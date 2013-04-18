@@ -1,0 +1,3 @@
+keyboardctl - keymap setup program
+
+This package provides the console with the same keyboard configuration scheme as the X Window System. As a result, there is no need to duplicate or change the keyboard files just to make simple customizations such as the use of dead keys, the key functioning as AltGr or Compose key, the key(s) to switch between Latin and non-Latin mode, etc.

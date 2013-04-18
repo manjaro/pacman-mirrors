@@ -1,0 +1,235 @@
+#!/bin/bash
+
+
+
+err() {
+	echo "$1" >&2
+}
+
+
+
+check_root() {
+	if [[ $EUID -ne 0 ]]; then
+		echo "error: you cannot perform this operation unless you are root." 1>&2
+		exit 1
+	fi
+}
+
+
+
+print_help()
+{
+	echo "${0##*/} [OPTION] [...]"
+	echo ""
+	echo " -h --help                         show help"
+	echo " -g --generate                     generate new mirrorlist"
+	echo " -m --method       {rank, random}  use generation method"
+	echo " -b --branch       [BRANCH]        use branch name"
+	echo " -c --only-country [COUNTRY]       use only mirrors from country"
+	echo " -d --mirror-dir   [PATH]          use path as mirrorlist directory"
+	echo " -o --output       [PATH]          specify output file"
+	echo ""
+}
+
+
+
+# gettime fetchurl (e.g gettime http://foo.com/core/i686/core.db.tar.gz)
+# returns the fetching time, or timeout, or unreachable
+gettime() {
+	IFS=' ' output=( $(curl -s -m 10 -w "%{time_total} %{http_code}" "$1" -o/dev/null) )
+	(( $? == 28 )) && echo timeout && return
+	(( ${output[1]} >= 400 || ! ${output[1]} )) && echo unreachable && return
+	output[0]="$(echo "${output[0]}" | sed 's/,/./g')"
+	echo "${output[0]}"
+}
+
+
+
+# getfetchurl serverurl (e.g. getturl http://foo.com/core/i686)
+# if $repo is in the line, then assumes core
+# if $arch is in the line, then assumes $(uname -m)
+# returns a fetchurl (e.g. http://foo.com/core/i686/core.db.tar.gz)
+ARCH="$(uname -m)"
+getfetchurl() {
+	local strippedurl="${1%/}"
+
+	local replacedurl="${strippedurl/'$arch'/$ARCH}"
+	if [[ ! $TARGETREPO ]]; then
+		replacedurl="${replacedurl/'$repo'/platform}"
+		local reponame="platform"
+	else
+		replacedurl="${replacedurl/'$repo'/$TARGETREPO}"
+		local reponame="$TARGETREPO"
+	fi
+
+	if [[ -z $reponame || $reponame = $replacedurl ]]; then
+		echo "fail"
+	else
+		local fetchurl="${replacedurl}/$reponame.db"
+		echo "$fetchurl"
+	fi
+}
+
+
+
+rankmirrors() {
+	if [ "$Method" == "rank" ]; then echo ":: Querying servers, this may take some time..."; fi
+	if [ "$OnlyCountry" != "" ]; then echo ":: Only country: $OnlyCountry"; fi
+
+	# Get all servers
+	local timesarray=()
+	
+	for file in "$MirrorlistsDir"/*
+	do
+		local territory="unkown"
+
+		while read line           
+		do           
+			line="$(echo "$line" | sed -e 's/#.*//g' -e 's/^ *//g' -e 's/ *$//g')"    
+
+			if [[ "$line" == '['*']' ]]; then
+				territory="$(echo "$line" | sed -e 's/\[//g' -e 's/\]//g')"
+			elif [[ "$line" == Server*=* ]]; then
+				# If only country is set, then only use the required country
+				if [ "$OnlyCountry" != "" ] && [ "$OnlyCountry" != "$territory" ]; then continue; fi
+
+				local server="$(echo "$line" | sed -e 's/Server[ ]*=//g' -e 's/^ *//g' -e 's/ *$//g' -e 's/\$branch/$Branch/g')"
+
+				# Status
+				echo -n " -> ... $server"
+				
+				local fetchurl="$(getfetchurl "$server")"
+				local time=0
+
+				# Get rank time if required
+				if [ "$Method" == "rank" ]; then
+					time=$(gettime "$fetchurl")
+					echo -e "\033[1K\r -> $time $server"
+				else
+					echo -e "\033[1K\r -> $server"
+				fi
+
+				# Check if time is a number
+				if [[ $time != ?(-)+([0-9.,]) ]]; then continue; fi
+
+				# Add to list
+				timesarray+=("$time|$territory|$server")
+			fi
+		done < "$file"
+	done
+
+	# Sort
+	timesarray=($(printf '%s\n' "${timesarray[@]}"|sort))
+
+	# Save to file
+	echo "##" > "$OutputMirrorlist"
+	echo "## Manjaro Linux repository mirrorlist" >> "$OutputMirrorlist"
+	echo "## Generated on "$(date "+%d %B %G")"" >> "$OutputMirrorlist"
+	echo "##" >> "$OutputMirrorlist"
+	echo "" >> "$OutputMirrorlist"
+
+	for str in "${timesarray[@]}"
+	do
+		IFS='|'
+		local array=($str)
+		IFS=' '
+
+		echo "" >> "$OutputMirrorlist"
+		echo "## Location: ${array[1]}" >> "$OutputMirrorlist"
+		if [ "$Method" == "rank" ]; then echo "## Time:     ${array[0]}" >> "$OutputMirrorlist"; fi
+		echo "Server = ${array[2]}" >> "$OutputMirrorlist"
+	done
+
+	echo ":: Generated and saved '$OutputMirrorlist' mirrorlist."
+}
+
+
+
+GENERATE="false"
+OnlyCountry=""
+
+# Include configuration
+. /etc/pacman-mirrors.conf
+
+Branch=${Branch:-stable}
+Method=${Method:-rank}
+MirrorlistsDir=${MirrorlistsDir:-/etc/pacman.d/mirrors}
+OutputMirrorlist=${OutputMirrorlist:-/etc/pacman.d/mirrorlist}
+
+
+
+
+
+
+
+
+
+PARAM=$#
+
+if [ "${PARAM}" -lt 1 ]; then
+	print_help
+	exit 0
+fi
+
+for (( I=1; $I <= $PARAM; I++ ))
+do
+	case "$1" in
+		-h|--help)
+			print_help
+			exit 0
+			;;
+		-g|--generate)
+			GENERATE="true"
+			;;
+		-m|--method)
+			shift
+
+			if [ "$1" != "rank" ] && [ "$1" != "random" ]; then
+				err "error: invalid argument passed!"
+				err "possible values: rank, random"
+				exit 1
+			fi
+
+			Method="$1"
+			;;
+		-b|--branch)
+			shift
+			Branch="$1"
+			;;
+		-c|--only-country)
+			shift
+			OnlyCountry="$1"
+			;;
+		-d|--mirror-dir)
+			shift
+			MirrorlistsDir="$1"
+			;;
+		-o|--output)
+			shift
+			OutputMirrorlist="$1"
+			;;
+		"") ;;
+		*)
+			echo "error: invalid argument: $1"
+			echo ""
+			print_help
+			exit 1
+			;;
+	esac
+
+	shift
+done
+
+
+if [ ! -d "$MirrorlistsDir" ]; then
+	err "error: '$MirrorlistsDir' directory does not exist!"
+	exit 1
+fi
+
+
+if [ "$GENERATE" == "true" ]; then
+	check_root
+	rankmirrors
+fi
+
+exit 0
