@@ -78,6 +78,7 @@ rankmirrors() {
 
 	# Get all servers
 	local timesarray=()
+	local noservers="true"
 	
 	for file in "$MirrorlistsDir"/*
 	do
@@ -114,9 +115,20 @@ rankmirrors() {
 
 				# Add to list
 				timesarray+=("$time|$territory|$server")
+				noservers="false"
 			fi
 		done < "$file"
 	done
+
+	# Check if no servers have been found
+	if [ "$Method" == "rank" ] && [ "$noservers" == "true" ]; then
+		# Fall back to random generation method
+		echo ""
+		echo ":: No Servers found! Falling back to random generation method."
+		Method="random"
+		rankmirrors
+		return
+	fi
 
 	# Sort
 	timesarray=($(printf '%s\n' "${timesarray[@]}"|sort))
