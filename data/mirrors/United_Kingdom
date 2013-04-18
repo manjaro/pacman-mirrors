@@ -1,0 +1,6 @@
+##
+## Pacman Mirrorslist
+##
+
+[United_Kingdom]
+Server = http://repo.manjaro.org.uk/$branch/$repo/$arch

@@ -1,0 +1,7 @@
+##
+## Pacman Mirrorslist
+##
+
+[Netherlands]
+Server = ftp://ftp.nluug.nl/pub/os/Linux/distr/manjaro/$branch/$repo/$arch
+Server = http://ftp.nluug.nl/pub/os/Linux/distr/manjaro/$branch/$repo/$arch

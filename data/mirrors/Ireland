@@ -1,0 +1,7 @@
+##
+## Pacman Mirrorslist
+##
+
+[Ireland]
+Server = http://ftp.heanet.ie/mirrors/manjaro/$branch/$repo/$arch
+Server = ftp://ftp.heanet.ie/mirrors/manjaro/$branch/$repo/$arch

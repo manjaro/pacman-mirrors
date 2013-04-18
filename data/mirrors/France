@@ -1,0 +1,6 @@
+##
+## Pacman Mirrorslist
+##
+
+[France]
+Server = http://manjarolinux.polymorf.fr/$branch/$repo/$arch

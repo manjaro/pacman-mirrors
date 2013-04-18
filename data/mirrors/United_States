@@ -1,0 +1,8 @@
+##
+## Pacman Mirrorslist
+##
+
+[United_States]
+Server = http://mirror.dacentec.com/manjaro/$branch/$repo/$arch
+Server = http://spiralinear.org/manjaro/repo/$branch/$repo/$arch
+Server = http://mirror-us1.vinzv.de/manjaro/repo/$branch/$repo/$arch
