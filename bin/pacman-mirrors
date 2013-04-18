@@ -55,8 +55,8 @@ getfetchurl() {
 
 	local replacedurl="${strippedurl/'$arch'/$ARCH}"
 	if [[ ! $TARGETREPO ]]; then
-		replacedurl="${replacedurl/'$repo'/platform}"
-		local reponame="platform"
+		replacedurl="${replacedurl/'$repo'/core}"
+		local reponame="core"
 	else
 		replacedurl="${replacedurl/'$repo'/$TARGETREPO}"
 		local reponame="$TARGETREPO"
