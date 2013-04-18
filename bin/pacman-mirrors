@@ -137,6 +137,7 @@ rankmirrors() {
 	echo "##" > "$OutputMirrorlist"
 	echo "## Manjaro Linux repository mirrorlist" >> "$OutputMirrorlist"
 	echo "## Generated on "$(date "+%d %B %G")"" >> "$OutputMirrorlist"
+	echo "## Use pacman-mirrors to modify" >> "$OutputMirrorlist"
 	echo "##" >> "$OutputMirrorlist"
 	echo "" >> "$OutputMirrorlist"
 
@@ -167,13 +168,6 @@ Branch=${Branch:-stable}
 Method=${Method:-rank}
 MirrorlistsDir=${MirrorlistsDir:-/etc/pacman.d/mirrors}
 OutputMirrorlist=${OutputMirrorlist:-/etc/pacman.d/mirrorlist}
-
-
-
-
-
-
-
 
 
 PARAM=$#
