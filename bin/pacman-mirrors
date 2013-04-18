@@ -91,7 +91,7 @@ rankmirrors() {
 				territory="$(echo "$line" | sed -e 's/\[//g' -e 's/\]//g' -e 's/ /_/g')"
 			elif [[ "$line" == Server*=* ]]; then
 				# If only country is set, then only use the required country
-				if [ "$OnlyCountry" != "" ] && [ "$OnlyCountry" != "$territory" ]; then continue; fi
+				if [ "$OnlyCountry" != "" ] && [ "$(echo "$OnlyCountry" | tr '[A-Z]' '[a-z]')" != "$(echo "$territory" | tr '[A-Z]' '[a-z]')" ]; then continue; fi
 
 				local server="$(echo "$line" | sed -e 's/Server[ ]*=//g' -e 's/^ *//g' -e 's/ *$//g' -e "s/\$branch/$Branch/g")"
 
