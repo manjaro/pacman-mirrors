@@ -4,7 +4,5 @@
 
 [Germany]
 Server = http://ftp.halifax.rwth-aachen.de/manjaro/$branch/$repo/$arch
-Server = http://mirror-europe1.vinzv.de/manjaro/repo/$branch/$repo/$arch
-Server = http://mirror-europe2.vinzv.de/manjaro/repo/$branch/$repo/$arch
 Server = http://ftp.tu-chemnitz.de/pub/linux/manjaro/$branch/$repo/$arch
 Server = http://ftp.rz.tu-bs.de/pub/mirror/manjaro.org/repos/$branch/$repo/$arch
