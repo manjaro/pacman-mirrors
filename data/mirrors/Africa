@@ -1,0 +1,7 @@
+##
+## Pacman Mirrorlist
+##
+
+[Africa]
+Server = http://manjaro.mirror.ac.za/$branch/$repo/$arch
+Server = ftp://manjaro.mirror.ac.za/$branch/$repo/$arch
