@@ -4,4 +4,4 @@
 
 [Romania]
 Server = http://mirrors.xservers.ro/manjaro/$branch/$repo/$arch
-http://mirrors.serverhost.ro/manjaro/packages/$branch/$repo/$arch
+Server = http://mirrors.serverhost.ro/manjaro/packages/$branch/$repo/$arch
