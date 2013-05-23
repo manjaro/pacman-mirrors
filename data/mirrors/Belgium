@@ -1,0 +1,7 @@
+##
+## Pacman Mirrorlist
+##
+
+[Belgium]
+Server = http://ftp.belnet.be/manjaro/$branch/$repo/$arch
+Server = ftp://ftp.belnet.be/mirror/manjaro/$branch/$repo/$arch
