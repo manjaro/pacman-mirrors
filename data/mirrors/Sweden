@@ -1,0 +1,6 @@
+##
+## Pacman Mirrorlist
+##
+
+[Sweden]
+Server = ftp://ftp.lysator.liu.se/pub/manjaro/$branch/$repo/$arch
