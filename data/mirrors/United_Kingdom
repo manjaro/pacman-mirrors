@@ -4,3 +4,5 @@
 
 [United_Kingdom]
 Server = http://repo.manjaro.org.uk/$branch/$repo/$arch
+Server = http://www.mirrorservice.org/sites/repo.manjaro.org/repos/$branch/$repo/$arch
+Server = ftp://ftp.mirrorservice.org/sites/repo.manjaro.org/repos/$branch/$repo/$arch
