@@ -1,0 +1,6 @@
+##
+## Pacman Mirrorlist
+##
+
+[South_Korea]
+Server = http://mirror.yongbok.net/manjaro/$branch/$repo/$arch
