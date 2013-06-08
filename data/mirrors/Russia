@@ -1,0 +1,7 @@
+##
+## Pacman Mirrorlist
+##
+
+[Russia]
+Server = http://mirror.yandex.ru/mirrors/manjaro/$branch/$repo/$arch
+Server = ftp://mirror.yandex.ru/mirrors/manjaro/$branch/$repo/$arch
