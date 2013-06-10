@@ -4,4 +4,4 @@
 
 [Italy]
 Server = http://manjaro.mirror.garr.it/mirrors/manjaro/$branch/$repo/$arch
-Server = http://ftp://manjaro.mirror.garr.it/mirrors/manjaro/$branch/$repo/$arch
+Server = ftp://manjaro.mirror.garr.it/mirrors/manjaro/$branch/$repo/$arch
