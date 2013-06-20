@@ -5,4 +5,4 @@
 [Japan]
 Server = http://ftp.tsukuba.wide.ad.jp/Linux/manjaro/$branch/$repo/$arch
 Server = http://www.ftp.ne.jp/Linux/packages/manjaro/$branch/$repo/$arch
-Server = ftp://ftp.kddilabs.jp/Linux/packages/manjaro/$branch/$repo/$arch
+Server = http://ftp.kddilabs.jp/Linux/packages/manjaro/$branch/$repo/$arch

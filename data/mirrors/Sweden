@@ -3,5 +3,5 @@
 ##
 
 [Sweden]
-Server = ftp://ftp.lysator.liu.se/pub/manjaro/$branch/$repo/$arch
+Server = http://ftp.lysator.liu.se/pub/manjaro/$branch/$repo/$arch
 Server = http://mirror.zetup.net/manjaro/$branch/$repo/$arch

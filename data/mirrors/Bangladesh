@@ -4,4 +4,3 @@
 
 [Bangladesh]
 Server = http://mirrors.ispros.com.bd/manjaro/$branch/$repo/$arch
-Server = ftp://mirrors.ispros.com.bd/manjaro/$branch/$repo/$arch
