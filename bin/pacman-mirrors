@@ -1,241 +1,234 @@
-#!/bin/bash
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import argparse, datetime, getopt, os, signal, sys, time, urllib.request
+from sys import *
+from operator import itemgetter
+from decimal import *
 
 
+# Global initializations
+# ======================
+path_conf = "/etc/pacman-mirrors.conf"
+datenow = datetime.datetime.utcnow()
+serverList = []
+nbServer = 0             	               # Global count of servers available
+nbServerResp = 0             		       # Number of servers responding
+nbServerGood = 0                               # Number of servers sinced < 4h
 
-err() {
-	echo "$1" >&2
-}
+generate = False                               # Generate new mirrorlist
+method = "rank"                                # Use generation method
+branch = "stable"                              # Use branch name
+onlyCountry=[]                                 # Use only mirrors from country[,country,...]
+mirrorlistsDir="/etc/pacman.d/mirrors"         # Use path as mirrorlist directory
+outputMirrorList = "/etc/pacman.d/mirrorlist"  # Specify output file
+maxWaitTime = 2                                # Server maximum waiting time (seconds)
 
+arch = os.uname().machine                      # i686 or X86_64
 
-
-check_root() {
-	if [[ $EUID -ne 0 ]]; then
-		echo "error: you cannot perform this operation unless you are root." 1>&2
-		exit 1
-	fi
-}
-
-
-
-print_help()
-{
-	echo "${0##*/} [OPTION] [...]"
-	echo ""
-	echo " -h --help                         show help"
-	echo " -g --generate                     generate new mirrorlist"
-	echo " -m --method       {rank, random}  use generation method"
-	echo " -b --branch       [BRANCH]        use branch name"
-	echo " -c --only-country [COUNTRY]       use only mirrors from country"
-	echo " -d --mirror-dir   [PATH]          use path as mirrorlist directory"
-	echo " -o --output       [PATH]          specify output file"
-	echo ""
-}
+def alarm_handler(signum, frame):
+    raise TimeoutError("Ici")
+def timeOut(timeout):
+    signal.signal(signal.SIGALRM, alarm_handler)
+    signal.alarm(timeout) # produce SIGALRM in `timeout` seconds
 
 
-
-# gettime fetchurl (e.g gettime http://foo.com/core/i686/core.db.tar.gz)
-# returns the fetching time, or timeout, or unreachable
-gettime() {
-	IFS=' ' output=( $(curl -s -m 10 -w "%{time_total} %{http_code}" "$1" -o/dev/null) )
-	(( $? == 28 )) && echo timeout && return
-	(( ${output[1]} >= 400 || ! ${output[1]} )) && echo unreachable && return
-	output[0]="$(echo "${output[0]}" | sed 's/,/./g')"
-	echo "${output[0]}"
-}
-
-
-
-# getfetchurl serverurl (e.g. getturl http://foo.com/core/i686)
-# if $repo is in the line, then assumes core
-# if $arch is in the line, then assumes $(uname -m)
-# returns a fetchurl (e.g. http://foo.com/core/i686/core.db.tar.gz)
-ARCH="$(uname -m)"
-getfetchurl() {
-	local strippedurl="${1%/}"
-
-	local replacedurl="${strippedurl/'$arch'/$ARCH}"
-	if [[ ! $TARGETREPO ]]; then
-		replacedurl="${replacedurl/'$repo'/core}"
-		local reponame="core"
-	else
-		replacedurl="${replacedurl/'$repo'/$TARGETREPO}"
-		local reponame="$TARGETREPO"
-	fi
-
-	if [[ -z $reponame || $reponame = $replacedurl ]]; then
-		echo "fail"
-	else
-		local fetchurl="${replacedurl}/$reponame.db"
-		echo "$fetchurl"
-	fi
-}
+# Parse the file "pacman-mirrors.conf"
+# ====================================
+try :
+    fi = open(path_conf, "r")
+except :
+    print("\n Error : cannot open file", path_conf, "\n")
+    exit(1)
+while 1 :
+    line = fi.readline()
+    if line == "" :
+        break
+    line.strip()
+    if line == "" :
+        break
+    if line[0] == '#' or line[0] == '\n' :
+        continue
+    i = line.find("=")
+    if i == -1 :
+        continue
+    snom = line[0:i]
+    i = i + 1
+    j = len(line) -1
+    if line[i] == '"' :
+        i = i + 1
+        if line[j -1] == '"' :
+            j = j - 1
+    sval = line[i:j]
+    if snom == "Branch" :			# Branch Pacman should use
+        branch=sval
+    elif snom == "OnlyCountry" :		# Specify to use only mirrors from specific countries
+        onlyCountry = sval.split(',')
+    elif snom == "MirrorlistsDir" :		# Input mirrorlist directory
+        pathMirrors = sval + "/"
+    elif snom == "OutputMirrorlist" :		# Output mirrorlist
+        outputMirrorList = sval
 
 
+#
+# Read the arguments of the command line
+# ======================================
 
-rankmirrors() {
-	if [ "$Method" == "rank" ]; then echo ":: Querying servers, this may take some time..."; fi
-	if [ "$OnlyCountry" != "" ]; then echo ":: Only country: $OnlyCountry"; fi
-
-	# Get all servers
-	local timesarray=()
-	local noservers="true"
-	
-	for file in "$MirrorlistsDir"/*
-	do
-		local territory="unkown"
-
-		while read line           
-		do           
-			line="$(echo "$line" | sed -e 's/#.*//g' -e 's/^ *//g' -e 's/ *$//g')"    
-
-			if [[ "$line" == '['*']' ]]; then
-				territory="$(echo "$line" | sed -e 's/\[//g' -e 's/\]//g' -e 's/ /_/g')"
-			elif [[ "$line" == Server*=* ]]; then
-				# If only country is set, then only use the required country
-				if [ "$OnlyCountry" != "" ] && [ "$(echo "$OnlyCountry" | tr '[A-Z]' '[a-z]')" != "$(echo "$territory" | tr '[A-Z]' '[a-z]')" ]; then continue; fi
-
-				local server="$(echo "$line" | sed -e 's/Server[ ]*=//g' -e 's/^ *//g' -e 's/ *$//g' -e "s/\$branch/$Branch/g")"
-
-				# Status
-				echo -n " -> ... $server"
-				
-				local fetchurl="$(getfetchurl "$server")"
-				local time=0
-
-				# Get rank time if required
-				if [ "$Method" == "rank" ]; then
-					time=$(gettime "$fetchurl")
-					echo -e "\033[1K\r -> $time $server"
-				else
-					echo -e "\033[1K\r -> $server"
-				fi
-
-				# Check if time is a number
-				if [[ $time != ?(-)+([0-9.,]) ]]; then continue; fi
-
-				# Add to list
-				timesarray+=("$time|$territory|$server")
-				noservers="false"
-			fi
-		done < "$file"
-	done
-
-	# Check if no servers have been found
-	if [ "$Method" == "rank" ] && [ "$noservers" == "true" ]; then
-		# Fall back to random generation method
-		echo ""
-		echo ":: No Servers found! Falling back to random generation method."
-		Method="random"
-		rankmirrors
-		return
-	fi
-
-	# Sort
-	timesarray=($(printf '%s\n' "${timesarray[@]}"|sort))
-
-	# Save to file
-	echo "##" > "$OutputMirrorlist"
-	echo "## Manjaro Linux repository mirrorlist" >> "$OutputMirrorlist"
-	echo "## Generated on "$(date "+%d %B %G")"" >> "$OutputMirrorlist"
-	echo "## Use pacman-mirrors to modify" >> "$OutputMirrorlist"
-	echo "##" >> "$OutputMirrorlist"
-	echo "" >> "$OutputMirrorlist"
-
-	for str in "${timesarray[@]}"
-	do
-		IFS='|'
-		local array=($str)
-		IFS=' '
-
-		echo "" >> "$OutputMirrorlist"
-		echo "## Location: ${array[1]}" >> "$OutputMirrorlist"
-		if [ "$Method" == "rank" ]; then echo "## Time:     ${array[0]}" >> "$OutputMirrorlist"; fi
-		echo "Server = ${array[2]}" >> "$OutputMirrorlist"
-	done
-
-	echo ":: Generated and saved '$OutputMirrorlist' mirrorlist."
-}
+parser = argparse.ArgumentParser()
+parser.add_argument("-g", "--generate", help="generate new mirrorlist",
+                    action="store_true")
+parser.add_argument("-m", "--method", help="use generation method",
+                    type=str, choices=["rank", "random"])
+parser.add_argument("-b", "--branch", help="use branch name",
+                    type=str, choices=["stable", "testing", "unstable"])
+parser.add_argument("-c", "--country", help="use only mirrors from country[,country,...]",
+                    type=str)
+parser.add_argument("-d", "--mirror_dir", help="use path as mirrorlist directory",
+                    type=str)
+parser.add_argument("-o", "--output", help="specify output file",
+                    type=str)
+parser.add_argument("-t", "--timeout", help="server maximum waiting time (seconds)",
+                    type=int)
+args = parser.parse_args()
+if len(sys.argv) == 1 :
+    parser.print_help()
+    exit(0)
+if args.generate :
+    generate = args.generate
+if args.method :
+    method = args.method
+if args.branch :
+    branch = args.branch
+if args.country :
+    onlyCountry = args.country.split(",")
+if args.mirror_dir :
+   mirrorlistsDir = args.mirror_dir
+if args.output :
+   outputMirrorList = args.output
+if args.timeout :
+   maxWaitTime = args.timeout
 
 
+try :
+    os.chdir(mirrorlistsDir)
+except :
+    print("\nError : Cannot change directory to", mirrorlistsDir, "\n")
+    exit(1)
+listeDir = os.listdir(mirrorlistsDir)
+listeDir.sort()
+for i in  onlyCountry :
+    if i not in listeDir :
+        print("\nError : unknown country", i)
+        print("\nAvailable countries are :", listeDir, "\n")
+        exit(1)
 
-GENERATE="false"
-OnlyCountry=""
-
-# Include configuration
-. /etc/pacman-mirrors.conf
-
-Branch=${Branch:-stable}
-Method=${Method:-rank}
-MirrorlistsDir=${MirrorlistsDir:-/etc/pacman.d/mirrors}
-OutputMirrorlist=${OutputMirrorlist:-/etc/pacman.d/mirrorlist}
-
-
-PARAM=$#
-
-if [ "${PARAM}" -lt 1 ]; then
-	print_help
-	exit 0
-fi
-
-for (( I=1; $I <= $PARAM; I++ ))
-do
-	case "$1" in
-		-h|--help)
-			print_help
-			exit 0
-			;;
-		-g|--generate)
-			GENERATE="true"
-			;;
-		-m|--method)
-			shift
-
-			if [ "$1" != "rank" ] && [ "$1" != "random" ]; then
-				err "error: invalid argument passed!"
-				err "possible values: rank, random"
-				exit 1
-			fi
-
-			Method="$1"
-			;;
-		-b|--branch)
-			shift
-			Branch="$1"
-			;;
-		-c|--only-country)
-			shift
-			OnlyCountry="$1"
-			;;
-		-d|--mirror-dir)
-			shift
-			MirrorlistsDir="$1"
-			;;
-		-o|--output)
-			shift
-			OutputMirrorlist="$1"
-			;;
-		"") ;;
-		*)
-			echo "error: invalid argument: $1"
-			echo ""
-			print_help
-			exit 1
-			;;
-	esac
-
-	shift
-done
+try :
+    fo = open(outputMirrorList, "w")
+except :
+    print("\nError : not enough rights to create", outputMirrorList)
+    if os.getuid() != 0 :
+        print("(Are you root ?)\n")
+    exit(1)
 
 
-if [ ! -d "$MirrorlistsDir" ]; then
-	err "error: '$MirrorlistsDir' directory does not exist!"
-	exit 1
-fi
+# Main loop
+# =========
+if method == "rank" :
+    print(":: Querying servers, this may take some time...")
+listeSer=[]
+for country in listeDir :
+    if len(onlyCountry) != 0 and country not in onlyCountry :
+        continue
+    #print(country)
+    fi = open(country, "r")
+    while 1 :
+        s = fi.readline()
+        if s == '' :
+            break
+        if s[0] != 'S' :
+            continue
+        urlServer = s[9:-1]
+        urlServer = urlServer.replace("$branch", branch)
+        # Add the server to the list, also if bad
+        serverList.append([country, "99.99", "99:99", urlServer, 0])
+        # Country, response time, last sync, url, quality level
+        nbServer = nbServer + 1
+        if method == "random" :
+            print("->", urlServer)
+            continue
+        print("-> .....", urlServer, end='')
+        sys.stdout.flush()
+        j = urlServer.find(branch)
+        url = urlServer[0:j] + "state"
+        start = time.time()
+        try :
+            furl  = urllib.request.urlopen(url, timeout=maxWaitTime)
+        except :
+            print("\r-> Error!")
+            continue
+        timeOut(maxWaitTime)
+        try :
+            resp =  furl.read()
+            d = resp.find(b"date=")
+            signal.alarm(0) # cancel alarm
+        except :
+            print("\r-> Error2!")
+            furl.close()
+            continue
+        elapsed = round((time.time() - start), 3)
+        nbServerResp = nbServerResp + 1                 # The server responds ..
+        date = resp[d+5:d+24].decode('utf-8')
+        selapsed = "{:6.4}".format(Decimal(elapsed).quantize(Decimal('.001')))
+        print("\r->", selapsed, sep="")
+        sys.stdout.flush()
+        serverList[nbServer - 1][1] = selapsed		# - response time
+        serverList[nbServer - 1][4] = 1
+        date2 = datetime.datetime.strptime(date, "%Y-%m-%dT%H:%M:%S" )
+        sec = (datenow - date2).seconds
+        min = int(sec / 60)
+        hr = int (min /60)
+        min = min - hr * 60
+        if hr < 4 :
+            nbServerGood = nbServerGood + 1             # ...and was recently synced (< 4h)
+            serverList[nbServer - 1][4] = 2
+        datesync = '{}:{}'.format(hr, str(min).zfill(2))
+        serverList[nbServer - 1][2] = datesync		# - last sync
+        furl.close()
+    fi.close()
+#    break
 
 
-if [ "$GENERATE" == "true" ]; then
-	check_root
-	rankmirrors
-fi
+#
+# Build the file "mirrorlist"
+# ===========================
+serverList = sorted(serverList, key=itemgetter(1))
+fo.write("##\n")
+fo.write("## Manjaro Linux repository mirrorlist\n")
+fo.write("## Generated on ")
+fo.write(datetime.datetime.now().strftime("%d %b %Y"))
+fo.write("\n##\n")
+fo.write("## Use pacman-mirrors to modify\n")
+fo.write("##\n\n")
+if nbServerGood >= 3 :					# Avoid an empty mirrorlist
+    level = 2
+elif nbServerResp >= 3 :
+    level = 1
+else :
+    level = 0
+    if nbServer == 0 :
+        print("\nError : no server available !\n")
+for server in serverList :
+    if server[4] < level :
+        continue
+    fo.write("\n## Location  : ")
+    fo.write(server[0])
+    if method == "rank" :
+        fo.write("\n## Time      :")
+        fo.write(server[1])
+        fo.write("\n## Last Sync : ")
+        fo.write(server[2])
+    fo.write("\nServer = ")
+    fo.write(server[3])
+    fo.write("\n")
+print(":: Generated and saved '{}' mirrorlist.".format(outputMirrorList))
 
-exit 0
