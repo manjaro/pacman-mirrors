@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 '''Build a list of mirrors for pacman'''
 
-# Release : 1.0b
-# Date    : 8 Jul 2013
+# Release : 1.0c
+# Date    : 16 Jul 2013
 
 import argparse, datetime, getopt, os, signal, sys, time, urllib.request
 from sys import *
@@ -48,9 +48,9 @@ while 1 :
     line = fi.readline()
     if line == "" :
         break
-    line.strip()
+    line = line.strip()
     if line == "" :
-        break
+        continue
     if line[0] == '#' or line[0] == '\n' :
         continue
     i = line.find("=")
@@ -58,7 +58,7 @@ while 1 :
         continue
     snom = line[0:i]
     i = i + 1
-    j = len(line) -1
+    j = len(line)
     if line[i] == '"' :
         i = i + 1
         if line[j -1] == '"' :
@@ -93,7 +93,7 @@ parser.add_argument("-o", "--output", help="specify output file",
                     type=str)
 parser.add_argument("-t", "--timeout", help="server maximum waiting time (seconds)",
                     type=int)
-parser.add_argument("-v", "--version", help="print the pacman-mirrors version",
+parser.add_argument("-v", "--version", help="print the pamir version",
                     action="store_true")
 args = parser.parse_args()
 if len(sys.argv) == 1 :
@@ -117,7 +117,7 @@ if args.output :
 if args.timeout :
     maxWaitTime = args.timeout
 if args.version :
-    print("pacman-mirrors 1.0b")
+    print("pacman-mirrors 1.0c")
     exit(0)
 
 
