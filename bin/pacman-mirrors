@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 '''Build a list of mirrors for pacman'''
 
-# Release : 1.0c
-# Date    : 16 Jul 2013
+# Release : 1.0d
+# Date    : 3 Août 2013
 
 import argparse, datetime, getopt, os, signal, sys, time, urllib.request
 from sys import *
@@ -151,7 +151,7 @@ listeSer=[]
 for country in listeDir :
     if len(onlyCountry) != 0 and country not in onlyCountry :
         continue
-    #print(country)
+    print(country)
     fi = open(country, "r")
     while 1 :
         s = fi.readline()
@@ -195,7 +195,11 @@ for country in listeDir :
         sys.stdout.flush()
         serverList[nbServer - 1][1] = selapsed		# - response time
         serverList[nbServer - 1][4] = 1
-        date2 = datetime.datetime.strptime(date, "%Y-%m-%dT%H:%M:%S" )
+        try :
+            date2 = datetime.datetime.strptime(date, "%Y-%m-%dT%H:%M:%S" )
+        except :
+            print('Wrong date format in "state" file. Server skipped.')
+            continue
         sec = (datenow - date2).seconds
         min = int(sec / 60)
         hr = int (min /60)
