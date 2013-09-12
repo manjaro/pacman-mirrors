@@ -4,7 +4,6 @@
 
 [United_States]
 Server = http://mirror.dacentec.com/manjaro/$branch/$repo/$arch
-Server = http://spiralinear.org/manjaro/repo/$branch/$repo/$arch
 Server = http://www.gtlib.gatech.edu/pub/manjaro/$branch/$repo/$arch
 Server = http://mirror.jmu.edu/manjaro/$branch/$repo/$arch
 Server = http://mirror.solarvps.com/manjaro/$branch/$repo/$arch
