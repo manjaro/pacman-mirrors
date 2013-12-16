@@ -3,5 +3,4 @@
 ##
 
 [Taiwan]
-Server = http://free.twaren.net/manjaro/$branch/$repo/$arch
 Server = http://free.nchc.org.tw/manjaro/$branch/$repo/$arch
