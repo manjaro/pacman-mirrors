@@ -2,11 +2,12 @@
 # -*- coding: utf-8 -*-
 '''Build a list of mirrors for pacman'''
 
-# Release : 1.0d
-# Date    : 3 Août 2013
+# Release : 1.4a
+# Date    : 25 December 2013
 
 import argparse, datetime, getopt, os, signal, sys, time, urllib.request
 from sys import *
+path.append("/usr/lib/pacman-mirrors")
 from operator import itemgetter
 from decimal import *
 
@@ -21,6 +22,7 @@ nbServerResp = 0             		       # Number of servers responding
 nbServerGood = 0                               # Number of servers sinced < 4h
 
 generate = False                               # Generate new mirrorlist
+interactive = False                            # Use the gui for custom mirrorlist
 method = "rank"                                # Use generation method
 branch = "stable"                              # Use branch name
 onlyCountry=[]                                 # Use only mirrors from country[,country,...]
@@ -93,7 +95,9 @@ parser.add_argument("-o", "--output", help="specify output file",
                     type=str)
 parser.add_argument("-t", "--timeout", help="server maximum waiting time (seconds)",
                     type=int)
-parser.add_argument("-v", "--version", help="print the pamir version",
+parser.add_argument("-i", "--interactive", help="interactively generate a custom mirrorlist",
+                    action="store_true")
+parser.add_argument("-v", "--version", help="print the pacman-mirrors version",
                     action="store_true")
 args = parser.parse_args()
 if len(sys.argv) == 1 :
@@ -107,6 +111,34 @@ if args.branch :
     branch = args.branch
 if args.country :
     onlyCountry = args.country.split(",")
+    if onlyCountry == ["all"] :
+        path = "/etc/pacman-mirrors.conf"
+        try :
+            fconf = open(path, "r")
+        except :
+            print("\n^GError : can't open file {0}.\n".format(path))
+            exit(1)
+        buf = fconf.read().split('\n')
+        fconf.close()
+        while buf[-1:] == [''] :
+            del buf[-1:]
+        try :
+            fconf = open(path, "w")
+        except :
+            print("\n^GError : can't open file {0}.\n".format(path))
+            exit(1)
+        for line in buf :
+            if "OnlyCountry" in line :
+                fconf.write("#OnlyCountry=Custom\n")
+            else :
+                fconf.write(line + "\n")
+        fconf.close
+        try :
+            os.remove(mirrorlistsDir + "/Custom")
+        except :
+            pass
+        onlyCountry = []
+
 if args.mirror_dir :
     mirrorlistsDir = args.mirror_dir
 if args.output :
@@ -114,10 +146,12 @@ if args.output :
         outputMirrorList = args.output
     else :
         outputMirrorList = os.getcwd() + "/" + args.output
+if args.interactive :
+    interactive = args.interactive
 if args.timeout :
     maxWaitTime = args.timeout
 if args.version :
-    print("pacman-mirrors 1.0c")
+    print("pacman-mirrors 1.4a")
     exit(0)
 
 
@@ -134,13 +168,10 @@ for i in  onlyCountry :
         print("\nAvailable countries are :", listeDir, "\n")
         exit(1)
 
-try :
-    fo = open(outputMirrorList, "w")
-except :
-    print("\nError : not enough rights to create", outputMirrorList)
-    if os.getuid() != 0 :
-        print("(Are you root ?)\n")
+if os.getuid() != 0 :
+    print("\nError : must be root.\n")
     exit(1)
+from pacman_mirrors_gui import chooseMirrors
 
 
 # Main loop
@@ -152,17 +183,21 @@ for country in listeDir :
     if len(onlyCountry) != 0 and country not in onlyCountry :
         continue
     print(country)
+    curCountry = country
     fi = open(country, "r")
     while 1 :
         s = fi.readline()
         if s == '' :
             break
+        if s[0] == '[' :
+            curCountry = s[1:-2]
+            continue
         if s[0] != 'S' :
             continue
         urlServer = s[9:-1]
         urlServer = urlServer.replace("$branch", branch)
         # Add the server to the list, also if bad
-        serverList.append([country, "99.99", "99:99", urlServer, 0])
+        serverList.append([curCountry, "99.99", "99:99", urlServer, 0, False])
         # Country, response time, last sync, url, quality level
         nbServer = nbServer + 1
         if method == "random" :
@@ -218,33 +253,119 @@ for country in listeDir :
 # Build the file "mirrorlist"
 # ===========================
 serverList = sorted(serverList, key=itemgetter(1))
-fo.write("##\n")
-fo.write("## Manjaro Linux repository mirrorlist\n")
-fo.write("## Generated on ")
-fo.write(datetime.datetime.now().strftime("%d %B %Y %H:%M"))
-fo.write("\n##\n")
-fo.write("## Use pacman-mirrors to modify\n")
-fo.write("##\n\n")
-if nbServerGood >= 3 :					# Avoid an empty mirrorlist
-    level = 2
-elif nbServerResp >= 3 :
-    level = 1
-else :
-    level = 0
-    if nbServer == 0 :
-        print("\nError : no server available !\n")
-for server in serverList :
-    if server[4] < level :
-        continue
-    fo.write("\n## Location  : ")
-    fo.write(server[0])
-    if method == "rank" :
-        fo.write("\n## Time      :")
-        fo.write(server[1])
-        fo.write("\n## Last Sync : ")
-        fo.write(server[2])
-    fo.write("\nServer = ")
-    fo.write(server[3])
-    fo.write("\n")
-print(":: Generated and saved '{}' mirrorlist.".format(outputMirrorList))
+if interactive :
+    finished = False
+    for item in serverList :
+        item[3] = item[3].replace("/" + branch + "/", "/$branch/")
+    while not finished :
+        chooseMirrors(True, serverList)
+        customList = []
+        for elem in serverList :
+            if elem[5] :
+                customList.append(elem)
+        if len(customList) == 0 :
+            continue
+        finished = chooseMirrors(False, customList)
 
+    path = mirrorlistsDir + "/Custom"
+    try :
+        fcust = open(path, "w")
+    except :
+        print("\n^GError : can't create file {0}.\n".format(path))
+        exit(1)
+    fcust.write("##\n")
+    fcust.write("## Pacman Mirrorlist\n")
+    fcust.write("##\n\n")
+    for elem in customList :
+        fcust.write("[" + elem[0] + "]\n")
+        fcust.write("Server = " + elem[3] + "\n")
+    fcust.close()
+    path = "/etc/pacman-mirrors.conf"
+    try :
+        fconf = open(path, "r")
+    except :
+        print("\n^GError : can't open file {0}.\n".format(path))
+        exit(1)
+    buf = fconf.read().split('\n')
+    fconf.close()
+    while buf[-1:] == [''] :
+        del buf[-1:]
+    try :
+        fconf = open(path, "w")
+    except :
+        print("\n^GError : can't open file {0}.\n".format(path))
+        exit(1)
+    for line in buf :
+        if "OnlyCountry" in line :
+            fconf.write("OnlyCountry=Custom\n")
+        else :
+            fconf.write(line + "\n")
+    fconf.close
+    try :
+        fo = open(outputMirrorList, "w")
+    except :
+        print("\nError : cannot create", outputMirrorList)
+        exit(1)
+    fo.write("##\n")
+    fo.write("## Manjaro Linux repository mirrorlist\n")
+    fo.write("## Generated on ")
+    fo.write(datetime.datetime.now().strftime("%d %B %Y %H:%M"))
+    fo.write("\n##\n")
+    fo.write("## Use pacman-mirrors to modify\n")
+    fo.write("##\n\n")
+    print("\nCustom List")
+    print("-----------\n")
+    for server in customList :
+        server[3] = server[3].replace("$branch", branch)
+        print("-> {0} :".format(server[0]), server[3])
+        fo.write("\n## Location  : ")
+        fo.write(server[0])
+        if method == "rank" :
+            fo.write("\n## Time      :")
+            fo.write(server[1])
+            fo.write("\n## Last Sync : ")
+            fo.write(server[2])
+        fo.write("\nServer = ")
+        fo.write(server[3])
+        fo.write("\n")
+    print("\n:: Generated and saved '{}' Custom list.".format(outputMirrorList))
+
+    
+
+
+else :
+    try :
+        fo = open(outputMirrorList, "w")
+    except :
+        print("\nError : cannot create", outputMirrorList)
+        exit(1)
+    fo.write("##\n")
+    fo.write("## Manjaro Linux repository mirrorlist\n")
+    fo.write("## Generated on ")
+    fo.write(datetime.datetime.now().strftime("%d %B %Y %H:%M"))
+    fo.write("\n##\n")
+    fo.write("## Use pacman-mirrors to modify\n")
+    fo.write("##\n\n")
+    if nbServerGood >= 3 :					# Avoid an empty mirrorlist
+        level = 2
+    elif nbServerResp >= 3 :
+        level = 1
+    else :
+        level = 0
+        if nbServer == 0 :
+            print("\nError : no server available !\n")
+    for server in serverList :
+        if server[4] < level :
+            continue
+        fo.write("\n## Location  : ")
+        fo.write(server[0])
+        if method == "rank" :
+            fo.write("\n## Time      :")
+            fo.write(server[1])
+            fo.write("\n## Last Sync : ")
+            fo.write(server[2])
+        fo.write("\nServer = ")
+        fo.write(server[3])
+        fo.write("\n")
+    print(":: Generated and saved '{}' mirrorlist.".format(outputMirrorList))
+    
