@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 '''Build a list of mirrors for pacman'''
 
-# Release : 1.4a
-# Date    : 25 December 2013
+# Release : 1.4
+# Date    : 10 Octobre 2013
 
 import argparse, datetime, getopt, os, signal, sys, time, urllib.request
 from sys import *
@@ -151,7 +151,7 @@ if args.interactive :
 if args.timeout :
     maxWaitTime = args.timeout
 if args.version :
-    print("pacman-mirrors 1.4a")
+    print("pacman-mirrors 1.4")
     exit(0)
 
 
@@ -171,7 +171,7 @@ for i in  onlyCountry :
 if os.getuid() != 0 :
     print("\nError : must be root.\n")
     exit(1)
-from pacman-mirrors-gui import chooseMirrors
+from pacman_mirrors_gui import chooseMirrors
 
 
 # Main loop
