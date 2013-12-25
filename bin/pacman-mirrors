@@ -171,7 +171,7 @@ for i in  onlyCountry :
 if os.getuid() != 0 :
     print("\nError : must be root.\n")
     exit(1)
-from pacman_mirrors_gui import chooseMirrors
+from pacman-mirrors-gui import chooseMirrors
 
 
 # Main loop
