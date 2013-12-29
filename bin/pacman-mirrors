@@ -2,14 +2,16 @@
 # -*- coding: utf-8 -*-
 '''Build a list of mirrors for pacman'''
 
-# Release : 1.4
-# Date    : 10 Octobre 2013
+# Release : 1.5
+# Date    : 29 Decembre 2013
+# Authors : Esclapion, philm
 
 import argparse, datetime, getopt, os, signal, sys, time, urllib.request
 from sys import *
 path.append("/usr/lib/pacman-mirrors")
 from operator import itemgetter
 from decimal import *
+import os
 
 
 # Global initializations
@@ -95,8 +97,9 @@ parser.add_argument("-o", "--output", help="specify output file",
                     type=str)
 parser.add_argument("-t", "--timeout", help="server maximum waiting time (seconds)",
                     type=int)
-parser.add_argument("-i", "--interactive", help="interactively generate a custom mirrorlist",
-                    action="store_true")
+if os.path.exists('/usr/lib/python3.3/site-packages/gi/overrides/Gtk.py'):
+    parser.add_argument("-i", "--interactive", help="interactively generate a custom mirrorlist",
+                        action="store_true")
 parser.add_argument("-v", "--version", help="print the pacman-mirrors version",
                     action="store_true")
 args = parser.parse_args()
@@ -151,7 +154,7 @@ if args.interactive :
 if args.timeout :
     maxWaitTime = args.timeout
 if args.version :
-    print("pacman-mirrors 1.4")
+    print("pacman-mirrors 1.5")
     exit(0)
 
 
@@ -171,7 +174,6 @@ for i in  onlyCountry :
 if os.getuid() != 0 :
     print("\nError : must be root.\n")
     exit(1)
-from pacman_mirrors_gui import chooseMirrors
 
 
 # Main loop
@@ -254,6 +256,7 @@ for country in listeDir :
 # ===========================
 serverList = sorted(serverList, key=itemgetter(1))
 if interactive :
+    from pacman_mirrors_gui import chooseMirrors
     finished = False
     for item in serverList :
         item[3] = item[3].replace("/" + branch + "/", "/$branch/")
@@ -328,9 +331,7 @@ if interactive :
         fo.write("\nServer = ")
         fo.write(server[3])
         fo.write("\n")
-    print("\n:: Generated and saved '{}' Custom list.".format(outputMirrorList))
-
-    
+    print("\n:: Generated and saved '{}' Custom list.".format(outputMirrorList))  
 
 
 else :
