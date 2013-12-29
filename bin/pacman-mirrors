@@ -149,8 +149,11 @@ if args.output :
         outputMirrorList = args.output
     else :
         outputMirrorList = os.getcwd() + "/" + args.output
-if args.interactive :
-    interactive = args.interactive
+if os.path.exists('/usr/lib/python3.3/site-packages/gi/overrides/Gtk.py'):
+    if args.interactive :
+        interactive = args.interactive
+else
+    interactive = False
 if args.timeout :
     maxWaitTime = args.timeout
 if args.version :
