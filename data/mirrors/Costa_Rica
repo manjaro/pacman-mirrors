@@ -1,0 +1,6 @@
+##
+## Pacman Mirrorlist
+##
+
+[Costa_Rica]
+Server = http://mirrors.ucr.ac.cr/manjaro/$branch/$repo/$arch
