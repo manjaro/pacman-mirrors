@@ -4,3 +4,4 @@
 
 [Indonesia]
 Server = http://kambing.ui.ac.id/manjaro/$branch/$repo/$arch
+Server = http://kartolo.sby.datautama.net.id/manjaro/$branch/$repo/$arch
