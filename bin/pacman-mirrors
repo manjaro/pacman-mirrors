@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 '''Build a list of mirrors for pacman'''
 
-# Release : 1.5
-# Date    : 29 Decembre 2013
+# Release : 1.5.1
+# Date    : 28 March 2014
 # Authors : Esclapion, philm
 
 import argparse, datetime, getopt, os, signal, sys, time, urllib.request
@@ -97,7 +97,7 @@ parser.add_argument("-o", "--output", help="specify output file",
                     type=str)
 parser.add_argument("-t", "--timeout", help="server maximum waiting time (seconds)",
                     type=int)
-if os.path.exists('/usr/lib/python3.3/site-packages/gi/overrides/Gtk.py') :
+if os.path.exists('/usr/lib/python3.4/site-packages/gi/overrides/Gtk.py') :
     parser.add_argument("-i", "--interactive", help="interactively generate a custom mirrorlist",
                         action="store_true")
 parser.add_argument("-v", "--version", help="print the pacman-mirrors version",
@@ -149,7 +149,7 @@ if args.output :
         outputMirrorList = args.output
     else :
         outputMirrorList = os.getcwd() + "/" + args.output
-if os.path.exists('/usr/lib/python3.3/site-packages/gi/overrides/Gtk.py') :
+if os.path.exists('/usr/lib/python3.4/site-packages/gi/overrides/Gtk.py') :
     if args.interactive :
         interactive = args.interactive
 else :
