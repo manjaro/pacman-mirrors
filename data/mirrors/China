@@ -4,3 +4,4 @@
 
 [China]
 Server = http://mirrors.ustc.edu.cn/manjaro/$branch/$repo/$arch
+Server = http://mirror.bjtu.edu.cn/manjaro/$branch/$repo/$arch
