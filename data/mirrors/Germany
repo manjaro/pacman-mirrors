@@ -8,3 +8,4 @@ Server = http://ftp.tu-chemnitz.de/pub/linux/manjaro/$branch/$repo/$arch
 Server = http://ftp.rz.tu-bs.de/pub/mirror/manjaro.org/repos/$branch/$repo/$arch
 Server = http://mirror3.layerjet.com/manjaro/$branch/$repo/$arch
 Server = http://mirror.netzspielplatz.de/manjaro/packages/$branch/$repo/$arch
+Server = http://mirror.intercolo.net/manjaro/$branch/$repo/$arch
