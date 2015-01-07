@@ -4,5 +4,4 @@
 
 [Taiwan]
 Server = http://free.nchc.org.tw/manjaro/$branch/$repo/$arch
-Server = http://free2.nchc.org.tw/manjaro/$branch/$repo/$arch
 Server = http://ftp.yzu.edu.tw/Linux/manjaro/$branch/$repo/$arch

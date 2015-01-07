@@ -1,6 +1,0 @@
-##
-## Pacman Mirrorlist
-##
-
-[India]
-Server = http://manjaro.mirror.net.in/manjaro/$branch/$repo/$arch
