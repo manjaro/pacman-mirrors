@@ -7,3 +7,4 @@ Server = http://repo.manjaro.org.uk/$branch/$repo/$arch
 Server = http://www.mirrorservice.org/sites/repo.manjaro.org/repos/$branch/$repo/$arch
 Server = http://mirror.catn.com/pub/manjaro/$branch/$repo/$arch
 Server = http://manjaro.mirrors.uk2.net/$branch/$repo/$arch
+Server = http://sorch.uk/manjaro/$branch/$repo/$arch
