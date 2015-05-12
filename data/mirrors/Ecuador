@@ -1,0 +1,8 @@
+##
+## Pacman Mirrorlist
+##
+
+[Ecuador]
+Server = http://mirror.cedia.org.ec/manjaro/$branch/$repo/$arch
+Server = http://mirror.uta.edu.ec/manjaro/$branch/$repo/$arch
+Server = http://mirror.espoch.edu.ec/manjaro/$branch/$repo/$arch
