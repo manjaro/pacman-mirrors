@@ -6,3 +6,4 @@
 Server = http://mirrors.ustc.edu.cn/manjaro/$branch/$repo/$arch
 Server = http://mirror.bjtu.edu.cn/manjaro/$branch/$repo/$arch
 Server = http://ftp.cuhk.edu.hk/pub/Linux/manjaro/$branch/$repo/$arch
+Server = http://mirrors.tuna.tsinghua.edu.cn/manjaro/$branch/$repo/$arch
