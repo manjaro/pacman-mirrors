@@ -4,4 +4,3 @@
 
 [France]
 Server = http://manjarolinux.polymorf.fr/$branch/$repo/$arch
-Server = http://mirror.finn.lu/manjaro/$branch/$repo/$arch

@@ -1,0 +1,6 @@
+##
+## Pacman Mirrorlist
+##
+
+[Germany]
+Server = http://mirror.intercolo.net/manjaro/$branch/$repo/$arch
