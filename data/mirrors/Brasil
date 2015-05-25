@@ -4,3 +4,4 @@
 
 [Brasil]
 Server = http://www.las.ic.unicamp.br/pub/manjarolinux/$branch/$repo/$arch
+Server = http://linorg.usp.br/manjaro/$branch/$repo/$arch
