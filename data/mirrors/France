@@ -4,3 +4,4 @@
 
 [France]
 Server = http://manjarolinux.polymorf.fr/$branch/$repo/$arch
+Server = http://mirror.lignux.com/manjaro/packages/$branch/$repo/$arch
