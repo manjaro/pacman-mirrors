@@ -4,3 +4,4 @@
 
 [Netherlands]
 Server = http://ftp.nluug.nl/pub/os/Linux/distr/manjaro/$branch/$repo/$arch
+Server = http://ftp.snt.utwente.nl/pub/linux/manjaro/$branch/$repo/$arch
