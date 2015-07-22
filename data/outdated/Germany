@@ -1,6 +1,0 @@
-##
-## Pacman Mirrorlist
-##
-
-[Germany]
-Server = http://mirror3.layerjet.com/manjaro/$branch/$repo/$arch
