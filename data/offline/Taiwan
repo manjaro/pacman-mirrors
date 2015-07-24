@@ -1,0 +1,6 @@
+##
+## Pacman Mirrorlist
+##
+
+[Taiwan]
+Server = http://ftp.yzu.edu.tw/Linux/manjaro/$branch/$repo/$arch

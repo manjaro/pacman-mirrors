@@ -1,0 +1,6 @@
+##
+## Pacman Mirrorlist
+##
+
+[Australia]
+Server = http://manjaro.mirror.serversaustralia.com.au/$branch/$repo/$arch
