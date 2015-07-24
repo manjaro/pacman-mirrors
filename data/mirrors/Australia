@@ -4,5 +4,4 @@
 
 [Australia]
 Server = http://mirror.ventraip.net.au/Manjaro/$branch/$repo/$arch
-Server = http://manjaro.mirror.serversaustralia.com.au/$branch/$repo/$arch
 Server = http://manjaro.uberglobalmirror.com/$branch/$repo/$arch
