@@ -3,4 +3,4 @@
 ##
 
 [Portugal]
-Server = http://ftp.dei.uc.pt/pub/linux/manjaro/repos/$branch/$repo/$arch
+Server = http://ftp.dei.uc.pt/pub/linux/manjaro/$branch/$repo/$arch
