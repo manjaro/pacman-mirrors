@@ -51,7 +51,7 @@ class PacmanMirrors:
     outputMirrorList = "/etc/pacman.d/mirrorlist"  # Specify output file
     maxWaitTime = 2      # Server maximum waiting time (seconds)
 
-    listeDir = []
+    country_list = []
 
     arch = os.uname().machine  # i686 or X86_64
 
@@ -126,8 +126,14 @@ class PacmanMirrors:
             self.method = args.method
         if args.branch:
             self.branch = args.branch
+        if args.mirror_dir:
+            self.mirrorlistsDir = args.mirror_dir
+        self.initialize_country_list()
         if args.country:
-            self.onlyCountry = args.country.split(",")
+            try:
+                self.onlyCountry = self.valid_country(args.country)
+            except argparse.ArgumentTypeError as ex:
+                parser.error(ex)
             if self.onlyCountry == ["all"]:
                 try:
                     fconf = open(self.path_conf, "r")
@@ -157,8 +163,6 @@ class PacmanMirrors:
                     pass
                 self.onlyCountry = []
 
-        if args.mirror_dir:
-            self.mirrorlistsDir = args.mirror_dir
         if args.output:
             if args.output[0] == '/':
                 self.outputMirrorList = args.output
@@ -175,19 +179,28 @@ class PacmanMirrors:
             print("pacman-mirrors 1.5")
             exit(0)
 
-        self.listeDir = os.listdir(self.mirrorlistsDir)
-        self.listeDir.sort()
-        for i in self.onlyCountry:
-            if i not in self.listeDir:
-                print("\nError : unknown country", i)
-                print("\nAvailable countries are :", self.listeDir, "\n")
-                exit(1)
+    def initialize_country_list(self):
+        self.country_list = os.listdir(self.mirrorlistsDir)
+        self.country_list.sort()
+
+    def valid_country(self, s):
+        countries = s.split(",")
+        if countries == ["all"]:
+            return countries
+        for i in countries:
+            if i not in self.country_list:
+                msg = "argument -c/--country: "\
+                      "unknown country '{}'"\
+                      "\nAvailable countries are: {}"\
+                    .format(i, ", ".join(self.country_list))
+                raise argparse.ArgumentTypeError(msg)
+        return countries
 
     def query_servers(self):
         """ Query servers """
         if self.method == "rank":
             print(":: Querying servers, this may take some time...")
-        for country in self.listeDir:
+        for country in self.country_list:
             if len(self.onlyCountry) != 0 and country not in self.onlyCountry:
                 continue
             print(country)
@@ -362,7 +375,7 @@ class PacmanMirrors:
             else:
                 level = 0
                 if self.nbServer == 0:
-                    print("\nError : no server available !\n")
+                    print("\nError: no server available !\n")
             for server in self.serverList:
                 if server[4] < level:
                     continue
