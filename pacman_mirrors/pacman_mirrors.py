@@ -21,50 +21,48 @@
 #            Ramon Buldó <rbuldo@gmail.com
 
 import argparse
+from builtins import staticmethod
 import datetime
-import signal
 import sys
 import time
-import urllib.request
+from urllib.request import Request, urlopen
+from urllib.error import URLError
+from socket import timeout
 from operator import itemgetter
 from decimal import Decimal
 import os
+import importlib.util
 
 from pacman_mirrors_gui import chooseMirrors
 
 
 class PacmanMirrors:
-    # Global initializations
-    path_conf = "/etc/pacman-mirrors.conf"
-    datenow = datetime.datetime.utcnow()
-    serverList = []
-    nbServer = 0      # Global count of servers available
-    nbServerResp = 0  # Number of servers responding
-    nbServerGood = 0  # Number of servers sinced < 4h
 
-    generate = False     # Generate new mirrorlist
-    interactive = False  # Use the gui for custom mirrorlist
-    method = "rank"      # Use generation method
-    branch = "stable"    # Use branch name
-    onlyCountry = []     # Use only mirrors from country[,country,...]
-    mirrorlistsDir = "/etc/pacman.d/mirrors"  # Mirrors directory
-    outputMirrorList = "/etc/pacman.d/mirrorlist"  # Specify output file
-    maxWaitTime = 2      # Server maximum waiting time (seconds)
+    def __init__(self):
+        self.path_conf = "/etc/pacman-mirrors.conf"
+        self.generate = False
+        self.interactive = False
+        self.method = "rank"
+        self.branch = "stable"
+        self.only_country = []
+        self.mirror_dir = "/etc/pacman.d/mirrors"
+        self.output_mirrorlist = "/etc/pacman.d/mirrorlist"
+        self.max_wait_time = 2
+        self.available_countries = []
+        self.server_list = []
+        self.arch = os.uname().machine  # i686 or X86_64
+        self.nbServerResp = 0
+        self.nbServerGood = 0
+        try:
+            self.parse_configuration_file(self.path_conf)
+        except OSError as e:
+            print(e)
+            exit(1)
+        self.parse_cmd()
 
-    country_list = []
-
-    arch = os.uname().machine  # i686 or X86_64
-
-    def alarm_handler(self, signum, frame):
-        raise TimeoutError("Ici")
-
-    def time_out(self, timeout):
-        signal.signal(signal.SIGALRM, self.alarm_handler)
-        signal.alarm(timeout)  # produce SIGALRM in `timeout` seconds
-
-    def parse_configuration_file(self):
+    def parse_configuration_file(self, conf_file):
         """ Parse the file "pacman-mirrors.conf" """
-        with open(self.path_conf) as fi:
+        with open(conf_file) as fi:
             for line in fi:
                 line = line.strip()
                 if line == "":
@@ -76,17 +74,30 @@ class PacmanMirrors:
                 (key, value) = line.split('=', 1)
                 if value.startswith('"') and value.endswith('"'):
                     value = value[1:-1]
-                if key == "Branch":              # Branch Pacman should use
+                # Branch Pacman should use
+                if key == "Branch":
                     self.branch = value
-                elif key == "OnlyCountry":       # Specify to use only mirrors from specific countries
-                    self.onlyCountry = value.split(',')
-                elif key == "MirrorlistsDir":    # Input mirrorlist directory
-                    self.mirrorlistsDir = value
-                elif key == "OutputMirrorlist":  # Output mirrorlist
-                    self.outputMirrorList = value
+                # Only mirrors from specific countries
+                elif key == "OnlyCountry":
+                    self.only_country = value.split(',')
+                # Input mirrorlist directory
+                elif key == "MirrorlistsDir":
+                    self.mirror_dir = value
+                # Output mirrorlist file
+                elif key == "OutputMirrorlist":
+                    self.output_mirrorlist = value
 
-    def parse_command_line_arguments(self):
+    def parse_cmd(self):
         """ Read the arguments of the command line """
+
+        # The interactive argument will be only available if Gtk is installed
+        try:
+            importlib.util.find_spec('gi.repository.Gtk')
+        except ImportError:
+            gtk_available = False
+        else:
+            gtk_available = True
+
         parser = argparse.ArgumentParser()
         parser.add_argument("-g", "--generate",
                             help="generate new mirrorlist",
@@ -109,7 +120,7 @@ class PacmanMirrors:
         parser.add_argument("-t", "--timeout",
                             help="server maximum waiting time (seconds)",
                             type=int)
-        if os.path.exists('/usr/lib/python3.4/site-packages/gi/overrides/Gtk.py'):
+        if gtk_available:
             parser.add_argument("-i", "--interactive",
                                 help="interactively generate a custom mirrorlist",
                                 action="store_true")
@@ -117,82 +128,98 @@ class PacmanMirrors:
                             help="print the pacman-mirrors version",
                             action="store_true")
         args = parser.parse_args()
+
         if len(sys.argv) == 1:
             parser.print_help()
             exit(0)
-        if args.generate:
-            self.generate = args.generate
-        if args.method:
-            self.method = args.method
-        if args.branch:
-            self.branch = args.branch
-        if args.mirror_dir:
-            self.mirrorlistsDir = args.mirror_dir
-        self.initialize_country_list()
-        if args.country:
-            try:
-                self.onlyCountry = self.valid_country(args.country)
-            except argparse.ArgumentTypeError as ex:
-                parser.error(ex)
-            if self.onlyCountry == ["all"]:
-                try:
-                    fconf = open(self.path_conf, "r")
-                except:
-                    print("\n^GError : can't open file {0}.\n"
-                          .format(self.path_conf))
-                    exit(1)
-                buf = fconf.read().split('\n')
-                fconf.close()
-                while buf[-1:] == ['']:
-                    del buf[-1:]
-                try:
-                    fconf = open(self.path_conf, "w")
-                except:
-                    print("\n^GError : can't open file {0}.\n"
-                          .format(self.path_conf))
-                    exit(1)
-                for line in buf:
-                    if "OnlyCountry" in line:
-                        fconf.write("#OnlyCountry=Custom\n")
-                    else:
-                        fconf.write(line + "\n")
-                fconf.close
-                try:
-                    os.remove(self.mirrorlistsDir + "/Custom", )
-                except OSError:
-                    pass
-                self.onlyCountry = []
 
-        if args.output:
-            if args.output[0] == '/':
-                self.outputMirrorList = args.output
-            else:
-                self.outputMirrorList = os.getcwd() + "/" + args.output
-        if os.path.exists('/usr/lib/python3.4/site-packages/gi/overrides/Gtk.py'):
-            if args.interactive:
-                self.interactive = args.interactive
-        else:
-            self.interactive = False
-        if args.timeout:
-            self.maxWaitTime = args.timeout
         if args.version:
             print("pacman-mirrors 1.5")
             exit(0)
 
-    def initialize_country_list(self):
-        self.country_list = os.listdir(self.mirrorlistsDir)
-        self.country_list.sort()
+        if args.generate:
+            self.generate = args.generate
 
-    def valid_country(self, s):
-        countries = s.split(",")
+        if args.method:
+            self.method = args.method
+
+        if args.branch:
+            self.branch = args.branch
+
+        if args.mirror_dir:
+            self.mirror_dir = args.mirror_dir
+        self.available_countries = self.get_available_countries(self.mirror_dir)
+
+        if args.country:
+            try:
+                self.only_country = self.valid_country(args.country,
+                                                       self.available_countries)
+            except argparse.ArgumentTypeError as e:
+                parser.error(e)
+            if self.only_country == ["all"]:
+                # When using all, comment "OnlyCountry=Custom" in
+                # the configuration file
+                try:
+                    with open(self.path_conf, "r") as fi:
+                        buf = fi.read().split('\n')
+                except OSError as e:
+                    print("Error: Cannot read to file '{filename}': {error}"
+                          .format(filename=e.filename,
+                                  error=e.strerror))
+                    exit(1)
+                try:
+                    with open(self.path_conf, "w") as fo:
+                        for line in buf:
+                            if "OnlyCountry=Custom" in line:
+                                fo.write("#OnlyCountry=Custom\n")
+                            else:
+                                fo.write(line + "\n")
+                except OSError as e:
+                    print("Error: Cannot write to file '{filename}': {error}"
+                          .format(filename=e.filename,
+                                  error=e.strerror))
+                    exit(1)
+                try:
+                    os.remove(self.mirror_dir + "/Custom", )
+                except FileNotFoundError:
+                    pass
+                except OSError as e:
+                    print("Warning: Cannot remove '{filename}': {error}"
+                          .format(filename=e.filename,
+                                  error=e.strerror))
+                else:
+                    self.available_countries.remove('Custom')
+                self.only_country = []
+
+        if args.output:
+            if args.output[0] == '/':
+                self.output_mirrorlist = args.output
+            else:
+                self.output_mirrorlist = os.getcwd() + "/" + args.output
+
+        if gtk_available and args.interactive:
+            self.interactive = args.interactive
+
+        if args.timeout:
+            self.max_wait_time = args.timeout
+
+    @staticmethod
+    def get_available_countries(mirrors_dir):
+        available_countries = os.listdir(mirrors_dir)
+        available_countries.sort()
+        return available_countries
+
+    @staticmethod
+    def valid_country(string, available_countries):
+        countries = string.split(",")
         if countries == ["all"]:
             return countries
         for i in countries:
-            if i not in self.country_list:
+            if i not in available_countries:
                 msg = "argument -c/--country: "\
                       "unknown country '{}'"\
                       "\nAvailable countries are: {}"\
-                    .format(i, ", ".join(self.country_list))
+                    .format(i, ", ".join(available_countries))
                 raise argparse.ArgumentTypeError(msg)
         return countries
 
@@ -200,211 +227,218 @@ class PacmanMirrors:
         """ Query servers """
         if self.method == "rank":
             print(":: Querying servers, this may take some time...")
-        for country in self.country_list:
-            if len(self.onlyCountry) != 0 and country not in self.onlyCountry:
-                continue
+        if self.only_country:
+            countries = self.only_country
+        else:
+            countries = self.available_countries
+        date_now = datetime.datetime.utcnow()
+        for country in countries:
             print(country)
             current_country = country
-            fi = open(os.path.join(self.mirrorlistsDir, country), "r")
-            while 1:
-                s = fi.readline()
-                if s == '':
-                    break
-                if s[0] == '[':
-                    current_country = s[1:-2]
-                    continue
-                if s[0] != 'S':
-                    continue
-                server_url = s[9:-1]
-                server_url = server_url.replace("$branch", self.branch)
-                # Add the server to the list, also if bad
-                self.serverList.append([current_country, "99.99", "99:99",
-                                        server_url, 0, False])
-                # Country, response time, last sync, url, quality level
-                self.nbServer += 1
-                if self.method == "random":
-                    print("->", server_url)
-                    continue
-                print("-> .....", server_url, end='')
-                sys.stdout.flush()
-                j = server_url.find(self.branch)
-                url = server_url[0:j] + "state"
-                start = time.time()
-                try:
-                    furl = urllib.request.urlopen(url, timeout=self.maxWaitTime)
-                except:
-                    print("\r-> Error!")
-                    continue
-                self.time_out(self.maxWaitTime)
-                try:
-                    resp = furl.read()
-                    d = resp.find(b"date=")
-                    signal.alarm(0)  # cancel alarm
-                except:
-                    print("\r-> Error2!")
-                    furl.close()
-                    continue
-                elapsed = round((time.time() - start), 3)
-                self.nbServerResp += 1  # The server responds ..
-                date = resp[d+5:d+24].decode('utf-8')
-                seconds_elapsed = "{:6.4}".format(Decimal(elapsed)
-                                                  .quantize(Decimal('.001')))
-                print("\r->", seconds_elapsed, sep="")
-                sys.stdout.flush()
-                self.serverList[self.nbServer - 1][1] = seconds_elapsed
-                self.serverList[self.nbServer - 1][4] = 1
-                try:
-                    date2 = datetime.datetime.strptime(date,
-                                                       "%Y-%m-%dT%H:%M:%S")
-                except:
-                    print('Wrong date format in "state" file. Server skipped.')
-                    continue
-                sec = (self.datenow - date2).seconds
-                min = int(sec / 60)
-                hr = int(min / 60)
-                min -= hr * 60
-                if hr < 4:
-                    self.nbServerGood += 1  # ...and was recently synced (< 4h)
-                    self.serverList[self.nbServer - 1][4] = 2
-                datesync = '{}:{}'.format(hr, str(min).zfill(2))
-                self.serverList[self.nbServer - 1][2] = datesync  # - last sync
-                furl.close()
-            fi.close()
+            with open(os.path.join(self.mirror_dir, country), "r") as fi:
+                for line in fi:
+                    line = line.strip()
+                    if line.startswith('[') and line.endswith(']'):
+                        current_country = line[1:-1]
+                        continue
+                    if not line.startswith('Server'):
+                        continue
+                    server_url = line[9:]
+                    server_url = server_url.replace("$branch", self.branch)
+                    # Add the server to the list, also if bad
+                    # Country, response time, last sync, url, quality level
+                    self.server_list.append([current_country, "99.99", "99:99",
+                                            server_url, 0, False])
+                    if self.method == "random":
+                        print("->", server_url)
+                        continue
+                    print("-> .....", server_url, end='')
+                    sys.stdout.flush()
+                    j = server_url.find(self.branch)
+                    url = server_url[0:j] + "state"
 
-    def write_mirrorlist_file(self):
-        """ Build the "mirrorlist" file """
-        self.serverList = sorted(self.serverList, key=itemgetter(1))
-        if self.interactive:
-            finished = False
-            for item in self.serverList:
-                item[3] = item[3].replace("/" + self.branch + "/", "/$branch/")
-            while not finished:
-                chooseMirrors(True, self.serverList)
-                customList = []
-                for elem in self.serverList:
-                    if elem[5]:
-                        customList.append(elem)
-                if len(customList) == 0:
-                    continue
-                finished = chooseMirrors(False, customList)
+                    start = time.time()
+                    req = Request(url)
+                    try:
+                        with urlopen(req, timeout=self.max_wait_time) as r:
+                            resp = r.read()
+                            d = resp.find(b"date=")
+                    except URLError as e:
+                        if hasattr(e, 'reason'):
+                            print('\nError: We failed to reach the server:', e.reason)
+                        elif hasattr(e, 'code'):
+                            print('\nError: The server couldn\'t fulfill the request.', e.code)
+                        continue
+                    except timeout:
+                        print("timeout error")
 
-            custom_path = self.mirrorlistsDir + "/Custom"
-            try:
-                fcust = open(custom_path, "w")
-            except:
-                print("\n^GError : can't create file {0}.\n"
-                      .format(custom_path))
-                exit(1)
-            fcust.write("##\n")
-            fcust.write("## Pacman Mirrorlist\n")
-            fcust.write("##\n\n")
-            for elem in customList:
-                fcust.write("[" + elem[0] + "]\n")
-                fcust.write("Server = " + elem[3] + "\n")
-            fcust.close()
+                    elapsed = round((time.time() - start), 3)
+                    self.nbServerResp += 1  # The server responds ..
+                    date = resp[d+5:d+24].decode('utf-8')
+                    seconds_elapsed = "{:6.4}".format(Decimal(elapsed)
+                                                      .quantize(Decimal('.001')))
+                    print("\r->", seconds_elapsed, sep="")
+                    sys.stdout.flush()
+                    self.server_list[-1][1] = seconds_elapsed
+                    self.server_list[-1][4] = 1
+                    try:
+                        date_server = datetime.datetime.strptime(date,
+                                                           "%Y-%m-%dT%H:%M:%S")
+                    except ValueError:
+                        print('Error: Wrong date format in "state" file. Server skipped.')
+                        continue
+                    total_seconds = (date_now - date_server).total_seconds()
+                    total_minutes = total_seconds // 60
+                    hours = total_minutes // 60
+                    minutes = total_minutes % 60
+                    if hours < 4:  # good server if was recently synced (< 4h)
+                        self.nbServerGood += 1
+                        self.server_list[-1][4] = 2
+                    datesync = '{}:{}'.format(int(hours),
+                                              str(int(minutes)).zfill(2))
+                    self.server_list[-1][2] = datesync  # last sync
+        # Sort by response time
+        self.server_list = sorted(self.server_list, key=itemgetter(1))
 
-            try:
-                fconf = open(self.path_conf, "r")
-            except:
-                print("\n^GError : can't open file {0}.\n"
-                      .format(self.path_conf))
-                exit(1)
-            buf = fconf.read().split('\n')
-            fconf.close()
-            while buf[-1:] == ['']:
-                del buf[-1:]
-            try:
-                fconf = open(self.path_conf, "w")
-            except:
-                print("\n^GError : can't open file {0}.\n"
-                      .format(self.path_conf))
-                exit(1)
-            for line in buf:
-                if "OnlyCountry" in line:
-                    fconf.write("OnlyCountry=Custom\n")
+    def write_mirrorlist(self):
+        """ Write the "mirrorlist" file """
+        try:
+            with open(self.output_mirrorlist, "w") as fo:
+                fo.write("##\n")
+                fo.write("## Manjaro Linux repository mirrorlist\n")
+                fo.write("## Generated on ")
+                fo.write(datetime.datetime.now().strftime("%d %B %Y %H:%M"))
+                fo.write("\n##\n")
+                fo.write("## Use pacman-mirrors to modify\n")
+                fo.write("##\n\n")
+                if self.nbServerGood >= 3:  # Avoid an empty mirrorlist
+                    level = 2
+                elif self.nbServerResp >= 3:
+                    level = 1
                 else:
-                    fconf.write(line + "\n")
-            fconf.close
-            try:
-                fo = open(self.outputMirrorList, "w")
-            except:
-                print("\nError : cannot create", self.outputMirrorList)
-                exit(1)
-            fo.write("##\n")
-            fo.write("## Manjaro Linux repository mirrorlist\n")
-            fo.write("## Generated on ")
-            fo.write(datetime.datetime.now().strftime("%d %B %Y %H:%M"))
-            fo.write("\n##\n")
-            fo.write("## Use pacman-mirrors to modify\n")
-            fo.write("##\n\n")
-            print("\nCustom List")
-            print("-----------\n")
-            for server in customList:
-                server[3] = server[3].replace("$branch", self.branch)
-                print("-> {0} :".format(server[0]), server[3])
-                fo.write("\n## Location  : ")
-                fo.write(server[0])
-                if self.method == "rank":
-                    fo.write("\n## Time      :")
-                    fo.write(server[1])
-                    fo.write("\n## Last Sync : ")
-                    fo.write(server[2])
-                fo.write("\nServer = ")
-                fo.write(server[3])
-                fo.write("\n")
-            print("\n:: Generated and saved '{}' Custom list."
-                  .format(self.outputMirrorList))
+                    level = 0
+                    if not self.server_list:
+                        print("\nError: no server available !\n")
+                for server in self.server_list:
+                    if server[4] < level:
+                        continue
+                    fo.write("\n## Location  : ")
+                    fo.write(server[0])
+                    if self.method == "rank":
+                        fo.write("\n## Time      :")
+                        fo.write(server[1])
+                        fo.write("\n## Last Sync : ")
+                        fo.write(server[2])
+                    fo.write("\nServer = ")
+                    fo.write(server[3])
+                    fo.write("\n")
+                print(":: Generated and saved '{}' mirrorlist."
+                      .format(self.output_mirrorlist))
+        except OSError as e:
+            print("Error: Cannot write to file '{filename}': {error}"
+                  .format(filename=e.filename,
+                          error=e.strerror))
+            exit(1)
 
-        else:
-            try:
-                fo = open(self.outputMirrorList, "w")
-            except:
-                print("\nError : cannot create", self.outputMirrorList)
-                exit(1)
-            fo.write("##\n")
-            fo.write("## Manjaro Linux repository mirrorlist\n")
-            fo.write("## Generated on ")
-            fo.write(datetime.datetime.now().strftime("%d %B %Y %H:%M"))
-            fo.write("\n##\n")
-            fo.write("## Use pacman-mirrors to modify\n")
-            fo.write("##\n\n")
-            if self.nbServerGood >= 3:  # Avoid an empty mirrorlist
-                level = 2
-            elif self.nbServerResp >= 3:
-                level = 1
-            else:
-                level = 0
-                if self.nbServer == 0:
-                    print("\nError: no server available !\n")
-            for server in self.serverList:
-                if server[4] < level:
-                    continue
-                fo.write("\n## Location  : ")
-                fo.write(server[0])
-                if self.method == "rank":
-                    fo.write("\n## Time      :")
-                    fo.write(server[1])
-                    fo.write("\n## Last Sync : ")
-                    fo.write(server[2])
-                fo.write("\nServer = ")
-                fo.write(server[3])
-                fo.write("\n")
-            print(":: Generated and saved '{}' mirrorlist."
-                  .format(self.outputMirrorList))
+    def write_interactive_mirrorlist(self):
+        """ Write the interactive "mirrorlist" file """
+        # Open custom mirrorlist selector
+        finished = False
+        for item in self.server_list:
+            item[3] = item[3].replace("/" + self.branch + "/", "/$branch/")
+        while not finished:
+            chooseMirrors(True, self.server_list)
+            custom_list = []
+            for elem in self.server_list:
+                if elem[5]:
+                    custom_list.append(elem)
+            if len(custom_list) == 0:
+                continue
+            finished = chooseMirrors(False, custom_list)
+
+        # Write Custom country
+        custom_path = self.mirror_dir + "/Custom"
+        try:
+            with open(custom_path, "w") as fo:
+                fo.write("##\n")
+                fo.write("## Pacman Mirrorlist\n")
+                fo.write("##\n\n")
+                for server in custom_list:
+                    fo.write("[" + server[0] + "]\n")
+                    fo.write("Server = " + server[3] + "\n")
+                fo.close()
+        except OSError as e:
+            print("Error: Cannot write to file '{filename}': {error}"
+                  .format(filename=e.filename,
+                          error=e.strerror))
+            exit(1)
+
+        # Modify configuration to use Custom Country
+        try:
+            with open(self.path_conf, "r") as fi:
+                buf = fi.read().split('\n')
+        except OSError as e:
+            print("Error: Cannot read to file '{filename}': {error}"
+                  .format(filename=e.filename,
+                          error=e.strerror))
+            exit(1)
+        try:
+            with open(self.path_conf, "w") as fo:
+                for line in buf:
+                    if "OnlyCountry" in line:
+                        fo.write("OnlyCountry=Custom\n")
+                    else:
+                        fo.write(line + "\n")
+        except OSError as e:
+            print("Error: Cannot write to file '{filename}': {error}"
+                  .format(filename=e.filename,
+                          error=e.strerror))
+            exit(1)
+
+        # Write custom mirrorlist
+        try:
+            with open(self.output_mirrorlist, "w") as fo:
+                fo.write("##\n")
+                fo.write("## Manjaro Linux repository mirrorlist\n")
+                fo.write("## Generated on ")
+                fo.write(datetime.datetime.now().strftime("%d %B %Y %H:%M"))
+                fo.write("\n##\n")
+                fo.write("## Use pacman-mirrors to modify\n")
+                fo.write("##\n\n")
+                print("\nCustom List")
+                print("-----------\n")
+                for server in custom_list:
+                    server[3] = server[3].replace("$branch", self.branch)
+                    print("-> {0} :".format(server[0]), server[3])
+                    fo.write("\n## Location  : ")
+                    fo.write(server[0])
+                    if self.method == "rank":
+                        fo.write("\n## Time      :")
+                        fo.write(server[1])
+                        fo.write("\n## Last Sync : ")
+                        fo.write(server[2])
+                    fo.write("\nServer = ")
+                    fo.write(server[3])
+                    fo.write("\n")
+                print("\n:: Generated and saved '{}' custom mirrorlist."
+                      .format(self.output_mirrorlist))
+        except OSError as e:
+            print("Error: Cannot write to file '{filename}': {error}"
+                  .format(filename=e.filename,
+                          error=e.strerror))
+            exit(1)
 
     def run(self):
-        try:
-            self.parse_configuration_file()
-        except (FileNotFoundError, PermissionError) as e:
-            print(e)
-            exit(1)
-        self.parse_command_line_arguments()
         self.query_servers()
-        self.write_mirrorlist_file()
+        if self.interactive:
+            self.write_interactive_mirrorlist()
+        else:
+            self.write_mirrorlist()
 
 if __name__ == '__main__':
     if os.getuid() != 0:
-        print("\nError : must be root.\n")
+        print("Error: must be root.")
         exit(1)
+
     pm = PacmanMirrors()
     pm.run()
