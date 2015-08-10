@@ -74,7 +74,7 @@ class PacmanMirrors:
                     continue
                 if '=' not in line:
                     continue
-                (key, value) = line.split('=', 1)
+                (key, value) = [x.strip() for x in line.split('=', 1)]
                 if not key or not value:
                     continue
                 if value.startswith('"') and value.endswith('"'):
