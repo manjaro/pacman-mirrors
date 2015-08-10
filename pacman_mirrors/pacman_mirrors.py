@@ -298,7 +298,7 @@ class PacmanMirrors:
                     total_minutes = total_seconds // 60
                     hours = total_minutes // 60
                     minutes = total_minutes % 60
-                    if hours < 4:  # good server if was recently synced (< 4h)
+                    if hours < 24:  # good server if was recently synced (< 24h)
                         self.nbServerGood += 1
                         self.server_list[-1][4] = 2
                     datesync = '{}:{}'.format(int(hours),
