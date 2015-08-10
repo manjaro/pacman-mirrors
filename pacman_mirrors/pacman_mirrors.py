@@ -55,9 +55,12 @@ class PacmanMirrors:
         self.nbServerGood = 0
         try:
             self.parse_configuration_file(self.path_conf)
-        except OSError as e:
-            print(e)
-            exit(1)
+        except PermissionError as e:
+            print("Warning: Cannot read file '{filename}': {error}"
+                  .format(filename=e.filename,
+                          error=e.strerror))
+        except OSError:
+            pass
         self.parse_cmd()
 
     def parse_configuration_file(self, conf_file):
@@ -165,7 +168,7 @@ class PacmanMirrors:
                     with open(self.path_conf, "r") as fi:
                         buf = fi.read().split('\n')
                 except OSError as e:
-                    print("Error: Cannot read to file '{filename}': {error}"
+                    print("Error: Cannot read file '{filename}': {error}"
                           .format(filename=e.filename,
                                   error=e.strerror))
                     exit(1)
@@ -177,7 +180,7 @@ class PacmanMirrors:
                             else:
                                 fo.write(line + "\n")
                 except OSError as e:
-                    print("Error: Cannot write to file '{filename}': {error}"
+                    print("Error: Cannot write file '{filename}': {error}"
                           .format(filename=e.filename,
                                   error=e.strerror))
                     exit(1)
@@ -337,7 +340,7 @@ class PacmanMirrors:
                 print(":: Generated and saved '{}' mirrorlist."
                       .format(self.output_mirrorlist))
         except OSError as e:
-            print("Error: Cannot write to file '{filename}': {error}"
+            print("Error: Cannot write file '{filename}': {error}"
                   .format(filename=e.filename,
                           error=e.strerror))
             exit(1)
@@ -370,7 +373,7 @@ class PacmanMirrors:
                     fo.write("Server = " + server[3] + "\n")
                 fo.close()
         except OSError as e:
-            print("Error: Cannot write to file '{filename}': {error}"
+            print("Error: Cannot write file '{filename}': {error}"
                   .format(filename=e.filename,
                           error=e.strerror))
             exit(1)
@@ -380,7 +383,7 @@ class PacmanMirrors:
             with open(self.path_conf, "r") as fi:
                 buf = fi.read().split('\n')
         except OSError as e:
-            print("Error: Cannot read to file '{filename}': {error}"
+            print("Error: Cannot read file '{filename}': {error}"
                   .format(filename=e.filename,
                           error=e.strerror))
             exit(1)
@@ -392,7 +395,7 @@ class PacmanMirrors:
                     else:
                         fo.write(line + "\n")
         except OSError as e:
-            print("Error: Cannot write to file '{filename}': {error}"
+            print("Error: Cannot write file '{filename}': {error}"
                   .format(filename=e.filename,
                           error=e.strerror))
             exit(1)
@@ -425,7 +428,7 @@ class PacmanMirrors:
                 print("\n:: Generated and saved '{}' custom mirrorlist."
                       .format(self.output_mirrorlist))
         except OSError as e:
-            print("Error: Cannot write to file '{filename}': {error}"
+            print("Error: Cannot write file '{filename}': {error}"
                   .format(filename=e.filename,
                           error=e.strerror))
             exit(1)
