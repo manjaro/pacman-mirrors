@@ -175,10 +175,12 @@ class PacmanMirrors:
                 try:
                     with open(self.path_conf, "w") as fo:
                         for line in buf:
-                            if "OnlyCountry=Custom" in line:
-                                fo.write("#OnlyCountry=Custom\n")
-                            else:
+                            if '=' not in line:
                                 fo.write(line + "\n")
+                            else:
+                                (key, value) = [x.strip() for x in line.split('=', 1)]
+                                if key == "OnlyCountry" and value == "Custom":
+                                    fo.write("# OnlyCountry = \n")
                 except OSError as e:
                     print("Error: Cannot write file '{filename}': {error}"
                           .format(filename=e.filename,
@@ -389,11 +391,16 @@ class PacmanMirrors:
             exit(1)
         try:
             with open(self.path_conf, "w") as fo:
+                replaced = False
                 for line in buf:
                     if "OnlyCountry" in line:
-                        fo.write("OnlyCountry=Custom\n")
+                        fo.write("OnlyCountry = Custom\n")
+                        replaced = True
                     else:
                         fo.write(line + "\n")
+                if not replaced:
+                    fo.write("OnlyCountry = Custom\n")
+
         except OSError as e:
             print("Error: Cannot write file '{filename}': {error}"
                   .format(filename=e.filename,
