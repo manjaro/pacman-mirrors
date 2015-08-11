@@ -49,10 +49,15 @@ class PacmanMirrors:
         self.output_mirrorlist = "/etc/pacman.d/mirrorlist"
         self.max_wait_time = 2
         self.available_countries = []
-        self.server_list = []
         self.arch = os.uname().machine  # i686 or X86_64
-        self.nbServerResp = 0
-        self.nbServerGood = 0
+
+        # good_server: respond back and updated in the last 24h
+        # resp_server: respond back but not updated in the last 24h or
+        #              can't get last update time
+        # bad_server: can't connect or it takes more than max_wait_time
+        self.good_servers = []
+        self.resp_servers = []
+        self.bad_servers = []
         try:
             self.parse_configuration_file(self.path_conf)
         except PermissionError as e:
@@ -252,13 +257,16 @@ class PacmanMirrors:
                         continue
                     server_url = line[9:]
                     server_url = server_url.replace("$branch", self.branch)
-                    # Add the server to the list, also if bad
-                    # Country, response time, last sync, url, quality level
-                    self.server_list.append([current_country, "99.99", "99:99",
-                                            server_url, 0, False])
+
                     if self.method == "random":
+                        self.bad_servers.append({'country': current_country,
+                                                 'response_time': "99.99",
+                                                 'last_sync': "99:99",
+                                                 'url': server_url,
+                                                 'selected': False})
                         print("->", server_url)
                         continue
+
                     print("-> .....", server_url, end='')
                     sys.stdout.flush()
                     j = server_url.find(self.branch)
@@ -272,40 +280,67 @@ class PacmanMirrors:
                             d = resp.find(b"date=")
                     except URLError as e:
                         if hasattr(e, 'reason'):
-                            print('\nError: We failed to reach the server:', e.reason)
+                            print('\nError: We failed to reach '
+                                  'the server:', e.reason)
                         elif hasattr(e, 'code'):
-                            print('\nError: The server couldn\'t fulfill the request.', e.code)
+                            print('\nError: The server couldn\'t '
+                                  'fulfill the request.', e.code)
+                        self.bad_servers.append({'country': current_country,
+                                                 'response_time': "99.99",
+                                                 'last_sync': "99:99",
+                                                 'url': server_url,
+                                                 'selected': False})
                         continue
                     except timeout:
-                        print("timeout error")
+                        print("Error: Timeout")
+                        self.bad_servers.append({'country': current_country,
+                                                 'response_time': "99.99",
+                                                 'last_sync': "99:99",
+                                                 'url': server_url,
+                                                 'selected': False})
+                        continue
 
-                    elapsed = round((time.time() - start), 3)
-                    self.nbServerResp += 1  # The server responds ..
+                    response_time = round((time.time() - start), 3)
                     date = resp[d+5:d+24].decode('utf-8')
-                    seconds_elapsed = "{:6.4}".format(Decimal(elapsed)
-                                                      .quantize(Decimal('.001')))
-                    print("\r->", seconds_elapsed, sep="")
+                    response_seconds = "{:6.4}".format(
+                        Decimal(response_time).quantize(Decimal('.001')))
+                    print("\r->", response_seconds, sep="")
                     sys.stdout.flush()
-                    self.server_list[-1][1] = seconds_elapsed
-                    self.server_list[-1][4] = 1
                     try:
-                        date_server = datetime.datetime.strptime(date,
-                                                           "%Y-%m-%dT%H:%M:%S")
+                        date_server = datetime.datetime.strptime(
+                            date, "%Y-%m-%dT%H:%M:%S")
                     except ValueError:
-                        print('Error: Wrong date format in "state" file. Server skipped.')
+                        self.resp_servers.append({'country': current_country,
+                                                  'response_time': response_seconds,
+                                                  'last_sync': "99:99",
+                                                  'url': server_url,
+                                                  'selected': False})
+                        print('Error: Wrong date format in "state" file. '
+                              'Server skipped.')
                         continue
                     total_seconds = (date_now - date_server).total_seconds()
                     total_minutes = total_seconds // 60
                     hours = total_minutes // 60
                     minutes = total_minutes % 60
-                    if hours < 24:  # good server if was recently synced (< 24h)
-                        self.nbServerGood += 1
-                        self.server_list[-1][4] = 2
                     datesync = '{}:{}'.format(int(hours),
                                               str(int(minutes)).zfill(2))
-                    self.server_list[-1][2] = datesync  # last sync
+                    if hours < 24:
+                        self.good_servers.append({'country': current_country,
+                                                  'response_time': response_seconds,
+                                                  'last_sync': datesync,
+                                                  'url': server_url,
+                                                  'selected': False})
+                    else:
+                        self.resp_servers.append({'country': current_country,
+                                                  'response_time': response_seconds,
+                                                  'last_sync': datesync,
+                                                  'url': server_url,
+                                                  'selected': False})
         # Sort by response time
-        self.server_list = sorted(self.server_list, key=itemgetter(1))
+        self.good_servers = sorted(self.good_servers,
+                                   key=itemgetter('response_time'))
+        self.resp_servers = sorted(self.resp_servers,
+                                   key=itemgetter('response_time'))
 
     def write_mirrorlist(self):
         """ Write the "mirrorlist" file """
@@ -318,26 +353,25 @@ class PacmanMirrors:
                 fo.write("\n##\n")
                 fo.write("## Use pacman-mirrors to modify\n")
                 fo.write("##\n\n")
-                if self.nbServerGood >= 3:  # Avoid an empty mirrorlist
-                    level = 2
-                elif self.nbServerResp >= 3:
-                    level = 1
+                if len(self.good_servers) >= 3:  # Avoid an empty mirrorlist
+                    server_list = self.good_servers
+                elif len(self.resp_servers) >= 3:
+                    server_list = self.good_servers + self.resp_servers
                 else:
-                    level = 0
-                    if not self.server_list:
+                    server_list = (self.good_servers + self.resp_servers +
+                                   self.bad_servers)
+                    if not server_list:
                         print("\nError: no server available !\n")
-                for server in self.server_list:
-                    if server[4] < level:
-                        continue
+                for server in server_list:
                     fo.write("\n## Location  : ")
-                    fo.write(server[0])
+                    fo.write(server['country'])
                     if self.method == "rank":
                         fo.write("\n## Time      :")
-                        fo.write(server[1])
+                        fo.write(server['response_time'])
                         fo.write("\n## Last Sync : ")
-                        fo.write(server[2])
+                        fo.write(server['last_sync'])
                     fo.write("\nServer = ")
-                    fo.write(server[3])
+                    fo.write(server['url'])
                     fo.write("\n")
                 print(":: Generated and saved '{}' mirrorlist."
                       .format(self.output_mirrorlist))
@@ -351,14 +385,16 @@ class PacmanMirrors:
         """ Write the interactive "mirrorlist" file """
         # Open custom mirrorlist selector
         finished = False
-        for item in self.server_list:
-            item[3] = item[3].replace("/" + self.branch + "/", "/$branch/")
+        server_list = self.good_servers + self.resp_servers + self.bad_servers
+        for server in server_list:
+            server['url'] = server['url'].replace("/" + self.branch + "/",
+                                                  "/$branch/")
         while not finished:
-            chooseMirrors(True, self.server_list)
+            chooseMirrors(True, server_list)
             custom_list = []
-            for elem in self.server_list:
-                if elem[5]:
-                    custom_list.append(elem)
+            for server in server_list:
+                if server['selected']:
+                    custom_list.append(server)
             if len(custom_list) == 0:
                 continue
             finished = chooseMirrors(False, custom_list)
@@ -371,9 +407,8 @@ class PacmanMirrors:
                 fo.write("## Pacman Mirrorlist\n")
                 fo.write("##\n\n")
                 for server in custom_list:
-                    fo.write("[" + server[0] + "]\n")
-                    fo.write("Server = " + server[3] + "\n")
-                fo.close()
+                    fo.write("[" + server['country'] + "]\n")
+                    fo.write("Server = " + server['url'] + "\n")
         except OSError as e:
             print("Error: Cannot write file '{filename}': {error}"
                   .format(filename=e.filename,
@@ -420,17 +455,17 @@ class PacmanMirrors:
                 print("\nCustom List")
                 print("-----------\n")
                 for server in custom_list:
-                    server[3] = server[3].replace("$branch", self.branch)
-                    print("-> {0} :".format(server[0]), server[3])
+                    server['url'] = server['url'].replace("$branch", self.branch)
+                    print("-> {0} :".format(server['country']), server['url'])
                     fo.write("\n## Location  : ")
-                    fo.write(server[0])
+                    fo.write(server['country'])
                     if self.method == "rank":
                         fo.write("\n## Time      :")
-                        fo.write(server[1])
+                        fo.write(server['response_time'])
                         fo.write("\n## Last Sync : ")
-                        fo.write(server[2])
+                        fo.write(server['last_sync'])
                     fo.write("\nServer = ")
-                    fo.write(server[3])
+                    fo.write(server['url'])
                     fo.write("\n")
                 print("\n:: Generated and saved '{}' custom mirrorlist."
                       .format(self.output_mirrorlist))

@@ -43,12 +43,12 @@ def chooseMirrors(indEdit, travList):
         indPage = True
         for i in range(nbItems):
             if index < len(travList):
-                tabSync[i].set_label(travList[index][2] + " |")
-                tabButton[i].set_label(truncName(travList[index][3]))
+                tabSync[i].set_label(travList[index]['last_sync'] + " |")
+                tabButton[i].set_label(truncName(travList[index]['url']))
                 if indEdit:
                     tabButton[i].set_relief(Gtk.ReliefStyle.NORMAL)
-                    tabButton[i].set_active(travList[index][5])
-                tabCountries[i].set_label("| " + travList[index][0])
+                    tabButton[i].set_active(travList[index]['selected'])
+                tabCountries[i].set_label("| " + travList[index]['country'])
             else:
                 tabSync[i].set_label("")
                 tabButton[i].set_label("")
@@ -90,8 +90,8 @@ def chooseMirrors(indEdit, travList):
             name = self.get_label()
             if name != '':
                 for elem in travList:
-                    if truncName(elem[3]) == name:
-                        elem[5] = self.get_active()
+                    if truncName(elem['url']) == name:
+                        elem['selected'] = self.get_active()
                         break
             else:
                 self.set_active(False)
@@ -193,7 +193,7 @@ if __name__ == "__main__":
         chooseMirrors(True, serverList)
         customList = []
         for elem in serverList:
-            if elem[5]:
+            if elem['selected']:
                 customList.append(elem)
         chooseMirrors(False, customList)
 
@@ -207,5 +207,5 @@ if __name__ == "__main__":
     fcust.write("## Pacman Mirrorlist\n")
     fcust.write("##\n\n")
     for elem in customList:
-        fcust.write(elem[3] + "\n")
+        fcust.write(elem['url'] + "\n")
     fcust.close()
