@@ -36,6 +36,16 @@ import importlib.util
 from pacman_mirrors_gui import chooseMirrors
 
 
+def print_write_error(e):
+    print("Error: Cannot write file '{filename}': {error}"
+          .format(filename=e.filename, error=e.strerror))
+
+
+def print_read_error(e):
+    print("Error: Cannot read file '{filename}': {error}"
+          .format(filename=e.filename, error=e.strerror))
+
+
 class PacmanMirrors:
 
     def __init__(self):
@@ -62,8 +72,7 @@ class PacmanMirrors:
             self.parse_configuration_file(self.path_conf)
         except PermissionError as e:
             print("Warning: Cannot read file '{filename}': {error}"
-                  .format(filename=e.filename,
-                          error=e.strerror))
+                  .format(filename=e.filename, error=e.strerror))
         except OSError:
             pass
         self.parse_cmd()
@@ -173,9 +182,7 @@ class PacmanMirrors:
                     with open(self.path_conf, "r") as fi:
                         buf = fi.read().split('\n')
                 except OSError as e:
-                    print("Error: Cannot read file '{filename}': {error}"
-                          .format(filename=e.filename,
-                                  error=e.strerror))
+                    print_read_error(e)
                     exit(1)
                 try:
                     with open(self.path_conf, "w") as fo:
@@ -187,9 +194,7 @@ class PacmanMirrors:
                                 if key == "OnlyCountry" and value == "Custom":
                                     fo.write("# OnlyCountry = \n")
                 except OSError as e:
-                    print("Error: Cannot write file '{filename}': {error}"
-                          .format(filename=e.filename,
-                                  error=e.strerror))
+                    print_write_error(e)
                     exit(1)
                 try:
                     os.remove(self.mirror_dir + "/Custom", )
@@ -376,9 +381,7 @@ class PacmanMirrors:
                 print(":: Generated and saved '{}' mirrorlist."
                       .format(self.output_mirrorlist))
         except OSError as e:
-            print("Error: Cannot write file '{filename}': {error}"
-                  .format(filename=e.filename,
-                          error=e.strerror))
+            print_write_error(e)
             exit(1)
 
     def write_interactive_mirrorlist(self):
@@ -410,9 +413,7 @@ class PacmanMirrors:
                     fo.write("[" + server['country'] + "]\n")
                     fo.write("Server = " + server['url'] + "\n")
         except OSError as e:
-            print("Error: Cannot write file '{filename}': {error}"
-                  .format(filename=e.filename,
-                          error=e.strerror))
+            print_write_error(e)
             exit(1)
 
         # Modify configuration to use Custom Country
@@ -420,9 +421,7 @@ class PacmanMirrors:
             with open(self.path_conf, "r") as fi:
                 buf = fi.read().split('\n')
         except OSError as e:
-            print("Error: Cannot read file '{filename}': {error}"
-                  .format(filename=e.filename,
-                          error=e.strerror))
+            print_read_error(e)
             exit(1)
         try:
             with open(self.path_conf, "w") as fo:
@@ -437,9 +436,7 @@ class PacmanMirrors:
                     fo.write("OnlyCountry = Custom\n")
 
         except OSError as e:
-            print("Error: Cannot write file '{filename}': {error}"
-                  .format(filename=e.filename,
-                          error=e.strerror))
+            print_write_error(e)
             exit(1)
 
         # Write custom mirrorlist
@@ -470,9 +467,7 @@ class PacmanMirrors:
                 print("\n:: Generated and saved '{}' custom mirrorlist."
                       .format(self.output_mirrorlist))
         except OSError as e:
-            print("Error: Cannot write file '{filename}': {error}"
-                  .format(filename=e.filename,
-                          error=e.strerror))
+            print_write_error(e)
             exit(1)
 
     def run(self):
