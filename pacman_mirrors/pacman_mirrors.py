@@ -195,9 +195,12 @@ class PacmanMirrors:
                             if '=' not in line:
                                 fo.write(line + "\n")
                             else:
-                                (key, value) = [x.strip() for x in line.split('=', 1)]
+                                (key, value) = [x.strip()
+                                                for x in line.split('=', 1)]
                                 if key == "OnlyCountry" and value == "Custom":
                                     fo.write("# OnlyCountry = \n")
+                                else:
+                                    fo.write(line + "\n")
                 except OSError as e:
                     print_write_error(e)
                     exit(1)
