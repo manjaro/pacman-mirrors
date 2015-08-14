@@ -34,6 +34,7 @@ import os
 import importlib.util
 
 from pacman_mirrors_gui import chooseMirrors
+from custom_help_formatter import CustomHelpFormatter
 
 
 def print_write_error(e):
@@ -117,35 +118,42 @@ class PacmanMirrors:
         else:
             gtk_available = True
 
-        parser = argparse.ArgumentParser()
+        parser = argparse.ArgumentParser(formatter_class=CustomHelpFormatter)
         parser.add_argument("-g", "--generate",
-                            help="generate new mirrorlist",
-                            action="store_true")
+                            action="store_true",
+                            help="generate new mirrorlist")
         parser.add_argument("-m", "--method",
-                            help="use generation method",
-                            type=str, choices=["rank", "random"])
+                            type=str,
+                            choices=["rank", "random"],
+                            help="generation method")
         parser.add_argument("-b", "--branch",
-                            help="use branch name",
-                            type=str, choices=["stable", "testing", "unstable"])
+                            type=str,
+                            choices=["stable", "testing", "unstable"],
+                            help="branch name")
         parser.add_argument("-c", "--country",
-                            help="use only mirrors from country[,country,...]",
-                            type=str)
+                            type=str,
+                            help="comma separated list of countries "
+                                 "where mirrors will be used")
         parser.add_argument("-d", "--mirror_dir",
-                            help="use path as mirrorlist directory",
-                            type=str)
+                            type=str,
+                            metavar="PATH",
+                            help="mirrors list path")
         parser.add_argument("-o", "--output",
-                            help="specify output file",
-                            type=str)
+                            type=str,
+                            metavar='FILE',
+                            help="output file")
         parser.add_argument("-t", "--timeout",
-                            help="server maximum waiting time (seconds)",
-                            type=int)
+                            type=int,
+                            metavar="SECONDS",
+                            help="server maximum waiting time")
         if gtk_available:
             parser.add_argument("-i", "--interactive",
-                                help="interactively generate a custom mirrorlist",
-                                action="store_true")
+                                action="store_true",
+                                help="interactively generate a custom "
+                                     "mirrorlist")
         parser.add_argument("-v", "--version",
-                            help="print the pacman-mirrors version",
-                            action="store_true")
+                            action="store_true",
+                            help="print the pacman-mirrors version")
         args = parser.parse_args()
 
         if len(sys.argv) == 1:
@@ -153,7 +161,7 @@ class PacmanMirrors:
             exit(0)
 
         if args.version:
-            print("pacman-mirrors 1.5")
+            print("pacman-mirrors 20150808")
             exit(0)
 
         if args.generate:
