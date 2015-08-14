@@ -52,7 +52,6 @@ class PacmanMirrors:
 
     def __init__(self):
         self.path_conf = "/etc/pacman-mirrors.conf"
-        self.generate = False
         self.interactive = False
         self.method = "rank"
         self.branch = "stable"
@@ -164,9 +163,6 @@ class PacmanMirrors:
         if args.version:
             print("pacman-mirrors 20150808")
             exit(0)
-
-        if args.generate:
-            self.generate = args.generate
 
         if args.method:
             self.method = args.method
