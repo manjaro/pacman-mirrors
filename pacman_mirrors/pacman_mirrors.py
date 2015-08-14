@@ -32,6 +32,7 @@ from operator import itemgetter
 from decimal import Decimal
 import os
 import importlib.util
+from random import shuffle
 
 from pacman_mirrors_gui import chooseMirrors
 from custom_help_formatter import CustomHelpFormatter
@@ -248,14 +249,34 @@ class PacmanMirrors:
                 raise argparse.ArgumentTypeError(msg)
         return countries
 
-    def query_servers(self):
-        """ Query servers """
-        if self.method == "rank":
-            print(":: Querying servers, this may take some time...")
+    def generate_servers_lists(self):
+        """
+        Generate a list of servers
+
+        If method == "random", it will add al server to bad_server and
+        shuffle them randomly.
+
+        It will only use mirrors defined in only_country, and if empty will
+        use all mirrors.
+        """
         if self.only_country:
             countries = self.only_country
         else:
             countries = self.available_countries
+
+        if self.method == "rank":
+            self.query_servers(countries)
+        elif self.method == "random":
+            self.random_servers(countries)
+
+    def query_servers(self, countries):
+        """
+        Query the servers and put them in good_server, resp_server and
+        bad_server depending on quality, and sort them by response time.
+
+        :param countries: list of country files to use
+        """
+        print(":: Querying servers, this may take some time...")
         date_now = datetime.datetime.utcnow()
         for country in countries:
             print(country)
@@ -270,15 +291,6 @@ class PacmanMirrors:
                         continue
                     server_url = line[9:]
                     server_url = server_url.replace("$branch", self.branch)
-
-                    if self.method == "random":
-                        self.bad_servers.append({'country': current_country,
-                                                 'response_time': "99.99",
-                                                 'last_sync': "99:99",
-                                                 'url': server_url,
-                                                 'selected': False})
-                        print("->", server_url)
-                        continue
 
                     print("-> .....", server_url, end='')
                     sys.stdout.flush()
@@ -354,6 +366,33 @@ class PacmanMirrors:
                                    key=itemgetter('response_time'))
         self.resp_servers = sorted(self.resp_servers,
                                    key=itemgetter('response_time'))
+
+    def random_servers(self, countries):
+        """
+        Add all servers to bad_server and shuffle them randomly.
+
+        :param countries: list of country files to use
+        """
+        print(":: Randomizing server list...")
+        for country in countries:
+            current_country = country
+            with open(os.path.join(self.mirror_dir, country), "r") as fi:
+                for line in fi:
+                    line = line.strip()
+                    if line.startswith('[') and line.endswith(']'):
+                        current_country = line[1:-1]
+                        continue
+                    if not line.startswith('Server'):
+                        continue
+                    server_url = line[9:]
+                    server_url = server_url.replace("$branch", self.branch)
+
+                    self.bad_servers.append({'country': current_country,
+                                             'response_time': "99.99",
+                                             'last_sync': "99:99",
+                                             'url': server_url,
+                                             'selected': False})
+        shuffle(self.bad_servers)
 
     def write_mirrorlist(self):
         """ Write the "mirrorlist" file """
@@ -479,7 +518,7 @@ class PacmanMirrors:
             exit(1)
 
     def run(self):
-        self.query_servers()
+        self.generate_servers_lists()
         if self.interactive:
             self.write_interactive_mirrorlist()
         else:
