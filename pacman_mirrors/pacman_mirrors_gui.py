@@ -20,6 +20,9 @@
 
 from gi.repository import Gtk
 
+import i18n
+_ = i18n.language.gettext
+
 
 def chooseMirrors(indEdit, travList):
 
@@ -60,13 +63,13 @@ def chooseMirrors(indEdit, travList):
         if not indShortList:
             if index > nbItems:
                 buttonPrev.set_relief(Gtk.ReliefStyle.NORMAL)
-                buttonPrev.set_label("Previous page")
+                buttonPrev.set_label(_("Previous page"))
             else:
                 buttonPrev.set_relief(Gtk.ReliefStyle.NONE)
                 buttonPrev.set_label(" ")
             if index < len(travList):
                 buttonNext.set_relief(Gtk.ReliefStyle.NORMAL)
-                buttonNext.set_label("Next page")
+                buttonNext.set_label(_("Next page"))
             else:
                 buttonNext.set_relief(Gtk.ReliefStyle.NONE)
                 buttonNext.set_label(" ")
@@ -113,16 +116,18 @@ def chooseMirrors(indEdit, travList):
     win = Gtk.Window()
     win.set_resizable(False)
     if indEdit:
-        Gtk.Window.__init__(win, title="Mirrors list sorted by response time")
+        Gtk.Window.__init__(win, title=_("Mirrors list sorted by response "
+                                         "time"))
     else:
-        Gtk.Window.__init__(win, title="List of selected mirrors")
+        Gtk.Window.__init__(win, title=_("List of selected mirrors"))
     win.set_border_width(10)
     mainbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=30)
     win.add(mainbox)
 
     if indEdit:
         vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
-        header = Gtk.Label(label="Select by clicking mirrors to prepare your custom list")
+        header = Gtk.Label(label=_("Select by clicking mirrors to prepare "
+                                   "your custom list"))
         vbox.add(header)
         mainbox.add(vbox)
 
@@ -161,14 +166,14 @@ def chooseMirrors(indEdit, travList):
         buttonPrev.connect("clicked", prevPage)
         hbox2.add(buttonPrev)
     if indEdit:
-        buttonShow = Gtk.Button("Show custom list")
+        buttonShow = Gtk.Button(_("Show custom list"))
         buttonShow.connect("clicked", showList)
         hbox2.add(buttonShow)
     else:
-        buttonBack = Gtk.Button("Back to main list")
+        buttonBack = Gtk.Button(_("Back to main list"))
         buttonBack.connect("clicked", backMain)
         hbox2.add(buttonBack)
-        buttonDone = Gtk.Button("Done")
+        buttonDone = Gtk.Button(_("Done"))
         buttonDone.connect("clicked", backDone)
         hbox2.add(buttonDone)
 
@@ -201,7 +206,7 @@ if __name__ == "__main__":
     try:
         fcust = open(path, "w")
     except:
-        print("\nError : can't create file {0}.\n".format(path))
+        print(_("\nError : can't create file {0}.\n".format(path)))
         exit(1)
     fcust.write("##\n")
     fcust.write("## Pacman Mirrorlist\n")

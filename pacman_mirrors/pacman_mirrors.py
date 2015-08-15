@@ -37,15 +37,18 @@ from random import shuffle
 from pacman_mirrors_gui import chooseMirrors
 from custom_help_formatter import CustomHelpFormatter
 
+import i18n
+_ = i18n.language.gettext
+
 
 def print_write_error(e):
-    print("Error: Cannot write file '{filename}': {error}"
-          .format(filename=e.filename, error=e.strerror))
+    print(_("Error: Cannot write file '{filename}': {error}"
+          .format(filename=e.filename, error=e.strerror)))
 
 
 def print_read_error(e):
-    print("Error: Cannot read file '{filename}': {error}"
-          .format(filename=e.filename, error=e.strerror))
+    print(_("Error: Cannot read file '{filename}': {error}"
+          .format(filename=e.filename, error=e.strerror)))
 
 
 class PacmanMirrors:
@@ -72,14 +75,14 @@ class PacmanMirrors:
         try:
             self.parse_configuration_file(self.path_conf)
         except PermissionError as e:
-            print("Warning: Cannot read file '{filename}': {error}"
-                  .format(filename=e.filename, error=e.strerror))
+            print(_("Warning: Cannot read file '{filename}': {error}"
+                  .format(filename=e.filename, error=e.strerror)))
         except OSError:
             pass
         self.parse_cmd()
 
     def parse_configuration_file(self, conf_file):
-        """ Parse the file "pacman-mirrors.conf" """
+        """ Parse the configuration file """
         with open(conf_file) as fi:
             for line in fi:
                 line = line.strip()
@@ -121,39 +124,39 @@ class PacmanMirrors:
         parser = argparse.ArgumentParser(formatter_class=CustomHelpFormatter)
         parser.add_argument("-g", "--generate",
                             action="store_true",
-                            help="generate new mirrorlist")
+                            help=_("generate new mirrorlist"))
         parser.add_argument("-m", "--method",
                             type=str,
                             choices=["rank", "random"],
-                            help="generation method")
+                            help=_("generation method"))
         parser.add_argument("-b", "--branch",
                             type=str,
                             choices=["stable", "testing", "unstable"],
-                            help="branch name")
+                            help=_("branch name"))
         parser.add_argument("-c", "--country",
                             type=str,
-                            help="comma separated list of countries "
-                                 "where mirrors will be used")
+                            help=_("comma separated list of countries "
+                                   "where mirrors will be used"))
         parser.add_argument("-d", "--mirror_dir",
                             type=str,
-                            metavar="PATH",
-                            help="mirrors list path")
+                            metavar=_("PATH"),
+                            help=_("mirrors list path"))
         parser.add_argument("-o", "--output",
                             type=str,
-                            metavar='FILE',
-                            help="output file")
+                            metavar=_('FILE'),
+                            help=_("output file"))
         parser.add_argument("-t", "--timeout",
                             type=int,
-                            metavar="SECONDS",
-                            help="server maximum waiting time")
+                            metavar=_("SECONDS"),
+                            help=_("server maximum waiting time"))
         if gtk_available:
             parser.add_argument("-i", "--interactive",
                                 action="store_true",
-                                help="interactively generate a custom "
-                                     "mirrorlist")
+                                help=_("interactively generate a custom "
+                                       "mirrorlist"))
         parser.add_argument("-v", "--version",
                             action="store_true",
-                            help="print the pacman-mirrors version")
+                            help=_("print the pacman-mirrors version"))
         args = parser.parse_args()
 
         if len(sys.argv) == 1:
@@ -209,9 +212,9 @@ class PacmanMirrors:
                 except FileNotFoundError:
                     pass
                 except OSError as e:
-                    print("Warning: Cannot remove '{filename}': {error}"
+                    print(_("Warning: Cannot remove '{filename}': {error}"
                           .format(filename=e.filename,
-                                  error=e.strerror))
+                                  error=e.strerror)))
                 else:
                     self.available_countries.remove('Custom')
                 self.only_country = []
@@ -230,30 +233,43 @@ class PacmanMirrors:
 
     @staticmethod
     def get_available_countries(mirrors_dir):
+        """
+        Returns a sorted list of countries.
+        The name of mirror file is the country.
+
+        :param mirrors_dir: path with the mirror list
+        :return: list of countries
+        """
         available_countries = os.listdir(mirrors_dir)
         available_countries.sort()
         return available_countries
 
     @staticmethod
     def valid_country(string, available_countries):
+        """
+        Check if the list of countries are valid.
+
+        Raises argparse.ArgumentTypeError if it finds and invalid country.
+
+        :param string: string with comma separated countries
+        :param available_countries: list of countries
+        :return: return the list of valid countries
+        """
         countries = string.split(",")
         if countries == ["all"]:
             return countries
-        for i in countries:
-            if i not in available_countries:
-                msg = "argument -c/--country: "\
-                      "unknown country '{}'"\
-                      "\nAvailable countries are: {}"\
-                    .format(i, ", ".join(available_countries))
+        for country in countries:
+            if country not in available_countries:
+                msg = _("argument -c/--country: unknown country '{country}'"
+                        "\nAvailable countries are: {country_list}"
+                        .format(country=country,
+                                country_list=", ".join(available_countries)))
                 raise argparse.ArgumentTypeError(msg)
         return countries
 
     def generate_servers_lists(self):
         """
         Generate a list of servers
-
-        If method == "random", it will add al server to bad_server and
-        shuffle them randomly.
 
         It will only use mirrors defined in only_country, and if empty will
         use all mirrors.
@@ -275,7 +291,7 @@ class PacmanMirrors:
 
         :param countries: list of country files to use
         """
-        print(":: Querying servers, this may take some time...")
+        print(_(":: Querying servers, this may take some time..."))
         date_now = datetime.datetime.utcnow()
         for country in countries:
             print(country)
@@ -291,7 +307,7 @@ class PacmanMirrors:
                     server_url = line[9:]
                     server_url = server_url.replace("$branch", self.branch)
 
-                    print("-> .....", server_url, end='')
+                    print("-> ..... {}".format(server_url), end='')
                     sys.stdout.flush()
                     j = server_url.find(self.branch)
                     url = server_url[0:j] + "state"
@@ -304,11 +320,13 @@ class PacmanMirrors:
                             d = resp.find(b"date=")
                     except URLError as e:
                         if hasattr(e, 'reason'):
-                            print('\nError: We failed to reach '
-                                  'the server:', e.reason)
+                            print(_("\nError: Failed to reach "
+                                    "the server: {reason}"
+                                    .format(reason=e.reason)))
                         elif hasattr(e, 'code'):
-                            print('\nError: The server couldn\'t '
-                                  'fulfill the request.', e.code)
+                            print(_("\nError: The server couldn\'t "
+                                    "fulfill the request: {code}"
+                                    .format(code=e.code)))
                         self.bad_servers.append({'country': current_country,
                                                  'response_time': "99.99",
                                                  'last_sync': "99:99",
@@ -316,7 +334,7 @@ class PacmanMirrors:
                                                  'selected': False})
                         continue
                     except timeout:
-                        print("Error: Timeout")
+                        print(_("\nError: Timeout"))
                         self.bad_servers.append({'country': current_country,
                                                  'response_time': "99.99",
                                                  'last_sync': "99:99",
@@ -328,8 +346,7 @@ class PacmanMirrors:
                     date = resp[d+5:d+24].decode('utf-8')
                     response_seconds = "{:6.4}".format(
                         Decimal(response_time).quantize(Decimal('.001')))
-                    print("\r->", response_seconds, sep="")
-                    sys.stdout.flush()
+                    print("\r->{} ".format(response_seconds))
                     try:
                         date_server = datetime.datetime.strptime(
                             date, "%Y-%m-%dT%H:%M:%S")
@@ -339,8 +356,7 @@ class PacmanMirrors:
                                                   'last_sync': "99:99",
                                                   'url': server_url,
                                                   'selected': False})
-                        print('Error: Wrong date format in "state" file. '
-                              'Server skipped.')
+                        print(_("\nWarning: Wrong date format in 'state' file."))
                         continue
                     total_seconds = (date_now - date_server).total_seconds()
                     total_minutes = total_seconds // 60
@@ -372,7 +388,7 @@ class PacmanMirrors:
 
         :param countries: list of country files to use
         """
-        print(":: Randomizing server list...")
+        print(_(":: Randomizing server list..."))
         for country in countries:
             current_country = country
             with open(os.path.join(self.mirror_dir, country), "r") as fi:
@@ -394,16 +410,9 @@ class PacmanMirrors:
         shuffle(self.bad_servers)
 
     def write_mirrorlist(self):
-        """ Write the "mirrorlist" file """
+        """ Write the output file """
         try:
             with open(self.output_mirrorlist, "w") as fo:
-                fo.write("##\n")
-                fo.write("## Manjaro Linux repository mirrorlist\n")
-                fo.write("## Generated on ")
-                fo.write(datetime.datetime.now().strftime("%d %B %Y %H:%M"))
-                fo.write("\n##\n")
-                fo.write("## Use pacman-mirrors to modify\n")
-                fo.write("##\n\n")
                 if len(self.good_servers) >= 3:  # Avoid an empty mirrorlist
                     server_list = self.good_servers
                 elif len(self.resp_servers) >= 3:
@@ -412,26 +421,34 @@ class PacmanMirrors:
                     server_list = (self.good_servers + self.resp_servers +
                                    self.bad_servers)
                     if not server_list:
-                        print("\nError: no server available !\n")
+                        print(_("\nError: no server available !\n"))
+
+                fo.write("##\n")
+                fo.write("## Manjaro Linux repository mirrorlist\n")
+                fo.write("## Generated on {}\n"
+                         .format(datetime.datetime.now()
+                                 .strftime("%d %B %Y %H:%M")))
+                fo.write("##\n")
+                fo.write("## Use pacman-mirrors to modify\n")
+                fo.write("##\n\n")
                 for server in server_list:
-                    fo.write("\n## Location  : ")
-                    fo.write(server['country'])
+                    fo.write("## Location  : {}\n"
+                             .format(server['country']))
                     if self.method == "rank":
-                        fo.write("\n## Time      :")
-                        fo.write(server['response_time'])
-                        fo.write("\n## Last Sync : ")
-                        fo.write(server['last_sync'])
-                    fo.write("\nServer = ")
-                    fo.write(server['url'])
-                    fo.write("\n")
-                print(":: Generated and saved '{}' mirrorlist."
-                      .format(self.output_mirrorlist))
+                        fo.write("## Time      : {}\n"
+                                 .format(server['response_time']))
+                        fo.write("## Last Sync : \n"
+                                 .format(server['last_sync']))
+                    fo.write("Server = {}\n\n"
+                             .format(server['url']))
+                print(_(":: Generated and saved '{output_file}' mirrorlist."
+                      .format(output_file=self.output_mirrorlist)))
         except OSError as e:
             print_write_error(e)
             exit(1)
 
     def write_interactive_mirrorlist(self):
-        """ Write the interactive "mirrorlist" file """
+        """ Write the interactive output file and the "Custom" country"""
         # Open custom mirrorlist selector
         finished = False
         server_list = self.good_servers + self.resp_servers + self.bad_servers
@@ -456,8 +473,10 @@ class PacmanMirrors:
                 fo.write("## Pacman Mirrorlist\n")
                 fo.write("##\n\n")
                 for server in custom_list:
-                    fo.write("[" + server['country'] + "]\n")
-                    fo.write("Server = " + server['url'] + "\n")
+                    fo.write("[{}]\n"
+                             .format(server['country']))
+                    fo.write("Server = {}\n"
+                             .format(server['url']))
         except OSError as e:
             print_write_error(e)
             exit(1)
@@ -490,28 +509,30 @@ class PacmanMirrors:
             with open(self.output_mirrorlist, "w") as fo:
                 fo.write("##\n")
                 fo.write("## Manjaro Linux repository mirrorlist\n")
-                fo.write("## Generated on ")
-                fo.write(datetime.datetime.now().strftime("%d %B %Y %H:%M"))
-                fo.write("\n##\n")
+                fo.write("## Generated on {}\n"
+                         .format(datetime.datetime.now()
+                                 .strftime("%d %B %Y %H:%M")))
+                fo.write("##\n")
                 fo.write("## Use pacman-mirrors to modify\n")
                 fo.write("##\n\n")
-                print("\nCustom List")
-                print("-----------\n")
+                print(_("\nUser generated mirror list"))
+                print("--------------------------")
                 for server in custom_list:
-                    server['url'] = server['url'].replace("$branch", self.branch)
-                    print("-> {0} :".format(server['country']), server['url'])
-                    fo.write("\n## Location  : ")
-                    fo.write(server['country'])
+                    server['url'] = server['url'].replace("$branch",
+                                                          self.branch)
+                    print("-> {} : {}"
+                          .format(server['country'], server['url']))
+                    fo.write("## Location  : {}\n"
+                             .format(server['country']))
                     if self.method == "rank":
-                        fo.write("\n## Time      :")
-                        fo.write(server['response_time'])
-                        fo.write("\n## Last Sync : ")
-                        fo.write(server['last_sync'])
-                    fo.write("\nServer = ")
-                    fo.write(server['url'])
-                    fo.write("\n")
-                print("\n:: Generated and saved '{}' custom mirrorlist."
-                      .format(self.output_mirrorlist))
+                        fo.write("## Time      : {}\n"
+                                 .format(server['response_time']))
+                        fo.write("## Last Sync : {}\n"
+                                 .format(server['last_sync']))
+                    fo.write("Server = {}\n\n"
+                             .format(server['url']))
+                print(_(":: Generated and saved '{output_file}' mirrorlist."
+                      .format(output_file=self.output_mirrorlist)))
         except OSError as e:
             print_write_error(e)
             exit(1)
@@ -525,7 +546,7 @@ class PacmanMirrors:
 
 if __name__ == '__main__':
     if os.getuid() != 0:
-        print("Error: must be root.")
+        print(_("Error: must have root privilegies."))
         exit(1)
 
     pm = PacmanMirrors()

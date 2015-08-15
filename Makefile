@@ -68,3 +68,6 @@ dist: clean
 
 install: clean
 	python setup.py install
+
+po-file:
+	xgettext --language=Python --keyword=_ --output=po/pacman_mirrors.pot `find pacman_mirrors -name '*.py'`
