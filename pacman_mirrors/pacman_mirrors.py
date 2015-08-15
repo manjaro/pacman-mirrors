@@ -303,86 +303,90 @@ class PacmanMirrors:
         for country in countries:
             print(country)
             current_country = country
-            with open(os.path.join(self.mirror_dir, country), "r") as fi:
-                for line in fi:
-                    line = line.strip()
-                    if line.startswith('[') and line.endswith(']'):
-                        current_country = line[1:-1]
-                        continue
-                    if not line.startswith('Server'):
-                        continue
-                    server_url = line[9:]
-                    server_url = server_url.replace("$branch", self.branch)
+            try:
+                with open(os.path.join(self.mirror_dir, country), "r") as fi:
+                    for line in fi:
+                        line = line.strip()
+                        if line.startswith('[') and line.endswith(']'):
+                            current_country = line[1:-1]
+                            continue
+                        if not line.startswith('Server'):
+                            continue
+                        server_url = line[9:]
+                        server_url = server_url.replace("$branch", self.branch)
 
-                    print("-> ..... {}".format(server_url), end='')
-                    sys.stdout.flush()
-                    j = server_url.find(self.branch)
-                    url = server_url[0:j] + "state"
+                        print("-> ..... {}".format(server_url), end='')
+                        sys.stdout.flush()
+                        j = server_url.find(self.branch)
+                        url = server_url[0:j] + "state"
 
-                    start = time.time()
-                    req = Request(url)
-                    try:
-                        with urlopen(req, timeout=self.max_wait_time) as r:
-                            resp = r.read()
-                            d = resp.find(b"date=")
-                    except URLError as e:
-                        if hasattr(e, 'reason'):
-                            print(_("\nError: Failed to reach "
-                                    "the server: {reason}"
-                                    .format(reason=e.reason)))
-                        elif hasattr(e, 'code'):
-                            print(_("\nError: The server couldn\'t "
-                                    "fulfill the request: {code}"
-                                    .format(code=e.code)))
-                        self.bad_servers.append({'country': current_country,
-                                                 'response_time': "99.99",
-                                                 'last_sync': "99:99",
-                                                 'url': server_url,
-                                                 'selected': False})
-                        continue
-                    except timeout:
-                        print(_("\nError: Timeout"))
-                        self.bad_servers.append({'country': current_country,
-                                                 'response_time': "99.99",
-                                                 'last_sync': "99:99",
-                                                 'url': server_url,
-                                                 'selected': False})
-                        continue
+                        start = time.time()
+                        req = Request(url)
+                        try:
+                            with urlopen(req, timeout=self.max_wait_time) as r:
+                                resp = r.read()
+                                d = resp.find(b"date=")
+                        except URLError as e:
+                            if hasattr(e, 'reason'):
+                                print(_("\nError: Failed to reach "
+                                        "the server: {reason}"
+                                        .format(reason=e.reason)))
+                            elif hasattr(e, 'code'):
+                                print(_("\nError: The server couldn\'t "
+                                        "fulfill the request: {code}"
+                                        .format(code=e.code)))
+                            self.bad_servers.append({'country': current_country,
+                                                     'response_time': "99.99",
+                                                     'last_sync': "99:99",
+                                                     'url': server_url,
+                                                     'selected': False})
+                            continue
+                        except timeout:
+                            print(_("\nError: Timeout"))
+                            self.bad_servers.append({'country': current_country,
+                                                     'response_time': "99.99",
+                                                     'last_sync': "99:99",
+                                                     'url': server_url,
+                                                     'selected': False})
+                            continue
 
-                    response_time = round((time.time() - start), 3)
-                    date = resp[d+5:d+24].decode('utf-8')
-                    response_seconds = "{:6.4}".format(
-                        Decimal(response_time).quantize(Decimal('.001')))
-                    print("\r->{} ".format(response_seconds))
-                    try:
-                        date_server = datetime.datetime.strptime(
-                            date, "%Y-%m-%dT%H:%M:%S")
-                    except ValueError:
-                        self.resp_servers.append({'country': current_country,
-                                                  'response_time': response_seconds,
-                                                  'last_sync': "99:99",
-                                                  'url': server_url,
-                                                  'selected': False})
-                        print(_("\nWarning: Wrong date format in 'state' file."))
-                        continue
-                    total_seconds = (date_now - date_server).total_seconds()
-                    total_minutes = total_seconds // 60
-                    hours = total_minutes // 60
-                    minutes = total_minutes % 60
-                    datesync = '{}:{}'.format(int(hours),
-                                              str(int(minutes)).zfill(2))
-                    if hours < 24:
-                        self.good_servers.append({'country': current_country,
-                                                  'response_time': response_seconds,
-                                                  'last_sync': datesync,
-                                                  'url': server_url,
-                                                  'selected': False})
-                    else:
-                        self.resp_servers.append({'country': current_country,
-                                                  'response_time': response_seconds,
-                                                  'last_sync': datesync,
-                                                  'url': server_url,
-                                                  'selected': False})
+                        response_time = round((time.time() - start), 3)
+                        date = resp[d+5:d+24].decode('utf-8')
+                        response_seconds = "{:6.4}".format(
+                            Decimal(response_time).quantize(Decimal('.001')))
+                        print("\r->{} ".format(response_seconds))
+                        try:
+                            date_server = datetime.datetime.strptime(
+                                date, "%Y-%m-%dT%H:%M:%S")
+                        except ValueError:
+                            self.resp_servers.append({'country': current_country,
+                                                      'response_time': response_seconds,
+                                                      'last_sync': "99:99",
+                                                      'url': server_url,
+                                                      'selected': False})
+                            print(_("\nWarning: Wrong date format in 'state' file."))
+                            continue
+                        total_seconds = (date_now - date_server).total_seconds()
+                        total_minutes = total_seconds // 60
+                        hours = total_minutes // 60
+                        minutes = total_minutes % 60
+                        datesync = '{}:{}'.format(int(hours),
+                                                  str(int(minutes)).zfill(2))
+                        if hours < 24:
+                            self.good_servers.append({'country': current_country,
+                                                      'response_time': response_seconds,
+                                                      'last_sync': datesync,
+                                                      'url': server_url,
+                                                      'selected': False})
+                        else:
+                            self.resp_servers.append({'country': current_country,
+                                                      'response_time': response_seconds,
+                                                      'last_sync': datesync,
+                                                      'url': server_url,
+                                                      'selected': False})
+            except OSError as e:
+                print_read_error(e)
+                continue
         # Sort by response time
         self.good_servers = sorted(self.good_servers,
                                    key=itemgetter('response_time'))
@@ -398,22 +402,26 @@ class PacmanMirrors:
         print(_(":: Randomizing server list..."))
         for country in countries:
             current_country = country
-            with open(os.path.join(self.mirror_dir, country), "r") as fi:
-                for line in fi:
-                    line = line.strip()
-                    if line.startswith('[') and line.endswith(']'):
-                        current_country = line[1:-1]
-                        continue
-                    if not line.startswith('Server'):
-                        continue
-                    server_url = line[9:]
-                    server_url = server_url.replace("$branch", self.branch)
+            try:
+                with open(os.path.join(self.mirror_dir, country), "r") as fi:
+                    for line in fi:
+                        line = line.strip()
+                        if line.startswith('[') and line.endswith(']'):
+                            current_country = line[1:-1]
+                            continue
+                        if not line.startswith('Server'):
+                            continue
+                        server_url = line[9:]
+                        server_url = server_url.replace("$branch", self.branch)
 
-                    self.bad_servers.append({'country': current_country,
-                                             'response_time': "99.99",
-                                             'last_sync': "99:99",
-                                             'url': server_url,
-                                             'selected': False})
+                        self.bad_servers.append({'country': current_country,
+                                                 'response_time': "99.99",
+                                                 'last_sync': "99:99",
+                                                 'url': server_url,
+                                                 'selected': False})
+            except OSError as e:
+                print_read_error(e)
+                continue
         shuffle(self.bad_servers)
 
     def write_mirrorlist(self):
