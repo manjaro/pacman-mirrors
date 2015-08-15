@@ -64,6 +64,7 @@ class PacmanMirrors:
         self.max_wait_time = 2
         self.available_countries = []
         self.arch = os.uname().machine  # i686 or X86_64
+        self.no_update = True
 
         # good_server: respond back and updated in the last 24h
         # resp_server: respond back but not updated in the last 24h or
@@ -97,18 +98,16 @@ class PacmanMirrors:
                     continue
                 if value.startswith('"') and value.endswith('"'):
                     value = value[1:-1]
-                # Branch Pacman should use
                 if key == "Branch":
                     self.branch = value
-                # Only mirrors from specific countries
                 elif key == "OnlyCountry":
                     self.only_country = value.split(',')
-                # Input mirrorlist directory
                 elif key == "MirrorlistsDir":
                     self.mirror_dir = value
-                # Output mirrorlist file
                 elif key == "OutputMirrorlist":
                     self.output_mirrorlist = value
+                elif key == "NoUpdate":
+                    self.no_update = value
 
     def parse_cmd(self):
         """ Read the arguments of the command line """
@@ -149,6 +148,10 @@ class PacmanMirrors:
                             type=int,
                             metavar=_("SECONDS"),
                             help=_("server maximum waiting time"))
+        parser.add_argument("--no-update",
+                            action="store_true",
+                            help=_("don't generate mirrorlist if NoUpdate is"
+                                   "set to True in the configuration file"))
         if gtk_available:
             parser.add_argument("-i", "--interactive",
                                 action="store_true",
@@ -166,6 +169,10 @@ class PacmanMirrors:
         if args.version:
             print("pacman-mirrors 20150808")
             exit(0)
+
+        if args.no_update:
+            if self.no_update == "True":
+                exit(0)
 
         if args.method:
             self.method = args.method
