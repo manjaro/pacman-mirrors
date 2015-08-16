@@ -21,21 +21,21 @@
 #            Ramon Buldó <rbuldo@gmail.com>
 
 import argparse
-from builtins import staticmethod
 import datetime
+import importlib.util
+import os
 import sys
 import time
+from builtins import staticmethod
+from decimal import Decimal
+from operator import itemgetter
+from random import shuffle
+from socket import timeout
 from urllib.request import Request, urlopen
 from urllib.error import URLError
-from socket import timeout
-from operator import itemgetter
-from decimal import Decimal
-import os
-import importlib.util
-from random import shuffle
 
-from pacman_mirrors_gui import chooseMirrors
 from custom_help_formatter import CustomHelpFormatter
+from pacman_mirrors_gui import chooseMirrors
 
 import i18n
 _ = i18n.language.gettext
