@@ -18,7 +18,7 @@
 #
 # Author(s): Esclapion
 #            philm
-#            Ramon Buldó <rbuldo@gmail.com
+#            Ramon Buldó <rbuldo@gmail.com>
 
 import argparse
 from builtins import staticmethod
@@ -395,7 +395,7 @@ class PacmanMirrors:
 
     def random_servers(self, countries):
         """
-        Add all servers to bad_server and shuffle them randomly.
+        Add all servers to bad_servers and shuffle them randomly.
 
         :param countries: list of country files to use
         """
