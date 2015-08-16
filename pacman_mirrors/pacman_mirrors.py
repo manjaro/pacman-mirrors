@@ -336,7 +336,8 @@ class PacmanMirrors:
                                                      'selected': False})
                             continue
                         except timeout:
-                            print(_("\nError: Timeout"))
+                            print(_("\nError: Failed to reach "
+                                    "the server: Timeout"))
                             self.bad_servers.append({'country': current_country,
                                                      'response_time': "99.99",
                                                      'last_sync': "99:99",
