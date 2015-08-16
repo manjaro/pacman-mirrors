@@ -35,10 +35,10 @@ from socket import timeout
 from urllib.request import Request, urlopen
 from urllib.error import URLError
 
-from custom_help_formatter import CustomHelpFormatter
-from pacman_mirrors_gui import chooseMirrors
+from .custom_help_formatter import CustomHelpFormatter
+from .pacman_mirrors_gui import chooseMirrors
+from . import i18n
 
-import i18n
 _ = i18n.language.gettext
 
 

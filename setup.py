@@ -32,6 +32,7 @@ setup(
     package_dir={'pacman_mirrors': 'pacman_mirrors'},
     data_files=[('etc', ['conf/pacman-mirrors.conf']),
                 ('etc/pacman.d/mirrors', mirror_files)],
+    scripts=["scripts/pacman-mirrors"],
     install_requires=requirements,
     license="GPL3",
     zip_safe=False,

@@ -20,7 +20,7 @@
 
 from gi.repository import Gtk
 
-import i18n
+from . import i18n
 _ = i18n.language.gettext
 
 
