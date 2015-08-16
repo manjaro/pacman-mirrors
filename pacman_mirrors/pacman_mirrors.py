@@ -63,7 +63,6 @@ class PacmanMirrors:
         self.output_mirrorlist = "/etc/pacman.d/mirrorlist"
         self.max_wait_time = 2
         self.available_countries = []
-        self.arch = os.uname().machine  # i686 or X86_64
         self.no_update = True
 
         # good_server: respond back and updated in the last 24h
