@@ -25,6 +25,7 @@ import datetime
 import importlib.util
 import os
 import sys
+import tempfile
 import time
 from builtins import staticmethod
 from decimal import Decimal
@@ -190,29 +191,13 @@ class PacmanMirrors:
             except argparse.ArgumentTypeError as e:
                 parser.error(e)
             if self.only_country == ["all"]:
-                # When using all, comment "OnlyCountry=Custom" in
-                # the configuration file
                 try:
-                    with open(self.path_conf, "r") as fi:
-                        buf = fi.read().split('\n')
+                    self.comment_custom_country()
                 except OSError as e:
-                    print_read_error(e)
+                    print(_("Error: Cannot update file '{filename}': {error}"
+                            .format(filename=e.filename, error=e.strerror)))
                     exit(1)
-                try:
-                    with open(self.path_conf, "w") as fo:
-                        for line in buf:
-                            if '=' not in line:
-                                fo.write(line + "\n")
-                            else:
-                                (key, value) = [x.strip()
-                                                for x in line.split('=', 1)]
-                                if key == "OnlyCountry" and value == "Custom":
-                                    fo.write("# OnlyCountry = \n")
-                                else:
-                                    fo.write(line + "\n")
-                except OSError as e:
-                    print_write_error(e)
-                    exit(1)
+                # Remove "Custom" country, created by interactive mode.
                 try:
                     os.remove(self.mirror_dir + "/Custom", )
                 except FileNotFoundError:
@@ -254,7 +239,6 @@ class PacmanMirrors:
     def valid_country(string, available_countries):
         """
         Check if the list of countries are valid.
-
         Raises argparse.ArgumentTypeError if it finds and invalid country.
 
         :param string: string with comma separated countries
@@ -272,6 +256,27 @@ class PacmanMirrors:
                                 country_list=", ".join(available_countries)))
                 raise argparse.ArgumentTypeError(msg)
         return countries
+
+    def comment_custom_country(self):
+        """
+        Replaces "OnlyCountry = Custom" to "# OnlyCountry = " in
+        the configuration file.
+        """
+        with open(self.path_conf) as fin, tempfile.NamedTemporaryFile(
+                "w+t", dir=os.path.dirname(self.path_conf),
+                delete=False) as fout:
+            for line in fin:
+                if '=' not in line:
+                        fout.write("{}".format(line))
+                else:
+                    (key, value) = [x.strip()
+                                    for x in line.split('=', 1)]
+                    if key == "OnlyCountry" and value == "Custom":
+                        fout.write("# OnlyCountry = \n")
+                    else:
+                        fout.write("{}".format(line))
+        os.replace(fout.name, self.path_conf)
+        os.chmod(self.path_conf, 0o644)
 
     def generate_servers_lists(self):
         """
@@ -462,7 +467,11 @@ class PacmanMirrors:
             exit(1)
 
     def write_interactive_mirrorlist(self):
-        """ Write the interactive output file and the "Custom" country"""
+        """
+        Prompt the user to select the mirrors with a gui.
+        Write the mirrorlist file, the "Custom" country and modify
+        the configuration file to use this Custom country.
+        """
         # Open custom mirrorlist selector
         finished = False
         server_list = self.good_servers + self.resp_servers + self.bad_servers
@@ -497,25 +506,23 @@ class PacmanMirrors:
 
         # Modify configuration to use Custom Country
         try:
-            with open(self.path_conf, "r") as fi:
-                buf = fi.read().split('\n')
-        except OSError as e:
-            print_read_error(e)
-            exit(1)
-        try:
-            with open(self.path_conf, "w") as fo:
+            with open(self.path_conf) as fin, tempfile.NamedTemporaryFile(
+                    "w+t", dir=os.path.dirname(self.path_conf),
+                    delete=False) as fout:
                 replaced = False
-                for line in buf:
+                for line in fin:
                     if "OnlyCountry" in line:
-                        fo.write("OnlyCountry = Custom\n")
+                        fout.write("OnlyCountry = Custom\n")
                         replaced = True
                     else:
-                        fo.write(line + "\n")
+                        fout.write("{}".format(line))
                 if not replaced:
-                    fo.write("OnlyCountry = Custom\n")
-
+                    fout.write("OnlyCountry = Custom\n")
+            os.replace(fout.name, self.path_conf)
+            os.chmod(self.path_conf, 0o644)
         except OSError as e:
-            print_write_error(e)
+            print(_("Error: Cannot update file '{filename}': {error}"
+                    .format(filename=e.filename, error=e.strerror)))
             exit(1)
 
         # Write custom mirrorlist
