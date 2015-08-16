@@ -42,16 +42,6 @@ import i18n
 _ = i18n.language.gettext
 
 
-def print_write_error(e):
-    print(_("Error: Cannot write file '{filename}': {error}"
-          .format(filename=e.filename, error=e.strerror)))
-
-
-def print_read_error(e):
-    print(_("Error: Cannot read file '{filename}': {error}"
-          .format(filename=e.filename, error=e.strerror)))
-
-
 class PacmanMirrors:
 
     def __init__(self):
@@ -389,7 +379,8 @@ class PacmanMirrors:
                                                       'url': server_url,
                                                       'selected': False})
             except OSError as e:
-                print_read_error(e)
+                print(_("Error: Cannot read file '{filename}': {error}"
+                        .format(filename=e.filename, error=e.strerror)))
                 continue
         # Sort by response time
         self.good_servers = sorted(self.good_servers,
@@ -424,7 +415,8 @@ class PacmanMirrors:
                                                  'url': server_url,
                                                  'selected': False})
             except OSError as e:
-                print_read_error(e)
+                print(_("Error: Cannot read file '{filename}': {error}"
+                        .format(filename=e.filename, error=e.strerror)))
                 continue
         shuffle(self.bad_servers)
 
@@ -463,7 +455,8 @@ class PacmanMirrors:
                 print(_(":: Generated and saved '{output_file}' mirrorlist."
                       .format(output_file=self.output_mirrorlist)))
         except OSError as e:
-            print_write_error(e)
+            print(_("Error: Cannot write file '{filename}': {error}"
+                    .format(filename=e.filename, error=e.strerror)))
             exit(1)
 
     def write_interactive_mirrorlist(self):
@@ -501,7 +494,8 @@ class PacmanMirrors:
                     fo.write("Server = {}\n"
                              .format(server['url']))
         except OSError as e:
-            print_write_error(e)
+            print(_("Error: Cannot write file '{filename}': {error}"
+                    .format(filename=e.filename, error=e.strerror)))
             exit(1)
 
         # Modify configuration to use Custom Country
@@ -555,7 +549,8 @@ class PacmanMirrors:
                 print(_(":: Generated and saved '{output_file}' mirrorlist."
                       .format(output_file=self.output_mirrorlist)))
         except OSError as e:
-            print_write_error(e)
+            print(_("Error: Cannot write file '{filename}': {error}"
+                    .format(filename=e.filename, error=e.strerror)))
             exit(1)
 
     def run(self):
