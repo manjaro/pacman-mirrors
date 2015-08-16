@@ -26,9 +26,9 @@ setup(
     version='20150808',
     description="Package that provides all mirrors for Manjaro Linux.",
     long_description=readme + '\n\n' + history,
-    author="Ramon Buldó",
-    author_email='rbuldo@gmail.com',
-    url='https://github.com/kirek/pacman-mirrors',
+    author="Roland Singer, Esclapion, philm, Ramon Buldó",
+    author_email='ramon@manjaro.org',
+    url='https://github.com/manjaro/pacman-mirrors',
     packages=[
         'pacman_mirrors',
         'pacman_mirrors_gui'
