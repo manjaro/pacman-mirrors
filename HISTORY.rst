@@ -3,7 +3,13 @@
 History
 -------
 
-20150808 (2015-08-08)
+201508XX (2015-08-XX)
 ---------------------
 
-* First release on PyPI.
+* Add translation support.
+* Better error messages.
+* --no-update option, to prevent updates when upgrading the package.
+* Bug refractor of code.
+* Configuration file /etc/pacman-mirrors.conf is optional
+* Pep8 all the cod in pacman_mirrors.py
+* Reestructure the project
