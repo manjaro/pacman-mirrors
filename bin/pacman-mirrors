@@ -40,6 +40,18 @@ def timeOut(timeout):
     signal.signal(signal.SIGALRM, alarm_handler)
     signal.alarm(timeout) # produce SIGALRM in `timeout` seconds
 
+def parseLine(line):
+    (snom, sval) = line.split("=", 1)
+    sval.strip()
+    if sval.startswith('"'):
+        i = 1
+    else:
+        i = 0
+    if sval.endswith('"'):
+        j = len(sval) - 1
+    else:
+        j = len(sval)
+    return (snom, sval[i:j])
 
 # Parse the file "pacman-mirrors.conf"
 # ====================================
@@ -48,26 +60,11 @@ try :
 except :
     print("\n Error : cannot open file", path_conf, "\n")
     exit(1)
-while 1 :
-    line = fi.readline()
-    if line == "" :
-        break
+for line in fi:
     line = line.strip()
-    if line == "" :
+    if line.startswith('#') or line.startswith('\n') or not "=" in line:
         continue
-    if line[0] == '#' or line[0] == '\n' :
-        continue
-    i = line.find("=")
-    if i == -1 :
-        continue
-    snom = line[0:i]
-    i = i + 1
-    j = len(line)
-    if line[i] == '"' :
-        i = i + 1
-        if line[j -1] == '"' :
-            j = j - 1
-    sval = line[i:j]
+    (snom,sval) = parseLine(line)
     if snom == "Branch" :			# Branch Pacman should use
         branch=sval
     elif snom == "OnlyCountry" :		# Specify to use only mirrors from specific countries
