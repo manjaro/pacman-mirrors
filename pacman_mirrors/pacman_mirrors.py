@@ -77,11 +77,9 @@ class PacmanMirrors:
         with open(conf_file) as fi:
             for line in fi:
                 line = line.strip()
-                if line == "":
-                    continue
-                if line[0] == '#' or line[0] == '\n':
-                    continue
-                if '=' not in line:
+                if (line.startswith('#') or
+                        line.startswith('\n') or
+                        "=" not in line):
                     continue
                 (key, value) = [x.strip() for x in line.split('=', 1)]
                 if not key or not value:
