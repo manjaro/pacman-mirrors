@@ -3,5 +3,4 @@
 ##
 
 [Africa]
-Server = http://manjaro.mirror.ac.za/$branch/$repo/$arch
 Server = http://mirror.is.co.za/mirrors/manjaro.org/$branch/$repo/$arch
