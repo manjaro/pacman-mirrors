@@ -3,6 +3,7 @@
 ##
 
 [Germany]
+Server = http://mirror.ragenetwork.de/manjaro/$branch/$repo/$arch
 Server = http://ftp.halifax.rwth-aachen.de/manjaro/$branch/$repo/$arch
 Server = http://ftp.tu-chemnitz.de/pub/linux/manjaro/$branch/$repo/$arch
 Server = http://mirror.netzspielplatz.de/manjaro/packages/$branch/$repo/$arch
