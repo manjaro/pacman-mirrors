@@ -1,6 +1,0 @@
-##
-## Pacman Mirrorlist
-##
-
-[Belgium]
-Server = http://manjaro.cu.be/$branch/$repo/$arch
