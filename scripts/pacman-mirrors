@@ -19,6 +19,7 @@
 # Author(s): Ramon Buldó <rbuldo@gmail.com>
 
 import os
+import shutil
 from pacman_mirrors import pacman_mirrors
 from pacman_mirrors import i18n
 
@@ -27,6 +28,28 @@ _ = i18n.language.gettext
 if os.getuid() != 0:
     print(_("Error: must have root privilegies."))
     exit(1)
+
+
+def move_custom_country():
+    """
+    Move custom country file from /etc/pacman.d/mirrors/ to
+    /var/lib/pacman-mirrors/
+    """
+    print(
+        _("Moving 'Custom' mirrors file to ") + "/var/lib/pacman-mirrors/")
+    os.makedirs("/var/lib/pacman-mirrors", mode=0o755, exist_ok=True)
+    try:
+        shutil.move("/etc/pacman.d/mirrors/Custom",
+                    "/var/lib/pacman-mirrors/Custom")
+    except OSError as e:
+        print(
+            _("Warning: Cannot move '{filename}' to '{filename2}': {error}"
+              .format(filename=e.filename,
+                      filename2=e.filename2,
+                      error=e.strerror)))
+
+if os.path.isfile("/etc/pacman.d/mirrors/Custom"):
+    move_custom_country()
 
 try:
     pm = pacman_mirrors.PacmanMirrors()

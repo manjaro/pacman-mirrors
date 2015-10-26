@@ -24,6 +24,7 @@ import argparse
 import datetime
 import importlib.util
 import os
+import shutil
 import sys
 import tempfile
 import time
@@ -55,6 +56,8 @@ class PacmanMirrors:
         self.max_wait_time = 2
         self.available_countries = []
         self.no_update = True
+        self.comment_custom = False
+        self.custom_mirror_dir = "/var/lib/pacman-mirrors"
 
         # good_server: respond back and updated in the last 24h
         # resp_server: respond back but not updated in the last 24h or
@@ -138,7 +141,7 @@ class PacmanMirrors:
                             help=_("server maximum waiting time"))
         parser.add_argument("--no-update",
                             action="store_true",
-                            help=_("don't generate mirrorlist if NoUpdate is"
+                            help=_("don't generate mirrorlist if NoUpdate is "
                                    "set to True in the configuration file"))
         if gtk_available:
             parser.add_argument("-i", "--interactive",
@@ -173,30 +176,20 @@ class PacmanMirrors:
         self.available_countries = self.get_available_countries(self.mirror_dir)
 
         if args.country:
-            try:
-                self.only_country = self.valid_country(args.country,
-                                                       self.available_countries)
-            except argparse.ArgumentTypeError as e:
-                parser.error(e)
-            if self.only_country == ["all"]:
-                try:
-                    self.comment_custom_country()
-                except OSError as e:
-                    print(_("Error: Cannot update file '{filename}': {error}"
-                            .format(filename=e.filename, error=e.strerror)))
-                    exit(1)
-                # Remove "Custom" country, created by interactive mode.
-                try:
-                    os.remove(self.mirror_dir + "/Custom", )
-                except FileNotFoundError:
-                    pass
-                except OSError as e:
-                    print(_("Warning: Cannot remove '{filename}': {error}"
-                          .format(filename=e.filename,
-                                  error=e.strerror)))
-                else:
-                    self.available_countries.remove('Custom')
+            country = args.country.split(",")
+            if country == ["Custom"]:
+                self.only_country = country
+            elif country == ["all"]:
                 self.only_country = []
+                self.comment_custom = True
+            else:
+                try:
+                    self.only_country = self.valid_country(country,
+                                                           self.available_countries)
+                except argparse.ArgumentTypeError as e:
+                    parser.error(e)
+        if self.only_country == ["Custom"]:
+            self.mirror_dir = self.custom_mirror_dir
 
         if args.output:
             if args.output[0] == '/':
@@ -224,16 +217,16 @@ class PacmanMirrors:
         return available_countries
 
     @staticmethod
-    def valid_country(string, available_countries):
+    def valid_country(countries, available_countries):
         """
         Check if the list of countries are valid.
         Raises argparse.ArgumentTypeError if it finds and invalid country.
 
-        :param string: string with comma separated countries
-        :param available_countries: list of countries
+        :param countries: list of countries to check
+        :param available_countries: list of available countries
         :return: return the list of valid countries
         """
-        countries = string.split(",")
+
         if countries == ["all"]:
             return countries
         for country in countries:
@@ -461,8 +454,8 @@ class PacmanMirrors:
     def write_interactive_mirrorlist(self):
         """
         Prompt the user to select the mirrors with a gui.
-        Write the mirrorlist file, the "Custom" country and modify
-        the configuration file to use this Custom country.
+        Write the mirrorlist file, the 'Custom' mirror file and modify
+        the configuration file to use the 'Custom' file.
         """
         # Open custom mirrorlist selector
         finished = False
@@ -470,9 +463,10 @@ class PacmanMirrors:
         for server in server_list:
             server['url'] = server['url'].replace("/" + self.branch + "/",
                                                   "/$branch/")
+
+        custom_list = []
         while not finished:
             chooseMirrors(True, server_list)
-            custom_list = []
             for server in server_list:
                 if server['selected']:
                     custom_list.append(server)
@@ -480,10 +474,10 @@ class PacmanMirrors:
                 continue
             finished = chooseMirrors(False, custom_list)
 
-        # Write Custom country
-        custom_path = self.mirror_dir + "/Custom"
+        # Write Custom mirror file
+        os.makedirs(self.custom_mirror_dir, mode=0o755, exist_ok=True)
         try:
-            with open(custom_path, "w") as fo:
+            with open(os.path.join(self.mirror_dir, "Custom"), "w") as fo:
                 fo.write("##\n")
                 fo.write("## Pacman Mirrorlist\n")
                 fo.write("##\n\n")
@@ -497,7 +491,7 @@ class PacmanMirrors:
                     .format(filename=e.filename, error=e.strerror)))
             exit(1)
 
-        # Modify configuration to use Custom Country
+        # Modify configuration to use Custom mirror file
         try:
             with open(self.path_conf) as fin, tempfile.NamedTemporaryFile(
                     "w+t", dir=os.path.dirname(self.path_conf),
@@ -545,8 +539,10 @@ class PacmanMirrors:
                                  .format(server['last_sync']))
                     fo.write("Server = {}\n\n"
                              .format(server['url']))
-                print(_(":: Generated and saved '{output_file}' mirrorlist."
-                      .format(output_file=self.output_mirrorlist)))
+                print(_(":: Generated and saved '{file}' mirrorlist."
+                      .format(file=self.output_mirrorlist)))
+                print(_(":: Saved custom mirror file in '{file}' mirrorlist."
+                        .format(file=os.path.join(self.mirror_dir, "Custom"))))
         except OSError as e:
             print(_("Error: Cannot write file '{filename}': {error}"
                     .format(filename=e.filename, error=e.strerror)))
@@ -558,6 +554,14 @@ class PacmanMirrors:
             self.write_interactive_mirrorlist()
         else:
             self.write_mirrorlist()
+            # Comment the "Custom" country in the configuration file
+            if self.comment_custom:
+                try:
+                    self.comment_custom_country()
+                except OSError as e:
+                    print(_("Warning: Cannot comment custom country: {error}"
+                            .format(error=e.strerror)))
+                    exit(1)
 
 if __name__ == '__main__':
     if os.getuid() != 0:
