@@ -10,7 +10,7 @@ Tests for `pacman-mirrors` module.
 
 import unittest
 
-from pacman_mirrors import pacman_mirrors
+#from pacman_mirrors import pacman_mirrors
 
 
 class TestPacmanMirrors(unittest.TestCase):
@@ -19,7 +19,11 @@ class TestPacmanMirrors(unittest.TestCase):
         pass
 
     def test_something(self):
-        pass
+        self.assertEqual('foo'.upper(), 'FOO')
 
     def tearDown(self):
         pass
+
+
+if __name__ == '__main__':
+    unittest.main()
