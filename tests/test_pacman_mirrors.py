@@ -10,7 +10,7 @@ Tests for `pacman-mirrors` module.
 
 import unittest
 
-#from pacman_mirrors import pacman_mirrors
+from pacman_mirrors import pacman_mirrors
 
 
 class TestPacmanMirrors(unittest.TestCase):
