@@ -37,8 +37,16 @@ from urllib.request import Request, urlopen
 from urllib.error import URLError
 
 from .custom_help_formatter import CustomHelpFormatter
-from .pacman_mirrors_gui import chooseMirrors
 from . import i18n
+
+# The interactive argument will be only available if Gtk is installed
+try:
+    importlib.util.find_spec('gi.repository.Gtk')
+except ImportError:
+    gtk_available = False
+else:
+    from .pacman_mirrors_gui import chooseMirrors
+    gtk_available = True
 
 _ = i18n.language.gettext
 
@@ -102,14 +110,6 @@ class PacmanMirrors:
 
     def parse_cmd(self):
         """ Read the arguments of the command line """
-
-        # The interactive argument will be only available if Gtk is installed
-        try:
-            importlib.util.find_spec('gi.repository.Gtk')
-        except ImportError:
-            gtk_available = False
-        else:
-            gtk_available = True
 
         parser = argparse.ArgumentParser(formatter_class=CustomHelpFormatter)
         parser.add_argument("-g", "--generate",
