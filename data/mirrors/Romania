@@ -6,4 +6,3 @@
 Server = http://mirrors.xservers.ro/manjaro/$branch/$repo/$arch
 Server = http://mirrors.serverhost.ro/manjaro/packages/$branch/$repo/$arch
 Server = http://ftp.lug.ro/manjaro/$branch/$repo/$arch
-Server = http://manjaro.mirrors.linux.ro/repos/$branch/$repo/$arch
