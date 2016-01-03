@@ -44,5 +44,3 @@ language = gettext.translation(APP_NAME,
 #
 # import i18n
 # _ = i18n.language.gettext
-
-

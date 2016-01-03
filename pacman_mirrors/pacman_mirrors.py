@@ -24,7 +24,6 @@ import argparse
 import datetime
 import importlib.util
 import os
-import shutil
 import sys
 import tempfile
 import time
@@ -315,11 +314,11 @@ class PacmanMirrors:
                             if hasattr(e, 'reason'):
                                 print("\n" + _("Error: Failed to reach "
                                                "the server: {reason}"
-                                        .format(reason=e.reason)))
+                                               .format(reason=e.reason)))
                             elif hasattr(e, 'code'):
                                 print("\n" + _("Error: The server couldn\'t "
                                                "fulfill the request: {code}"
-                                        .format(code=e.code)))
+                                               .format(code=e.code)))
                             self.bad_servers.append({'country': current_country,
                                                      'response_time': "99.99",
                                                      'last_sync': "99:99",
@@ -424,7 +423,7 @@ class PacmanMirrors:
                     server_list = (self.good_servers + self.resp_servers +
                                    self.bad_servers)
                     if not server_list:
-                        print("\n" + _("Error: no server available !") + "\n")
+                        print("\n" + _("Error: No server available !") + "\n")
 
                 fo.write("##\n")
                 fo.write("## Manjaro Linux repository mirrorlist\n")
