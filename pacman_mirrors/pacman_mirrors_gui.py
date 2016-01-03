@@ -208,7 +208,7 @@ if __name__ == "__main__":
     try:
         fcust = open(path, "w")
     except:
-        print(_("\nError : can't create file {0}.\n".format(path)))
+        print("\nError : can't create file {0}.\n".format(path))
         exit(1)
     fcust.write("##\n")
     fcust.write("## Pacman Mirrorlist\n")

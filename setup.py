@@ -18,11 +18,11 @@ test_requirements = [
     # TODO: put package test requirements here
 ]
 
-mirror_files = glob.glob("data/mirrors/*")
+mirror_files = glob.glob('data/mirrors/*')
 
 setup(
     name='pacman-mirrors',
-    version='20150808',
+    version='20160103',
     description="Package that provides all mirrors for Manjaro Linux.",
     long_description=readme + '\n\n' + history,
     author="Roland Singer, Esclapion, philm, Ramon Buldó",
@@ -30,8 +30,14 @@ setup(
     url='https://github.com/manjaro/pacman-mirrors',
     packages=['pacman_mirrors'],
     package_dir={'pacman_mirrors': 'pacman_mirrors'},
-    data_files=[('etc', ['conf/pacman-mirrors.conf']),
-                ('etc/pacman.d/mirrors', mirror_files)],
+    data_files=[('/etc', ['conf/pacman-mirrors.conf']),
+                ('/etc/pacman.d/mirrors', mirror_files),
+                ('share/locale/ca/LC_MESSAGES', ['locale/ca/LC_MESSAGES/pacman_mirrors.mo']),
+                ('share/locale/de/LC_MESSAGES', ['locale/de/LC_MESSAGES/pacman_mirrors.mo']),
+                ('share/locale/es/LC_MESSAGES', ['locale/es/LC_MESSAGES/pacman_mirrors.mo']),
+                ('share/locale/fr/LC_MESSAGES', ['locale/fr/LC_MESSAGES/pacman_mirrors.mo']),
+                ('share/locale/it/LC_MESSAGES', ['locale/it/LC_MESSAGES/pacman_mirrors.mo']),
+                ('share/locale/tr/LC_MESSAGES', ['locale/tr/LC_MESSAGES/pacman_mirrors.mo'])],
     scripts=["scripts/pacman-mirrors"],
     install_requires=requirements,
     license="GPL3",
@@ -44,6 +50,7 @@ setup(
         'Natural Language :: English',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
         'Environment :: Console'
     ],
     test_suite='tests',

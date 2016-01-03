@@ -55,6 +55,6 @@ try:
     pm = pacman_mirrors.PacmanMirrors()
     pm.run()
 except KeyboardInterrupt:
-    print(_("\nError: interrupted by the user."))
+    print("\n" + _("Error: interrupted by the user."))
     exit(1)
 

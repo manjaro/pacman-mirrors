@@ -313,12 +313,12 @@ class PacmanMirrors:
                                 d = resp.find(b"date=")
                         except URLError as e:
                             if hasattr(e, 'reason'):
-                                print(_("\nError: Failed to reach "
-                                        "the server: {reason}"
+                                print("\n" + _("Error: Failed to reach "
+                                               "the server: {reason}"
                                         .format(reason=e.reason)))
                             elif hasattr(e, 'code'):
-                                print(_("\nError: The server couldn\'t "
-                                        "fulfill the request: {code}"
+                                print("\n" + _("Error: The server couldn\'t "
+                                               "fulfill the request: {code}"
                                         .format(code=e.code)))
                             self.bad_servers.append({'country': current_country,
                                                      'response_time': "99.99",
@@ -327,8 +327,8 @@ class PacmanMirrors:
                                                      'selected': False})
                             continue
                         except timeout:
-                            print(_("\nError: Failed to reach "
-                                    "the server: Timeout"))
+                            print("\n" + _("Error: Failed to reach "
+                                           "the server: Timeout"))
                             self.bad_servers.append({'country': current_country,
                                                      'response_time': "99.99",
                                                      'last_sync': "99:99",
@@ -350,7 +350,7 @@ class PacmanMirrors:
                                                       'last_sync': "99:99",
                                                       'url': server_url,
                                                       'selected': False})
-                            print(_("\nWarning: Wrong date format in 'state' file."))
+                            print("\n" + _("Warning: Wrong date format in 'state' file."))
                             continue
                         total_seconds = (date_now - date_server).total_seconds()
                         total_minutes = total_seconds // 60
@@ -424,7 +424,7 @@ class PacmanMirrors:
                     server_list = (self.good_servers + self.resp_servers +
                                    self.bad_servers)
                     if not server_list:
-                        print(_("\nError: no server available !\n"))
+                        print("\n" + _("Error: no server available !") + "\n")
 
                 fo.write("##\n")
                 fo.write("## Manjaro Linux repository mirrorlist\n")
@@ -523,7 +523,7 @@ class PacmanMirrors:
                 fo.write("##\n")
                 fo.write("## Use pacman-mirrors to modify\n")
                 fo.write("##\n\n")
-                print(_("\nUser generated mirror list"))
+                print("\n" + _("User generated mirror list"))
                 print("--------------------------")
                 for server in custom_list:
                     server['url'] = server['url'].replace("$branch",
@@ -539,10 +539,10 @@ class PacmanMirrors:
                                  .format(server['last_sync']))
                     fo.write("Server = {}\n\n"
                              .format(server['url']))
-                print(_(":: Generated and saved '{file}' mirrorlist."
-                      .format(file=self.output_mirrorlist)))
-                print(_(":: Saved custom mirror file in '{file}' mirrorlist."
-                        .format(file=os.path.join(self.mirror_dir, "Custom"))))
+                print(_(":: Generated and saved '{output_file}' mirrorlist."
+                      .format(output_file=self.output_mirrorlist)))
+                print(_(":: Saved personalized list of mirrors in '{custom_file}'."
+                        .format(custom_file=os.path.join(self.mirror_dir, "Custom"))))
         except OSError as e:
             print(_("Error: Cannot write file '{filename}': {error}"
                     .format(filename=e.filename, error=e.strerror)))
@@ -559,13 +559,13 @@ class PacmanMirrors:
                 try:
                     self.comment_custom_country()
                 except OSError as e:
-                    print(_("Warning: Cannot comment custom country: {error}"
+                    print(_("Warning: Cannot remove 'Custom' country in the configuration file: {error}"
                             .format(error=e.strerror)))
                     exit(1)
 
 if __name__ == '__main__':
     if os.getuid() != 0:
-        print(_("Error: must have root privilegies."))
+        print("Error: must have root privilegies.")
         exit(1)
 
     pm = PacmanMirrors()

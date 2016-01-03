@@ -1,0 +1,183 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Translators:
+# Ramon Buldó <rbuldo@gmail.com>, 2015
+msgid ""
+msgstr ""
+"Project-Id-Version: manjaro-pacman-mirrors\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-12-22 03:23+0100\n"
+"PO-Revision-Date: 2015-12-22 03:50+0000\n"
+"Last-Translator: Ramon Buldó <rbuldo@gmail.com>\n"
+"Language-Team: Catalan (http://www.transifex.com/manjarolinux/manjaro-pacman-mirrors/language/ca/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ca\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: pacman_mirrors/pacman_mirrors_gui.py:68
+msgid "Previous page"
+msgstr "Pàgina anterior"
+
+#: pacman_mirrors/pacman_mirrors_gui.py:74
+msgid "Next page"
+msgstr "Pàgina següent"
+
+#: pacman_mirrors/pacman_mirrors_gui.py:121
+msgid "Mirrors list sorted by response time"
+msgstr "Repositoris ordenats per el temps de resposta"
+
+#: pacman_mirrors/pacman_mirrors_gui.py:124
+msgid "List of selected mirrors"
+msgstr "Llista de repositoris seleccionats"
+
+#: pacman_mirrors/pacman_mirrors_gui.py:131
+msgid "Select by clicking mirrors to prepare your custom list"
+msgstr "Selecciona el repositoris per preparar la teva llista personalitzada"
+
+#: pacman_mirrors/pacman_mirrors_gui.py:171
+msgid "Show custom list"
+msgstr "Mostrar llista personalitzada"
+
+#: pacman_mirrors/pacman_mirrors_gui.py:175
+msgid "Back to main list"
+msgstr "Tornar a la llista de repositoris"
+
+#: pacman_mirrors/pacman_mirrors_gui.py:178
+msgid "Done"
+msgstr "Aceptar"
+
+#: pacman_mirrors/pacman_mirrors.py:80
+#, python-brace-format
+msgid "Warning: Cannot read file '{filename}': {error}"
+msgstr "Atenció: No es pot llegir fitxer '{filename}': {error}"
+
+#: pacman_mirrors/pacman_mirrors.py:117
+msgid "generate new mirrorlist"
+msgstr "generar nova llista de repositoris"
+
+#: pacman_mirrors/pacman_mirrors.py:121
+msgid "generation method"
+msgstr "metode de generació"
+
+#: pacman_mirrors/pacman_mirrors.py:125
+msgid "branch name"
+msgstr "nom de la branca"
+
+#: pacman_mirrors/pacman_mirrors.py:128
+msgid "comma separated list of countries where mirrors will be used"
+msgstr "llista de països separats per coma que s'utilitzaran"
+
+#: pacman_mirrors/pacman_mirrors.py:132
+msgid "PATH"
+msgstr "CAMÍ"
+
+#: pacman_mirrors/pacman_mirrors.py:133
+msgid "mirrors list path"
+msgstr "cami de la llista de repositoris"
+
+#: pacman_mirrors/pacman_mirrors.py:136
+msgid "FILE"
+msgstr "FITXER"
+
+#: pacman_mirrors/pacman_mirrors.py:137
+msgid "output file"
+msgstr "fitxer de sortida"
+
+#: pacman_mirrors/pacman_mirrors.py:140
+msgid "SECONDS"
+msgstr "SEGONS"
+
+#: pacman_mirrors/pacman_mirrors.py:141
+msgid "server maximum waiting time"
+msgstr "temps màxim d'espera del servidor"
+
+#: pacman_mirrors/pacman_mirrors.py:144
+msgid ""
+"don't generate mirrorlist if NoUpdate is set to True in the configuration "
+"file"
+msgstr "no generar la llista de repositoris si \"NoUpdate\" és \"True\" en el fitxer de configuració"
+
+#: pacman_mirrors/pacman_mirrors.py:149
+msgid "interactively generate a custom mirrorlist"
+msgstr "generar llista de repositoris interactivament"
+
+#: pacman_mirrors/pacman_mirrors.py:153
+msgid "print the pacman-mirrors version"
+msgstr "mostrar la versió de pacman-mirrors"
+
+#: pacman_mirrors/pacman_mirrors.py:234
+#, python-brace-format
+msgid ""
+"argument -c/--country: unknown country '{country}'\n"
+"Available countries are: {country_list}"
+msgstr "argument -c/--country: país desconegur '{country}'\nPaïsos disponibles: {country_list}"
+
+#: pacman_mirrors/pacman_mirrors.py:286
+msgid ":: Querying servers, this may take some time..."
+msgstr ":: Consultant els servidors, això pot trigar una mica ..."
+
+#: pacman_mirrors/pacman_mirrors.py:316
+#, python-brace-format
+msgid "Error: Failed to reach the server: {reason}"
+msgstr "Error: No s'ha pogut trobar el servidor: {reason}"
+
+#: pacman_mirrors/pacman_mirrors.py:320
+#, python-brace-format
+msgid "Error: The server couldn't fulfill the request: {code}"
+msgstr "Error: El servidor no ha pogut complir amb la sol·licitud: {code}"
+
+#: pacman_mirrors/pacman_mirrors.py:330
+msgid "Error: Failed to reach the server: Timeout"
+msgstr "Error: No s'ha pogut trobar el servidor: Ha tardat massa a respondre"
+
+#: pacman_mirrors/pacman_mirrors.py:353
+msgid "Warning: Wrong date format in 'state' file."
+msgstr "Atenció: Data incorrecta en el fitxer 'state'."
+
+#: pacman_mirrors/pacman_mirrors.py:374 pacman_mirrors/pacman_mirrors.py:410
+#, python-brace-format
+msgid "Error: Cannot read file '{filename}': {error}"
+msgstr "Error: No es pot llegir el fitxer '{filename}': {error}"
+
+#: pacman_mirrors/pacman_mirrors.py:389
+msgid ":: Randomizing server list..."
+msgstr ":: Assignant a l'atzar la llista de servidors ..."
+
+#: pacman_mirrors/pacman_mirrors.py:427
+msgid "Error: no server available !"
+msgstr "Error: no hi ha cap servidor disponible!"
+
+#: pacman_mirrors/pacman_mirrors.py:447 pacman_mirrors/pacman_mirrors.py:542
+#, python-brace-format
+msgid ":: Generated and saved '{output_file}' mirrorlist."
+msgstr ":: Generada i guardada la llista de repositoris '{output_file}'."
+
+#: pacman_mirrors/pacman_mirrors.py:450 pacman_mirrors/pacman_mirrors.py:490
+#: pacman_mirrors/pacman_mirrors.py:547
+#, python-brace-format
+msgid "Error: Cannot write file '{filename}': {error}"
+msgstr "Error: No es pot escriure el fitxer '{filename}': {error}"
+
+#: pacman_mirrors/pacman_mirrors.py:511
+#, python-brace-format
+msgid "Error: Cannot update file '{filename}': {error}"
+msgstr "Error: No es pot actualitzar el fitxer '{filename}': {error}"
+
+#: pacman_mirrors/pacman_mirrors.py:526
+msgid "User generated mirror list"
+msgstr "Llista de repositoris personalitzada per l'usuari"
+
+#: pacman_mirrors/pacman_mirrors.py:544
+#, python-brace-format
+msgid ":: Saved personalized list of mirrors in '{custom_file}'."
+msgstr ":: Guardada la llista personalitzada de repositoris a '{custom_file}'."
+
+#: pacman_mirrors/pacman_mirrors.py:562
+#, python-brace-format
+msgid ""
+"Warning: Cannot remove 'Custom' country in the configuration file: {error}"
+msgstr "Atenció: No es pot esborrar el país 'Custom' en el fitxer de configuració: {error}"

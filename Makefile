@@ -13,6 +13,10 @@ help:
 	@echo "release - package and upload a release"
 	@echo "dist - package"
 	@echo "install - install the package to the active Python's site-packages"
+	@echo "pot-file - extract messages to locale/pacman_mirrors.pot"
+	@echo "push-pot - push pot file to transifex"
+	@echo "pull-pot - pull all translations from transifex"
+	@echo "mo-files - generate .mo files"
 
 clean: clean-build clean-pyc clean-test
 
@@ -66,8 +70,17 @@ dist: clean
 	python setup.py bdist_wheel
 	ls -l dist
 
-install: clean
-	python setup.py install
+install: clean mo-files
+	python setup.py install --root=$(DESTDIR) --optimize=1
 
-po-file:
-	xgettext --language=Python --keyword=_ --output=po/pacman_mirrors.pot `find pacman_mirrors -name '*.py'`
+pot-file:
+	python setup.py extract_messages --output-file locale/pacman_mirrors.pot
+
+push-pot:
+	tx push -s
+
+pull-po:
+	tx pull -a
+
+mo-files:
+	python setup.py compile_catalog --directory locale --domain pacman_mirrors
