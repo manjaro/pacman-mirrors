@@ -25,10 +25,6 @@ from pacman_mirrors import i18n
 
 _ = i18n.language.gettext
 
-if os.getuid() != 0:
-    print(_("Error: must have root privilegies."))
-    exit(1)
-
 
 def move_custom_country():
     """
@@ -49,7 +45,8 @@ def move_custom_country():
                       error=e.strerror)))
 
 if os.path.isfile("/etc/pacman.d/mirrors/Custom"):
-    move_custom_country()
+    if os.getuid() == 0:
+        move_custom_country()
 
 try:
     pm = pacman_mirrors.PacmanMirrors()

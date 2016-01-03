@@ -157,8 +157,12 @@ class PacmanMirrors:
             exit(0)
 
         if args.version:
-            print("pacman-mirrors 20150808")
+            print("pacman-mirrors 20160103")
             exit(0)
+
+        if os.getuid() != 0:
+            print(_("Error: Must have root privileges."))
+            exit(1)
 
         if args.no_update:
             if self.no_update == "True":
