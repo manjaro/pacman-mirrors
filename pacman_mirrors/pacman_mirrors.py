@@ -191,8 +191,15 @@ class PacmanMirrors:
                                                            self.available_countries)
                 except argparse.ArgumentTypeError as e:
                     parser.error(e)
+
         if self.only_country == ["Custom"]:
-            self.mirror_dir = self.custom_mirror_dir
+            custom_path = os.path.join(self.custom_mirror_dir, "Custom")
+            if os.path.isfile(custom_path):
+                self.mirror_dir = self.custom_mirror_dir
+            else:
+                print(_("Error: Custom mirrors file '{path}' doesn't exists.")
+                      .format(custom_path))
+                exit(1)
 
         if args.output:
             if args.output[0] == '/':
@@ -480,7 +487,7 @@ class PacmanMirrors:
         # Write Custom mirror file
         os.makedirs(self.custom_mirror_dir, mode=0o755, exist_ok=True)
         try:
-            with open(os.path.join(self.mirror_dir, "Custom"), "w") as fo:
+            with open(os.path.join(self.custom_mirror_dir, "Custom"), "w") as fo:
                 fo.write("##\n")
                 fo.write("## Pacman Mirrorlist\n")
                 fo.write("##\n\n")
@@ -545,7 +552,7 @@ class PacmanMirrors:
                 print(_(":: Generated and saved '{output_file}' mirrorlist."
                       .format(output_file=self.output_mirrorlist)))
                 print(_(":: Saved personalized list of mirrors in '{custom_file}'."
-                        .format(custom_file=os.path.join(self.mirror_dir, "Custom"))))
+                        .format(custom_file=os.path.join(self.custom_mirror_dir, "Custom"))))
         except OSError as e:
             print(_("Error: Cannot write file '{filename}': {error}"
                     .format(filename=e.filename, error=e.strerror)))

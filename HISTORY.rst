@@ -13,5 +13,5 @@ History
 * Configuration file /etc/pacman-mirrors.conf is optional.
 * Pep8 all the code in pacman_mirrors.py
 * Reestructure the project.
-* The Custom country created in interactive mode is now stored in /var/lib/pacman-mirrors/
-  if a Custom country is found in /etc/pacman.d/mirrors/ its moved automatically to the new directory.
+* The Custom country created with interactive mode is now stored in /var/lib/pacman-mirrors/
+* If a Custom country is found in /etc/pacman.d/mirrors/ its moved automatically to the new directory.
