@@ -157,7 +157,7 @@ class PacmanMirrors:
             exit(0)
 
         if args.version:
-            print("pacman-mirrors 20160103")
+            print("pacman-mirrors 2.0")
             exit(0)
 
         if os.getuid() != 0:
