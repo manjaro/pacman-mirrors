@@ -4,172 +4,171 @@
 # project.
 # 
 # Translators:
-# Julián Federico Hipólito <julianhipolito@gmail.com>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: manjaro-pacman-mirrors\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-01-03 13:01+0100\n"
-"PO-Revision-Date: 2016-03-18 12:49+0000\n"
-"Last-Translator: Julián Federico Hipólito <julianhipolito@gmail.com>\n"
-"Language-Team: Spanish (http://www.transifex.com/manjarolinux/manjaro-pacman-mirrors/language/es/)\n"
+"PO-Revision-Date: 2015-12-22 01:50+0000\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Swedish (http://www.transifex.com/manjarolinux/manjaro-pacman-mirrors/language/sv/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.1.1\n"
-"Language: es\n"
+"Language: sv\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: pacman_mirrors/pacman_mirrors.py:80
 msgid "Warning: Cannot read file '{filename}': {error}"
-msgstr "Atención: No se puede leer el archivo '{filename}': {error}"
+msgstr ""
 
 #: pacman_mirrors/pacman_mirrors.py:116
 msgid "generate new mirrorlist"
-msgstr "Generar nueva lista de mirros"
+msgstr ""
 
 #: pacman_mirrors/pacman_mirrors.py:120
 msgid "generation method"
-msgstr "Método de generación"
+msgstr ""
 
 #: pacman_mirrors/pacman_mirrors.py:124
 msgid "branch name"
-msgstr "nombre de división"
+msgstr ""
 
 #: pacman_mirrors/pacman_mirrors.py:127
 msgid "comma separated list of countries where mirrors will be used"
-msgstr "Lista separada por comas de países de donde se usarán los mirrors"
+msgstr ""
 
 #: pacman_mirrors/pacman_mirrors.py:131
 msgid "PATH"
-msgstr "RUTA"
+msgstr ""
 
 #: pacman_mirrors/pacman_mirrors.py:132
 msgid "mirrors list path"
-msgstr "Ruta de lista de mirrors"
+msgstr ""
 
 #: pacman_mirrors/pacman_mirrors.py:135
 msgid "FILE"
-msgstr "ARCHIVO"
+msgstr ""
 
 #: pacman_mirrors/pacman_mirrors.py:136
 msgid "output file"
-msgstr "Archivo de salida"
+msgstr ""
 
 #: pacman_mirrors/pacman_mirrors.py:139
 msgid "SECONDS"
-msgstr "SEGUNDOS"
+msgstr ""
 
 #: pacman_mirrors/pacman_mirrors.py:140
 msgid "server maximum waiting time"
-msgstr "Tiempo máximo de espera del servidor"
+msgstr ""
 
 #: pacman_mirrors/pacman_mirrors.py:143
 msgid ""
 "don't generate mirrorlist if NoUpdate is set to True in the configuration "
 "file"
-msgstr "No generar lista de mirrors si NoUpdate está definido como True en el archivo de configuración"
+msgstr ""
 
 #: pacman_mirrors/pacman_mirrors.py:148
 msgid "interactively generate a custom mirrorlist"
-msgstr "Generar lista de mirrors de forma interactiva"
+msgstr ""
 
 #: pacman_mirrors/pacman_mirrors.py:152
 msgid "print the pacman-mirrors version"
-msgstr "imprimir la versión de pacman-mirrors"
+msgstr ""
 
 #: pacman_mirrors/pacman_mirrors.py:236
 msgid ""
 "argument -c/--country: unknown country '{country}'\n"
 "Available countries are: {country_list}"
-msgstr "argumento -c/--country: país desconocido '{country}'\nLos países disponibles son: {country_list}"
+msgstr ""
 
 #: pacman_mirrors/pacman_mirrors.py:285
 msgid ":: Querying servers, this may take some time..."
-msgstr ":: Enviando solicitud a los servidores, esto puede tardar unos minutos..."
+msgstr ""
 
 #: pacman_mirrors/pacman_mirrors.py:317
 msgid "Error: Failed to reach the server: {reason}"
-msgstr "Error: Fallo al alcanzar al servidor: {reason}"
+msgstr ""
 
 #: pacman_mirrors/pacman_mirrors.py:321
 msgid "Error: The server couldn't fulfill the request: {code}"
-msgstr "Error: El servidor no responde a la solicitud: {code}"
+msgstr ""
 
 #: pacman_mirrors/pacman_mirrors.py:329
 msgid "Error: Failed to reach the server: Timeout"
-msgstr "Error: Fallo al acceder al servidor: Tiempo de espera agotado"
+msgstr ""
 
 #: pacman_mirrors/pacman_mirrors.py:352
 msgid "Warning: Wrong date format in 'state' file."
-msgstr "Atención: Formato incorrecto de fecha en el archivo 'state'."
+msgstr ""
 
 #: pacman_mirrors/pacman_mirrors.py:374 pacman_mirrors/pacman_mirrors.py:410
 msgid "Error: Cannot read file '{filename}': {error}"
-msgstr "Error: No se puede leer el archivo '{filename}': {error}"
+msgstr ""
 
 #: pacman_mirrors/pacman_mirrors.py:388
 msgid ":: Randomizing server list..."
-msgstr ":: Aleatorizando lista de servidores..."
+msgstr ""
 
 #: pacman_mirrors/pacman_mirrors.py:426
 msgid "Error: No server available !"
-msgstr "Error: No hay servidores disponibles!"
+msgstr ""
 
 #: pacman_mirrors/pacman_mirrors.py:447 pacman_mirrors/pacman_mirrors.py:542
 msgid ":: Generated and saved '{output_file}' mirrorlist."
-msgstr ":: Lista de mirrors '{output_file}' generada y guardada."
+msgstr ""
 
 #: pacman_mirrors/pacman_mirrors.py:450 pacman_mirrors/pacman_mirrors.py:490
 #: pacman_mirrors/pacman_mirrors.py:547
 msgid "Error: Cannot write file '{filename}': {error}"
-msgstr "Error: No se puede escribir archivo '{filename}': {error}"
+msgstr ""
 
 #: pacman_mirrors/pacman_mirrors.py:511
 msgid "Error: Cannot update file '{filename}': {error}"
-msgstr "Error: No se puede actualizar archivo '{filename}': {error}"
+msgstr ""
 
 #: pacman_mirrors/pacman_mirrors.py:525
 msgid "User generated mirror list"
-msgstr "Lista de mirrors generada por el usuario"
+msgstr ""
 
 #: pacman_mirrors/pacman_mirrors.py:544
 msgid ":: Saved personalized list of mirrors in '{custom_file}'."
-msgstr ":: Lista personalizada de mirrors guardada en '{custom_file}'."
+msgstr ""
 
 #: pacman_mirrors/pacman_mirrors.py:562
 msgid ""
 "Warning: Cannot remove 'Custom' country in the configuration file: {error}"
-msgstr "Alerta: No se puede remover el país 'Custom' del archivo de configuración: {error}"
+msgstr ""
 
 #: pacman_mirrors/pacman_mirrors_gui.py:68
 msgid "Previous page"
-msgstr "Página anterior"
+msgstr ""
 
 #: pacman_mirrors/pacman_mirrors_gui.py:74
 msgid "Next page"
-msgstr "Página siguiente"
+msgstr ""
 
 #: pacman_mirrors/pacman_mirrors_gui.py:121
 msgid "Mirrors list sorted by response time"
-msgstr "Lista de mirrors ordenada por tiempo de respuesta"
+msgstr ""
 
 #: pacman_mirrors/pacman_mirrors_gui.py:124
 msgid "List of selected mirrors"
-msgstr "Lista de mirrors seleccionados"
+msgstr ""
 
 #: pacman_mirrors/pacman_mirrors_gui.py:131
 msgid "Select by clicking mirrors to prepare your custom list"
-msgstr "Haga click en los mirros para seleccionarlos y preparar su lista personalizada"
+msgstr ""
 
 #: pacman_mirrors/pacman_mirrors_gui.py:171
 msgid "Show custom list"
-msgstr "Mostrar lista personalizada"
+msgstr ""
 
 #: pacman_mirrors/pacman_mirrors_gui.py:175
 msgid "Back to main list"
-msgstr "Volver a la lista principal"
+msgstr ""
 
 #: pacman_mirrors/pacman_mirrors_gui.py:178
 msgid "Done"
-msgstr "Hecho"
+msgstr ""
