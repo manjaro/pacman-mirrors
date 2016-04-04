@@ -44,7 +44,6 @@ try:
 except ImportError:
     gtk_available = False
 else:
-    from .pacman_mirrors_gui import chooseMirrors
     gtk_available = True
 
 _ = i18n.language.gettext
@@ -467,6 +466,8 @@ class PacmanMirrors:
         Write the mirrorlist file, the 'Custom' mirror file and modify
         the configuration file to use the 'Custom' file.
         """
+        from .pacman_mirrors_gui import chooseMirrors
+
         # Open custom mirrorlist selector
         finished = False
         server_list = self.good_servers + self.resp_servers + self.bad_servers
