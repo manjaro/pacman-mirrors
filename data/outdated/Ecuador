@@ -1,7 +1,0 @@
-##
-## Pacman Mirrorlist
-##
-
-[Ecuador]
-Server = http://mirror.uta.edu.ec/manjaro/manjarolinux/$branch/$repo/$arch
-Server = http://mirror.espoch.edu.ec/manjaro/manjarolinux/$branch/$repo/$arch
