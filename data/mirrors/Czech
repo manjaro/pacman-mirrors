@@ -1,0 +1,6 @@
+##
+## Pacman Mirrorlist
+##
+
+[Czech]
+Server = http://mirror.dkm.cz/manjaro/$branch/$repo/$arch
