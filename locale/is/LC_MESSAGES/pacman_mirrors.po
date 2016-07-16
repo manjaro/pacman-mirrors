@@ -4,13 +4,14 @@
 # project.
 # 
 # Translators:
+# Kristján Magnússon, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: manjaro-pacman-mirrors\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-01-03 13:01+0100\n"
-"PO-Revision-Date: 2015-12-22 01:50+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2016-04-24 14:41+0000\n"
+"Last-Translator: Kristján Magnússon\n"
 "Language-Team: Icelandic (http://www.transifex.com/manjarolinux/manjaro-pacman-mirrors/language/is/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -49,7 +50,7 @@ msgstr ""
 
 #: pacman_mirrors/pacman_mirrors.py:135
 msgid "FILE"
-msgstr ""
+msgstr "SKRÁ"
 
 #: pacman_mirrors/pacman_mirrors.py:136
 msgid "output file"
@@ -57,11 +58,11 @@ msgstr ""
 
 #: pacman_mirrors/pacman_mirrors.py:139
 msgid "SECONDS"
-msgstr ""
+msgstr "SEKÚNDUR"
 
 #: pacman_mirrors/pacman_mirrors.py:140
 msgid "server maximum waiting time"
-msgstr ""
+msgstr "miðlari hámarks biðtíma"
 
 #: pacman_mirrors/pacman_mirrors.py:143
 msgid ""
@@ -89,7 +90,7 @@ msgstr ""
 
 #: pacman_mirrors/pacman_mirrors.py:317
 msgid "Error: Failed to reach the server: {reason}"
-msgstr ""
+msgstr "Villa: Náði ekki að tengjast við miðlara: {reason}"
 
 #: pacman_mirrors/pacman_mirrors.py:321
 msgid "Error: The server couldn't fulfill the request: {code}"
@@ -113,7 +114,7 @@ msgstr ""
 
 #: pacman_mirrors/pacman_mirrors.py:426
 msgid "Error: No server available !"
-msgstr ""
+msgstr "Villa: Einginn miðlari í boði !"
 
 #: pacman_mirrors/pacman_mirrors.py:447 pacman_mirrors/pacman_mirrors.py:542
 msgid ":: Generated and saved '{output_file}' mirrorlist."
@@ -143,11 +144,11 @@ msgstr ""
 
 #: pacman_mirrors/pacman_mirrors_gui.py:68
 msgid "Previous page"
-msgstr ""
+msgstr "Fyrri síða"
 
 #: pacman_mirrors/pacman_mirrors_gui.py:74
 msgid "Next page"
-msgstr ""
+msgstr "Næsta síða"
 
 #: pacman_mirrors/pacman_mirrors_gui.py:121
 msgid "Mirrors list sorted by response time"
@@ -171,4 +172,4 @@ msgstr ""
 
 #: pacman_mirrors/pacman_mirrors_gui.py:178
 msgid "Done"
-msgstr ""
+msgstr "Lokið"
