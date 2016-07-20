@@ -1,0 +1,6 @@
+##
+## Pacman Mirrorlist
+##
+
+[Vietnam]
+Server = http://mirror.freedif.org/Manjaro/$branch/$repo/$arch
