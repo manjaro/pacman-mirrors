@@ -34,7 +34,7 @@ from random import shuffle
 from socket import timeout
 from urllib.request import Request, urlopen
 from urllib.error import URLError
-from httplib.client import HTTPException
+from http.client import HTTPException
 
 from .custom_help_formatter import CustomHelpFormatter
 from . import i18n
