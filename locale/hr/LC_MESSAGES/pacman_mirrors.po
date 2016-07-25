@@ -4,172 +4,172 @@
 # project.
 # 
 # Translators:
-# Nicolas Cuffia <cuffia.cuceglio@vivaldi.net>, 2016
+# Lovro Kudelić <lovro.kudelic@outlook.com>, 2016
 msgid ""
 msgstr ""
 "Project-Id-Version: manjaro-pacman-mirrors\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2016-01-03 13:01+0100\n"
-"PO-Revision-Date: 2016-07-24 18:43+0000\n"
-"Last-Translator: Nicolas Cuffia <cuffia.cuceglio@vivaldi.net>\n"
-"Language-Team: French (http://www.transifex.com/manjarolinux/manjaro-pacman-mirrors/language/fr/)\n"
+"PO-Revision-Date: 2016-05-05 19:38+0000\n"
+"Last-Translator: Lovro Kudelić <lovro.kudelic@outlook.com>\n"
+"Language-Team: Croatian (http://www.transifex.com/manjarolinux/manjaro-pacman-mirrors/language/hr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.1.1\n"
-"Language: fr\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Language: hr\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 
 #: pacman_mirrors/pacman_mirrors.py:80
 msgid "Warning: Cannot read file '{filename}': {error}"
-msgstr "Avertissement: Ne peut pas lire '{filename}': {error}"
+msgstr "Upozorenje: Ne mogu pročitati datoteku '{filename}': {error}"
 
 #: pacman_mirrors/pacman_mirrors.py:116
 msgid "generate new mirrorlist"
-msgstr "générer nouveau mirrorlist"
+msgstr "generiraj novu listu zrcalnih poslužitelja"
 
 #: pacman_mirrors/pacman_mirrors.py:120
 msgid "generation method"
-msgstr "méthode de génération"
+msgstr "metoda generiranja"
 
 #: pacman_mirrors/pacman_mirrors.py:124
 msgid "branch name"
-msgstr "nom de la branche"
+msgstr "ime grane"
 
 #: pacman_mirrors/pacman_mirrors.py:127
 msgid "comma separated list of countries where mirrors will be used"
-msgstr "la virgule sépare la liste des pays où les miroirs seront utilisés"
+msgstr "lista zemalja iz kojih će se koristiti zrcalni poslužitelji odvojenih zarezom"
 
 #: pacman_mirrors/pacman_mirrors.py:131
 msgid "PATH"
-msgstr "CHEMIN"
+msgstr "PUTANJA"
 
 #: pacman_mirrors/pacman_mirrors.py:132
 msgid "mirrors list path"
-msgstr "chemin de la liste des miroirs"
+msgstr "putanja liste zrcalnih poslužitelja"
 
 #: pacman_mirrors/pacman_mirrors.py:135
 msgid "FILE"
-msgstr "FICHIER"
+msgstr "DATOTEKA"
 
 #: pacman_mirrors/pacman_mirrors.py:136
 msgid "output file"
-msgstr "fichier de sortie"
+msgstr "izlazna datoteka"
 
 #: pacman_mirrors/pacman_mirrors.py:139
 msgid "SECONDS"
-msgstr "SECONDES"
+msgstr "SEKUNDE"
 
 #: pacman_mirrors/pacman_mirrors.py:140
 msgid "server maximum waiting time"
-msgstr "temps d'attente maximum du serveur "
+msgstr "maksimalno vrijeme čekanja poslužitelja"
 
 #: pacman_mirrors/pacman_mirrors.py:143
 msgid ""
 "don't generate mirrorlist if NoUpdate is set to True in the configuration "
 "file"
-msgstr "ne générez pas mirrorlist si NoUpdate est reglé à True dans le fichier de configuration"
+msgstr "nemoj generirati listu zrcalnih poslužitelja ako je NoUpdate postavljen na True u konfiguracijskoj datoteci"
 
 #: pacman_mirrors/pacman_mirrors.py:148
 msgid "interactively generate a custom mirrorlist"
-msgstr "générer de manière interactive un mirrorlist personnalisé"
+msgstr "interaktivno generiraj prilagođenu listu zrcalnih poslužitelja"
 
 #: pacman_mirrors/pacman_mirrors.py:152
 msgid "print the pacman-mirrors version"
-msgstr "afficher la version de pacman-mirrors"
+msgstr "ispiši verziju pacman-mirrors-a"
 
 #: pacman_mirrors/pacman_mirrors.py:236
 msgid ""
 "argument -c/--country: unknown country '{country}'\n"
 "Available countries are: {country_list}"
-msgstr "argument -c/--country: pays inconnu '{country}'\n\nPays disponibles sont: {country_list}"
+msgstr "argument -c/--country: nepoznata zemlja '{country}'\nDostupne zemlje su: {country_list}"
 
 #: pacman_mirrors/pacman_mirrors.py:285
 msgid ":: Querying servers, this may take some time..."
-msgstr ":: Interrogation des serveurs, cela peut prendre quelques temps..."
+msgstr ":: Postavljam upite poslužiteljima, to može potrajati neko vrijeme..."
 
 #: pacman_mirrors/pacman_mirrors.py:317
 msgid "Error: Failed to reach the server: {reason}"
-msgstr "Erreur: Ne peut pas atteindre le serveur: {reason}"
+msgstr "Greška: Ne mogu pristupiti poslužitelju: {reason}"
 
 #: pacman_mirrors/pacman_mirrors.py:321
 msgid "Error: The server couldn't fulfill the request: {code}"
-msgstr "Erreur: Le serveur n'a pas pu remplir la demande: {code}"
+msgstr "Greška: Poslužitelj ne može ispuniti zahtjev: {code}"
 
 #: pacman_mirrors/pacman_mirrors.py:329
 msgid "Error: Failed to reach the server: Timeout"
-msgstr "Erreur: Ne peut pas atteindre le serveur: Temps dépassé"
+msgstr "Greška: Ne mogu pristupiti poslužitelju: Vremensko ograničenje"
 
 #: pacman_mirrors/pacman_mirrors.py:352
 msgid "Warning: Wrong date format in 'state' file."
-msgstr "Avertissement: Mauvais format de la date dans le fichier 'state'"
+msgstr "Upozorenje: Krivi format datuma u 'state' datoteci."
 
 #: pacman_mirrors/pacman_mirrors.py:374 pacman_mirrors/pacman_mirrors.py:410
 msgid "Error: Cannot read file '{filename}': {error}"
-msgstr "Erreur: Ne peut pas lire '{filename}': {error}"
+msgstr "Greška: Ne mogu pročitati datoteku '{filename}': {error}"
 
 #: pacman_mirrors/pacman_mirrors.py:388
 msgid ":: Randomizing server list..."
-msgstr ":: Randomisation de la liste de serveurs..."
+msgstr ":: Slučajno odabirem listu zrcalnih poslužitelja..."
 
 #: pacman_mirrors/pacman_mirrors.py:426
 msgid "Error: No server available !"
-msgstr "Erreur: Aucun serveur disponible !"
+msgstr "Greška: Poslužitelj nije dostupan !"
 
 #: pacman_mirrors/pacman_mirrors.py:447 pacman_mirrors/pacman_mirrors.py:542
 msgid ":: Generated and saved '{output_file}' mirrorlist."
-msgstr ":: Génération et sauvegarde '{output_file}' mirrorlist."
+msgstr ":: Generirana je i spremljena '{output_file}' lista zrcalnih poslužitelja."
 
 #: pacman_mirrors/pacman_mirrors.py:450 pacman_mirrors/pacman_mirrors.py:490
 #: pacman_mirrors/pacman_mirrors.py:547
 msgid "Error: Cannot write file '{filename}': {error}"
-msgstr "Erreur: Ne peut pas écrire le fichier '{filename}': {error}"
+msgstr "Greška: Ne mogu pisati u datoteku '{filename}': {error}"
 
 #: pacman_mirrors/pacman_mirrors.py:511
 msgid "Error: Cannot update file '{filename}': {error}"
-msgstr "Erreur: Ne peut pas mettre à jour le fichier '{filename}': {error}"
+msgstr "Greška: Ne mogu ažurirati datoteku '{filename}': {error}"
 
 #: pacman_mirrors/pacman_mirrors.py:525
 msgid "User generated mirror list"
-msgstr "Liste des miroirs généré par l'utilisateur"
+msgstr "Korisnički generirana lista zrcalnih poslužitelja"
 
 #: pacman_mirrors/pacman_mirrors.py:544
 msgid ":: Saved personalized list of mirrors in '{custom_file}'."
-msgstr ":: Sauvegarde de la liste personnalisée des miroirs dans '{custom_file}'."
+msgstr ":: Spremljena je osobna lista zrcalnih poslužitelja u '{custom_file}'."
 
 #: pacman_mirrors/pacman_mirrors.py:562
 msgid ""
 "Warning: Cannot remove 'Custom' country in the configuration file: {error}"
-msgstr "Avertissement: ne peut pas enlever pays 'Custom' dans le fichier de configuration: {error}"
+msgstr "Greška: Ne mogu ukloniti 'Custom' zemlju iz konfiguracijske datoteke : {error}"
 
 #: pacman_mirrors/pacman_mirrors_gui.py:68
 msgid "Previous page"
-msgstr "Page précédente"
+msgstr "Prethodna stranica"
 
 #: pacman_mirrors/pacman_mirrors_gui.py:74
 msgid "Next page"
-msgstr "Page suivante"
+msgstr "Sljedeća stranica"
 
 #: pacman_mirrors/pacman_mirrors_gui.py:121
 msgid "Mirrors list sorted by response time"
-msgstr "Liste des miroirs classés par temps de réponse "
+msgstr "Lista zrcalnih poslužitelja je sortirana prema vremenu odgovora"
 
 #: pacman_mirrors/pacman_mirrors_gui.py:124
 msgid "List of selected mirrors"
-msgstr "Liste des miroirs selectionnés"
+msgstr "Lista odabranih zrcalnih poslužitelja"
 
 #: pacman_mirrors/pacman_mirrors_gui.py:131
 msgid "Select by clicking mirrors to prepare your custom list"
-msgstr "Selectionnez en cliquant sur les miroirs pour préparer votre liste personnalisée"
+msgstr "Odaberite klikom na zrcalne poslužitelje koje želite staviti na svoju prilagođenu listu"
 
 #: pacman_mirrors/pacman_mirrors_gui.py:171
 msgid "Show custom list"
-msgstr "Afficher la liste personnalisée"
+msgstr "Prikaz prilagođene liste"
 
 #: pacman_mirrors/pacman_mirrors_gui.py:175
 msgid "Back to main list"
-msgstr "Retour à la liste principale"
+msgstr "Povratak na glavnu listu"
 
 #: pacman_mirrors/pacman_mirrors_gui.py:178
 msgid "Done"
-msgstr "Fait"
+msgstr "Gotovo"
