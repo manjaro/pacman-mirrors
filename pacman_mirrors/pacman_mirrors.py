@@ -34,6 +34,7 @@ from random import shuffle
 from socket import timeout
 from urllib.request import Request, urlopen
 from urllib.error import URLError
+from httplib.client import HTTPException
 
 from .custom_help_formatter import CustomHelpFormatter
 from . import i18n
@@ -316,11 +317,13 @@ class PacmanMirrors:
 
                         start = time.time()
                         req = Request(url)
+                        request_error = False
                         try:
                             with urlopen(req, timeout=self.max_wait_time) as r:
                                 resp = r.read()
                                 d = resp.find(b"date=")
                         except URLError as e:
+                            request_error = True
                             if hasattr(e, 'reason'):
                                 print("\n" + _("Error: Failed to reach "
                                                "the server: {reason}"
@@ -329,20 +332,22 @@ class PacmanMirrors:
                                 print("\n" + _("Error: The server couldn\'t "
                                                "fulfill the request: {code}"
                                                .format(code=e.code)))
-                            self.bad_servers.append({'country': current_country,
-                                                     'response_time': "99.99",
-                                                     'last_sync': "99:99",
-                                                     'url': server_url,
-                                                     'selected': False})
-                            continue
                         except timeout:
+                            request_error = True
                             print("\n" + _("Error: Failed to reach "
-                                           "the server: Timeout"))
-                            self.bad_servers.append({'country': current_country,
-                                                     'response_time': "99.99",
-                                                     'last_sync': "99:99",
-                                                     'url': server_url,
-                                                     'selected': False})
+                                           "the server: Timeout."))
+                        except HTTPException:
+                            request_error = True
+                            print("\n" + _("Error: Cannot read server "
+                                           "response: HTTPException."))
+
+                        if request_error is True:
+                            self.bad_servers.append(
+                                {'country': current_country,
+                                 'response_time': "99.99",
+                                 'last_sync': "99:99",
+                                 'url': server_url,
+                                 'selected': False})
                             continue
 
                         response_time = round((time.time() - start), 3)
