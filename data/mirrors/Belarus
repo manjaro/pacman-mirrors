@@ -1,0 +1,6 @@
+##
+## Pacman Mirrorlist
+##
+
+[Belarus]
+Server = http://mirror.datacenter.by/pub/mirrors/manjaro/$branch/$repo/$arch
