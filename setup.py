@@ -46,6 +46,7 @@ setup(
                 ('share/locale/is_IS/LC_MESSAGES', ['locale/is_IS/LC_MESSAGES/pacman_mirrors.mo']),
                 ('share/locale/it/LC_MESSAGES', ['locale/it/LC_MESSAGES/pacman_mirrors.mo']),
                 ('share/locale/lt/LC_MESSAGES', ['locale/lt/LC_MESSAGES/pacman_mirrors.mo']),
+                ('share/locale/ru_RU/LC_MESSAGES', ['locale/ru_RU/LC_MESSAGES/pacman_mirrors.mo']),
                 ('share/locale/sk/LC_MESSAGES', ['locale/sk/LC_MESSAGES/pacman_mirrors.mo']),
                 ('share/locale/sv/LC_MESSAGES', ['locale/sv/LC_MESSAGES/pacman_mirrors.mo']),
                 ('share/locale/tr/LC_MESSAGES', ['locale/tr/LC_MESSAGES/pacman_mirrors.mo']),
