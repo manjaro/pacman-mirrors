@@ -198,7 +198,7 @@ class PacmanMirrors:
                 self.mirror_dir = self.custom_mirror_dir
             else:
                 print(_("Warning: Custom mirrors file '{path}' doesn't exists. "
-                        "Checking all countries.").format(path=custom_path))
+                        "Querying all servers.").format(path=custom_path))
                 print("\n")
                 self.only_country = []
                 self.comment_custom = True
