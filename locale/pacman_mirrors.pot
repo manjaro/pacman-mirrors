@@ -7,16 +7,16 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: pacman-mirrors 20160103\n"
+"Project-Id-Version: pacman-mirrors 2.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2016-01-03 13:01+0100\n"
+"POT-Creation-Date: 2016-08-17 19:31+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.1.1\n"
+"Generated-By: Babel 2.3.4\n"
 
 #: pacman_mirrors/pacman_mirrors.py:80
 msgid "Warning: Cannot read file '{filename}': {error}"
@@ -76,66 +76,80 @@ msgstr ""
 msgid "print the pacman-mirrors version"
 msgstr ""
 
-#: pacman_mirrors/pacman_mirrors.py:236
+#: pacman_mirrors/pacman_mirrors.py:164
+msgid "Error: Must have root privileges."
+msgstr ""
+
+#: pacman_mirrors/pacman_mirrors.py:200
+msgid ""
+"Warning: Custom mirrors file '{path}' doesn't exists. Checking all "
+"countries."
+msgstr ""
+
+#: pacman_mirrors/pacman_mirrors.py:249
 msgid ""
 "argument -c/--country: unknown country '{country}'\n"
 "Available countries are: {country_list}"
 msgstr ""
 
-#: pacman_mirrors/pacman_mirrors.py:285
+#: pacman_mirrors/pacman_mirrors.py:298
 msgid ":: Querying servers, this may take some time..."
 msgstr ""
 
-#: pacman_mirrors/pacman_mirrors.py:317
+#: pacman_mirrors/pacman_mirrors.py:332
 msgid "Error: Failed to reach the server: {reason}"
 msgstr ""
 
-#: pacman_mirrors/pacman_mirrors.py:321
+#: pacman_mirrors/pacman_mirrors.py:336
 msgid "Error: The server couldn't fulfill the request: {code}"
 msgstr ""
 
-#: pacman_mirrors/pacman_mirrors.py:329
-msgid "Error: Failed to reach the server: Timeout"
+#: pacman_mirrors/pacman_mirrors.py:339
+msgid "Error: Failed to reach the server: Timeout."
 msgstr ""
 
-#: pacman_mirrors/pacman_mirrors.py:352
+#: pacman_mirrors/pacman_mirrors.py:343
+msgid "Error: Cannot read server response: HTTPException."
+msgstr ""
+
+#: pacman_mirrors/pacman_mirrors.py:369
 msgid "Warning: Wrong date format in 'state' file."
 msgstr ""
 
-#: pacman_mirrors/pacman_mirrors.py:374 pacman_mirrors/pacman_mirrors.py:410
+#: pacman_mirrors/pacman_mirrors.py:391 pacman_mirrors/pacman_mirrors.py:427
 msgid "Error: Cannot read file '{filename}': {error}"
 msgstr ""
 
-#: pacman_mirrors/pacman_mirrors.py:388
+#: pacman_mirrors/pacman_mirrors.py:405
 msgid ":: Randomizing server list..."
 msgstr ""
 
-#: pacman_mirrors/pacman_mirrors.py:426
+#: pacman_mirrors/pacman_mirrors.py:443
 msgid "Error: No server available !"
 msgstr ""
 
-#: pacman_mirrors/pacman_mirrors.py:447 pacman_mirrors/pacman_mirrors.py:542
+#: pacman_mirrors/pacman_mirrors.py:464 pacman_mirrors/pacman_mirrors.py:561
 msgid ":: Generated and saved '{output_file}' mirrorlist."
 msgstr ""
 
-#: pacman_mirrors/pacman_mirrors.py:450 pacman_mirrors/pacman_mirrors.py:490
-#: pacman_mirrors/pacman_mirrors.py:547
+#: pacman_mirrors/pacman_mirrors.py:467 pacman_mirrors/pacman_mirrors.py:509
+#: pacman_mirrors/pacman_mirrors.py:566
 msgid "Error: Cannot write file '{filename}': {error}"
 msgstr ""
 
-#: pacman_mirrors/pacman_mirrors.py:511
+#: pacman_mirrors/pacman_mirrors.py:530
 msgid "Error: Cannot update file '{filename}': {error}"
 msgstr ""
 
-#: pacman_mirrors/pacman_mirrors.py:525
+#: pacman_mirrors/pacman_mirrors.py:544
 msgid "User generated mirror list"
 msgstr ""
 
-#: pacman_mirrors/pacman_mirrors.py:544
+#: pacman_mirrors/pacman_mirrors.py:563
 msgid ":: Saved personalized list of mirrors in '{custom_file}'."
 msgstr ""
 
-#: pacman_mirrors/pacman_mirrors.py:562
+#: pacman_mirrors/pacman_mirrors.py:581
 msgid "Warning: Cannot remove 'Custom' country in the configuration file: {error}"
 msgstr ""
 
