@@ -197,9 +197,11 @@ class PacmanMirrors:
             if os.path.isfile(custom_path):
                 self.mirror_dir = self.custom_mirror_dir
             else:
-                print(_("Error: Custom mirrors file '{path}' doesn't exists.")
-                      .format(custom_path))
-                exit(1)
+                print(_("Warning: Custom mirrors file '{path}' doesn't exists. "
+                        "Checking all countries.").format(path=custom_path))
+                print("\n")
+                self.only_country = []
+                self.comment_custom = True
 
         if args.output:
             if args.output[0] == '/':
