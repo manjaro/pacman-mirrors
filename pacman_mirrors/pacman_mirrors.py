@@ -96,6 +96,8 @@ class PacmanMirrors:
                     continue
                 if value.startswith('"') and value.endswith('"'):
                     value = value[1:-1]
+                if key == "Method" and value == "random":
+                    self.method = value
                 if key == "Branch":
                     self.branch = value
                 elif key == "OnlyCountry":
