@@ -1,0 +1,6 @@
+##
+## Pacman Mirrorlist
+##
+
+[Canada]
+Server = http://manjaro.cybr.ca/$branch/$repo/$arch
