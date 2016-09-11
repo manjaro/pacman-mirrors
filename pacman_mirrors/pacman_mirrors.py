@@ -194,16 +194,7 @@ class PacmanMirrors:
             self.use_geolocation = False
             country = args.country.split(",")
             if country == ["Custom"]:
-                custom_path = os.path.join(self.custom_mirror_dir, "Custom")
-                if os.path.isfile(custom_path):
-                    self.mirror_dir = self.custom_mirror_dir
-                else:
-                    print(_(
-                        "Warning: Custom mirrors file '{path}' doesn't exists. "
-                        "Querying all servers.").format(path=custom_path))
-                    print("\n")
-                    self.only_country = []
-                    self.comment_custom = True
+                self.only_country = ["Custom"]
             elif country == ["all"]:
                 self.only_country = []
                 self.comment_custom = True
@@ -213,6 +204,20 @@ class PacmanMirrors:
                     self.only_country = country
                 except argparse.ArgumentTypeError as e:
                     parser.error(e)
+
+        # only_country may be set as Custom by reading the configuration file
+        # or passed as a --country argument
+        if self.only_country == ["Custom"]:
+            custom_path = os.path.join(self.custom_mirror_dir, "Custom")
+            if os.path.isfile(custom_path):
+                self.mirror_dir = self.custom_mirror_dir
+            else:
+                print(_(
+                    "Warning: Custom mirrors file '{path}' doesn't exists. "
+                    "Querying all servers.").format(path=custom_path))
+                print("\n")
+                self.only_country = []
+                self.comment_custom = True
 
         if args.output:
             if args.output[0] == '/':
