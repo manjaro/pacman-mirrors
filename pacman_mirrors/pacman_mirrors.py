@@ -278,7 +278,10 @@ class PacmanMirrors:
             return []
 
         country_fix = {
+            'Brazil': 'Brasil',
+            'Costa Rica': 'Costa_Rica',
             'Czech Republic': 'Czech',
+            'South Africa': 'Africa',
             'United Kingdom': 'United_Kingdom',
             'United States': 'United_States',
         }
