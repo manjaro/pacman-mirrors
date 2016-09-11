@@ -82,7 +82,6 @@ class PacmanMirrors:
                   .format(filename=e.filename, error=e.strerror)))
         except OSError:
             pass
-        self.parse_cmd()
 
     def parse_configuration_file(self, conf_file):
         """ Parse the configuration file """
@@ -193,31 +192,14 @@ class PacmanMirrors:
             # If country is passed as an argument don't use geolocation
             self.use_geolocation = False
             country = args.country.split(",")
-            if country == ["Custom"]:
-                self.only_country = ["Custom"]
-            elif country == ["all"]:
-                self.only_country = []
-                self.comment_custom = True
+            if country == ["Custom"] or country == ["all"]:
+                self.only_country = country
             else:
                 try:
                     self.valid_country(country, self.available_countries)
                     self.only_country = country
                 except argparse.ArgumentTypeError as e:
                     parser.error(e)
-
-        # only_country may be set as Custom by reading the configuration file
-        # or passed as a --country argument
-        if self.only_country == ["Custom"]:
-            custom_path = os.path.join(self.custom_mirror_dir, "Custom")
-            if os.path.isfile(custom_path):
-                self.mirror_dir = self.custom_mirror_dir
-            else:
-                print(_(
-                    "Warning: Custom mirrors file '{path}' doesn't exists. "
-                    "Querying all servers.").format(path=custom_path))
-                print("\n")
-                self.only_country = []
-                self.comment_custom = True
 
         if args.output:
             if args.output[0] == '/':
@@ -266,7 +248,7 @@ class PacmanMirrors:
         """
         Try to get the user country via GeoIP
 
-        :return: return country name as a list or empty list
+        :return: return country name or empty list
         """
         req = Request("http://freegeoip.net/json/")
         try:
@@ -293,7 +275,7 @@ class PacmanMirrors:
         if country_name in country_fix.keys():
             country_name = country_fix[country_name]
 
-        return [country_name]
+        return country_name
 
     def comment_custom_country(self):
         """
@@ -323,18 +305,34 @@ class PacmanMirrors:
         It will only use mirrors defined in only_country, and if empty will
         use all mirrors.
         """
-        countries = []
         if self.use_geolocation:
-            countries = [self.get_geoip_country()]
-        if self.only_country and not countries:
-            countries = self.only_country
-        if not countries:
-            countries = self.available_countries
+            geoip_country = self.get_geoip_country()
+            if geoip_country in self.available_countries:
+                self.only_country = [geoip_country]
+
+        if self.only_country:
+            if self.only_country == ["Custom"]:
+                custom_path = os.path.join(self.custom_mirror_dir, "Custom")
+                if os.path.isfile(custom_path):
+                    self.mirror_dir = self.custom_mirror_dir
+                else:
+                    print(_(
+                        "Warning: Custom mirrors file '{path}' doesn't exists. "
+                        "Querying all servers.").format(path=custom_path))
+                    print("\n")
+                    self.only_country = []
+                    self.comment_custom = True
+            if self.only_country == ["all"]:
+                self.only_country = []
+                self.comment_custom = True
+
+        if not self.only_country:
+            self.only_country = self.available_countries
 
         if self.method == "rank":
-            self.query_servers(countries)
+            self.query_servers(self.only_country)
         elif self.method == "random":
-            self.random_servers(countries)
+            self.random_servers(self.only_country)
 
     def query_servers(self, countries):
         """
@@ -615,7 +613,9 @@ class PacmanMirrors:
             exit(1)
 
     def run(self):
+        self.parse_cmd()
         self.generate_servers_lists()
+        """
         if self.interactive:
             self.write_interactive_mirrorlist()
         else:
@@ -628,6 +628,7 @@ class PacmanMirrors:
                     print(_("Warning: Cannot remove 'Custom' country in the configuration file: {error}"
                             .format(error=e.strerror)))
                     exit(1)
+                    """
 
 if __name__ == '__main__':
     if os.getuid() != 0:
