@@ -23,6 +23,7 @@
 import argparse
 import datetime
 import importlib.util
+import json
 import os
 import sys
 import tempfile
@@ -65,6 +66,7 @@ class PacmanMirrors:
         self.no_update = True
         self.comment_custom = False
         self.custom_mirror_dir = "/var/lib/pacman-mirrors"
+        self.use_geolocation = False
 
         # good_server: respond back and updated in the last 24h
         # resp_server: respond back but not updated in the last 24h or
@@ -128,6 +130,10 @@ class PacmanMirrors:
                             type=str,
                             help=_("comma separated list of countries "
                                    "where mirrors will be used"))
+        parser.add_argument("--geoip",
+                            action="store_true",
+                            help=_("detect country using geolocation, "
+                                   "ignored if '--country' is used"))
         parser.add_argument("-d", "--mirror_dir",
                             type=str,
                             metavar=_("PATH"),
@@ -180,7 +186,12 @@ class PacmanMirrors:
             self.mirror_dir = args.mirror_dir
         self.available_countries = self.get_available_countries(self.mirror_dir)
 
+        if args.geoip:
+            self.use_geolocation = True
+
         if args.country:
+            # If country is passed as an argument don't use geolocation
+            self.use_geolocation = False
             country = args.country.split(",")
             if country == ["Custom"]:
                 self.only_country = country
@@ -252,6 +263,37 @@ class PacmanMirrors:
                 raise argparse.ArgumentTypeError(msg)
         return countries
 
+    @staticmethod
+    def get_geoip_country():
+        """
+        Try to get the user country via GeoIP
+
+        :return: return country name as a list or empty list
+        """
+        req = Request("http://freegeoip.net/json/")
+        try:
+            with urlopen(req, timeout=2) as response:
+                raw_data = response.read()
+                encoding = response.info().get_content_charset('utf8')
+                json_obj = json.loads(raw_data.decode(encoding))
+        except (URLError, timeout, HTTPException, json.JSONDecodeError):
+            return []
+
+        try:
+            country_name = json_obj['country_name']
+        except KeyError:
+            return []
+
+        country_fix = {
+            'Czech Republic': 'Czech',
+            'United Kingdom': 'United_Kingdom',
+            'United States': 'United_States',
+        }
+        if country_name in country_fix.keys():
+            country_name = country_fix[country_name]
+
+        return [country_name]
+
     def comment_custom_country(self):
         """
         Replaces "OnlyCountry = Custom" to "# OnlyCountry = " in
@@ -280,9 +322,12 @@ class PacmanMirrors:
         It will only use mirrors defined in only_country, and if empty will
         use all mirrors.
         """
-        if self.only_country:
+        countries = []
+        if self.use_geolocation:
+            countries = [self.get_geoip_country()]
+        if self.only_country and not countries:
             countries = self.only_country
-        else:
+        if not countries:
             countries = self.available_countries
 
         if self.method == "rank":
