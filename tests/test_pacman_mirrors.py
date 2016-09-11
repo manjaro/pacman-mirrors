@@ -22,16 +22,18 @@ class TestPacmanMirrors(unittest.TestCase):
     @patch("os.getuid")
     def test_run(self, mock_os_getuid):
         mock_os_getuid.return_value = 0
-        with unittest.mock.patch('sys.argv', ["pacman-mirrors", "-g", "-m", "random"]):
+        with unittest.mock.patch('sys.argv', ["pacman-mirrors", "-g", "-m", "random", "-d" "data/mirrors"]):
             pm = pacman_mirrors.PacmanMirrors()
-            pm.run()
+            pm.parse_cmd()
+            pm.generate_servers_lists()
 
     @patch("os.getuid")
     def test_run_country(self, mock_os_getuid):
         mock_os_getuid.return_value = 0
-        with unittest.mock.patch('sys.argv', ["pacman-mirrors", "-g", "-c", "Germany", "-m", "random"]):
+        with unittest.mock.patch('sys.argv', ["pacman-mirrors", "-g", "-c", "Germany", "-m", "random", "-d" "data/mirrors"]):
             pm = pacman_mirrors.PacmanMirrors()
-            pm.run()
+            pm.parse_cmd()
+            pm.generate_servers_lists()
             assert pm.only_country == ["Germany"]
 
     @patch("os.getuid")
@@ -40,9 +42,10 @@ class TestPacmanMirrors(unittest.TestCase):
         mock_os_getuid.return_value = 0
         mock_geoip.return_value = "France"
         with unittest.mock.patch('sys.argv',
-                                 ["pacman-mirrors", "-g", "--geoip", "-m", "random"]):
+                                 ["pacman-mirrors", "-g", "--geoip", "-m", "random", "-d" "data/mirrors"]):
             pm = pacman_mirrors.PacmanMirrors()
-            pm.run()
+            pm.parse_cmd()
+            pm.generate_servers_lists()
             assert pm.only_country == ["France"]
 
     @patch("os.getuid")
@@ -51,10 +54,11 @@ class TestPacmanMirrors(unittest.TestCase):
         mock_os_getuid.return_value = 0
         mock_geoip.return_value = "testetestes"
         with unittest.mock.patch('sys.argv',
-                                 ["pacman-mirrors", "-g", "--geoip", "-m", "random"]):
+                                 ["pacman-mirrors", "-g", "--geoip", "-m", "random", "-d" "data/mirrors"]):
             pm = pacman_mirrors.PacmanMirrors()
             pm.only_country = []
-            pm.run()
+            pm.parse_cmd()
+            pm.generate_servers_lists()
             assert pm.only_country == pm.available_countries
 
     def tearDown(self):

@@ -615,7 +615,6 @@ class PacmanMirrors:
     def run(self):
         self.parse_cmd()
         self.generate_servers_lists()
-        """
         if self.interactive:
             self.write_interactive_mirrorlist()
         else:
@@ -628,7 +627,6 @@ class PacmanMirrors:
                     print(_("Warning: Cannot remove 'Custom' country in the configuration file: {error}"
                             .format(error=e.strerror)))
                     exit(1)
-                    """
 
 if __name__ == '__main__':
     if os.getuid() != 0:
