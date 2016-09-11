@@ -194,27 +194,25 @@ class PacmanMirrors:
             self.use_geolocation = False
             country = args.country.split(",")
             if country == ["Custom"]:
-                self.only_country = country
+                custom_path = os.path.join(self.custom_mirror_dir, "Custom")
+                if os.path.isfile(custom_path):
+                    self.mirror_dir = self.custom_mirror_dir
+                else:
+                    print(_(
+                        "Warning: Custom mirrors file '{path}' doesn't exists. "
+                        "Querying all servers.").format(path=custom_path))
+                    print("\n")
+                    self.only_country = []
+                    self.comment_custom = True
             elif country == ["all"]:
                 self.only_country = []
                 self.comment_custom = True
             else:
                 try:
-                    self.only_country = self.valid_country(country,
-                                                           self.available_countries)
+                    self.valid_country(country, self.available_countries)
+                    self.only_country = country
                 except argparse.ArgumentTypeError as e:
                     parser.error(e)
-
-        if self.only_country == ["Custom"]:
-            custom_path = os.path.join(self.custom_mirror_dir, "Custom")
-            if os.path.isfile(custom_path):
-                self.mirror_dir = self.custom_mirror_dir
-            else:
-                print(_("Warning: Custom mirrors file '{path}' doesn't exists. "
-                        "Querying all servers.").format(path=custom_path))
-                print("\n")
-                self.only_country = []
-                self.comment_custom = True
 
         if args.output:
             if args.output[0] == '/':
@@ -245,15 +243,11 @@ class PacmanMirrors:
     def valid_country(countries, available_countries):
         """
         Check if the list of countries are valid.
-        Raises argparse.ArgumentTypeError if it finds and invalid country.
 
         :param countries: list of countries to check
         :param available_countries: list of available countries
-        :return: return the list of valid countries
+        :raise argparse.ArgumentTypeError: if it finds and invalid country.
         """
-
-        if countries == ["all"]:
-            return countries
         for country in countries:
             if country not in available_countries:
                 msg = _("argument -c/--country: unknown country '{country}'"
@@ -261,7 +255,6 @@ class PacmanMirrors:
                         .format(country=country,
                                 country_list=", ".join(available_countries)))
                 raise argparse.ArgumentTypeError(msg)
-        return countries
 
     @staticmethod
     def get_geoip_country():
