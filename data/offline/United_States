@@ -1,0 +1,7 @@
+##
+## Pacman Mirrorlist
+##
+
+[United_States]
+Server = http://lug.mtu.edu/manjaro/$branch/$repo/$arch
+Server = http://www.gtlib.gatech.edu/pub/manjaro/$branch/$repo/$arch
