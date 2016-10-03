@@ -1,0 +1,6 @@
+##
+## Pacman Mirrorlist
+##
+
+[Austria]
+Server = http://mirror.inode.at/manjaro/$branch/$repo/$arch
