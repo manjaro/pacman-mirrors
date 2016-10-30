@@ -4,3 +4,4 @@
 
 [Denmark]
 Server = http://mirrors.dotsrc.org/manjaro/$branch/$repo/$arch
+Server = http://www.uex.dk/repos/manjaro/$branch/$repo/$arch
