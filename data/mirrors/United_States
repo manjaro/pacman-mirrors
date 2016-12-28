@@ -9,3 +9,4 @@ Server = http://mirror.solarvps.com/manjaro/$branch/$repo/$arch
 Server = http://mirror.nexcess.net/manjaro/$branch/$repo/$arch
 Server = http://distro.ibiblio.org/manjaro/$branch/$repo/$arch
 Server = http://mirror.clarkson.edu/manjaro/$branch/$repo/$arch
+Server = http://mirrors.ocf.berkeley.edu/manjaro/$branch/$repo/$arch
