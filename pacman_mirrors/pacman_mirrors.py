@@ -28,7 +28,6 @@ import os
 import sys
 import tempfile
 import time
-from builtins import staticmethod
 from decimal import Decimal
 from operator import itemgetter
 from random import shuffle
