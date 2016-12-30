@@ -118,10 +118,9 @@ def chooseMirrors(indEdit, travList):
     win = Gtk.Window()
     win.set_resizable(False)
     if indEdit:
-        Gtk.Window.__init__(win, title=_("Mirrors list sorted by response "
-                                         "time"))
+        win.set_title(_("Mirrors list sorted by response time"))
     else:
-        Gtk.Window.__init__(win, title=_("List of selected mirrors"))
+        win.set_title(_("List of selected mirrors"))
     win.set_border_width(10)
     mainbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=30)
     win.add(mainbox)
