@@ -17,201 +17,124 @@
 # along with pacman-mirrors.  If not, see <http://www.gnu.org/licenses/>.
 #
 # Author(s): Esclapion
+#            Hugo Posnic
 
 import gi
-gi.require_version('Gtk', '3.0')
+gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
 from . import i18n
 _ = i18n.language.gettext
 
 
-def chooseMirrors(indEdit, travList):
+class PacmanMirrors(Gtk.Window):
+    def __init__(self, server_list):
+        Gtk.Window.__init__(self, title=_("Mirrors list sorted by response time"))
+        self.set_size_request(600, 250)
+        self.set_resizable(False)
+        self.set_border_width(10)
+        self.set_position(Gtk.WindowPosition.CENTER)
 
-    global index, nbItems, indPage, indDone
-    tabSync = []
-    tabButton = []
-    tabCountries = []
-    nbItems = 12
-    indDone = False
-    index = 0
-    indPage = False
-    indShortList = len(travList) <= nbItems
-    if indShortList:
-        nbItems = len(travList)
+        self.stack = Gtk.Stack()
+        self.stack.set_transition_type(Gtk.StackTransitionType.SLIDE_LEFT_RIGHT)
 
-    def truncName(name):
-        return name[7:-12]
+        mirrors_list = []
+        for server in server_list:
+            mirrors_list.append((Gtk.CheckButton(),
+                                 server["last_sync"],
+                                 server["url"][:-20],
+                                 server["country"]))
+        self.mirrors_liststore = Gtk.ListStore(bool, str, str, str)
+        for mirror_ref in mirrors_list:
+            self.mirrors_liststore.append(list(mirror_ref))
+        self.mirror_filter = Gtk.TreeModelSort(self.mirrors_liststore)
+        scrolled_tree = Gtk.ScrolledWindow()
+        self.treeview = Gtk.TreeView.new_with_model(self.mirror_filter)
+        self.treeview.set_vexpand(True)
+        renderer = Gtk.CellRendererToggle()
+        renderer.connect("toggled", self.on_toggle)
+        column = Gtk.TreeViewColumn(_("Use?"), renderer, active=0)
+        self.treeview.append_column(column)
+        for i, column_title in enumerate([_("Last sync (min)"), _("URL"), _("Country")]):
+            renderer = Gtk.CellRendererText()
+            column = Gtk.TreeViewColumn(column_title, renderer, text=i+1)
+            column.set_sort_column_id(i+1)
+            self.treeview.append_column(column)
+        scrolled_tree.add(self.treeview)
 
-    def displayPage():
-        global index, nbItems, indPage
-        indPage = True
-        for i in range(nbItems):
-            if index < len(travList):
-                tabSync[i].set_label(travList[index]['last_sync'] + " |")
-                tabButton[i].set_label(truncName(travList[index]['url']))
-                if indEdit:
-                    tabButton[i].set_relief(Gtk.ReliefStyle.NORMAL)
-                    tabButton[i].set_active(travList[index]['selected'])
-                tabCountries[i].set_label("| " + travList[index]['country'])
-            else:
-                tabSync[i].set_label("")
-                tabButton[i].set_label("")
-                if indEdit:
-                    tabButton[i].set_relief(Gtk.ReliefStyle.NONE)
-                    tabButton[i].set_active(False)
-                tabCountries[i].set_label("")
-            index += 1
-        if not indShortList:
-            if index > nbItems:
-                buttonPrev.set_relief(Gtk.ReliefStyle.NORMAL)
-                buttonPrev.set_label(_("Previous page"))
-            else:
-                buttonPrev.set_relief(Gtk.ReliefStyle.NONE)
-                buttonPrev.set_label(" ")
-            if index < len(travList):
-                buttonNext.set_relief(Gtk.ReliefStyle.NORMAL)
-                buttonNext.set_label(_("Next page"))
-            else:
-                buttonNext.set_relief(Gtk.ReliefStyle.NONE)
-                buttonNext.set_label(" ")
-
-        indPage = False
-
-    def nextPage(self):
-        global index
-        if index < len(travList):
-            displayPage()
-
-    def prevPage(self):
-        global index
-        val = 2 * nbItems
-        if index >= val:
-            index -= val
-            displayPage()
-
-    def toggled(self):
-        if indPage is False:
-            name = self.get_label()
-            if name != '':
-                for elem in travList:
-                    if truncName(elem['url']) == name:
-                        elem['selected'] = self.get_active()
-                        break
-            else:
-                self.set_active(False)
-
-    def showList(self):
-        Gtk.main_quit()
-
-    def deleteEvent(self, Widget):
-        exit(1)
-
-    def backMain(self):
-        Gtk.main_quit()
-
-    def backDone(self):
-        global indDone
-        indDone = True
-        Gtk.main_quit()
-
-    win = Gtk.Window()
-    win.set_resizable(False)
-    if indEdit:
-        win.set_title(_("Mirrors list sorted by response time"))
-    else:
-        win.set_title(_("List of selected mirrors"))
-    win.set_border_width(10)
-    mainbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=30)
-    win.add(mainbox)
-
-    if indEdit:
-        vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
-        header = Gtk.Label(label=_("Select by clicking mirrors to prepare "
-                                   "your custom list"))
-        vbox.add(header)
-        mainbox.add(vbox)
-
-    hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=10)
-
-    vbox2c = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
-    for i in range(nbItems):
-        Label = Gtk.Label()
-        Label.set_property("xalign", 1.0)
-        tabSync.append(Label)
-        vbox2c.pack_start(tabSync[i], True, True, 0)
-    hbox.add(vbox2c)
-
-    vbox2 = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
-    for i in range(nbItems):
-        if indEdit:
-            tabButton.append(Gtk.ToggleButton())
-            tabButton[i].connect("toggled", toggled)
-        else:
-            tabButton.append(Gtk.Label())
-        vbox2.pack_start(tabButton[i], True, True, 0)
-    hbox.add(vbox2)
-
-    vbox2b = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
-    for i in range(nbItems):
-        Label = Gtk.Label(" ")
-        Label.set_property("xalign", 0.0)
-        tabCountries.append(Label)
-        vbox2b.pack_start(tabCountries[i], True, True, 0)
-    hbox.add(vbox2b)
-    mainbox.add(hbox)
-
-    hbox2 = Gtk.Box(True, spacing=50)
-    if not indShortList:
-        buttonPrev = Gtk.Button(" ")
-        buttonPrev.connect("clicked", prevPage)
-        hbox2.add(buttonPrev)
-    if indEdit:
+        header = Gtk.Label(_("Select by clicking mirrors to prepare your custom list"))
         buttonShow = Gtk.Button(_("Show custom list"))
-        buttonShow.connect("clicked", showList)
-        hbox2.add(buttonShow)
-    else:
+        buttonShow.connect("clicked", self.show_list)
+
+        page1 = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
+        page1.add(header)
+        page1.add(scrolled_tree)
+        page1.add(buttonShow)
+
+        scrolled_window = Gtk.ScrolledWindow()
+        scrolled_window.set_vexpand(True)
+        self.box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
+        scrolled_window.add(self.box)
         buttonBack = Gtk.Button(_("Back to main list"))
-        buttonBack.connect("clicked", backMain)
-        hbox2.add(buttonBack)
-        buttonDone = Gtk.Button(_("Done"))
-        buttonDone.connect("clicked", backDone)
-        hbox2.add(buttonDone)
+        buttonBack.connect("clicked", self.back_list)
+        self.buttonDone = Gtk.Button(_("Done"))
+        self.buttonDone.connect("clicked", self.done)
 
-    if not indShortList:
-        buttonNext = Gtk.Button(" ")
-        buttonNext.connect("clicked", nextPage)
-        hbox2.add(buttonNext)
-    displayPage()
-    mainbox.add(hbox2)
+        page2 = Gtk.Grid()
+        page2.set_column_homogeneous(True)
+        page2.set_row_spacing(10)
+        page2.set_column_spacing(10)
+        page2.attach(scrolled_window, 0, 0, 2, 1)
+        page2.attach(buttonBack, 0, 1, 1, 1)
+        page2.attach(self.buttonDone, 1, 1, 1, 1)
 
-    win.connect("delete-event", deleteEvent)
-    win.set_position(Gtk.WindowPosition.CENTER)
-    win.show_all()
+        self.stack.add_named(page1, "choice")
+        self.stack.add_named(page2, "confirm")
+        self.add(self.stack)
+
+        # Server lists
+        self.server_list = server_list
+        self.custom_list = []
+
+        self.is_done = False
+
+    def on_toggle(self, widget, path):
+        self.mirrors_liststore[path][0] = not self.mirrors_liststore[path][0]
+
+    def show_list(self, button):
+        # Reset custom list
+        self.custom_list = []
+        for element in self.box.get_children():
+            self.box.remove(element)
+        # Get selected elementqs
+        for row in self.mirror_filter:
+            if row[0]:
+                for server in self.server_list:
+                    if server["url"][:-20] == row[2]:
+                        self.custom_list.append(server)
+                        self.box.add(Gtk.Label("- " + row[2]))
+        # Check if at least a server is selected
+        if not self.custom_list:
+            self.box.add(Gtk.Label(_("Please select at least one server")))
+        self.buttonDone.set_sensitive(self.custom_list)
+        # Show selected servers
+        self.box.show_all()
+        self.stack.set_visible_child_name("confirm")
+        self.set_title(_("List of selected mirrors"))
+
+    def back_list(self, button):
+        # Return to the choice page
+        self.stack.set_visible_child_name("choice")
+        self.set_title(_("Mirrors list sorted by response time"))
+
+    def done(self, button):
+        # Confirm the action
+        self.is_done = True
+        Gtk.main_quit()
+
+def launch(server_list):
+    window = PacmanMirrors(server_list)
+    window.connect("delete-event", Gtk.main_quit)
+    window.show_all()
     Gtk.main()
-    win.destroy()
-    return indDone
-
-if __name__ == "__main__":
-
-    indDone = False
-    while not indDone:
-        chooseMirrors(True, serverList)
-        customList = []
-        for elem in serverList:
-            if elem['selected']:
-                customList.append(elem)
-        chooseMirrors(False, customList)
-
-    path = "/tmp/Custom"
-    try:
-        fcust = open(path, "w")
-    except:
-        print("\nError : can't create file {0}.\n".format(path))
-        exit(1)
-    fcust.write("##\n")
-    fcust.write("## Pacman Mirrorlist\n")
-    fcust.write("##\n\n")
-    for elem in customList:
-        fcust.write(elem['url'] + "\n")
-    fcust.close()
+    return window

@@ -393,8 +393,7 @@ class PacmanMirrors:
                                 {'country': current_country,
                                  'response_time': "99.99",
                                  'last_sync': "99:99",
-                                 'url': server_url,
-                                 'selected': False})
+                                 'url': server_url})
                             continue
 
                         response_time = round((time.time() - start), 3)
@@ -409,8 +408,7 @@ class PacmanMirrors:
                             self.resp_servers.append({'country': current_country,
                                                       'response_time': response_seconds,
                                                       'last_sync': "99:99",
-                                                      'url': server_url,
-                                                      'selected': False})
+                                                      'url': server_url})
                             print("\n" + _("Warning: Wrong date format in 'state' file."))
                             continue
                         total_seconds = (date_now - date_server).total_seconds()
@@ -423,14 +421,12 @@ class PacmanMirrors:
                             self.good_servers.append({'country': current_country,
                                                       'response_time': response_seconds,
                                                       'last_sync': datesync,
-                                                      'url': server_url,
-                                                      'selected': False})
+                                                      'url': server_url})
                         else:
                             self.resp_servers.append({'country': current_country,
                                                       'response_time': response_seconds,
                                                       'last_sync': datesync,
-                                                      'url': server_url,
-                                                      'selected': False})
+                                                      'url': server_url})
             except OSError as e:
                 print(_("Error: Cannot read file '{filename}': {error}"
                         .format(filename=e.filename, error=e.strerror)))
@@ -465,8 +461,7 @@ class PacmanMirrors:
                         self.bad_servers.append({'country': current_country,
                                                  'response_time': "99.99",
                                                  'last_sync': "99:99",
-                                                 'url': server_url,
-                                                 'selected': False})
+                                                 'url': server_url})
             except OSError as e:
                 print(_("Error: Cannot read file '{filename}': {error}"
                         .format(filename=e.filename, error=e.strerror)))
@@ -518,24 +513,17 @@ class PacmanMirrors:
         Write the mirrorlist file, the 'Custom' mirror file and modify
         the configuration file to use the 'Custom' file.
         """
-        from .pacman_mirrors_gui import chooseMirrors
+        from . import pacman_mirrors_gui
 
         # Open custom mirrorlist selector
-        finished = False
         server_list = self.good_servers + self.resp_servers + self.bad_servers
         for server in server_list:
             server['url'] = server['url'].replace("/" + self.branch + "/",
                                                   "/$branch/")
-
-        custom_list = []
-        while not finished:
-            chooseMirrors(True, server_list)
-            for server in server_list:
-                if server['selected']:
-                    custom_list.append(server)
-            if len(custom_list) == 0:
-                continue
-            finished = chooseMirrors(False, custom_list)
+        gui = pacman_mirrors_gui.launch(server_list)
+        custom_list = gui.custom_list
+        if not gui.is_done:
+            return
 
         # Write Custom mirror file
         os.makedirs(self.custom_mirror_dir, mode=0o755, exist_ok=True)
