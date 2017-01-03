@@ -60,7 +60,7 @@ class PacmanMirrors(Gtk.Window):
             self.treeview.append_column(column)
         scrolled_tree.add(self.treeview)
 
-        header = Gtk.Label(_("Select by clicking mirrors to prepare your custom list"))
+        header = Gtk.Label(_("Tick mirrors to prepare your custom list"))
         buttonShow = Gtk.Button(_("Show custom list"))
         buttonShow.connect("clicked", self.show_list)
 
