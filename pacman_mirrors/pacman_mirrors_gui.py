@@ -54,7 +54,7 @@ class PacmanMirrors(Gtk.Window):
         renderer.connect("toggled", self.on_toggle)
         column = Gtk.TreeViewColumn(_("Use?"), renderer, active=0)
         self.treeview.append_column(column)
-        for i, column_title in enumerate([_("Last sync (min)"), _("URL"), _("Country")]):
+        for i, column_title in enumerate([_("Last sync (hh:mm)"), _("URL"), _("Country")]):
             renderer = Gtk.CellRendererText()
             column = Gtk.TreeViewColumn(column_title, renderer, text=i+1)
             self.treeview.append_column(column)
