@@ -30,8 +30,7 @@ _ = i18n.language.gettext
 class PacmanMirrors(Gtk.Window):
     def __init__(self, server_list):
         Gtk.Window.__init__(self, title=_("Mirrors list sorted by response time"))
-        self.set_size_request(600, 250)
-        self.set_resizable(False)
+        self.set_size_request(700, 350)
         self.set_border_width(10)
         self.set_position(Gtk.WindowPosition.CENTER)
 
