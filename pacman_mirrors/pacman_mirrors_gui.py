@@ -58,7 +58,6 @@ class PacmanMirrors(Gtk.Window):
         for i, column_title in enumerate([_("Last sync (min)"), _("URL"), _("Country")]):
             renderer = Gtk.CellRendererText()
             column = Gtk.TreeViewColumn(column_title, renderer, text=i+1)
-            column.set_sort_column_id(i+1)
             self.treeview.append_column(column)
         scrolled_tree.add(self.treeview)
 
