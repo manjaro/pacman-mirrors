@@ -59,6 +59,7 @@ class PacmanMirrors(Gtk.Window):
 
         header = Gtk.Label(_("Tick mirrors to prepare your custom list"))
         self.buttonDone = Gtk.Button(_("Confirm selection"))
+        self.buttonDone.set_sensitive(False)
         self.buttonDone.connect("clicked", self.done)
 
         box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
@@ -75,45 +76,39 @@ class PacmanMirrors(Gtk.Window):
         self.is_done = False
 
     def on_toggle(self, widget, path):
+        # Add or remove server from custom list
         self.mirrors_liststore[path][0] = not self.mirrors_liststore[path][0]
+        if self.mirrors_liststore[path][0]:
+            for server in self.server_list:
+                if server["url"][:-20] == self.mirrors_liststore[path][2]:
+                    self.custom_list.append(server)
+        else:
+            for server in self.custom_list:
+                if server["url"][:-20] == self.mirrors_liststore[path][2]:
+                    self.custom_list.remove(server)
+
+        self.buttonDone.set_sensitive(bool(self.custom_list))
 
     def done(self, button):
-        # Reset custom list
-        self.custom_list = []
-        # Get selected servers
-        for row in self.mirror_filter:
-            if row[0]:
-                for server in self.server_list:
-                    if server["url"][:-20] == row[2]:
-                        self.custom_list.append(server)
-        if self.custom_list:
-            # If at least one server is selected
-            dialog = Gtk.Dialog("Are you sure?", None, 0,
-            (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
-            Gtk.STOCK_OK, Gtk.ResponseType.OK))
-            dialog.set_transient_for(self)
-            dialog.set_border_width(10)
-            box = dialog.get_content_area()
-            box.set_spacing(10)
-            box.add(Gtk.Label("Are you sure to replace your list of mirrors?"))
-            dialog.show_all()
-            response = dialog.run()
+        # Confirm choice
+        dialog = Gtk.Dialog("Are you sure?", None, 0,
+        (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
+        Gtk.STOCK_OK, Gtk.ResponseType.OK))
+        dialog.set_transient_for(self)
+        dialog.set_border_width(10)
+        box = dialog.get_content_area()
+        box.set_spacing(10)
+        box.add(Gtk.Label("Are you sure to replace your list of mirrors?"))
+        dialog.show_all()
+        response = dialog.run()
 
-            if response == Gtk.ResponseType.OK:
-                # Quit GUI
-                dialog.destroy()
-                self.is_done = True
-                Gtk.main_quit()
-            elif response == Gtk.ResponseType.CANCEL:
-                # Go back to selection
-                dialog.destroy()
-        else:
-            # No selected server
-            dialog = Gtk.MessageDialog(self, 0, Gtk.MessageType.ERROR,
-            Gtk.ButtonsType.OK, _("No selected server"))
-            dialog.format_secondary_text(_("Please select at least one server"))
-            dialog.set_title(_("An error occured"))
-            dialog.run()
+        if response == Gtk.ResponseType.OK:
+            # Quit GUI
+            dialog.destroy()
+            self.is_done = True
+            Gtk.main_quit()
+        elif response == Gtk.ResponseType.CANCEL:
+            # Go back to selection
             dialog.destroy()
 
 def launch(server_list):
