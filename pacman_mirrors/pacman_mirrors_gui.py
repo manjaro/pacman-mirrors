@@ -39,7 +39,7 @@ class PacmanMirrors(Gtk.Window):
 
         mirrors_list = []
         for server in server_list:
-            mirrors_list.append((Gtk.CheckButton(),
+            mirrors_list.append((False,
                                  server["last_sync"],
                                  server["url"][:-20],
                                  server["country"]))
