@@ -58,17 +58,17 @@ class PacmanMirrors(Gtk.Window):
         scrolled_tree.add(self.treeview)
 
         header = Gtk.Label(_("Tick mirrors to prepare your custom list"))
-        buttonCancel = Gtk.Button(_("Cancel"))
-        buttonCancel.connect("clicked", self.cancel)
-        self.buttonDone = Gtk.Button(_("Confirm selection"))
-        self.buttonDone.set_sensitive(False)
-        self.buttonDone.connect("clicked", self.done)
+        button_cancel = Gtk.Button(_("Cancel"))
+        button_cancel.connect("clicked", self.cancel)
+        self.button_done = Gtk.Button(_("Confirm selection"))
+        self.button_done.set_sensitive(False)
+        self.button_done.connect("clicked", self.done)
 
         grid = Gtk.Grid(column_homogeneous=True, column_spacing=10, row_spacing=10)
         grid.attach(header, 0, 0, 2, 1)
         grid.attach(scrolled_tree, 0, 1, 2, 1)
-        grid.attach(buttonCancel, 0, 2, 1, 1)
-        grid.attach(self.buttonDone, 1, 2, 1, 1)
+        grid.attach(button_cancel, 0, 2, 1, 1)
+        grid.attach(self.button_done, 1, 2, 1, 1)
 
         self.add(grid)
 
@@ -90,7 +90,7 @@ class PacmanMirrors(Gtk.Window):
                 if server["url"][:-20] == self.mirrors_liststore[path][2]:
                     self.custom_list.remove(server)
 
-        self.buttonDone.set_sensitive(bool(self.custom_list))
+        self.button_done.set_sensitive(bool(self.custom_list))
 
     def cancel(self, button):
         self.custom_list = []
