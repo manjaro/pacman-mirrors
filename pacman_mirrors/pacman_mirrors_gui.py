@@ -58,16 +58,19 @@ class PacmanMirrors(Gtk.Window):
         scrolled_tree.add(self.treeview)
 
         header = Gtk.Label(_("Tick mirrors to prepare your custom list"))
+        buttonCancel = Gtk.Button(_("Cancel"))
+        buttonCancel.connect("clicked", self.cancel)
         self.buttonDone = Gtk.Button(_("Confirm selection"))
         self.buttonDone.set_sensitive(False)
         self.buttonDone.connect("clicked", self.done)
 
-        box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
-        box.add(header)
-        box.add(scrolled_tree)
-        box.add(self.buttonDone)
+        grid = Gtk.Grid(column_homogeneous=True, column_spacing=10, row_spacing=10)
+        grid.attach(header, 0, 0, 2, 1)
+        grid.attach(scrolled_tree, 0, 1, 2, 1)
+        grid.attach(buttonCancel, 0, 2, 1, 1)
+        grid.attach(self.buttonDone, 1, 2, 1, 1)
 
-        self.add(box)
+        self.add(grid)
 
         # Server lists
         self.server_list = server_list
@@ -88,6 +91,10 @@ class PacmanMirrors(Gtk.Window):
                     self.custom_list.remove(server)
 
         self.buttonDone.set_sensitive(bool(self.custom_list))
+
+    def cancel(self, button):
+        self.custom_list = []
+        Gtk.main_quit()
 
     def done(self, button):
         # Confirm choice
