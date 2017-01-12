@@ -1,8 +1,29 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from setuptools import setup
 import glob
+import io
+import re
+import os
+
+from setuptools import setup
+
+
+def read(*names, **kwargs):
+    with io.open(
+        os.path.join(os.path.dirname(__file__), *names),
+        encoding=kwargs.get("encoding", "utf8")
+    ) as fp:
+        return fp.read()
+
+
+def find_version(*file_paths):
+    version_file = read(*file_paths)
+    version_match = re.search(r"^__version__ = ['\"]([^'\"]*)['\"]",
+                              version_file, re.M)
+    if version_match:
+        return version_match.group(1)
+    raise RuntimeError("Unable to find version string.")
 
 with open('README.rst') as readme_file:
     readme = readme_file.read()
@@ -22,7 +43,7 @@ mirror_files = glob.glob('data/mirrors/*')
 
 setup(
     name='pacman-mirrors',
-    version='3.0',
+    version=find_version("pacman_mirrors", "__init__.py"),
     description="Package that provides all mirrors for Manjaro Linux.",
     long_description=readme + '\n\n' + history,
     author="Roland Singer, Esclapion, philm, Ramon Buldó",
@@ -67,6 +88,7 @@ setup(
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
         'Environment :: Console'
     ],
     test_suite='tests',

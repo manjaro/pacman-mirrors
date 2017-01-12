@@ -39,11 +39,12 @@ from http.client import HTTPException
 from operator import itemgetter
 from random import shuffle
 from socket import timeout
-from urllib.request import Request, urlopen
 from urllib.error import URLError
+from urllib.request import Request, urlopen
 
-from .custom_help_formatter import CustomHelpFormatter
+from pacman_mirrors import __version__
 from . import i18n
+from .custom_help_formatter import CustomHelpFormatter
 
 # The interactive argument will be only available if Gtk is installed
 try:
@@ -55,25 +56,25 @@ else:
 
 _ = i18n.language.gettext
 
-# semantic version
-PM_VERSION = "pacman-mirrors 3.0.0"
 # mirror status constants
-LASTSYNC_OK = "24:00" # sync within 24 hours
-LASTSYNC_NA = "98:00" # last sync not available
-SERVER_BAD = "99:99" # default last sync
-SERVER_RES = "99.99" # default response time
+LASTSYNC_OK = "24:00"  # sync within 24 hours
+LASTSYNC_NA = "98:00"  # last sync not available
+SERVER_BAD = "99:99"  # default last sync
+SERVER_RES = "99.99"  # default response time
+
 
 class PacmanMirrors:
     """
     Class PacmanMirrors
     """
+
     def __init__(self):
         """ Init """
         # Lists
         self.available_countries = []
-        self.good_servers = [] # respond back and updated in the last 24h
-        self.resp_servers = [] # respond back but not updated in the last 24h
-        self.bad_servers = [] # not respond back or timeout is upper than max_wait_time
+        self.good_servers = []  # respond back and updated in the last 24h
+        self.resp_servers = []  # respond back but not updated in the last 24h
+        self.bad_servers = []  # not respond back or timeout is upper than max_wait_time
         # Decisions
         self.geolocation = False
         self.interactive = False
@@ -123,11 +124,11 @@ class PacmanMirrors:
         parser.add_argument("-c", "--country",
                             type=str,
                             help=_("comma separated list of countries "
-                                    "where mirrors will be used"))
+                                   "where mirrors will be used"))
         parser.add_argument("--geoip",
                             action="store_true",
                             help=_("detect country using geolocation, "
-                                    "ignored if \"--country\" is used"))
+                                   "ignored if \"--country\" is used"))
         parser.add_argument("-d", "--mirror_dir",
                             type=str,
                             metavar=_("PATH"),
@@ -142,13 +143,13 @@ class PacmanMirrors:
                             help=_("server maximum waiting time"))
         parser.add_argument("--no-update",
                             action="store_true",
-                            help=_("don\"t generate mirrorlist if NoUpdate is "
-                                    "set to True in the configuration file"))
+                            help=_("don't generate mirrorlist if NoUpdate is "
+                                   "set to True in the configuration file"))
         if GTK_AVAILABLE:
             parser.add_argument("-i", "--interactive",
                                 action="store_true",
                                 help=_("interactively generate a custom "
-                                        "mirrorlist"))
+                                       "mirrorlist"))
         parser.add_argument("-v", "--version",
                             action="store_true",
                             help=_("print the pacman-mirrors version"))
@@ -161,7 +162,7 @@ class PacmanMirrors:
             parser.print_help()
             exit(0)
         if args.version:
-            print(PM_VERSION)
+            print("pacman-mirrors {}".format(__version__))
             exit(0)
         if os.getuid() != 0:
             print(_("Error: Must have root privileges."))
@@ -264,7 +265,7 @@ class PacmanMirrors:
             print("\n" + _("Error: No server available !") + "\n")
         else:
             # modify configuration to use default
-            self.modify_config() # function do self check
+            self.modify_config()  # function do self check
             self.output_mirror_list(server_list, write_file=True)
 
     def generate_mirror_list_interactive(self):
@@ -290,9 +291,9 @@ class PacmanMirrors:
         self.output_custom_mirror_file(server_list)
         self.output_mirror_list(server_list, write_file=True)
         # modify configuration to use custom
-        self.modify_config() # function do self check
-        print(_(":: Saved personalized list of mirrors in '{custom_mirror_file}'."
-                .format(custom_mirror_file=self.custom_mirror_file)))
+        self.modify_config()  # function do self check
+        print(_(":: Saved personalized list of mirrors in '{path}'."
+                .format(path=self.custom_mirror_file)))
 
     def load_server_lists(self):
         """
@@ -382,10 +383,9 @@ class PacmanMirrors:
                     if write_file:
                         # insert selected branch in url
                         server["url"] = server["url"].replace("$branch", self.config["branch"])
+                        self.write_mirror_list_entry(outfile, server)
                         if self.verbose:
                             print("==> {} : {}".format(server["country"], server["url"]))
-
-                        self.write_mirror_list_entry(outfile, server)
 
                 print(_(":: Generated and saved '{output_file}' mirrorlist."
                         .format(output_file=mirror_list)))
@@ -424,7 +424,7 @@ class PacmanMirrors:
                         if not server_url:
                             continue
                         server = {"country": server_country,
-                                  "response_time":SERVER_RES,
+                                  "response_time": SERVER_RES,
                                   "last_sync": SERVER_BAD,
                                   "url": server_url}
                         # create a probe start reference point
@@ -437,13 +437,13 @@ class PacmanMirrors:
                         if self.verbose:
                             if custom:
                                 print("==> {s_ctry} - {s_rt} - {s_url}".format(
-                                      s_ctry=server_country,
-                                      s_rt=server_response_time,
-                                      s_url=server_url.replace("$branch", self.config["branch"])))
+                                    s_ctry=server_country,
+                                    s_rt=server_response_time,
+                                    s_url=server_url.replace("$branch", self.config["branch"])))
                             else:
                                 print("==> {s_rt} - {s_url}".format(
-                                      s_rt=server_response_time,
-                                      s_url=server_url.replace("$branch", self.config["branch"])))
+                                    s_rt=server_response_time,
+                                    s_url=server_url.replace("$branch", self.config["branch"])))
                         if not statefile_content:
                             self.append_to_server_list(server, server["last_sync"])
                             continue
@@ -510,14 +510,14 @@ class PacmanMirrors:
         Use custom configuration
         """
         for country in config_only_country:
-            if "Custom" in country: # country is full path
-                country = "Custom" # must change to Custom
+            if "Custom" in country:  # country is full path
+                country = "Custom"  # must change to Custom
         country_list = ("OnlyCountry = {list}\n").format(
             list=",".join(config_only_country))
         try:
             with open(config_file) as cnf, tempfile.NamedTemporaryFile(
-                "w+t", dir=os.path.dirname(config_file),
-                delete=False) as tmp:
+                    "w+t", dir=os.path.dirname(config_file),
+                    delete=False) as tmp:
                 replaced = False
                 for line in cnf:
                     if "OnlyCountry" in line:
@@ -541,8 +541,8 @@ class PacmanMirrors:
         Use default configuration
         """
         with open(config_file) as cnf, tempfile.NamedTemporaryFile(
-            "w+t", dir=os.path.dirname(config_file),
-            delete=False) as tmp:
+                "w+t", dir=os.path.dirname(config_file),
+                delete=False) as tmp:
             for line in cnf:
                 if '=' not in line:
                     tmp.write("{}".format(line))
@@ -702,11 +702,11 @@ class PacmanMirrors:
         except timeout:
             if verbose:
                 print("\n" + _("Error: Failed to reach "
-                            "the server: Timeout."))
+                               "the server: Timeout."))
         except HTTPException:
             if verbose:
                 print("\n" + _("Error: Cannot read server "
-                            "response: HTTPException."))
+                               "response: HTTPException."))
 
         return content
 
@@ -756,15 +756,15 @@ class PacmanMirrors:
         """
         handle.write("## Country       : {}\n"
                      .format(mirror["country"]))
-        if not mirror["response_time"] == SERVER_RES: #99.99
+        if not mirror["response_time"] == SERVER_RES:  # 99.99
             handle.write("## Response time : {}\n"
                          .format(mirror["response_time"]))
-        if not mirror["last_sync"] == SERVER_BAD: # 99:99
-            if mirror["last_sync"] == LASTSYNC_NA: # 98:00 N/A
+        if not mirror["last_sync"] == SERVER_BAD:  # 99:99
+            if mirror["last_sync"] == LASTSYNC_NA:  # 98:00 N/A
                 handle.write("## Last sync     : {}\n"
                              .format("N/A"))
             else:
-                handle.write("## Last sync     : {}h\n" # 24:00
+                handle.write("## Last sync     : {}h\n"  # 24:00
                              .format(mirror["last_sync"]))
         handle.write("Server = {}\n\n"
                      .format(mirror["url"]))
@@ -782,9 +782,10 @@ class PacmanMirrors:
         else:
             self.generate_mirror_list_common()
 
+
 if __name__ == "__main__":
     if os.getuid() != 0:
-        print("Error: must have root privilegies.")
+        print("Error: must have root privileges.")
         exit(1)
 
     pm = PacmanMirrors()
