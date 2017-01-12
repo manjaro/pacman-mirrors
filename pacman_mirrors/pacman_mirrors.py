@@ -33,7 +33,6 @@ import os
 import sys
 import tempfile
 import time
-from decimal import Decimal
 from http.client import HTTPException
 from operator import itemgetter
 from random import shuffle
@@ -652,11 +651,11 @@ class PacmanMirrors:
 
         :param: start_time
         :param: stop_time
-        :return: time_taken
+        :return: probe_time
         """
         probe_time = round((stop_time - start_time), 3)
-        time_taken = "{:6.4}".format(Decimal(probe_time).quantize(Decimal(".001")))
-        return time_taken
+        probe_time = format(probe_time, ".3f")
+        return str(probe_time)
 
     @staticmethod
     def get_mirror_url(data):
