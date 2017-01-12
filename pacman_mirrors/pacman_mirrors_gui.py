@@ -99,14 +99,14 @@ class PacmanMirrors(Gtk.Window):
 
     def done(self, button):
         # Confirm choice
-        dialog = Gtk.Dialog("Are you sure?", None, 0,
+        dialog = Gtk.Dialog(_("Are you sure?"), None, 0,
         (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
         Gtk.STOCK_OK, Gtk.ResponseType.OK))
         dialog.set_transient_for(self)
         dialog.set_border_width(10)
         box = dialog.get_content_area()
         box.set_spacing(10)
-        box.add(Gtk.Label("Are you sure to replace your list of mirrors?"))
+        box.add(Gtk.Label(_("Are you sure to replace your list of mirrors?")))
         dialog.show_all()
         response = dialog.run()
 
