@@ -29,17 +29,14 @@ _ = i18n.language.gettext
 
 class PacmanMirrors(Gtk.Window):
     def __init__(self, server_list):
-        Gtk.Window.__init__(self, title=_("Mirrors list sorted by response time"))
+        Gtk.Window.__init__(self, title=_("List of mirrors sorted by response time"))
         self.set_size_request(700, 350)
         self.set_border_width(10)
         self.set_position(Gtk.WindowPosition.CENTER)
 
-        self.stack = Gtk.Stack()
-        self.stack.set_transition_type(Gtk.StackTransitionType.SLIDE_LEFT_RIGHT)
-
         mirrors_list = []
         for server in server_list:
-            mirrors_list.append((Gtk.CheckButton(),
+            mirrors_list.append((False,
                                  server["last_sync"],
                                  server["url"][:-20],
                                  server["country"]))
@@ -61,34 +58,19 @@ class PacmanMirrors(Gtk.Window):
         scrolled_tree.add(self.treeview)
 
         header = Gtk.Label(_("Tick mirrors to prepare your custom list"))
-        buttonShow = Gtk.Button(_("Show custom list"))
-        buttonShow.connect("clicked", self.show_list)
+        button_cancel = Gtk.Button(_("Cancel"))
+        button_cancel.connect("clicked", self.cancel)
+        self.button_done = Gtk.Button(_("Confirm selection"))
+        self.button_done.set_sensitive(False)
+        self.button_done.connect("clicked", self.done)
 
-        page1 = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
-        page1.add(header)
-        page1.add(scrolled_tree)
-        page1.add(buttonShow)
+        grid = Gtk.Grid(column_homogeneous=True, column_spacing=10, row_spacing=10)
+        grid.attach(header, 0, 0, 2, 1)
+        grid.attach(scrolled_tree, 0, 1, 2, 1)
+        grid.attach(button_cancel, 0, 2, 1, 1)
+        grid.attach(self.button_done, 1, 2, 1, 1)
 
-        scrolled_window = Gtk.ScrolledWindow()
-        scrolled_window.set_vexpand(True)
-        self.box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
-        scrolled_window.add(self.box)
-        buttonBack = Gtk.Button(_("Back to main list"))
-        buttonBack.connect("clicked", self.back_list)
-        self.buttonDone = Gtk.Button(_("Done"))
-        self.buttonDone.connect("clicked", self.done)
-
-        page2 = Gtk.Grid()
-        page2.set_column_homogeneous(True)
-        page2.set_row_spacing(10)
-        page2.set_column_spacing(10)
-        page2.attach(scrolled_window, 0, 0, 2, 1)
-        page2.attach(buttonBack, 0, 1, 1, 1)
-        page2.attach(self.buttonDone, 1, 1, 1, 1)
-
-        self.stack.add_named(page1, "choice")
-        self.stack.add_named(page2, "confirm")
-        self.add(self.stack)
+        self.add(grid)
 
         # Server lists
         self.server_list = server_list
@@ -97,38 +79,44 @@ class PacmanMirrors(Gtk.Window):
         self.is_done = False
 
     def on_toggle(self, widget, path):
+        # Add or remove server from custom list
         self.mirrors_liststore[path][0] = not self.mirrors_liststore[path][0]
+        if self.mirrors_liststore[path][0]:
+            for server in self.server_list:
+                if server["url"][:-20] == self.mirrors_liststore[path][2]:
+                    self.custom_list.append(server)
+        else:
+            for server in self.custom_list:
+                if server["url"][:-20] == self.mirrors_liststore[path][2]:
+                    self.custom_list.remove(server)
 
-    def show_list(self, button):
-        # Reset custom list
+        self.button_done.set_sensitive(bool(self.custom_list))
+
+    def cancel(self, button):
         self.custom_list = []
-        for element in self.box.get_children():
-            self.box.remove(element)
-        # Get selected elementqs
-        for row in self.mirror_filter:
-            if row[0]:
-                for server in self.server_list:
-                    if server["url"][:-20] == row[2]:
-                        self.custom_list.append(server)
-                        self.box.add(Gtk.Label("- " + row[2]))
-        # Check if at least a server is selected
-        if not self.custom_list:
-            self.box.add(Gtk.Label(_("Please select at least one server")))
-        self.buttonDone.set_sensitive(self.custom_list)
-        # Show selected servers
-        self.box.show_all()
-        self.stack.set_visible_child_name("confirm")
-        self.set_title(_("List of selected mirrors"))
-
-    def back_list(self, button):
-        # Return to the choice page
-        self.stack.set_visible_child_name("choice")
-        self.set_title(_("Mirrors list sorted by response time"))
+        Gtk.main_quit()
 
     def done(self, button):
-        # Confirm the action
-        self.is_done = True
-        Gtk.main_quit()
+        # Confirm choice
+        dialog = Gtk.Dialog("Are you sure?", None, 0,
+        (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
+        Gtk.STOCK_OK, Gtk.ResponseType.OK))
+        dialog.set_transient_for(self)
+        dialog.set_border_width(10)
+        box = dialog.get_content_area()
+        box.set_spacing(10)
+        box.add(Gtk.Label("Are you sure to replace your list of mirrors?"))
+        dialog.show_all()
+        response = dialog.run()
+
+        if response == Gtk.ResponseType.OK:
+            # Quit GUI
+            dialog.destroy()
+            self.is_done = True
+            Gtk.main_quit()
+        elif response == Gtk.ResponseType.CANCEL:
+            # Go back to selection
+            dialog.destroy()
 
 def launch(server_list):
     window = PacmanMirrors(server_list)
