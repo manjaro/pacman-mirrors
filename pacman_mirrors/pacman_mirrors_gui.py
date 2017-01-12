@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 #
 # This file is part of pacman-mirrors.
 #
@@ -16,9 +15,10 @@
 # You should have received a copy of the GNU General Public License
 # along with pacman-mirrors.  If not, see <http://www.gnu.org/licenses/>.
 #
-# Author(s): Esclapion
-#            Hugo Posnic
+# Authors: Esclapion
+#          Hugo Posnic <huluti@manjaro.org>
 
+""" Module PacmanMirrors GUI"""
 import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
@@ -28,6 +28,7 @@ _ = i18n.language.gettext
 
 
 class PacmanMirrors(Gtk.Window):
+    """ Class PacmanMirrors """
     def __init__(self, server_list):
         Gtk.Window.__init__(self, title=_("List of mirrors sorted by response time"))
         self.set_size_request(700, 350)
@@ -118,7 +119,7 @@ class PacmanMirrors(Gtk.Window):
             # Go back to selection
             dialog.destroy()
 
-def launch(server_list):
+def run(server_list):
     window = PacmanMirrors(server_list)
     window.connect("delete-event", Gtk.main_quit)
     window.show_all()

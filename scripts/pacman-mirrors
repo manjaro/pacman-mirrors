@@ -54,4 +54,3 @@ try:
 except KeyboardInterrupt:
     print("\n" + _("Error: interrupted by the user."))
     exit(1)
-

@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 #
 # This file is part of pacman-mirrors.
 #
@@ -26,28 +25,29 @@ class CustomHelpFormatter(argparse.HelpFormatter):
     """
 
     def _split_lines(self, text, width):
+        """Split lines"""
         return text.splitlines()
 
     def _get_help_string(self, action):
         """Place default value in help string."""
         h = action.help
-        if '%(default)' not in action.help:
-            if action.default != '' and action.default != [] and action.default is not None and action.default is not False:
+        if "%(default)" not in action.help:
+            if action.default != "" and action.default != [] and action.default is not None and action.default is not False:
                 if action.default is not argparse.SUPPRESS:
                     defaulting_nargs = [argparse.OPTIONAL, argparse.ZERO_OR_MORE]
 
                     if action.option_strings or action.nargs in defaulting_nargs:
-                        if '\n' in h:
+                        if "\n" in h:
                             lines = h.splitlines()
-                            lines[0] += ' (default: %(default)s)'
-                            h = '\n'.join(lines)
+                            lines[0] += " (default: %(default)s)"
+                            h = "\n".join(lines)
                         else:
-                            h += ' (default: %(default)s)'
+                            h += " (default: %(default)s)"
             return h
 
     def _fill_text(self, text, width, indent):
         """Permit multiple line descriptions."""
-        return ''.join([indent + line for line in text.splitlines(True)])
+        return "".join([indent + line for line in text.splitlines(True)])
 
     def _format_action_invocation(self, action):
         """Removes duplicate ALLCAPS with positional arguments."""
@@ -72,12 +72,14 @@ class CustomHelpFormatter(argparse.HelpFormatter):
                 for option_string in action.option_strings:
                     parts.append(option_string)
 
-                return '%s %s' % (', '.join(parts), args_string)
+                return "%s %s" % (", ".join(parts), args_string)
 
-            return ', '.join(parts)
+            return ", ".join(parts)
 
     def _get_default_metavar_for_optional(self, action):
+        """Get default metavar for optional"""
         return action.dest.upper()
 
     def _get_default_metavar_for_positional(self, action):
+        """get default metavar for positional"""
         return action.dest

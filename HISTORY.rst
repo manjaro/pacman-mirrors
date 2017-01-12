@@ -3,6 +3,13 @@
 History
 -------
 
+2.0.1 (2017-01)
+---------------------
+
+* Refactoring
+* Code improvements
+* --verbose option
+
 2.0 (2016-03-01)
 ---------------------
 

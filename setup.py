@@ -22,7 +22,7 @@ mirror_files = glob.glob('data/mirrors/*')
 
 setup(
     name='pacman-mirrors',
-    version='2.0',
+    version='2.0.1',
     description="Package that provides all mirrors for Manjaro Linux.",
     long_description=readme + '\n\n' + history,
     author="Roland Singer, Esclapion, philm, Ramon Buldó",

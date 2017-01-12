@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 
 """
 test_pacman-mirrors
@@ -22,48 +21,48 @@ class TestPacmanMirrors(unittest.TestCase):
     @patch("os.getuid")
     def test_run(self, mock_os_getuid):
         mock_os_getuid.return_value = 0
-        with unittest.mock.patch('sys.argv', ["pacman-mirrors", "-g", "-m", "random", "-d" "data/mirrors"]):
+        with unittest.mock.patch("sys.argv", ["pacman-mirrors", "-g", "-m", "random", "-d" "data/mirrors"]):
             pm = pacman_mirrors.PacmanMirrors()
-            pm.parse_cmd()
-            pm.generate_servers_lists()
+            pm.command_line_parse()
+            pm.load_server_lists()
 
     @patch("os.getuid")
     def test_run_country(self, mock_os_getuid):
         mock_os_getuid.return_value = 0
-        with unittest.mock.patch('sys.argv', ["pacman-mirrors", "-g", "-c", "Germany", "-m", "random", "-d" "data/mirrors"]):
+        with unittest.mock.patch("sys.argv", ["pacman-mirrors", "-g", "-c", "Germany", "-m", "random", "-d" "data/mirrors"]):
             pm = pacman_mirrors.PacmanMirrors()
-            pm.parse_cmd()
-            pm.generate_servers_lists()
-            assert pm.only_country == ["Germany"]
+            pm.command_line_parse()
+            pm.load_server_lists()
+            assert pm.config["only_country"] == ["Germany"]
 
     @patch("os.getuid")
-    @patch.object(pacman_mirrors.PacmanMirrors, 'get_geoip_country')
+    @patch.object(pacman_mirrors.PacmanMirrors, "get_geoip_country")
     def test_geoip_country_available(self, mock_geoip, mock_os_getuid):
         mock_os_getuid.return_value = 0
         mock_geoip.return_value = "France"
-        with unittest.mock.patch('sys.argv',
+        with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors", "-g", "--geoip", "-m", "random", "-d" "data/mirrors"]):
             pm = pacman_mirrors.PacmanMirrors()
-            pm.parse_cmd()
-            pm.generate_servers_lists()
-            assert pm.only_country == ["France"]
+            pm.command_line_parse()
+            pm.load_server_lists()
+            assert pm.config["only_country"] == ["France"]
 
     @patch("os.getuid")
-    @patch.object(pacman_mirrors.PacmanMirrors, 'get_geoip_country')
+    @patch.object(pacman_mirrors.PacmanMirrors, "get_geoip_country")
     def test_geoip_country_not_available(self, mock_geoip, mock_os_getuid):
         mock_os_getuid.return_value = 0
-        mock_geoip.return_value = "testetestes"
-        with unittest.mock.patch('sys.argv',
+        mock_geoip.return_value = "Antarctica"
+        with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors", "-g", "--geoip", "-m", "random", "-d" "data/mirrors"]):
             pm = pacman_mirrors.PacmanMirrors()
-            pm.only_country = []
-            pm.parse_cmd()
-            pm.generate_servers_lists()
-            assert pm.only_country == pm.available_countries
+            pm.config["only_country"] = []
+            pm.command_line_parse()
+            pm.load_server_lists()
+            assert pm.config["only_country"] == pm.available_countries
 
     def tearDown(self):
         pass
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()
