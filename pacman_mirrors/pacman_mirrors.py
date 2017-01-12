@@ -19,8 +19,7 @@
 #             philm
 #             Ramon Buldó <rbuldo@gmail.com>
 #             Hugo Posnic <huluti@manjaro.org>
-# Co-Authors: Frede Hundewadt <frede@hundewadt.dk>
-#
+#             Frede Hundewadt <frede@hundewadt.dk>
 
 """
 Module PacmanMirrors
