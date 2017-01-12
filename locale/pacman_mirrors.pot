@@ -1,200 +1,190 @@
 # Translations template for pacman-mirrors.
-# Copyright (C) 2016 ORGANIZATION
+# Copyright (C) 2017 ORGANIZATION
 # This file is distributed under the same license as the pacman-mirrors
 # project.
-# FIRST AUTHOR <EMAIL@ADDRESS>, 2016.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2017.
 #
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: pacman-mirrors 2.0\n"
+"Project-Id-Version: pacman-mirrors 3.0.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2017-01-12 10:45+0100\n"
+"POT-Creation-Date: 2017-01-12 16:25+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Hugo Posnic <huluti@manjaro.org>\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.3.4\n"
 
-#: pacman_mirrors/pacman_mirrors.py:80
-#, python-brace-format
-msgid "Warning: Cannot read file '{filename}': {error}"
-msgstr ""
-
-#: pacman_mirrors/pacman_mirrors.py:118
+#: pacman_mirrors/pacman_mirrors.py:115
 msgid "generate new mirrorlist"
 msgstr ""
 
-#: pacman_mirrors/pacman_mirrors.py:122
+#: pacman_mirrors/pacman_mirrors.py:119
 msgid "generation method"
 msgstr ""
 
-#: pacman_mirrors/pacman_mirrors.py:126
+#: pacman_mirrors/pacman_mirrors.py:123
 msgid "branch name"
 msgstr ""
 
-#: pacman_mirrors/pacman_mirrors.py:129
+#: pacman_mirrors/pacman_mirrors.py:126
 msgid "comma separated list of countries where mirrors will be used"
 msgstr ""
 
-#: pacman_mirrors/pacman_mirrors.py:133
-msgid "detect country using geolocation, ignored if '--country' is used"
+#: pacman_mirrors/pacman_mirrors.py:130
+msgid "detect country using geolocation, ignored if \"--country\" is used"
 msgstr ""
 
-#: pacman_mirrors/pacman_mirrors.py:137
+#: pacman_mirrors/pacman_mirrors.py:134
 msgid "PATH"
 msgstr ""
 
-#: pacman_mirrors/pacman_mirrors.py:138
+#: pacman_mirrors/pacman_mirrors.py:135
 msgid "mirrors list path"
 msgstr ""
 
-#: pacman_mirrors/pacman_mirrors.py:141
+#: pacman_mirrors/pacman_mirrors.py:138
 msgid "FILE"
 msgstr ""
 
-#: pacman_mirrors/pacman_mirrors.py:142
+#: pacman_mirrors/pacman_mirrors.py:139
 msgid "output file"
 msgstr ""
 
-#: pacman_mirrors/pacman_mirrors.py:145
+#: pacman_mirrors/pacman_mirrors.py:142
 msgid "SECONDS"
 msgstr ""
 
-#: pacman_mirrors/pacman_mirrors.py:146
+#: pacman_mirrors/pacman_mirrors.py:143
 msgid "server maximum waiting time"
 msgstr ""
 
-#: pacman_mirrors/pacman_mirrors.py:149
+#: pacman_mirrors/pacman_mirrors.py:146
 msgid ""
-"don't generate mirrorlist if NoUpdate is set to True in the configuration "
-"file"
+"don't generate mirrorlist if NoUpdate is set to True in the configuration"
+" file"
 msgstr ""
 
-#: pacman_mirrors/pacman_mirrors.py:154
+#: pacman_mirrors/pacman_mirrors.py:151
 msgid "interactively generate a custom mirrorlist"
 msgstr ""
 
-#: pacman_mirrors/pacman_mirrors.py:158
+#: pacman_mirrors/pacman_mirrors.py:155
 msgid "print the pacman-mirrors version"
 msgstr ""
 
-#: pacman_mirrors/pacman_mirrors.py:170
+#: pacman_mirrors/pacman_mirrors.py:158
+msgid "verbose output"
+msgstr ""
+
+#: pacman_mirrors/pacman_mirrors.py:168
 msgid "Error: Must have root privileges."
 msgstr ""
 
-#: pacman_mirrors/pacman_mirrors.py:239
-#, python-brace-format
+#: pacman_mirrors/pacman_mirrors.py:250
+msgid "Warning: Cannot read file  '{filename}': {error}"
+msgstr ""
+
+#: pacman_mirrors/pacman_mirrors.py:265
+msgid "Error: No server available !"
+msgstr ""
+
+#: pacman_mirrors/pacman_mirrors.py:287
+msgid "User generated mirror list"
+msgstr ""
+
+#: pacman_mirrors/pacman_mirrors.py:296
+msgid ":: Saved personalized list of mirrors in '{path}'."
+msgstr ""
+
+#: pacman_mirrors/pacman_mirrors.py:310
+msgid ""
+"Warning: Custom mirrors file '{path}' doesn't exists.\n"
+"Querying all servers."
+msgstr ""
+
+#: pacman_mirrors/pacman_mirrors.py:366 pacman_mirrors/pacman_mirrors.py:395
+msgid "Error: Cannot write file '{filename}': {error}"
+msgstr ""
+
+#: pacman_mirrors/pacman_mirrors.py:391
+msgid ":: Generated and saved '{output_file}' mirrorlist."
+msgstr ""
+
+#: pacman_mirrors/pacman_mirrors.py:405
+msgid ":: Querying servers, this may take some time..."
+msgstr ""
+
+#: pacman_mirrors/pacman_mirrors.py:460
+msgid "Warning: Wrong date format in 'state' file."
+msgstr ""
+
+#: pacman_mirrors/pacman_mirrors.py:467 pacman_mirrors/pacman_mirrors.py:500
+msgid "Error: Cannot read file '{filename}': {error}"
+msgstr ""
+
+#: pacman_mirrors/pacman_mirrors.py:480
+msgid ":: Randomizing server list..."
+msgstr ""
+
+#: pacman_mirrors/pacman_mirrors.py:535
+msgid "Error: Cannot update file '{filename}': {error}"
+msgstr ""
+
+#: pacman_mirrors/pacman_mirrors.py:696
+msgid "Error: Failed to reach the server: {reason}"
+msgstr ""
+
+#: pacman_mirrors/pacman_mirrors.py:701
+msgid "Error: The server couldn't fulfill the request: {code}"
+msgstr ""
+
+#: pacman_mirrors/pacman_mirrors.py:704
+msgid "Error: Failed to reach the server: Timeout."
+msgstr ""
+
+#: pacman_mirrors/pacman_mirrors.py:708
+msgid "Error: Cannot read server response: HTTPException."
+msgstr ""
+
+#: pacman_mirrors/pacman_mirrors.py:727
 msgid ""
 "argument -c/--country: unknown country '{country}'\n"
 "Available countries are: {country_list}"
 msgstr ""
 
-#: pacman_mirrors/pacman_mirrors.py:319
-#, python-brace-format
-msgid ""
-"Warning: Custom mirrors file '{path}' doesn't exists. Querying all servers."
-msgstr ""
-
-#: pacman_mirrors/pacman_mirrors.py:343
-msgid ":: Querying servers, this may take some time..."
-msgstr ""
-
-#: pacman_mirrors/pacman_mirrors.py:375
-#, python-brace-format
-msgid "Error: Failed to reach the server: {reason}"
-msgstr ""
-
-#: pacman_mirrors/pacman_mirrors.py:379
-#, python-brace-format
-msgid "Error: The server couldn't fulfill the request: {code}"
-msgstr ""
-
-#: pacman_mirrors/pacman_mirrors.py:384
-msgid "Error: Failed to reach the server: Timeout."
-msgstr ""
-
-#: pacman_mirrors/pacman_mirrors.py:388
-msgid "Error: Cannot read server response: HTTPException."
-msgstr ""
-
-#: pacman_mirrors/pacman_mirrors.py:412
-msgid "Warning: Wrong date format in 'state' file."
-msgstr ""
-
-#: pacman_mirrors/pacman_mirrors.py:431 pacman_mirrors/pacman_mirrors.py:466
-#, python-brace-format
-msgid "Error: Cannot read file '{filename}': {error}"
-msgstr ""
-
-#: pacman_mirrors/pacman_mirrors.py:446
-msgid ":: Randomizing server list..."
-msgstr ""
-
-#: pacman_mirrors/pacman_mirrors.py:483
-msgid "Error: No server available !"
-msgstr ""
-
-#: pacman_mirrors/pacman_mirrors.py:503 pacman_mirrors/pacman_mirrors.py:593
-#, python-brace-format
-msgid ":: Generated and saved '{output_file}' mirrorlist."
-msgstr ""
-
-#: pacman_mirrors/pacman_mirrors.py:506 pacman_mirrors/pacman_mirrors.py:541
-#: pacman_mirrors/pacman_mirrors.py:598
-#, python-brace-format
-msgid "Error: Cannot write file '{filename}': {error}"
-msgstr ""
-
-#: pacman_mirrors/pacman_mirrors.py:562
-#, python-brace-format
-msgid "Error: Cannot update file '{filename}': {error}"
-msgstr ""
-
-#: pacman_mirrors/pacman_mirrors.py:577
-msgid "User generated mirror list"
-msgstr ""
-
-#: pacman_mirrors/pacman_mirrors.py:595
-#, python-brace-format
-msgid ":: Saved personalized list of mirrors in '{custom_file}'."
-msgstr ""
-
-#: pacman_mirrors/pacman_mirrors.py:614
-#, python-brace-format
-msgid ""
-"Warning: Cannot remove 'Custom' country in the configuration file: {error}"
-msgstr ""
-
-#: pacman_mirrors/pacman_mirrors_gui.py:32
+#: pacman_mirrors/pacman_mirrors_gui.py:33
 msgid "List of mirrors sorted by response time"
 msgstr ""
 
-#: pacman_mirrors/pacman_mirrors_gui.py:52
+#: pacman_mirrors/pacman_mirrors_gui.py:53
 msgid "Use?"
 msgstr ""
 
-#: pacman_mirrors/pacman_mirrors_gui.py:54
+#: pacman_mirrors/pacman_mirrors_gui.py:55
 msgid "Last sync (hh:mm)"
 msgstr ""
 
-#: pacman_mirrors/pacman_mirrors_gui.py:54
+#: pacman_mirrors/pacman_mirrors_gui.py:55
 msgid "URL"
 msgstr ""
 
-#: pacman_mirrors/pacman_mirrors_gui.py:54
+#: pacman_mirrors/pacman_mirrors_gui.py:55
 msgid "Country"
 msgstr ""
 
-#: pacman_mirrors/pacman_mirrors_gui.py:60
+#: pacman_mirrors/pacman_mirrors_gui.py:61
 msgid "Tick mirrors to prepare your custom list"
 msgstr ""
 
-#: pacman_mirrors/pacman_mirrors_gui.py:61
+#: pacman_mirrors/pacman_mirrors_gui.py:62
 msgid "Cancel"
 msgstr ""
 
-#: pacman_mirrors/pacman_mirrors_gui.py:63
+#: pacman_mirrors/pacman_mirrors_gui.py:64
 msgid "Confirm selection"
 msgstr ""
+
