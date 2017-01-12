@@ -6,9 +6,10 @@ History
 3.0 (2017-01-12)
 ---------------------
 
-* Refactoring
-* Code improvements
-* --verbose option
+* Refactoring.
+* New GUI.
+* Code improvements.
+* --verbose option.
 
 2.0 (2016-03-01)
 ---------------------
