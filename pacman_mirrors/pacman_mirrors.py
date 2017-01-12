@@ -278,7 +278,7 @@ class PacmanMirrors:
         from . import pacman_mirrors_gui
         # concat good servers and responding servers
         server_list = self.good_servers + self.resp_servers + self.bad_servers
-        server_list = sorted(server_list, key=itemgetter("response_time"))       
+        server_list = sorted(server_list, key=itemgetter("response_time"))
         gui = pacman_mirrors_gui.run(server_list)
         server_list = gui.custom_list
         if not gui.is_done:
@@ -384,7 +384,7 @@ class PacmanMirrors:
                         server["url"] = server["url"].replace("$branch", self.config["branch"])
                         if self.verbose:
                             print("==> {} : {}".format(server["country"], server["url"]))
-                        
+
                         self.write_mirror_list_entry(outfile, server)
 
                 print(_(":: Generated and saved '{output_file}' mirrorlist."
@@ -402,7 +402,7 @@ class PacmanMirrors:
 
         :param countries: list of country files to use
         """
-        print(_(":: Querying servers, this may take some time..."))        
+        print(_(":: Querying servers, this may take some time..."))
         for country in countries:
             if "Custom" in country:
                 custom = True
@@ -438,7 +438,7 @@ class PacmanMirrors:
                             if custom:
                                 print("==> {s_ctry} - {s_rt} - {s_url}".format(
                                       s_ctry=server_country,
-                                      s_rt=server_response_time, 
+                                      s_rt=server_response_time,
                                       s_url=server_url.replace("$branch", self.config["branch"])))
                             else:
                                 print("==> {s_rt} - {s_url}".format(
@@ -448,7 +448,7 @@ class PacmanMirrors:
                             self.append_to_server_list(server, server["last_sync"])
                             continue
                         server["response_time"] = server_response_time
-                        # extract timestamp from statefile                        
+                        # extract timestamp from statefile
                         statefile_timestamp = self.get_mirror_branch_timestamp(statefile_content)
                         try:
                             branch_timestamp = datetime.datetime.strptime(
@@ -499,7 +499,7 @@ class PacmanMirrors:
                 print(_("Error: Cannot read file '{filename}': {error}"
                         .format(filename=err.filename, error=err.strerror)))
                 continue
-        shuffle(self.bad_servers)        
+        shuffle(self.bad_servers)
 
     # ----------------------------------------------------------------
     # Begin static methods
@@ -604,7 +604,7 @@ class PacmanMirrors:
     @staticmethod
     def get_mirror_branch_last_sync(point_in_time, timestamp):
         """
-        Calculates elapsed time 
+        Calculates elapsed time
 
         :param: point_in_time: reference point
         :param: timestamp: timestamp
@@ -755,7 +755,7 @@ class PacmanMirrors:
         :param: mirror: mirror object
         """
         handle.write("## Country       : {}\n"
-                     .format(mirror["country"]))                     
+                     .format(mirror["country"]))
         if not mirror["response_time"] == SERVER_RES: #99.99
             handle.write("## Response time : {}\n"
                          .format(mirror["response_time"]))
