@@ -540,11 +540,10 @@ class PacmanMirrors:
                 "w+t", dir=os.path.dirname(config_file),
                 delete=False) as tmp:
             for line in cnf:
-                if '=' not in line:
+                if "=" not in line:
                     tmp.write("{}".format(line))
                 else:
-                    (key, value) = [x.strip()
-                                    for x in line.split('=', 1)]
+                    key = [x.strip() for x in line.split("=", 1)[0]]
                     if key == "OnlyCountry":
                         tmp.write("# OnlyCountry = \n")
                     else:
