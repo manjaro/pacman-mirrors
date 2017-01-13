@@ -633,13 +633,11 @@ class PacmanMirrors:
         :param: data
         :return: country
         """
-        country = ""
         line = data.strip()
         if line.startswith("[") and line.endswith("]"):
-            country = line[1:-1]
+            return line[1:-1]
         elif line.startswith("## Country") or line.startswith("## Location"):
-            country = line[19:]
-        return country
+            return line[19:]
 
     @staticmethod
     def get_mirror_response_time(start_time, stop_time):
@@ -662,11 +660,9 @@ class PacmanMirrors:
         :param: data
         :return: url
         """
-        url = ""
         line = data.strip()
         if line.startswith("Server"):
-            url = line[9:]
-        return url
+            return line[9:]
 
     @staticmethod
     def query_mirror_state(state_url, mirror_branch, request_timeout, verbose=False):
