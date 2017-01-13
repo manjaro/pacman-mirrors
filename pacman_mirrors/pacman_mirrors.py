@@ -407,7 +407,7 @@ class PacmanMirrors:
                 print("=> Using custom mirror list")
             else:
                 custom = False
-                print("=> Using mirrors in " + country)
+                print("=> Testing mirrors in " + country)
             server_country = country
             # create a ref point for calculation
             ref_point_in_time = datetime.datetime.utcnow()
