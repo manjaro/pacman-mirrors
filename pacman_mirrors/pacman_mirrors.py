@@ -560,9 +560,7 @@ class PacmanMirrors:
         :param country_dir: path with the mirror list
         :return: list of countries
         """
-        available_countries = os.listdir(country_dir)
-        available_countries.sort()
-        return available_countries
+        return sorted(os.listdir(country_dir))
 
     @staticmethod
     def get_geoip_country():
