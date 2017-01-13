@@ -408,7 +408,6 @@ class PacmanMirrors:
             else:
                 custom = False
                 print("=> Testing mirrors in " + country)
-            server_country = country
             # create a ref point for calculation
             ref_point_in_time = datetime.datetime.utcnow()
             try:
@@ -416,12 +415,12 @@ class PacmanMirrors:
                     for line in mirrorfile:
                         mirror_country = self.get_mirror_country(line)
                         if mirror_country:
-                            server_country = mirror_country
+                            country = mirror_country
                             continue
                         server_url = self.get_mirror_url(line)
                         if not server_url:
                             continue
-                        server = {"country": server_country,
+                        server = {"country": country,
                                   "response_time": SERVER_RES,
                                   "last_sync": SERVER_BAD,
                                   "url": server_url}
@@ -435,7 +434,7 @@ class PacmanMirrors:
                         if self.verbose:
                             if custom:
                                 print("==> {s_ctry} - {s_rt} - {s_url}".format(
-                                    s_ctry=server_country,
+                                    s_ctry=country,
                                     s_rt=server_response_time,
                                     s_url=server_url.replace("$branch", self.config["branch"])))
                             else:
@@ -477,18 +476,17 @@ class PacmanMirrors:
         """
         print(_(":: Randomizing server list..."))
         for country in countries:
-            server_country = country
             try:
                 with open(os.path.join(self.default_mirror_dir, country), "r") as conf:
                     for line in conf:
                         m_country = self.get_mirror_country(line)
                         if m_country:
-                            server_country = m_country
+                            country = m_country
                             continue
                         m_url = self.get_mirror_url(line)
                         if not m_url:
                             continue
-                        server = {"country": server_country,
+                        server = {"country": country,
                                   "response_time": SERVER_RES,
                                   "last_sync": SERVER_BAD,
                                   "url": m_url}
