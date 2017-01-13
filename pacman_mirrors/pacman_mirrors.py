@@ -90,7 +90,7 @@ class PacmanMirrors:
 
     def append_to_server_list(self, mirror, mirror_last_sync):
         """
-        append mirror to relevant list based on elapsed hours
+        Append mirror to relevant list based on elapsed hours
 
         :param: mirror: object{}
         :param: response_time: mirror response time
@@ -628,7 +628,7 @@ class PacmanMirrors:
     @staticmethod
     def get_mirror_country(data):
         """
-        extract mirror country from data
+        Extract mirror country from data
 
         :param: data
         :return: country
@@ -657,7 +657,7 @@ class PacmanMirrors:
     @staticmethod
     def get_mirror_url(data):
         """
-        extract mirror url from data
+        Extract mirror url from data
 
         :param: data
         :return: url
@@ -725,7 +725,7 @@ class PacmanMirrors:
     @staticmethod
     def write_mirror_list_header(handle, custom=False):
         """
-        write mirrorlist header
+        Write mirrorlist header
 
         :param: handle: handle to a file opened for writing
         """
