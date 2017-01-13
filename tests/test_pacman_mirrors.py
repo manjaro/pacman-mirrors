@@ -8,7 +8,6 @@ Tests for `pacman-mirrors` module.
 """
 
 import unittest
-from unittest import mock
 from unittest.mock import patch
 
 from pacman_mirrors import pacman_mirrors
