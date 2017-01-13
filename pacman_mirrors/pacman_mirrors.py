@@ -38,7 +38,7 @@ from operator import itemgetter
 from random import shuffle
 from socket import timeout
 from urllib.error import URLError
-from urllib.request import Request, urlopen
+from urllib.request import urlopen
 
 from pacman_mirrors import __version__
 from . import i18n
@@ -569,30 +569,27 @@ class PacmanMirrors:
 
         :return: return country name or empty list
         """
-        req = Request("http://freegeoip.net/json/")
+        country_name = None
         try:
-            with urlopen(req, timeout=2) as res:
-                raw_data = res.read()
-                encoding = res.info().get_content_charset("utf8")
-                json_obj = json.loads(raw_data.decode(encoding))
-
+            res = urlopen("http://freegeoip.net/json/", timeout=2)
+            json_obj = json.loads(res.read().decode("utf8"))
         except (URLError, timeout, HTTPException, json.JSONDecodeError):
-            return []
-        try:
-            country_name = json_obj["country_name"]
-        except KeyError:
-            return []
-        country_fix = {
-            "Brazil": "Brasil",
-            "Costa Rica": "Costa_Rica",
-            "Czech Republic": "Czech",
-            "South Africa": "Africa",
-            "United Kingdom": "United_Kingdom",
-            "United States": "United_States",
-        }
-        if country_name in country_fix.keys():
-            country_name = country_fix[country_name]
-        return country_name
+            country_name = []
+        else:
+            if "country_name" in json_obj:
+                country_name = json_obj["country_name"]
+                country_fix = {
+                    "Brazil": "Brasil",
+                    "Costa Rica": "Costa_Rica",
+                    "Czech Republic": "Czech",
+                    "South Africa": "Africa",
+                    "United Kingdom": "United_Kingdom",
+                    "United States": "United_States",
+                }
+                if country_name in country_fix.keys():
+                    country_name = country_fix[country_name]
+        finally:
+            return country_name
 
     @staticmethod
     def get_mirror_branch_last_sync(point_in_time, timestamp):
@@ -673,10 +670,10 @@ class PacmanMirrors:
         content = ""
         _state_url = state_url.replace("$branch", mirror_branch)
         position = _state_url.find(mirror_branch)
-        req = Request(_state_url[0:position] + "state")
+        req = _state_url[0:position] + "state"
         try:
-            with urlopen(req, timeout=request_timeout) as state_file:
-                content = state_file.read()
+            res = urlopen(req, timeout=request_timeout)
+            content = res.read()
         except URLError as err:
             if hasattr(err, "reason"):
                 if verbose:
