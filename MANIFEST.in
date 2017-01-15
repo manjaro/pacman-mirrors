@@ -1,8 +1,8 @@
-include AUTHORS.rst
-include CONTRIBUTING.rst
-include HISTORY.rst
+include AUTHORS.md
+include CONTRIBUTING.md
+include CHANGELOG.md
 include LICENSE
-include README.rst
+include README.md
 include data/mirrors/*
 include scripts/pacman-mirrors
 
@@ -10,4 +10,4 @@ recursive-include tests *
 recursive-exclude * __pycache__
 recursive-exclude * *.py[co]
 
-recursive-include docs *.rst conf.py Makefile make.bat
+recursive-include docs *.md

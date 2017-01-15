@@ -1,8 +1,6 @@
-============
-Installation
-============
+# Installation
 
-At the command line::
+At the command line:
 
     $ easy_install pacman-mirrors
 

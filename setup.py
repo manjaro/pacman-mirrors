@@ -25,11 +25,11 @@ def find_version(*file_paths):
         return version_match.group(1)
     raise RuntimeError("Unable to find version string.")
 
-with open('README.rst') as readme_file:
+with open('README.md') as readme_file:
     readme = readme_file.read()
 
-with open('HISTORY.rst') as history_file:
-    history = history_file.read().replace('.. :changelog:', '')
+with open('CHANGELOG.md') as changelog_file:
+    changelog = changelog_file.read()
 
 requirements = [
     # TODO: put package requirements here
@@ -45,7 +45,7 @@ setup(
     name='pacman-mirrors',
     version=find_version("pacman_mirrors", "__init__.py"),
     description="Package that provides all mirrors for Manjaro Linux.",
-    long_description=readme + '\n\n' + history,
+    long_description=readme + '\n\n' + changelog,
     author="Roland Singer, Esclapion, philm, Ramon Buldó",
     author_email='ramon@manjaro.org',
     url='https://github.com/manjaro/pacman-mirrors',

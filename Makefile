@@ -54,12 +54,7 @@ coverage:
 	open htmlcov/index.html
 
 docs:
-	rm -f docs/pacman-mirrors.rst
-	rm -f docs/modules.rst
-	sphinx-apidoc -o docs/ pacman-mirrors
-	$(MAKE) -C docs clean
-	$(MAKE) -C docs html
-	open docs/_build/html/index.html
+	mkdocs build
 
 release: clean
 	python setup.py sdist upload
