@@ -660,7 +660,7 @@ class PacmanMirrors:
             return line[9:]
 
     @staticmethod
-    def query_mirror_state(state_url, mirror_branch, request_timeout, quiet=False):
+    def query_mirror_state(state_url, mirror_branch, request_timeout, quiet):
         """
         Get statefile
 
