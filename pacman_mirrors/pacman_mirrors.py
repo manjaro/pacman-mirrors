@@ -76,7 +76,7 @@ class PacmanMirrors:
         # Decisions
         self.geolocation = False
         self.interactive = False
-        self.verbose = False
+        self.quiet = False
         # Time out
         self.max_wait_time = 2
         # Files and dirs
@@ -151,9 +151,9 @@ class PacmanMirrors:
         parser.add_argument("-v", "--version",
                             action="store_true",
                             help=_("print the pacman-mirrors version"))
-        parser.add_argument("--verbose",
+        parser.add_argument("--quiet",
                             action="store_true",
-                            help=_("verbose output"))
+                            help=_("make pacman-mirrors silent"))
         args = parser.parse_args()
         # start parsing
         if len(sys.argv) == 1:
@@ -200,8 +200,8 @@ class PacmanMirrors:
             self.interactive = True
         if args.timeout:
             self.max_wait_time = args.timeout
-        if args.verbose:
-            self.verbose = True
+        if args.quiet:
+            self.quiet = True
 
     def config_init(self):
         """
@@ -382,7 +382,7 @@ class PacmanMirrors:
                         # insert selected branch in url
                         server["url"] = server["url"].replace("$branch", self.config["branch"])
                         self.write_mirror_list_entry(outfile, server)
-                        if self.verbose:
+                        if not self.quiet:
                             print("==> {} : {}".format(server["country"], server["url"]))
 
                 print(_(":: Generated and saved '{output_file}' mirrorlist."
@@ -427,11 +427,11 @@ class PacmanMirrors:
                         # create a probe start reference point
                         probe_start = time.time()
                         statefile_content = self.query_mirror_state(
-                            server["url"], self.config["branch"], self.max_wait_time, self.verbose)
+                            server["url"], self.config["branch"], self.max_wait_time, self.quiet)
                         # calculate response time
                         server_response_time = self.get_mirror_response_time(
                             probe_start, time.time())
-                        if self.verbose:
+                        if not self.quiet:
                             if custom:
                                 print("==> {s_ctry} - {s_rt} - {s_url}".format(
                                     s_ctry=country,
@@ -453,7 +453,7 @@ class PacmanMirrors:
                         except ValueError:
                             server["last_sync"] = LASTSYNC_NA
                             self.append_to_server_list(server, server["last_sync"])
-                            if self.verbose:
+                            if not self.quiet:
                                 print("\n" + _("Warning: Wrong date format in 'state' file."))
                             continue
                         server["last_sync"] = self.get_mirror_branch_last_sync(
@@ -660,7 +660,7 @@ class PacmanMirrors:
             return line[9:]
 
     @staticmethod
-    def query_mirror_state(state_url, mirror_branch, request_timeout, verbose=False):
+    def query_mirror_state(state_url, mirror_branch, request_timeout, quiet=False):
         """
         Get statefile
 
@@ -676,21 +676,21 @@ class PacmanMirrors:
             content = res.read()
         except URLError as err:
             if hasattr(err, "reason"):
-                if verbose:
+                if not quiet:
                     print("\n" + _("Error: Failed to reach "
                                    "the server: {reason}"
                                    .format(reason=err.reason)))
             elif hasattr(err, "code"):
-                if verbose:
+                if not quiet:
                     print("\n" + _("Error: The server couldn't "
                                    "fulfill the request: {code}"
                                    .format(code=err.errno)))
         except timeout:
-            if verbose:
+            if not quiet:
                 print("\n" + _("Error: Failed to reach "
                                "the server: Timeout."))
         except HTTPException:
-            if verbose:
+            if not quiet:
                 print("\n" + _("Error: Cannot read server "
                                "response: HTTPException."))
 

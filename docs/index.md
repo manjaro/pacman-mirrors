@@ -51,5 +51,5 @@ Launch a graphical tool to select mirrors to generate a custom mirrorlist.
 `-v`, `--version`
 Show the version of pacman-mirrors.
 
-`--verbose`
-Enable the verbose output.
+`--quiet`
+Make pacman-mirrors silent.
