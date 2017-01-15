@@ -151,9 +151,9 @@ class PacmanMirrors:
         parser.add_argument("-v", "--version",
                             action="store_true",
                             help=_("print the pacman-mirrors version"))
-        parser.add_argument("--quiet",
+        parser.add_argument("-q", "--quiet",
                             action="store_true",
-                            help=_("make pacman-mirrors silent"))
+                            help=_("quiet or silent mode"))
         args = parser.parse_args()
         # start parsing
         if len(sys.argv) == 1:

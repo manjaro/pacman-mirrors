@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pacman-mirrors 3.0.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2017-01-12 18:07+0100\n"
+"POT-Creation-Date: 2017-01-15 13:02+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -77,7 +77,7 @@ msgid "print the pacman-mirrors version"
 msgstr ""
 
 #: pacman_mirrors/pacman_mirrors.py:156
-msgid "verbose output"
+msgid "quiet or silent mode"
 msgstr ""
 
 #: pacman_mirrors/pacman_mirrors.py:166
@@ -118,39 +118,39 @@ msgstr ""
 msgid ":: Querying servers, this may take some time..."
 msgstr ""
 
-#: pacman_mirrors/pacman_mirrors.py:458
+#: pacman_mirrors/pacman_mirrors.py:457
 msgid "Warning: Wrong date format in 'state' file."
 msgstr ""
 
-#: pacman_mirrors/pacman_mirrors.py:465 pacman_mirrors/pacman_mirrors.py:498
+#: pacman_mirrors/pacman_mirrors.py:464 pacman_mirrors/pacman_mirrors.py:496
 msgid "Error: Cannot read file '{filename}': {error}"
 msgstr ""
 
-#: pacman_mirrors/pacman_mirrors.py:478
+#: pacman_mirrors/pacman_mirrors.py:477
 msgid ":: Randomizing server list..."
 msgstr ""
 
-#: pacman_mirrors/pacman_mirrors.py:533
+#: pacman_mirrors/pacman_mirrors.py:531
 msgid "Error: Cannot update file '{filename}': {error}"
 msgstr ""
 
-#: pacman_mirrors/pacman_mirrors.py:694
+#: pacman_mirrors/pacman_mirrors.py:682
 msgid "Error: Failed to reach the server: {reason}"
 msgstr ""
 
-#: pacman_mirrors/pacman_mirrors.py:699
+#: pacman_mirrors/pacman_mirrors.py:687
 msgid "Error: The server couldn't fulfill the request: {code}"
 msgstr ""
 
-#: pacman_mirrors/pacman_mirrors.py:702
+#: pacman_mirrors/pacman_mirrors.py:690
 msgid "Error: Failed to reach the server: Timeout."
 msgstr ""
 
-#: pacman_mirrors/pacman_mirrors.py:706
+#: pacman_mirrors/pacman_mirrors.py:694
 msgid "Error: Cannot read server response: HTTPException."
 msgstr ""
 
-#: pacman_mirrors/pacman_mirrors.py:725
+#: pacman_mirrors/pacman_mirrors.py:713
 msgid ""
 "argument -c/--country: unknown country '{country}'\n"
 "Available countries are: {country_list}"
