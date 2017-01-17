@@ -77,53 +77,53 @@ OPT_NOUPDATE = " 'NoUpdate = True' "
 
 # BEGIN translatable strings
 # message type
-ERROR = "Error"
-INF = "Info"
-WARN = "Warning"
+ERROR = _("Error")
+INF = _("Info")
+WARN = _("Warning")
 # error types
-TIMEOUT = "Timeout"
-HTTP_EXEPTION = "HTTPException"
+TIMEOUT = _("Timeout")
+HTTP_EXEPTION = _("HTTPException")
 # help messages
-HLP_ARG_BRANCH = "Branch name"
-HLP_ARG_COUNTRY = "Comma separated list of countries, from which mirrors will be used"
-HLP_ARG_FILE = "Output file"
-HLP_ARG_GENERATE = "Generate mirrorlist"
-HLP_ARG_GEOIP_P1 = "Get current country using geolocation. Ignored if"
-HLP_ARG_GEOIP_P2 = "is supplied"
-HLP_ARG_INTERACTIVE = "Generate custom mirrorlist"
-HLP_ARG_METHOD = "Generation method"
-HLP_ARG_NOUPDATE_P1 = "Don't generate mirrorlist if"
-HLP_ARG_NOUPDATE_P2 = "in the configuration file"
-HLP_ARG_PATH = "Mirrors list path"
-HLP_ARG_QUIET = "Quiet mode - less verbose output"
-HLP_ARG_TIMEOUT = "Maximum waiting time for server response"
-HLP_ARG_VERSION = "Print the pacman-mirrors version"
+HLP_ARG_BRANCH = _("Branch name")
+HLP_ARG_COUNTRY = _("Comma separated list of countries, from which mirrors will be used")
+HLP_ARG_FILE = _("Output file")
+HLP_ARG_GENERATE = _("Generate mirrorlist")
+HLP_ARG_GEOIP_P1 = _("Get current country using geolocation. Ignored if")
+HLP_ARG_GEOIP_P2 = _("is supplied")
+HLP_ARG_INTERACTIVE = _("Generate custom mirrorlist")
+HLP_ARG_METHOD = _("Generation method")
+HLP_ARG_NOUPDATE_P1 = _("Don't generate mirrorlist if")
+HLP_ARG_NOUPDATE_P2 = _("in the configuration file")
+HLP_ARG_PATH = _("Mirrors list path")
+HLP_ARG_QUIET = _("Quiet mode - less verbose output")
+HLP_ARG_TIMEOUT = _("Maximum waiting time for server response")
+HLP_ARG_VERSION = _("Print the pacman-mirrors version")
 # error messages
-ERR_FILE_READ = "Cannot read file"
-ERR_FILE_UPDATE = "Cannot update file"
-ERR_FILE_WRITE = "Cannot write file"
-ERR_NOT_ROOT = "Must have root privileges"
-ERR_SERVER_HTTP_EXCEPTION = "Cannot read server response"
-ERR_SERVER_NOT_AVAILABLE = "No server available"
-ERR_SERVER_NOT_REACHABLE = "Failed to reach server"
-ERR_SERVER_REQUEST = "The server did not complete the request"
-ERR_SERVER_TIMEOUT = "Failed to reach the server"
+ERR_FILE_READ = _("Cannot read file")
+ERR_FILE_UPDATE = _("Cannot update file")
+ERR_FILE_WRITE = _("Cannot write file")
+ERR_NOT_ROOT = _("Must have root privileges")
+ERR_SERVER_HTTP_EXCEPTION = _("Cannot read server response")
+ERR_SERVER_NOT_AVAILABLE = _("No server available")
+ERR_SERVER_NOT_REACHABLE = _("Failed to reach server")
+ERR_SERVER_REQUEST = _("The server did not complete the request")
+ERR_SERVER_TIMEOUT = _("Failed to reach the server")
 # info messages
-INF_INTERACTIVE_LIST = "User generated mirror list"
-INF_INTERACTIVE_LIST_SAVED = "Saved personalized list of mirrors in"
-INF_LOAD_SERVER_LIST_P1 = "Custom mirrors file"
-INF_LOAD_SERVER_LIST_P2 = "doesn't exist. Querying all servers"
-INF_OUTPUT_MIRROR_FILE = "Writing custom mirror file"
-INF_MIRROR_LIST_WRITE = "Writing mirror list"
-INF_MIRROR_LIST_SAVED = "Mirrorlist generated and saved to"
-INF_QUERY_TIME_INFO = "Querying servers, this may take some time"
-INF_QUERY_CUSTOM = "Using custom mirror list"
-INF_QUERY_DEFAULT = "Testing mirrors in"
-INF_QUERY_WRONG_DATE_FORMAT = "Wrong date format in state file"
-INF_RANDOMIZE_SERVERS = "Randomizing server list"
-INF_VALIDATE_COUNTRY_P1 = "Option"
-INF_VALIDATE_COUNTRY_P2 = "unknown country"
-INF_VALIDATE_COUNTRY_P3 = "Available countries are"
+INF_INTERACTIVE_LIST = _("User generated mirror list")
+INF_INTERACTIVE_LIST_SAVED = _("Saved personalized list of mirrors in")
+INF_LOAD_SERVER_LIST_P1 = _("Custom mirrors file")
+INF_LOAD_SERVER_LIST_P2 = _("doesn't exist. Querying all servers")
+INF_OUTPUT_MIRROR_FILE = _("Writing custom mirror file")
+INF_MIRROR_LIST_WRITE = _("Writing mirror list")
+INF_MIRROR_LIST_SAVED = _("Mirrorlist generated and saved to")
+INF_QUERY_TIME_INFO = _("Querying servers, this may take some time")
+INF_QUERY_CUSTOM = _("Using custom mirror list")
+INF_QUERY_DEFAULT = _("Testing mirrors in")
+INF_QUERY_WRONG_DATE_FORMAT = _("Wrong date format in state file")
+INF_RANDOMIZE_SERVERS = _("Randomizing server list")
+INF_VALIDATE_COUNTRY_P1 = _("Option")
+INF_VALIDATE_COUNTRY_P2 = _("unknown country")
+INF_VALIDATE_COUNTRY_P3 = _("Available countries are")
 # END translatable strings
 
 class PacmanMirrors:
@@ -175,47 +175,47 @@ class PacmanMirrors:
         parser = argparse.ArgumentParser(formatter_class=CustomHelpFormatter)
         parser.add_argument("-g", "--generate",
                             action="store_true",
-                            help=_(HLP_ARG_GENERATE) + DOT)
+                            help=(HLP_ARG_GENERATE) + DOT)
         parser.add_argument("-m", "--method",
                             type=str,
                             choices=["rank", "random"],
-                            help=_(HLP_ARG_METHOD) + DOT)
+                            help=(HLP_ARG_METHOD) + DOT)
         parser.add_argument("-b", "--branch",
                             type=str,
                             choices=["stable", "testing", "unstable"],
-                            help=_(HLP_ARG_BRANCH) + DOT)
+                            help=(HLP_ARG_BRANCH) + DOT)
         parser.add_argument("-c", "--country",
                             type=str,
-                            help=_(HLP_ARG_COUNTRY) + DOT)
+                            help=(HLP_ARG_COUNTRY) + DOT)
         parser.add_argument("--geoip",
                             action="store_true",
-                            help=_(HLP_ARG_GEOIP_P1) + OPT_COUNTRY + _(HLP_ARG_GEOIP_P2) + DOT)
+                            help=(HLP_ARG_GEOIP_P1) + OPT_COUNTRY + _(HLP_ARG_GEOIP_P2) + DOT)
         parser.add_argument("-d", "--mirror_dir",
                             type=str,
                             metavar=_("PATH"),
-                            help=_(HLP_ARG_PATH) + DOT)
+                            help=(HLP_ARG_PATH) + DOT)
         parser.add_argument("-o", "--output",
                             type=str,
-                            metavar=_("FILE"),
+                            metavar=("FILE"),
                             help=_(HLP_ARG_FILE) + DOT)
         parser.add_argument("-t", "--timeout",
                             type=int,
-                            metavar=_("SECONDS"),
+                            metavar=("SECONDS"),
                             help=_(HLP_ARG_TIMEOUT) + DOT)
         parser.add_argument("--no-update",
                             action="store_true",
-                            help=_(HLP_ARG_NOUPDATE_P1) + OPT_NOUPDATE +
-                            _(HLP_ARG_NOUPDATE_P2) + DOT)
+                            help=(HLP_ARG_NOUPDATE_P1) + OPT_NOUPDATE +
+                            (HLP_ARG_NOUPDATE_P2) + DOT)
         if GTK_AVAILABLE:
             parser.add_argument("-i", "--interactive",
                                 action="store_true",
-                                help=_(HLP_ARG_INTERACTIVE) + DOT)
+                                help=(HLP_ARG_INTERACTIVE) + DOT)
         parser.add_argument("-v", "--version",
                             action="store_true",
-                            help=_(HLP_ARG_VERSION) + DOT)
+                            help=(HLP_ARG_VERSION) + DOT)
         parser.add_argument("-q", "--quiet",
                             action="store_true",
-                            help=_(HLP_ARG_QUIET) + DOT)
+                            help=(HLP_ARG_QUIET) + DOT)
         args = parser.parse_args()
         # start parsing
         if len(sys.argv) == 1:
@@ -225,7 +225,7 @@ class PacmanMirrors:
             print("pacman-mirrors {}".format(__version__) + DOT)
             exit(0)
         if os.getuid() != 0:
-            print(_(ERROR) + SEP + _(ERR_NOT_ROOT) + DOT)
+            print(ERROR + SEP + ERR_NOT_ROOT + DOT)
             exit(1)
         if args.no_update:
             if self.config["no_update"] == "True":
@@ -306,7 +306,7 @@ class PacmanMirrors:
                         elif key == "NoUpdate":
                             config["no_update"] = value
         except (PermissionError, OSError) as err:
-            print(_(ERROR) + SEP + _(ERR_FILE_READ) +
+            print(ERROR + SEP + ERR_FILE_READ +
                   SEP + "{filename}" + SEP + "{error}"
                   .format(filename=err.filename, error=err.strerror) + DOT)
         return config
@@ -324,7 +324,7 @@ class PacmanMirrors:
                            self.bad_servers)
         if not server_list:
             print(NEWLINE +
-                  _(ERROR) + SEP + _(ERR_SERVER_NOT_AVAILABLE) + DOT + NEWLINE)
+                  ERROR + SEP + ERR_SERVER_NOT_AVAILABLE + DOT + NEWLINE)
         else:
             # modify configuration to use default
             self.modify_config()  # function do self check
@@ -347,7 +347,7 @@ class PacmanMirrors:
         if not gui.is_done:
             return
         print(NEWLINE +
-              DCS + _(INF_INTERACTIVE_LIST) + DOTS)
+              DCS + INF_INTERACTIVE_LIST + DOTS)
         print("--------------------------")
         # restore self.config["only_country"] to "Custom"
         self.config["only_country"] = ["Custom"]
@@ -355,7 +355,7 @@ class PacmanMirrors:
         self.output_mirror_list(server_list, write_file=True)
         # modify configuration to use custom
         self.modify_config()  # function do self check
-        print(DCS + _(INF_INTERACTIVE_LIST_SAVED) +
+        print(DCS + INF_INTERACTIVE_LIST_SAVED +
               SEP + "{path}".format(path=self.custom_mirror_file) + DOT)
 
     def load_server_lists(self):
@@ -370,9 +370,9 @@ class PacmanMirrors:
                 if os.path.isfile(self.custom_mirror_file):
                     self.config["only_country"] = [self.custom_mirror_file]
                 else:
-                    print(_(WARN) + SEP + _(INF_LOAD_SERVER_LIST_P1) +
+                    print(WARN + SEP + INF_LOAD_SERVER_LIST_P1 +
                           " '{path}' ".format(path=self.custom_mirror_file) +
-                          _(INF_LOAD_SERVER_LIST_P2) + DOT)
+                          INF_LOAD_SERVER_LIST_P2 + DOT)
                     print(NEWLINE)
                     self.config["only_country"] = []
             elif self.config["only_country"] == ["all"]:
@@ -419,13 +419,13 @@ class PacmanMirrors:
         os.makedirs(self.custom_mirror_dir, mode=0o755, exist_ok=True)
         try:
             with open(mirror_file, "w") as output:
-                print(DCS + _(INF_OUTPUT_MIRROR_FILE) + DOTS)
+                print(DCS + INF_OUTPUT_MIRROR_FILE + DOTS)
                 self.write_mirror_list_header(output, custom=True)
                 for server in servers:
                     self.write_mirror_list_entry(output, server)
 
         except OSError as err:
-            print(_(ERROR) + SEP + _(ERR_FILE_WRITE) +
+            print(ERROR + SEP + ERR_FILE_WRITE +
                   " '{filename}': {error}".format(filename=err.filename, error=err.strerror) + DOT)
             exit(1)
 
@@ -440,7 +440,7 @@ class PacmanMirrors:
         try:
             with open(mirror_list, "w") as outfile:
                 if write_file:
-                    print(DCS + _(INF_MIRROR_LIST_WRITE) + DOTS)
+                    print(DCS + INF_MIRROR_LIST_WRITE + DOTS)
                     self.write_mirror_list_header(outfile)
                 for server in servers:
                     if write_file:
@@ -449,11 +449,11 @@ class PacmanMirrors:
                         self.write_mirror_list_entry(outfile, server)
                         if not self.quiet:
                             print(DAS + "{} : {}".format(server["country"], server["url"]) + DOT)
-                print(DCS + _(INF_MIRROR_LIST_SAVED) +
+                print(DCS + INF_MIRROR_LIST_SAVED +
                       " '{output_file}' ".format(output_file=mirror_list) + DOT)
 
         except OSError as err:
-            print(_(ERROR) + SEP + _(ERR_FILE_WRITE) +
+            print(ERROR + SEP + ERR_FILE_WRITE +
                   " '{filename}': {error}".format(filename=err.filename, error=err.strerror) + DOT)
             exit(1)
 
@@ -464,14 +464,14 @@ class PacmanMirrors:
 
         :param countries: list of country files to use
         """
-        print(DCS + _(INF_QUERY_TIME_INFO) + DOTS)
+        print(DCS + INF_QUERY_TIME_INFO + DOTS)
         for country in countries:
             if "Custom" in country:
                 custom = True
-                print(SAS + _(INF_QUERY_CUSTOM) + DOTS)
+                print(SAS + INF_QUERY_CUSTOM + DOTS)
             else:
                 custom = False
-                print(SAS + _(INF_QUERY_DEFAULT) + " {}".format(country) + DOTS)
+                print(SAS + INF_QUERY_DEFAULT + " {}".format(country) + DOTS)
             # create a ref point for calculation
             ref_point_in_time = datetime.datetime.utcnow()
             try:
@@ -521,13 +521,13 @@ class PacmanMirrors:
                             self.append_to_server_list(server, server["last_sync"])
                             if not self.quiet:
                                 print(NEWLINE +
-                                      _(WARN) + SEP + _(INF_QUERY_WRONG_DATE_FORMAT) + DOT)
+                                      WARN + SEP + INF_QUERY_WRONG_DATE_FORMAT + DOT)
                             continue
                         server["last_sync"] = self.get_mirror_branch_last_sync(
                             ref_point_in_time, branch_timestamp)
                         self.append_to_server_list(server, server["last_sync"])
             except OSError as err:
-                print(_(ERROR) + SEP + _(ERR_READ_FILE) +
+                print(ERROR + SEP + ERR_READ_FILE +
                       SEP + "{filename}" + SEP + "{error}".format(filename=err.filename,
                                                       error=err.strerror) + DOT)
                 continue
@@ -542,7 +542,7 @@ class PacmanMirrors:
 
         :param countries: list of country files to use
         """
-        print(DCS + _(INF_RANDOMIZE_SERVERS) + DOTS)
+        print(DCS + INF_RANDOMIZE_SERVERS + DOTS)
         for country in countries:
             try:
                 with open(os.path.join(self.default_mirror_dir, country), "r") as conf:
@@ -560,7 +560,7 @@ class PacmanMirrors:
                                   "url": m_url}
                         self.append_to_server_list(server, SERVER_RES)
             except OSError as err:
-                print(_(ERROR) + SEP + _(ERR_FILE_READ) +
+                print(ERROR + SEP + ERR_FILE_READ +
                       SEP + "{filename}" + SEP + "{error}".format(filename=err.filename,
                                                       error=err.strerror) + DOT)
                 continue
@@ -596,7 +596,7 @@ class PacmanMirrors:
             os.chmod(config_file, 0o644)
 
         except OSError as err:
-            print(_(ERROR) + SEP + _(ERR_FILE_UPDATE) + SEP + "{filename}" + SEP + "{error}"
+            print(ERROR + SEP + ERR_FILE_UPDATE + SEP + "{filename}" + SEP + "{error}"
                   .format(filename=err.filename, error=err.strerror) + DOT)
             exit(1)
 
@@ -747,21 +747,21 @@ class PacmanMirrors:
             if hasattr(err, "reason"):
                 if not quiet:
                     print(NEWLINE +
-                          _(ERROR) + SEP + _(ERR_SERVER_NOT_REACHABLE) + SEP +
+                          ERROR + SEP + ERR_SERVER_NOT_REACHABLE + SEP +
                           "{}".format(err.reason) + DOT)
             elif hasattr(err, "code"):
                 if not quiet:
                     print(NEWLINE +
-                          _(ERROR) + SEP + _(ERR_SERVER_REQUEST) + SEP +
+                          ERROR + SEP + ERR_SERVER_REQUEST + SEP +
                           "{}".format(err.errno) + DOT)
         except timeout:
             if not quiet:
                 print(NEWLINE +
-                      _(ERROR) + SEP + _(ERR_SERVER_TIMEOUT) + SEP + _(TIMEOUT) + DOT)
+                      ERROR + SEP + ERR_SERVER_TIMEOUT + SEP + TIMEOUT + DOT)
         except HTTPException:
             if not quiet:
                 print(NEWLINE +
-                      _(ERROR) + SEP + _(ERR_SERVER_HTTP_EXCEPTION) + SEP + _(HTTP_EXCEPTION) + DOT)
+                      ERROR + SEP + ERR_SERVER_HTTP_EXCEPTION + SEP + HTTP_EXCEPTION + DOT)
 
         return content
 
@@ -776,11 +776,11 @@ class PacmanMirrors:
         """
         for country in countries:
             if country not in available_countries:
-                msg = (_(INF_VALIDATE_COUNTRY_P1) +
+                msg = (INF_VALIDATE_COUNTRY_P1 +
                        OPT_COUNTRY +
-                       _(INF_VALIDATE_COUNTRY_P2) + SEP +
+                       INF_VALIDATE_COUNTRY_P2 + SEP +
                        "'{country}'.\n".format(country=country) +
-                       _(INF_VALIDATE_COUNTRY_P3) + SEP +
+                       INF_VALIDATE_COUNTRY_P3 + SEP +
                        "{country_list}".format(country_list=", ".join(available_countries)) + DOT)
                 raise argparse.ArgumentTypeError(msg)
 
@@ -842,7 +842,7 @@ class PacmanMirrors:
 
 if __name__ == "__main__":
     if os.getuid() != 0:
-        print(_(ERROR) + SEP + _(ERR_NOT_ROOT) + DOT)
+        print(ERROR + SEP + ERR_NOT_ROOT + DOT)
         exit(1)
 
     pm = PacmanMirrors()
