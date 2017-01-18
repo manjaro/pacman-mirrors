@@ -83,6 +83,10 @@ WARN = _("Warning")
 # error types
 TIMEOUT = _("Timeout")
 HTTP_EXEPTION = _("HTTPException")
+# special words
+PATH = _("PATH")
+FILE = _("FILE")
+SECONDS = _("SECONDS")
 # help messages
 HLP_ARG_BRANCH = _("Branch name")
 HLP_ARG_COUNTRY = _("Comma separated list of countries, from which mirrors will be used")
@@ -175,47 +179,46 @@ class PacmanMirrors:
         parser = argparse.ArgumentParser(formatter_class=CustomHelpFormatter)
         parser.add_argument("-g", "--generate",
                             action="store_true",
-                            help=(HLP_ARG_GENERATE) + DOT)
+                            help=HLP_ARG_GENERATE + DOT)
         parser.add_argument("-m", "--method",
                             type=str,
                             choices=["rank", "random"],
-                            help=(HLP_ARG_METHOD) + DOT)
+                            help=HLP_ARG_METHOD + DOT)
         parser.add_argument("-b", "--branch",
                             type=str,
                             choices=["stable", "testing", "unstable"],
-                            help=(HLP_ARG_BRANCH) + DOT)
+                            help=HLP_ARG_BRANCH + DOT)
         parser.add_argument("-c", "--country",
                             type=str,
-                            help=(HLP_ARG_COUNTRY) + DOT)
+                            help=HLP_ARG_COUNTRY + DOT)
         parser.add_argument("--geoip",
                             action="store_true",
-                            help=(HLP_ARG_GEOIP_P1) + OPT_COUNTRY + _(HLP_ARG_GEOIP_P2) + DOT)
+                            help=HLP_ARG_GEOIP_P1 + OPT_COUNTRY + HLP_ARG_GEOIP_P2 + DOT)
         parser.add_argument("-d", "--mirror_dir",
                             type=str,
-                            metavar=_("PATH"),
-                            help=(HLP_ARG_PATH) + DOT)
+                            metavar=PATH,
+                            help=HLP_ARG_PATH + DOT)
         parser.add_argument("-o", "--output",
                             type=str,
-                            metavar=("FILE"),
-                            help=_(HLP_ARG_FILE) + DOT)
+                            metavar=FILE,
+                            help=HLP_ARG_FILE + DOT)
         parser.add_argument("-t", "--timeout",
                             type=int,
-                            metavar=("SECONDS"),
-                            help=_(HLP_ARG_TIMEOUT) + DOT)
+                            metavar=SECONDS,
+                            help=HLP_ARG_TIMEOUT + DOT)
         parser.add_argument("--no-update",
                             action="store_true",
-                            help=(HLP_ARG_NOUPDATE_P1) + OPT_NOUPDATE +
-                            (HLP_ARG_NOUPDATE_P2) + DOT)
+                            help=HLP_ARG_NOUPDATE_P1 + OPT_NOUPDATE + HLP_ARG_NOUPDATE_P2 + DOT)
         if GTK_AVAILABLE:
             parser.add_argument("-i", "--interactive",
                                 action="store_true",
-                                help=(HLP_ARG_INTERACTIVE) + DOT)
+                                help=HLP_ARG_INTERACTIVE + DOT)
         parser.add_argument("-v", "--version",
                             action="store_true",
-                            help=(HLP_ARG_VERSION) + DOT)
+                            help=HLP_ARG_VERSION + DOT)
         parser.add_argument("-q", "--quiet",
                             action="store_true",
-                            help=(HLP_ARG_QUIET) + DOT)
+                            help=HLP_ARG_QUIET + DOT)
         args = parser.parse_args()
         # start parsing
         if len(sys.argv) == 1:
@@ -306,9 +309,9 @@ class PacmanMirrors:
                         elif key == "NoUpdate":
                             config["no_update"] = value
         except (PermissionError, OSError) as err:
-            print(ERROR + SEP + ERR_FILE_READ +
-                  SEP + "{filename}" + SEP + "{error}"
-                  .format(filename=err.filename, error=err.strerror) + DOT)
+            print(ERROR + SEP + ERR_FILE_READ + SEP +
+                  "{filename}" + SEP + "{error}".format(filename=err.filename,
+                                                        error=err.strerror) + DOT)
         return config
 
     def generate_mirror_list_common(self):
@@ -355,8 +358,8 @@ class PacmanMirrors:
         self.output_mirror_list(server_list, write_file=True)
         # modify configuration to use custom
         self.modify_config()  # function do self check
-        print(DCS + INF_INTERACTIVE_LIST_SAVED +
-              SEP + "{path}".format(path=self.custom_mirror_file) + DOT)
+        print(DCS + INF_INTERACTIVE_LIST_SAVED + SEP +
+              "{path}".format(path=self.custom_mirror_file) + DOT)
 
     def load_server_lists(self):
         """
@@ -425,8 +428,9 @@ class PacmanMirrors:
                     self.write_mirror_list_entry(output, server)
 
         except OSError as err:
-            print(ERROR + SEP + ERR_FILE_WRITE +
-                  " '{filename}': {error}".format(filename=err.filename, error=err.strerror) + DOT)
+            print(ERROR + SEP + ERR_FILE_WRITE + SEP +
+                  "{filename}" + SEP + "{error}".format(filename=err.filename,
+                                                        error=err.strerror) + DOT)
             exit(1)
 
     def output_mirror_list(self, servers, write_file=False):
@@ -449,12 +453,13 @@ class PacmanMirrors:
                         self.write_mirror_list_entry(outfile, server)
                         if not self.quiet:
                             print(DAS + "{} : {}".format(server["country"], server["url"]) + DOT)
-                print(DCS + INF_MIRROR_LIST_SAVED +
-                      " '{output_file}' ".format(output_file=mirror_list) + DOT)
+                print(DCS + INF_MIRROR_LIST_SAVED + SEP +
+                      "{output_file}".format(output_file=mirror_list) + DOT)
 
         except OSError as err:
-            print(ERROR + SEP + ERR_FILE_WRITE +
-                  " '{filename}': {error}".format(filename=err.filename, error=err.strerror) + DOT)
+            print(ERROR + SEP + ERR_FILE_WRITE + SEP +
+                  "{filename}" + SEP + "{error}".format(filename=err.filename,
+                                                        error=err.strerror) + DOT)
             exit(1)
 
     def query_servers(self, countries):
@@ -527,9 +532,9 @@ class PacmanMirrors:
                             ref_point_in_time, branch_timestamp)
                         self.append_to_server_list(server, server["last_sync"])
             except OSError as err:
-                print(ERROR + SEP + ERR_READ_FILE +
-                      SEP + "{filename}" + SEP + "{error}".format(filename=err.filename,
-                                                      error=err.strerror) + DOT)
+                print(ERROR + SEP + ERR_READ_FILE + SEP +
+                      "{filename}" + SEP + "{error}".format(filename=err.filename,
+                                                            error=err.strerror) + DOT)
                 continue
         self.good_servers = sorted(self.good_servers,
                                    key=itemgetter("response_time"))
@@ -560,9 +565,9 @@ class PacmanMirrors:
                                   "url": m_url}
                         self.append_to_server_list(server, SERVER_RES)
             except OSError as err:
-                print(ERROR + SEP + ERR_FILE_READ +
-                      SEP + "{filename}" + SEP + "{error}".format(filename=err.filename,
-                                                      error=err.strerror) + DOT)
+                print(ERROR + SEP + ERR_FILE_READ + SEP +
+                      "{filename}" + SEP + "{error}".format(filename=err.filename,
+                                                            error=err.strerror) + DOT)
                 continue
         shuffle(self.bad_servers)
 
@@ -596,8 +601,9 @@ class PacmanMirrors:
             os.chmod(config_file, 0o644)
 
         except OSError as err:
-            print(ERROR + SEP + ERR_FILE_UPDATE + SEP + "{filename}" + SEP + "{error}"
-                  .format(filename=err.filename, error=err.strerror) + DOT)
+            print(ERROR + SEP + ERR_FILE_UPDATE + SEP +
+                  "{filename}" + SEP + "{error}".format(filename=err.filename,
+                                                        error=err.strerror) + DOT)
             exit(1)
 
     @staticmethod
