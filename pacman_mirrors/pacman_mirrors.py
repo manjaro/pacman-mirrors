@@ -111,7 +111,6 @@ ERR_SERVER_HTTP_EXCEPTION = _("Cannot read server response")
 ERR_SERVER_NOT_AVAILABLE = _("No server available")
 ERR_SERVER_NOT_REACHABLE = _("Failed to reach server")
 ERR_SERVER_REQUEST = _("The server did not complete the request")
-ERR_SERVER_TIMEOUT = _("Failed to reach the server")
 # info messages
 INF_INTERACTIVE_LIST = _("User generated mirror list")
 INF_INTERACTIVE_LIST_SAVED = _("Saved personalized list of mirrors in")
@@ -763,7 +762,7 @@ class PacmanMirrors:
         except timeout:
             if not quiet:
                 print(NEWLINE +
-                      ERROR + SEP + ERR_SERVER_TIMEOUT + SEP + TIMEOUT + DOT)
+                      ERROR + SEP + ERR_SERVER_NOT_REACHABLE + SEP + TIMEOUT + DOT)
         except HTTPException:
             if not quiet:
                 print(NEWLINE +
