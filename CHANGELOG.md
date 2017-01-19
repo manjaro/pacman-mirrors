@@ -6,6 +6,7 @@ All notable changes to this project will be documented in this file.
 - New documentation.
 - Translation review.
 - Check DISPLAY when using interactive mode.
+- Better structure for the GUI.
 
 ## [3.0.0] - 2017-01-12
 - Refactoring.
