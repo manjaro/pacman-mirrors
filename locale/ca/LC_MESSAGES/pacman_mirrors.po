@@ -4,13 +4,14 @@
 # project.
 # 
 # Translators:
+# acutbal <acutbal@gmail.com>, 2017
 # Ramon Buldó <rbuldo@gmail.com>, 2015-2017
 msgid ""
 msgstr ""
 "Project-Id-Version: manjaro-pacman-mirrors\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2017-01-12 18:07+0100\n"
-"PO-Revision-Date: 2017-01-12 17:08+0000\n"
+"POT-Creation-Date: 2017-01-19 15:16+0100\n"
+"PO-Revision-Date: 2017-01-19 14:17+0000\n"
 "Last-Translator: Ramon Buldó <rbuldo@gmail.com>\n"
 "Language-Team: Catalan (http://www.transifex.com/manjarolinux/manjaro-pacman-mirrors/language/ca/)\n"
 "MIME-Version: 1.0\n"
@@ -20,180 +21,222 @@ msgstr ""
 "Language: ca\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: pacman_mirrors/pacman_mirrors.py:113
-msgid "generate new mirrorlist"
-msgstr "generar nova llista de repositoris"
+#: pacman_mirrors/pacman_mirrors.py:80
+msgid "Error"
+msgstr "Error"
 
-#: pacman_mirrors/pacman_mirrors.py:117
-msgid "generation method"
-msgstr "metode de generació"
+#: pacman_mirrors/pacman_mirrors.py:81
+msgid "Info"
+msgstr "Informació"
 
-#: pacman_mirrors/pacman_mirrors.py:121
-msgid "branch name"
-msgstr "nom de la branca"
+#: pacman_mirrors/pacman_mirrors.py:82
+msgid "Warning"
+msgstr "Avís"
 
-#: pacman_mirrors/pacman_mirrors.py:124
-msgid "comma separated list of countries where mirrors will be used"
-msgstr "llista de països separats per coma que s'utilitzaran"
+#: pacman_mirrors/pacman_mirrors.py:84
+msgid "Timeout"
+msgstr "Temps d'espera"
 
-#: pacman_mirrors/pacman_mirrors.py:128
-msgid "detect country using geolocation, ignored if \"--country\" is used"
-msgstr ""
+#: pacman_mirrors/pacman_mirrors.py:85
+msgid "HTTPException"
+msgstr "HTTPException"
 
-#: pacman_mirrors/pacman_mirrors.py:132
+#: pacman_mirrors/pacman_mirrors.py:87
 msgid "PATH"
 msgstr "CAMÍ"
 
-#: pacman_mirrors/pacman_mirrors.py:133
-msgid "mirrors list path"
-msgstr "cami de la llista de repositoris"
-
-#: pacman_mirrors/pacman_mirrors.py:136
+#: pacman_mirrors/pacman_mirrors.py:88
 msgid "FILE"
-msgstr "FITXER"
-
-#: pacman_mirrors/pacman_mirrors.py:137
-msgid "output file"
-msgstr "fitxer de sortida"
-
-#: pacman_mirrors/pacman_mirrors.py:140
-msgid "SECONDS"
-msgstr "SEGONS"
-
-#: pacman_mirrors/pacman_mirrors.py:141
-msgid "server maximum waiting time"
-msgstr "temps màxim d'espera del servidor"
-
-#: pacman_mirrors/pacman_mirrors.py:144
-msgid ""
-"don't generate mirrorlist if NoUpdate is set to True in the configuration "
-"file"
-msgstr "no generar la llista de repositoris si \"NoUpdate\" és \"True\" en el fitxer de configuració"
-
-#: pacman_mirrors/pacman_mirrors.py:149
-msgid "interactively generate a custom mirrorlist"
-msgstr "generar llista de repositoris interactivament"
-
-#: pacman_mirrors/pacman_mirrors.py:153
-msgid "print the pacman-mirrors version"
-msgstr "mostrar la versió de pacman-mirrors"
-
-#: pacman_mirrors/pacman_mirrors.py:156
-msgid "verbose output"
 msgstr ""
 
-#: pacman_mirrors/pacman_mirrors.py:166
-msgid "Error: Must have root privileges."
-msgstr "Error: Necessites privilegis de root."
+#: pacman_mirrors/pacman_mirrors.py:89
+msgid "SECONDS"
+msgstr ""
 
-#: pacman_mirrors/pacman_mirrors.py:248
-msgid "Warning: Cannot read file  '{filename}': {error}"
-msgstr "Atenció: No es pot llegir el fitxer '{filename}': {error}"
+#: pacman_mirrors/pacman_mirrors.py:91
+msgid "Branch name"
+msgstr "Nom de la branca"
 
-#: pacman_mirrors/pacman_mirrors.py:263
-msgid "Error: No server available !"
-msgstr "Error: No hi ha cap servidor disponible!"
+#: pacman_mirrors/pacman_mirrors.py:92
+msgid "Comma separated list of countries, from which mirrors will be used"
+msgstr "Llista de països separats per comes, des d'on s'utilitzen els miralls"
 
-#: pacman_mirrors/pacman_mirrors.py:285
+#: pacman_mirrors/pacman_mirrors.py:93
+msgid "Output file"
+msgstr "Fitxer de sortida"
+
+#: pacman_mirrors/pacman_mirrors.py:94
+msgid "Generate mirrorlist"
+msgstr "Generar llista de miralls"
+
+#: pacman_mirrors/pacman_mirrors.py:95
+msgid "Get current country using geolocation. Ignored if"
+msgstr "Obtenir país actual utilitzant geolocalització. S'ignora si"
+
+#: pacman_mirrors/pacman_mirrors.py:96
+msgid "is supplied"
+msgstr "és subministrat"
+
+#: pacman_mirrors/pacman_mirrors.py:97
+msgid "Generate custom mirrorlist"
+msgstr "Generar llista de miralls personalitzada"
+
+#: pacman_mirrors/pacman_mirrors.py:98
+msgid "Generation method"
+msgstr "mètode de generació"
+
+#: pacman_mirrors/pacman_mirrors.py:99
+msgid "Don't generate mirrorlist if"
+msgstr "No generar la llista de miralls si"
+
+#: pacman_mirrors/pacman_mirrors.py:100
+msgid "in the configuration file"
+msgstr "a l'arxiu de configuració"
+
+#: pacman_mirrors/pacman_mirrors.py:101
+msgid "Mirrors list path"
+msgstr "Camí de la llista de miralls"
+
+#: pacman_mirrors/pacman_mirrors.py:102
+msgid "Quiet mode - less verbose output"
+msgstr "Mode silenciós - Sortida menys detallada"
+
+#: pacman_mirrors/pacman_mirrors.py:103
+msgid "Maximum waiting time for server response"
+msgstr "Temps màxim d'espera de resposta del servidor"
+
+#: pacman_mirrors/pacman_mirrors.py:104
+msgid "Print the pacman-mirrors version"
+msgstr "Imprimeix la versió de pacman-mirrors"
+
+#: pacman_mirrors/pacman_mirrors.py:106
+msgid "Cannot read file"
+msgstr "No es pot llegir el fitxer"
+
+#: pacman_mirrors/pacman_mirrors.py:107
+msgid "Cannot update file"
+msgstr "No es pot actualitzar el fitxer"
+
+#: pacman_mirrors/pacman_mirrors.py:108
+msgid "Cannot write file"
+msgstr "No es pot escriure el fitxer"
+
+#: pacman_mirrors/pacman_mirrors.py:109
+msgid "Must have root privileges"
+msgstr "S'han de tenir privilegis root"
+
+#: pacman_mirrors/pacman_mirrors.py:110
+msgid "Cannot read server response"
+msgstr "No es pot llegir la resposta del servidor"
+
+#: pacman_mirrors/pacman_mirrors.py:111
+msgid "No server available"
+msgstr "No hi ha cap servidor disponible"
+
+#: pacman_mirrors/pacman_mirrors.py:112
+msgid "Failed to reach server"
+msgstr "No s'ha pogut connectar amb el servidor"
+
+#: pacman_mirrors/pacman_mirrors.py:113
+msgid "The server did not complete the request"
+msgstr "El servidor no ha completat la sol·licitud"
+
+#: pacman_mirrors/pacman_mirrors.py:115
 msgid "User generated mirror list"
-msgstr "Llista de repositoris personalitzada per l'usuari"
+msgstr "Llista dels miralls generada per l'usuari"
 
-#: pacman_mirrors/pacman_mirrors.py:294
-msgid ":: Saved personalized list of mirrors in '{path}'."
-msgstr ":: Guardada la llista personalitzada de repositoris a '{path}'."
+#: pacman_mirrors/pacman_mirrors.py:116
+msgid "Saved personalized list of mirrors in"
+msgstr "Llista personalitzada dels miralls guardada en"
 
-#: pacman_mirrors/pacman_mirrors.py:308
-msgid ""
-"Warning: Custom mirrors file '{path}' doesn't exists.\n"
-"Querying all servers."
-msgstr "Atenció: El fitxer de repositoris personalitzada '{path}' no existeix. Consultant tots el servidors."
+#: pacman_mirrors/pacman_mirrors.py:117
+msgid "Custom mirrors file"
+msgstr "Arxiu de miralls personalitzats"
 
-#: pacman_mirrors/pacman_mirrors.py:364 pacman_mirrors/pacman_mirrors.py:393
-msgid "Error: Cannot write file '{filename}': {error}"
-msgstr "Error: No es pot escriure el fitxer '{filename}': {error}"
+#: pacman_mirrors/pacman_mirrors.py:118
+msgid "doesn't exist. Querying all servers"
+msgstr ""
 
-#: pacman_mirrors/pacman_mirrors.py:389
-msgid ":: Generated and saved '{output_file}' mirrorlist."
-msgstr ":: Generada i guardada la llista de repositoris '{output_file}'."
+#: pacman_mirrors/pacman_mirrors.py:119
+msgid "Writing custom mirror file"
+msgstr ""
 
-#: pacman_mirrors/pacman_mirrors.py:403
-msgid ":: Querying servers, this may take some time..."
-msgstr ":: Consultant els servidors, això pot trigar una mica ..."
+#: pacman_mirrors/pacman_mirrors.py:120
+msgid "Writing mirror list"
+msgstr ""
 
-#: pacman_mirrors/pacman_mirrors.py:458
-msgid "Warning: Wrong date format in 'state' file."
-msgstr "Atenció: Data incorrecta en el fitxer 'state'."
+#: pacman_mirrors/pacman_mirrors.py:121
+msgid "Mirrorlist generated and saved to"
+msgstr ""
 
-#: pacman_mirrors/pacman_mirrors.py:465 pacman_mirrors/pacman_mirrors.py:498
-msgid "Error: Cannot read file '{filename}': {error}"
-msgstr "Error: No es pot llegir el fitxer '{filename}': {error}"
+#: pacman_mirrors/pacman_mirrors.py:122
+msgid "Querying servers, this may take some time"
+msgstr ""
 
-#: pacman_mirrors/pacman_mirrors.py:478
-msgid ":: Randomizing server list..."
-msgstr ":: Assignant a l'atzar la llista de servidors ..."
+#: pacman_mirrors/pacman_mirrors.py:123
+msgid "Using custom mirror list"
+msgstr ""
 
-#: pacman_mirrors/pacman_mirrors.py:533
-msgid "Error: Cannot update file '{filename}': {error}"
-msgstr "Error: No es pot actualitzar el fitxer '{filename}': {error}"
+#: pacman_mirrors/pacman_mirrors.py:124
+msgid "Testing mirrors in"
+msgstr ""
 
-#: pacman_mirrors/pacman_mirrors.py:694
-msgid "Error: Failed to reach the server: {reason}"
-msgstr "Error: No s'ha pogut trobar el servidor: {reason}"
+#: pacman_mirrors/pacman_mirrors.py:125
+msgid "Wrong date format in state file"
+msgstr ""
 
-#: pacman_mirrors/pacman_mirrors.py:699
-msgid "Error: The server couldn't fulfill the request: {code}"
-msgstr "Error: El servidor no ha pogut complir amb la sol·licitud: {code}"
+#: pacman_mirrors/pacman_mirrors.py:126
+msgid "Randomizing server list"
+msgstr ""
 
-#: pacman_mirrors/pacman_mirrors.py:702
-msgid "Error: Failed to reach the server: Timeout."
-msgstr "Error: No s'ha pogut trobar el servidor: Superat el temps d'espera."
+#: pacman_mirrors/pacman_mirrors.py:127
+msgid "Option"
+msgstr ""
 
-#: pacman_mirrors/pacman_mirrors.py:706
-msgid "Error: Cannot read server response: HTTPException."
-msgstr "Error: No s'ha pogut llegir la resposta del servidor: HTTPException."
+#: pacman_mirrors/pacman_mirrors.py:128
+msgid "unknown country"
+msgstr ""
 
-#: pacman_mirrors/pacman_mirrors.py:725
-msgid ""
-"argument -c/--country: unknown country '{country}'\n"
-"Available countries are: {country_list}"
-msgstr "argument -c/--country: país desconegur '{country}'\nPaïsos disponibles: {country_list}"
+#: pacman_mirrors/pacman_mirrors.py:129
+msgid "Available countries are"
+msgstr ""
 
 #: pacman_mirrors/pacman_mirrors_gui.py:33
-msgid "List of mirrors sorted by response time"
-msgstr "Repositoris ordenats per el temps de resposta"
-
-#: pacman_mirrors/pacman_mirrors_gui.py:53
-msgid "Use?"
+msgid "Mirrors by response time"
 msgstr ""
 
-#: pacman_mirrors/pacman_mirrors_gui.py:55
-msgid "Last sync (hh:mm)"
-msgstr ""
+#: pacman_mirrors/pacman_mirrors_gui.py:54
+msgid "Use"
+msgstr "Ús"
 
-#: pacman_mirrors/pacman_mirrors_gui.py:55
-msgid "URL"
-msgstr ""
-
-#: pacman_mirrors/pacman_mirrors_gui.py:55
+#: pacman_mirrors/pacman_mirrors_gui.py:56
 msgid "Country"
+msgstr "País"
+
+#: pacman_mirrors/pacman_mirrors_gui.py:56
+msgid "Last sync"
 msgstr ""
 
-#: pacman_mirrors/pacman_mirrors_gui.py:61
-msgid "Tick mirrors to prepare your custom list"
-msgstr ""
+#: pacman_mirrors/pacman_mirrors_gui.py:56
+msgid "URL"
+msgstr "URL"
 
 #: pacman_mirrors/pacman_mirrors_gui.py:62
+msgid "Check mirrors for your personal list"
+msgstr ""
+
+#: pacman_mirrors/pacman_mirrors_gui.py:63
 msgid "Cancel"
-msgstr ""
+msgstr "Cancel · lar"
 
-#: pacman_mirrors/pacman_mirrors_gui.py:64
-msgid "Confirm selection"
-msgstr ""
+#: pacman_mirrors/pacman_mirrors_gui.py:65
+msgid "Confirm"
+msgstr "Confirmar"
 
-#: pacman_mirrors/pacman_mirrors_gui.py:102
-msgid "Are you sure?"
-msgstr ""
+#: pacman_mirrors/pacman_mirrors_gui.py:103
+msgid "Confirm selections"
+msgstr "Confirmar les seleccions"
 
-#: pacman_mirrors/pacman_mirrors_gui.py:109
-msgid "Are you sure to replace your list of mirrors?"
-msgstr ""
+#: pacman_mirrors/pacman_mirrors_gui.py:110
+msgid "I want to use these mirrors"
+msgstr "Vull utilitzar aquests miralls"
