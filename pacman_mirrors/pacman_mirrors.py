@@ -846,9 +846,5 @@ class PacmanMirrors:
 
 
 if __name__ == "__main__":
-    if os.getuid() != 0:
-        print(ERROR + SEP + ERR_NOT_ROOT + DOT)
-        exit(1)
-
     pm = PacmanMirrors()
     pm.run()
