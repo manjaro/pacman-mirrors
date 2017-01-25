@@ -51,7 +51,7 @@ Ready to contribute? Here's how to set up `pacman-mirrors` for local development
 
     $ `git clone git@github.com:your_name_here/pacman-mirrors.git`
 
-3. Install your local copy into a virtualenv. Assuming you have virtualenvwrapper installed, this is how you set up your fork for local development:
+3. Install your local copy into a virtualenv. Assuming you have [virtualenvwrapper](https://virtualenvwrapper.readthedocs.io/en/latest/) installed, this is how you set up your fork for local development:
     - $ `mkvirtualenv pacman-mirrors`
     - $ `cd pacman-mirrors/`
     - $ `python setup.py develop`
