@@ -305,7 +305,7 @@ class PacmanMirrors:
 
         server_list = interactive.custom_list
 
-        if not gui.is_done:
+        if not interactive.is_done:
             return
 
         print(txt.NEWLINE +
@@ -456,7 +456,7 @@ class PacmanMirrors:
                         if not server_url:
                             continue
                         server = {"country": country,
-                                  "response_time": txt.txt.SERVER_RES,
+                                  "response_time": txt.SERVER_RES,
                                   "last_sync": txt.SERVER_BAD,
                                   "url": server_url}
                         # create a probe start reference point
