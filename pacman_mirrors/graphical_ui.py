@@ -18,30 +18,32 @@
 # Authors: Esclapion
 #          Hugo Posnic <huluti@manjaro.org>
 
-""" Module PacmanMirrors GUI"""
+""" Module GraphicalUI GUI"""
 import gi
+from . import i18n
+from . import txt
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 
-from . import i18n
+
 _ = i18n.language.gettext
 
 
-class PacmanMirrors(Gtk.Window):
-    """ Class PacmanMirrors """
+class GraphicalUI(Gtk.Window):
+    """ Class GraphicalUI """
     def __init__(self, server_list):
-        Gtk.Window.__init__(self, title=_("Mirrors by response time"))
+        Gtk.Window.__init__(self, title=txt.I_TITLE)
         self.set_size_request(700, 350)
         self.set_border_width(10)
         self.set_position(Gtk.WindowPosition.CENTER)
 
         mirrors_list = []
         for server in server_list:
-            mirrors_list.append((False,
-                                 server["country"],
-                                 "{}h {}m".format(server["last_sync"][:2],
-                                                    server["last_sync"][-2:]),
-                                 server["url"][:-20]))
+            mirrors_list.append((
+                False, server["country"],
+                "{}h {}m".format(server["last_sync"][:2],
+                                 server["last_sync"][-2:]),
+                server["url"][:-20]))
         self.mirrors_liststore = Gtk.ListStore(bool, str, str, str)
         for mirror_ref in mirrors_list:
             self.mirrors_liststore.append(list(mirror_ref))
@@ -51,22 +53,25 @@ class PacmanMirrors(Gtk.Window):
         self.treeview.set_vexpand(True)
         renderer = Gtk.CellRendererToggle()
         renderer.connect("toggled", self.on_toggle)
-        column = Gtk.TreeViewColumn(_("Use"), renderer, active=0)
+        column = Gtk.TreeViewColumn(txt.I_USE, renderer, active=0)
         self.treeview.append_column(column)
-        for i, column_title in enumerate([_("Country"), _("Last sync"), _("URL")]):
+        for i, column_title in enumerate([txt.I_COUNTRY,
+                                          txt.I_LAST_SYNC,
+                                          txt.I_URL]):
             renderer = Gtk.CellRendererText()
             column = Gtk.TreeViewColumn(column_title, renderer, text=i+1)
             self.treeview.append_column(column)
         scrolled_tree.add(self.treeview)
 
-        header = Gtk.Label(_("Check mirrors for your personal list"))
-        button_cancel = Gtk.Button(_("Cancel"))
+        header = Gtk.Label(txt.I_LIST_TITLE)
+        button_cancel = Gtk.Button(txt.I_CANCEL)
         button_cancel.connect("clicked", self.cancel)
-        self.button_done = Gtk.Button(_("Confirm"))
+        self.button_done = Gtk.Button(txt.I_CONFIRM)
         self.button_done.set_sensitive(False)
         self.button_done.connect("clicked", self.done)
-
-        grid = Gtk.Grid(column_homogeneous=True, column_spacing=10, row_spacing=10)
+        grid = Gtk.Grid(column_homogeneous=True,
+                        column_spacing=10,
+                        row_spacing=10)
         grid.attach(header, 0, 0, 2, 1)
         grid.attach(scrolled_tree, 0, 1, 2, 1)
         grid.attach(button_cancel, 0, 2, 1, 1)
@@ -80,8 +85,8 @@ class PacmanMirrors(Gtk.Window):
 
         self.is_done = False
 
-    def on_toggle(self, widget, path):
-        # Add or remove server from custom list
+    def on_toggle(self, path):
+        """Add or remove server from custom list"""
         self.mirrors_liststore[path][0] = not self.mirrors_liststore[path][0]
         if self.mirrors_liststore[path][0]:
             for server in self.server_list:
@@ -94,20 +99,21 @@ class PacmanMirrors(Gtk.Window):
 
         self.button_done.set_sensitive(bool(self.custom_list))
 
-    def cancel(self, button):
+    def cancel(self):
+        """Cancel mirrorlist"""
         self.custom_list = []
         Gtk.main_quit()
 
-    def done(self, button):
-        # Confirm choice
-        dialog = Gtk.Dialog(_("Confirm selections"), None, 0,
-        (Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
-        Gtk.STOCK_OK, Gtk.ResponseType.OK))
+    def done(self):
+        """Confirm choice"""
+        dialog = Gtk.Dialog(txt.I_CONFIRM_SELECTION, None, 0, (
+            Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
+            Gtk.STOCK_OK, Gtk.ResponseType.OK))
         dialog.set_transient_for(self)
         dialog.set_border_width(10)
         box = dialog.get_content_area()
         box.set_spacing(10)
-        box.add(Gtk.Label(_("I want to use these mirrors")))
+        box.add(Gtk.Label(txt.I_USE_THESE_MIRRORS))
         dialog.show_all()
         response = dialog.run()
 
@@ -120,8 +126,10 @@ class PacmanMirrors(Gtk.Window):
             # Go back to selection
             dialog.destroy()
 
+
 def run(server_list):
-    window = PacmanMirrors(server_list)
+    """Run interactive"""
+    window = GraphicalUI(server_list)
     window.connect("delete-event", Gtk.main_quit)
     window.show_all()
     Gtk.main()
