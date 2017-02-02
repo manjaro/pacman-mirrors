@@ -18,7 +18,11 @@
 # Authors: Esclapion
 #          Hugo Posnic <huluti@manjaro.org>
 
-""" Module GraphicalUI GUI"""
+"""
+Pacman-Mirrors
+Graphical UI Module
+"""
+
 import gi
 from . import i18n
 from . import txt
@@ -123,8 +127,7 @@ class GraphicalUI(Gtk.Window):
             self.is_done = True
             Gtk.main_quit()
         elif response == Gtk.ResponseType.CANCEL:
-            # Go back to selection
-            dialog.destroy()
+            dialog.destroy() # Go back to selection
 
 
 def run(server_list):

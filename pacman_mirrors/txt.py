@@ -18,7 +18,7 @@
 # Authors: Frede Hundewadt <frede@hundewadt.dk>
 
 """
-Pacman Mirrors
+Pacman-Mirrors
 Text Module
 """
 

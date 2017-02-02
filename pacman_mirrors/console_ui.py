@@ -18,23 +18,23 @@
 # Authors: Frede Hundewadt <frede@hundewadt.dk>
 
 """
-Pacman Mirrors
+Pacman-Mirrors
 Console UI Module
 """
+
 from collections import namedtuple
 import npyscreen
 from . import txt
 from . console_helpers import ConsoleHelpers
 from . import i18n
 
-Util = ConsoleHelpers
 
+Util = ConsoleHelpers
 _ = i18n.language.gettext
 
+
 class ConsoleUI(npyscreen.NPSAppManaged):
-    """
-    App
-    """
+    """App"""
 
     def __init__(self, server_list):
         npyscreen.NPSAppManaged.__init__(self)
@@ -44,9 +44,7 @@ class ConsoleUI(npyscreen.NPSAppManaged):
         self.is_done = False
 
     def main(self):
-        """
-        Main
-        """
+        """Main"""
         main_server_list = []
         server = namedtuple("Server", ["country",
                                        "response_time",
@@ -73,10 +71,9 @@ class ConsoleUI(npyscreen.NPSAppManaged):
                                         value=[],
                                         values=server_rows,
                                         scroll_exit=True)
-        # activate form
-        mainform.edit()
-        # done
-        self.done(selected_servers.get_selected_objects())
+
+        mainform.edit() # activate form
+        self.done(selected_servers.get_selected_objects()) # done
 
     def done(self, selection):
         """
@@ -91,7 +88,6 @@ class ConsoleUI(npyscreen.NPSAppManaged):
                                          "response_time": server[1].strip(),
                                          "last_sync": server[2].strip(),
                                          "url": server[3].strip()})
-
         self.is_done = True
         self.setNextForm(None)
 

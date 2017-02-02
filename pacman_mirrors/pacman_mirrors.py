@@ -22,7 +22,8 @@
 #             Frede Hundewadt <frede@hundewadt.dk>
 
 """
-Module PacmanMirrors
+Pacman-Mirrors
+Main Module
 """
 
 import argparse
