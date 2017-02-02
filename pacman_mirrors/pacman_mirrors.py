@@ -333,7 +333,7 @@ class PacmanMirrors:
                 if os.path.isfile(self.custom_mirror_file):
                     self.config["only_country"] = [self.custom_mirror_file]
                 else:
-                    print(txt.WARN + txt.SEP + txt.CUSTOM_MIRROR_FILE +
+                    print(txt.WARN + txt.SEP + txt.INF_CUSTOM_MIRROR_FILE +
                           " '{path}' ".format(path=self.custom_mirror_file) +
                           txt.INF_DOES_NOT_EXIST)
                     print(txt.NEWLINE)
@@ -632,7 +632,7 @@ class PacmanMirrors:
             res = urlopen("http://freegeoip.net/json/", timeout=2)
             json_obj = json.loads(res.read().decode("utf8"))
         except (URLError, timeout, HTTPException, json.JSONDecodeError):
-            country_name = None
+            pass
         else:
             if "country_name" in json_obj:
                 country_name = json_obj["country_name"]
@@ -646,8 +646,7 @@ class PacmanMirrors:
                 }
                 if country_name in country_fix.keys():
                     country_name = country_fix[country_name]
-        finally:
-            return country_name
+        return country_name
 
     @staticmethod
     def get_mirror_branch_last_sync(point_in_time, timestamp):
