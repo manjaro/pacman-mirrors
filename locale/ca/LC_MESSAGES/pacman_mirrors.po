@@ -11,8 +11,8 @@ msgstr ""
 "Project-Id-Version: manjaro-pacman-mirrors\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2017-01-19 15:16+0100\n"
-"PO-Revision-Date: 2017-01-19 14:17+0000\n"
-"Last-Translator: Ramon Buldó <rbuldo@gmail.com>\n"
+"PO-Revision-Date: 2017-02-02 16:04+0000\n"
+"Last-Translator: acutbal <acutbal@gmail.com>\n"
 "Language-Team: Catalan (http://www.transifex.com/manjarolinux/manjaro-pacman-mirrors/language/ca/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -47,11 +47,11 @@ msgstr "CAMÍ"
 
 #: pacman_mirrors/pacman_mirrors.py:88
 msgid "FILE"
-msgstr ""
+msgstr "ARXIU"
 
 #: pacman_mirrors/pacman_mirrors.py:89
 msgid "SECONDS"
-msgstr ""
+msgstr "SEGONS"
 
 #: pacman_mirrors/pacman_mirrors.py:91
 msgid "Branch name"
@@ -155,55 +155,55 @@ msgstr "Arxiu de miralls personalitzats"
 
 #: pacman_mirrors/pacman_mirrors.py:118
 msgid "doesn't exist. Querying all servers"
-msgstr ""
+msgstr "no existeix. Consultant a tots els servidors"
 
 #: pacman_mirrors/pacman_mirrors.py:119
 msgid "Writing custom mirror file"
-msgstr ""
+msgstr "Escrivint llista de miralls personalitzada"
 
 #: pacman_mirrors/pacman_mirrors.py:120
 msgid "Writing mirror list"
-msgstr ""
+msgstr "Escrivint llista de miralls"
 
 #: pacman_mirrors/pacman_mirrors.py:121
 msgid "Mirrorlist generated and saved to"
-msgstr ""
+msgstr "Llista de miralls creada i guardada en"
 
 #: pacman_mirrors/pacman_mirrors.py:122
 msgid "Querying servers, this may take some time"
-msgstr ""
+msgstr "Consultant els servidors, això pot portar el seu temps"
 
 #: pacman_mirrors/pacman_mirrors.py:123
 msgid "Using custom mirror list"
-msgstr ""
+msgstr "Fent servir llista personalitzada de miralls"
 
 #: pacman_mirrors/pacman_mirrors.py:124
 msgid "Testing mirrors in"
-msgstr ""
+msgstr "Miralls de proves en"
 
 #: pacman_mirrors/pacman_mirrors.py:125
 msgid "Wrong date format in state file"
-msgstr ""
+msgstr "Format de data incorrecta a l'arxiu d'estat"
 
 #: pacman_mirrors/pacman_mirrors.py:126
 msgid "Randomizing server list"
-msgstr ""
+msgstr "Variació aleatòria de la llista de servidors"
 
 #: pacman_mirrors/pacman_mirrors.py:127
 msgid "Option"
-msgstr ""
+msgstr "Opció"
 
 #: pacman_mirrors/pacman_mirrors.py:128
 msgid "unknown country"
-msgstr ""
+msgstr "país desconegut"
 
 #: pacman_mirrors/pacman_mirrors.py:129
 msgid "Available countries are"
-msgstr ""
+msgstr "Els països disponibles són"
 
 #: pacman_mirrors/pacman_mirrors_gui.py:33
 msgid "Mirrors by response time"
-msgstr ""
+msgstr "Miralls segons temps de resposta"
 
 #: pacman_mirrors/pacman_mirrors_gui.py:54
 msgid "Use"
@@ -215,7 +215,7 @@ msgstr "País"
 
 #: pacman_mirrors/pacman_mirrors_gui.py:56
 msgid "Last sync"
-msgstr ""
+msgstr "Última sincronització"
 
 #: pacman_mirrors/pacman_mirrors_gui.py:56
 msgid "URL"
@@ -223,7 +223,7 @@ msgstr "URL"
 
 #: pacman_mirrors/pacman_mirrors_gui.py:62
 msgid "Check mirrors for your personal list"
-msgstr ""
+msgstr "Comprova els miralls per a la teva llista personal"
 
 #: pacman_mirrors/pacman_mirrors_gui.py:63
 msgid "Cancel"
