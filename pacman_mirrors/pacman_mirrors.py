@@ -446,7 +446,7 @@ class PacmanMirrors:
                                   "url": server_url}
                         # create a probe start reference point
                         probe_start = time.time()
-                        statefile_content = self.query_mirror_state(
+                        statefile = self.query_mirror_state(
                             server["url"], self.config["branch"],
                             self.max_wait_time, self.quiet)
                         # calculate response time
@@ -466,14 +466,14 @@ class PacmanMirrors:
                                     s_rt=server_response_time,
                                     s_url=server_url.replace(
                                         "$branch", self.config["branch"])))
-                        if not statefile_content:
+                        if not statefile:
                             self.append_to_server_list(
                                 server, server["last_sync"])
                             continue
                         server["response_time"] = server_response_time
                         # extract timestamp from statefile
                         statefile_timestamp = self.get_mirror_branch_timestamp(
-                            statefile_content)
+                            statefile)
                         try:
                             branch_timestamp = datetime.datetime.strptime(
                                 statefile_timestamp, "%Y-%m-%dT%H:%M:%S")
@@ -695,7 +695,7 @@ class PacmanMirrors:
             return line[9:]
 
     @staticmethod
-    def query_mirror_state(url, mirror_branch, request_timeout, quiet):
+    def query_mirror_state(url, branch, timeout, quiet):
         """
         Get statefile
 
@@ -703,9 +703,9 @@ class PacmanMirrors:
         :return: content
         """
         content = ""
-        url = url.replace("$branch/$repo/$arch", mirror_branch)
+        url = url.replace("$branch/$repo/$arch", branch)
         try:
-            res = urlopen(url + "/state", timeout=request_timeout)
+            res = urlopen(url + "/state", timeout=timeout)
             content = res.read()
         except URLError as err:
             if hasattr(err, "reason") and not quiet:
