@@ -198,13 +198,10 @@ class PacmanMirrors:
                 self.config["mirror_list"] = os.getcwd() + "/" + args.output
             self.default_mirror_list = self.config["mirror_list"]
 
-        if GTK_AVAILABLE and (
-                os.environ.get('DISPLAY') is not None) and args.interactive:
+        if args.interactive:
             self.interactive = True
-
-        if args.interactive and (os.environ.get("DISPLAY") is None):
-            self.interactive = True
-            self.no_display = True
+            if not os.environ.get("DISPLAY") or not GTK_AVAILABLE:
+                self.no_display = True
 
         if args.timeout:
             self.max_wait_time = args.timeout
