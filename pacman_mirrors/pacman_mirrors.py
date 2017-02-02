@@ -41,11 +41,10 @@ from socket import timeout
 from urllib.error import URLError
 from urllib.request import urlopen
 
+from .custom_help_formatter import CustomHelpFormatter
 from pacman_mirrors import __version__
 from . import i18n
 from . import txt
-
-from .custom_help_formatter import CustomHelpFormatter
 
 # The interactive argument will be only available if Gtk is installed
 try:
@@ -54,7 +53,6 @@ except ImportError:
     GTK_AVAILABLE = False
 else:
     GTK_AVAILABLE = True
-
 _ = i18n.language.gettext
 
 
@@ -62,7 +60,7 @@ class PacmanMirrors:
     """Class PacmanMirrors"""
 
     def __init__(self):
-        """ Init """
+        """Init"""
         # Lists
         self.available_countries = []
         self.good_servers = []  # respond updated < 24h
@@ -100,9 +98,7 @@ class PacmanMirrors:
             self.bad_servers.append(mirror)
 
     def command_line_parse(self):
-        """
-        Read the arguments of the command line
-        """
+        """Read the arguments of the command line"""
         parser = argparse.ArgumentParser(formatter_class=CustomHelpFormatter)
         parser.add_argument("-g", "--generate",
                             action="store_true",
@@ -217,9 +213,7 @@ class PacmanMirrors:
             self.quiet = True
 
     def config_init(self):
-        """
-        Get config informations
-        """
+        """Get config informations"""
         # initialising defaults
         # information which can differ from these defaults
         # is fetched from config file
@@ -264,9 +258,7 @@ class PacmanMirrors:
         return config
 
     def generate_mirror_list_common(self):
-        """
-        Generate common mirrorlist
-        """
+        """Generate common mirrorlist"""
         if len(self.good_servers) >= 3:  # Avoid an empty mirrorlist
             server_list = self.good_servers
         elif len(self.resp_servers) >= 3:
@@ -307,8 +299,7 @@ class PacmanMirrors:
         if not interactive.is_done:
             return
 
-        print(txt.NEWLINE +
-              txt.DCS + txt.INF_INTERACTIVE_LIST)
+        print(txt.NEWLINE + txt.DCS + txt.INF_INTERACTIVE_LIST)
         print("--------------------------")
         # restore self.config["only_country"] to "Custom"
         self.config["only_country"] = ["Custom"]
@@ -373,9 +364,7 @@ class PacmanMirrors:
                 self.config_file, self.config["only_country"])
 
     def output_custom_mirror_file(self, servers):
-        """
-        Write a custom mirror file in custom mirror dir
-        """
+        """Write a custom mirror file in custom mirror dir"""
         mirror_file = self.custom_mirror_file
 
         os.makedirs(self.custom_mirror_dir, mode=0o755, exist_ok=True)
@@ -549,14 +538,9 @@ class PacmanMirrors:
                 continue
         shuffle(self.bad_servers)
 
-    # ----------------------------------------------------------------
-    # Begin static methods
-    # ----------------------------------------------------------------
     @staticmethod
     def config_set_custom(config_file, config_only_country):
-        """
-        Use custom configuration
-        """
+        """Use custom configuration"""
         for country in config_only_country:
             if "Custom" in country:  # country is full path
                 country = "Custom"  # must change to Custom
@@ -588,9 +572,7 @@ class PacmanMirrors:
 
     @staticmethod
     def config_set_default(config_file):
-        """
-        Use default configuration
-        """
+        """Use default configuration"""
         with open(config_file) as cnf, tempfile.NamedTemporaryFile(
                 "w+t", dir=os.path.dirname(config_file),
                 delete=False) as tmp:
@@ -820,12 +802,8 @@ class PacmanMirrors:
         handle.write("Server = {}\n\n"
                      .format(mirror["url"]))
 
-    # ----------------------------------------------------------------
-    # End static methods
-    # ----------------------------------------------------------------
-
     def run(self):
-        """ Run """
+        """Run"""
         self.command_line_parse()
         self.load_server_lists()
         if self.interactive:

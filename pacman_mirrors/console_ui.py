@@ -24,9 +24,10 @@ Console UI Module
 
 from collections import namedtuple
 import npyscreen
-from . import txt
+
 from . console_helpers import ConsoleHelpers
 from . import i18n
+from . import txt
 
 
 Util = ConsoleHelpers
@@ -72,8 +73,8 @@ class ConsoleUI(npyscreen.NPSAppManaged):
                                         values=server_rows,
                                         scroll_exit=True)
 
-        mainform.edit() # activate form
-        self.done(selected_servers.get_selected_objects()) # done
+        mainform.edit()  # activate form
+        self.done(selected_servers.get_selected_objects())  # done
 
     def done(self, selection):
         """
@@ -93,9 +94,7 @@ class ConsoleUI(npyscreen.NPSAppManaged):
 
 
 def run(server_list):
-    """
-    Run
-    """
+    """Run"""
     app = ConsoleUI(server_list)
     app.run()
     return app

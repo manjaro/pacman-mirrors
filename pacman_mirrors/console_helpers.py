@@ -61,5 +61,4 @@ class ConsoleHelpers:
         for line in servers:
             lines.append(joiner.join("{:{}}".format(x, col_width[i])
                                      for i, x in enumerate(line)))
-
         return lines

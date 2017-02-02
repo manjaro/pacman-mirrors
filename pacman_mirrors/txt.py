@@ -24,6 +24,7 @@ Text Module
 
 from . import i18n
 
+
 _ = i18n.language.gettext
 
 
