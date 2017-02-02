@@ -59,9 +59,7 @@ _ = i18n.language.gettext
 
 
 class PacmanMirrors:
-    """
-    Class PacmanMirrors
-    """
+    """Class PacmanMirrors"""
 
     def __init__(self):
         """ Init """

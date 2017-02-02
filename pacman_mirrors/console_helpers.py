@@ -25,9 +25,7 @@ import json
 
 
 class ConsoleHelpers:
-    """
-    Console Helpers class
-    """
+    """Console Helpers class"""
 
     @staticmethod
     def list_to_tuple(list_data, named_tuple):

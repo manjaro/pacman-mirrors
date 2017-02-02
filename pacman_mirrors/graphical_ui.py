@@ -24,17 +24,17 @@ Graphical UI Module
 """
 
 import gi
-from . import i18n
-from . import txt
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
+from . import i18n
+from . import txt
 
 
 _ = i18n.language.gettext
 
 
 class GraphicalUI(Gtk.Window):
-    """ Class GraphicalUI """
+    """Class GraphicalUI"""
     def __init__(self, server_list):
         Gtk.Window.__init__(self, title=txt.I_TITLE)
         self.set_size_request(700, 350)
@@ -100,7 +100,6 @@ class GraphicalUI(Gtk.Window):
             for server in self.custom_list:
                 if server["url"][:-20] == self.mirrors_liststore[path][3]:
                     self.custom_list.remove(server)
-
         self.button_done.set_sensitive(bool(self.custom_list))
 
     def cancel(self):
