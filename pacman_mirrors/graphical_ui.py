@@ -90,7 +90,7 @@ class GraphicalUI(Gtk.Window):
 
         self.is_done = False
 
-    def on_toggle(self, path):
+    def on_toggle(self, widget, path):
         """Add or remove server from custom list"""
         self.mirrors_liststore[path][0] = not self.mirrors_liststore[path][0]
         if self.mirrors_liststore[path][0]:
@@ -103,12 +103,12 @@ class GraphicalUI(Gtk.Window):
                     self.custom_list.remove(server)
         self.button_done.set_sensitive(bool(self.custom_list))
 
-    def cancel(self):
+    def cancel(self, button):
         """Cancel mirrorlist"""
         self.custom_list = []
         Gtk.main_quit()
 
-    def done(self):
+    def done(self, button):
         """Confirm choice"""
         dialog = Gtk.Dialog(txt.I_CONFIRM_SELECTION, None, 0, (
             Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
