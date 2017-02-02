@@ -26,9 +26,9 @@ from . import i18n
 
 _ = i18n.language.gettext
 
-'''
-BEGIN translatable
-'''
+
+# TRANSLATABLE STRINGS
+
 # message type
 ERROR = _("Error")
 INFO = _("Info")
@@ -99,13 +99,9 @@ I_CANCEL = _("Cancel")
 I_CONFIRM = _("OK")
 I_CONFIRM_SELECTION = _("Confirm selections")
 I_USE_THESE_MIRRORS = _("I want to use these mirrors")
-'''
-END translatable
-'''
 
-'''
-BEGIN non translatable
-'''
+# NON TRANSLATABLE STRINGS
+
 # mirror status constants
 LASTSYNC_OK = "24:00"  # last syncronize in the past 24 hours
 LASTSYNC_NA = "98:00"  # last syncronization not available
@@ -123,6 +119,3 @@ SEP = ": "
 # options
 OPT_COUNTRY = " '-c/--country' "
 OPT_NOUPDATE = " 'NoUpdate = True' "
-'''
-END non translatable
-'''
