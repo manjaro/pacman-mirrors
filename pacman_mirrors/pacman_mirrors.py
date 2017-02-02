@@ -427,7 +427,7 @@ class PacmanMirrors:
                 custom = False
                 print(txt.SAS + txt.INF_QUERY_DEFAULT + " {}".format(country))
             # create a ref point for calculation
-            ref_point_in_time = datetime.datetime.utcnow()
+            point_in_time = datetime.datetime.utcnow()
             try:
                 with open(os.path.join(
                     self.default_mirror_dir, country), "r") as mirrorfile:
@@ -489,7 +489,7 @@ class PacmanMirrors:
                                     txt.INF_QUERY_WRONG_DATE_FORMAT)
                             continue
                         server["last_sync"] = self.get_mirror_branch_last_sync(
-                            ref_point_in_time, branch_timestamp)
+                            point_in_time, branch_timestamp)
                         self.append_to_server_list(server, server["last_sync"])
             except OSError as err:
                 print(txt.ERROR + txt.SEP + txt.ERR_FILE_READ + txt.SEP +
