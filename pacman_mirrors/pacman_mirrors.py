@@ -86,7 +86,7 @@ class PacmanMirrors:
         """
         Append mirror to relevant list based on elapsed hours
 
-        :param: mirror: object{}
+        :param: mirror: object
         :param: response_time: mirror response time
         """
         elapsed_hours = int(mirror_last_sync[:-3])
