@@ -1,0 +1,241 @@
+# Translations template for pacman-mirrors.
+# Copyright (C) 2017 ORGANIZATION
+# This file is distributed under the same license as the pacman-mirrors
+# project.
+# 
+# Translators:
+# Frede H. <frede@hundewadt.dk>, 2017
+msgid ""
+msgstr ""
+"Project-Id-Version: manjaro-pacman-mirrors\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2017-01-19 15:16+0100\n"
+"PO-Revision-Date: 2017-01-30 04:41+0000\n"
+"Last-Translator: Frede H. <frede@hundewadt.dk>\n"
+"Language-Team: Danish (http://www.transifex.com/manjarolinux/manjaro-pacman-mirrors/language/da/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.3.4\n"
+"Language: da\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: pacman_mirrors/pacman_mirrors.py:80
+msgid "Error"
+msgstr "Fejl"
+
+#: pacman_mirrors/pacman_mirrors.py:81
+msgid "Info"
+msgstr "Info"
+
+#: pacman_mirrors/pacman_mirrors.py:82
+msgid "Warning"
+msgstr "Advarsel"
+
+#: pacman_mirrors/pacman_mirrors.py:84
+msgid "Timeout"
+msgstr "Tidsgrænse"
+
+#: pacman_mirrors/pacman_mirrors.py:85
+msgid "HTTPException"
+msgstr "HTTP fejl"
+
+#: pacman_mirrors/pacman_mirrors.py:87
+msgid "PATH"
+msgstr "STI"
+
+#: pacman_mirrors/pacman_mirrors.py:88
+msgid "FILE"
+msgstr "FIL"
+
+#: pacman_mirrors/pacman_mirrors.py:89
+msgid "SECONDS"
+msgstr "SEKUNDER"
+
+#: pacman_mirrors/pacman_mirrors.py:91
+msgid "Branch name"
+msgstr "Gren"
+
+#: pacman_mirrors/pacman_mirrors.py:92
+msgid "Comma separated list of countries, from which mirrors will be used"
+msgstr "En komma adskilt liste over lande, hvorfra servere vil blive brugt"
+
+#: pacman_mirrors/pacman_mirrors.py:93
+msgid "Output file"
+msgstr "Fil der skrives til"
+
+#: pacman_mirrors/pacman_mirrors.py:94
+msgid "Generate mirrorlist"
+msgstr "Opret liste med servere"
+
+#: pacman_mirrors/pacman_mirrors.py:95
+msgid "Get current country using geolocation. Ignored if"
+msgstr "Brug geolokation for at finde servere. Ignoreres hvis"
+
+#: pacman_mirrors/pacman_mirrors.py:96
+msgid "is supplied"
+msgstr "er angivet"
+
+#: pacman_mirrors/pacman_mirrors.py:97
+msgid "Generate custom mirrorlist"
+msgstr "Opret en personlig server liste"
+
+#: pacman_mirrors/pacman_mirrors.py:98
+msgid "Generation method"
+msgstr "Oprettelses måde"
+
+#: pacman_mirrors/pacman_mirrors.py:99
+msgid "Don't generate mirrorlist if"
+msgstr "Opret ikke liste hvis"
+
+#: pacman_mirrors/pacman_mirrors.py:100
+msgid "in the configuration file"
+msgstr "findes i konfigurationsfilen"
+
+#: pacman_mirrors/pacman_mirrors.py:101
+msgid "Mirrors list path"
+msgstr "Sti hvor listen gemmes"
+
+#: pacman_mirrors/pacman_mirrors.py:102
+msgid "Quiet mode - less verbose output"
+msgstr "Vær stille - udskriver færre informationer"
+
+#: pacman_mirrors/pacman_mirrors.py:103
+msgid "Maximum waiting time for server response"
+msgstr "Maksimal ventetid for server svar"
+
+#: pacman_mirrors/pacman_mirrors.py:104
+msgid "Print the pacman-mirrors version"
+msgstr "Udskriv pacman-mirrors version"
+
+#: pacman_mirrors/pacman_mirrors.py:106
+msgid "Cannot read file"
+msgstr "Kan ikke læse filen"
+
+#: pacman_mirrors/pacman_mirrors.py:107
+msgid "Cannot update file"
+msgstr "Kan ikke opdatere filen"
+
+#: pacman_mirrors/pacman_mirrors.py:108
+msgid "Cannot write file"
+msgstr "Kan ikke skrive filen"
+
+#: pacman_mirrors/pacman_mirrors.py:109
+msgid "Must have root privileges"
+msgstr "Mangler administrator adgang"
+
+#: pacman_mirrors/pacman_mirrors.py:110
+msgid "Cannot read server response"
+msgstr "Kan ikke oversætte server svar"
+
+#: pacman_mirrors/pacman_mirrors.py:111
+msgid "No server available"
+msgstr "Ingen server til rådighed"
+
+#: pacman_mirrors/pacman_mirrors.py:112
+msgid "Failed to reach server"
+msgstr "Serveren kan ikke findes"
+
+#: pacman_mirrors/pacman_mirrors.py:113
+msgid "The server did not complete the request"
+msgstr "Serveren kunne ikke fuldføre forespørgslen"
+
+#: pacman_mirrors/pacman_mirrors.py:115
+msgid "User generated mirror list"
+msgstr "Personligt oprettet server liste"
+
+#: pacman_mirrors/pacman_mirrors.py:116
+msgid "Saved personalized list of mirrors in"
+msgstr "Gemte din personlige liste i"
+
+#: pacman_mirrors/pacman_mirrors.py:117
+msgid "Custom mirrors file"
+msgstr "Personlig server liste"
+
+#: pacman_mirrors/pacman_mirrors.py:118
+msgid "doesn't exist. Querying all servers"
+msgstr "findes ikke. Bruger alle servere"
+
+#: pacman_mirrors/pacman_mirrors.py:119
+msgid "Writing custom mirror file"
+msgstr "Skriver personlig server liste"
+
+#: pacman_mirrors/pacman_mirrors.py:120
+msgid "Writing mirror list"
+msgstr "Skriver server liste"
+
+#: pacman_mirrors/pacman_mirrors.py:121
+msgid "Mirrorlist generated and saved to"
+msgstr "Oprettede server liste og gemte som"
+
+#: pacman_mirrors/pacman_mirrors.py:122
+msgid "Querying servers, this may take some time"
+msgstr "Tester servere, dette kan tage nogen tid"
+
+#: pacman_mirrors/pacman_mirrors.py:123
+msgid "Using custom mirror list"
+msgstr "Bruger personlig server liste"
+
+#: pacman_mirrors/pacman_mirrors.py:124
+msgid "Testing mirrors in"
+msgstr "Tester servere i"
+
+#: pacman_mirrors/pacman_mirrors.py:125
+msgid "Wrong date format in state file"
+msgstr "Forkert dato format i status fil"
+
+#: pacman_mirrors/pacman_mirrors.py:126
+msgid "Randomizing server list"
+msgstr "Blander server listen"
+
+#: pacman_mirrors/pacman_mirrors.py:127
+msgid "Option"
+msgstr "Tilvalg"
+
+#: pacman_mirrors/pacman_mirrors.py:128
+msgid "unknown country"
+msgstr "ukendt land"
+
+#: pacman_mirrors/pacman_mirrors.py:129
+msgid "Available countries are"
+msgstr "Tilgængelige lande er"
+
+#: pacman_mirrors/pacman_mirrors_gui.py:33
+msgid "Mirrors by response time"
+msgstr "Servere efter svartider"
+
+#: pacman_mirrors/pacman_mirrors_gui.py:54
+msgid "Use"
+msgstr "Brug"
+
+#: pacman_mirrors/pacman_mirrors_gui.py:56
+msgid "Country"
+msgstr "Land"
+
+#: pacman_mirrors/pacman_mirrors_gui.py:56
+msgid "Last sync"
+msgstr "Sidst opdateret"
+
+#: pacman_mirrors/pacman_mirrors_gui.py:56
+msgid "URL"
+msgstr "URL"
+
+#: pacman_mirrors/pacman_mirrors_gui.py:62
+msgid "Check mirrors for your personal list"
+msgstr "Marker servere til din personlige liste"
+
+#: pacman_mirrors/pacman_mirrors_gui.py:63
+msgid "Cancel"
+msgstr "Afbryd"
+
+#: pacman_mirrors/pacman_mirrors_gui.py:65
+msgid "Confirm"
+msgstr "Bekræft"
+
+#: pacman_mirrors/pacman_mirrors_gui.py:103
+msgid "Confirm selections"
+msgstr "Bekræft valgene"
+
+#: pacman_mirrors/pacman_mirrors_gui.py:110
+msgid "I want to use these mirrors"
+msgstr "Ja - Jeg vil bruge disse servere"
