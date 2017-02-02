@@ -291,8 +291,8 @@ class PacmanMirrors:
             from . import console_ui
             interactive = console_ui.run(server_list)
         else:
-            from . import graphical_gui
-            interactive = graphical_gui.run(server_list)
+            from . import graphical_ui
+            interactive = graphical_ui.run(server_list)
 
         server_list = interactive.custom_list
 
