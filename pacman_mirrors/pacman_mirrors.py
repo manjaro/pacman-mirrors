@@ -651,8 +651,8 @@ class PacmanMirrors:
         :param: data: contents of state file
         :return: string with timestamp from file
         """
-        position = data.find(b"date=")
-        timestamp = data[position + 5:position + 24].decode("utf-8")
+        position = data.find("date=")
+        timestamp = data[position + 5:position + 24]
         return timestamp
 
     @staticmethod
@@ -706,7 +706,7 @@ class PacmanMirrors:
         url = url.replace("$branch/$repo/$arch", branch)
         try:
             res = urlopen(url + "/state", timeout=timeout)
-            content = res.read()
+            content = res.read().decode("utf8")
         except URLError as err:
             if hasattr(err, "reason") and not quiet:
                 print(txt.NEWLINE + txt.ERROR + txt.SEP +
