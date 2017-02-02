@@ -17,6 +17,11 @@
 #
 # from https://wiki.maemo.org/Internationalize_a_Python_application
 
+"""
+Pacman-Mirrors
+Translation Module
+"""
+
 import os
 import sys
 import locale
