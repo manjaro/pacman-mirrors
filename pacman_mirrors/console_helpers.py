@@ -16,7 +16,6 @@
 # along with pacman-mirrors.  If not, see <http://www.gnu.org/licenses/>.
 #
 # Authors: Frede Hundewadt <frede@hundewadt.dk>
-#
 
 """
 Pacman Mirrors
