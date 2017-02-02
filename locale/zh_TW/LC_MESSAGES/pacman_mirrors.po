@@ -1,0 +1,241 @@
+# Translations template for pacman-mirrors.
+# Copyright (C) 2017 ORGANIZATION
+# This file is distributed under the same license as the pacman-mirrors
+# project.
+# 
+# Translators:
+# Hsiu-Ming Chang <cges30901@gmail.com>, 2017
+msgid ""
+msgstr ""
+"Project-Id-Version: manjaro-pacman-mirrors\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2017-01-19 15:16+0100\n"
+"PO-Revision-Date: 2017-01-23 07:45+0000\n"
+"Last-Translator: Hsiu-Ming Chang <cges30901@gmail.com>\n"
+"Language-Team: Chinese (Taiwan) (http://www.transifex.com/manjarolinux/manjaro-pacman-mirrors/language/zh_TW/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.3.4\n"
+"Language: zh_TW\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: pacman_mirrors/pacman_mirrors.py:80
+msgid "Error"
+msgstr "錯誤"
+
+#: pacman_mirrors/pacman_mirrors.py:81
+msgid "Info"
+msgstr "資訊"
+
+#: pacman_mirrors/pacman_mirrors.py:82
+msgid "Warning"
+msgstr "警告"
+
+#: pacman_mirrors/pacman_mirrors.py:84
+msgid "Timeout"
+msgstr "逾時"
+
+#: pacman_mirrors/pacman_mirrors.py:85
+msgid "HTTPException"
+msgstr "HTTPException"
+
+#: pacman_mirrors/pacman_mirrors.py:87
+msgid "PATH"
+msgstr "路徑"
+
+#: pacman_mirrors/pacman_mirrors.py:88
+msgid "FILE"
+msgstr "檔案"
+
+#: pacman_mirrors/pacman_mirrors.py:89
+msgid "SECONDS"
+msgstr "秒"
+
+#: pacman_mirrors/pacman_mirrors.py:91
+msgid "Branch name"
+msgstr ""
+
+#: pacman_mirrors/pacman_mirrors.py:92
+msgid "Comma separated list of countries, from which mirrors will be used"
+msgstr ""
+
+#: pacman_mirrors/pacman_mirrors.py:93
+msgid "Output file"
+msgstr "輸出檔案"
+
+#: pacman_mirrors/pacman_mirrors.py:94
+msgid "Generate mirrorlist"
+msgstr ""
+
+#: pacman_mirrors/pacman_mirrors.py:95
+msgid "Get current country using geolocation. Ignored if"
+msgstr ""
+
+#: pacman_mirrors/pacman_mirrors.py:96
+msgid "is supplied"
+msgstr ""
+
+#: pacman_mirrors/pacman_mirrors.py:97
+msgid "Generate custom mirrorlist"
+msgstr ""
+
+#: pacman_mirrors/pacman_mirrors.py:98
+msgid "Generation method"
+msgstr "產生方式"
+
+#: pacman_mirrors/pacman_mirrors.py:99
+msgid "Don't generate mirrorlist if"
+msgstr ""
+
+#: pacman_mirrors/pacman_mirrors.py:100
+msgid "in the configuration file"
+msgstr ""
+
+#: pacman_mirrors/pacman_mirrors.py:101
+msgid "Mirrors list path"
+msgstr ""
+
+#: pacman_mirrors/pacman_mirrors.py:102
+msgid "Quiet mode - less verbose output"
+msgstr ""
+
+#: pacman_mirrors/pacman_mirrors.py:103
+msgid "Maximum waiting time for server response"
+msgstr ""
+
+#: pacman_mirrors/pacman_mirrors.py:104
+msgid "Print the pacman-mirrors version"
+msgstr ""
+
+#: pacman_mirrors/pacman_mirrors.py:106
+msgid "Cannot read file"
+msgstr "無法讀取檔案"
+
+#: pacman_mirrors/pacman_mirrors.py:107
+msgid "Cannot update file"
+msgstr "無法更新檔案"
+
+#: pacman_mirrors/pacman_mirrors.py:108
+msgid "Cannot write file"
+msgstr "無法寫入檔案"
+
+#: pacman_mirrors/pacman_mirrors.py:109
+msgid "Must have root privileges"
+msgstr "需要有 root 權限"
+
+#: pacman_mirrors/pacman_mirrors.py:110
+msgid "Cannot read server response"
+msgstr ""
+
+#: pacman_mirrors/pacman_mirrors.py:111
+msgid "No server available"
+msgstr "沒有可用的伺服器"
+
+#: pacman_mirrors/pacman_mirrors.py:112
+msgid "Failed to reach server"
+msgstr "無法連接到伺服器"
+
+#: pacman_mirrors/pacman_mirrors.py:113
+msgid "The server did not complete the request"
+msgstr ""
+
+#: pacman_mirrors/pacman_mirrors.py:115
+msgid "User generated mirror list"
+msgstr ""
+
+#: pacman_mirrors/pacman_mirrors.py:116
+msgid "Saved personalized list of mirrors in"
+msgstr ""
+
+#: pacman_mirrors/pacman_mirrors.py:117
+msgid "Custom mirrors file"
+msgstr ""
+
+#: pacman_mirrors/pacman_mirrors.py:118
+msgid "doesn't exist. Querying all servers"
+msgstr ""
+
+#: pacman_mirrors/pacman_mirrors.py:119
+msgid "Writing custom mirror file"
+msgstr ""
+
+#: pacman_mirrors/pacman_mirrors.py:120
+msgid "Writing mirror list"
+msgstr ""
+
+#: pacman_mirrors/pacman_mirrors.py:121
+msgid "Mirrorlist generated and saved to"
+msgstr ""
+
+#: pacman_mirrors/pacman_mirrors.py:122
+msgid "Querying servers, this may take some time"
+msgstr ""
+
+#: pacman_mirrors/pacman_mirrors.py:123
+msgid "Using custom mirror list"
+msgstr ""
+
+#: pacman_mirrors/pacman_mirrors.py:124
+msgid "Testing mirrors in"
+msgstr ""
+
+#: pacman_mirrors/pacman_mirrors.py:125
+msgid "Wrong date format in state file"
+msgstr ""
+
+#: pacman_mirrors/pacman_mirrors.py:126
+msgid "Randomizing server list"
+msgstr ""
+
+#: pacman_mirrors/pacman_mirrors.py:127
+msgid "Option"
+msgstr "選項"
+
+#: pacman_mirrors/pacman_mirrors.py:128
+msgid "unknown country"
+msgstr "未知的國家"
+
+#: pacman_mirrors/pacman_mirrors.py:129
+msgid "Available countries are"
+msgstr "可用的國家有"
+
+#: pacman_mirrors/pacman_mirrors_gui.py:33
+msgid "Mirrors by response time"
+msgstr ""
+
+#: pacman_mirrors/pacman_mirrors_gui.py:54
+msgid "Use"
+msgstr "使用"
+
+#: pacman_mirrors/pacman_mirrors_gui.py:56
+msgid "Country"
+msgstr "國家"
+
+#: pacman_mirrors/pacman_mirrors_gui.py:56
+msgid "Last sync"
+msgstr "上次同步"
+
+#: pacman_mirrors/pacman_mirrors_gui.py:56
+msgid "URL"
+msgstr "URL"
+
+#: pacman_mirrors/pacman_mirrors_gui.py:62
+msgid "Check mirrors for your personal list"
+msgstr ""
+
+#: pacman_mirrors/pacman_mirrors_gui.py:63
+msgid "Cancel"
+msgstr "取消"
+
+#: pacman_mirrors/pacman_mirrors_gui.py:65
+msgid "Confirm"
+msgstr "確認"
+
+#: pacman_mirrors/pacman_mirrors_gui.py:103
+msgid "Confirm selections"
+msgstr "確認選擇"
+
+#: pacman_mirrors/pacman_mirrors_gui.py:110
+msgid "I want to use these mirrors"
+msgstr ""

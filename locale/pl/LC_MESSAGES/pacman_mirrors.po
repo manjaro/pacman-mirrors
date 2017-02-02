@@ -1,0 +1,243 @@
+# Translations template for pacman-mirrors.
+# Copyright (C) 2017 ORGANIZATION
+# This file is distributed under the same license as the pacman-mirrors
+# project.
+# 
+# Translators:
+# Daniel Napora <napcok@gmail.com>, 2017
+# m4sk1n <m4sk1n@o2.pl>, 2016-2017
+# m4sk1n <m4sk1n@o2.pl>, 2016
+msgid ""
+msgstr ""
+"Project-Id-Version: manjaro-pacman-mirrors\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2017-01-19 15:16+0100\n"
+"PO-Revision-Date: 2017-01-19 14:17+0000\n"
+"Last-Translator: Ramon Buldó <rbuldo@gmail.com>\n"
+"Language-Team: Polish (http://www.transifex.com/manjarolinux/manjaro-pacman-mirrors/language/pl/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.3.4\n"
+"Language: pl\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#: pacman_mirrors/pacman_mirrors.py:80
+msgid "Error"
+msgstr "Błąd"
+
+#: pacman_mirrors/pacman_mirrors.py:81
+msgid "Info"
+msgstr "Info"
+
+#: pacman_mirrors/pacman_mirrors.py:82
+msgid "Warning"
+msgstr "Ostrzeżenie"
+
+#: pacman_mirrors/pacman_mirrors.py:84
+msgid "Timeout"
+msgstr ""
+
+#: pacman_mirrors/pacman_mirrors.py:85
+msgid "HTTPException"
+msgstr "Wyjątek HTTP"
+
+#: pacman_mirrors/pacman_mirrors.py:87
+msgid "PATH"
+msgstr "ŚCIEŻKA"
+
+#: pacman_mirrors/pacman_mirrors.py:88
+msgid "FILE"
+msgstr ""
+
+#: pacman_mirrors/pacman_mirrors.py:89
+msgid "SECONDS"
+msgstr ""
+
+#: pacman_mirrors/pacman_mirrors.py:91
+msgid "Branch name"
+msgstr "Nazwa gałęzi"
+
+#: pacman_mirrors/pacman_mirrors.py:92
+msgid "Comma separated list of countries, from which mirrors will be used"
+msgstr "Oddzielana przecinkami lista państw, z których mirrory będą używane"
+
+#: pacman_mirrors/pacman_mirrors.py:93
+msgid "Output file"
+msgstr "Plik wyjściowy"
+
+#: pacman_mirrors/pacman_mirrors.py:94
+msgid "Generate mirrorlist"
+msgstr "Generuj listę mirrorów"
+
+#: pacman_mirrors/pacman_mirrors.py:95
+msgid "Get current country using geolocation. Ignored if"
+msgstr "Wykryj państwo używając geolokalizacji, ignorowane przy użyciu"
+
+#: pacman_mirrors/pacman_mirrors.py:96
+msgid "is supplied"
+msgstr ""
+
+#: pacman_mirrors/pacman_mirrors.py:97
+msgid "Generate custom mirrorlist"
+msgstr "Generuj własną listę mirrorów"
+
+#: pacman_mirrors/pacman_mirrors.py:98
+msgid "Generation method"
+msgstr "Metoda generowania"
+
+#: pacman_mirrors/pacman_mirrors.py:99
+msgid "Don't generate mirrorlist if"
+msgstr "Nie generuj listy mirrorów jeśli"
+
+#: pacman_mirrors/pacman_mirrors.py:100
+msgid "in the configuration file"
+msgstr "w pliku konfiguracyjnym"
+
+#: pacman_mirrors/pacman_mirrors.py:101
+msgid "Mirrors list path"
+msgstr "Ścieżka listy mirrorów"
+
+#: pacman_mirrors/pacman_mirrors.py:102
+msgid "Quiet mode - less verbose output"
+msgstr "Cichy tryb - mniej wyświetlanych komunikatów"
+
+#: pacman_mirrors/pacman_mirrors.py:103
+msgid "Maximum waiting time for server response"
+msgstr "Maksymalny czas oczekiwania na odpowiedź serwera"
+
+#: pacman_mirrors/pacman_mirrors.py:104
+msgid "Print the pacman-mirrors version"
+msgstr "Wyświetl wersję pacman-mirrors"
+
+#: pacman_mirrors/pacman_mirrors.py:106
+msgid "Cannot read file"
+msgstr "Nie można odczytać pliku"
+
+#: pacman_mirrors/pacman_mirrors.py:107
+msgid "Cannot update file"
+msgstr "Nie można zaktualizować pliku"
+
+#: pacman_mirrors/pacman_mirrors.py:108
+msgid "Cannot write file"
+msgstr "Nie można zapisać do pliku"
+
+#: pacman_mirrors/pacman_mirrors.py:109
+msgid "Must have root privileges"
+msgstr "Musisz mieć uprawnienia roota"
+
+#: pacman_mirrors/pacman_mirrors.py:110
+msgid "Cannot read server response"
+msgstr "Nie można odczytać odpowiedzi serwera"
+
+#: pacman_mirrors/pacman_mirrors.py:111
+msgid "No server available"
+msgstr "Brak dostępnych serwerów"
+
+#: pacman_mirrors/pacman_mirrors.py:112
+msgid "Failed to reach server"
+msgstr "Nie udało się połączyć z serwerem"
+
+#: pacman_mirrors/pacman_mirrors.py:113
+msgid "The server did not complete the request"
+msgstr "Serwer nie odpowiedział na żądanie"
+
+#: pacman_mirrors/pacman_mirrors.py:115
+msgid "User generated mirror list"
+msgstr "Lista mirrorów generowana przez użytkownika"
+
+#: pacman_mirrors/pacman_mirrors.py:116
+msgid "Saved personalized list of mirrors in"
+msgstr "Zapisano spersonalizowaną listę mirrorów w"
+
+#: pacman_mirrors/pacman_mirrors.py:117
+msgid "Custom mirrors file"
+msgstr "Plik spersonalizowanej listy mirrorów"
+
+#: pacman_mirrors/pacman_mirrors.py:118
+msgid "doesn't exist. Querying all servers"
+msgstr "nie istnieje. Odpytywanie wszystkich serwerów"
+
+#: pacman_mirrors/pacman_mirrors.py:119
+msgid "Writing custom mirror file"
+msgstr "Zapisuję plik spersonalizowanej listy mirrorów"
+
+#: pacman_mirrors/pacman_mirrors.py:120
+msgid "Writing mirror list"
+msgstr "Zapisuję listę mirrorów"
+
+#: pacman_mirrors/pacman_mirrors.py:121
+msgid "Mirrorlist generated and saved to"
+msgstr "Lista mirrorów została wygenerowana i zapisana do"
+
+#: pacman_mirrors/pacman_mirrors.py:122
+msgid "Querying servers, this may take some time"
+msgstr "Odpytywanie serwerów, to może zająć trochę czasu"
+
+#: pacman_mirrors/pacman_mirrors.py:123
+msgid "Using custom mirror list"
+msgstr "Używanie spersonalizowanej listy mirrorów"
+
+#: pacman_mirrors/pacman_mirrors.py:124
+msgid "Testing mirrors in"
+msgstr "Testowanie mirrorów w"
+
+#: pacman_mirrors/pacman_mirrors.py:125
+msgid "Wrong date format in state file"
+msgstr "Nieprawidłowy format daty w pliku stanu"
+
+#: pacman_mirrors/pacman_mirrors.py:126
+msgid "Randomizing server list"
+msgstr "Losowanie listy serwerów"
+
+#: pacman_mirrors/pacman_mirrors.py:127
+msgid "Option"
+msgstr "Opcja"
+
+#: pacman_mirrors/pacman_mirrors.py:128
+msgid "unknown country"
+msgstr "nieznany kraj"
+
+#: pacman_mirrors/pacman_mirrors.py:129
+msgid "Available countries are"
+msgstr "Dostępne kraje to"
+
+#: pacman_mirrors/pacman_mirrors_gui.py:33
+msgid "Mirrors by response time"
+msgstr "Mirrory według czasu odpowiedzi"
+
+#: pacman_mirrors/pacman_mirrors_gui.py:54
+msgid "Use"
+msgstr "Użyj"
+
+#: pacman_mirrors/pacman_mirrors_gui.py:56
+msgid "Country"
+msgstr "Państwo"
+
+#: pacman_mirrors/pacman_mirrors_gui.py:56
+msgid "Last sync"
+msgstr "Ostatnia synchronizacja"
+
+#: pacman_mirrors/pacman_mirrors_gui.py:56
+msgid "URL"
+msgstr "Adres URL"
+
+#: pacman_mirrors/pacman_mirrors_gui.py:62
+msgid "Check mirrors for your personal list"
+msgstr "Zaznacz mirrory do swojej spersonalizowanej listy"
+
+#: pacman_mirrors/pacman_mirrors_gui.py:63
+msgid "Cancel"
+msgstr "Anuluj"
+
+#: pacman_mirrors/pacman_mirrors_gui.py:65
+msgid "Confirm"
+msgstr "Zatwierdź"
+
+#: pacman_mirrors/pacman_mirrors_gui.py:103
+msgid "Confirm selections"
+msgstr "Potwierdź zaznaczenie"
+
+#: pacman_mirrors/pacman_mirrors_gui.py:110
+msgid "I want to use these mirrors"
+msgstr "Chcę użyć tych mirrorów"
