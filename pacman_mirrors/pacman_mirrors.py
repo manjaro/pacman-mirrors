@@ -713,31 +713,22 @@ class PacmanMirrors:
             res = urlopen(req, timeout=request_timeout)
             content = res.read()
         except URLError as err:
-            if hasattr(err, "reason"):
-                if not quiet:
-                    print(txt.NEWLINE +
-                          txt.ERROR + txt.SEP +
-                          txt.ERR_SERVER_NOT_REACHABLE + txt.SEP +
-                          "{}".format(err.reason))
-            elif hasattr(err, "code"):
-                if not quiet:
-                    print(txt.NEWLINE +
-                          txt.ERROR + txt.SEP +
-                          txt.ERR_SERVER_REQUEST + txt.SEP +
-                          "{}".format(err.errno))
+            if hasattr(err, "reason") and not quiet:
+                print(txt.NEWLINE + txt.ERROR + txt.SEP +
+                      txt.ERR_SERVER_NOT_REACHABLE + txt.SEP +
+                      "{}".format(err.reason))
+            elif hasattr(err, "code") and not quiet:
+                print(txt.NEWLINE + txt.ERROR + txt.SEP +
+                      txt.ERR_SERVER_REQUEST + txt.SEP +
+                      "{}".format(err.errno))
         except timeout:
             if not quiet:
-                print(txt.NEWLINE +
-                      txt.ERROR + txt.SEP +
-                      txt.ERR_SERVER_NOT_AVAILABLE + txt.SEP +
-                      txt.TIMEOUT)
+                print(txt.NEWLINE + txt.ERROR + txt.SEP +
+                      txt.ERR_SERVER_NOT_AVAILABLE + txt.SEP + txt.TIMEOUT)
         except HTTPException:
             if not quiet:
-                print(txt.NEWLINE +
-                      txt.ERROR + txt.SEP +
-                      txt.ERR_SERVER_HTTP_EXCEPTION +
-                      txt.SEP + txt.HTTP_EXCEPTION)
-
+                print(txt.NEWLINE + txt.ERROR + txt.SEP +
+                txt.ERR_SERVER_HTTP_EXCEPTION + txt.SEP + txt.HTTP_EXCEPTION)
         return content
 
     @staticmethod
@@ -754,8 +745,7 @@ class PacmanMirrors:
                 msg = (txt.INF_OPTION + txt.OPT_COUNTRY +
                        txt.INF_UNKNOWN_COUNTRY + txt.SEP +
                        "'{country}'.\n".format(country=country) +
-                       txt.NEWLINE +
-                       txt.INF_AVAILABLE_COUNTRIES + txt.SEP +
+                       txt.NEWLINE + txt.INF_AVAILABLE_COUNTRIES + txt.SEP +
                        "{country_list}".format(
                            country_list=", ".join(available_countries)))
                 raise argparse.ArgumentTypeError(msg)
@@ -787,20 +777,17 @@ class PacmanMirrors:
         :param: handle: handle to a file opened for writing
         :param: mirror: mirror object
         """
-        handle.write("## Country       : {}\n"
-                     .format(mirror["country"]))
+        handle.write("## Country       : {}\n".format(mirror["country"]))
         if not mirror["response_time"] == txt.SERVER_RES:  # 99.99
             handle.write("## Response time : {}\n"
                          .format(mirror["response_time"]))
         if not mirror["last_sync"] == txt.SERVER_BAD:  # 99:99
             if mirror["last_sync"] == txt.LASTSYNC_NA:  # 98:00 N/A
-                handle.write("## Last sync     : {}\n"
-                             .format("N/A"))
+                handle.write("## Last sync     : {}\n".format("N/A"))
             else:
-                handle.write("## Last sync     : {}h\n"  # 24:00
-                             .format(mirror["last_sync"]))
-        handle.write("Server = {}\n\n"
-                     .format(mirror["url"]))
+                handle.write("## Last sync     : {}h\n"
+                             .format(mirror["last_sync"])) # 24:00
+        handle.write("Server = {}\n\n".format(mirror["url"]))
 
     def run(self):
         """Run"""
