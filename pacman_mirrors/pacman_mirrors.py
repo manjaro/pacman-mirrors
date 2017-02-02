@@ -695,7 +695,7 @@ class PacmanMirrors:
             return line[9:]
 
     @staticmethod
-    def query_mirror_state(state_url, mirror_branch, request_timeout, quiet):
+    def query_mirror_state(url, mirror_branch, request_timeout, quiet):
         """
         Get statefile
 
@@ -703,11 +703,9 @@ class PacmanMirrors:
         :return: content
         """
         content = ""
-        _state_url = state_url.replace("$branch", mirror_branch)
-        position = _state_url.find(mirror_branch)
-        req = _state_url[0:position] + "state"
+        url = url.replace("$branch/$repo/$arch", mirror_branch)
         try:
-            res = urlopen(req, timeout=request_timeout)
+            res = urlopen(url + "/state", timeout=request_timeout)
             content = res.read()
         except URLError as err:
             if hasattr(err, "reason") and not quiet:
