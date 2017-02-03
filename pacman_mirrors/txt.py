@@ -43,7 +43,7 @@ FILE = _("FILE")
 SECONDS = _("SECONDS")
 # help messages
 HLP_ARG_BRANCH = _("Branch name")
-HLP_ARG_COUNTRIES = _(
+HLP_ARG_COUNTRY = _(
     "Comma separated list of countries, from which mirrors will be used")
 HLP_ARG_FILE = _("Output file")
 HLP_ARG_GENERATE = _("Generate mirrorlist")
