@@ -343,11 +343,7 @@ class PacmanMirrors:
             self.random_servers(self.config["only_country"])
 
     def modify_config(self):
-        """
-        Modify configuration
-
-        :param: custom: modify configuration based on custom
-        """
+        """Modify configuration"""
         if self.config["only_country"] == self.available_countries:
             # default
             self.config_set_default(self.config_file)
@@ -362,21 +358,17 @@ class PacmanMirrors:
 
     def output_custom_mirror_file(self, servers):
         """Write a custom mirror file in custom mirror dir"""
-        mirror_file = self.custom_mirror_file
-
         os.makedirs(self.custom_mirror_dir, mode=0o755, exist_ok=True)
         try:
-            with open(mirror_file, "w") as output:
+            with open(self.custom_mirror_file, "w") as output:
                 print(txt.DCS + txt.INF_OUTPUT_MIRROR_FILE)
                 self.write_mirror_list_header(output, custom=True)
                 for server in servers:
                     self.write_mirror_list_entry(output, server)
-
         except OSError as err:
             print(txt.ERROR + txt.SEP + txt.ERR_FILE_WRITE + txt.SEP +
                   "{filename}" + txt.SEP +
-                  "{error}".format(filename=err.filename,
-                                   error=err.strerror))
+                  "{error}".format(filename=err.filename, error=err.strerror))
             exit(1)
 
     def output_mirror_list(self, servers, write_file=False):
@@ -386,9 +378,8 @@ class PacmanMirrors:
         :param: servers: list of servers to write
         :param: write_file: if "True" the list is written to disk
         """
-        mirror_list = self.config["mirror_list"]
         try:
-            with open(mirror_list, "w") as outfile:
+            with open(self.config["mirror_list"], "w") as outfile:
                 if write_file:
                     print(txt.DCS + txt.INF_MIRROR_LIST_WRITE)
                     self.write_mirror_list_header(outfile)
@@ -402,8 +393,8 @@ class PacmanMirrors:
                             print(txt.DAS + "{} : {}".format(
                                 server["country"], server["url"]))
                 print(txt.DCS + txt.INF_MIRROR_LIST_SAVED + txt.SEP +
-                      "{output_file}".format(output_file=mirror_list))
-
+                      "{output_file}"
+                      .format(output_file=self.config["mirror_list"]))
         except OSError as err:
             print(txt.ERROR + txt.SEP + txt.ERR_FILE_WRITE + txt.SEP +
                   "{filename}" + txt.SEP +
@@ -431,7 +422,6 @@ class PacmanMirrors:
             try:
                 with open(os.path.join(
                     self.default_mirror_dir, country), "r") as mirrorfile:
-
                     for line in mirrorfile:
                         mirror_country = self.get_mirror_country(line)
                         if mirror_country:
@@ -751,9 +741,8 @@ class PacmanMirrors:
         """
         handle.write("##\n")
         handle.write("## Manjaro Linux repository mirrorlist\n")
-        handle.write("## Generated on {}\n"
-                     .format(datetime.datetime.now()
-                             .strftime("%d %B %Y %H:%M")))
+        handle.write("## Generated on {}\n".format(datetime.datetime.now()
+                                                   .strftime("%d %B %Y %H:%M")))
         handle.write("##\n")
         handle.write("## Use pacman-mirrors to modify\n")
         if custom:
@@ -770,15 +759,15 @@ class PacmanMirrors:
         :param: mirror: mirror object
         """
         handle.write("## Country       : {}\n".format(mirror["country"]))
-        if not mirror["response_time"] == txt.SERVER_RES:  # 99.99
+        if mirror["response_time"] != txt.SERVER_RES:
             handle.write("## Response time : {}\n"
                          .format(mirror["response_time"]))
-        if not mirror["last_sync"] == txt.SERVER_BAD:  # 99:99
-            if mirror["last_sync"] == txt.LASTSYNC_NA:  # 98:00 N/A
+        if mirror["last_sync"] != txt.SERVER_BAD:
+            if mirror["last_sync"] == txt.LASTSYNC_NA:
                 handle.write("## Last sync     : {}\n".format("N/A"))
             else:
                 handle.write("## Last sync     : {}h\n"
-                             .format(mirror["last_sync"])) # 24:00
+                             .format(mirror["last_sync"]))
         handle.write("Server = {}\n\n".format(mirror["url"]))
 
     def run(self):
