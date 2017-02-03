@@ -23,7 +23,7 @@ Choose the branch to use:
 - testing
 - unstable
 
-`-c [country]`, `--country [country]`
+`-c [countries]`, `--countries [countries]`
 Choose the country to use:
 
 - all

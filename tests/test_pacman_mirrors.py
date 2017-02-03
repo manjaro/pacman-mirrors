@@ -44,7 +44,7 @@ class TestPacmanMirrors(unittest.TestCase):
             app = pacman_mirrors.PacmanMirrors()
             app.command_line_parse()
             app.load_server_lists()
-            assert app.config["only_country"] == ["Germany"]
+            assert app.config["only_countries"] == ["Germany"]
 
     @patch("os.getuid")
     @patch.object(pacman_mirrors.PacmanMirrors, "get_geoip_country")
@@ -61,7 +61,7 @@ class TestPacmanMirrors(unittest.TestCase):
             app = pacman_mirrors.PacmanMirrors()
             app.command_line_parse()
             app.load_server_lists()
-            assert app.config["only_country"] == ["France"]
+            assert app.config["only_countries"] == ["France"]
 
     @patch("os.getuid")
     @patch.object(pacman_mirrors.PacmanMirrors, "get_geoip_country")
@@ -76,10 +76,10 @@ class TestPacmanMirrors(unittest.TestCase):
                                   "-m", "random",
                                   "-d", "data/mirrors"]):
             app = pacman_mirrors.PacmanMirrors()
-            app.config["only_country"] = []
+            app.config["only_countries"] = []
             app.command_line_parse()
             app.load_server_lists()
-            assert app.config["only_country"] == app.available_countries
+            assert app.config["only_countries"] == app.available_countries
 
     def tearDown(self):
         pass

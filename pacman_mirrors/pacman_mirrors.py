@@ -81,8 +81,6 @@ class PacmanMirrors:
         self.custom_mirror_file = "/var/lib/pacman-mirrors/Custom"
         # Get config from file
         self.config = self.config_init()
-        # Available countries
-        self.available_countries = sorted(os.listdir(self.config["mirror_dir"]))
 
     def append_to_server_list(self, mirror, last_sync):
         """
@@ -113,9 +111,9 @@ class PacmanMirrors:
                             type=str,
                             choices=["stable", "testing", "unstable"],
                             help=txt.HLP_ARG_BRANCH)
-        parser.add_argument("-c", "--country",
+        parser.add_argument("-c", "--countries",
                             type=str,
-                            help=txt.HLP_ARG_COUNTRY)
+                            help=txt.HLP_ARG_COUNTRIES)
         parser.add_argument("--geoip",
                             action="store_true",
                             help=txt.HLP_ARG_GEOIP_P1 + txt.OPT_COUNTRY +
@@ -172,20 +170,21 @@ class PacmanMirrors:
             self.config["mirror_dir"] = args.mirror_dir
             self.default_mirror_dir = self.config["mirror_dir"]
 
+        self.available_countries = sorted(os.listdir(self.config["mirror_dir"]))
+
         if args.geoip:
             self.geolocation = True
 
-        if args.country:
-            country = args.country.split(",")
-            if country == ["Custom"]:
-                self.config["only_country"] = country
-            elif country == ["all"]:
-                self.config["only_country"] = []
+        if args.countries:
+            countries = args.countries.split(",")
+            if countries == ["Custom"]:
+                self.config["only_countries"] = countries
+            elif countries == ["all"]:
+                self.config["only_countries"] = []
             else:
                 try:
-                    self.validate_country_list(
-                        country, self.available_countries)
-                    self.config["only_country"] = country
+                    self.validate_country_list(countries, self.available_countries)
+                    self.config["only_countries"] = countries
                 except argparse.ArgumentTypeError as err:
                     parser.error(err)
 
@@ -215,7 +214,7 @@ class PacmanMirrors:
         config = {
             "branch": "stable",
             "method": "rank",
-            "only_country": [],
+            "only_countries": [],
             "mirror_dir": "/etc/pacman.d/mirrors",
             "mirror_list": "/etc/pacman.d/mirrorlist",
             "no_update": False,
@@ -238,7 +237,7 @@ class PacmanMirrors:
                         elif key == "Branch":
                             config["branch"] = value
                         elif key == "OnlyCountry":
-                            config["only_country"] = value.split(",")
+                            config["only_countries"] = value.split(",")
                         elif key == "MirrorlistsDir":
                             config["mirror_dir"] = value
                         elif key == "OutputMirrorlist":
@@ -296,8 +295,8 @@ class PacmanMirrors:
 
         print(txt.NEWLINE + txt.DCS + txt.INF_INTERACTIVE_LIST)
         print("--------------------------")
-        # restore self.config["only_country"] to "Custom"
-        self.config["only_country"] = ["Custom"]
+        # restore self.config["only_countries"] to "Custom"
+        self.config["only_countries"] = ["Custom"]
         self.output_custom_mirror_file(server_list)
         self.output_mirror_list(server_list, write_file=True)
         # modify configuration to use custom
@@ -309,40 +308,40 @@ class PacmanMirrors:
         """
         Generate a list of servers
 
-        It will only use mirrors defined in only_country, and if empty will
+        It will only use mirrors defined in only_countries, and if empty will
         use all mirrors.
         """
-        if self.config["only_country"]:
-            if self.config["only_country"] == ["Custom"]:
+        if self.config["only_countries"]:
+            if self.config["only_countries"] == ["Custom"]:
                 if os.path.isfile(self.custom_mirror_file):
-                    self.config["only_country"] = [self.custom_mirror_file]
+                    self.config["only_countries"] = [self.custom_mirror_file]
                 else:
                     print(txt.WARN + txt.SEP + txt.INF_CUSTOM_MIRROR_FILE +
                           " '{path}' ".format(path=self.custom_mirror_file) +
                           txt.INF_DOES_NOT_EXIST)
                     print(txt.NEWLINE)
-                    self.config["only_country"] = []
-            elif self.config["only_country"] == ["all"]:
-                self.config["only_country"] = []
+                    self.config["only_countries"] = []
+            elif self.config["only_countries"] == ["all"]:
+                self.config["only_countries"] = []
 
-        if not self.config["only_country"]:
+        if not self.config["only_countries"]:
             if self.geolocation:
                 geoip_country = self.get_geoip_country()
                 if geoip_country and geoip_country in self.available_countries:
-                    self.config["only_country"] = [geoip_country]
+                    self.config["only_countries"] = [geoip_country]
                 else:
-                    self.config["only_country"] = self.available_countries
+                    self.config["only_countries"] = self.available_countries
             else:
-                self.config["only_country"] = self.available_countries
+                self.config["only_countries"] = self.available_countries
 
         if self.config["method"] == "rank":
-            self.query_servers(self.config["only_country"])
+            self.query_servers(self.config["only_countries"])
         elif self.config["method"] == "random":
-            self.random_servers(self.config["only_country"])
+            self.random_servers(self.config["only_countries"])
 
     def modify_config(self):
         """Modify configuration"""
-        if self.config["only_country"] == self.available_countries:
+        if self.config["only_countries"] == self.available_countries:
             # default
             self.config_set_default(self.config_file)
             # remove obsolete custom mirror file
@@ -352,7 +351,7 @@ class PacmanMirrors:
         else:
             # custom
             self.config_set_custom(
-                self.config_file, self.config["only_country"])
+                self.config_file, self.config["only_countries"])
 
     def output_custom_mirror_file(self, servers):
         """Write a custom mirror file in custom mirror dir"""
@@ -524,13 +523,13 @@ class PacmanMirrors:
         shuffle(self.bad_servers)
 
     @staticmethod
-    def config_set_custom(config_file, config_only_country):
+    def config_set_custom(config_file, config_only_countries):
         """Use custom configuration"""
-        for country in config_only_country:
+        for country in config_only_countries:
             if "Custom" in country:  # country is full path
                 country = "Custom"  # must change to Custom
         country_list = ("OnlyCountry = {list}\n").format(
-            list=",".join(config_only_country))
+            list=",".join(config_only_countries))
         try:
             with open(config_file) as cnf, tempfile.NamedTemporaryFile(
                     "w+t", dir=os.path.dirname(config_file),
