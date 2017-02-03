@@ -158,7 +158,8 @@ class PacmanMirrors:
             exit(1)
 
         if args.no_update:
-            self.config["no_update"] = True
+            if self.config["no_update"] == "True":
+                exit(0)
 
         if args.method:
             self.config["method"] = args.method
