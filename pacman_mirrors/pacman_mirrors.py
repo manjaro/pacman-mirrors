@@ -81,15 +81,17 @@ class PacmanMirrors:
         self.custom_mirror_file = "/var/lib/pacman-mirrors/Custom"
         # Get config from file
         self.config = self.config_init()
+        # Available countries
+        self.available_countries = sorted(os.listdir(self.config["mirror_dir"]))
 
-    def append_to_server_list(self, mirror, mirror_last_sync):
+    def append_to_server_list(self, mirror, last_sync):
         """
         Append mirror to relevant list based on elapsed hours
 
         :param: mirror: object
-        :param: response_time: mirror response time
+        :param: last_sync: mirror last sync
         """
-        elapsed_hours = int(mirror_last_sync[:-3])
+        elapsed_hours = int(last_sync[:-3])
         if elapsed_hours <= int(txt.LASTSYNC_OK[:-3]):
             self.good_servers.append(mirror)
         elif elapsed_hours <= int(txt.LASTSYNC_NA[:-3]):
@@ -144,7 +146,7 @@ class PacmanMirrors:
                             action="store_true",
                             help=txt.HLP_ARG_QUIET)
         args = parser.parse_args()
-        # start parsing
+
         if len(sys.argv) == 1:
             parser.print_help()
             exit(0)
@@ -158,8 +160,7 @@ class PacmanMirrors:
             exit(1)
 
         if args.no_update:
-            if self.config["no_update"] == "True":
-                exit(0)
+            self.config["no_update"] = True
 
         if args.method:
             self.config["method"] = args.method
@@ -170,9 +171,6 @@ class PacmanMirrors:
         if args.mirror_dir:
             self.config["mirror_dir"] = args.mirror_dir
             self.default_mirror_dir = self.config["mirror_dir"]
-
-        self.available_countries = self.get_available_countries(
-            self.config["mirror_dir"])
 
         if args.geoip:
             self.geolocation = True
@@ -575,17 +573,6 @@ class PacmanMirrors:
                         tmp.write("{}".format(line))
         os.replace(tmp.name, config_file)
         os.chmod(config_file, 0o644)
-
-    @staticmethod
-    def get_available_countries(country_dir):
-        """
-        Returns a sorted list of countries.
-        The name of mirror file is the country.
-
-        :param country_dir: path with the mirror list
-        :return: list of countries
-        """
-        return sorted(os.listdir(country_dir))
 
     @staticmethod
     def get_geoip_country():
