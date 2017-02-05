@@ -96,5 +96,5 @@ class ConsoleUI(npyscreen.NPSAppManaged):
 def run(server_list):
     """Run"""
     app = ConsoleUI(server_list)
-    app.main()
+    app.run()
     return app
