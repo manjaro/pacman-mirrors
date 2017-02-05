@@ -305,9 +305,9 @@ class PacmanMirrors:
                   "{path}".format(path=self.custom_mirror_file))
         else:
             print("{}{}{}".format(
-                  txt.INFO, txt.SEP, txt.INF_NO_SELECTION))
+                txt.INFO, txt.SEP, txt.INF_NO_SELECTION))
             print("{}{}{}".format(
-                  txt.INFO, txt.SEP, txt.INF_NO_CHANGES))
+                txt.INFO, txt.SEP, txt.INF_NO_CHANGES))
 
     def load_server_lists(self):
         """
