@@ -302,9 +302,12 @@ class PacmanMirrors:
             # modify configuration to use custom
             self.modify_config()  # function do self check
             print(txt.DCS + txt.INF_INTERACTIVE_LIST_SAVED + txt.SEP +
-                "{path}".format(path=self.custom_mirror_file))
+                  "{path}".format(path=self.custom_mirror_file))
         else:
-            print(txt.INFO + txt.INF_NO_SELECTION + txt.NEWLINE)
+            print("{}{}{}".format(
+                  txt.INFO, txt.SEP, txt.INF_NO_SELECTION))
+            print("{}{}{}".format(
+                  txt.INFO, txt.SEP, txt.INF_NO_CHANGES))
 
     def load_server_lists(self):
         """
