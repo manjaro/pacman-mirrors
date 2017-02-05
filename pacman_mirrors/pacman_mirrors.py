@@ -246,10 +246,9 @@ class PacmanMirrors:
                         elif key == "NoUpdate":
                             config["no_update"] = value
         except (PermissionError, OSError) as err:
-            print(txt.ERROR + txt.SEP + txt.ERR_FILE_READ + txt.SEP +
-                  "{filename}" + txt.SEP +
-                  "{error}".format(filename=err.filename,
-                                   error=err.strerror))
+            print("{}{}{}{}{}{}{}".format(
+                txt.ERROR, txt.SEP, txt.ERR_FILE_READ, txt.SEP,
+                err.filename, txt.SEP, err.strerror))
         return config
 
     def generate_mirror_list_common(self):
@@ -294,16 +293,19 @@ class PacmanMirrors:
         if not interactive.is_done:
             return
 
-        print(txt.NEWLINE + txt.DCS + txt.INF_INTERACTIVE_LIST)
-        print("--------------------------")
-        # restore self.config["only_country"] to "Custom"
-        self.config["only_country"] = ["Custom"]
-        self.output_custom_mirror_file(server_list)
-        self.output_mirror_list(server_list, write_file=True)
-        # modify configuration to use custom
-        self.modify_config()  # function do self check
-        print(txt.DCS + txt.INF_INTERACTIVE_LIST_SAVED + txt.SEP +
-              "{path}".format(path=self.custom_mirror_file))
+        if server_list:
+            print(txt.NEWLINE + txt.DCS + txt.INF_INTERACTIVE_LIST)
+            print("--------------------------")
+            # restore self.config["only_country"] to "Custom"
+            self.config["only_country"] = ["Custom"]
+            self.output_custom_mirror_file(server_list)
+            self.output_mirror_list(server_list, write_file=True)
+            # modify configuration to use custom
+            self.modify_config()  # function do self check
+            print(txt.DCS + txt.INF_INTERACTIVE_LIST_SAVED + txt.SEP +
+                "{path}".format(path=self.custom_mirror_file))
+        else:
+            print(txt.INFO + txt.INF_NO_SELECTION + txt.NEWLINE)
 
     def load_server_lists(self):
         """
@@ -364,9 +366,9 @@ class PacmanMirrors:
                 for server in servers:
                     self.write_mirror_list_entry(output, server)
         except OSError as err:
-            print(txt.ERROR + txt.SEP + txt.ERR_FILE_WRITE + txt.SEP +
-                  "{filename}" + txt.SEP +
-                  "{error}".format(filename=err.filename, error=err.strerror))
+            print("{}{}{}{}{}{}{}".format(
+                txt.ERROR, txt.SEP, txt.ERR_FILE_WRITE, txt.SEP,
+                err.filename, txt.SEP, err.strerror))
             exit(1)
 
     def output_mirror_list(self, servers, write_file=False):
@@ -394,10 +396,10 @@ class PacmanMirrors:
                       "{output_file}"
                       .format(output_file=self.config["mirror_list"]))
         except OSError as err:
-            print(txt.ERROR + txt.SEP + txt.ERR_FILE_WRITE + txt.SEP +
-                  "{filename}" + txt.SEP +
-                  "{error}".format(
-                      filename=err.filename, error=err.strerror))
+            print("{}{}{}{}{}{}{}".format(
+                txt.ERROR, txt.SEP, txt.ERR_FILE_WRITE, txt.SEP,
+                err.filename, txt.SEP, err.strerror))
+
             exit(1)
 
     def query_servers(self, countries):
@@ -480,10 +482,9 @@ class PacmanMirrors:
                             point_in_time, branch_timestamp)
                         self.append_to_server_list(server, server["last_sync"])
             except OSError as err:
-                print(txt.ERROR + txt.SEP + txt.ERR_FILE_READ + txt.SEP +
-                      "{filename}" + txt.SEP +
-                      "{error}".format(filename=err.filename,
-                                       error=err.strerror))
+                print("{}{}{}{}{}{}{}".format(
+                    txt.ERROR, txt.SEP, txt.ERR_FILE_READ, txt.SEP,
+                    err.filename, txt.SEP, err.strerror))
                 continue
         self.good_servers = sorted(self.good_servers,
                                    key=itemgetter("response_time"))
@@ -516,10 +517,10 @@ class PacmanMirrors:
                                   "url": m_url}
                         self.append_to_server_list(server, txt.SERVER_RES)
             except OSError as err:
-                print(txt.ERROR + txt.SEP + txt.ERR_FILE_READ + txt.SEP +
-                      "{filename}" + txt.SEP +
-                      "{error}".format(filename=err.filename,
-                                       error=err.strerror))
+                print("{}{}{}{}{}{}{}".format(
+                    txt.ERROR, txt.SEP, txt.ERR_FILE_READ, txt.SEP,
+                    err.filename, txt.SEP, err.strerror))
+
                 continue
         shuffle(self.bad_servers)
 
@@ -549,10 +550,10 @@ class PacmanMirrors:
             os.chmod(config_file, 0o644)
 
         except OSError as err:
-            print(txt.ERROR + txt.SEP + txt.ERR_FILE_UPDATE + txt.SEP +
-                  "{filename}" + txt.SEP +
-                  "{error}".format(filename=err.filename,
-                                   error=err.strerror))
+            print("{}{}{}{}{}{}{}".format(
+                txt.ERROR, txt.SEP, txt.ERR_FILE_READ, txt.SEP,
+                err.filename, txt.SEP, err.strerror))
+
             exit(1)
 
     @staticmethod
@@ -669,7 +670,7 @@ class PacmanMirrors:
             return line[9:]
 
     @staticmethod
-    def query_mirror_state(url, branch, timeout, quiet):
+    def query_mirror_state(url, branch, _timeout, quiet):
         """
         Get statefile
 
@@ -679,7 +680,7 @@ class PacmanMirrors:
         content = ""
         url = url.replace("$branch/$repo/$arch", branch)
         try:
-            res = urlopen(url + "/state", timeout=timeout)
+            res = urlopen(url + "/state", timeout=_timeout)
             content = res.read().decode("utf8")
         except URLError as err:
             if hasattr(err, "reason") and not quiet:
