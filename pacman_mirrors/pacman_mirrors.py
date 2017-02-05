@@ -40,9 +40,8 @@ from random import shuffle
 from socket import timeout
 from urllib.error import URLError
 from urllib.request import urlopen
-
-from .custom_help_formatter import CustomHelpFormatter
 from pacman_mirrors import __version__
+from .custom_help_formatter import CustomHelpFormatter
 from . import i18n
 from . import txt
 
