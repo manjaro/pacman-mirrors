@@ -615,9 +615,12 @@ class PacmanMirrors:
         :return: elapsed_time
         """
         total_seconds = (point_in_time - timestamp).total_seconds()
-        hrs = str(int(total_seconds / 3600)).zfill(2)
-        mins = str(int(total_seconds % 3600 / 60)).zfill(2)
-        elapsed_time = "{}:{}".format(hrs, mins)
+        total_minutes = total_seconds // 60
+        elapsed_hours = total_minutes // 60
+        elapsed_minutes = total_minutes % 60
+        elapsed_time = "{}:{}".format(
+            str(int(elapsed_hours)).zfill(2),
+            str(int(elapsed_minutes)).zfill(2))
         return elapsed_time
 
     @staticmethod
