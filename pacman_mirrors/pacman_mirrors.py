@@ -420,7 +420,7 @@ class PacmanMirrors:
                 custom = False
                 print(txt.SAS + txt.INF_QUERY_DEFAULT + " {}".format(country))
             # create a ref point for calculation
-            point_in_time = datetime.datetime.now()
+            point_in_time = datetime.datetime.utcnow()
             try:
                 with open(os.path.join(
                     self.default_mirror_dir, country), "r") as mirrorfile:
