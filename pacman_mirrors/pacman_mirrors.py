@@ -57,6 +57,7 @@ _ = i18n.language.gettext
 DEFAULT = "default"
 CUSTOM = "custom"
 
+
 class PacmanMirrors:
     """Class PacmanMirrors"""
 
@@ -172,7 +173,8 @@ class PacmanMirrors:
             self.config["mirror_dir"] = args.mirror_dir
             self.default_mirror_dir = self.config["mirror_dir"]
 
-        self.available_countries = sorted(os.listdir(self.config["mirror_dir"]))
+        self.available_countries = sorted(
+            os.listdir(self.config["mirror_dir"]))
 
         if args.geoip:
             self.geolocation = True
@@ -185,7 +187,8 @@ class PacmanMirrors:
                 self.config["only_country"] = []
             else:
                 try:
-                    self.validate_country_list(country, self.available_countries)
+                    self.validate_country_list(
+                        country, self.available_countries)
                     self.config["only_country"] = country
                 except argparse.ArgumentTypeError as err:
                     parser.error(err)
@@ -252,7 +255,7 @@ class PacmanMirrors:
                 err.filename, txt.SEP, err.strerror))
         return config
 
-    def generate_mirror_list_common(self):
+    def gen_mirror_list_common(self):
         """Generate common mirrorlist"""
         if len(self.good_servers) >= 3:  # Avoid an empty mirrorlist
             server_list = self.good_servers
@@ -270,7 +273,7 @@ class PacmanMirrors:
             self.modify_config(DEFAULT)
             self.output_mirror_list(server_list, write_file=True)
 
-    def generate_mirror_list_interactive(self):
+    def gen_mirror_list_interactive(self):
         """
         Prompt the user to select the mirrors with a gui.
 
@@ -289,16 +292,16 @@ class PacmanMirrors:
             from . import graphical_ui
             interactive = graphical_ui.run(server_list)
 
-        server_list = interactive.custom_list
+        new_list = interactive.custom_list
 
         if not interactive.is_done:
             return
 
-        if server_list:
+        if new_list:
             print(txt.NEWLINE + txt.DCS + txt.INF_INTERACTIVE_LIST)
             print("--------------------------")
-            self.output_custom_mirror_file(server_list)
-            self.output_mirror_list(server_list, write_file=True)
+            self.output_mirror_file(new_list)
+            self.output_mirror_list(new_list, write_file=True)
             self.modify_config(CUSTOM)
             print(txt.DCS + txt.INF_INTERACTIVE_LIST_SAVED + txt.SEP +
                   "{path}".format(path=self.custom_mirror_file))
@@ -352,7 +355,7 @@ class PacmanMirrors:
         self.write_config_to_file(
             self.config_file, self.config["only_country"], config_type)
 
-    def output_custom_mirror_file(self, servers):
+    def output_mirror_file(self, servers):
         """Write a custom mirror file in custom mirror dir"""
         os.makedirs(self.custom_mirror_dir, mode=0o755, exist_ok=True)
         try:
@@ -418,7 +421,8 @@ class PacmanMirrors:
             # create a ref point for calculation
             point_in_time = datetime.datetime.utcnow()
             try:
-                with open(os.path.join(mirror_dir, country), "r") as mirrorfile:
+                with open(os.path.join(
+                        mirror_dir, country), "r") as mirrorfile:
                     for line in mirrorfile:
                         mirror_country = self.get_mirror_country(line)
                         if mirror_country:
@@ -647,7 +651,8 @@ class PacmanMirrors:
         except HTTPException:
             if not quiet:
                 print(txt.NEWLINE + txt.ERROR + txt.SEP +
-                      txt.ERR_SERVER_HTTP_EXCEPTION + txt.SEP + txt.HTTP_EXCEPTION)
+                      txt.ERR_SERVER_HTTP_EXCEPTION + txt.SEP +
+                      txt.HTTP_EXCEPTION)
         return content
 
     @staticmethod
@@ -714,8 +719,8 @@ class PacmanMirrors:
         """
         handle.write("##\n")
         handle.write("## Manjaro Linux repository mirrorlist\n")
-        handle.write("## Generated on {}\n".format(datetime.datetime.now()
-                                                   .strftime("%d %B %Y %H:%M")))
+        handle.write("## Generated on {}\n".format(
+                      datetime.datetime.now().strftime("%d %B %Y %H:%M")))
         handle.write("##\n")
         handle.write("## Use pacman-mirrors to modify\n")
         if custom:
@@ -750,9 +755,9 @@ class PacmanMirrors:
         self.command_line_parse()
         self.load_server_lists()
         if self.interactive:
-            self.generate_mirror_list_interactive()
+            self.gen_mirror_list_interactive()
         else:
-            self.generate_mirror_list_common()
+            self.gen_mirror_list_common()
 
 
 if __name__ == "__main__":
