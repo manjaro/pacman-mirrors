@@ -703,7 +703,7 @@ class PacmanMirrors:
         except HTTPException:
             if not quiet:
                 print(txt.NEWLINE + txt.ERROR + txt.SEP +
-                txt.ERR_SERVER_HTTP_EXCEPTION + txt.SEP + txt.HTTP_EXCEPTION)
+                      txt.ERR_SERVER_HTTP_EXCEPTION + txt.SEP + txt.HTTP_EXCEPTION)
         return content
 
     @staticmethod
