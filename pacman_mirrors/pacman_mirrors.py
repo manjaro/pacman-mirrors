@@ -54,6 +54,8 @@ else:
     GTK_AVAILABLE = True
 _ = i18n.language.gettext
 
+DEFAULT = "default"
+CUSTOM = "custom"
 
 class PacmanMirrors:
     """Class PacmanMirrors"""
@@ -265,7 +267,7 @@ class PacmanMirrors:
                   txt.NEWLINE)
         else:
             # modify configuration to use default
-            self.modify_config()  # function do self check
+            self.modify_config(DEFAULT)
             self.output_mirror_list(server_list, write_file=True)
 
     def generate_mirror_list_interactive(self):
@@ -299,8 +301,7 @@ class PacmanMirrors:
             self.config["only_country"] = ["Custom"]
             self.output_custom_mirror_file(server_list)
             self.output_mirror_list(server_list, write_file=True)
-            # modify configuration to use custom
-            self.modify_config()  # function do self check
+            self.modify_config(CUSTOM)
             print(txt.DCS + txt.INF_INTERACTIVE_LIST_SAVED + txt.SEP +
                   "{path}".format(path=self.custom_mirror_file))
         else:
@@ -326,10 +327,11 @@ class PacmanMirrors:
                           txt.INF_DOES_NOT_EXIST)
                     print(txt.NEWLINE)
                     self.config["only_country"] = []
+
             elif self.config["only_country"] == ["all"]:
                 self.config["only_country"] = []
 
-        if not self.config["only_country"]:
+        elif not self.config["only_country"]:
             if self.geolocation:
                 geoip_country = self.get_geoip_country()
                 if geoip_country and geoip_country in self.available_countries:
@@ -344,19 +346,15 @@ class PacmanMirrors:
         elif self.config["method"] == "random":
             self.random_servers(self.config["only_country"])
 
-    def modify_config(self):
+    def modify_config(self, config_type):
         """Modify configuration"""
-        if self.config["only_country"] == self.available_countries:
-            # default
-            self.config_set_default(self.config_file)
-            # remove obsolete custom mirror file
+        if config_type == DEFAULT:
+            # remove custom mirror file
             if os.path.isfile(self.custom_mirror_file):
                 os.remove(self.custom_mirror_file)
                 os.rmdir(self.custom_mirror_dir)
-        else:
-            # custom
-            self.config_set_custom(
-                self.config_file, self.config["only_country"])
+        self.write_config_to_file(
+            self.config_file, self.config["only_country"], config_type)
 
     def output_custom_mirror_file(self, servers):
         """Write a custom mirror file in custom mirror dir"""
@@ -527,57 +525,6 @@ class PacmanMirrors:
         shuffle(self.bad_servers)
 
     @staticmethod
-    def config_set_custom(config_file, config_only_country):
-        """Use custom configuration"""
-        for country in config_only_country:
-            if "Custom" in country:  # country is full path
-                country = "Custom"  # must change to Custom
-        country_list = ("OnlyCountry = {list}\n").format(
-            list=",".join(config_only_country))
-        try:
-            with open(config_file) as cnf, tempfile.NamedTemporaryFile(
-                    "w+t", dir=os.path.dirname(config_file),
-                    delete=False) as tmp:
-
-                replaced = False
-                for line in cnf:
-                    if "OnlyCountry" in line:
-                        tmp.write(country_list)
-                        replaced = True
-                    else:
-                        tmp.write("{}".format(line))
-                if not replaced:
-                    tmp.write(country_list)
-            os.replace(tmp.name, config_file)
-            os.chmod(config_file, 0o644)
-
-        except OSError as err:
-            print("{}{}{}{}{}{}{}".format(
-                txt.ERROR, txt.SEP, txt.ERR_FILE_READ, txt.SEP,
-                err.filename, txt.SEP, err.strerror))
-
-            exit(1)
-
-    @staticmethod
-    def config_set_default(config_file):
-        """Use default configuration"""
-        with open(config_file) as cnf, tempfile.NamedTemporaryFile(
-                "w+t", dir=os.path.dirname(config_file),
-                delete=False) as tmp:
-
-            for line in cnf:
-                if "=" not in line:
-                    tmp.write("{}".format(line))
-                else:
-                    key = [x.strip() for x in line.split("=", 1)[0]]
-                    if key == "OnlyCountry":
-                        tmp.write("# OnlyCountry = \n")
-                    else:
-                        tmp.write("{}".format(line))
-        os.replace(tmp.name, config_file)
-        os.chmod(config_file, 0o644)
-
-    @staticmethod
     def get_geoip_country():
         """
         Try to get the user country via GeoIP
@@ -724,6 +671,42 @@ class PacmanMirrors:
                        "{country_list}".format(
                            country_list=", ".join(available_countries)))
                 raise argparse.ArgumentTypeError(msg)
+
+    @staticmethod
+    def write_config_to_file(config_file, selected_countries, config_type):
+        """Writes the configuration to file"""
+        if config_type == DEFAULT:
+            selection = "# OnlyCountry = \n"
+        else:
+            if selected_countries == ["Custom"]:
+                selection = "OnlyCountry = Custom\n"
+            else:
+                selection = ("OnlyCountry = {list}\n").format(
+                    list=",".join(selected_countries))
+
+        try:
+            with open(config_file) as cnf, tempfile.NamedTemporaryFile(
+                    "w+t", dir=os.path.dirname(config_file),
+                    delete=False) as tmp:
+
+                replaced = False
+                for line in cnf:
+                    if "OnlyCountry" in line:
+                        tmp.write(selection)
+                        replaced = True
+                    else:
+                        tmp.write("{}".format(line))
+                if not replaced:
+                    tmp.write(selection)
+            os.replace(tmp.name, config_file)
+            os.chmod(config_file, 0o644)
+
+        except OSError as err:
+            print("{}{}{}{}{}{}{}".format(
+                txt.ERROR, txt.SEP, txt.ERR_FILE_READ, txt.SEP,
+                err.filename, txt.SEP, err.strerror))
+
+            exit(1)
 
     @staticmethod
     def write_mirror_list_header(handle, custom=False):
