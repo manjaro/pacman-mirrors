@@ -89,12 +89,12 @@ class TestPacmanMirrors(unittest.TestCase):
         assert app.get_mirror_response_time(
             "1486371026.6549892", "1486371026.7216527") == "0.067"
 
-    @patch.object(pacman_mirrors.PacmanMirrors, "get_mirror_response_time")
+    @patch.object(pacman_mirrors.PacmanMirrors, "get_mirror_branch_last_sync")
     def test_last_sync_calc(self, mock_calc):
         """Calculate mirror last_sync offset"""
         mock_calc.return_value = "20:19"
         app = pacman_mirrors.PacmanMirrors()
-        assert app.get_mirror_response_time(
+        assert app.get_mirror_branch_last_sync(
             "2017-02-06 09:50:26.544456", "2017-02-05 13:31:09") == "20:19"
 
     @patch.object(pacman_mirrors.PacmanMirrors, "get_mirror_url")
