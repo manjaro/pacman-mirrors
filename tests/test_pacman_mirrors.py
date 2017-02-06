@@ -84,47 +84,57 @@ class TestPacmanMirrors(unittest.TestCase):
     @patch.object(pacman_mirrors.PacmanMirrors, "get_mirror_response_time")
     def test_resp_time_calc(self, mock_calc):
         """Calculate mirror response time"""
-        mock_calc.return_value = "0.067"
         app = pacman_mirrors.PacmanMirrors()
+        mock_calc.return_value = "0.067"
         assert app.get_mirror_response_time(
             "1486371026.6549892", "1486371026.7216527") == "0.067"
+        mock_calc.return_value = "0.047"
+        assert app.get_mirror_response_time(
+            "1486371026.7686312", "1486371026.8155131") == "0.047"
+        mock_calc.return_value = "0.156"
+        assert app.get_mirror_response_time(
+            "1486371026.815664", "1486371026.9718077") == "0.156"
 
     @patch.object(pacman_mirrors.PacmanMirrors, "get_mirror_branch_last_sync")
     def test_last_sync_calc(self, mock_calc):
         """Calculate mirror last_sync offset"""
-        mock_calc.return_value = "20:19"
         app = pacman_mirrors.PacmanMirrors()
+        mock_calc.return_value = "2189:29"
         assert app.get_mirror_branch_last_sync(
-            "2017-02-06 09:50:26.544456", "2017-02-05 13:31:09") == "20:19"
+            "2017-02-06 11:39:14.610344", "2016-11-07 06:09:51") == "2189:29"
+        mock_calc.return_value = "22:08"
+        assert app.get_mirror_branch_last_sync(
+            "2017-02-06 11:39:14.866841", "2017-02-05 13:31:09") == "22:08"
+        mock_calc.return_value = "04:20"
+        assert app.get_mirror_branch_last_sync(
+            "2017-02-06 11:39:23.523478", "2017-02-06 07:18:43") == "04:20"
 
     @patch.object(pacman_mirrors.PacmanMirrors, "get_mirror_url")
     def test_get_mirror_url(self, mock_url):
         """Extract mirror url from input"""
         mock_url.return_value = "http://mirror.domain.tld"
         app = pacman_mirrors.PacmanMirrors()
-        assert app.get_mirror_url(
-            "Server = http://mirror.domain.tld") == "http://mirror.domain.tld"
+        mock_data = "Server = http://mirror.domain.tld"
+        assert app.get_mirror_url(mock_data) == "http://mirror.domain.tld"
 
     @patch.object(pacman_mirrors.PacmanMirrors, "get_mirror_country")
     def test_get_mirror_country(self, mock_country):
         """Extract mirror country from input"""
         mock_country.return_value = "France"
         app = pacman_mirrors.PacmanMirrors()
-        assert app.get_mirror_country(
-            "## Country       : France") == "France"
-        assert app.get_mirror_country(
-            "## Location      : France") == "France"
-        assert app.get_mirror_country(
-            "[France]") == "France"
+        mock_data = "## Country       : France"
+        assert app.get_mirror_country(mock_data) == "France"
+        mock_data = "## Location      : France"
+        assert app.get_mirror_country(mock_data) == "France"
+        mock_data = "[France]"
+        assert app.get_mirror_country(mock_data) == "France"
 
     @patch.object(pacman_mirrors.PacmanMirrors, "get_mirror_branch_timestamp")
     def test_get_mirror_timestamp(self, mock_timestamp):
         """Extract timestamp from input"""
         mock_timestamp.return_value = "2017-02-06T07:18:43Z"
-        mock_data = "###\n### BoxIt branch state file\n###\n\n# Unique hash code representing current branch state.\n# This hash code changes as soon as anything changes in this branch.\nstate=9a255e4d625f6d3ad2643a3ff1421ad02e731938\n\n# Date and time of the last branch change.\ndate=2017-02-06T07:18:43Z"
-
         app = pacman_mirrors.PacmanMirrors()
-
+        mock_data = "date=2017-02-06T07:18:43Z"
         assert app.get_mirror_branch_timestamp(mock_data) == "2017-02-06T07:18:43Z"
 
     def tearDown(self):
