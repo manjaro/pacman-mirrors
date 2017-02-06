@@ -295,8 +295,6 @@ class PacmanMirrors:
         if server_list:
             print(txt.NEWLINE + txt.DCS + txt.INF_INTERACTIVE_LIST)
             print("--------------------------")
-            # restore self.config["only_country"] to "Custom"
-            self.config["only_country"] = ["Custom"]
             self.output_custom_mirror_file(server_list)
             self.output_mirror_list(server_list, write_file=True)
             # modify configuration to use custom
@@ -318,9 +316,7 @@ class PacmanMirrors:
         """
         if self.config["only_country"]:
             if self.config["only_country"] == ["Custom"]:
-                if os.path.isfile(self.custom_mirror_file):
-                    self.config["only_country"] = [self.custom_mirror_file]
-                else:
+                if not os.path.isfile(self.custom_mirror_file):
                     print(txt.WARN + txt.SEP + txt.INF_CUSTOM_MIRROR_FILE +
                           " '{path}' ".format(path=self.custom_mirror_file) +
                           txt.INF_DOES_NOT_EXIST)
@@ -415,15 +411,16 @@ class PacmanMirrors:
         for country in countries:
             if "Custom" in country:
                 custom = True
+                mirror_dir = self.custom_mirror_dir
                 print(txt.SAS + txt.INF_QUERY_CUSTOM)
             else:
                 custom = False
+                mirror_dir = self.default_mirror_dir
                 print(txt.SAS + txt.INF_QUERY_DEFAULT + " {}".format(country))
             # create a ref point for calculation
             point_in_time = datetime.datetime.now()
             try:
-                with open(os.path.join(
-                    self.default_mirror_dir, country), "r") as mirrorfile:
+                with open(os.path.join(mirror_dir, country), "r") as mirrorfile:
                     for line in mirrorfile:
                         mirror_country = self.get_mirror_country(line)
                         if mirror_country:
