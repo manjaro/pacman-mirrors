@@ -106,6 +106,7 @@ class GraphicalUI(Gtk.Window):
     def cancel(self, button):
         """Cancel mirrorlist"""
         self.custom_list = []
+        self.is_done = True
         Gtk.main_quit()
 
     def done(self, button):
