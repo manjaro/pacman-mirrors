@@ -74,6 +74,7 @@ class GraphicalUI(Gtk.Window):
         self.button_done = Gtk.Button(txt.I_CONFIRM)
         self.button_done.set_sensitive(False)
         self.button_done.connect("clicked", self.done)
+        
         grid = Gtk.Grid(column_homogeneous=True,
                         column_spacing=10,
                         row_spacing=10)
@@ -106,6 +107,7 @@ class GraphicalUI(Gtk.Window):
     def cancel(self, button):
         """Cancel mirrorlist"""
         self.custom_list = []
+        self.is_done = True
         Gtk.main_quit()
 
     def done(self, button):

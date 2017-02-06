@@ -44,6 +44,8 @@ from pacman_mirrors import __version__
 from .custom_help_formatter import CustomHelpFormatter
 from . import i18n
 from . import txt
+from . import file_functions
+from . import http_fetchers
 
 # The interactive argument will be only available if Gtk is installed
 try:
@@ -251,8 +253,8 @@ class PacmanMirrors:
                 txt.ERROR, txt.SEP, txt.ERR_FILE_READ, txt.SEP,
                 err.filename, txt.SEP, err.strerror))
         return config
-
-    def generate_mirror_list_common(self):
+    
+    def gen_mirror_list_common(self):
         """Generate common mirrorlist"""
         if len(self.good_servers) >= 3:  # Avoid an empty mirrorlist
             server_list = self.good_servers
@@ -270,7 +272,7 @@ class PacmanMirrors:
             self.modify_config(DEFAULT)
             self.output_mirror_list(server_list, write_file=True)
 
-    def generate_mirror_list_interactive(self):
+    def gen_mirror_list_interactive(self):
         """
         Prompt the user to select the mirrors with a gui.
 
@@ -750,9 +752,9 @@ class PacmanMirrors:
         self.command_line_parse()
         self.load_server_lists()
         if self.interactive:
-            self.generate_mirror_list_interactive()
+            self.gen_mirror_list_interactive()
         else:
-            self.generate_mirror_list_common()
+            self.gen_mirror_list_common()
 
 
 if __name__ == "__main__":
