@@ -80,8 +80,8 @@ class PacmanMirrors:
         self.default_mirror_list = "/etc/pacman.d/mirrorlist"
         self.custom_mirror_dir = "/var/lib/pacman-mirrors"
         self.custom_mirror_file = "/var/lib/pacman-mirrors/Custom"
-        # Get config from file
-        self.config = self.config_init()
+        # Define config
+        self.config = {}
 
     def append_to_server_list(self, mirror, last_sync):
         """
@@ -647,7 +647,7 @@ class PacmanMirrors:
         except HTTPException:
             if not quiet:
                 print(txt.NEWLINE + txt.ERROR + txt.SEP +
-                txt.ERR_SERVER_HTTP_EXCEPTION + txt.SEP + txt.HTTP_EXCEPTION)
+                      txt.ERR_SERVER_HTTP_EXCEPTION + txt.SEP + txt.HTTP_EXCEPTION)
         return content
 
     @staticmethod
@@ -745,6 +745,8 @@ class PacmanMirrors:
 
     def run(self):
         """Run"""
+        # Get config from file
+        self.config = self.config_init()
         self.command_line_parse()
         self.load_server_lists()
         if self.interactive:
@@ -754,5 +756,5 @@ class PacmanMirrors:
 
 
 if __name__ == "__main__":
-    pm = PacmanMirrors()
-    pm.run()
+    pmapp = PacmanMirrors()
+    pmapp.run()
