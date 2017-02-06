@@ -44,8 +44,6 @@ from pacman_mirrors import __version__
 from .custom_help_formatter import CustomHelpFormatter
 from . import i18n
 from . import txt
-from . import file_functions
-from . import http_fetchers
 
 # The interactive argument will be only available if Gtk is installed
 try:
