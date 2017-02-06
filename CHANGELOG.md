@@ -1,6 +1,11 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [3.2.0] - 2017-02-06
+- Add TUI interface.
+- Bug fixes.
+- Update translations.
+
 ## [3.1.0] - 2017-01-18
 - Replace --verbose option by --quiet.
 - New documentation.
