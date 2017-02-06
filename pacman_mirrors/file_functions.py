@@ -1,16 +1,12 @@
 #!/usr/bin/env python3
-"""Handler module"""
+"""File functions module"""
 
 import json
 from collections import OrderedDict
 
-class Handler():
-    """Handler class"""
 
-    def close(self):
-        """Close program"""
-        print("Closing ....")
-        exit()
+class FileFunctions():
+    """File functions class"""
 
     def write_json(self, data, filename):
         """

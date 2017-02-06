@@ -74,7 +74,7 @@ class GraphicalUI(Gtk.Window):
         self.button_done = Gtk.Button(txt.I_CONFIRM)
         self.button_done.set_sensitive(False)
         self.button_done.connect("clicked", self.done)
-        
+
         grid = Gtk.Grid(column_homogeneous=True,
                         column_spacing=10,
                         row_spacing=10)

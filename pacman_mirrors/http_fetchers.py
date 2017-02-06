@@ -1,10 +1,10 @@
-#/usr/bin/env python3
+#!/usr/bin/env python3
 """Manjaro Mirrors fetcher"""
 
 import json
 import urllib.request
 from collections import OrderedDict
-from http_conf import MIRRORS_URL, STATUS_URL
+from .http_conf import MIRRORS_URL, STATUS_URL
 
 
 class Fetcher():

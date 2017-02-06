@@ -143,7 +143,8 @@ class TestPacmanMirrors(unittest.TestCase):
         mock_timestamp.return_value = "2017-02-06T07:18:43Z"
         app = pacman_mirrors.PacmanMirrors()
         mock_data = "date=2017-02-06T07:18:43Z"
-        assert app.get_mirror_branch_timestamp(mock_data) == "2017-02-06T07:18:43Z"
+        assert app.get_mirror_branch_timestamp(
+            mock_data) == "2017-02-06T07:18:43Z"
 
     def tearDown(self):
         pass
