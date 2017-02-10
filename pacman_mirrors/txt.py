@@ -108,15 +108,6 @@ LASTSYNC_OK = "24:00"  # last syncronize in the past 24 hours
 LASTSYNC_NA = "98:00"  # last syncronization not available
 SERVER_BAD = "99:99"  # default last syncronization status
 SERVER_RES = "99.99"  # default response status
-# control
-NEWLINE = "\n"
-# indicators
-DCS = ":: "
-SAS = "=> "
-DAS = "==> "
-DOT = "."
-DOTS = "..."
-SEP = ": "
 # options
 OPT_COUNTRY = " '-c/--country' "
 OPT_NOUPDATE = " 'NoUpdate = True' "
