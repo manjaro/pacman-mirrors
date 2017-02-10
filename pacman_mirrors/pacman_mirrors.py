@@ -45,7 +45,6 @@ from .custom_help_formatter import CustomHelpFormatter
 from . import i18n
 from . import txt
 
-# The interactive argument will be only available if Gtk is installed
 try:
     importlib.util.find_spec("gi.repository.Gtk")
 except ImportError:
@@ -329,7 +328,6 @@ class PacmanMirrors:
 
             elif self.config["only_country"] == ["all"]:
                 self.config["only_country"] = []
-
         elif not self.config["only_country"]:
             if self.geolocation:
                 geoip_country = self.get_geoip_country()
@@ -339,7 +337,6 @@ class PacmanMirrors:
                     self.config["only_country"] = self.available_countries
             else:
                 self.config["only_country"] = self.available_countries
-
         if self.config["method"] == "rank":
             self.query_servers(self.config["only_country"])
         elif self.config["method"] == "random":
@@ -398,7 +395,6 @@ class PacmanMirrors:
             print("{}{}{}{}{}{}{}".format(
                 txt.ERROR, txt.SEP, txt.ERR_FILE_WRITE, txt.SEP,
                 err.filename, txt.SEP, err.strerror))
-
             exit(1)
 
     def query_servers(self, countries):
@@ -503,7 +499,6 @@ class PacmanMirrors:
             try:
                 with open(os.path.join(
                         self.default_mirror_dir, country), "r") as conf:
-
                     for line in conf:
                         m_country = self.get_mirror_country(line)
                         if m_country:
@@ -521,7 +516,6 @@ class PacmanMirrors:
                 print("{}{}{}{}{}{}{}".format(
                     txt.ERROR, txt.SEP, txt.ERR_FILE_READ, txt.SEP,
                     err.filename, txt.SEP, err.strerror))
-
                 continue
         shuffle(self.bad_servers)
 
@@ -685,12 +679,10 @@ class PacmanMirrors:
             else:
                 selection = ("OnlyCountry = {list}\n").format(
                     list=",".join(selected_countries))
-
         try:
             with open(config_file) as cnf, tempfile.NamedTemporaryFile(
                     "w+t", dir=os.path.dirname(config_file),
                     delete=False) as tmp:
-
                 replaced = False
                 for line in cnf:
                     if "OnlyCountry" in line:
@@ -702,12 +694,10 @@ class PacmanMirrors:
                     tmp.write(selection)
             os.replace(tmp.name, config_file)
             os.chmod(config_file, 0o644)
-
         except OSError as err:
             print("{}{}{}{}{}{}{}".format(
                 txt.ERROR, txt.SEP, txt.ERR_FILE_READ, txt.SEP,
                 err.filename, txt.SEP, err.strerror))
-
             exit(1)
 
     @staticmethod
@@ -750,7 +740,6 @@ class PacmanMirrors:
 
     def run(self):
         """Run"""
-        # Get config from file
         self.config = self.config_init()
         self.command_line_parse()
         self.load_server_lists()
