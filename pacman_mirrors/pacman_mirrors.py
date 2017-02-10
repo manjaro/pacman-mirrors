@@ -260,6 +260,10 @@ class PacmanMirrors:
             server_list.extend(self.bad_servers)
 
         if server_list:
+            if self.config["only_country"] == self.available_countries:
+                self.modify_config()
+            else:
+                self.modify_config(True)
             self.output_mirror_list(server_list, write_file=True)
         else:
             print("\n{}: {}\n".format(txt.ERROR, txt.ERR_SERVER_NOT_AVAILABLE))
