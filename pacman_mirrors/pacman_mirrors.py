@@ -449,14 +449,12 @@ class PacmanMirrors:
                             if not self.quiet:
                                 print("\n{}: {}".format(txt.WARN,
                                                txt.INF_QUERY_WRONG_DATE_FORMAT))
-                            continue
                         server["last_sync"] = self.get_mirror_branch_last_sync(
                             point_in_time, branch_timestamp)
                         self.append_to_server_list(server, server["last_sync"])
             except OSError as err:
                 print("{}: {}: {}: {}".format(txt.ERROR, txt.ERR_FILE_READ,
                                               err.filename, err.strerror))
-                continue
         self.good_servers = sorted(self.good_servers,
                                    key=itemgetter("response_time"))
         self.resp_servers = sorted(self.resp_servers,
@@ -489,7 +487,6 @@ class PacmanMirrors:
             except OSError as err:
                 print("{}: {}: {}: {}".format(txt.ERROR, txt.ERR_FILE_READ,
                                               err.filename, err.strerror))
-                continue
         shuffle(self.bad_servers)
 
     @staticmethod
