@@ -53,9 +53,6 @@ else:
     GTK_AVAILABLE = True
 _ = i18n.language.gettext
 
-DEFAULT = "default"
-CUSTOM = "custom"
-
 
 class PacmanMirrors:
     """Class PacmanMirrors"""
@@ -264,7 +261,7 @@ class PacmanMirrors:
 
         if server_list:
             # modify configuration to use default
-            self.modify_config(DEFAULT)
+            self.modify_config()
             self.output_mirror_list(server_list, write_file=True)
         else:
             print("\n{}: {}\n".format(txt.ERROR, txt.ERR_SERVER_NOT_AVAILABLE))
@@ -293,7 +290,7 @@ class PacmanMirrors:
                 print("--------------------------")
                 self.output_mirror_file(new_list)
                 self.output_mirror_list(new_list, write_file=True)
-                self.modify_config(CUSTOM)
+                self.modify_config(True)
                 print(":: {}: {}".format(txt.INF_INTERACTIVE_LIST_SAVED,
                                          self.custom_mirror_file))
             else:
@@ -333,15 +330,15 @@ class PacmanMirrors:
         elif self.config["method"] == "random":
             self.random_servers(self.config["only_country"])
 
-    def modify_config(self, config_type):
+    def modify_config(self, custom=False):
         """Modify configuration"""
-        if config_type == DEFAULT:
+        if not custom:
             # remove custom mirror file
             if os.path.isfile(self.custom_mirror_file):
                 os.remove(self.custom_mirror_file)
                 os.rmdir(self.custom_mirror_dir)
         self.write_config_to_file(
-            self.config_file, self.config["only_country"], config_type)
+            self.config_file, self.config["only_country"], custom)
 
     def output_mirror_file(self, servers):
         """Write a custom mirror file in custom mirror dir"""
@@ -645,16 +642,16 @@ class PacmanMirrors:
                 raise argparse.ArgumentTypeError(msg)
 
     @staticmethod
-    def write_config_to_file(config_file, selected_countries, config_type):
+    def write_config_to_file(config_file, selected_countries, custom):
         """Writes the configuration to file"""
-        if config_type == DEFAULT:
-            selection = "# OnlyCountry = \n"
-        else:
+        if custom:
             if selected_countries == ["Custom"]:
                 selection = "OnlyCountry = Custom\n"
             else:
                 selection = ("OnlyCountry = {list}\n").format(
-                    list=",".join(selected_countries))
+                list=",".join(selected_countries))
+        else:
+            selection = "# OnlyCountry = \n"
         try:
             with open(config_file) as cnf, tempfile.NamedTemporaryFile(
                     "w+t", dir=os.path.dirname(config_file),
