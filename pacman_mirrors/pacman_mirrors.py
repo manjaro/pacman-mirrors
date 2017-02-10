@@ -256,21 +256,21 @@ class PacmanMirrors:
 
     def gen_mirror_list_common(self):
         """Generate common mirrorlist"""
-        if len(self.good_servers) >= 3:  # Avoid an empty mirrorlist
-            server_list = self.good_servers
-        elif len(self.resp_servers) >= 3:
-            server_list = (self.good_servers + self.resp_servers)
+        server_list = self.good_servers # Avoid an empty mirrorlist
+        if len(self.resp_servers) >= 3:
+            server_list.extend(self.resp_servers)
         else:
-            server_list = (self.good_servers + self.resp_servers +
-                           self.bad_servers)
-        if not server_list:
-            print(txt.NEWLINE +
-                  txt.ERROR + txt.SEP + txt.ERR_SERVER_NOT_AVAILABLE +
-                  txt.NEWLINE)
-        else:
+            server_list.extend(self.resp_servers)
+            server_list.extend(self.bad_servers)
+
+        if server_list:
             # modify configuration to use default
             self.modify_config(DEFAULT)
             self.output_mirror_list(server_list, write_file=True)
+        else:
+            print(txt.NEWLINE +
+                  txt.ERROR + txt.SEP + txt.ERR_SERVER_NOT_AVAILABLE +
+                  txt.NEWLINE)
 
     def gen_mirror_list_interactive(self):
         """
@@ -284,31 +284,29 @@ class PacmanMirrors:
         server_list = self.good_servers + self.resp_servers + self.bad_servers
         server_list = sorted(server_list, key=itemgetter("response_time"))
 
-        if self.no_display is True:
-            from . import console_ui
-            interactive = console_ui.run(server_list)
+        if self.no_display:
+            from . import console_ui as ui
         else:
-            from . import graphical_ui
-            interactive = graphical_ui.run(server_list)
+            from . import graphical_ui as ui
+        interactive = ui.run(server_list)
 
-        new_list = interactive.custom_list
-
-        if not interactive.is_done:
+        if interactive.is_done:
+            new_list = interactive.custom_list
+            if new_list:
+                print(txt.NEWLINE + txt.DCS + txt.INF_INTERACTIVE_LIST)
+                print("--------------------------")
+                self.output_mirror_file(new_list)
+                self.output_mirror_list(new_list, write_file=True)
+                self.modify_config(CUSTOM)
+                print(txt.DCS + txt.INF_INTERACTIVE_LIST_SAVED + txt.SEP +
+                      "{path}".format(path=self.custom_mirror_file))
+            else:
+                print("{}{}{}".format(
+                    txt.INFO, txt.SEP, txt.INF_NO_SELECTION))
+                print("{}{}{}".format(
+                    txt.INFO, txt.SEP, txt.INF_NO_CHANGES))
+        else:
             return
-
-        if new_list:
-            print(txt.NEWLINE + txt.DCS + txt.INF_INTERACTIVE_LIST)
-            print("--------------------------")
-            self.output_mirror_file(new_list)
-            self.output_mirror_list(new_list, write_file=True)
-            self.modify_config(CUSTOM)
-            print(txt.DCS + txt.INF_INTERACTIVE_LIST_SAVED + txt.SEP +
-                  "{path}".format(path=self.custom_mirror_file))
-        else:
-            print("{}{}{}".format(
-                txt.INFO, txt.SEP, txt.INF_NO_SELECTION))
-            print("{}{}{}".format(
-                txt.INFO, txt.SEP, txt.INF_NO_CHANGES))
 
     def load_server_lists(self):
         """
@@ -325,7 +323,6 @@ class PacmanMirrors:
                           txt.INF_DOES_NOT_EXIST)
                     print(txt.NEWLINE)
                     self.config["only_country"] = []
-
             elif self.config["only_country"] == ["all"]:
                 self.config["only_country"] = []
         elif not self.config["only_country"]:
@@ -337,6 +334,7 @@ class PacmanMirrors:
                     self.config["only_country"] = self.available_countries
             else:
                 self.config["only_country"] = self.available_countries
+
         if self.config["method"] == "rank":
             self.query_servers(self.config["only_country"])
         elif self.config["method"] == "random":
