@@ -246,8 +246,8 @@ class PacmanMirrors:
                         elif key == "NoUpdate":
                             config["no_update"] = value
         except (PermissionError, OSError) as err:
-            print("{}: {}: {}: {}".format(txt.ERROR, txt.ERR_FILE_READ, err.filename,
-                                          err.strerror))
+            print("{}: {}: {}: {}".format(txt.ERROR, txt.ERR_FILE_READ,
+                                          err.filename, err.strerror))
         return config
 
     def gen_mirror_list_common(self):
@@ -427,7 +427,8 @@ class PacmanMirrors:
                         server_response_time = self.get_mirror_response_time(
                             probe_start, time.time())
                         if not self.quiet:
-                            s_url = server_url.replace("$branch", self.config["branch"])
+                            s_url = server_url.replace("$branch",
+                                                       self.config["branch"])
                             if custom:
                                 print("==> {} - {} - {}".format(country,
                                                            server_response_time,
