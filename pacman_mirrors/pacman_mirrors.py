@@ -45,7 +45,6 @@ from .custom_help_formatter import CustomHelpFormatter
 from . import i18n
 from . import txt
 
-# The interactive argument will be only available if Gtk is installed
 try:
     importlib.util.find_spec("gi.repository.Gtk")
 except ImportError:
@@ -53,9 +52,6 @@ except ImportError:
 else:
     GTK_AVAILABLE = True
 _ = i18n.language.gettext
-
-DEFAULT = "default"
-CUSTOM = "custom"
 
 
 class PacmanMirrors:
@@ -156,7 +152,7 @@ class PacmanMirrors:
             exit(0)
 
         if os.getuid() != 0:
-            print(txt.ERROR + txt.SEP + txt.ERR_NOT_ROOT)
+            print("{}: {}".format(txt.ERROR, txt.ERR_NOT_ROOT))
             exit(1)
 
         if args.no_update:
@@ -187,8 +183,8 @@ class PacmanMirrors:
                 self.config["only_country"] = []
             else:
                 try:
-                    self.validate_country_list(
-                        country, self.available_countries)
+                    self.validate_country_list(country,
+                                               self.available_countries)
                     self.config["only_country"] = country
                 except argparse.ArgumentTypeError as err:
                     parser.error(err)
@@ -250,28 +246,27 @@ class PacmanMirrors:
                         elif key == "NoUpdate":
                             config["no_update"] = value
         except (PermissionError, OSError) as err:
-            print("{}{}{}{}{}{}{}".format(
-                txt.ERROR, txt.SEP, txt.ERR_FILE_READ, txt.SEP,
-                err.filename, txt.SEP, err.strerror))
+            print("{}: {}: {}: {}".format(txt.ERROR, txt.ERR_FILE_READ,
+                                          err.filename, err.strerror))
         return config
 
     def gen_mirror_list_common(self):
         """Generate common mirrorlist"""
-        if len(self.good_servers) >= 3:  # Avoid an empty mirrorlist
-            server_list = self.good_servers
-        elif len(self.resp_servers) >= 3:
-            server_list = (self.good_servers + self.resp_servers)
+        server_list = self.good_servers # Avoid an empty mirrorlist
+        if len(self.resp_servers) >= 3:
+            server_list.extend(self.resp_servers)
         else:
-            server_list = (self.good_servers + self.resp_servers +
-                           self.bad_servers)
-        if not server_list:
-            print(txt.NEWLINE +
-                  txt.ERROR + txt.SEP + txt.ERR_SERVER_NOT_AVAILABLE +
-                  txt.NEWLINE)
-        else:
-            # modify configuration to use default
-            self.modify_config(DEFAULT)
+            server_list.extend(self.resp_servers)
+            server_list.extend(self.bad_servers)
+
+        if server_list:
+            if self.config["only_country"] == self.available_countries:
+                self.modify_config()
+            else:
+                self.modify_config(custom=True)
             self.output_mirror_list(server_list, write_file=True)
+        else:
+            print("\n{}: {}\n".format(txt.ERROR, txt.ERR_SERVER_NOT_AVAILABLE))
 
     def gen_mirror_list_interactive(self):
         """
@@ -285,31 +280,27 @@ class PacmanMirrors:
         server_list = self.good_servers + self.resp_servers + self.bad_servers
         server_list = sorted(server_list, key=itemgetter("response_time"))
 
-        if self.no_display is True:
-            from . import console_ui
-            interactive = console_ui.run(server_list)
+        if self.no_display:
+            from . import console_ui as ui
         else:
-            from . import graphical_ui
-            interactive = graphical_ui.run(server_list)
+            from . import graphical_ui as ui
+        interactive = ui.run(server_list)
 
-        new_list = interactive.custom_list
-
-        if not interactive.is_done:
+        if interactive.is_done:
+            new_list = interactive.custom_list
+            if new_list:
+                print("\n:: {}".format(txt.INF_INTERACTIVE_LIST))
+                print("--------------------------")
+                self.output_mirror_file(new_list)
+                self.output_mirror_list(new_list, write_file=True)
+                self.modify_config(custom=True)
+                print(":: {}: {}".format(txt.INF_INTERACTIVE_LIST_SAVED,
+                                         self.custom_mirror_file))
+            else:
+                print("{}: {}".format(txt.INFO, txt.INF_NO_SELECTION))
+                print("{}: {}".format(txt.INFO, txt.INF_NO_CHANGES))
+        else:
             return
-
-        if new_list:
-            print(txt.NEWLINE + txt.DCS + txt.INF_INTERACTIVE_LIST)
-            print("--------------------------")
-            self.output_mirror_file(new_list)
-            self.output_mirror_list(new_list, write_file=True)
-            self.modify_config(CUSTOM)
-            print(txt.DCS + txt.INF_INTERACTIVE_LIST_SAVED + txt.SEP +
-                  "{path}".format(path=self.custom_mirror_file))
-        else:
-            print("{}{}{}".format(
-                txt.INFO, txt.SEP, txt.INF_NO_SELECTION))
-            print("{}{}{}".format(
-                txt.INFO, txt.SEP, txt.INF_NO_CHANGES))
 
     def load_server_lists(self):
         """
@@ -321,15 +312,12 @@ class PacmanMirrors:
         if self.config["only_country"]:
             if self.config["only_country"] == ["Custom"]:
                 if not os.path.isfile(self.custom_mirror_file):
-                    print(txt.WARN + txt.SEP + txt.INF_CUSTOM_MIRROR_FILE +
-                          " '{path}' ".format(path=self.custom_mirror_file) +
-                          txt.INF_DOES_NOT_EXIST)
-                    print(txt.NEWLINE)
+                    print("{}: {} '{} {}'\n".format(txt.WARN,
+                                                  txt.INF_CUSTOM_MIRROR_FILE,
+                                                  self.custom_mirror_file))
                     self.config["only_country"] = []
-
             elif self.config["only_country"] == ["all"]:
                 self.config["only_country"] = []
-
         elif not self.config["only_country"]:
             if self.geolocation:
                 geoip_country = self.get_geoip_country()
@@ -345,29 +333,28 @@ class PacmanMirrors:
         elif self.config["method"] == "random":
             self.random_servers(self.config["only_country"])
 
-    def modify_config(self, config_type):
+    def modify_config(self, custom=False):
         """Modify configuration"""
-        if config_type == DEFAULT:
+        if not custom:
             # remove custom mirror file
             if os.path.isfile(self.custom_mirror_file):
                 os.remove(self.custom_mirror_file)
                 os.rmdir(self.custom_mirror_dir)
-        self.write_config_to_file(
-            self.config_file, self.config["only_country"], config_type)
+        self.write_config_to_file(self.config_file, self.config["only_country"],
+                                  custom)
 
     def output_mirror_file(self, servers):
         """Write a custom mirror file in custom mirror dir"""
         os.makedirs(self.custom_mirror_dir, mode=0o755, exist_ok=True)
         try:
             with open(self.custom_mirror_file, "w") as output:
-                print(txt.DCS + txt.INF_OUTPUT_MIRROR_FILE)
+                print(":: {}".format(txt.INF_OUTPUT_MIRROR_FILE))
                 self.write_mirror_list_header(output, custom=True)
                 for server in servers:
                     self.write_mirror_list_entry(output, server)
         except OSError as err:
-            print("{}{}{}{}{}{}{}".format(
-                txt.ERROR, txt.SEP, txt.ERR_FILE_WRITE, txt.SEP,
-                err.filename, txt.SEP, err.strerror))
+            print("{}: {}: {}: {}".format(txt.ERROR, txt.ERR_FILE_WRITE,
+                                          err.filename, err.strerror))
             exit(1)
 
     def output_mirror_list(self, servers, write_file=False):
@@ -380,7 +367,7 @@ class PacmanMirrors:
         try:
             with open(self.config["mirror_list"], "w") as outfile:
                 if write_file:
-                    print(txt.DCS + txt.INF_MIRROR_LIST_WRITE)
+                    print(":: {}".format(txt.INF_MIRROR_LIST_WRITE))
                     self.write_mirror_list_header(outfile)
                 for server in servers:
                     if write_file:
@@ -389,16 +376,13 @@ class PacmanMirrors:
                             "$branch", self.config["branch"])
                         self.write_mirror_list_entry(outfile, server)
                         if not self.quiet:
-                            print(txt.DAS + "{} : {}".format(
-                                server["country"], server["url"]))
-                print(txt.DCS + txt.INF_MIRROR_LIST_SAVED + txt.SEP +
-                      "{output_file}"
-                      .format(output_file=self.config["mirror_list"]))
+                            print("==> {} : {}".format(server["country"],
+                                                       server["url"]))
+                print(":: {}: {}".format(txt.INF_MIRROR_LIST_SAVED,
+                                         self.config["mirror_list"]))
         except OSError as err:
-            print("{}{}{}{}{}{}{}".format(
-                txt.ERROR, txt.SEP, txt.ERR_FILE_WRITE, txt.SEP,
-                err.filename, txt.SEP, err.strerror))
-
+            print("{}: {}: {}: {}".format(txt.ERROR, txt.ERR_FILE_WRITE,
+                                          err.filename, err.strerror))
             exit(1)
 
     def query_servers(self, countries):
@@ -408,21 +392,20 @@ class PacmanMirrors:
 
         :param countries: list of country files to use
         """
-        print(txt.DCS + txt.INF_QUERY_TIME_INFO)
+        print(":: {}".format(txt.INF_QUERY_TIME_INFO))
         for country in countries:
             if "Custom" in country:
                 custom = True
                 mirror_dir = self.custom_mirror_dir
-                print(txt.SAS + txt.INF_QUERY_CUSTOM)
+                print("=> {}".format(txt.INF_QUERY_CUSTOM))
             else:
                 custom = False
                 mirror_dir = self.default_mirror_dir
-                print(txt.SAS + txt.INF_QUERY_DEFAULT + " {}".format(country))
+                print("=> {} {}".format(txt.INF_QUERY_DEFAULT, country))
             # create a ref point for calculation
             point_in_time = datetime.datetime.utcnow()
             try:
-                with open(os.path.join(
-                        mirror_dir, country), "r") as mirrorfile:
+                with open(os.path.join(mirror_dir, country), "r") as mirrorfile:
                     for line in mirrorfile:
                         mirror_country = self.get_mirror_country(line)
                         if mirror_country:
@@ -444,19 +427,15 @@ class PacmanMirrors:
                         server_response_time = self.get_mirror_response_time(
                             probe_start, time.time())
                         if not self.quiet:
+                            s_url = server_url.replace("$branch",
+                                                       self.config["branch"])
                             if custom:
-                                print(
-                                    txt.DAS +
-                                    "{s_ctry} - {s_rt} - {s_url}".format(
-                                        s_ctry=country,
-                                        s_rt=server_response_time,
-                                        s_url=server_url.replace(
-                                            "$branch", self.config["branch"])))
+                                print("==> {} - {} - {}".format(country,
+                                                           server_response_time,
+                                                           s_url))
                             else:
-                                print(txt.DAS + "{s_rt} - {s_url}".format(
-                                    s_rt=server_response_time,
-                                    s_url=server_url.replace(
-                                        "$branch", self.config["branch"])))
+                                print("==> {} - {}".format(server_response_time,
+                                                           s_url))
                         if not statefile:
                             self.append_to_server_list(
                                 server, server["last_sync"])
@@ -473,20 +452,14 @@ class PacmanMirrors:
                             self.append_to_server_list(
                                 server, server["last_sync"])
                             if not self.quiet:
-                                print(
-                                    txt.NEWLINE +
-                                    txt.WARN +
-                                    txt.SEP +
-                                    txt.INF_QUERY_WRONG_DATE_FORMAT)
-                            continue
+                                print("\n{}: {}".format(txt.WARN,
+                                               txt.INF_QUERY_WRONG_DATE_FORMAT))
                         server["last_sync"] = self.get_mirror_branch_last_sync(
                             point_in_time, branch_timestamp)
                         self.append_to_server_list(server, server["last_sync"])
             except OSError as err:
-                print("{}{}{}{}{}{}{}".format(
-                    txt.ERROR, txt.SEP, txt.ERR_FILE_READ, txt.SEP,
-                    err.filename, txt.SEP, err.strerror))
-                continue
+                print("{}: {}: {}: {}".format(txt.ERROR, txt.ERR_FILE_READ,
+                                              err.filename, err.strerror))
         self.good_servers = sorted(self.good_servers,
                                    key=itemgetter("response_time"))
         self.resp_servers = sorted(self.resp_servers,
@@ -498,12 +471,11 @@ class PacmanMirrors:
 
         :param countries: list of country files to use
         """
-        print(txt.DCS + txt.INF_RANDOMIZE_SERVERS)
+        print(":: {}".format(txt.INF_RANDOMIZE_SERVERS))
         for country in countries:
             try:
                 with open(os.path.join(
                         self.default_mirror_dir, country), "r") as conf:
-
                     for line in conf:
                         m_country = self.get_mirror_country(line)
                         if m_country:
@@ -518,11 +490,8 @@ class PacmanMirrors:
                                   "url": m_url}
                         self.append_to_server_list(server, txt.SERVER_RES)
             except OSError as err:
-                print("{}{}{}{}{}{}{}".format(
-                    txt.ERROR, txt.SEP, txt.ERR_FILE_READ, txt.SEP,
-                    err.filename, txt.SEP, err.strerror))
-
-                continue
+                print("{}: {}: {}: {}".format(txt.ERROR, txt.ERR_FILE_READ,
+                                              err.filename, err.strerror))
         shuffle(self.bad_servers)
 
     @staticmethod
@@ -637,22 +606,22 @@ class PacmanMirrors:
             content = res.read().decode("utf8")
         except URLError as err:
             if hasattr(err, "reason") and not quiet:
-                print(txt.NEWLINE + txt.ERROR + txt.SEP +
-                      txt.ERR_SERVER_NOT_REACHABLE + txt.SEP +
-                      "{}".format(err.reason))
+                print("\n{}: {}: {}".format(txt.ERROR,
+                                            txt.ERR_SERVER_NOT_REACHABLE,
+                                            err.reason))
             elif hasattr(err, "code") and not quiet:
-                print(txt.NEWLINE + txt.ERROR + txt.SEP +
-                      txt.ERR_SERVER_REQUEST + txt.SEP +
-                      "{}".format(err.errno))
+                print("\n{}: {}: {}".format(txt.ERROR, txt.ERR_SERVER_REQUEST,
+                                            err.errno))
         except timeout:
             if not quiet:
-                print(txt.NEWLINE + txt.ERROR + txt.SEP +
-                      txt.ERR_SERVER_NOT_AVAILABLE + txt.SEP + txt.TIMEOUT)
+                print("\n{}: {}: {}".format(txt.ERROR,
+                                            txt.ERR_SERVER_NOT_AVAILABLE,
+                                            txt.TIMEOUT))
         except HTTPException:
             if not quiet:
-                print(txt.NEWLINE + txt.ERROR + txt.SEP +
-                      txt.ERR_SERVER_HTTP_EXCEPTION + txt.SEP +
-                      txt.HTTP_EXCEPTION)
+                print("\n{}: {}: {}".format(txt.ERROR,
+                                            txt.ERR_SERVER_HTTP_EXCEPTION,
+                                            txt.HTTP_EXCEPTION))
         return content
 
     @staticmethod
@@ -666,31 +635,28 @@ class PacmanMirrors:
         """
         for country in countries:
             if country not in available_countries:
-                msg = (txt.INF_OPTION + txt.OPT_COUNTRY +
-                       txt.INF_UNKNOWN_COUNTRY + txt.SEP +
-                       "'{country}'.\n".format(country=country) +
-                       txt.NEWLINE + txt.INF_AVAILABLE_COUNTRIES + txt.SEP +
-                       "{country_list}".format(
-                           country_list=", ".join(available_countries)))
+                msg = ("{}{}{}: '{}'.\n\n{}: {}".format(txt.INF_OPTION,
+                                                       txt.OPT_COUNTRY,
+                                                       txt.INF_UNKNOWN_COUNTRY,
+                                                    txt.INF_AVAILABLE_COUNTRIES,
+                                                ", ".join(available_countries)))
                 raise argparse.ArgumentTypeError(msg)
 
     @staticmethod
-    def write_config_to_file(config_file, selected_countries, config_type):
+    def write_config_to_file(config_file, selected_countries, custom):
         """Writes the configuration to file"""
-        if config_type == DEFAULT:
-            selection = "# OnlyCountry = \n"
-        else:
+        if custom:
             if selected_countries == ["Custom"]:
                 selection = "OnlyCountry = Custom\n"
             else:
                 selection = ("OnlyCountry = {list}\n").format(
-                    list=",".join(selected_countries))
-
+                list=",".join(selected_countries))
+        else:
+            selection = "# OnlyCountry = \n"
         try:
             with open(config_file) as cnf, tempfile.NamedTemporaryFile(
                     "w+t", dir=os.path.dirname(config_file),
                     delete=False) as tmp:
-
                 replaced = False
                 for line in cnf:
                     if "OnlyCountry" in line:
@@ -702,12 +668,9 @@ class PacmanMirrors:
                     tmp.write(selection)
             os.replace(tmp.name, config_file)
             os.chmod(config_file, 0o644)
-
         except OSError as err:
-            print("{}{}{}{}{}{}{}".format(
-                txt.ERROR, txt.SEP, txt.ERR_FILE_READ, txt.SEP,
-                err.filename, txt.SEP, err.strerror))
-
+            print("{}: {}: {}: {}".format(txt.ERROR, txt.ERR_FILE_READ,
+                                          err.filename, err.strerror))
             exit(1)
 
     @staticmethod
@@ -750,7 +713,6 @@ class PacmanMirrors:
 
     def run(self):
         """Run"""
-        # Get config from file
         self.config = self.config_init()
         self.command_line_parse()
         self.load_server_lists()

@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: manjaro-pacman-mirrors\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2017-02-02 21:13+0100\n"
-"PO-Revision-Date: 2017-02-04 14:54+0000\n"
+"PO-Revision-Date: 2017-02-10 16:35+0000\n"
 "Last-Translator: Hugo Posnic <huluti@manjaro.org>\n"
 "Language-Team: French (http://www.transifex.com/manjarolinux/manjaro-pacman-mirrors/language/fr/)\n"
 "MIME-Version: 1.0\n"
@@ -208,7 +208,7 @@ msgstr "Utilisation de la liste de miroirs personalisée"
 
 #: pacman_mirrors/txt.py:86
 msgid "Testing mirrors in"
-msgstr "Tester les miroirs en "
+msgstr "Tester les miroirs en"
 
 #: pacman_mirrors/txt.py:87
 msgid "Wrong date format in state file"
