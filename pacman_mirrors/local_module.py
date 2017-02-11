@@ -9,10 +9,6 @@ import tempfile
 from collections import OrderedDict
 from . import txt
 
-MIRRORS_FILE = "/etc/pacman.d/mirrors/mirrors.json"
-STATES_FILE = "/etc/pacman.d/mirrors/states.json"
-
-
 class FileHandler():
     """FileHandler class"""
 

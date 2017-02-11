@@ -8,13 +8,9 @@ from socket import timeout
 from urllib.error import URLError
 from urllib.request import urlopen
 from collections import OrderedDict
-from local_module import MIRRORS_FILE, STATES_FILE, FileHandler
+from .configuration import MIRRORS_URL, STATES_URL, MIRRORS_FILE, STATES_FILE
+from .local_module import FileHandler
 from . import txt
-
-MIRRORS_URL = "http://repo.manjaro.org/new/manjaro-web-repo/mirrors.json"
-STATES_URL = "http://repo.manjaro.org/new/manjaro-web-repo/docs/status.json"
-BRANCHES = ("stable", "testing", "unstable")
-REPO_ARCH = "$repo/$arch"
 
 
 class Fetcher():
@@ -29,8 +25,8 @@ class Fetcher():
                     "utf8"), object_pairs_hook=OrderedDict)
         except URLError:
             print("Error getting mirror list from server")
-
-        FileHandler.write_json(self, mirrors, MIRRORS_FILE)
+        if mirrors:
+            FileHandler.write_json(self, mirrors, MIRRORS_FILE)
 
     def get_mirrors_state(self):
         """Retrieve state for all mirrors from manjaro.org"""
@@ -42,8 +38,8 @@ class Fetcher():
                         "utf8"), object_pairs_hook=OrderedDict)
         except URLError:
             print("Error getting mirrors state from server")
-
-        FileHandler.write_json(self, states, STATES_FILE)
+        if states:
+            FileHandler.write_json(self, states, STATES_FILE)
 
     def get_response_time(self, _mirror_url, _timeout, _quiet):
         """Get a mirrors response time
