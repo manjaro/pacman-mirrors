@@ -9,7 +9,7 @@ MIRRORS_FILE = "/etc/pacman.d/mirrors/mirrors.json"
 STATES_FILE = "/etc/pacman.d/mirrors/states.json"
 
 
-class LocalModule():
+class FileHandler():
     """FileHandler class"""
 
     def write_json(self, data, filename):

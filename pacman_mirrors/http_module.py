@@ -8,8 +8,7 @@ from socket import timeout
 from urllib.error import URLError
 from urllib.request import urlopen
 from collections import OrderedDict
-from local_module import MIRRORS_FILE, STATES_FILE
-from file_handler import FileHandler
+from local_module import MIRRORS_FILE, STATES_FILE, FileHandler
 from . import txt
 
 MIRRORS_URL = "http://repo.manjaro.org/new/manjaro-web-repo/mirrors.json"
@@ -18,10 +17,10 @@ BRANCHES = ("stable", "testing", "unstable")
 REPO_ARCH = "$repo/$arch"
 
 
-class HttpModule():
-    """Http Module"""
+class Fetcher():
+    """Fetcher Class"""
 
-    def fetch_mirrors_list(self):
+    def get_mirrors_list(self):
         """Retrieve mirror list from manjaro.org"""
         mirrors = list()
         try:
@@ -33,7 +32,7 @@ class HttpModule():
 
         FileHandler.write_json(self, mirrors, MIRRORS_FILE)
 
-    def fetch_mirrors_state(self):
+    def get_mirrors_state(self):
         """Retrieve state for all mirrors from manjaro.org"""
         states = list()
         try:
@@ -46,10 +45,12 @@ class HttpModule():
 
         FileHandler.write_json(self, states, STATES_FILE)
 
-    def ping_mirror(self, _mirror_url, _timeout, _quiet):
+    def get_response_time(self, _mirror_url, _timeout, _quiet):
         """Get a mirrors response time
 
-        :param mirror_url:
+        :param _mirror_url: mirrors url
+        :param _timeout: wait for mirror response
+        :param _quiet: controls message output
         :return string: response time
         """
         probe_start = time.time()

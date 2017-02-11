@@ -44,6 +44,7 @@ from pacman_mirrors import __version__
 from .custom_help_formatter import CustomHelpFormatter
 from . import i18n
 from . import txt
+from http_module import Fetcher
 
 try:
     importlib.util.find_spec("gi.repository.Gtk")
@@ -716,6 +717,8 @@ class PacmanMirrors:
 
     def run(self):
         """Run"""
+        Fetcher.get_mirrors_list()
+        Fetcher.get_mirrors_state()
         self.config = self.config_init()
         self.command_line_parse()
         self.load_server_lists()        
