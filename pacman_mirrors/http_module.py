@@ -46,16 +46,19 @@ class HttpModule():
 
         FileHandler.write_json(self, states, STATES_FILE)
 
-    def ping_mirror(self, mirror_url, _timeout, _quiet):
+    def ping_mirror(self, _mirror_url, _timeout, _quiet):
         """Get a mirrors response time
 
         :param mirror_url:
         :return string: response time
         """
         probe_start = time.time()
+        probe_time = txt.SERVER_RES
         try:
-            urlopen(mirror_url, timeout=_timeout)
+            urlopen(_mirror_url, timeout=_timeout)
+            probe_stop = time.time()
         except URLError as err:
+            probe_stop = None
             if hasattr(err, "reason") and not _quiet:
                 print("\n{}: {}: {}".format(txt.ERROR,
                                             txt.ERR_SERVER_NOT_REACHABLE,
@@ -65,16 +68,18 @@ class HttpModule():
                                             txt.ERR_SERVER_REQUEST,
                                             err.errno))
         except timeout:
+            probe_stop = None
             if not _quiet:
                 print("\n{}: {}: {}".format(txt.ERROR,
                                             txt.ERR_SERVER_NOT_AVAILABLE,
                                             txt.TIMEOUT))
         except HTTPException:
+            probe_stop = None
             if not _quiet:
                 print("\n{}: {}: {}".format(txt.ERROR,
                                             txt.ERR_SERVER_HTTP_EXCEPTION,
                                             txt.HTTP_EXCEPTION))
-        probe_stop = time.time()
-        probe_time = round((probe_stop - probe_start), 3)
-        probe_time = format(probe_time, ".3f")
+        if probe_stop:
+            probe_time = round((probe_stop - probe_start), 3)
+            probe_time = format(probe_time, ".3f")
         return str(probe_time)
