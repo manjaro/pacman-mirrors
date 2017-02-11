@@ -635,11 +635,13 @@ class PacmanMirrors:
         """
         for country in countries:
             if country not in available_countries:
-                msg = ("{}{}{}: '{}'.\n\n{}: {}".format(txt.INF_OPTION,
-                                                       txt.OPT_COUNTRY,
-                                                       txt.INF_UNKNOWN_COUNTRY,
-                                                    txt.INF_AVAILABLE_COUNTRIES,
-                                                ", ".join(available_countries)))
+                msg = ("{}{}{}: '{}'.\n\n{}: {}".format(
+                    txt.INFO,
+                    txt.INF_OPTION,
+                    txt.OPT_COUNTRY,
+                    txt.INF_UNKNOWN_COUNTRY,
+                    txt.INF_AVAILABLE_COUNTRIES,
+                    ", ".join(available_countries)))
                 raise argparse.ArgumentTypeError(msg)
 
     @staticmethod
@@ -650,7 +652,7 @@ class PacmanMirrors:
                 selection = "OnlyCountry = Custom\n"
             else:
                 selection = ("OnlyCountry = {list}\n").format(
-                list=",".join(selected_countries))
+                    list=",".join(selected_countries))
         else:
             selection = "# OnlyCountry = \n"
         try:
