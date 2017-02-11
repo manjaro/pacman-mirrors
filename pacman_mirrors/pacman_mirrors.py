@@ -32,7 +32,6 @@ import importlib.util
 import json
 import os
 import sys
-import tempfile
 import time
 from http.client import HTTPException
 from operator import itemgetter
@@ -40,11 +39,13 @@ from random import shuffle
 from socket import timeout
 from urllib.error import URLError
 from urllib.request import urlopen
+from http_module import Fetcher
+from local_module import FileHandler
 from pacman_mirrors import __version__
 from .custom_help_formatter import CustomHelpFormatter
 from . import i18n
 from . import txt
-from http_module import Fetcher
+
 
 try:
     importlib.util.find_spec("gi.repository.Gtk")
@@ -342,8 +343,10 @@ class PacmanMirrors:
             if os.path.isfile(self.custom_mirror_file):
                 os.remove(self.custom_mirror_file)
                 os.rmdir(self.custom_mirror_dir)
-        self.write_config_to_file(self.config_file, self.config["only_country"],
-                                  custom)
+        FileHandler.write_config_to_file(self, 
+                                         self.config_file,
+                                         self.config["only_country"],
+                                         custom)
 
     def output_mirror_file(self, servers):
         """Write a custom mirror file in custom mirror dir"""
@@ -351,9 +354,12 @@ class PacmanMirrors:
         try:
             with open(self.custom_mirror_file, "w") as output:
                 print(":: {}".format(txt.INF_OUTPUT_MIRROR_FILE))
-                self.write_mirror_list_header(output, custom=True)
+                FileHandler.write_mirror_file_header(self, output)
                 for server in servers:
-                    self.write_mirror_list_entry(output, server)
+                    FileHandler.write_mirror_list_entry(self,
+                                                        output,
+                                                        server,
+                                                        mirror_file=True)
         except OSError as err:
             print("{}: {}: {}: {}".format(txt.ERROR, txt.ERR_FILE_WRITE,
                                           err.filename, err.strerror))
@@ -370,13 +376,13 @@ class PacmanMirrors:
             with open(self.config["mirror_list"], "w") as outfile:
                 if write_file:
                     print(":: {}".format(txt.INF_MIRROR_LIST_WRITE))
-                    self.write_mirror_list_header(outfile)
+                    FileHandler.write_mirror_list_header(self, outfile)
                 for server in servers:
                     if write_file:
                         # insert selected branch in url
                         server["url"] = server["url"].replace(
                             "$branch", self.config["branch"])
-                        self.write_mirror_list_entry(outfile, server)
+                        FileHandler.write_mirror_list_entry(self, outfile, server)
                         if not self.quiet:
                             print("==> {} : {}".format(server["country"],
                                                        server["url"]))
@@ -524,107 +530,107 @@ class PacmanMirrors:
                     country_name = country_fix[country_name]
         return country_name
 
-    @staticmethod
-    def get_mirror_branch_last_sync(point_in_time, timestamp):
-        """
-        Calculates elapsed time
+    # @staticmethod
+    # def get_mirror_branch_last_sync(point_in_time, timestamp):
+    #     """
+    #     Calculates elapsed time
 
-        :param: point_in_time: reference point
-        :param: timestamp: timestamp
-        :return: elapsed_time
-        """
-        total_seconds = (point_in_time - timestamp).total_seconds()
-        total_minutes = total_seconds // 60
-        elapsed_hours = total_minutes // 60
-        elapsed_minutes = total_minutes % 60
-        elapsed_time = "{}:{}".format(
-            str(int(elapsed_hours)).zfill(2),
-            str(int(elapsed_minutes)).zfill(2))
-        return elapsed_time
+    #     :param: point_in_time: reference point
+    #     :param: timestamp: timestamp
+    #     :return: elapsed_time
+    #     """
+    #     total_seconds = (point_in_time - timestamp).total_seconds()
+    #     total_minutes = total_seconds // 60
+    #     elapsed_hours = total_minutes // 60
+    #     elapsed_minutes = total_minutes % 60
+    #     elapsed_time = "{}:{}".format(
+    #         str(int(elapsed_hours)).zfill(2),
+    #         str(int(elapsed_minutes)).zfill(2))
+    #     return elapsed_time
 
-    @staticmethod
-    def get_mirror_branch_timestamp(data):
-        """
-        Extract date from state file
+    # @staticmethod
+    # def get_mirror_branch_timestamp(data):
+    #     """
+    #     Extract date from state file
 
-        :param: data: contents of state file
-        :return: string with timestamp from file
-        """
-        position = data.find("date=")
-        timestamp = data[position + 5:position + 24]
-        return timestamp
+    #     :param: data: contents of state file
+    #     :return: string with timestamp from file
+    #     """
+    #     position = data.find("date=")
+    #     timestamp = data[position + 5:position + 24]
+    #     return timestamp
 
-    @staticmethod
-    def get_mirror_country(data):
-        """
-        Extract mirror country from data
+    # @staticmethod
+    # def get_mirror_country(data):
+    #     """
+    #     Extract mirror country from data
 
-        :param: data
-        :return: country
-        """
-        line = data.strip()
-        if line.startswith("[") and line.endswith("]"):
-            return line[1:-1]
-        elif line.startswith("## Country") or line.startswith("## Location"):
-            return line[19:]
+    #     :param: data
+    #     :return: country
+    #     """
+    #     line = data.strip()
+    #     if line.startswith("[") and line.endswith("]"):
+    #         return line[1:-1]
+    #     elif line.startswith("## Country") or line.startswith("## Location"):
+    #         return line[19:]
 
-    @staticmethod
-    def get_mirror_response_time(start_time, stop_time):
-        """
-        Calculate response time
+    # @staticmethod
+    # def get_mirror_response_time(start_time, stop_time):
+    #     """
+    #     Calculate response time
 
-        :param: start_time
-        :param: stop_time
-        :return: probe_time
-        """
-        probe_time = round((stop_time - start_time), 3)
-        probe_time = format(probe_time, ".3f")
-        return str(probe_time)
+    #     :param: start_time
+    #     :param: stop_time
+    #     :return: probe_time
+    #     """
+    #     probe_time = round((stop_time - start_time), 3)
+    #     probe_time = format(probe_time, ".3f")
+    #     return str(probe_time)
 
-    @staticmethod
-    def get_mirror_url(data):
-        """
-        Extract mirror url from data
+    # @staticmethod
+    # def get_mirror_url(data):
+    #     """
+    #     Extract mirror url from data
 
-        :param: data
-        :return: url
-        """
-        line = data.strip()
-        if line.startswith("Server"):
-            return line[9:]
+    #     :param: data
+    #     :return: url
+    #     """
+    #     line = data.strip()
+    #     if line.startswith("Server"):
+    #         return line[9:]
 
-    @staticmethod
-    def query_mirror_state(url, branch, _timeout, quiet):
-        """
-        Get statefile
+    # @staticmethod
+    # def query_mirror_state(url, branch, _timeout, quiet):
+    #     """
+    #     Get statefile
 
-        :param: mirror_url
-        :return: content
-        """
-        content = ""
-        url = url.replace("$branch/$repo/$arch", branch)
-        try:
-            res = urlopen(url + "/state", timeout=_timeout)
-            content = res.read().decode("utf8")
-        except URLError as err:
-            if hasattr(err, "reason") and not quiet:
-                print("\n{}: {}: {}".format(txt.ERROR,
-                                            txt.ERR_SERVER_NOT_REACHABLE,
-                                            err.reason))
-            elif hasattr(err, "code") and not quiet:
-                print("\n{}: {}: {}".format(txt.ERROR, txt.ERR_SERVER_REQUEST,
-                                            err.errno))
-        except timeout:
-            if not quiet:
-                print("\n{}: {}: {}".format(txt.ERROR,
-                                            txt.ERR_SERVER_NOT_AVAILABLE,
-                                            txt.TIMEOUT))
-        except HTTPException:
-            if not quiet:
-                print("\n{}: {}: {}".format(txt.ERROR,
-                                            txt.ERR_SERVER_HTTP_EXCEPTION,
-                                            txt.HTTP_EXCEPTION))
-        return content
+    #     :param: mirror_url
+    #     :return: content
+    #     """
+    #     content = ""
+    #     url = url.replace("$branch/$repo/$arch", branch)
+    #     try:
+    #         res = urlopen(url + "/state", timeout=_timeout)
+    #         content = res.read().decode("utf8")
+    #     except URLError as err:
+    #         if hasattr(err, "reason") and not quiet:
+    #             print("\n{}: {}: {}".format(txt.ERROR,
+    #                                         txt.ERR_SERVER_NOT_REACHABLE,
+    #                                         err.reason))
+    #         elif hasattr(err, "code") and not quiet:
+    #             print("\n{}: {}: {}".format(txt.ERROR, txt.ERR_SERVER_REQUEST,
+    #                                         err.errno))
+    #     except timeout:
+    #         if not quiet:
+    #             print("\n{}: {}: {}".format(txt.ERROR,
+    #                                         txt.ERR_SERVER_NOT_AVAILABLE,
+    #                                         txt.TIMEOUT))
+    #     except HTTPException:
+    #         if not quiet:
+    #             print("\n{}: {}: {}".format(txt.ERROR,
+    #                                         txt.ERR_SERVER_HTTP_EXCEPTION,
+    #                                         txt.HTTP_EXCEPTION))
+    #     return content
 
     @staticmethod
     def validate_country_list(countries, available_countries):
@@ -646,82 +652,13 @@ class PacmanMirrors:
                     ", ".join(available_countries)))
                 raise argparse.ArgumentTypeError(msg)
 
-    @staticmethod
-    def write_config_to_file(config_file, selected_countries, custom):
-        """Writes the configuration to file"""
-        if custom:
-            if selected_countries == ["Custom"]:
-                selection = "OnlyCountry = Custom\n"
-            else:
-                selection = ("OnlyCountry = {list}\n").format(
-                    list=",".join(selected_countries))
-        else:
-            selection = "# OnlyCountry = \n"
-        try:
-            with open(config_file) as cnf, tempfile.NamedTemporaryFile(
-                    "w+t", dir=os.path.dirname(config_file),
-                    delete=False) as tmp:
-                replaced = False
-                for line in cnf:
-                    if "OnlyCountry" in line:
-                        tmp.write(selection)
-                        replaced = True
-                    else:
-                        tmp.write("{}".format(line))
-                if not replaced:
-                    tmp.write(selection)
-            os.replace(tmp.name, config_file)
-            os.chmod(config_file, 0o644)
-        except OSError as err:
-            print("{}: {}: {}: {}".format(txt.ERROR, txt.ERR_FILE_READ,
-                                          err.filename, err.strerror))
-            exit(1)
-
-    @staticmethod
-    def write_mirror_list_header(handle, custom=False):
-        """
-        Write mirrorlist header
-
-        :param: handle: handle to a file opened for writing
-        """
-        handle.write("##\n")
-        handle.write("## Manjaro Linux repository mirrorlist\n")
-        handle.write("## Generated on {}\n".format(
-            datetime.datetime.now().strftime("%d %B %Y %H:%M")))
-        handle.write("##\n")
-        handle.write("## Use pacman-mirrors to modify\n")
-        if custom:
-            handle.write("## Custom mirrorlist\n")
-            handle.write("## Use 'pacman-mirrors -c all' to reset\n")
-        handle.write("##\n\n")
-
-    @staticmethod
-    def write_mirror_list_entry(handle, mirror):
-        """
-        Write mirror to mirrorlist
-
-        :param: handle: handle to a file opened for writing
-        :param: mirror: mirror object
-        """
-        handle.write("## Country       : {}\n".format(mirror["country"]))
-        if mirror["response_time"] != txt.SERVER_RES:
-            handle.write("## Response time : {}\n"
-                         .format(mirror["response_time"]))
-        if mirror["last_sync"] != txt.SERVER_BAD:
-            if mirror["last_sync"] == txt.LASTSYNC_NA:
-                handle.write("## Last sync     : {}\n".format("N/A"))
-            else:
-                handle.write("## Last sync     : {}h\n"
-                             .format(mirror["last_sync"]))
-        handle.write("Server = {}\n\n".format(mirror["url"]))
-
     def run(self):
         """Run"""
         Fetcher.get_mirrors_list(self)
         Fetcher.get_mirrors_state(self)
         self.config = self.config_init()
         self.command_line_parse()
-        self.load_server_lists()        
+        self.load_server_lists()
         if self.interactive:
             self.gen_mirror_list_interactive()
         else:
@@ -729,5 +666,5 @@ class PacmanMirrors:
 
 
 if __name__ == "__main__":
-    pmapp = PacmanMirrors()
-    pmapp.run()
+    app = PacmanMirrors()
+    app.run()
