@@ -718,7 +718,7 @@ class PacmanMirrors:
         """Run"""
         self.config = self.config_init()
         self.command_line_parse()
-        self.load_server_lists()
+        self.load_server_lists()        
         if self.interactive:
             self.gen_mirror_list_interactive()
         else:
