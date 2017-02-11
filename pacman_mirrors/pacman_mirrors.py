@@ -717,8 +717,8 @@ class PacmanMirrors:
 
     def run(self):
         """Run"""
-        Fetcher.get_mirrors_list()
-        Fetcher.get_mirrors_state()
+        Fetcher.get_mirrors_list(self)
+        Fetcher.get_mirrors_state(self)
         self.config = self.config_init()
         self.command_line_parse()
         self.load_server_lists()        
