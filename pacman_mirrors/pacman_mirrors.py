@@ -635,8 +635,7 @@ class PacmanMirrors:
         """
         for country in countries:
             if country not in available_countries:
-                msg = ("{}{}{}: '{}'.\n\n{}: {}".format(
-                    txt.INFO,
+                msg = ("{}{}: '{}'.\n\n{}: {}".format(
                     txt.INF_OPTION,
                     txt.OPT_COUNTRY,
                     txt.INF_UNKNOWN_COUNTRY,
