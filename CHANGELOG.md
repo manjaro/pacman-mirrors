@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [3.2.1] - 2017-02-10
+- Fix save of config file.
+- Update translations.
+
 ## [3.2.0] - 2017-02-06
 - Add TUI interface.
 - Bug fixes.

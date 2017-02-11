@@ -183,8 +183,8 @@ class PacmanMirrors:
                 self.config["only_country"] = []
             else:
                 try:
-                    self.validate_country_list(
-                        country, self.available_countries)
+                    self.validate_country_list(country,
+                                               self.available_countries)
                     self.config["only_country"] = country
                 except argparse.ArgumentTypeError as err:
                     parser.error(err)
@@ -263,7 +263,7 @@ class PacmanMirrors:
             if self.config["only_country"] == self.available_countries:
                 self.modify_config()
             else:
-                self.modify_config(True)
+                self.modify_config(custom=True)
             self.output_mirror_list(server_list, write_file=True)
         else:
             print("\n{}: {}\n".format(txt.ERROR, txt.ERR_SERVER_NOT_AVAILABLE))
@@ -293,7 +293,7 @@ class PacmanMirrors:
                 print("--------------------------")
                 self.output_mirror_file(new_list)
                 self.output_mirror_list(new_list, write_file=True)
-                self.modify_config(True)
+                self.modify_config(custom=True)
                 print(":: {}: {}".format(txt.INF_INTERACTIVE_LIST_SAVED,
                                          self.custom_mirror_file))
             else:
@@ -340,8 +340,8 @@ class PacmanMirrors:
             if os.path.isfile(self.custom_mirror_file):
                 os.remove(self.custom_mirror_file)
                 os.rmdir(self.custom_mirror_dir)
-        self.write_config_to_file(
-            self.config_file, self.config["only_country"], custom)
+        self.write_config_to_file(self.config_file, self.config["only_country"],
+                                  custom)
 
     def output_mirror_file(self, servers):
         """Write a custom mirror file in custom mirror dir"""
