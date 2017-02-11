@@ -393,114 +393,114 @@ class PacmanMirrors:
                                           err.filename, err.strerror))
             exit(1)
 
-    def query_servers(self, countries):
-        """
-        Query the servers and put them in good_server, resp_server and
-        bad_server depending on quality, and sort them by response time.
+    # def query_servers(self, countries):
+    #     """
+    #     Query the servers and put them in good_server, resp_server and
+    #     bad_server depending on quality, and sort them by response time.
 
-        :param countries: list of country files to use
-        """
-        print(":: {}".format(txt.INF_QUERY_TIME_INFO))
-        for country in countries:
-            if "Custom" in country:
-                custom = True
-                mirror_dir = self.custom_mirror_dir
-                print("=> {}".format(txt.INF_QUERY_CUSTOM))
-            else:
-                custom = False
-                mirror_dir = self.default_mirror_dir
-                print("=> {} {}".format(txt.INF_QUERY_DEFAULT, country))
-            # create a ref point for calculation
-            point_in_time = datetime.datetime.utcnow()
-            try:
-                with open(os.path.join(mirror_dir, country), "r") as mirrorfile:
-                    for line in mirrorfile:
-                        mirror_country = self.get_mirror_country(line)
-                        if mirror_country:
-                            country = mirror_country
-                            continue
-                        server_url = self.get_mirror_url(line)
-                        if not server_url:
-                            continue
-                        server = {"country": country,
-                                  "response_time": txt.SERVER_RES,
-                                  "last_sync": txt.SERVER_BAD,
-                                  "url": server_url}
-                        # create a probe start reference point
-                        probe_start = time.time()
-                        statefile = self.query_mirror_state(
-                            server["url"], self.config["branch"],
-                            self.max_wait_time, self.quiet)
-                        # calculate response time
-                        server_response_time = self.get_mirror_response_time(
-                            probe_start, time.time())
-                        if not self.quiet:
-                            s_url = server_url.replace("$branch",
-                                                       self.config["branch"])
-                            if custom:
-                                print("==> {} - {} - {}".format(country,
-                                                                server_response_time,
-                                                                s_url))
-                            else:
-                                print("==> {} - {}".format(server_response_time,
-                                                           s_url))
-                        if not statefile:
-                            self.append_to_server_list(
-                                server, server["last_sync"])
-                            continue
-                        server["response_time"] = server_response_time
-                        # extract timestamp from statefile
-                        statefile_timestamp = self.get_mirror_branch_timestamp(
-                            statefile)
-                        try:
-                            branch_timestamp = datetime.datetime.strptime(
-                                statefile_timestamp, "%Y-%m-%dT%H:%M:%S")
-                        except ValueError:
-                            server["last_sync"] = txt.LASTSYNC_NA
-                            self.append_to_server_list(
-                                server, server["last_sync"])
-                            if not self.quiet:
-                                print("\n{}: {}".format(txt.WARN,
-                                                        txt.INF_QUERY_WRONG_DATE_FORMAT))
-                        server["last_sync"] = self.get_mirror_branch_last_sync(
-                            point_in_time, branch_timestamp)
-                        self.append_to_server_list(server, server["last_sync"])
-            except OSError as err:
-                print("{}: {}: {}: {}".format(txt.ERROR, txt.ERR_FILE_READ,
-                                              err.filename, err.strerror))
-        self.good_servers = sorted(self.good_servers,
-                                   key=itemgetter("response_time"))
-        self.resp_servers = sorted(self.resp_servers,
-                                   key=itemgetter("response_time"))
+    #     :param countries: list of country files to use
+    #     """
+    #     print(":: {}".format(txt.INF_QUERY_TIME_INFO))
+    #     for country in countries:
+    #         if "Custom" in country:
+    #             custom = True
+    #             mirror_dir = self.custom_mirror_dir
+    #             print("=> {}".format(txt.INF_QUERY_CUSTOM))
+    #         else:
+    #             custom = False
+    #             mirror_dir = self.default_mirror_dir
+    #             print("=> {} {}".format(txt.INF_QUERY_DEFAULT, country))
+    #         # create a ref point for calculation
+    #         point_in_time = datetime.datetime.utcnow()
+    #         try:
+    #             with open(os.path.join(mirror_dir, country), "r") as mirrorfile:
+    #                 for line in mirrorfile:
+    #                     mirror_country = self.get_mirror_country(line)
+    #                     if mirror_country:
+    #                         country = mirror_country
+    #                         continue
+    #                     server_url = self.get_mirror_url(line)
+    #                     if not server_url:
+    #                         continue
+    #                     server = {"country": country,
+    #                               "response_time": txt.SERVER_RES,
+    #                               "last_sync": txt.SERVER_BAD,
+    #                               "url": server_url}
+    #                     # create a probe start reference point
+    #                     probe_start = time.time()
+    #                     statefile = self.query_mirror_state(
+    #                         server["url"], self.config["branch"],
+    #                         self.max_wait_time, self.quiet)
+    #                     # calculate response time
+    #                     server_response_time = self.get_mirror_response_time(
+    #                         probe_start, time.time())
+    #                     if not self.quiet:
+    #                         s_url = server_url.replace("$branch",
+    #                                                    self.config["branch"])
+    #                         if custom:
+    #                             print("==> {} - {} - {}".format(country,
+    #                                                             server_response_time,
+    #                                                             s_url))
+    #                         else:
+    #                             print("==> {} - {}".format(server_response_time,
+    #                                                        s_url))
+    #                     if not statefile:
+    #                         self.append_to_server_list(
+    #                             server, server["last_sync"])
+    #                         continue
+    #                     server["response_time"] = server_response_time
+    #                     # extract timestamp from statefile
+    #                     statefile_timestamp = self.get_mirror_branch_timestamp(
+    #                         statefile)
+    #                     try:
+    #                         branch_timestamp = datetime.datetime.strptime(
+    #                             statefile_timestamp, "%Y-%m-%dT%H:%M:%S")
+    #                     except ValueError:
+    #                         server["last_sync"] = txt.LASTSYNC_NA
+    #                         self.append_to_server_list(
+    #                             server, server["last_sync"])
+    #                         if not self.quiet:
+    #                             print("\n{}: {}".format(txt.WARN,
+    #                                                     txt.INF_QUERY_WRONG_DATE_FORMAT))
+    #                     server["last_sync"] = self.get_mirror_branch_last_sync(
+    #                         point_in_time, branch_timestamp)
+    #                     self.append_to_server_list(server, server["last_sync"])
+    #         except OSError as err:
+    #             print("{}: {}: {}: {}".format(txt.ERROR, txt.ERR_FILE_READ,
+    #                                           err.filename, err.strerror))
+    #     self.good_servers = sorted(self.good_servers,
+    #                                key=itemgetter("response_time"))
+    #     self.resp_servers = sorted(self.resp_servers,
+    #                                key=itemgetter("response_time"))
 
-    def random_servers(self, countries):
-        """
-        Add all servers to bad_servers and shuffle them randomly.
+    # def random_servers(self, countries):
+    #     """
+    #     Add all servers to bad_servers and shuffle them randomly.
 
-        :param countries: list of country files to use
-        """
-        print(":: {}".format(txt.INF_RANDOMIZE_SERVERS))
-        for country in countries:
-            try:
-                with open(os.path.join(
-                        self.default_mirror_dir, country), "r") as conf:
-                    for line in conf:
-                        m_country = self.get_mirror_country(line)
-                        if m_country:
-                            country = m_country
-                            continue
-                        m_url = self.get_mirror_url(line)
-                        if not m_url:
-                            continue
-                        server = {"country": country,
-                                  "response_time": txt.SERVER_RES,
-                                  "last_sync": txt.SERVER_BAD,
-                                  "url": m_url}
-                        self.append_to_server_list(server, txt.SERVER_RES)
-            except OSError as err:
-                print("{}: {}: {}: {}".format(txt.ERROR, txt.ERR_FILE_READ,
-                                              err.filename, err.strerror))
-        shuffle(self.bad_servers)
+    #     :param countries: list of country files to use
+    #     """
+    #     print(":: {}".format(txt.INF_RANDOMIZE_SERVERS))
+    #     for country in countries:
+    #         try:
+    #             with open(os.path.join(
+    #                     self.default_mirror_dir, country), "r") as conf:
+    #                 for line in conf:
+    #                     m_country = self.get_mirror_country(line)
+    #                     if m_country:
+    #                         country = m_country
+    #                         continue
+    #                     m_url = self.get_mirror_url(line)
+    #                     if not m_url:
+    #                         continue
+    #                     server = {"country": country,
+    #                               "response_time": txt.SERVER_RES,
+    #                               "last_sync": txt.SERVER_BAD,
+    #                               "url": m_url}
+    #                     self.append_to_server_list(server, txt.SERVER_RES)
+    #         except OSError as err:
+    #             print("{}: {}: {}: {}".format(txt.ERROR, txt.ERR_FILE_READ,
+    #                                           err.filename, err.strerror))
+    #     shuffle(self.bad_servers)
 
     @staticmethod
     def get_geoip_country():
