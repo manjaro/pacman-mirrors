@@ -313,8 +313,9 @@ class PacmanMirrors:
             if self.config["only_country"] == ["Custom"]:
                 if not os.path.isfile(self.custom_mirror_file):
                     print("{}: {} '{} {}'\n".format(txt.WARN,
-                                                  txt.INF_CUSTOM_MIRROR_FILE,
-                                                  self.custom_mirror_file))
+                                                    txt.INF_CUSTOM_MIRROR_FILE,
+                                                    self.custom_mirror_file,
+                                                    txt.INF_DOES_NOT_EXIST))
                     self.config["only_country"] = []
             elif self.config["only_country"] == ["all"]:
                 self.config["only_country"] = []
@@ -431,8 +432,8 @@ class PacmanMirrors:
                                                        self.config["branch"])
                             if custom:
                                 print("==> {} - {} - {}".format(country,
-                                                           server_response_time,
-                                                           s_url))
+                                                                server_response_time,
+                                                                s_url))
                             else:
                                 print("==> {} - {}".format(server_response_time,
                                                            s_url))
@@ -453,7 +454,7 @@ class PacmanMirrors:
                                 server, server["last_sync"])
                             if not self.quiet:
                                 print("\n{}: {}".format(txt.WARN,
-                                               txt.INF_QUERY_WRONG_DATE_FORMAT))
+                                                        txt.INF_QUERY_WRONG_DATE_FORMAT))
                         server["last_sync"] = self.get_mirror_branch_last_sync(
                             point_in_time, branch_timestamp)
                         self.append_to_server_list(server, server["last_sync"])
@@ -685,7 +686,7 @@ class PacmanMirrors:
         handle.write("##\n")
         handle.write("## Manjaro Linux repository mirrorlist\n")
         handle.write("## Generated on {}\n".format(
-                      datetime.datetime.now().strftime("%d %B %Y %H:%M")))
+            datetime.datetime.now().strftime("%d %B %Y %H:%M")))
         handle.write("##\n")
         handle.write("## Use pacman-mirrors to modify\n")
         if custom:
