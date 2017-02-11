@@ -313,8 +313,9 @@ class PacmanMirrors:
             if self.config["only_country"] == ["Custom"]:
                 if not os.path.isfile(self.custom_mirror_file):
                     print("{}: {} '{} {}'\n".format(txt.WARN,
-                                                  txt.INF_CUSTOM_MIRROR_FILE,
-                                                  self.custom_mirror_file))
+                                                    txt.INF_CUSTOM_MIRROR_FILE,
+                                                    self.custom_mirror_file,
+                                                    txt.INF_DOES_NOT_EXIST))
                     self.config["only_country"] = []
             elif self.config["only_country"] == ["all"]:
                 self.config["only_country"] = []
