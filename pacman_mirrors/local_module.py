@@ -83,7 +83,7 @@ class FileHandler():
         """
         Write mirrorfile header
 
-        :param: handle: handle to a file opened for writing
+        :param handle: handle to a file opened for writing
         """
         handle.write("##\n")
         handle.write("## Manjaro Linux Custom mirror file\n")
@@ -97,7 +97,7 @@ class FileHandler():
         """
         Write mirrorlist header
 
-        :param: handle: handle to a file opened for writing
+        :param handle: handle to a file opened for writing
         """
         handle.write("##\n")
         if custom:
@@ -116,10 +116,10 @@ class FileHandler():
 
     def write_mirror_list_entry(self, handle, mirror, mirror_file=False):
         """
-        Write mirror to mirrorlist
+        Write mirror to mirror list or file
 
-        :param: handle: handle to a file opened for writing
-        :param: mirror: mirror object
+        :param handle: handle to a file opened for writing
+        :param mirror: mirror object
         """
         handle.write("## Country       : {}\n".format(mirror["country"]))
         if not mirror_file:
