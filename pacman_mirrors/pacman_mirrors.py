@@ -343,7 +343,7 @@ class PacmanMirrors:
             if os.path.isfile(self.custom_mirror_file):
                 os.remove(self.custom_mirror_file)
                 os.rmdir(self.custom_mirror_dir)
-        FileHandler.write_config_to_file(self, 
+        FileHandler.write_config_to_file(self,
                                          self.config_file,
                                          self.config["only_country"],
                                          custom)
