@@ -75,19 +75,13 @@ class FileHandler():
                                           err.filename, err.strerror))
             exit(1)
 
-    def write_mirror_file_header(self, handle):
+    def write_mirror_file_header(self, data, filename):
         """
-        Write mirrorfile header
+        Write mirrorfile
 
         :param handle: handle to a file opened for writing
         """
-        handle.write("##\n")
-        handle.write("## Manjaro Linux Custom mirror file\n")
-        handle.write("## Generated on {}\n".format(
-            datetime.datetime.now().strftime("%d %B %Y %H:%M")))
-        handle.write("##\n")
-        handle.write("## Use 'pacman-mirrors -c all' to reset\n")
-        handle.write("##\n\n")
+        self.write_json(data, filename)
 
     def write_mirror_list_header(self, handle, custom=False):
         """
@@ -110,7 +104,7 @@ class FileHandler():
             handle.write("## Use pacman-mirrors to modify\n")
         handle.write("##\n\n")
 
-    def write_mirror_list_entry(self, handle, mirror, mirror_file=False):
+    def write_mirror_list_entry(self, handle, mirror):
         """
         Write mirror to mirror list or file
 
@@ -118,15 +112,11 @@ class FileHandler():
         :param mirror: mirror object
         """
         handle.write("## Country       : {}\n".format(mirror["country"]))
-        if not mirror_file:
-            if mirror["response_time"] != txt.SERVER_RES:
-                handle.write("## Response time : {}\n"
-                             .format(mirror["response_time"]))
-            if mirror["last_sync"] != txt.SERVER_BAD:
-                if mirror["last_sync"] == txt.LASTSYNC_NA:
-                    handle.write("## Last sync     : {}\n".format("N/A"))
-                else:
-                    handle.write("## Last sync     : {}h\n"
-                                 .format(mirror["last_sync"]))
+        if mirror["response_time"] == txt.SERVER_RES:
+            mirror["response_time"] = "N/A"
+        handle.write("## Response time : {}\n".format(mirror["response_time"]))
+        if mirror["last_sync"] == txt.SERVER_BAD or mirror["last_sync"] == txt.LASTSYNC_NA:
+            mirror["last_sync"] = "N/A"
+        handle.write("## Last sync     : {}h\n".format(mirror["last_sync"]))
         handle.write("Server = {}\n\n".format(mirror["url"]))
 
