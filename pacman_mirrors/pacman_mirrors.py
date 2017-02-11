@@ -635,10 +635,11 @@ class PacmanMirrors:
         """
         for country in countries:
             if country not in available_countries:
-                msg = ("{}{}: '{}'.\n\n{}: {}".format(
+                msg = ("{}{}: '{}: {}'.\n\n{}: {}".format(
                     txt.INF_OPTION,
                     txt.OPT_COUNTRY,
                     txt.INF_UNKNOWN_COUNTRY,
+                    country,
                     txt.INF_AVAILABLE_COUNTRIES,
                     ", ".join(available_countries)))
                 raise argparse.ArgumentTypeError(msg)
