@@ -2,9 +2,12 @@
 
 """Manjaro-Mirrors Local Module"""
 
+import datetime
 import json
+import os
 import tempfile
 from collections import OrderedDict
+from . import txt
 
 MIRRORS_FILE = "/etc/pacman.d/mirrors/mirrors.json"
 STATES_FILE = "/etc/pacman.d/mirrors/states.json"
@@ -44,7 +47,7 @@ class FileHandler():
             return False
 
         return result
-    
+
     def write_config_to_file(self, config_file, selected_countries, custom):
         """Writes the configuration to file"""
         if custom:
@@ -56,9 +59,10 @@ class FileHandler():
         else:
             selection = "# OnlyCountry = \n"
         try:
-            with open(config_file) as cnf, tempfile.NamedTemporaryFile(
-                    "w+t", dir=os.path.dirname(config_file),
-                    delete=False) as tmp:
+            with open(
+                config_file) as cnf, tempfile.NamedTemporaryFile(
+                    "w+t", dir=os.path.dirname(
+                        config_file), delete=False) as tmp:
                 replaced = False
                 for line in cnf:
                     if "OnlyCountry" in line:
@@ -121,12 +125,12 @@ class FileHandler():
         if not mirror_file:
             if mirror["response_time"] != txt.SERVER_RES:
                 handle.write("## Response time : {}\n"
-                            .format(mirror["response_time"]))
+                             .format(mirror["response_time"]))
             if mirror["last_sync"] != txt.SERVER_BAD:
                 if mirror["last_sync"] == txt.LASTSYNC_NA:
                     handle.write("## Last sync     : {}\n".format("N/A"))
                 else:
                     handle.write("## Last sync     : {}h\n"
-                                .format(mirror["last_sync"]))
+                                 .format(mirror["last_sync"]))
         handle.write("Server = {}\n\n".format(mirror["url"]))
-        
+
