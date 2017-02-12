@@ -2,6 +2,7 @@
 """Conversion Module"""
 
 import json
+import os
 
 
 class Mirror:
@@ -16,25 +17,22 @@ class Converter:
     def convert_custom_to_json():
         """Convert custom mirror file to json"""
         # load custom mirror file
-        with open("/etc/pacman.d/mirrorlist", "r") as mirrorfile:
-            mirrors = []
-            mirror_country = ""
-            for line in mirrorfile:
-                # mirror country
-                country = Function.get_country(line)
-                if country:
-                    mirror_country = country
-                    continue
-                mirror_url = Function.get_url(line)
-                if not mirror_url:
-                    continue
-                mirror_protocol = Function.get_protocol(mirror_url)
-                # mirror = json.JSONEncoder().encode({mirror_country: {mirror_url: {"prococols": [mirror_protocol]}}})
-                # mirror = {mirror_country: {mirror_url: {"prococols": [mirror_protocol]}}}
-                mirror = Mirror(mirror_country, mirror_url, mirror_protocol)
-                mirrors.append(mirror)
-
-        Function.write_json(mirrors, "./test.json")
+        if os.isfile("/var/lib/pacman-mirrors/Custom"):
+            with open("/etc/pacman.d/mirrorlist", "r") as mirrorfile:
+                mirrors = []
+                mirror_country = ""
+                for line in mirrorfile:
+                    # mirror country
+                    country = Function.get_country(line)
+                    if country:
+                        mirror_country = country
+                        continue
+                    mirror_url = Function.get_url(line)
+                    if not mirror_url:
+                        continue
+                    mirror_protocol = Function.get_protocol(mirror_url)
+                    mirrors.append({mirror_country: {mirror_url: {"prococols": [mirror_protocol]}}})
+            Function.write_json(mirrors, "./test.json")
 
 
 class Function:
