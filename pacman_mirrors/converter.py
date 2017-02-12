@@ -3,13 +3,7 @@
 
 import json
 import os
-
-
-class Mirror:
-    def __init__(self, country, url, protocols):
-        self.country = country
-        self.url = url,
-        self.protocols = protocols
+from .configuration import CUSTOM_MIRROR_FILE, CUSTOM_MIRROR_JSON
 
 
 class Converter:
@@ -17,8 +11,8 @@ class Converter:
     def convert_custom_to_json():
         """Convert custom mirror file to json"""
         # load custom mirror file
-        if os.isfile("/var/lib/pacman-mirrors/Custom"):
-            with open("/etc/pacman.d/mirrorlist", "r") as mirrorfile:
+        if os.isfile(CUSTOM_MIRROR_FILE):
+            with open(CUSTOM_MIRROR_FILE, "r") as mirrorfile:
                 mirrors = []
                 mirror_country = ""
                 for line in mirrorfile:
@@ -32,19 +26,17 @@ class Converter:
                         continue
                     mirror_protocol = Function.get_protocol(mirror_url)
                     mirrors.append({mirror_country: {mirror_url: {"prococols": [mirror_protocol]}}})
-            Function.write_json(mirrors, "./test.json")
+            Function.write_json(mirrors, CUSTOM_MIRROR_JSON)
 
 
 class Function:
     @staticmethod
     def write_json(data, filename):
         """Writes a named json file"""
-
         try:
             with open(filename, "w") as outfile:
                 json.dump(data, outfile, sort_keys=True)
             return True
-
         except OSError:
             return False
 
@@ -77,8 +69,3 @@ class Function:
         line = data.strip()
         if line.startswith("Server"):
             return line[9:]
-
-
-if __name__ == "__main__":
-    app = Converter()
-    app.convert_custom_to_json()
