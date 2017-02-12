@@ -313,8 +313,9 @@ class PacmanMirrors:
             if self.config["only_country"] == ["Custom"]:
                 if not os.path.isfile(self.custom_mirror_file):
                     print("{}: {} '{} {}'\n".format(txt.WARN,
-                                                  txt.INF_CUSTOM_MIRROR_FILE,
-                                                  self.custom_mirror_file))
+                                                    txt.INF_CUSTOM_MIRROR_FILE,
+                                                    self.custom_mirror_file,
+                                                    txt.INF_DOES_NOT_EXIST))
                     self.config["only_country"] = []
             elif self.config["only_country"] == ["all"]:
                 self.config["only_country"] = []
@@ -635,11 +636,13 @@ class PacmanMirrors:
         """
         for country in countries:
             if country not in available_countries:
-                msg = ("{}{}{}: '{}'.\n\n{}: {}".format(txt.INF_OPTION,
-                                                       txt.OPT_COUNTRY,
-                                                       txt.INF_UNKNOWN_COUNTRY,
-                                                    txt.INF_AVAILABLE_COUNTRIES,
-                                                ", ".join(available_countries)))
+                msg = ("{}{}: '{}: {}'.\n\n{}: {}".format(
+                    txt.INF_OPTION,
+                    txt.OPT_COUNTRY,
+                    txt.INF_UNKNOWN_COUNTRY,
+                    country,
+                    txt.INF_AVAILABLE_COUNTRIES,
+                    ", ".join(available_countries)))
                 raise argparse.ArgumentTypeError(msg)
 
     @staticmethod
@@ -650,7 +653,7 @@ class PacmanMirrors:
                 selection = "OnlyCountry = Custom\n"
             else:
                 selection = ("OnlyCountry = {list}\n").format(
-                list=",".join(selected_countries))
+                    list=",".join(selected_countries))
         else:
             selection = "# OnlyCountry = \n"
         try:
