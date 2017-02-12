@@ -5,10 +5,17 @@
 MIRRORS_URL = "http://repo.manjaro.org/mirrors.json"
 STATES_URL = "http://repo.manjaro.org/status.json"
 # local file constants
-MIRRORS_FILE = "/etc/pacman.d/mirrors/mirrors.json"
-STATES_FILE = "/etc/pacman.d/mirrors/status.json"
-# CUSTOM_FILE = "/var/lib/pacman-mirrors/custom.json"
-CUSTOM_FILE = "./custom.json"
+# commented while dev
+# MIRRORS_JSON = "/var/lib/pacman-mirrors/mirrors.json"
+# STATES_JSON = "/var/lib/pacman-mirrors/status.json"
+# CUSTOM_MIRROR_JSON = "/var/lib/pacman-mirrors/custom-mirrors.json"
+# CUSTOM_MIRROR_FILE = "/var/lib/pacman-mirrors/Custom"
+# used while dev
+MIRRORS_JSON = "data/mirrors.json"
+STATES_JSON = "data/status.json"
+CUSTOM_MIRROR_JSON = "data/custom-mirrors.json"
+CUSTOM_MIRROR_FILE = "data/Custom"
+
 # repo constants
 BRANCHES = ("stable", "testing", "unstable")
 REPO_ARCH = "$repo/$arch"
