@@ -547,6 +547,7 @@ class PacmanMirrors:
         """Run"""
         Fetcher.get_mirrors_list()
         Fetcher.get_mirrors_state()
+        Converter.convert_custom_to_json()
         self.config = self.config_init()
         # self.command_line_parse()
         # self.load_server_lists()
