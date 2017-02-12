@@ -12,7 +12,8 @@ from . import txt
 class FileHandler():
     """FileHandler class"""
 
-    def write_json(self, data, filename):
+    @staticmethod
+    def write_json(data, filename):
         """
         Writes a named json file
 
@@ -21,13 +22,14 @@ class FileHandler():
         """
         try:
             with open(filename, "w") as outfile:
-                json.dump(data, outfile)
+                json.dump(data, outfile, sort_keys=True)
             return True
 
         except OSError:
             return False
 
-    def read_json(self, filename):
+    @staticmethod
+    def read_json(filename):
         """
         Reads a named json file
 
@@ -44,7 +46,8 @@ class FileHandler():
 
         return result
 
-    def write_config_to_file(self, config_file, selected_countries, custom):
+    @staticmethod
+    def write_config_to_file(config_file, selected_countries, custom):
         """Writes the configuration to file"""
         if custom:
             if selected_countries == ["Custom"]:
@@ -75,19 +78,25 @@ class FileHandler():
                                           err.filename, err.strerror))
             exit(1)
 
-    def write_mirror_file_header(self, data, filename):
+        return True
+
+    @staticmethod
+    def write_mirror_file(data, filename):
         """
         Write mirrorfile
 
-        :param handle: handle to a file opened for writing
+        :param data: custom mirrors
+        :param filename: custom mirror file
         """
-        self.write_json(data, filename)
+        FileHandler.write_json(data, filename)
 
-    def write_mirror_list_header(self, handle, custom=False):
+    @staticmethod
+    def write_mirror_list_header(handle, custom=False):
         """
         Write mirrorlist header
 
         :param handle: handle to a file opened for writing
+        :param custom: controls content of the header
         """
         handle.write("##\n")
         if custom:
@@ -104,19 +113,20 @@ class FileHandler():
             handle.write("## Use pacman-mirrors to modify\n")
         handle.write("##\n\n")
 
-    def write_mirror_list_entry(self, handle, mirror):
+    @staticmethod
+    def write_mirror_list_entry(handle, mirror):
         """
         Write mirror to mirror list or file
 
         :param handle: handle to a file opened for writing
         :param mirror: mirror object
         """
-        handle.write("## Country       : {}\n".format(mirror["country"]))
-        if mirror["response_time"] == txt.SERVER_RES:
-            mirror["response_time"] = "N/A"
-        handle.write("## Response time : {}\n".format(mirror["response_time"]))
-        if mirror["last_sync"] == txt.SERVER_BAD or mirror["last_sync"] == txt.LASTSYNC_NA:
-            mirror["last_sync"] = "N/A"
-        handle.write("## Last sync     : {}h\n".format(mirror["last_sync"]))
-        handle.write("Server = {}\n\n".format(mirror["url"]))
-
+        work = mirror
+        handle.write("## Country       : {}\n".format(work["country"]))
+        if work["response_time"] == txt.SERVER_RES:
+            work["response_time"] = "N/A"
+        handle.write("## Response time : {}\n".format(work["response_time"]))
+        if work["last_sync"] == txt.SERVER_BAD or work["last_sync"] == txt.LASTSYNC_NA:
+            work["last_sync"] = "N/A"
+        handle.write("## Last sync     : {}h\n".format(work["last_sync"]))
+        handle.write("Server = {}\n\n".format(work["url"]))

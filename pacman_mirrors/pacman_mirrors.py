@@ -27,21 +27,19 @@ Main Module
 """
 
 import argparse
-import datetime
 import importlib.util
 import json
 import os
 import sys
-import time
 from http.client import HTTPException
 from operator import itemgetter
-from random import shuffle
 from socket import timeout
 from urllib.error import URLError
 from urllib.request import urlopen
 from pacman_mirrors import __version__
 from .local_module import FileHandler
 from .http_module import Fetcher
+from .converter import Converter
 from .custom_help_formatter import CustomHelpFormatter
 from . import i18n
 from . import txt
@@ -176,8 +174,8 @@ class PacmanMirrors:
         if args.geoip:
             self.geolocation = True
 
-        if args.country:
-            country = args.country.split(",")
+        if country:
+            country = country.split(",")
             if country == ["Custom"]:
                 self.config["only_country"] = country
             elif country == ["all"]:

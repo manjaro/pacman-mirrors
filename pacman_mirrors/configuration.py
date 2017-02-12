@@ -7,7 +7,8 @@ STATES_URL = "http://repo.manjaro.org/status.json"
 # local file constants
 MIRRORS_FILE = "/etc/pacman.d/mirrors/mirrors.json"
 STATES_FILE = "/etc/pacman.d/mirrors/status.json"
-CUSTOM_FILE = "/var/lib/pacman-mirrors/custom.json"
+# CUSTOM_FILE = "/var/lib/pacman-mirrors/custom.json"
+CUSTOM_FILE = "./custom.json"
 # repo constants
 BRANCHES = ("stable", "testing", "unstable")
 REPO_ARCH = "$repo/$arch"

@@ -7,7 +7,7 @@ from http.client import HTTPException
 from socket import timeout
 from urllib.error import URLError
 from urllib.request import urlopen
-from collections import OrderedDict
+# from collections import OrderedDict
 from .configuration import MIRRORS_URL, STATES_URL, MIRRORS_FILE, STATES_FILE
 from .local_module import FileHandler
 from . import txt
@@ -22,11 +22,12 @@ class Fetcher():
         try:
             with urlopen(MIRRORS_URL) as response:
                 mirrors = json.loads(response.read().decode(
-                    "utf8"), object_pairs_hook=OrderedDict)
+                    "utf8")) #, object_pairs_hook=OrderedDict
         except URLError:
             print("Error getting mirror list from server")
         if mirrors:
-            FileHandler.write_json(self, mirrors, MIRRORS_FILE)
+            print(mirrors)
+            FileHandler.write_json(mirrors, MIRRORS_FILE)
 
     def get_mirrors_state(self):
         """Retrieve state for all mirrors from manjaro.org"""
@@ -35,11 +36,11 @@ class Fetcher():
             with urlopen(STATES_URL) as response:
                 states = json.loads(
                     response.read().decode(
-                        "utf8"), object_pairs_hook=OrderedDict)
+                        "utf8")) # , object_pairs_hook=OrderedDict
         except URLError:
             print("Error getting mirrors state from server")
         if states:
-            FileHandler.write_json(self, states, STATES_FILE)
+            FileHandler.write_json(states, STATES_FILE)
 
     def get_response_time(self, _mirror_url, _timeout, _quiet):
         """Get a mirrors response time
