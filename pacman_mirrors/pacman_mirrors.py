@@ -31,11 +31,6 @@ import importlib.util
 import json
 import os
 import sys
-from http.client import HTTPException
-from operator import itemgetter
-from socket import timeout
-from urllib.error import URLError
-from urllib.request import urlopen
 from pacman_mirrors import __version__
 from .local_module import FileHandler
 from .http_module import Fetcher
@@ -52,6 +47,7 @@ except ImportError:
 else:
     GTK_AVAILABLE = True
 _ = i18n.language.gettext
+
 
 class PacmanMirrors:
     """Class PacmanMirrors"""
@@ -549,8 +545,8 @@ class PacmanMirrors:
 
     def run(self):
         """Run"""
-        Fetcher.get_mirrors_list(self)
-        Fetcher.get_mirrors_state(self)
+        Fetcher.get_mirrors_list()
+        Fetcher.get_mirrors_state()
         self.config = self.config_init()
         # self.command_line_parse()
         # self.load_server_lists()
