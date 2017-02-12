@@ -52,12 +52,12 @@ class Fetcher():
         :return string: response time
         """
         probe_start = time.time()
-        probe_time = txt.SERVER_RES
+        probe_time = txt.SERVER_RES  # default probe_time
+        probe_stop = None
         try:
             urllib.request.urlopen(mirror_url, timeout=timeout)
             probe_stop = time.time()
         except urllib.request.URLError as err:
-            probe_stop = None
             if hasattr(err, "reason") and not quiet:
                 print("\n{}: {}: {}".format(txt.ERROR,
                                             txt.ERR_SERVER_NOT_REACHABLE,
@@ -67,13 +67,11 @@ class Fetcher():
                                             txt.ERR_SERVER_REQUEST,
                                             err.errno))
         except timeout:
-            probe_stop = None
             if not quiet:
                 print("\n{}: {}: {}".format(txt.ERROR,
                                             txt.ERR_SERVER_NOT_AVAILABLE,
                                             txt.TIMEOUT))
         except HTTPException:
-            probe_stop = None
             if not quiet:
                 print("\n{}: {}: {}".format(txt.ERROR,
                                             txt.ERR_SERVER_HTTP_EXCEPTION,
