@@ -9,8 +9,14 @@ import tempfile
 from collections import OrderedDict
 from . import txt
 
-class FileHandler():
-    """FileHandler class"""
+
+class FileMethods:
+    """FileMethods class"""
+
+    @staticmethod
+    def check_directory(dir_name):
+        """Check necessary directory"""
+        os.makedirs(dir_name, mode=0o755, exist_ok=True)
 
     @staticmethod
     def write_json(data, filename):
@@ -53,7 +59,7 @@ class FileHandler():
             if selected_countries == ["Custom"]:
                 selection = "OnlyCountry = Custom\n"
             else:
-                selection = ("OnlyCountry = {list}\n").format(
+                selection = "OnlyCountry = {list}\n".format(
                     list=",".join(selected_countries))
         else:
             selection = "# OnlyCountry = \n"
@@ -88,7 +94,7 @@ class FileHandler():
         :param data: custom mirrors
         :param filename: custom mirror file
         """
-        FileHandler.write_json(data, filename)
+        FileMethods.write_json(data, filename)
 
     @staticmethod
     def write_mirror_list_header(handle, custom=False):
