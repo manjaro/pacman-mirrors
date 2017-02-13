@@ -31,9 +31,9 @@ import importlib.util
 import os
 import sys
 from pacman_mirrors import __version__
-from .configuration import MIRRORS_CONF, MIRRORS_DIR, CUSTOM_MIRROR_JSON, MIRROR_LIST
+from .configuration import CONFIG_FILE, MIRROR_DIR, CUSTOM_FILE, MIRROR_LIST
 from .filemethods import FileMethods
-from .httpmodule import Fetcher
+from .httpfetcher import HttpFetcher
 from .customfile import CustomFile
 from .custom_help_formatter import CustomHelpFormatter
 from . import i18n
@@ -67,10 +67,8 @@ class PacmanMirrors:
         # Time out
         self.max_wait_time = 2
         # Files and dirs
-        self.config_file = MIRRORS_CONF
-        self.default_mirror_list = MIRROR_LIST
-        self.custom_mirror_dir = MIRRORS_DIR
-        self.custom_mirror_file = MIRRORS_DIR + CUSTOM_MIRROR_JSON
+        self.config_file = CONFIG_FILE
+        self.custom_file = MIRROR_DIR + CUSTOM_FILE
         # Define config
         self.config = {}
 
@@ -110,7 +108,7 @@ class PacmanMirrors:
                             action="store_true",
                             help=txt.HLP_ARG_GEOIP_P1 + txt.OPT_COUNTRY +
                             txt.HLP_ARG_GEOIP_P2)
-        parser.add_argument("-d", "--mirror_dir",
+        parser.add_argument("-d", "--mirrordir",
                             type=str,
                             metavar=txt.PATH,
                             help=txt.HLP_ARG_PATH)
@@ -149,8 +147,8 @@ class PacmanMirrors:
             print("{}: {}".format(txt.ERROR, txt.ERR_NOT_ROOT))
             exit(1)
 
-        if args.no_update:
-            if self.config["no_update"] == "True":
+        if args.noupdate:
+            if self.config["noupdate"] == "True":
                 exit(0)
 
         if args.method:
@@ -159,11 +157,11 @@ class PacmanMirrors:
         if args.branch:
             self.config["branch"] = args.branch
 
-        if args.mirror_dir:
-            self.config["mirror_dir"] = args.mirror_dir
+        if args.mirrordir:
+            self.config["mirrordir"] = args.mirrordir
 
         self.available_countries = sorted(
-            os.listdir(self.config["mirror_dir"]))
+            os.listdir(self.config["mirrordir"]))
 
         if args.geoip:
             self.geolocation = True
@@ -171,23 +169,23 @@ class PacmanMirrors:
         if args.country:
             country = args.country.split(",")
             if country == ["Custom"]:
-                self.config["only_country"] = country
+                self.config["selectedcountries"] = country
             elif country == ["all"]:
-                self.config["only_country"] = []
+                self.config["selectedcountries"] = []
             else:
                 try:
                     self.validate_country_list(country,
                                                self.available_countries)
-                    self.config["only_country"] = country
+                    self.config["selectedcountries"] = country
                 except argparse.ArgumentTypeError as err:
                     parser.error(err)
 
         if args.output:
             if args.output[0] == "/":
-                self.config["mirror_list"] = args.output
+                self.config["mirrorlist"] = args.output
             else:
-                self.config["mirror_list"] = os.getcwd() + "/" + args.output
-            self.default_mirror_list = self.config["mirror_list"]
+                self.config["mirrorlist"] = os.getcwd() + "/" + args.output
+            self.config["mirrorlist"] = self.config["mirrorlist"]
 
         if args.interactive:
             self.interactive = True
@@ -208,10 +206,10 @@ class PacmanMirrors:
         config = {
             "branch": "stable",
             "method": "rank",
-            "only_country": [],
-            "mirror_dir": MIRRORS_DIR,
-            "mirror_list": MIRROR_LIST,
-            "no_update": False,
+            "mirrordir": MIRROR_DIR,
+            "mirrorlist": MIRROR_LIST,
+            "noupdate": False,
+            "selectedcountries": [],
         }
         try:
             # read configuration from file
@@ -231,13 +229,13 @@ class PacmanMirrors:
                         elif key == "Branch":
                             config["branch"] = value
                         elif key == "OnlyCountry":
-                            config["only_country"] = value.split(",")
+                            config["selectedcountries"] = value.split(",")
                         elif key == "MirrorlistsDir":
-                            config["mirror_dir"] = value
+                            config["mirrordir"] = value
                         elif key == "OutputMirrorlist":
-                            config["mirror_list"] = value
+                            config["mirrorlist"] = value
                         elif key == "NoUpdate":
-                            config["no_update"] = value
+                            config["noupdate"] = value
         except (PermissionError, OSError) as err:
             print("{}: {}: {}: {}".format(txt.ERROR, txt.ERR_FILE_READ,
                                           err.filename, err.strerror))
@@ -253,7 +251,7 @@ class PacmanMirrors:
             server_list.extend(self.bad_servers)
 
         if server_list:
-            if self.config["only_country"] == self.available_countries:
+            if self.config["selectedcountries"] == self.available_countries:
                 self.modify_config()
             else:
                 self.modify_config(custom=True)
@@ -291,7 +289,7 @@ class PacmanMirrors:
                 self.output_mirror_list(new_list, write_file=True)
                 self.modify_config(custom=True)
                 print(":: {}: {}".format(txt.INF_INTERACTIVE_LIST_SAVED,
-                                         CUSTOM_MIRROR_JSON))
+                                         CUSTOM_FILE))
             else:
                 print("{}: {}".format(txt.INFO, txt.INF_NO_SELECTION))
                 print("{}: {}".format(txt.INFO, txt.INF_NO_CHANGES))
@@ -302,42 +300,42 @@ class PacmanMirrors:
         """
         Generate a list of servers
 
-        It will only use mirrors defined in only_country, and if empty will
+        It will only use mirrors defined in selectedcountries, and if empty will
         use all mirrors.
         """
-        if self.config["only_country"]:
-            if self.config["only_country"] == ["Custom"]:
-                if not os.path.isfile(self.custom_mirror_file):
+        if self.config["selectedcountries"]:
+            if self.config["selectedcountries"] == ["Custom"]:
+                if not os.path.isfile(self.custom_file):
                     print("{}: {} '{} {}'\n".format(txt.WARN,
                                                     txt.INF_CUSTOM_MIRROR_FILE,
-                                                    self.custom_mirror_file,
+                                                    self.custom_file,
                                                     txt.INF_DOES_NOT_EXIST))
-                    self.config["only_country"] = []
-            elif self.config["only_country"] == ["all"]:
-                self.config["only_country"] = []
-        elif not self.config["only_country"]:
+                    self.config["selectedcountries"] = []
+            elif self.config["selectedcountries"] == ["all"]:
+                self.config["selectedcountries"] = []
+        elif not self.config["selectedcountries"]:
             if self.geolocation:
                 geoip_country = self.get_geoip_country()
                 if geoip_country and geoip_country in self.available_countries:
-                    self.config["only_country"] = [geoip_country]
+                    self.config["selectedcountries"] = [geoip_country]
                 else:
-                    self.config["only_country"] = self.available_countries
+                    self.config["selectedcountries"] = self.available_countries
             else:
-                self.config["only_country"] = self.available_countries
+                self.config["selectedcountries"] = self.available_countries
 
         if self.config["method"] == "rank":
-            self.query_servers(self.config["only_country"])
+            self.query_servers(self.config["selectedcountries"])
         elif self.config["method"] == "random":
-            self.random_servers(self.config["only_country"])
+            self.random_servers(self.config["selectedcountries"])
 
     def modify_config(self, custom=False):
         """Modify configuration"""
         if not custom:
             # remove custom mirror file
-            if os.path.isfile(self.custom_mirror_file):
-                os.remove(self.custom_mirror_file)
+            if os.path.isfile(self.custom_file):
+                os.remove(self.custom_file)
         FileMethods.write_config_to_file(self.config_file,
-                                         self.config["only_country"],
+                                         self.config["selectedcountries"],
                                          custom)
 
     def output_mirror_list(self, servers, write_file=False):
@@ -348,7 +346,7 @@ class PacmanMirrors:
         :param: write_file: if "True" the list is written to disk
         """
         try:
-            with open(self.config["mirror_list"], "w") as outfile:
+            with open(self.config["mirrorlist"], "w") as outfile:
                 if write_file:
                     print(":: {}".format(txt.INF_MIRROR_LIST_WRITE))
                     FileMethods.write_mirror_list_header(self, outfile)
@@ -362,7 +360,7 @@ class PacmanMirrors:
                             print("==> {} : {}".format(server["country"],
                                                        server["url"]))
                 print(":: {}: {}".format(txt.INF_MIRROR_LIST_SAVED,
-                                         self.config["mirror_list"]))
+                                         self.config["mirrorlist"]))
         except OSError as err:
             print("{}: {}: {}: {}".format(txt.ERROR, txt.ERR_FILE_WRITE,
                                           err.filename, err.strerror))
@@ -390,10 +388,10 @@ class PacmanMirrors:
 
     def run(self):
         """Run"""
-        FileMethods.check_directory(MIRRORS_DIR)
+        FileMethods.check_directory(MIRROR_DIR)
         CustomFile.custom_to_json()
-        Fetcher.get_mirrors_json()
-        Fetcher.get_status_json()
+        HttpFetcher.get_mirrors_json()
+        HttpFetcher.get_status_json()
         self.config = self.config_init()
         # self.command_line_parse()
         # self.load_server_lists()
