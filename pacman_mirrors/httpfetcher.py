@@ -12,7 +12,7 @@ from .filemethods import FileMethods
 from . import txt
 
 
-class Fetcher():
+class HttpFetcher:
     """Fetcher Class"""
 
     @staticmethod
