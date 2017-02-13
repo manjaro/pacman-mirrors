@@ -1,20 +1,24 @@
 #!/usr/bin/env python3
 """Pacman-Mirrors Configuration"""
-
+ENV = "dev"
 # http constants
-MIRRORS_URL = "http://repo.manjaro.org/mirrors.json"
-STATES_URL = "http://repo.manjaro.org/status.json"
+URL_MIRROR_JSON = "http://repo.manjaro.org/mirrors.json"
+URL_STATUS_JSON = "http://repo.manjaro.org/status.json"
 # local file constants
-# commented while dev
-# MIRRORS_JSON = "/var/lib/pacman-mirrors/mirrors.json"
-# STATES_JSON = "/var/lib/pacman-mirrors/status.json"
-# CUSTOM_MIRROR_JSON = "/var/lib/pacman-mirrors/custom-mirrors.json"
-# CUSTOM_MIRROR_FILE = "/var/lib/pacman-mirrors/Custom"
-# used while dev
-MIRRORS_JSON = "data/mirrors.json"
-STATES_JSON = "data/status.json"
-CUSTOM_MIRROR_JSON = "data/custom-mirrors.json"
-CUSTOM_MIRROR_FILE = "data/Custom"
+if ENV == "production":
+    CUSTOM_MIRROR_FILE = "/var/lib/pacman-mirrors/Custom"
+    CUSTOM_MIRROR_JSON = "custom-mirrors.json"
+    MIRRORS_DIR = "/var/lib/manjaro-mirrors/"
+    MIRRORS_JSON = "mirrors.json"
+    PACMAN_MIRROR_LIST = "/etc/pacman.d/mirrorlist"
+    STATUS_JSON = "status.json"
+else:
+    CUSTOM_MIRROR_FILE = "data/pacman-mirrors/Custom"
+    CUSTOM_MIRROR_JSON = "custom-mirrors.json"
+    MIRRORS_DIR = "data/manjaro-mirrors/"
+    MIRRORS_JSON = "mirrors.json"
+    PACMAN_MIRROR_LIST = "data/mirrorlist"
+    STATUS_JSON = "status.json"
 
 # repo constants
 BRANCHES = ("stable", "testing", "unstable")
