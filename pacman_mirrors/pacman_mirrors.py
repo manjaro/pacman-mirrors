@@ -28,13 +28,13 @@ Main Module
 
 import argparse
 import importlib.util
-import json
 import os
 import sys
 from pacman_mirrors import __version__
-from .local_module import FileHandler
-from .http_module import Fetcher
-from .converter import Converter
+from .configuration import MIRRORS_CONF, MIRRORS_DIR, CUSTOM_MIRROR_JSON, MIRROR_LIST
+from .filemethods import FileMethods
+from .httpmodule import Fetcher
+from .customfile import CustomFile
 from .custom_help_formatter import CustomHelpFormatter
 from . import i18n
 from . import txt
@@ -67,11 +67,10 @@ class PacmanMirrors:
         # Time out
         self.max_wait_time = 2
         # Files and dirs
-        self.config_file = "/etc/pacman-mirrors.conf"
-        self.default_mirror_dir = "/etc/pacman.d/mirrors"
-        self.default_mirror_list = "/etc/pacman.d/mirrorlist"
-        self.custom_mirror_dir = "/var/lib/pacman-mirrors"
-        self.custom_mirror_file = "/var/lib/pacman-mirrors/Custom"
+        self.config_file = MIRRORS_CONF
+        self.default_mirror_list = MIRROR_LIST
+        self.custom_mirror_dir = MIRRORS_DIR
+        self.custom_mirror_file = MIRRORS_DIR + CUSTOM_MIRROR_JSON
         # Define config
         self.config = {}
 
@@ -162,7 +161,6 @@ class PacmanMirrors:
 
         if args.mirror_dir:
             self.config["mirror_dir"] = args.mirror_dir
-            self.default_mirror_dir = self.config["mirror_dir"]
 
         self.available_countries = sorted(
             os.listdir(self.config["mirror_dir"]))
@@ -170,8 +168,8 @@ class PacmanMirrors:
         if args.geoip:
             self.geolocation = True
 
-        if country:
-            country = country.split(",")
+        if args.country:
+            country = args.country.split(",")
             if country == ["Custom"]:
                 self.config["only_country"] = country
             elif country == ["all"]:
@@ -211,8 +209,8 @@ class PacmanMirrors:
             "branch": "stable",
             "method": "rank",
             "only_country": [],
-            "mirror_dir": "/etc/pacman.d/mirrors",
-            "mirror_list": "/etc/pacman.d/mirrorlist",
+            "mirror_dir": MIRRORS_DIR,
+            "mirror_list": MIRROR_LIST,
             "no_update": False,
         }
         try:
@@ -247,7 +245,7 @@ class PacmanMirrors:
 
     def gen_mirror_list_common(self):
         """Generate common mirrorlist"""
-        server_list = self.good_servers # Avoid an empty mirrorlist
+        server_list = self.good_servers  # Avoid an empty mirrorlist
         if len(self.resp_servers) >= 3:
             server_list.extend(self.resp_servers)
         else:
@@ -286,11 +284,14 @@ class PacmanMirrors:
             if new_list:
                 print("\n:: {}".format(txt.INF_INTERACTIVE_LIST))
                 print("--------------------------")
+                # output mirror file - change this to output json instead
                 self.output_mirror_file(new_list)
+
+                # output mirror list
                 self.output_mirror_list(new_list, write_file=True)
                 self.modify_config(custom=True)
                 print(":: {}: {}".format(txt.INF_INTERACTIVE_LIST_SAVED,
-                                         self.custom_mirror_file))
+                                         CUSTOM_MIRROR_JSON))
             else:
                 print("{}: {}".format(txt.INFO, txt.INF_NO_SELECTION))
                 print("{}: {}".format(txt.INFO, txt.INF_NO_CHANGES))
@@ -335,28 +336,9 @@ class PacmanMirrors:
             # remove custom mirror file
             if os.path.isfile(self.custom_mirror_file):
                 os.remove(self.custom_mirror_file)
-                os.rmdir(self.custom_mirror_dir)
-        FileHandler.write_config_to_file(self,
-                                         self.config_file,
+        FileMethods.write_config_to_file(self.config_file,
                                          self.config["only_country"],
                                          custom)
-
-    def output_mirror_file(self, servers):
-        """Write a custom mirror file in custom mirror dir"""
-        os.makedirs(self.custom_mirror_dir, mode=0o755, exist_ok=True)
-        try:
-            with open(self.custom_mirror_file, "w") as output:
-                print(":: {}".format(txt.INF_OUTPUT_MIRROR_FILE))
-                FileHandler.write_mirror_file_header(self, output)
-                for server in servers:
-                    FileHandler.write_mirror_list_entry(self,
-                                                        output,
-                                                        server,
-                                                        mirror_file=True)
-        except OSError as err:
-            print("{}: {}: {}: {}".format(txt.ERROR, txt.ERR_FILE_WRITE,
-                                          err.filename, err.strerror))
-            exit(1)
 
     def output_mirror_list(self, servers, write_file=False):
         """
@@ -369,13 +351,13 @@ class PacmanMirrors:
             with open(self.config["mirror_list"], "w") as outfile:
                 if write_file:
                     print(":: {}".format(txt.INF_MIRROR_LIST_WRITE))
-                    FileHandler.write_mirror_list_header(self, outfile)
+                    FileMethods.write_mirror_list_header(self, outfile)
                 for server in servers:
                     if write_file:
                         # insert selected branch in url
                         server["url"] = server["url"].replace(
                             "$branch", self.config["branch"])
-                        FileHandler.write_mirror_list_entry(self, outfile, server)
+                        FileMethods.write_mirror_list_entry(outfile, server)
                         if not self.quiet:
                             print("==> {} : {}".format(server["country"],
                                                        server["url"]))
@@ -385,143 +367,6 @@ class PacmanMirrors:
             print("{}: {}: {}: {}".format(txt.ERROR, txt.ERR_FILE_WRITE,
                                           err.filename, err.strerror))
             exit(1)
-
-    def query_servers(self, countries):
-        """
-        Query the servers and put them in good_server, resp_server and
-        bad_server depending on quality, and sort them by response time.
-
-        :param countries: list of country files to use
-        """
-        print(":: {}".format(txt.INF_QUERY_TIME_INFO))
-        # for country in countries:
-        #     if "Custom" in country:
-        #         custom = True
-        #         mirror_dir = self.custom_mirror_dir
-        #         print("=> {}".format(txt.INF_QUERY_CUSTOM))
-        #     else:
-        #         custom = False
-        #         mirror_dir = self.default_mirror_dir
-        #         print("=> {} {}".format(txt.INF_QUERY_DEFAULT, country))
-        #     # create a ref point for calculation
-        #     point_in_time = datetime.datetime.utcnow()
-        #     try:
-        #         with open(os.path.join(mirror_dir, country), "r") as mirrorfile:
-        #             for line in mirrorfile:
-        #                 mirror_country = self.get_mirror_country(line)
-        #                 if mirror_country:
-        #                     country = mirror_country
-        #                     continue
-        #                 server_url = self.get_mirror_url(line)
-        #                 if not server_url:
-        #                     continue
-        #                 server = {"country": country,
-        #                           "response_time": txt.SERVER_RES,
-        #                           "last_sync": txt.SERVER_BAD,
-        #                           "url": server_url}
-        #                 # create a probe start reference point
-        #                 probe_start = time.time()
-        #                 statefile = self.query_mirror_state(
-        #                     server["url"], self.config["branch"],
-        #                     self.max_wait_time, self.quiet)
-        #                 # calculate response time
-        #                 server_response_time = self.get_mirror_response_time(
-        #                     probe_start, time.time())
-        #                 if not self.quiet:
-        #                     s_url = server_url.replace("$branch",
-        #                                                self.config["branch"])
-        #                     if custom:
-        #                         print("==> {} - {} - {}".format(country,
-        #                                                         server_response_time,
-        #                                                         s_url))
-        #                     else:
-        #                         print("==> {} - {}".format(server_response_time,
-        #                                                    s_url))
-        #                 if not statefile:
-        #                     self.append_to_server_list(
-        #                         server, server["last_sync"])
-        #                     continue
-        #                 server["response_time"] = server_response_time
-        #                 # extract timestamp from statefile
-        #                 statefile_timestamp = self.get_mirror_branch_timestamp(
-        #                     statefile)
-        #                 try:
-        #                     branch_timestamp = datetime.datetime.strptime(
-        #                         statefile_timestamp, "%Y-%m-%dT%H:%M:%S")
-        #                 except ValueError:
-        #                     server["last_sync"] = txt.LASTSYNC_NA
-        #                     self.append_to_server_list(
-        #                         server, server["last_sync"])
-        #                     if not self.quiet:
-        #                         print("\n{}: {}".format(txt.WARN,
-        #                                                 txt.INF_QUERY_WRONG_DATE_FORMAT))
-        #                 server["last_sync"] = self.get_mirror_branch_last_sync(
-        #                     point_in_time, branch_timestamp)
-        #                 self.append_to_server_list(server, server["last_sync"])
-        #     except OSError as err:
-        #         print("{}: {}: {}: {}".format(txt.ERROR, txt.ERR_FILE_READ,
-        #                                       err.filename, err.strerror))
-        # self.good_servers = sorted(self.good_servers,
-        #                            key=itemgetter("response_time"))
-        # self.resp_servers = sorted(self.resp_servers,
-        #                            key=itemgetter("response_time"))
-
-    def random_servers(self, countries):
-        """
-        Add all servers to bad_servers and shuffle them randomly.
-
-        :param countries: list of country files to use
-        """
-        print(":: {}".format(txt.INF_RANDOMIZE_SERVERS))
-        # for country in countries:
-        #     try:
-        #         with open(os.path.join(
-        #                 self.default_mirror_dir, country), "r") as conf:
-        #             for line in conf:
-        #                 m_country = self.get_mirror_country(line)
-        #                 if m_country:
-        #                     country = m_country
-        #                     continue
-        #                 m_url = self.get_mirror_url(line)
-        #                 if not m_url:
-        #                     continue
-        #                 server = {"country": country,
-        #                           "response_time": txt.SERVER_RES,
-        #                           "last_sync": txt.SERVER_BAD,
-        #                           "url": m_url}
-        #                 self.append_to_server_list(server, txt.SERVER_RES)
-        #     except OSError as err:
-        #         print("{}: {}: {}: {}".format(txt.ERROR, txt.ERR_FILE_READ,
-        #                                       err.filename, err.strerror))
-        # shuffle(self.bad_servers)
-
-    @staticmethod
-    def get_geoip_country():
-        """
-        Try to get the user country via GeoIP
-
-        :return: return country name or empty list
-        """
-        country_name = None
-        try:
-            res = urlopen("http://freegeoip.net/json/", timeout=2)
-            json_obj = json.loads(res.read().decode("utf8"))
-        except (URLError, timeout, HTTPException, json.JSONDecodeError):
-            pass
-        else:
-            if "country_name" in json_obj:
-                country_name = json_obj["country_name"]
-                country_fix = {
-                    "Brazil": "Brasil",
-                    "Costa Rica": "Costa_Rica",
-                    "Czech Republic": "Czech",
-                    "South Africa": "Africa",
-                    "United Kingdom": "United_Kingdom",
-                    "United States": "United_States",
-                }
-                if country_name in country_fix.keys():
-                    country_name = country_fix[country_name]
-        return country_name
 
     @staticmethod
     def validate_country_list(countries, available_countries):
@@ -545,9 +390,10 @@ class PacmanMirrors:
 
     def run(self):
         """Run"""
-        Fetcher.get_mirrors_list()
-        Fetcher.get_mirrors_state()
-        Converter.convert_custom_to_json()
+        FileMethods.check_directory(MIRRORS_DIR)
+        CustomFile.custom_to_json()
+        Fetcher.get_mirrors_json()
+        Fetcher.get_status_json()
         self.config = self.config_init()
         # self.command_line_parse()
         # self.load_server_lists()
