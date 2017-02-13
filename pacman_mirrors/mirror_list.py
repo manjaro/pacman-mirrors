@@ -15,8 +15,8 @@ class MirrorList:
             "mirrors": []
         })
 
-    def add_country_mirror(self, country, url, protocols, last_sync="99:99",
-                           stable="0", testing="0", unstable="0"):
+    def add_mirror(self, country, url, protocols, last_sync="99:99",
+                   stable="0", testing="0", unstable="0"):
         """Append mirror
         :param country:
         :param url:
