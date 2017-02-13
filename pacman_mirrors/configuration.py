@@ -8,6 +8,7 @@ URL_STATUS_JSON = "http://repo.manjaro.org/status.json"
 if ENV == "production":
     CUSTOM_MIRROR_FILE = "/var/lib/pacman-mirrors/Custom"
     CUSTOM_MIRROR_JSON = "custom-mirrors.json"
+    MIRRORS_CONF = "/etc/pacman-mirrors"
     MIRRORS_DIR = "/var/lib/manjaro-mirrors/"
     MIRRORS_JSON = "mirrors.json"
     PACMAN_MIRROR_LIST = "/etc/pacman.d/mirrorlist"
@@ -15,6 +16,7 @@ if ENV == "production":
 else:
     CUSTOM_MIRROR_FILE = "data/pacman-mirrors/Custom"
     CUSTOM_MIRROR_JSON = "custom-mirrors.json"
+    MIRRORS_CONF = "conf/pacman-mirrors.conf"
     MIRRORS_DIR = "data/manjaro-mirrors/"
     MIRRORS_JSON = "mirrors.json"
     PACMAN_MIRROR_LIST = "data/mirrorlist"
