@@ -7,7 +7,7 @@ from http.client import HTTPException
 from urllib.error import URLError
 from urllib.request import urlopen
 import collections
-from .configuration import URL_MIRROR_JSON, URL_STATUS_JSON, MIRRORS_JSON, STATUS_JSON
+from .configuration import URL_MIRROR_JSON, URL_STATUS_JSON, MIRROR_FILE, STATUS_FILE
 from .filemethods import FileMethods
 from . import txt
 
@@ -55,7 +55,7 @@ class HttpFetcher:
             print("Error getting mirror list from server")
         if mirrors:
             print(mirrors)
-            FileMethods.write_json(mirrors, MIRRORS_JSON)
+            FileMethods.write_json(mirrors, MIRROR_FILE)
 
     @staticmethod
     def get_status_json():
@@ -69,7 +69,7 @@ class HttpFetcher:
         except URLError:
             print("Error getting mirrors state from server")
         if status:
-            FileMethods.write_json(status, STATUS_JSON)
+            FileMethods.write_json(status, STATUS_FILE)
 
     @staticmethod
     def get_response_time(mirror_url, timeout=2, quiet=False):
