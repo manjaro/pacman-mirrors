@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """Conversion Module"""
 
-import json
 import os
-from .configuration import CUSTOM_MIRROR_FILE, CUSTOM_MIRROR_JSON
+from .configuration import CUSTOM_MIRROR_FILE, CUSTOM_MIRROR_JSON, MIRRORS_DIR
+from .mirror_list import MirrorList
+from .file_methods import FileMethods
 
 
 class Converter:
@@ -13,33 +14,26 @@ class Converter:
         # load custom mirror file
         if os.isfile(CUSTOM_MIRROR_FILE):
             with open(CUSTOM_MIRROR_FILE, "r") as mirrorfile:
-                mirrors = []
                 mirror_country = ""
+                mirror = MirrorList()
                 for line in mirrorfile:
                     # mirror country
-                    country = Function.get_country(line)
+                    country = ImportHelper.get_country(line)
                     if country:
                         mirror_country = country
                         continue
-                    mirror_url = Function.get_url(line)
+                    mirror_url = ImportHelper.get_url(line)
                     if not mirror_url:
                         continue
-                    mirror_protocol = Function.get_protocol(mirror_url)
-                    mirrors.append({mirror_country: {mirror_url: {"prococols": [mirror_protocol]}}})
-            Function.write_json(mirrors, CUSTOM_MIRROR_JSON)
+                    mirror_protocol = ImportHelper.get_protocol(mirror_url)
+                    mirror.add_country(mirror_country)
+                    mirror.add_country_mirror(mirror_country, mirror_url, [mirror_protocol])
+
+                custom_file = MIRRORS_DIR + CUSTOM_MIRROR_JSON
+                FileMethods.write_json(mirror.get_mirrorlist(), custom_file)
 
 
-class Function:
-    @staticmethod
-    def write_json(data, filename):
-        """Writes a named json file"""
-        try:
-            with open(filename, "w") as outfile:
-                json.dump(data, outfile, sort_keys=True)
-            return True
-        except OSError:
-            return False
-
+class ImportHelper:
     @staticmethod
     def get_protocol(data):
         """Extract protocol from url"""
@@ -54,14 +48,6 @@ class Function:
             return line[1:-1]
         elif line.startswith("## Country") or line.startswith("## Location"):
             return line[19:]
-
-    @staticmethod
-    def validate_country_list(countries, available_countries):
-        """Check if the list of countries are valid."""
-        for country in countries:
-            if country not in available_countries:
-                return False
-        return True
 
     @staticmethod
     def get_url(data):
