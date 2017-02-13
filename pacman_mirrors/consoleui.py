@@ -25,7 +25,7 @@ Console UI Module
 from collections import namedtuple
 import npyscreen
 
-from . console_helpers import ConsoleHelpers
+from . consolehelpers import ConsoleHelpers
 from . import i18n
 from . import txt
 

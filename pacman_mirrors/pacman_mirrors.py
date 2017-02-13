@@ -274,7 +274,7 @@ class PacmanMirrors:
         server_list = sorted(server_list, key=itemgetter("response_time"))
 
         if self.no_display:
-            from . import console_ui as ui
+            from . import consoleui as ui
         else:
             from . import graphical_ui as ui
         interactive = ui.run(server_list)

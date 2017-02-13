@@ -3,6 +3,7 @@
 
 import json
 import time
+from http.client import HTTPException
 from urllib.error import URLError
 from urllib.request import urlopen
 import collections
@@ -68,7 +69,7 @@ class Fetcher():
         except URLError:
             print("Error getting mirrors state from server")
         if status:
-            FileMethods.write_json(states, STATUS_JSON)
+            FileMethods.write_json(status, STATUS_JSON)
 
     @staticmethod
     def get_response_time(mirror_url, timeout=2, quiet=False):
@@ -85,11 +86,11 @@ class Fetcher():
         try:
             # dont use ping - try open url in stead
             # open 3 times to get an average response time
-            urllib.request.urlopen(mirror_url, timeout)
-            urllib.request.urlopen(mirror_url, timeout)
-            urllib.request.urlopen(mirror_url, timeout)
+            urlopen(mirror_url, timeout)
+            urlopen(mirror_url, timeout)
+            urlopen(mirror_url, timeout)
             probe_stop = time.time()
-        except urllib.request.URLError as err:
+        except URLError as err:
             if hasattr(err, "reason") and not quiet:
                 print("\n{}: {}: {}".format(txt.ERROR,
                                             txt.ERR_SERVER_NOT_REACHABLE,

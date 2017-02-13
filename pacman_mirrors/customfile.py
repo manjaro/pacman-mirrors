@@ -3,7 +3,7 @@
 
 import os
 from .configuration import ENV, CUSTOM_MIRROR_FILE, CUSTOM_MIRROR_JSON, MIRRORS_DIR
-from .mirror_list import MirrorList
+from .mirrorlist import MirrorList
 from .filemethods import FileMethods
 
 
