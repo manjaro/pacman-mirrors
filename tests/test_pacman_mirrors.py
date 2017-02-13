@@ -25,12 +25,11 @@ class TestPacmanMirrors(unittest.TestCase):
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors"]):
             app = pacman_mirrors.PacmanMirrors()
-            app.config_file = "conf/pacman-mirrors.conf"
-            app.config = app.config_init()
-            app.Fetcher.get_mirrors_list()
-            app.Fetcher.get_mirrors_state()
-            app.Converter.custom_to_json()
-
+            # app.config_file = "conf/pacman-mirrors.conf"
+            # app.config = app.config_init()
+            # app.Fetcher.get_mirrors_list()
+            # app.Fetcher.get_mirrors_state()
+            # app.Converter.custom_to_json()
 
     # @patch.object(pacman_mirrors.PacmanMirrors, "get_mirror_branch_timestamp")
     # def test_get_mirror_timestamp(self, mock_timestamp):
