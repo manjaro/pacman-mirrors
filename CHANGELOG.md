@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [3.2.2] - 2017-02-12
+- Fix issue with multible country select.
+- Bug fixes.
+
 ## [3.2.1] - 2017-02-10
 - Fix save of config file.
 - Update translations.
