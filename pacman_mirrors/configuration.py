@@ -11,7 +11,7 @@ if ENV == "production":
     MIRRORS_CONF = "/etc/pacman-mirrors"
     MIRRORS_DIR = "/var/lib/manjaro-mirrors/"
     MIRRORS_JSON = "mirrors.json"
-    PACMAN_MIRROR_LIST = "/etc/pacman.d/mirrorlist"
+    MIRROR_LIST = "/etc/pacman.d/mirrorlist"
     STATUS_JSON = "status.json"
 else:
     CUSTOM_MIRROR_FILE = "data/pacman-mirrors/Custom"
@@ -19,7 +19,7 @@ else:
     MIRRORS_CONF = "conf/pacman-mirrors.conf"
     MIRRORS_DIR = "data/manjaro-mirrors/"
     MIRRORS_JSON = "mirrors.json"
-    PACMAN_MIRROR_LIST = "data/mirrorlist"
+    MIRROR_LIST = "data/mirrorlist"
     STATUS_JSON = "status.json"
 
 # repo constants
