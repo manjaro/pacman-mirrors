@@ -7,7 +7,7 @@ from urllib.error import URLError
 from urllib.request import urlopen
 import collections
 from .configuration import URL_MIRROR_JSON, URL_STATUS_JSON, MIRRORS_JSON, STATUS_JSON
-from .file_methods import FileMethods
+from .filemethods import FileMethods
 from . import txt
 
 

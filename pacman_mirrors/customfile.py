@@ -4,12 +4,12 @@
 import os
 from .configuration import ENV, CUSTOM_MIRROR_FILE, CUSTOM_MIRROR_JSON, MIRRORS_DIR
 from .mirror_list import MirrorList
-from .file_methods import FileMethods
+from .filemethods import FileMethods
 
 
-class Converter:
+class CustomFile:
     @staticmethod
-    def convert_custom_to_json():
+    def custom_to_json():
         """Convert custom mirror file to json"""
         if os.path.isfile(CUSTOM_MIRROR_FILE):
             with open(CUSTOM_MIRROR_FILE, "r") as mirrorfile:
