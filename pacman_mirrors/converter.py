@@ -2,7 +2,7 @@
 """Conversion Module"""
 
 import os
-from .configuration import CUSTOM_MIRROR_FILE, CUSTOM_MIRROR_JSON, MIRRORS_DIR
+from .configuration import ENV, CUSTOM_MIRROR_FILE, CUSTOM_MIRROR_JSON, MIRRORS_DIR
 from .mirror_list import MirrorList
 from .file_methods import FileMethods
 
@@ -11,29 +11,35 @@ class Converter:
     @staticmethod
     def convert_custom_to_json():
         """Convert custom mirror file to json"""
-        # load custom mirror file
-        if os.isfile(CUSTOM_MIRROR_FILE):
+        if os.path.isfile(CUSTOM_MIRROR_FILE):
             with open(CUSTOM_MIRROR_FILE, "r") as mirrorfile:
-                mirror_country = ""
                 mirror = MirrorList()
+                mirror_country = None
                 for line in mirrorfile:
-                    # mirror country
                     country = ImportHelper.get_country(line)
                     if country:
+                        if mirror_country != country:  # add only if different
+                            mirror.add_country(country)
                         mirror_country = country
                         continue
                     mirror_url = ImportHelper.get_url(line)
                     if not mirror_url:
                         continue
                     mirror_protocol = ImportHelper.get_protocol(mirror_url)
-                    mirror.add_country(mirror_country)
-                    mirror.add_country_mirror(mirror_country, mirror_url, [mirror_protocol])
-
+                    mirror.add_mirror(country, mirror_url, [mirror_protocol])
                 custom_file = MIRRORS_DIR + CUSTOM_MIRROR_JSON
                 FileMethods.write_json(mirror.get_mirrorlist(), custom_file)
+                if ENV == "production":
+                    ImportHelper.cleanup()
 
 
 class ImportHelper:
+    @staticmethod
+    def cleanup():
+        if os.path.isfile(CUSTOM_MIRROR_FILE):
+            os.remove(CUSTOM_MIRROR_FILE)
+            os.rmdir(os.path.dirname(CUSTOM_MIRROR_FILE))
+
     @staticmethod
     def get_protocol(data):
         """Extract protocol from url"""
