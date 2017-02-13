@@ -315,7 +315,7 @@ class PacmanMirrors:
                 self.config["selectedcountries"] = []
         elif not self.config["selectedcountries"]:
             if self.geolocation:
-                geoip_country = self.get_geoip_country()
+                geoip_country = HttpFetcher.get_geoip_country()
                 if geoip_country and geoip_country in self.available_countries:
                     self.config["selectedcountries"] = [geoip_country]
                 else:

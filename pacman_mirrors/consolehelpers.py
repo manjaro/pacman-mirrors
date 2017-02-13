@@ -47,7 +47,6 @@ class ConsoleHelpers:
 
         :param servers: named tuples
         :param joiner: string used to join tuple items
-        :param cols: column names
         :return lines: list of nicely formatted lines
         """
         lines = []
