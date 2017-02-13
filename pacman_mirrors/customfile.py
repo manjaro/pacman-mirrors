@@ -2,7 +2,7 @@
 """Conversion Module"""
 
 import os
-from .configuration import ENV, CUSTOM_MIRROR_FILE, CUSTOM_MIRROR_JSON, MIRRORS_DIR
+from .configuration import ENV, O_CUST_FILE, CUSTOM_FILE, MIRROR_DIR
 from .mirrorlist import MirrorList
 from .filemethods import FileMethods
 
@@ -11,8 +11,8 @@ class CustomFile:
     @staticmethod
     def custom_to_json():
         """Convert custom mirror file to json"""
-        if os.path.isfile(CUSTOM_MIRROR_FILE):
-            with open(CUSTOM_MIRROR_FILE, "r") as mirrorfile:
+        if os.path.isfile(O_CUST_FILE):
+            with open(O_CUST_FILE, "r") as mirrorfile:
                 mirror = MirrorList()
                 mirror_country = None
                 for line in mirrorfile:
@@ -27,8 +27,7 @@ class CustomFile:
                         continue
                     mirror_protocol = ImportHelper.get_protocol(mirror_url)
                     mirror.add_mirror(country, mirror_url, [mirror_protocol])
-                custom_file = MIRRORS_DIR + CUSTOM_MIRROR_JSON
-                FileMethods.write_json(mirror.get_mirrorlist(), custom_file)
+                FileMethods.write_json(mirror.get_mirrorlist(), CUSTOM_FILE)
                 if ENV == "production":
                     ImportHelper.cleanup()
 
@@ -36,9 +35,8 @@ class CustomFile:
 class ImportHelper:
     @staticmethod
     def cleanup():
-        if os.path.isfile(CUSTOM_MIRROR_FILE):
-            os.remove(CUSTOM_MIRROR_FILE)
-            os.rmdir(os.path.dirname(CUSTOM_MIRROR_FILE))
+        os.remove(O_CUST_FILE)
+        os.rmdir(os.path.dirname(O_CUST_FILE))
 
     @staticmethod
     def get_protocol(data):
