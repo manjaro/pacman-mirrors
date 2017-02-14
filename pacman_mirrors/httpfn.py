@@ -3,6 +3,7 @@
 
 import collections
 import json
+import time
 from http.client import HTTPException
 from os import system as system_call
 from urllib.error import URLError
@@ -11,7 +12,6 @@ from .configuration import \
     FALLBACK, MANJARO_FILE, MIRROR_FILE, \
     STATUS_FILE, URL_MIRROR_JSON, URL_STATUS_JSON
 from .filefn import FileFn
-from .mirror import Mirror
 from . import txt
 
 
@@ -19,16 +19,16 @@ class HttpFn:
     """Http Function Class"""
 
     @staticmethod
-    def get_geoip_country(timeout=2):
+    def get_geoip_country():
         """Try to get the user country via GeoIP
         :param timeout:
         :return: country name or nothing
         """
         country_name = None
         try:
-            res = urlopen("http://freegeoip.net/json/", timeout)
+            res = urlopen("http://freegeoip.net/json/")
             json_obj = json.loads(res.read().decode("utf8"))
-        except (URLError, timeout, HTTPException, json.JSONDecodeError):
+        except (URLError, HTTPException, json.JSONDecodeError):
             pass
         else:
             if "country_name" in json_obj:
@@ -46,7 +46,7 @@ class HttpFn:
         return country_name
 
     @staticmethod
-    def get_mirrors_file(timeout=2):
+    def get_mirrors_file():
         """Retrieve mirror list from manjaro.org
         :return: True on success
         :rtype: boolean
@@ -54,7 +54,7 @@ class HttpFn:
         countries = list()
         success = False
         try:
-            with urlopen(URL_MIRROR_JSON, timeout) as response:
+            with urlopen(URL_MIRROR_JSON) as response:
                 countries = json.loads(response.read().decode(
                     "utf8"), object_pairs_hook=collections.OrderedDict)
         except URLError:
@@ -62,20 +62,12 @@ class HttpFn:
         if countries:
             success = True
             FileFn.write_json(countries, MANJARO_FILE)
-            mirrors = Mirror()
-            for country in countries.keys():
-                # print("got key", country, "which maps to value", mirrors[country])
-                for url in countries[country]:
-                    # print("got key", url, "which maps to value", mirrors[country][url])
-                    for protocols in countries[country][url]:
-                        # print("got key", protocols, "which maps to value", mirrors[country][url][protocols])
-                        mirrors.add_mirror(country, url, protocols)
-
-            FileFn.write_json(mirrors.get_mirrors(), MIRROR_FILE)
+            countries = FileFn.tranlate_mjro_dictionary(countries)
+            FileFn.write_json(countries, MIRROR_FILE)
         return success
 
     @staticmethod
-    def get_status_file(timeout=2):
+    def get_status_file():
         """Retrieve state for all mirrors from manjaro.org
         :return: True on success
         :rtype: boolean
@@ -83,7 +75,7 @@ class HttpFn:
         status = list()
         success = False
         try:
-            with urlopen(URL_STATUS_JSON, timeout) as response:
+            with urlopen(URL_STATUS_JSON) as response:
                 status = json.loads(
                     response.read().decode(
                         "utf8"), object_pairs_hook=collections.OrderedDict)
@@ -121,14 +113,12 @@ class HttpFn:
 
     @staticmethod
     def query_mirror_available(url, timeout, retry):
-        """
-        Get statefile
-        :param: mirror_url
-        :return: content
+        """Query mirrors availability
+        :returns string with response time
         """
         url += "state"
         probe_start = time.time()
-        probe_time = txt.SERVER_RES
+        response_time = txt.SERVER_RES
         probe_stop = None
         _c = ""
         try:
@@ -140,5 +130,5 @@ class HttpFn:
             _c
         if probe_stop:
             calc = round((probe_stop - probe_start), 3)
-            probe_time = str(format(calc, ".3f"))
-        return probe_time
+            response_time = str(format(calc, ".3f"))
+        return response_time
