@@ -18,6 +18,9 @@ develop-eggs
 lib
 lib64
 
+# mock data files
+mock/**/*.json
+
 # Installer logs
 pip-log.txt
 
