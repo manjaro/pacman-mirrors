@@ -4,36 +4,36 @@
 import os
 from .configuration import ENV, O_CUST_FILE, CUSTOM_FILE, MIRROR_DIR
 from .mirrors import Mirrors
-from .filemethods import FileMethods
+from .files import Files
 
 
-class CustomFile:
+class Custom:
     @staticmethod
-    def custom_to_json():
+    def convert_to_json():
         """Convert custom mirror file to json"""
         if os.path.isfile(O_CUST_FILE):
             with open(O_CUST_FILE, "r") as mirrorfile:
                 mirror = Mirrors()
                 mirror_country = None
                 for line in mirrorfile:
-                    country = ImportHelper.get_country(line)
+                    country = CustomHelper.get_country(line)
                     if country:
                         mirror_country = country
                         continue
-                    mirror_url = ImportHelper.get_url(line)
+                    mirror_url = CustomHelper.get_url(line)
                     if not mirror_url:
                         continue
-                    mirror_protocol = ImportHelper.get_protocol(mirror_url)
+                    mirror_protocol = CustomHelper.get_protocol(mirror_url)
 
                     mirror.add_mirror(mirror_country, mirror_url, [mirror_protocol])
 
-                FileMethods.write_json(mirror.get_mirrors(), CUSTOM_FILE)
+                Files.write_json(mirror.get_mirrors(), CUSTOM_FILE)
                 print("TODO: change this")
                 print("calling ImportHelper.cleanup()")
                 # ImportHelper.cleanup()
 
 
-class ImportHelper:
+class CustomHelper:
     @staticmethod
     def cleanup():
         os.remove(O_CUST_FILE)
