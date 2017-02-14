@@ -1,7 +1,7 @@
 #!/usr/env python3
 """Pacman-Mirrors Mirrors Module"""
 
-from .files import Files
+from .filefn import FileFn
 
 
 class Mirrors:
@@ -19,9 +19,7 @@ class Mirrors:
         mirror = {
             "country": country,
             "url": url,
-            "protocols": protocols,
-            "lastsync": "",
-            "resptime": ""
+            "protocols": protocols
         }
         self.mirrors.append(mirror)
 
@@ -31,7 +29,7 @@ class Mirrors:
 
     def load_mjro_json(self, filename):
         """Load manjaro mirrors from file"""
-        countries = Files.read_json(filename)
+        countries = FileFn.read_json(filename)
 
         for country in countries:
             for host in country:
