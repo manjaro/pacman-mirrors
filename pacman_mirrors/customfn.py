@@ -3,7 +3,7 @@
 
 import os
 from .configuration import ENV, O_CUST_FILE, CUSTOM_FILE
-from .mirrors import Mirrors
+from .mirror import Mirror
 from .filefn import FileFn
 from . import txt
 
@@ -15,7 +15,7 @@ class CustomFn:
         if os.path.isfile(O_CUST_FILE):
             print(":: {}".format(txt.INF_CONVERT_MIRROR_FILE))
             with open(O_CUST_FILE, "r") as mirrorfile:
-                mirror = Mirrors()
+                mirror = Mirror()
                 mirror_country = None
                 for line in mirrorfile:
                     country = CustomHelper.get_country(line)
@@ -30,7 +30,8 @@ class CustomFn:
                     mirror.add_mirror(
                         mirror_country, mirror_url, [mirror_protocol])
                 # write new file
-                FileFn.write_json(mirror.get_mirrors(), CUSTOM_FILE)
+                mirror_list = mirror.get_mirrorlist()
+                FileFn.write_json(mirror_list, CUSTOM_FILE)
                 if not ENV:
                     CustomHelper.cleanup()
 
