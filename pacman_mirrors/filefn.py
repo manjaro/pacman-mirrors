@@ -3,12 +3,9 @@
 """Manjaro-Mirrors Local Module"""
 
 import datetime
-import json
 import os
 import tempfile
-from collections import OrderedDict
 from . import txt
-from .mirror import Mirror
 
 
 class FileFn:
@@ -25,61 +22,6 @@ class FileFn:
         if os.path.isfile(filename):
             return True
         return False
-
-    @staticmethod
-    def load_mirrors(filename, dictionary=False):
-        """Load manjaro mirrors from file"""
-        mirrors = Mirror()
-
-        if dictionary:
-            countries = FileFn.read_json(filename, dictionary=dictionary)
-            for country in countries.keys():
-                for url in countries[country]:
-                    for protocols in countries[country][url]:
-                        mirrors.add_mirror(country, url, protocols)
-        else:
-            Mirror().mirror_list = FileFn.read_json(filename)
-        mirror_list = mirrors.get_mirrorlist()
-        return mirror_list
-
-    @staticmethod
-    def read_json(filename, dictionary=False):
-        """Read json data from file"""
-        result = list()
-        try:
-            if dictionary:
-                with open(filename, "rb") as infile:
-                    result = json.loads(infile.read().decode(
-                        "utf8"), object_pairs_hook=OrderedDict)
-            else:
-                with open(filename, "r") as infile:
-                    result = json.load(infile)
-
-        except OSError:
-            return result
-        return result
-
-    @staticmethod
-    def tranlate_mjro_dictionary(data):
-        """Translate manjaro.json"""
-        mirrors = Mirror()
-        for country in data.keys():
-            for url in data[country]:
-                for protocols in data[country][url]:
-                    mirrors.add_mirror(country, url, protocols)
-        mirror_list = mirrors.get_mirrorlist()
-        return mirror_list
-
-    @staticmethod
-    def write_json(data, filename):
-        """Writes data to file as json"""
-        try:
-            with open(filename, "w") as outfile:
-                json.dump(data, outfile, sort_keys=True, indent=4)
-            return True
-
-        except OSError:
-            return False
 
     @staticmethod
     def write_mirror_config(config_file, countryselection, custom):

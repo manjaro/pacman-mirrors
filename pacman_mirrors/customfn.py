@@ -4,7 +4,7 @@
 import os
 from .configuration import ENV, O_CUST_FILE, CUSTOM_FILE
 from .mirror import Mirror
-from .filefn import FileFn
+from .jsonfn import JsonFn
 from . import txt
 
 
@@ -30,8 +30,8 @@ class CustomFn:
                     mirror.add_mirror(
                         mirror_country, mirror_url, [mirror_protocol])
                 # write new file
-                mirror_list = mirror.get_mirrorlist()
-                FileFn.write_json(mirror_list, CUSTOM_FILE)
+                # mirror_list = mirror.get_mirrorlist()
+                JsonFn.write_json_file(mirror.mirrorlist, CUSTOM_FILE)
                 if not ENV:
                     CustomHelper.cleanup()
 

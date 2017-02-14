@@ -11,7 +11,7 @@ from urllib.request import urlopen
 from .configuration import \
     FALLBACK, MANJARO_FILE, MIRROR_FILE, \
     STATUS_FILE, URL_MIRROR_JSON, URL_STATUS_JSON
-from .filefn import FileFn
+from .jsonfn import JsonFn
 from . import txt
 
 
@@ -21,7 +21,6 @@ class HttpFn:
     @staticmethod
     def get_geoip_country():
         """Try to get the user country via GeoIP
-        :param timeout:
         :return: country name or nothing
         """
         country_name = None
@@ -61,9 +60,9 @@ class HttpFn:
             print("Error getting mirror list from server")
         if countries:
             success = True
-            FileFn.write_json(countries, MANJARO_FILE)
-            countries = FileFn.tranlate_mjro_dictionary(countries)
-            FileFn.write_json(countries, MIRROR_FILE)
+            JsonFn.write_json_file(countries, MANJARO_FILE)
+            translated = JsonFn.tranlate_mjro_dictionary(countries)
+            JsonFn.write_json_file(translated, MIRROR_FILE)
         return success
 
     @staticmethod
@@ -83,7 +82,7 @@ class HttpFn:
             print("Error getting mirrors state from server")
         if status:
             success = True
-            FileFn.write_json(status, STATUS_FILE)
+            JsonFn.write_json_file(status, STATUS_FILE)
         return success
 
     @staticmethod
@@ -104,7 +103,7 @@ class HttpFn:
             HttpFn.get_status_file()
             return True
         else:
-            if not FileFn.check_file(MIRROR_FILE):
+            if not JsonFn.check_file(MIRROR_FILE):
                 print(":: {} '{}' {}".format(txt.INF_MIRROR_FILE,
                                              MIRROR_FILE,
                                              txt.INF_IS_MISSING))
