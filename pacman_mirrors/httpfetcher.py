@@ -43,9 +43,13 @@ class HttpFetcher:
         return country_name
 
     @staticmethod
-    def get_mirrors_json():
-        """Retrieve mirror list from manjaro.org"""
+    def download_mirrors():
+        """Retrieve mirror list from manjaro.org
+        :return: True on success
+        :rtype: boolean
+        """
         mirrors = list()
+        success = False
         try:
             with urlopen(URL_MIRROR_JSON) as response:
                 mirrors = json.loads(response.read().decode(
@@ -53,12 +57,18 @@ class HttpFetcher:
         except URLError:
             print("Error getting mirror list from server")
         if mirrors:
+            success = True
             FileMethods.write_json(mirrors, MIRROR_FILE)
+        return success
 
     @staticmethod
-    def get_status_json():
-        """Retrieve state for all mirrors from manjaro.org"""
+    def download_status():
+        """Retrieve state for all mirrors from manjaro.org
+        :return: True on success
+        :rtype: boolean
+        """
         status = list()
+        success = False
         try:
             with urlopen(URL_STATUS_JSON) as response:
                 status = json.loads(
@@ -67,16 +77,18 @@ class HttpFetcher:
         except URLError:
             print("Error getting mirrors state from server")
         if status:
+            success = True
             FileMethods.write_json(status, STATUS_FILE)
+        return success
 
     @staticmethod
     def get_response_time(mirror_url, timeout=2, quiet=False):
         """Get a mirrors response time
-
         :param mirror_url: mirrors url
         :param timeout: wait for mirror response
         :param quiet: controls message output
         :return: response time
+        :rtype: string
         """
         probe_start = time.time()
         probe_time = txt.SERVER_RES  # default probe_time
