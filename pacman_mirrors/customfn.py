@@ -4,14 +4,15 @@
 import os
 from .configuration import ENV, O_CUST_FILE, CUSTOM_FILE
 from .mirrors import Mirrors
-from .files import Files
+from .filefn import FileFn
 
 
-class Custom:
+class CustomFn:
     @staticmethod
     def convert_to_json():
         """Convert custom mirror file to json"""
         if os.path.isfile(O_CUST_FILE):
+            print(":: Converting custom mirror file to json")
             with open(O_CUST_FILE, "r") as mirrorfile:
                 mirror = Mirrors()
                 mirror_country = None
@@ -24,12 +25,11 @@ class Custom:
                     if not mirror_url:
                         continue
                     mirror_protocol = CustomHelper.get_protocol(mirror_url)
-
-                    mirror.add_mirror(mirror_country, mirror_url, [mirror_protocol])
-
-                Files.write_json(mirror.get_mirrors(), CUSTOM_FILE)
-                print("TODO: change this")
-                print("calling ImportHelper.cleanup()")
+                    # add to mirrors
+                    mirror.add_mirror(
+                        mirror_country, mirror_url, [mirror_protocol])
+                # write new file
+                FileFn.write_json(mirror.get_mirrors(), CUSTOM_FILE)
                 if not ENV:
                     CustomHelper.cleanup()
 
@@ -60,4 +60,4 @@ class CustomHelper:
         """Extract mirror url from data"""
         line = data.strip()
         if line.startswith("Server"):
-            return line[9:]
+            return line[9:].replace("$branch/$repo/$arch", "")
