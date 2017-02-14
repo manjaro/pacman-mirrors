@@ -56,6 +56,7 @@ class PacmanMirrors:
     def __init__(self):
         """Init"""
         # Lists
+        self.mirrors = {}
         self.available_countries = []
         self.good_servers = []  # respond updated < 24h
         self.resp_servers = []  # respond updated > 24h
@@ -181,9 +182,6 @@ class PacmanMirrors:
             if not os.environ.get("DISPLAY") or not GTK_AVAILABLE:
                 self.no_display = True
 
-        self.available_countries = sorted(
-            os.listdir(self.config["mirror_dir"]))
-
         if args.country:
             country = args.country.split(",")
             if country == ["Custom"]:
@@ -191,12 +189,7 @@ class PacmanMirrors:
             elif country == ["all"]:
                 self.config["only_country"] = []
             else:
-                try:
-                    self.validate_country_list(country,
-                                               self.available_countries)
-                    self.config["only_country"] = country
-                except argparse.ArgumentTypeError as err:
-                    parser.error(err)
+                self.config["only_country"] = country
 
     @staticmethod
     def config_init():
@@ -247,7 +240,6 @@ class PacmanMirrors:
     def load_available_mirrors(mirrorfile):
         """Load available mirrors from mirror file"""
         mirrors = FileFn.read_json(mirrorfile)
-        print(mirrors)
         return mirrors
 
     def gen_mirror_list_common(self):
@@ -350,9 +342,9 @@ class PacmanMirrors:
             # remove custom mirror file
             if os.path.isfile(CUSTOM_FILE):
                 os.remove(CUSTOM_FILE)
-        FileFn.write_config_to_file(CONFIG_FILE,
-                                    self.config["only_country"],
-                                    custom)
+        FileFn.write_mirror_config(CONFIG_FILE,
+                                   self.config["only_country"],
+                                   custom)
 
     def output_mirror_list(self, servers, write_file=False):
         """
@@ -371,7 +363,7 @@ class PacmanMirrors:
                         # insert selected branch in url
                         server["url"] = server["url"].replace(
                             "$branch", self.config["branch"])
-                        FileFn.write_mirror_list_entry(outfile, server)
+                        FileFn.write_mirror_list_server(outfile, server)
                         if not self.quiet:
                             print("==> {} : {}".format(server["country"],
                                                        server["url"]))
@@ -408,18 +400,21 @@ class PacmanMirrors:
         CustomFn.convert_to_json()
         self.config = self.config_init()
         self.mjro_online = HttpFn.host_online("repo.manjaro.org", 1)
-        print("mjro_online = {}".format(self.mjro_online))
         if self.mjro_online:
-            print(":: Downloading mirror status file")
+            print(":: {}".format(txt.INF_DOWNLOAD_STATUS_FILE))
             HttpFn.get_status_file()
-            print(":: Downloading current mirrors file")
+            print(":: {}".format(txt.INF_DOWNLOAD_MIRROR_FILE))
             HttpFn.get_mirrors_file()
         else:
             if not FileFn.check_file(MIRROR_FILE):
-                print(":: Mirrorfile '{}' is not available".format(MIRROR_FILE))
-                print(":: Falling back to '{}'".format(FALLBACK))
+                print(":: {} '{}' {}".format(txt.INF_MIRROR_FILE,
+                                             MIRROR_FILE,
+                                             txt.INF_IS_MISSING))
+                print(":: {} '{}'".format(txt.INF_FALLING_BACK, FALLBACK))
                 self.config["mirror_file"] = FALLBACK
         self.command_line_parse()
+        self.mirrors = FileFn.read_json(MIRROR_FILE)
+
         # self.load_server_lists()
         # if self.interactive:
         #     self.gen_mirror_list_interactive()
