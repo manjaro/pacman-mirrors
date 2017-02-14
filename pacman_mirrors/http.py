@@ -8,12 +8,24 @@ from urllib.error import URLError
 from urllib.request import urlopen
 import collections
 from .configuration import URL_MIRROR_JSON, URL_STATUS_JSON, MIRROR_FILE, STATUS_FILE
-from .filemethods import FileMethods
+from .files import Files
 from . import txt
 
 
-class HttpFetcher:
+class Http:
     """HttpFetcher Class"""
+
+    @staticmethod
+    def network_status():
+        """Return the network status"""
+        # http://stackoverflow.com/a/26468712
+        hostname = "https://google.com"
+        response = os.system("ping -c 3 " + hostname)
+        if response == 0:
+            pingstatus = True
+        else:
+            pingstatus = False
+        return pingstatus
 
     @staticmethod
     def get_geoip_country(timeout=2):
@@ -58,7 +70,7 @@ class HttpFetcher:
             print("Error getting mirror list from server")
         if mirrors:
             success = True
-            FileMethods.write_json(mirrors, MIRROR_FILE)
+            Files.write_json(mirrors, MIRROR_FILE)
         return success
 
     @staticmethod
@@ -78,7 +90,7 @@ class HttpFetcher:
             print("Error getting mirrors state from server")
         if status:
             success = True
-            FileMethods.write_json(status, STATUS_FILE)
+            Files.write_json(status, STATUS_FILE)
         return success
 
     @staticmethod
