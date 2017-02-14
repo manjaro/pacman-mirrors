@@ -32,14 +32,14 @@ import os
 import sys
 from operator import itemgetter
 from pacman_mirrors import __version__
-from .configuration import CONFIG_FILE, CUSTOM_FILE, FALLBACK, MIRROR_DIR, MIRROR_FILE, MIRROR_LIST
-from .files import Files
-from .http import Http
-from .custom import Custom
+from .configuration import \
+    ENV, CONFIG_FILE, CUSTOM_FILE, FALLBACK, MIRROR_DIR, MIRROR_FILE, MIRROR_LIST
+from .filefn import FileFn
+from .httpfn import HttpFn
+from .customfn import CustomFn
 from .custom_help_formatter import CustomHelpFormatter
 from . import i18n
 from . import txt
-
 
 try:
     importlib.util.find_spec("gi.repository.Gtk")
@@ -59,7 +59,7 @@ class PacmanMirrors:
         self.available_countries = []
         self.good_servers = []  # respond updated < 24h
         self.resp_servers = []  # respond updated > 24h
-        self.bad_servers = []   # no response timeout > max_wait_time
+        self.bad_servers = []  # no response timeout > max_wait_time
         # Decisions
         self.geolocation = False
         self.interactive = False
@@ -69,7 +69,7 @@ class PacmanMirrors:
         self.max_wait_time = 2
         # Define config
         self.config = {}
-        self.hostonline = True
+        self.mjro_online = True
 
     def append_to_server_list(self, mirror, last_sync):
         """
@@ -107,7 +107,7 @@ class PacmanMirrors:
                             action="store_true",
                             help=txt.HLP_ARG_GEOIP_P1 + txt.OPT_COUNTRY +
                             txt.HLP_ARG_GEOIP_P2)
-        parser.add_argument("-d", "--mirrordir",
+        parser.add_argument("-d", "--mirror_dir",
                             type=str,
                             metavar=txt.PATH,
                             help=txt.HLP_ARG_PATH)
@@ -119,7 +119,7 @@ class PacmanMirrors:
                             type=int,
                             metavar=txt.SECONDS,
                             help=txt.HLP_ARG_TIMEOUT)
-        parser.add_argument("--no-update",
+        parser.add_argument("--no_update",
                             action="store_true",
                             help=txt.HLP_ARG_NOUPDATE_P1 + txt.OPT_NOUPDATE +
                             txt.HLP_ARG_NOUPDATE_P2)
@@ -142,11 +142,12 @@ class PacmanMirrors:
             print("pacman-mirrors {}".format(__version__))
             exit(0)
 
-        # if os.getuid() != 0:
-        #     print("{}: {}".format(txt.ERROR, txt.ERR_NOT_ROOT))
-        #     exit(1)
+        if not ENV:
+            if os.getuid() != 0:
+                print("{}: {}".format(txt.ERROR, txt.ERR_NOT_ROOT))
+                exit(1)
 
-        if args.noupdate:
+        if args.no_update:
             if self.config["no_update"] == "True":
                 exit(0)
 
@@ -156,40 +157,8 @@ class PacmanMirrors:
         if args.branch:
             self.config["branch"] = args.branch
 
-        if args.mirrordir:
-            self.config["mirrordir"] = args.mirrordir
-
-        self.available_countries = sorted(
-            os.listdir(self.config["mirrordir"]))
-
         if args.geoip:
             self.geolocation = True
-
-        if args.country:
-            country = args.country.split(",")
-            if country == ["Custom"]:
-                self.config["selectedcountries"] = country
-            elif country == ["all"]:
-                self.config["selectedcountries"] = []
-            else:
-                try:
-                    self.validate_country_list(country,
-                                               self.available_countries)
-                    self.config["selectedcountries"] = country
-                except argparse.ArgumentTypeError as err:
-                    parser.error(err)
-
-        if args.output:
-            if args.output[0] == "/":
-                self.config["mirrorlist"] = args.output
-            else:
-                self.config["mirrorlist"] = os.getcwd() + "/" + args.output
-            self.config["mirrorlist"] = self.config["mirrorlist"]
-
-        if args.interactive:
-            self.interactive = True
-            if not os.environ.get("DISPLAY") or not GTK_AVAILABLE:
-                self.no_display = True
 
         if args.timeout:
             self.max_wait_time = args.timeout
@@ -197,19 +166,52 @@ class PacmanMirrors:
         if args.quiet:
             self.quiet = True
 
-    def config_init(self):
+        if args.mirror_dir:
+            self.config["mirror_dir"] = args.mirror_dir
+
+        if args.output:
+            if args.output[0] == "/":
+                self.config["mirror_list"] = args.output
+            else:
+                self.config["mirror_list"] = os.getcwd() + "/" + args.output
+            self.config["mirror_list"] = self.config["mirror_list"]
+
+        if args.interactive:
+            self.interactive = True
+            if not os.environ.get("DISPLAY") or not GTK_AVAILABLE:
+                self.no_display = True
+
+        self.available_countries = sorted(
+            os.listdir(self.config["mirror_dir"]))
+
+        if args.country:
+            country = args.country.split(",")
+            if country == ["Custom"]:
+                self.config["only_country"] = country
+            elif country == ["all"]:
+                self.config["only_country"] = []
+            else:
+                try:
+                    self.validate_country_list(country,
+                                               self.available_countries)
+                    self.config["only_country"] = country
+                except argparse.ArgumentTypeError as err:
+                    parser.error(err)
+
+    @staticmethod
+    def config_init():
         """Get config informations"""
         # initialising defaults
         # information which can differ from these defaults
         # is fetched from config file
         config = {
-            "mirrorfile": MIRROR_FILE,
+            "mirror_file": MIRROR_FILE,
             "branch": "stable",
             "method": "rank",
-            "mirrordir": MIRROR_DIR,
-            "mirrorlist": MIRROR_LIST,
+            "mirror_dir": MIRROR_DIR,
+            "mirror_list": MIRROR_LIST,
             "no_update": False,
-            "selectedcountries": [],
+            "only_country": [],
         }
         try:
             # read configuration from file
@@ -229,17 +231,24 @@ class PacmanMirrors:
                         elif key == "Branch":
                             config["branch"] = value
                         elif key == "OnlyCountry":
-                            config["selectedcountries"] = value.split(",")
+                            config["only_country"] = value.split(",")
                         elif key == "MirrorlistsDir":
-                            config["mirrordir"] = value
+                            config["mirror_dir"] = value
                         elif key == "OutputMirrorlist":
-                            config["mirrorlist"] = value
+                            config["mirror_list"] = value
                         elif key == "NoUpdate":
                             config["no_update"] = value
         except (PermissionError, OSError) as err:
             print("{}: {}: {}: {}".format(txt.ERROR, txt.ERR_FILE_READ,
                                           err.filename, err.strerror))
         return config
+
+    @staticmethod
+    def load_available_mirrors(mirrorfile):
+        """Load available mirrors from mirror file"""
+        mirrors = FileFn.read_json(mirrorfile)
+        print(mirrors)
+        return mirrors
 
     def gen_mirror_list_common(self):
         """Generate common mirrorlist"""
@@ -251,7 +260,7 @@ class PacmanMirrors:
             server_list.extend(self.bad_servers)
 
         if server_list:
-            if self.config["selectedcountries"] == self.available_countries:
+            if self.config["only_country"] == self.available_countries:
                 self.modify_config()
             else:
                 self.modify_config(custom=True)
@@ -300,35 +309,40 @@ class PacmanMirrors:
         """
         Generate a list of servers
 
-        It will only use mirrors defined in selectedcountries, and if empty will
-        use all mirrors.
+        It will only use mirrors defined in only_country,
+        and if empty will use all mirrors.
         """
-        if self.config["selectedcountries"]:
-            if self.config["selectedcountries"] == ["Custom"]:
+        if self.config["only_country"]:
+            # custom
+            if self.config["only_country"] == ["Custom"]:
                 if not os.path.isfile(CUSTOM_FILE):
                     print("{}: {} '{} {}'\n".format(txt.WARN,
                                                     txt.INF_CUSTOM_MIRROR_FILE,
                                                     CUSTOM_FILE,
                                                     txt.INF_DOES_NOT_EXIST))
-                    self.config["selectedcountries"] = []
-            elif self.config["selectedcountries"] == ["all"]:
-                self.config["selectedcountries"] = []
+                    # fallback to default
+                    self.config["only_country"] = []
+            # all
+            elif self.config["only_country"] == ["all"]:
+                self.config["only_country"] = []
 
-        elif not self.config["selectedcountries"]:
+        elif not self.config["only_country"]:
+            # geoip
             if self.geolocation:
-                geoip_country = Http.get_geoip_country()
+                geoip_country = HttpFn.get_geoip_country()
                 if geoip_country and geoip_country in self.available_countries:
-                    self.config["selectedcountries"] = [geoip_country]
+                    self.config["only_country"] = [geoip_country]
                 else:
-                    self.config["selectedcountries"] = self.available_countries
+                    self.config["only_country"] = self.available_countries
+            # default
             else:
-                self.config["selectedcountries"] = self.available_countries
+                self.config["only_country"] = self.available_countries
 
         if self.config["method"] == "rank":
-            self.query_servers(self.config["selectedcountries"])
+            self.query_servers(self.config["only_country"])
 
         elif self.config["method"] == "random":
-            self.random_servers(self.config["selectedcountries"])
+            self.random_servers(self.config["only_country"])
 
     def modify_config(self, custom=False):
         """Modify configuration"""
@@ -336,9 +350,9 @@ class PacmanMirrors:
             # remove custom mirror file
             if os.path.isfile(CUSTOM_FILE):
                 os.remove(CUSTOM_FILE)
-        Files.write_config_to_file(CONFIG_FILE,
-                                   self.config["selectedcountries"],
-                                   custom)
+        FileFn.write_config_to_file(CONFIG_FILE,
+                                    self.config["only_country"],
+                                    custom)
 
     def output_mirror_list(self, servers, write_file=False):
         """
@@ -348,21 +362,21 @@ class PacmanMirrors:
         :param: write_file: if "True" the list is written to disk
         """
         try:
-            with open(self.config["mirrorlist"], "w") as outfile:
+            with open(self.config["mirror_list"], "w") as outfile:
                 if write_file:
                     print(":: {}".format(txt.INF_MIRROR_LIST_WRITE))
-                    Files.write_mirror_list_header(self, outfile)
+                    FileFn.write_mirror_list_header(self, outfile)
                 for server in servers:
                     if write_file:
                         # insert selected branch in url
                         server["url"] = server["url"].replace(
                             "$branch", self.config["branch"])
-                        Files.write_mirror_list_entry(outfile, server)
+                        FileFn.write_mirror_list_entry(outfile, server)
                         if not self.quiet:
                             print("==> {} : {}".format(server["country"],
                                                        server["url"]))
                 print(":: {}: {}".format(txt.INF_MIRROR_LIST_SAVED,
-                                         self.config["mirrorlist"]))
+                                         self.config["mirror_list"]))
         except OSError as err:
             print("{}: {}: {}: {}".format(txt.ERROR, txt.ERR_FILE_WRITE,
                                           err.filename, err.strerror))
@@ -390,30 +404,22 @@ class PacmanMirrors:
 
     def run(self):
         """Run"""
-        Files.check_directory(MIRROR_DIR)
-        Custom.convert_to_json()
+        FileFn.check_directory(MIRROR_DIR)
+        CustomFn.convert_to_json()
         self.config = self.config_init()
-        self.hostonline = Http.host_online("repo.manjaro.org", 1)
-        if self.hostonline:
-            print("repo.manjaro.org is up")
-            print("downloading mirror status")
-            Http.get_status_file()
-            print("downloading current mirrors file")
-            Http.get_mirrors_file()
+        self.mjro_online = HttpFn.host_online("repo.manjaro.org", 1)
+        print("mjro_online = {}".format(self.mjro_online))
+        if self.mjro_online:
+            print(":: Downloading mirror status file")
+            HttpFn.get_status_file()
+            print(":: Downloading current mirrors file")
+            HttpFn.get_mirrors_file()
         else:
-            print("repo.manjaro.org is down")
-            if not Files.check_file(MIRROR_FILE):
-                print("Mirrorfile '{}' is not available".format(MIRROR_FILE))
-                print("Falling back to '{}'".format(FALLBACK))
-                self.config["mirrorfile"] = FALLBACK
-
-        url = "http://www.uex.dk/repos/manjaro"
-        avail = Http.query_mirror_available(url, 2)
-        if avail:
-            print("Mirror at: {}: is available".format(url))
-        else:
-            print("Mirror at: {}: is NOT available".format(url))
-        # self.command_line_parse()
+            if not FileFn.check_file(MIRROR_FILE):
+                print(":: Mirrorfile '{}' is not available".format(MIRROR_FILE))
+                print(":: Falling back to '{}'".format(FALLBACK))
+                self.config["mirror_file"] = FALLBACK
+        self.command_line_parse()
         # self.load_server_lists()
         # if self.interactive:
         #     self.gen_mirror_list_interactive()
