@@ -7,11 +7,12 @@ from http.client import HTTPException
 from os import system as system_call
 from urllib.error import URLError
 from urllib.request import urlopen
-from .configuration import URL_MIRROR_JSON, URL_STATUS_JSON, MIRROR_FILE, STATUS_FILE
-from .files import Files
+from .configuration import \
+    URL_MIRROR_JSON, URL_STATUS_JSON, MIRROR_FILE, STATUS_FILE
+from .filefn import FileFn
 
 
-class Http:
+class HttpFn:
     """HttpFetcher Class"""
 
     @staticmethod
@@ -57,7 +58,7 @@ class Http:
             print("Error getting mirror list from server")
         if mirrors:
             success = True
-            Files.write_json(mirrors, MIRROR_FILE)
+            FileFn.write_json(mirrors, MIRROR_FILE)
         return success
 
     @staticmethod
@@ -77,7 +78,7 @@ class Http:
             print("Error getting mirrors state from server")
         if status:
             success = True
-            Files.write_json(status, STATUS_FILE)
+            FileFn.write_json(status, STATUS_FILE)
         return success
 
     @staticmethod
