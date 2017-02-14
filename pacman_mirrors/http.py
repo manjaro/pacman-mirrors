@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
 """Manjaro-Mirrors HTTP Module"""
 
+import collections
 import json
+import sys
 import time
 from http.client import HTTPException
+from os import system as system_call
 from urllib.error import URLError
 from urllib.request import urlopen
-import collections
 from .configuration import URL_MIRROR_JSON, URL_STATUS_JSON, MIRROR_FILE, STATUS_FILE
 from .files import Files
 from . import txt
@@ -14,18 +16,6 @@ from . import txt
 
 class Http:
     """HttpFetcher Class"""
-
-    @staticmethod
-    def network_status():
-        """Return the network status"""
-        # http://stackoverflow.com/a/26468712
-        hostname = "https://google.com"
-        response = os.system("ping -c 3 " + hostname)
-        if response == 0:
-            pingstatus = True
-        else:
-            pingstatus = False
-        return pingstatus
 
     @staticmethod
     def get_geoip_country(timeout=2):
@@ -55,7 +45,7 @@ class Http:
         return country_name
 
     @staticmethod
-    def download_mirrors():
+    def get_mirrors_file():
         """Retrieve mirror list from manjaro.org
         :return: True on success
         :rtype: boolean
@@ -74,7 +64,7 @@ class Http:
         return success
 
     @staticmethod
-    def download_status():
+    def get_status_file():
         """Retrieve state for all mirrors from manjaro.org
         :return: True on success
         :rtype: boolean
@@ -94,44 +84,23 @@ class Http:
         return success
 
     @staticmethod
-    def get_response_time(mirror_url, timeout=2, quiet=False):
-        """Get a mirrors response time
-        :param mirror_url: mirrors url
-        :param timeout: wait for mirror response
-        :param quiet: controls message output
-        :return: response time
-        :rtype: string
+    def host_online(host, retry):
+        """Check a hosts availability
+        :rtype: boolean
         """
-        probe_start = time.time()
-        probe_time = txt.SERVER_RES  # default probe_time
-        probe_stop = None
+        return system_call("ping -c{} {} > /dev/null".format(retry, host)) == 0
+
+    @staticmethod
+    def query_mirror(url, timeout):
+        """
+        Get statefile
+        :param: mirror_url
+        :return: content
+        """
         try:
-            # dont use ping - try open url in stead
-            # open 3 times to get an average response time
-            urlopen(mirror_url, timeout)
-            urlopen(mirror_url, timeout)
-            urlopen(mirror_url, timeout)
-            probe_stop = time.time()
-        except URLError as err:
-            if hasattr(err, "reason") and not quiet:
-                print("\n{}: {}: {}".format(txt.ERROR,
-                                            txt.ERR_SERVER_NOT_REACHABLE,
-                                            err.reason))
-            elif hasattr(err, "code") and not quiet:
-                print("\n{}: {}: {}".format(txt.ERROR,
-                                            txt.ERR_SERVER_REQUEST,
-                                            err.errno))
-        except timeout:
-            if not quiet:
-                print("\n{}: {}: {}".format(txt.ERROR,
-                                            txt.ERR_SERVER_NOT_AVAILABLE,
-                                            txt.TIMEOUT))
-        except HTTPException:
-            if not quiet:
-                print("\n{}: {}: {}".format(txt.ERROR,
-                                            txt.ERR_SERVER_HTTP_EXCEPTION,
-                                            txt.HTTP_EXCEPTION))
-        if probe_stop:
-            probe_time = (round((probe_stop - probe_start), 3) / 3)
-            probe_time = format(probe_time, ".3f")
-        return str(probe_time)
+            res = urlopen(url, timeout=timeout)
+            content = res.read().decode("utf8")
+        except URLError:
+            content = ""
+
+        return content
