@@ -26,6 +26,23 @@ class FileFn:
         return False
 
     @staticmethod
+    def read_json(filename, return_dict=False):
+        """Read json data from file"""
+        result = list()
+        try:
+            if return_dict:
+                with open(filename, "rb") as infile:
+                    result = json.loads(infile.read().decode(
+                        "utf8"), object_pairs_hook=OrderedDict)
+            else:
+                with open(filename, "r") as infile:
+                    result = json.load(infile)
+
+        except OSError:
+            return result
+        return result
+
+    @staticmethod
     def write_json(data, filename):
         """Writes data to file as json"""
         try:
@@ -37,33 +54,7 @@ class FileFn:
             return False
 
     @staticmethod
-    def read_json_as_dictionary(filename):
-        """Read json data from file"""
-        result = list()
-        try:
-            with open(filename, "r") as infile:
-                result = json.loads(infile.read().decode(
-                    "utf8"), object_pairs_hook=OrderedDict)
-        except OSError:
-            return result
-
-        return result
-
-    @staticmethod
-    def read_json(filename):
-        """Read json data from file"""
-        result = list()
-        try:
-            with open(filename, "r") as infile:
-                result = json.loads(infile.read().decode(
-                    "utf8"))  # , object_pairs_hook=OrderedDict)
-        except OSError:
-            return result
-
-        return result
-
-    @staticmethod
-    def write_config_to_file(config_file, countryselection, custom):
+    def write_mirror_config(config_file, countryselection, custom):
         """Writes the configuration to file"""
         if custom:
             if countryselection == ["Custom"]:
@@ -118,7 +109,7 @@ class FileFn:
         handle.write("##\n\n")
 
     @staticmethod
-    def write_mirror_list_entry(handle, mirror):
+    def write_mirror_list_server(handle, mirror):
         """
         Write mirror to mirror list or file
 
