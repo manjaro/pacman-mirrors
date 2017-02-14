@@ -19,7 +19,7 @@ if ENV == "production":
     O_CUST_FILE = "/var/lib/pacman-mirrors/Custom"
 else:
     # dir constant
-    MIRROR_DIR = "root/var/lib/pacman-mirrors/"
+    MIRROR_DIR = "/pacman-mirrors/"
     # file constant
     CUSTOM_FILE = MIRROR_DIR + "custom-mirrors.json"
     CONFIG_FILE = "root/etc/pacman-mirrors.conf"
