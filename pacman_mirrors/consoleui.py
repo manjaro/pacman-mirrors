@@ -25,12 +25,12 @@ Console UI Module
 from collections import namedtuple
 import npyscreen
 
-from . consolehelpers import ConsoleHelpers
+from . consolefn import ConsoleFn
 from . import i18n
 from . import txt
 
 
-Util = ConsoleHelpers
+Util = ConsoleFn
 _ = i18n.language.gettext
 
 

@@ -24,7 +24,7 @@ Utilities Module
 import json
 
 
-class ConsoleHelpers:
+class ConsoleFn:
     """Console Helpers class"""
 
     @staticmethod
