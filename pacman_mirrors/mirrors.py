@@ -41,4 +41,3 @@ class Mirrors:
             print("url:" + url)
             print("protocols:" + protocols)
             self.add_mirror(country, url, protocols)
-
