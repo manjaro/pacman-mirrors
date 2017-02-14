@@ -35,7 +35,7 @@ class Files:
         """
         try:
             with open(filename, "w") as outfile:
-                json.dump(data, outfile, sort_keys=True)
+                json.dump(data, outfile, sort_keys=True, indent=True)
             return True
 
         except OSError:
@@ -55,7 +55,7 @@ class Files:
                 result = json.loads(infile.read().decode(
                     "utf8"), object_pairs_hook=OrderedDict)
         except OSError:
-            return False
+            return result
 
         return result
 
