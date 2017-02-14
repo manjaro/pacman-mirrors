@@ -1,0 +1,314 @@
+{
+    "Australia": {
+        "http://mirror.ventraip.net.au/Manjaro/": {
+            "protocols": ["http"]
+        },
+        "http://manjaro.uberglobalmirror.com/": {
+            "protocols": ["http"]
+        },
+        "http://manjaro.mirror.serversaustralia.com.au/": {
+            "protocols": ["http"]
+        }
+    },
+    "Austria": {
+        "http://mirror.inode.at/manjaro/": {
+            "protocols": ["http"]
+        }
+    },
+    "Belarus": {
+        "http://mirror.datacenter.by/pub/mirrors/manjaro/": {
+            "protocols": ["http"]
+        }
+    },
+    "Belgium": {
+        "http://ftp.belnet.be/manjaro/": {
+            "protocols": ["ftp", "http"]
+        },
+        "https://manjaro.cu.be/": {
+            "protocols": ["https"]
+        }
+    },
+    "Brasil": {
+        "http://linorg.usp.br/manjaro/": {
+            "protocols": ["http"]
+        }
+    },
+    "Bulgaria": {
+        "https://mirrors.netix.net/manjaro/": {
+            "protocols": ["http", "https"]
+        },
+        "http://manjaro.ipacct.com/manjaro/": {
+            "protocols": ["http"]
+        },
+        "http://manjaro.telecoms.bg/": {
+            "protocols": ["http"]
+        }
+    },
+    "Canada": {
+        "http://manjaro.cybr.ca/": {
+            "protocols": ["http"]
+        },
+        "https://ca.mirror.babylon.network/manjaro/": {
+            "protocols": ["https"]
+        }
+    },
+    "Chile": {
+        "http://manjaro.dcc.uchile.cl/": {
+            "protocols": ["http"]
+        },
+        "http://doge.ing.puc.cl/Mirrors/Manjaro/": {
+            "protocols": ["http"]
+        }
+    },
+    "China": {
+        "http://mirrors.ustc.edu.cn/manjaro/": {
+            "protocols": ["http"]
+        },
+        "http://ftp.cuhk.edu.hk/pub/Linux/manjaro/": {
+            "protocols": ["ftp", "http"]
+        },
+        "http://mirrors.tuna.tsinghua.edu.cn/manjaro/": {
+            "protocols": ["http"]
+        }
+    },
+    "Colombia": {
+        "http://mirror.edatel.net.co/manjaro/": {
+            "protocols": ["http"]
+        }
+    },
+    "Costa_Rica": {
+        "http://mirrors.ucr.ac.cr/manjaro/": {
+            "protocols": ["http"]
+        }
+    },
+    "Czech": {
+        "https://mirror.dkm.cz/manjaro/": {
+            "protocols": ["http", "https"]
+        }
+    },
+    "Denmark": {
+        "https://mirrors.dotsrc.org/manjaro/": {
+            "protocols": ["http", "https"]
+        },
+        "http://www.uex.dk/repos/manjaro/": {
+            "protocols": ["http"]
+        }
+    },
+    "Ecuador": {
+        "https://mirror.cedia.org.ec/manjaro/": {
+            "protocols": ["http", "https"]
+        },
+        "https://mirror.uta.edu.ec/manjaro/": {
+            "protocols": ["http", "https"]
+        },
+        "https://mirror.espoch.edu.ec/manjaro/": {
+            "protocols": ["http", "https"]
+        }
+    },
+    "France": {
+        "http://manjarolinux.polymorf.fr/": {
+            "protocols": ["http"]
+        },
+        "http://mirror.lignux.com/manjaro/": {
+            "protocols": ["http"]
+        },
+        "http://ftp.free.org/mirrors/repo.manjaro.org/repos/": {
+            "protocols": ["ftp", "http"]
+        },
+        "https://fr.mirror.babylon.network/manjaro/": {
+            "protocols": ["https"]
+        }
+    },
+    "Germany": {
+        "http://mirror.ragenetwork.de/manjaro/": {
+            "protocols": ["http"]
+        },
+        "http://ftp.halifax.rwth-aachen.de/manjaro/": {
+            "protocols": ["ftp", "http"]
+        },
+        "http://ftp.tu-chemnitz.de/pub/linux/manjaro/": {
+            "protocols": ["ftp", "http"]
+        },
+        "https://mirror.netzspielplatz.de/manjaro/packages/": {
+            "protocols": ["https"]
+        },
+        "https://mirror.netcologne.de/manjaro/": {
+            "protocols": ["https"]
+        },
+        "https://repo.rhindon.net/manjaro/": {
+            "protocols": ["https"]
+        },
+        "https://mirrors.cicku.me/manjaro/": {
+            "protocols": ["https"]
+        },
+        "https://repo.stdout.net/manjaro/": {
+            "protocols": ["http", "https"]
+        },
+        "https://manjaro-mirror-a.alpix.eu/": {
+            "protocols": ["http", "https"]
+        },
+        "http://ftp.rz.tu-bs.de/pub/mirror/manjaro.org/repos/": {
+            "protocols": ["ftp", "http"]
+        }
+    },
+    "Greece": {
+        "http://ftp.cc.uoc.gr/mirrors/linux/manjaro/": {
+            "protocols": ["ftp", "http"]
+        }
+    },
+    "Hungary": {
+        "http://mirror.infotronik.hu/mirrors/pub/manjaro/": {
+            "protocols": ["http"]
+        }
+    },
+    "Indonesia": {
+        "http://kambing.ui.ac.id/manjaro/": {
+            "protocols": ["http"]
+        },
+        "http://kartolo.sby.datautama.net.id/manjaro/": {
+            "protocols": ["http"]
+        },
+        "http://jaran.undip.ac.id/manjaro/": {
+            "protocols": ["http"]
+        }
+    },
+    "Ireland": {
+        "https://ftp.heanet.ie/mirrors/manjaro/": {
+            "protocols": ["ftp", "https"]
+        }
+    },
+    "Italy": {
+        "http://manjaro.mirror.garr.it/mirrors/manjaro/": {
+            "protocols": ["http"]
+        },
+        "http://ba.mirror.garr.it/mirrors/manjaro/": {
+            "protocols": ["http"]
+        },
+        "http://ct.mirror.garr.it/mirrors/manjaro/": {
+            "protocols": ["http"]
+        }
+    },
+    "Japan": {
+        "http://ftp.tsukuba.wide.ad.jp/Linux/manjaro/": {
+            "protocols": ["ftp", "http"]
+        },
+        "http://ftp.riken.jp/Linux/manjaro/": {
+            "protocols": ["ftp", "http"]
+        }
+    },
+    "Netherlands": {
+        "http://ftp.nluug.nl/pub/os/Linux/distr/manjaro/": {
+            "protocols": ["ftp", "http"]
+        },
+        "http://ftp.snt.utwente.nl/pub/linux/manjaro/": {
+            "protocols": ["ftp", "http"]
+        },
+        "https://nl.mirror.babylon.network/manjaro/": {
+            "protocols": ["https"]
+        }
+    },
+    "Philippines": {
+        "http://mirror.rise.ph/manjaro/": {
+            "protocols": ["http"]
+        }
+    },
+    "Poland": {
+        "http://mirror.chmuri.net/manjaro/": {
+            "protocols": ["http"]
+        }
+    },
+    "Portugal": {
+        "http://ftp.dei.uc.pt/pub/linux/manjaro/": {
+            "protocols": ["ftp", "http"]
+        },
+        "http://repo.barata.website/": {
+            "protocols": ["http"]
+        }
+    },
+    "Romania": {
+        "http://mirrors.serverhost.ro/manjaro/packages/": {
+            "protocols": ["http"]
+        },
+        "http://ftp.lug.ro/manjaro/": {
+            "protocols": ["ftp", "http"]
+        }
+    },
+    "Russia": {
+        "https://mirror.yandex.ru/mirrors/manjaro/": {
+            "protocols": ["http", "https"]
+        },
+        "ftp://kibo.remi.lu/pub/": {
+            "protocols": ["ftp"]
+        }
+    },
+    "Singapore": {
+        "http://download.nus.edu.sg/mirror/manjaro/": {
+            "protocols": ["http"]
+        }
+    },
+    "South_Africa": {
+        "http://mirror.is.co.za/mirrors/manjaro.org/": {
+            "protocols": ["http"]
+        }
+    },
+    "Sweden": {
+        "https://ftp.lysator.liu.se/pub/manjaro/": {
+            "protocols": ["ftp", "https"]
+        },
+        "http://mirror.zetup.net/manjaro/": {
+            "protocols": ["http"]
+        }
+    },
+    "Taiwan": {
+        "http://free.nchc.org.tw/manjaro/": {
+            "protocols": ["http"]
+        }
+    },
+    "Turkey": {
+        "http://ftp.linux.org.tr/manjaro/": {
+            "protocols": ["ftp", "http"]
+        }
+    },
+    "United_Kingdom": {
+        "http://repo.manjaro.org.uk/": {
+            "protocols": ["http"]
+        },
+        "https://www.mirrorservice.org/sites/repo.manjaro.org/repos/": {
+            "protocols": ["https"]
+        },
+        "http://mirror.catn.com/pub/manjaro/": {
+            "protocols": ["http"]
+        },
+        "http://manjaro.mirrors.uk2.net/": {
+            "protocols": ["http"]
+        }
+    },
+    "United_States": {
+        "http://mirror.dacentec.com/manjaro/": {
+            "protocols": ["http"]
+        },
+        "http://mirror.jmu.edu/manjaro/": {
+            "protocols": ["http"]
+        },
+        "http://mirror.solarvps.com/manjaro/": {
+            "protocols": ["http"]
+        },
+        "http://mirror.nexcess.net/manjaro/": {
+            "protocols": ["http"]
+        },
+        "http://distro.ibiblio.org/manjaro/": {
+            "protocols": ["http"]
+        },
+        "http://mirror.clarkson.edu/manjaro/": {
+            "protocols": ["http"]
+        },
+        "http://mirrors.ocf.berkeley.edu/manjaro/": {
+            "protocols": ["http"]
+        }
+    },
+    "Vietnam": {
+        "https://mirror.freedif.org/Manjaro/": {
+            "protocols": ["https"]
+        }
+    }
+}
