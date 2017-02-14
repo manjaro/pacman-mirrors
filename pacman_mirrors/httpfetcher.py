@@ -13,14 +13,13 @@ from . import txt
 
 
 class HttpFetcher:
-    """Fetcher Class"""
+    """HttpFetcher Class"""
 
     @staticmethod
     def get_geoip_country(timeout=2):
-        """
-        Try to get the user country via GeoIP
-
-        :return: return country name or empty list
+        """Try to get the user country via GeoIP
+        :param timeout:
+        :return: country name or nothing
         """
         country_name = None
         try:
@@ -54,7 +53,6 @@ class HttpFetcher:
         except URLError:
             print("Error getting mirror list from server")
         if mirrors:
-            print(mirrors)
             FileMethods.write_json(mirrors, MIRROR_FILE)
 
     @staticmethod
@@ -78,7 +76,7 @@ class HttpFetcher:
         :param mirror_url: mirrors url
         :param timeout: wait for mirror response
         :param quiet: controls message output
-        :return string: response time
+        :return: response time
         """
         probe_start = time.time()
         probe_time = txt.SERVER_RES  # default probe_time
