@@ -407,7 +407,7 @@ class PacmanMirrors:
                 self.config["mirrorfile"] = FALLBACK
 
         url = "http://www.uex.dk/repos/manjaro"
-        avail = Http.query_mirror(url, 2)
+        avail = Http.query_mirror_available(url, 2)
         if avail:
             print("Mirror at: {}: is available".format(url))
         else:

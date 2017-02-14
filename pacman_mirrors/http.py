@@ -3,15 +3,12 @@
 
 import collections
 import json
-import sys
-import time
 from http.client import HTTPException
 from os import system as system_call
 from urllib.error import URLError
 from urllib.request import urlopen
 from .configuration import URL_MIRROR_JSON, URL_STATUS_JSON, MIRROR_FILE, STATUS_FILE
 from .files import Files
-from . import txt
 
 
 class Http:
@@ -91,7 +88,7 @@ class Http:
         return system_call("ping -c{} {} > /dev/null".format(retry, host)) == 0
 
     @staticmethod
-    def query_mirror(url, timeout):
+    def query_mirror_available(url, timeout):
         """
         Get statefile
         :param: mirror_url
