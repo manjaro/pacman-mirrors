@@ -8,13 +8,15 @@ from os import system as system_call
 from urllib.error import URLError
 from urllib.request import urlopen
 from .configuration import \
-    FALLBACK, MIRROR_FILE, STATUS_FILE, URL_MIRROR_JSON, URL_STATUS_JSON
+    FALLBACK, MANJARO_FILE, MIRROR_FILE, \
+    STATUS_FILE, URL_MIRROR_JSON, URL_STATUS_JSON
 from .filefn import FileFn
+from .mirror import Mirror
 from . import txt
 
 
 class HttpFn:
-    """HttpFetcher Class"""
+    """Http Function Class"""
 
     @staticmethod
     def get_geoip_country(timeout=2):
@@ -44,26 +46,36 @@ class HttpFn:
         return country_name
 
     @staticmethod
-    def get_mirrors_file():
+    def get_mirrors_file(timeout=2):
         """Retrieve mirror list from manjaro.org
         :return: True on success
         :rtype: boolean
         """
-        mirrors = list()
+        countries = list()
         success = False
         try:
-            with urlopen(URL_MIRROR_JSON) as response:
-                mirrors = json.loads(response.read().decode(
+            with urlopen(URL_MIRROR_JSON, timeout) as response:
+                countries = json.loads(response.read().decode(
                     "utf8"), object_pairs_hook=collections.OrderedDict)
         except URLError:
             print("Error getting mirror list from server")
-        if mirrors:
+        if countries:
             success = True
-            FileFn.write_json(mirrors, MIRROR_FILE)
+            FileFn.write_json(countries, MANJARO_FILE)
+            mirrors = Mirror()
+            for country in countries.keys():
+                # print("got key", country, "which maps to value", mirrors[country])
+                for url in countries[country]:
+                    # print("got key", url, "which maps to value", mirrors[country][url])
+                    for protocols in countries[country][url]:
+                        # print("got key", protocols, "which maps to value", mirrors[country][url][protocols])
+                        mirrors.add_mirror(country, url, protocols)
+
+            FileFn.write_json(mirrors.get_mirrors(), MIRROR_FILE)
         return success
 
     @staticmethod
-    def get_status_file():
+    def get_status_file(timeout=2):
         """Retrieve state for all mirrors from manjaro.org
         :return: True on success
         :rtype: boolean
@@ -71,7 +83,7 @@ class HttpFn:
         status = list()
         success = False
         try:
-            with urlopen(URL_STATUS_JSON) as response:
+            with urlopen(URL_STATUS_JSON, timeout) as response:
                 status = json.loads(
                     response.read().decode(
                         "utf8"), object_pairs_hook=collections.OrderedDict)
@@ -94,10 +106,10 @@ class HttpFn:
         """Checking repo.manjaro.org"""
         mjro_online = HttpFn.host_online("repo.manjaro.org", 1)
         if mjro_online:
-            print(":: {}".format(txt.INF_DOWNLOAD_STATUS_FILE))
-            HttpFn.get_status_file()
             print(":: {}".format(txt.INF_DOWNLOAD_MIRROR_FILE))
             HttpFn.get_mirrors_file()
+            print(":: {}".format(txt.INF_DOWNLOAD_STATUS_FILE))
+            HttpFn.get_status_file()
             return True
         else:
             if not FileFn.check_file(MIRROR_FILE):
@@ -108,16 +120,25 @@ class HttpFn:
             return False
 
     @staticmethod
-    def query_mirror_available(url, timeout):
+    def query_mirror_available(url, timeout, retry):
         """
         Get statefile
         :param: mirror_url
         :return: content
         """
+        url += "state"
+        probe_start = time.time()
+        probe_time = txt.SERVER_RES
+        probe_stop = None
+        _c = ""
         try:
-            res = urlopen(url, timeout=timeout)
-            content = res.read().decode("utf8")
+            for _ in range(retry):
+                res = urlopen(url, timeout=timeout)
+                _c = res.read().decode("utf8")
+            probe_stop = time.time()
         except URLError:
-            content = ""
-
-        return content
+            _c
+        if probe_stop:
+            calc = round((probe_stop - probe_start), 3)
+            probe_time = str(format(calc, ".3f"))
+        return probe_time
