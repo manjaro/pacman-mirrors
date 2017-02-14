@@ -12,6 +12,7 @@ if ENV == "dev":
     # pacman-mirrors
     MIRROR_DIR = "mock/var/"
     CUSTOM_FILE = MIRROR_DIR + "custom-mirrors.json"
+    MANJARO_FILE = MIRROR_DIR + "manjaro.json"
     MIRROR_FILE = MIRROR_DIR + "mirrors.json"
     STATUS_FILE = MIRROR_DIR + "status.json"
     # special cases
@@ -24,6 +25,7 @@ else:
     # pacman-mirrors
     MIRROR_DIR = "/var/lib/pacman-mirrors/"
     CUSTOM_FILE = MIRROR_DIR + "custom-mirrors.json"
+    MANJARO_FILE = MIRROR_DIR + "manjaro.json"
     MIRROR_FILE = MIRROR_DIR + "mirrors.json"
     STATUS_FILE = MIRROR_DIR + "status.json"
     # special cases
