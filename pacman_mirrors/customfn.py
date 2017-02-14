@@ -5,6 +5,7 @@ import os
 from .configuration import ENV, O_CUST_FILE, CUSTOM_FILE
 from .mirrors import Mirrors
 from .filefn import FileFn
+from . import txt
 
 
 class CustomFn:
@@ -12,7 +13,7 @@ class CustomFn:
     def convert_to_json():
         """Convert custom mirror file to json"""
         if os.path.isfile(O_CUST_FILE):
-            print(":: Converting custom mirror file to json")
+            print(":: {}".format(txt.INF_CONVERT_MIRROR_FILE))
             with open(O_CUST_FILE, "r") as mirrorfile:
                 mirror = Mirrors()
                 mirror_country = None
