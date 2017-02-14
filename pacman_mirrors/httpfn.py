@@ -8,8 +8,9 @@ from os import system as system_call
 from urllib.error import URLError
 from urllib.request import urlopen
 from .configuration import \
-    URL_MIRROR_JSON, URL_STATUS_JSON, MIRROR_FILE, STATUS_FILE
+    FALLBACK, MIRROR_FILE, STATUS_FILE, URL_MIRROR_JSON, URL_STATUS_JSON
 from .filefn import FileFn
+from . import txt
 
 
 class HttpFn:
@@ -87,6 +88,24 @@ class HttpFn:
         :rtype: boolean
         """
         return system_call("ping -c{} {} > /dev/null".format(retry, host)) == 0
+
+    @staticmethod
+    def manjaro_online_update():
+        """Checking repo.manjaro.org"""
+        mjro_online = HttpFn.host_online("repo.manjaro.org", 1)
+        if mjro_online:
+            print(":: {}".format(txt.INF_DOWNLOAD_STATUS_FILE))
+            HttpFn.get_status_file()
+            print(":: {}".format(txt.INF_DOWNLOAD_MIRROR_FILE))
+            HttpFn.get_mirrors_file()
+            return True
+        else:
+            if not FileFn.check_file(MIRROR_FILE):
+                print(":: {} '{}' {}".format(txt.INF_MIRROR_FILE,
+                                             MIRROR_FILE,
+                                             txt.INF_IS_MISSING))
+                print(":: {} '{}'".format(txt.INF_FALLING_BACK, FALLBACK))
+            return False
 
     @staticmethod
     def query_mirror_available(url, timeout):
