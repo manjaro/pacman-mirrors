@@ -10,13 +10,20 @@ from collections import OrderedDict
 from . import txt
 
 
-class FileMethods:
+class Files:
     """FileMethods class"""
 
     @staticmethod
     def check_directory(dir_name):
         """Check necessary directory"""
         os.makedirs(dir_name, mode=0o755, exist_ok=True)
+
+    @staticmethod
+    def check_file(filename):
+        """Check if file exist"""
+        if os.path.isfile(filename):
+            return True
+        return False
 
     @staticmethod
     def write_json(data, filename):
@@ -94,7 +101,7 @@ class FileMethods:
         :param data: custom mirrors
         :param filename: custom mirror file
         """
-        FileMethods.write_json(data, filename)
+        Files.write_json(data, filename)
 
     @staticmethod
     def write_mirror_list_header(handle, custom=False):
