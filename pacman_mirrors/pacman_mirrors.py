@@ -30,6 +30,7 @@ import argparse
 import importlib.util
 import os
 import sys
+from operator import itemgetter
 from pacman_mirrors import __version__
 from .configuration import CONFIG_FILE, CUSTOM_FILE, FALLBACK, MIRROR_DIR, MIRROR_FILE, MIRROR_LIST
 from .files import Files
