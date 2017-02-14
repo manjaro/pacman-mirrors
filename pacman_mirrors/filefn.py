@@ -8,6 +8,7 @@ import os
 import tempfile
 from collections import OrderedDict
 from . import txt
+from .mirror import Mirror
 
 
 class FileFn:
@@ -26,11 +27,27 @@ class FileFn:
         return False
 
     @staticmethod
-    def read_json(filename, return_dict=False):
+    def load_mirrors(filename, dictionary=False):
+        """Load manjaro mirrors from file"""
+        mirrors = Mirror()
+
+        if dictionary:
+            countries = FileFn.read_json(filename, dictionary=dictionary)
+            for country in countries.keys():
+                for url in countries[country]:
+                    for protocols in countries[country][url]:
+                        mirrors.add_mirror(country, url, protocols)
+        else:
+            Mirror().mirror_list = FileFn.read_json(filename)
+        mirror_list = mirrors.get_mirrorlist()
+        return mirror_list
+
+    @staticmethod
+    def read_json(filename, dictionary=False):
         """Read json data from file"""
         result = list()
         try:
-            if return_dict:
+            if dictionary:
                 with open(filename, "rb") as infile:
                     result = json.loads(infile.read().decode(
                         "utf8"), object_pairs_hook=OrderedDict)
@@ -41,6 +58,17 @@ class FileFn:
         except OSError:
             return result
         return result
+
+    @staticmethod
+    def tranlate_mjro_dictionary(data):
+        """Translate manjaro.json"""
+        mirrors = Mirror()
+        for country in data.keys():
+            for url in data[country]:
+                for protocols in data[country][url]:
+                    mirrors.add_mirror(country, url, protocols)
+        mirror_list = mirrors.get_mirrorlist()
+        return mirror_list
 
     @staticmethod
     def write_json(data, filename):
@@ -67,8 +95,8 @@ class FileFn:
         try:
             with open(
                 config_file) as cnf, tempfile.NamedTemporaryFile(
-                    "w+t", dir=os.path.dirname(
-                        config_file), delete=False) as tmp:
+                "w+t", dir=os.path.dirname(
+                    config_file), delete=False) as tmp:
                 replaced = False
                 for line in cnf:
                     if "OnlyCountry" in line:
