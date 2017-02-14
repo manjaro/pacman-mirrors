@@ -291,6 +291,8 @@ class PacmanMirrors:
             self.mirrors.seed(JsonFn.read_json_file(FALLBACK, dictionary=True))
             JsonFn.write_json_file(self.mirrors.mirrorlist, MIRROR_FILE)
 
+    def check_country_selection(self):
+        """Check validity of country selection"""
         if self.config["only_country"]:
             # custom
             if self.config["only_country"] == ["Custom"]:
@@ -322,6 +324,8 @@ class PacmanMirrors:
             else:
                 self.config["only_country"] = self.mirrors.countrylist
 
+    def gen_server_list(self):
+        """Generate mirror lists"""
         if self.config["method"] == "rank":
             self.query_servers(self.config["only_country"])
         # elif self.config["method"] == "random":
@@ -345,12 +349,10 @@ class PacmanMirrors:
     def query_servers(self, selection):
         """Query server for response time"""
         mirrors = self.mirrors.filter_countries(selection)
-        print("DEBUG >>> query_servers -> mirrors = " + str(mirrors))
         for mirror in mirrors:
             resp_time = HttpFn.query_mirror_available(
                 mirror["url"], timeout=2, retry=3)
             mirror["resp_time"] = resp_time
-            print("DEBUG >>> query_servers -> mirror = " + str(mirror))
             self.mirror_to_server_list(mirror)
 
     def modify_config(self, custom=False):
@@ -402,7 +404,6 @@ class PacmanMirrors:
         """
         for country in countries:
             if country not in countrylist:
-                print("DEBUG >>> validate_country_list -> country = " + country)
                 print("{}{}: '{}: {}'.\n\n{}".format(
                     txt.INF_OPTION,
                     txt.OPT_COUNTRY,
@@ -420,7 +421,8 @@ class PacmanMirrors:
         self.command_line_parse()
         self.manjaro_online = HttpFn.manjaro_online_update()
         self.load_mirror_file()
-
+        self.check_country_selection()
+        self.gen_server_list()
         if self.interactive:
             self.gen_mirror_list_interactive()
         else:
