@@ -10,7 +10,7 @@ from collections import OrderedDict
 from . import txt
 
 
-class Files:
+class FileFn:
     """FileMethods class"""
 
     @staticmethod
@@ -27,28 +27,18 @@ class Files:
 
     @staticmethod
     def write_json(data, filename):
-        """
-        Writes a named json file
-
-        :param data:
-        :param filename:
-        """
+        """Writes data to file as json"""
         try:
             with open(filename, "w") as outfile:
-                json.dump(data, outfile, sort_keys=True, indent=True)
+                json.dump(data, outfile, sort_keys=True, indent=4)
             return True
 
         except OSError:
             return False
 
     @staticmethod
-    def read_json(filename):
-        """
-        Reads a named json file
-
-        :param filename:
-        :return data: OrderedDict
-        """
+    def read_json_as_dictionary(filename):
+        """Read json data from file"""
         result = list()
         try:
             with open(filename, "r") as infile:
@@ -60,14 +50,27 @@ class Files:
         return result
 
     @staticmethod
-    def write_config_to_file(config_file, selected_countries, custom):
+    def read_json(filename):
+        """Read json data from file"""
+        result = list()
+        try:
+            with open(filename, "r") as infile:
+                result = json.loads(infile.read().decode(
+                    "utf8"))  # , object_pairs_hook=OrderedDict)
+        except OSError:
+            return result
+
+        return result
+
+    @staticmethod
+    def write_config_to_file(config_file, countryselection, custom):
         """Writes the configuration to file"""
         if custom:
-            if selected_countries == ["Custom"]:
+            if countryselection == ["Custom"]:
                 selection = "OnlyCountry = Custom\n"
             else:
                 selection = "OnlyCountry = {list}\n".format(
-                    list=",".join(selected_countries))
+                    list=",".join(countryselection))
         else:
             selection = "# OnlyCountry = \n"
         try:
@@ -90,18 +93,6 @@ class Files:
             print("{}: {}: {}: {}".format(txt.ERROR, txt.ERR_FILE_READ,
                                           err.filename, err.strerror))
             exit(1)
-
-        return True
-
-    @staticmethod
-    def write_mirror_file(data, filename):
-        """
-        Write mirrorfile
-
-        :param data: custom mirrors
-        :param filename: custom mirror file
-        """
-        Files.write_json(data, filename)
 
     @staticmethod
     def write_mirror_list_header(handle, custom=False):
@@ -139,7 +130,8 @@ class Files:
         if work["response_time"] == txt.SERVER_RES:
             work["response_time"] = "N/A"
         handle.write("## Response time : {}\n".format(work["response_time"]))
-        if work["last_sync"] == txt.SERVER_BAD or work["last_sync"] == txt.LASTSYNC_NA:
+        if work["last_sync"] == txt.SERVER_BAD or \
+                work["last_sync"] == txt.LASTSYNC_NA:
             work["last_sync"] = "N/A"
         handle.write("## Last sync     : {}h\n".format(work["last_sync"]))
         handle.write("Server = {}\n\n".format(work["url"]))
