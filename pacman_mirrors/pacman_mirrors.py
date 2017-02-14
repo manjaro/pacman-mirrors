@@ -31,10 +31,10 @@ import importlib.util
 import os
 import sys
 from pacman_mirrors import __version__
-from .configuration import CONFIG_FILE, MIRROR_DIR, CUSTOM_FILE, MIRROR_LIST
-from .filemethods import FileMethods
-from .httpfetcher import HttpFetcher
-from .customfile import CustomFile
+from .configuration import CONFIG_FILE, CUSTOM_FILE, FALLBACK, MIRROR_DIR, MIRROR_FILE, MIRROR_LIST
+from .files import Files
+from .http import Http
+from .custom import Custom
 from .custom_help_formatter import CustomHelpFormatter
 from . import i18n
 from . import txt
@@ -64,11 +64,9 @@ class PacmanMirrors:
         self.interactive = False
         self.quiet = False
         self.no_display = False
+        self.network = Http.network_status()
         # Time out
         self.max_wait_time = 2
-        # Files and dirs
-        self.config_file = CONFIG_FILE
-        self.custom_file = MIRROR_DIR + CUSTOM_FILE
         # Define config
         self.config = {}
 
@@ -148,7 +146,7 @@ class PacmanMirrors:
         #     exit(1)
 
         if args.noupdate:
-            if self.config["noupdate"] == "True":
+            if self.config["no_update"] == "True":
                 exit(0)
 
         if args.method:
@@ -204,16 +202,17 @@ class PacmanMirrors:
         # information which can differ from these defaults
         # is fetched from config file
         config = {
+            "mirrorfile": MIRROR_FILE,
             "branch": "stable",
             "method": "rank",
             "mirrordir": MIRROR_DIR,
             "mirrorlist": MIRROR_LIST,
-            "noupdate": False,
+            "no_update": False,
             "selectedcountries": [],
         }
         try:
             # read configuration from file
-            with open(self.config_file) as conf:
+            with open(CONFIG_FILE) as conf:
                 for line in conf:
                     line = line.strip()
                     if line.startswith("#") or "=" not in line:
@@ -235,7 +234,7 @@ class PacmanMirrors:
                         elif key == "OutputMirrorlist":
                             config["mirrorlist"] = value
                         elif key == "NoUpdate":
-                            config["noupdate"] = value
+                            config["no_update"] = value
         except (PermissionError, OSError) as err:
             print("{}: {}: {}: {}".format(txt.ERROR, txt.ERR_FILE_READ,
                                           err.filename, err.strerror))
@@ -305,17 +304,18 @@ class PacmanMirrors:
         """
         if self.config["selectedcountries"]:
             if self.config["selectedcountries"] == ["Custom"]:
-                if not os.path.isfile(self.custom_file):
+                if not os.path.isfile(CUSTOM_FILE):
                     print("{}: {} '{} {}'\n".format(txt.WARN,
                                                     txt.INF_CUSTOM_MIRROR_FILE,
-                                                    self.custom_file,
+                                                    CUSTOM_FILE,
                                                     txt.INF_DOES_NOT_EXIST))
                     self.config["selectedcountries"] = []
             elif self.config["selectedcountries"] == ["all"]:
                 self.config["selectedcountries"] = []
+
         elif not self.config["selectedcountries"]:
             if self.geolocation:
-                geoip_country = HttpFetcher.get_geoip_country()
+                geoip_country = Http.get_geoip_country()
                 if geoip_country and geoip_country in self.available_countries:
                     self.config["selectedcountries"] = [geoip_country]
                 else:
@@ -325,6 +325,7 @@ class PacmanMirrors:
 
         if self.config["method"] == "rank":
             self.query_servers(self.config["selectedcountries"])
+
         elif self.config["method"] == "random":
             self.random_servers(self.config["selectedcountries"])
 
@@ -332,11 +333,11 @@ class PacmanMirrors:
         """Modify configuration"""
         if not custom:
             # remove custom mirror file
-            if os.path.isfile(self.custom_file):
-                os.remove(self.custom_file)
-        FileMethods.write_config_to_file(self.config_file,
-                                         self.config["selectedcountries"],
-                                         custom)
+            if os.path.isfile(CUSTOM_FILE):
+                os.remove(CUSTOM_FILE)
+        Files.write_config_to_file(CONFIG_FILE,
+                                   self.config["selectedcountries"],
+                                   custom)
 
     def output_mirror_list(self, servers, write_file=False):
         """
@@ -349,13 +350,13 @@ class PacmanMirrors:
             with open(self.config["mirrorlist"], "w") as outfile:
                 if write_file:
                     print(":: {}".format(txt.INF_MIRROR_LIST_WRITE))
-                    FileMethods.write_mirror_list_header(self, outfile)
+                    Files.write_mirror_list_header(self, outfile)
                 for server in servers:
                     if write_file:
                         # insert selected branch in url
                         server["url"] = server["url"].replace(
                             "$branch", self.config["branch"])
-                        FileMethods.write_mirror_list_entry(outfile, server)
+                        Files.write_mirror_list_entry(outfile, server)
                         if not self.quiet:
                             print("==> {} : {}".format(server["country"],
                                                        server["url"]))
@@ -388,10 +389,14 @@ class PacmanMirrors:
 
     def run(self):
         """Run"""
-        FileMethods.check_directory(MIRROR_DIR)
-        CustomFile.custom_to_json()
-        HttpFetcher.get_mirrors_json()
-        HttpFetcher.get_status_json()
+        Files.check_directory(MIRROR_DIR)
+        Custom.convert_to_json()
+        if self.network:
+            Http.download_status()
+            Http.download_mirrors()
+        else:
+            if not Files.check_file(MIRROR_FILE):
+                self.config["mirrorfile"] = FALLBACK
         self.config = self.config_init()
         # self.command_line_parse()
         # self.load_server_lists()
