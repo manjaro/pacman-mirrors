@@ -2,7 +2,7 @@
 """Conversion Module"""
 
 import os
-from .configuration import ENV, O_CUST_FILE, CUSTOM_FILE, MIRROR_DIR
+from .configuration import ENV, O_CUST_FILE, CUSTOM_FILE
 from .mirrors import Mirrors
 from .files import Files
 
@@ -30,7 +30,8 @@ class Custom:
                 Files.write_json(mirror.get_mirrors(), CUSTOM_FILE)
                 print("TODO: change this")
                 print("calling ImportHelper.cleanup()")
-                # ImportHelper.cleanup()
+                if not ENV:
+                    CustomHelper.cleanup()
 
 
 class CustomHelper:
