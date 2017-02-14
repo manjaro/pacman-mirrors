@@ -64,11 +64,11 @@ class PacmanMirrors:
         self.interactive = False
         self.quiet = False
         self.no_display = False
-        self.network = Http.network_status()
         # Time out
         self.max_wait_time = 2
         # Define config
         self.config = {}
+        self.hostonline = True
 
     def append_to_server_list(self, mirror, last_sync):
         """
@@ -391,13 +391,27 @@ class PacmanMirrors:
         """Run"""
         Files.check_directory(MIRROR_DIR)
         Custom.convert_to_json()
-        if self.network:
-            Http.download_status()
-            Http.download_mirrors()
-        else:
-            if not Files.check_file(MIRROR_FILE):
-                self.config["mirrorfile"] = FALLBACK
         self.config = self.config_init()
+        self.hostonline = Http.host_online("repo.manjaro.org", 1)
+        if self.hostonline:
+            print("repo.manjaro.org is up")
+            print("downloading mirror status")
+            Http.get_status_file()
+            print("downloading current mirrors file")
+            Http.get_mirrors_file()
+        else:
+            print("repo.manjaro.org is down")
+            if not Files.check_file(MIRROR_FILE):
+                print("Mirrorfile '{}' is not available".format(MIRROR_FILE))
+                print("Falling back to '{}'".format(FALLBACK))
+                self.config["mirrorfile"] = FALLBACK
+
+        url = "http://www.uex.dk/repos/manjaro"
+        avail = Http.query_mirror(url, 2)
+        if avail:
+            print("Mirror at: {}: is available".format(url))
+        else:
+            print("Mirror at: {}: is NOT available".format(url))
         # self.command_line_parse()
         # self.load_server_lists()
         # if self.interactive:
