@@ -77,16 +77,16 @@ class HttpFn:
         return success
 
     @staticmethod
-    def check_host_online(host, retry):
+    def check_host_online(host, count=1):
         """Check a hosts availability
         :rtype: boolean
         """
-        return system_call("ping -c{} {} > /dev/null".format(retry, host)) == 0
+        return system_call("ping -c{} {} > /dev/null".format(count, host)) == 0
 
     @staticmethod
     def manjaro_online_update():
         """Checking repo.manjaro.org"""
-        mjro_online = HttpFn.check_host_online("repo.manjaro.org", 1)
+        mjro_online = HttpFn.check_host_online("repo.manjaro.org", count=1)
         if mjro_online:
             print(":: {}".format(txt.INF_DOWNLOAD_MIRROR_FILE))
             HttpFn.download_mirrors()
@@ -102,7 +102,7 @@ class HttpFn:
             return False
 
     @staticmethod
-    def query_mirror_available(url, timeout, retry):
+    def query_mirror_available(url, timeout, count=1):
         """Query mirrors availability
         :returns string with response time
         """
@@ -112,7 +112,7 @@ class HttpFn:
         probe_stop = None
         _c = ""
         try:
-            for _ in range(retry):
+            for _ in range(count):
                 res = urlopen(url, timeout=timeout)
                 _c = res.read().decode("utf8")
             probe_stop = time.time()
