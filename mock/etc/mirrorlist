@@ -1,0 +1,97 @@
+##
+## Manjaro Linux mirrorlist
+## Generated on 15 February 2017 07:31
+##
+## Use pacman-mirrors to modify
+##
+
+## Country       : Denmark
+## Response time : 0.248
+## Last sync     : N/Ah
+Server = https://mirrors.dotsrc.org/manjaro/
+
+## Country       : Denmark
+## Response time : 0.008
+## Last sync     : N/Ah
+Server = http://www.uex.dk/repos/manjaro/
+
+## Country       : United_States
+## Response time : 0.802
+## Last sync     : N/Ah
+Server = http://mirror.dacentec.com/manjaro/
+
+## Country       : United_States
+## Response time : 0.678
+## Last sync     : N/Ah
+Server = http://mirror.jmu.edu/manjaro/
+
+## Country       : United_States
+## Response time : 0.715
+## Last sync     : N/Ah
+Server = http://mirror.solarvps.com/manjaro/
+
+## Country       : United_States
+## Response time : 0.872
+## Last sync     : N/Ah
+Server = http://mirror.nexcess.net/manjaro/
+
+## Country       : United_States
+## Response time : 1.067
+## Last sync     : N/Ah
+Server = http://distro.ibiblio.org/manjaro/
+
+## Country       : United_States
+## Response time : 0.611
+## Last sync     : N/Ah
+Server = http://mirror.clarkson.edu/manjaro/
+
+## Country       : United_States
+## Response time : 1.826
+## Last sync     : N/Ah
+Server = http://mirrors.ocf.berkeley.edu/manjaro/
+
+## Country       : Denmark
+## Response time : 0.261
+## Last sync     : N/Ah
+Server = https://mirrors.dotsrc.org/manjaro/
+
+## Country       : Denmark
+## Response time : 0.009
+## Last sync     : N/Ah
+Server = http://www.uex.dk/repos/manjaro/
+
+## Country       : United_States
+## Response time : 0.768
+## Last sync     : N/Ah
+Server = http://mirror.dacentec.com/manjaro/
+
+## Country       : United_States
+## Response time : 0.675
+## Last sync     : N/Ah
+Server = http://mirror.jmu.edu/manjaro/
+
+## Country       : United_States
+## Response time : 0.570
+## Last sync     : N/Ah
+Server = http://mirror.solarvps.com/manjaro/
+
+## Country       : United_States
+## Response time : 0.725
+## Last sync     : N/Ah
+Server = http://mirror.nexcess.net/manjaro/
+
+## Country       : United_States
+## Response time : 0.730
+## Last sync     : N/Ah
+Server = http://distro.ibiblio.org/manjaro/
+
+## Country       : United_States
+## Response time : 0.609
+## Last sync     : N/Ah
+Server = http://mirror.clarkson.edu/manjaro/
+
+## Country       : United_States
+## Response time : 1.113
+## Last sync     : N/Ah
+Server = http://mirrors.ocf.berkeley.edu/manjaro/
+

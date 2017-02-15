@@ -25,20 +25,20 @@ class TestPacmanMirrors(unittest.TestCase):
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors"]):
             app = pacman_mirrors.PacmanMirrors()
-            # app.config_file = "conf/pacman-mirrors.conf"
-            # app.config = app.config_init()
-            # app.Fetcher.get_mirrors_list()
-            # app.Fetcher.get_mirrors_state()
-            # app.Converter.custom_to_json()
+            app.config = app.config_init()
 
-    # @patch.object(pacman_mirrors.PacmanMirrors, "get_mirror_branch_timestamp")
-    # def test_get_mirror_timestamp(self, mock_timestamp):
-    #     """Extract timestamp from input"""
-    #     mock_timestamp.return_value = "2017-02-06T07:18:43Z"
-    #     app = pacman_mirrors.PacmanMirrors()
-    #     mock_data = "date=2017-02-06T07:18:43Z"
-    #     assert app.get_mirror_branch_timestamp(
-    #         mock_data) == "2017-02-06T07:18:43Z"
+    @patch.object(
+        pacman_mirrors.HttpFn, "get_geoip_country")
+    def test_get_geoip_country(self, mock_geoip):
+        """Geoip country IS available"""
+        mock_countries = ["France", "Germany", "Denmark"]
+        mock_geoip.return_value = "France"
+        with unittest.mock.patch("sys.argv",
+                                 ["pacman-mirrors",
+                                  "--geoip"]):
+            app = pacman_mirrors.PacmanMirrors()
+        app.available_countries = mock_countries
+        assert app.config["only_country"] == ["France"]
 
     def tearDown(self):
         pass

@@ -30,6 +30,9 @@ import argparse
 import importlib.util
 import os
 import sys
+import datetime
+import os
+import tempfile
 from operator import itemgetter
 from pacman_mirrors import __version__
 from .configuration import \
@@ -234,7 +237,7 @@ class PacmanMirrors:
             server_list.extend(self.bad_servers)
 
         if server_list:
-            if self.config["only_country"] == self.mirrors.mirrorlist:
+            if self.config["only_country"] == self.mirrors.countrylist:
                 self.modify_config()
             else:
                 self.modify_config(custom=True)
@@ -348,7 +351,8 @@ class PacmanMirrors:
 
     def query_servers(self, selection):
         """Query server for response time"""
-        mirrors = self.mirrors.filter_countries(selection)
+        mirrors = self.mirrors.filter(selection)
+        print()
         for mirror in mirrors:
             resp_time = HttpFn.query_mirror_available(
                 mirror["url"], timeout=2, retry=3)
@@ -376,13 +380,13 @@ class PacmanMirrors:
             with open(self.config["mirror_list"], "w") as outfile:
                 if write_file:
                     print(":: {}".format(txt.INF_MIRROR_LIST_WRITE))
-                    FileFn.write_mirror_list_header(self, outfile)
+                    self.write_mirror_list_header(outfile)
                 for server in servers:
                     if write_file:
                         # insert selected branch in url
                         server["url"] = server["url"].replace(
                             "$branch", self.config["branch"])
-                        FileFn.write_mirror_list_server(outfile, server)
+                        self.write_mirror_list_server(outfile, server)
                         if not self.quiet:
                             print("==> {} : {}".format(server["country"],
                                                        server["url"]))
@@ -412,6 +416,51 @@ class PacmanMirrors:
                     txt.INF_USING_ALL_SERVERS))
                 return False
         return True
+    @staticmethod
+    def write_mirror_list_header(handle, custom=False):
+        """
+        Write mirrorlist header
+
+        :param handle: handle to a file opened for writing
+        :param custom: controls content of the header
+        """
+        handle.write("##\n")
+        if custom:
+            handle.write("## Manjaro Linux Custom mirrorlist\n")
+            handle.write("## Generated on {}\n".format(
+                datetime.datetime.now().strftime("%d %B %Y %H:%M")))
+            handle.write("##\n")
+            handle.write("## Use 'pacman-mirrors -c all' to reset\n")
+        else:
+            handle.write("## Manjaro Linux mirrorlist\n")
+            handle.write("## Generated on {}\n".format(
+                datetime.datetime.now().strftime("%d %B %Y %H:%M")))
+            handle.write("##\n")
+            handle.write("## Use pacman-mirrors to modify\n")
+        handle.write("##\n\n")
+
+    @staticmethod
+    def write_mirror_list_server(handle, mirror):
+        """
+        Write mirror to mirror list or file
+
+        :param handle: handle to a file opened for writing
+        :param mirror: mirror object
+        """
+        workitem = mirror
+        handle.write("## Country       : {}\n".format(
+            workitem["country"]))
+        if workitem["resp_time"] == txt.SERVER_RES:
+            workitem["resp_time"] = "N/A"
+        handle.write("## Response time : {}\n".format(
+            workitem["resp_time"]))
+        if workitem["last_sync"] == txt.SERVER_BAD or \
+                workitem["last_sync"] == txt.LASTSYNC_NA:
+            workitem["last_sync"] = "N/A"
+        handle.write("## Last sync     : {}h\n".format(
+            workitem["last_sync"]))
+        handle.write("Server = {}\n\n".format(
+            workitem["url"]))
 
     def run(self):
         """Run"""
