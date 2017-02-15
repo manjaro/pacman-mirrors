@@ -7,9 +7,8 @@ from operator import itemgetter
 class Mirror:
     """Pacman-Mirrors Mirrors Class"""
 
-    def __init__(self):
-        self.mirrors = []
-        self.countries = []
+    mirrors = []
+    countries = []
 
     @property
     def mirrorlist(self):
@@ -43,43 +42,40 @@ class Mirror:
         }
         self.mirrors.append(mirror)
 
-    def seed(self, mirrors):
+    def seed(self, mirrors, status=False):
         """Seed mirrorlist"""
         for server in mirrors:
-            self.add_mirror(server["country"],
-                            server["url"],
-                            server["protocols"],
-                            server["branches"],
-                            server["last_sync"])
+            if status:
+                self.add_mirror(server["country"],
+                                server["url"],
+                                server["protocols"],
+                                server["branches"],
+                                server["last_sync"])
+            else:
+                self.add_mirror(server["country"],
+                                server["url"],
+                                server["protocols"])
 
-    @staticmethod
-    def filter_country(country):
-        """Return mirrors for country
-        :param country: name of country
-        :return: a condensed mirror list for country
-        """
-        result = [x for x in Mirror().mirrorlist if x["country"] in country]
-        return result
-
-    def filter_countries(self, country_list):
-        """Returns mirrors for list of countries
-        :param country_list: list of countries
+    def filter(self, selection):
+        """Returns mirrors for country selection
+        :param selection: list of country names
         :return: a condensed list with countries
         """
-        print("DBEBUG >>> filter_countries -> country_list = " + str(country_list))
         result = []
-        print("DBEBUG >>> filter_countries -> self.mirrors = " + str(self.mirrors))
-        # result = [x for x in Mirror().mirrorlist if x["country"] in country_list]
         for mirror in self.mirrors:
-            print("DBEBUG >>> filter_countries -> mirror = " + str(mirror))
-            if mirror["country"] in country_list:
+            if mirror["country"] in selection:
                 result.append(mirror)
         print(str(result))
         return result
 
     @staticmethod
-    def sort_country():
+    def sort_country(mirrors):
         """Returns a country sorted mirror list"""
-        result = sorted(Mirror().mirrorlist, key=itemgetter('country'))
+        result = sorted(mirrors, key=itemgetter('country'))
         return result
 
+    @staticmethod
+    def sort_response(mirrors):
+        """Returns a country sorted mirror list"""
+        result = sorted(mirrors, key=itemgetter('resp_time'))
+        return result
