@@ -11,6 +11,7 @@ from urllib.request import urlopen
 from .configuration import \
     FALLBACK, MANJARO_FILE, MIRROR_FILE, \
     STATUS_FILE, URL_MIRROR_JSON, URL_STATUS_JSON
+from .filefn import FileFn
 from .jsonfn import JsonFn
 from . import txt
 
@@ -45,48 +46,38 @@ class HttpFn:
         return country_name
 
     @staticmethod
-    def get_mirrors_file():
-        """Retrieve mirror list from manjaro.org
+    def download_mirrors(status=False):
+        """Retrieve mirrors from manjaro.org
+        :param status: mirrors with status
         :return: True on success
         :rtype: boolean
         """
         countries = list()
+        fname = URL_MIRROR_JSON
+        if status:
+            fname = URL_STATUS_JSON
         success = False
         try:
-            with urlopen(URL_MIRROR_JSON) as response:
+            with urlopen(fname) as response:
                 countries = json.loads(response.read().decode(
                     "utf8"), object_pairs_hook=collections.OrderedDict)
         except URLError:
-            print("Error getting mirror list from server")
+            if status:
+                print(":: {]: {}".format(txt.ERROR, txt.ERR_DOWNLOAD_STATUS_FILE))
+            else:
+                print(":: {]: {}".format(txt.ERROR, txt.ERR_DOWNLOAD_MIRROR_FILE))
         if countries:
             success = True
-            JsonFn.write_json_file(countries, MANJARO_FILE)
-            translated = JsonFn.tranlate_mjro_dictionary(countries)
-            JsonFn.write_json_file(translated, MIRROR_FILE)
+            if status:
+                JsonFn.write_json_file(status, STATUS_FILE)
+            else:
+                JsonFn.write_json_file(countries, MANJARO_FILE)
+                translated = JsonFn.tranlate_mjro_dictionary(countries)
+                JsonFn.write_json_file(translated, MIRROR_FILE)
         return success
 
     @staticmethod
-    def get_status_file():
-        """Retrieve state for all mirrors from manjaro.org
-        :return: True on success
-        :rtype: boolean
-        """
-        status = list()
-        success = False
-        try:
-            with urlopen(URL_STATUS_JSON) as response:
-                status = json.loads(
-                    response.read().decode(
-                        "utf8"), object_pairs_hook=collections.OrderedDict)
-        except URLError:
-            print("Error getting mirrors state from server")
-        if status:
-            success = True
-            JsonFn.write_json_file(status, STATUS_FILE)
-        return success
-
-    @staticmethod
-    def host_online(host, retry):
+    def check_host_online(host, retry):
         """Check a hosts availability
         :rtype: boolean
         """
@@ -95,15 +86,15 @@ class HttpFn:
     @staticmethod
     def manjaro_online_update():
         """Checking repo.manjaro.org"""
-        mjro_online = HttpFn.host_online("repo.manjaro.org", 1)
+        mjro_online = HttpFn.check_host_online("repo.manjaro.org", 1)
         if mjro_online:
             print(":: {}".format(txt.INF_DOWNLOAD_MIRROR_FILE))
-            HttpFn.get_mirrors_file()
+            HttpFn.download_mirrors()
             print(":: {}".format(txt.INF_DOWNLOAD_STATUS_FILE))
-            HttpFn.get_status_file()
+            HttpFn.download_mirrors()
             return True
         else:
-            if not JsonFn.check_file(MIRROR_FILE):
+            if not FileFn.check_file(MIRROR_FILE):
                 print(":: {} '{}' {}".format(txt.INF_MIRROR_FILE,
                                              MIRROR_FILE,
                                              txt.INF_IS_MISSING))
