@@ -34,4 +34,4 @@ else:
 
 # repo constants
 BRANCHES = ("stable", "testing", "unstable")
-REPO_ARCH = "$repo/$arch"
+REPO_ARCH = "/$repo/$arch"
