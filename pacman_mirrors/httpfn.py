@@ -46,34 +46,26 @@ class HttpFn:
         return country_name
 
     @staticmethod
-    def download_mirrors(status=False):
+    def download_mirrors(url):
         """Retrieve mirrors from manjaro.org
-        :param status: mirrors with status
+        :param url:
         :return: True on success
         :rtype: boolean
         """
         countries = list()
-        fname = URL_MIRROR_JSON
-        if status:
-            fname = URL_STATUS_JSON
         success = False
         try:
-            with urlopen(fname) as response:
+            with urlopen(url) as response:
                 countries = json.loads(response.read().decode(
                     "utf8"), object_pairs_hook=collections.OrderedDict)
         except URLError:
-            if status:
-                print(":: {]: {}".format(txt.ERROR, txt.ERR_DOWNLOAD_STATUS_FILE))
-            else:
-                print(":: {]: {}".format(txt.ERROR, txt.ERR_DOWNLOAD_MIRROR_FILE))
+            print(".:> {}: {} `{}`".format(txt.ERROR, txt.ERR_DOWNLOAD_FAIL, url))
         if countries:
             success = True
-            if status:
-                JsonFn.write_json_file(status, STATUS_FILE)
+            if url == URL_STATUS_JSON:
+                JsonFn.write_json_file(countries, STATUS_FILE)
             else:
-                JsonFn.write_json_file(countries, MANJARO_FILE)
-                translated = JsonFn.tranlate_mjro_dictionary(countries)
-                JsonFn.write_json_file(translated, MIRROR_FILE)
+                JsonFn.write_json_file(countries, MIRROR_FILE)
         return success
 
     @staticmethod
@@ -88,21 +80,19 @@ class HttpFn:
         """Checking repo.manjaro.org"""
         mjro_online = HttpFn.check_host_online("repo.manjaro.org", count=1)
         if mjro_online:
-            print(":: {}".format(txt.INF_DOWNLOAD_MIRROR_FILE))
-            HttpFn.download_mirrors()
-            print(":: {}".format(txt.INF_DOWNLOAD_STATUS_FILE))
-            HttpFn.download_mirrors()
+            print(".:> {}".format(txt.INF_DOWNLOAD_MIRROR_FILE))
+            HttpFn.download_mirrors(URL_MIRROR_JSON)
+            print(".:> {}".format(txt.INF_DOWNLOAD_STATUS_FILE))
+            HttpFn.download_mirrors(URL_STATUS_JSON)
             return True
         else:
             if not FileFn.check_file(MIRROR_FILE):
-                print(":: {} '{}' {}".format(txt.INF_MIRROR_FILE,
-                                             MIRROR_FILE,
-                                             txt.INF_IS_MISSING))
-                print(":: {} '{}'".format(txt.INF_FALLING_BACK, FALLBACK))
+                print(".:>{}: {} `{}` {}".format(txt.INFO, txt.INF_MIRROR_FILE, MIRROR_FILE, txt.INF_IS_MISSING))
+                print(".:>{}: {} `{}`".format(txt.INFO, txt.INF_FALLING_BACK, FALLBACK))
             return False
 
     @staticmethod
-    def query_mirror_available(url, timeout, count=1):
+    def get_mirror_response(url, timeout, count=1):
         """Query mirrors availability
         :returns string with response time
         """

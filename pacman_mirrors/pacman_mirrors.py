@@ -35,9 +35,11 @@ import os
 import tempfile
 from operator import itemgetter
 from pacman_mirrors import __version__
+from random import shuffle
 from .configuration import \
     ENV, CONFIG_FILE, CUSTOM_FILE, FALLBACK, \
-    MIRROR_DIR, MIRROR_FILE, MIRROR_LIST, STATUS_FILE
+    MIRROR_DIR, MIRROR_FILE, MIRROR_LIST, STATUS_FILE, \
+    REPO_ARCH, BRANCHES
 from .customfn import CustomFn
 from .custom_help_formatter import CustomHelpFormatter
 from .filefn import FileFn
@@ -63,19 +65,22 @@ class PacmanMirrors:
         """Init"""
         # Lists
         self.mirrors = Mirror()
-        self.good_servers = []  # respond updated < 24h
-        self.resp_servers = []  # respond updated > 24h
-        self.bad_servers = []  # no response timeout > max_wait_time
+        self.bad_servers = []         # timeout > max_wait_time
+        self.good_servers = []        # respond updated < 24h
+        self.random_servers = []
+        self.resp_servers = []        # respond updated > 24h
+        self.selection = []  # users selected countries
         # Decisions
+        self.custom = False
         self.geolocation = False
         self.interactive = False
-        self.quiet = False
+        self.manjaro_online = True
         self.no_display = False
+        self.quiet = False
         # Time out
         self.max_wait_time = 2
         # Define config
         self.config = {}
-        self.manjaro_online = True
 
     def command_line_parse(self):
         """Read the arguments of the command line"""
@@ -136,7 +141,7 @@ class PacmanMirrors:
         if not ENV:
             print("TODO: Remove ENV check in command_line_parse()")
             if os.getuid() != 0:
-                print("{}: {}".format(txt.ERROR, txt.ERR_NOT_ROOT))
+                print(".:> {}: {}".format(txt.ERROR, txt.ERR_NOT_ROOT))
                 exit(1)
 
         if args.no_update:
@@ -174,13 +179,237 @@ class PacmanMirrors:
                 self.no_display = True
 
         if args.country:
-            country = args.country.split(",")
-            if country == ["Custom"]:
-                self.config["only_country"] = country
-            elif country == ["all"]:
-                self.config["only_country"] = []
+            self.config["only_country"] = args.country.split(",")
+
+    def gen_mirror_list_common(self):
+        """Generate common mirrorlist"""
+        server_list = self.good_servers + self.resp_servers
+        if self.config["method"] == "random":
+            server_list = self.random_servers
+        if server_list:
+            if self.custom:
+                self.modify_config(custom=True)
             else:
-                self.config["only_country"] = country
+                self.modify_config()
+            self.output_mirror_list(server_list, write_file=True)
+        else:
+            print("\n.: {}: {}\n".format(txt.ERROR, txt.ERR_NO_MIRRORS))
+
+    def gen_mirror_list_interactive(self):
+        """Prompt the user to select the mirrors with a gui.
+        * Outputs a pacman mirrorlist,
+        * Outputs a "custom" mirror file
+        * Modify the configuration file to use the "custom" file.
+        """
+        mirrorlist = []
+        interactive_list = []
+        for country in self.selection:
+            for mirror in self.mirrors.mirrorlist:
+                if country == mirror["country"]:
+                    mirrorlist.append(mirror)
+                    interactive_list.append({
+                        "country": mirror["country"],
+                        "resp_time": mirror["resp_time"],
+                        "last_sync": mirror["last_sync"],
+                        "url": mirror["url"]
+                    })
+        if self.no_display:
+            from . import consoleui as ui
+        else:
+            from . import graphical_ui as ui
+        interactive = ui.run(interactive_list)
+
+        if interactive.is_done:
+            selection = []
+            mirrorfile = []
+            for selected in interactive.custom_list:
+                for server in self.mirrors.mirrorlist:
+                    if selected["url"] == server["url"]:
+                        selection.append(server)
+                        mirrorfile.append({
+                            "country": server["country"],
+                            "protocols": server["protocols"],
+                            "url": server["url"]
+                        })
+            if mirrorfile:
+                print("\n.:> {}: {}".format(txt.INFO, txt.INF_INTERACTIVE_LIST))
+                print("--------------------------")
+                # write custom mirror file
+                JsonFn.write_json_file(mirrorfile, CUSTOM_FILE)
+                # output pacman mirrorlist
+                self.output_mirror_list(mirrorfile, write_file=True)
+                self.modify_config()
+                print(".:> {}: {}: `{}`".format(txt.INFO, txt.INF_INTERACTIVE_LIST_SAVED, CUSTOM_FILE))
+            else:
+                print(".:> {}: {}".format(txt.INFO, txt.INF_NO_SELECTION))
+                print(".:> {}: {}".format(txt.INFO, txt.INF_NO_CHANGES))
+        else:
+            return
+
+    def gen_server_list(self):
+        """Generate server lists"""
+        if not self.manjaro_online:
+            self.config["method"] = "random"
+            print(".:> {}: {}".format(txt.INFO, txt.INF_NETWORK_DOWN))
+            print(".:> {}: {} {}".format(txt.INFO, txt.INF_FALLING_BACK, txt.OPT_RANDOM))
+        if self.config["method"] == "rank":
+            self.validate_mirror()
+        elif self.config["method"] == "random":
+            self.randomize_servers()
+
+    def load_mirror_file(self):
+        """Load mirror file"""
+        load_status = False
+        if self.custom:
+            servers = JsonFn.read_json_file(CUSTOM_FILE, dictionary=True)
+        else:
+            if FileFn.check_file(STATUS_FILE):
+                load_status = True
+                servers = JsonFn.read_json_file(STATUS_FILE, dictionary=True)
+            elif FileFn.check_file(MIRROR_FILE):
+                servers = JsonFn.read_json_file(MIRROR_FILE, dictionary=True)
+            else:
+                servers = JsonFn.read_json_file(FALLBACK, dictionary=True)
+                JsonFn.write_json_file(servers, MIRROR_FILE)
+        if load_status:
+            self.mirrors.seed(servers, status=True)
+        else:
+            self.mirrors.seed(servers)
+
+    def mirror_to_server_list(self, mirror):
+        """Append mirror to relevant list based on elapsed hours
+        :param: mirror: object
+        :param: last_sync: mirror last sync
+        """
+        if mirror["last_sync"] == -1:
+            elapsed_hours = -1
+        else:
+            elapsed_hours = int(mirror["last_sync"][:-3])
+        if elapsed_hours <= int(txt.LASTSYNC_OK[:-3]):
+            self.good_servers.append(mirror)
+        elif elapsed_hours <= int(txt.LASTSYNC_NA[:-3]):
+            self.resp_servers.append(mirror)
+        elif elapsed_hours == int(txt.SERVER_BAD[:-3]):
+            self.bad_servers.append(mirror)
+
+    def modify_config(self, custom=False):
+        """Modify configuration"""
+        if not custom:
+            # remove custom mirror file
+            if os.path.isfile(CUSTOM_FILE):
+                os.remove(CUSTOM_FILE)
+        self.write_mirror_config(CONFIG_FILE, self.selection, custom)
+
+    def output_mirror_list(self, servers, write_file=False):
+        """Write servers to /etc/pacman.d/mirrorlist
+        :param: servers: list of servers to write
+        :param: write_file: if "True" the list is written to disk
+        """
+        try:
+            with open(self.config["mirror_list"], "w") as outfile:
+                if write_file:
+                    print(".:> {}: {}".format(txt.INFO, txt.INF_MIRROR_LIST_WRITE))
+                    self.write_mirror_list_header(outfile)
+                for server in servers:
+                    if write_file:
+                        url = server["url"]
+                        for protocol in enumerate(server["protocols"]):
+                            pos = url.find(":")
+                            server["url"] = "{}{}{}{}".format(protocol[1],
+                                                              url[pos:],
+                                                              self.config["branch"],
+                                                              REPO_ARCH)
+                            self.write_mirror_list_server(outfile, server)
+                            if not self.quiet:
+                                print(".:> {} : `{}`".format(server["country"], server["url"]))
+                print(".:> {}: {}: `{}`".format(txt.INFO, txt.INF_MIRROR_LIST_SAVED, self.config["mirror_list"]))
+        except OSError as err:
+            print(".:> {}: {}: {}: {}".format(txt.ERROR, txt.ERR_FILE_WRITE, err.filename, err.strerror))
+            exit(1)
+
+    def randomize_servers(self):
+        """Randomize selected servers"""
+        print(".:> {}: {}".format(txt.INFO, txt.INF_RANDOMIZE_SERVERS))
+        mirrors = []
+        for country in self.selection:
+            for mirror in self.mirrors.mirrorlist:
+                if country == mirror["country"]:
+                    mirrors.append(mirror)
+        self.random_servers = mirrors
+
+    def validate_mirror(self):
+        """Query server for response time"""
+        if self.custom:
+            print(".:> {}: {}".format(txt.INFO, txt.INF_QUERY_CUSTOM_SERVERS))
+            print(".:> {}: {}".format(txt.INFO, txt.INF_QUERY_CUSTOM))
+        else:
+            print(".:> {}: {}".format(txt.INFO, txt.INF_QUERY_ALL_SERVERS))
+            print(".:> {}: {}".format(txt.INFO, txt.INF_QUERY_DEFAULT))
+
+        mirrors = []
+        for country in self.selection:
+            for mirror in self.mirrors.mirrorlist:
+                if country == mirror["country"]:
+                    mirrors.append(mirror)
+
+        for mirror in mirrors:
+            print("-> ..... {}: `{}`".format(mirror["country"], mirror["url"]),
+                  end='')
+            sys.stdout.flush()
+            resp_time = HttpFn.get_mirror_response(mirror["url"], timeout=2, count=1)
+            print("\r-> {} ".format(resp_time))
+            mirror["resp_time"] = resp_time
+            self.mirror_to_server_list(mirror)
+
+    def validate_country_selection(self):
+        """Do a check on the users country selection"""
+        self.selection = self.check_list(self.config["only_country"],
+                                         self.mirrors.countrylist)
+        self.selection = self.check_selection(self.selection,
+                                              self.mirrors.countrylist,
+                                              self.geolocation)
+        if self.selection == self.mirrors.countrylist:
+            self.config["only_country"] = []
+
+    @staticmethod
+    def check_list(selection, countrylist):
+        """Check if the list of countries are valid.
+        :param selection: list of countries to check
+        :param countrylist: list of available countries
+        """
+        if not selection == ["all"]:
+            for country in selection:
+                if country not in countrylist:
+                    print(".:> {}{}: '{}: {}'.\n\n{}".format(
+                        txt.INF_OPTION,
+                        txt.OPT_COUNTRY,
+                        txt.INF_UNKNOWN_COUNTRY,
+                        country,
+                        txt.INF_USING_ALL_SERVERS))
+                    selection = []
+        return selection
+
+    @staticmethod
+    def check_selection(selection, country_list, geoip):
+        """Check validity of country selection"""
+        if selection:
+            if selection == ["Custom"]:
+                if not os.path.isfile(CUSTOM_FILE):
+                    print(".:> {}: {} '{} {}'\n".format(
+                        txt.WARN, txt.INF_CUSTOM_MIRROR_FILE, CUSTOM_FILE, txt.INF_DOES_NOT_EXIST))
+                    print(".:> {}")
+                    selection = []
+            if geoip or selection == ["all"]:
+                selection = []
+
+        if not selection:
+            if geoip:
+                geoip_country = HttpFn.get_geoip_country()
+                if geoip_country and geoip_country in country_list:
+                    selection = [geoip_country]
+            else:
+                selection = country_list
+        return selection
 
     @staticmethod
     def config_init():
@@ -223,204 +452,51 @@ class PacmanMirrors:
                         elif key == "NoUpdate":
                             config["no_update"] = value
         except (PermissionError, OSError) as err:
-            print("{}: {}: {}: {}".format(txt.ERROR, txt.ERR_FILE_READ,
-                                          err.filename, err.strerror))
+            print(".:> {}: {}: {}: {}".format(txt.ERROR,
+                                            txt.ERR_FILE_READ,
+                                            err.filename,
+                                            err.strerror))
         return config
 
-    def gen_mirror_list_common(self):
-        """Generate common mirrorlist"""
-        server_list = self.good_servers  # Avoid an empty mirrorlist
-        if len(self.resp_servers) >= 3:
-            server_list.extend(self.resp_servers)
-        else:
-            server_list.extend(self.resp_servers)
-            server_list.extend(self.bad_servers)
-
-        if server_list:
-            if self.config["only_country"] == self.mirrors.countrylist:
-                self.modify_config()
+    @staticmethod
+    def write_mirror_config(config_file, selection, custom=False):
+        """Writes the configuration to file
+        :param config_file:
+        :param selection:
+        :param custom:
+        """
+        if custom:
+            if selection == ["Custom"]:
+                selection = "OnlyCountry = Custom\n"
             else:
-                self.modify_config(custom=True)
-            self.output_mirror_list(server_list, write_file=True)
+                selection = "OnlyCountry = {list}\n".format(
+                    list=",".join(selection))
         else:
-            print("\n{}: {}\n".format(txt.ERROR, txt.ERR_SERVER_NOT_AVAILABLE))
-
-    def gen_mirror_list_interactive(self):
-        """
-        Prompt the user to select the mirrors with a gui.
-
-        * Write the mirrorlist file,
-        * Write "Custom" mirror file
-        * Modify the configuration file to use the "Custom" file.
-        """
-        # concat good servers and responding servers
-        server_list = self.good_servers + self.resp_servers + self.bad_servers
-        server_list = sorted(server_list, key=itemgetter("response_time"))
-
-        if self.no_display:
-            from . import consoleui as ui
-        else:
-            from . import graphical_ui as ui
-        interactive = ui.run(server_list)
-
-        if interactive.is_done:
-            new_list = interactive.custom_list
-            if new_list:
-                print("\n:: {}".format(txt.INF_INTERACTIVE_LIST))
-                print("--------------------------")
-                # output mirror file - change this to output json instead
-                self.output_mirror_file(new_list)
-
-                # output mirror list
-                self.output_mirror_list(new_list, write_file=True)
-                self.modify_config(custom=True)
-                print(":: {}: {}".format(txt.INF_INTERACTIVE_LIST_SAVED,
-                                         CUSTOM_FILE))
-            else:
-                print("{}: {}".format(txt.INFO, txt.INF_NO_SELECTION))
-                print("{}: {}".format(txt.INFO, txt.INF_NO_CHANGES))
-        else:
-            return
-
-    def load_mirror_file(self):
-        """Load mirror file"""
-        if FileFn.check_file(STATUS_FILE):
-            self.mirrors.seed(
-                JsonFn.read_json_file(STATUS_FILE))
-        elif FileFn.check_file(MIRROR_FILE):
-            self.mirrors.seed(
-                JsonFn.read_json_file(MIRROR_FILE))
-        else:
-            self.mirrors.seed(JsonFn.read_json_file(FALLBACK, dictionary=True))
-            JsonFn.write_json_file(self.mirrors.mirrorlist, MIRROR_FILE)
-
-    def check_country_selection(self):
-        """Check validity of country selection"""
-        if self.config["only_country"]:
-            # custom
-            if self.config["only_country"] == ["Custom"]:
-                if not os.path.isfile(CUSTOM_FILE):
-                    print("{}: {} '{} {}'\n".format(txt.WARN,
-                                                    txt.INF_CUSTOM_MIRROR_FILE,
-                                                    CUSTOM_FILE,
-                                                    txt.INF_DOES_NOT_EXIST))
-                    # fallback to default
-                    self.config["only_country"] = []
-            # all
-            elif self.config["only_country"] == ["all"]:
-                self.config["only_country"] = []
-            else:
-                # validate a selection of countries
-                if not self.validate_country_list(
-                        self.config["only_country"], self.mirrors.countrylist):
-                    self.config["only_country"] = []
-
-        elif not self.config["only_country"]:
-            # geoip
-            if self.geolocation:
-                geoip_country = HttpFn.get_geoip_country()
-                if geoip_country and geoip_country in self.mirrors.countrylist:
-                    self.config["only_country"] = [geoip_country]
-                else:
-                    self.config["only_country"] = self.mirrors.countrylist
-            # default
-            else:
-                self.config["only_country"] = self.mirrors.countrylist
-
-    def gen_server_list(self):
-        """Generate mirror lists"""
-        if self.config["method"] == "rank":
-            self.query_servers(self.config["only_country"])
-        # elif self.config["method"] == "random":
-        #     self.random_servers(self.config["only_country"])
-
-    def mirror_to_server_list(self, mirror):
-        """
-        Append mirror to relevant list based on elapsed hours
-
-        :param: mirror: object
-        :param: last_sync: mirror last sync
-        """
-        elapsed_hours = int(mirror["last_sync"][:-3])
-        if elapsed_hours <= int(txt.LASTSYNC_OK[:-3]):
-            self.good_servers.append(mirror)
-        elif elapsed_hours <= int(txt.LASTSYNC_NA[:-3]):
-            self.resp_servers.append(mirror)
-        elif elapsed_hours == int(txt.SERVER_BAD[:-3]):
-            self.bad_servers.append(mirror)
-
-    def query_servers(self, selection):
-        """Query server for response time"""
-        mirrors = self.mirrors.filter(selection)
-        print()
-        for mirror in mirrors:
-            resp_time = HttpFn.query_mirror_available(
-                mirror["url"], timeout=2, retry=3)
-            mirror["resp_time"] = resp_time
-            self.mirror_to_server_list(mirror)
-
-    def modify_config(self, custom=False):
-        """Modify configuration"""
-        if not custom:
-            # remove custom mirror file
-            if os.path.isfile(CUSTOM_FILE):
-                os.remove(CUSTOM_FILE)
-        FileFn.write_mirror_config(CONFIG_FILE,
-                                   self.config["only_country"],
-                                   custom)
-
-    def output_mirror_list(self, servers, write_file=False):
-        """
-        Write servers to /etc/pacman.d/mirrorlist
-
-        :param: servers: list of servers to write
-        :param: write_file: if "True" the list is written to disk
-        """
+            selection = "# OnlyCountry = \n"
         try:
-            with open(self.config["mirror_list"], "w") as outfile:
-                if write_file:
-                    print(":: {}".format(txt.INF_MIRROR_LIST_WRITE))
-                    self.write_mirror_list_header(outfile)
-                for server in servers:
-                    if write_file:
-                        # insert selected branch in url
-                        server["url"] = server["url"].replace(
-                            "$branch", self.config["branch"])
-                        self.write_mirror_list_server(outfile, server)
-                        if not self.quiet:
-                            print("==> {} : {}".format(server["country"],
-                                                       server["url"]))
-                print(":: {}: {}".format(txt.INF_MIRROR_LIST_SAVED,
-                                         self.config["mirror_list"]))
+            with open(
+                config_file) as cnf, tempfile.NamedTemporaryFile(
+                "w+t", dir=os.path.dirname(
+                    config_file), delete=False) as tmp:
+                replaced = False
+                for line in cnf:
+                    if "OnlyCountry" in line:
+                        tmp.write(selection)
+                        replaced = True
+                    else:
+                        tmp.write("{}".format(line))
+                if not replaced:
+                    tmp.write(selection)
+            os.replace(tmp.name, config_file)
+            os.chmod(config_file, 0o644)
         except OSError as err:
-            print("{}: {}: {}: {}".format(txt.ERROR, txt.ERR_FILE_WRITE,
+            print(".:> {}: {}: {}: {}".format(txt.ERROR, txt.ERR_FILE_READ,
                                           err.filename, err.strerror))
             exit(1)
 
     @staticmethod
-    def validate_country_list(countries, countrylist):
-        """
-        Check if the list of countries are valid.
-
-        :param countries: list of countries to check
-        :param countrylist: list of available countries
-        :raise argparse.ArgumentTypeError: if it finds and invalid country.
-        """
-        for country in countries:
-            if country not in countrylist:
-                print("{}{}: '{}: {}'.\n\n{}".format(
-                    txt.INF_OPTION,
-                    txt.OPT_COUNTRY,
-                    txt.INF_UNKNOWN_COUNTRY,
-                    country,
-                    txt.INF_USING_ALL_SERVERS))
-                return False
-        return True
-    @staticmethod
     def write_mirror_list_header(handle, custom=False):
-        """
-        Write mirrorlist header
-
+        """Write mirrorlist header
         :param handle: handle to a file opened for writing
         :param custom: controls content of the header
         """
@@ -441,26 +517,22 @@ class PacmanMirrors:
 
     @staticmethod
     def write_mirror_list_server(handle, mirror):
-        """
-        Write mirror to mirror list or file
-
+        """Write mirror to mirror list or file
         :param handle: handle to a file opened for writing
         :param mirror: mirror object
         """
         workitem = mirror
-        handle.write("## Country       : {}\n".format(
-            workitem["country"]))
-        if workitem["resp_time"] == txt.SERVER_RES:
-            workitem["resp_time"] = "N/A"
-        handle.write("## Response time : {}\n".format(
-            workitem["resp_time"]))
-        if workitem["last_sync"] == txt.SERVER_BAD or \
-                workitem["last_sync"] == txt.LASTSYNC_NA:
-            workitem["last_sync"] = "N/A"
-        handle.write("## Last sync     : {}h\n".format(
-            workitem["last_sync"]))
-        handle.write("Server = {}\n\n".format(
-            workitem["url"]))
+        handle.write("## Country       : {}\n".format(workitem["country"]))
+        # if workitem["resp_time"] == txt.SERVER_RES:
+        #     workitem["resp_time"] = "N/A"
+        # handle.write("## Response time : {}\n".format(
+        #     workitem["resp_time"]))
+        # if workitem["last_sync"] == txt.SERVER_BAD or \
+        #         workitem["last_sync"] == txt.LASTSYNC_NA:
+        #     workitem["last_sync"] = "N/A"
+        # handle.write("## Last Upd hh:mm: {}\n".format(
+        #     workitem["last_sync"]))
+        handle.write("Server = {}\n\n".format(workitem["url"]))
 
     def run(self):
         """Run"""
@@ -470,7 +542,8 @@ class PacmanMirrors:
         self.command_line_parse()
         self.manjaro_online = HttpFn.manjaro_online_update()
         self.load_mirror_file()
-        self.check_country_selection()
+        self.validate_country_selection()
+
         self.gen_server_list()
         if self.interactive:
             self.gen_mirror_list_interactive()

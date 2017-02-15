@@ -48,11 +48,11 @@ class ConsoleUI(npyscreen.NPSAppManaged):
         """Main"""
         main_server_list = []
         server = namedtuple("Server", ["country",
-                                       "response_time",
+                                       "resp_time",
                                        "last_sync",
                                        "url"])
         header_cols = ({"country": txt.I_COUNTRY,
-                        "response_time": txt.I_RESPONSE,
+                        "resp_time": txt.I_RESPONSE,
                         "last_sync": txt.I_LAST_SYNC,
                         "url": txt.I_URL})
         main_server_list.append(header_cols)

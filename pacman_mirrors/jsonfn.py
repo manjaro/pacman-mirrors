@@ -3,13 +3,12 @@
 
 from collections import OrderedDict
 import json
-from .mirror import Mirror
 
 
 class JsonFn:
     """Json Functions Class"""
     @staticmethod
-    def read_json_file(filename, dictionary=False):
+    def read_json_file(filename, dictionary=True):
         """Read json data from file"""
         result = list()
         try:
@@ -24,28 +23,6 @@ class JsonFn:
         except OSError:
             return result
         return result
-
-    @staticmethod
-    def read_manjaro_file(filename, dictionary=False):
-        """Load manjaro json file"""
-        mirror = Mirror()
-        if dictionary:
-            countries = JsonFn.read_json_file(filename, dictionary=dictionary)
-            for country in countries.keys():
-                for url in countries[country]:
-                    for protocols in countries[country][url]:
-                        mirror.add_mirror(country, url, protocols)
-            return mirror.mirrors
-
-    @staticmethod
-    def tranlate_mjro_dictionary(data):
-        """Translate manjaro.json"""
-        mirrors = Mirror()
-        for country in data.keys():
-            for url in data[country]:
-                for protocols in data[country][url]:
-                    mirrors.add_mirror(country, url, data[country][url][protocols])
-        return mirrors.mirrors
 
     @staticmethod
     def write_json_file(data, filename, dictionary=False):

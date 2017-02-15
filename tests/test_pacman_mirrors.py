@@ -27,18 +27,17 @@ class TestPacmanMirrors(unittest.TestCase):
             app = pacman_mirrors.PacmanMirrors()
             app.config = app.config_init()
 
-    @patch.object(
-        pacman_mirrors.HttpFn, "get_geoip_country")
-    def test_get_geoip_country(self, mock_geoip):
-        """Geoip country IS available"""
-        mock_countries = ["France", "Germany", "Denmark"]
-        mock_geoip.return_value = "France"
-        with unittest.mock.patch("sys.argv",
-                                 ["pacman-mirrors",
-                                  "--geoip"]):
-            app = pacman_mirrors.PacmanMirrors()
-        app.available_countries = mock_countries
-        assert app.config["only_country"] == ["France"]
+    # @patch.object(pacman_mirrors.HttpFn, "get_geoip_country")
+    # def test_get_geoip_country(self, mock_geoip):
+    #     """Geoip country IS available"""
+    #     mock_countries = ["France", "Germany", "Denmark"]
+    #     mock_geoip.return_value = "France"
+    #     with unittest.mock.patch("sys.argv",
+    #                              ["pacman-mirrors",
+    #                               "--geoip"]):
+    #         app = pacman_mirrors.PacmanMirrors()
+    #     app.available_countries = mock_countries
+    #     assert app.config["only_country"] == ["France"]
 
     def tearDown(self):
         pass

@@ -58,11 +58,11 @@ HLP_ARG_QUIET = _("Quiet mode - less verbose output")
 HLP_ARG_TIMEOUT = _("Maximum waiting time for server response")
 HLP_ARG_VERSION = _("Print the pacman-mirrors version")
 # error messages
-ERR_DOWNLOAD_MIRROR_FILE = _("Could not download mirrors")
-ERR_DOWNLOAD_STATUS_FILE = _("Could not download mirrors status")
+ERR_DOWNLOAD_FAIL = _("Could not download from")
 ERR_FILE_READ = _("Cannot read file")
 ERR_FILE_UPDATE = _("Cannot update file")
 ERR_FILE_WRITE = _("Cannot write file")
+ERR_NO_MIRRORS = _("No mirrors available")
 ERR_NOT_ROOT = _("Must have root privileges")
 ERR_SERVER_HTTP_EXCEPTION = _("Cannot read server response")
 ERR_SERVER_NOT_AVAILABLE = _("server not available")
@@ -70,6 +70,7 @@ ERR_SERVER_NOT_REACHABLE = _("Failed to reach server")
 ERR_SERVER_REQUEST = _("The server did not complete the request")
 # info messages
 INF_AVAILABLE_COUNTRIES = _("Available countries are")
+INF_NETWORK_DOWN = _("The network appears to be down")
 INF_CONVERT_MIRROR_FILE = _("Converting custom mirror file to new format")
 INF_CUSTOM_MIRROR_FILE = _("Custom mirrors file")
 INF_DOES_NOT_EXIST = _("doesn't exist.")
@@ -88,15 +89,17 @@ INF_NO_CHANGES = _("The mirror list is not changed")
 INF_OPTION = _("Option")
 INF_OUTPUT_MIRROR_FILE = _("Writing custom mirror file")
 INF_QUERY_ALL_SERVERS = _("Querying all servers")
+INF_QUERY_CUSTOM_SERVERS = _("Querying custom servers")
 INF_QUERY_TIME_INFO = _("Querying servers, this may take some time")
 INF_QUERY_CUSTOM = _("Using custom mirror list")
-INF_QUERY_DEFAULT = _("Testing mirrors in")
+INF_QUERY_DEFAULT = _("Using default mirror list")
 INF_QUERY_WRONG_DATE_FORMAT = _("Wrong date format in state file")
 INF_RANDOMIZE_SERVERS = _("Randomizing server list")
 INF_UNKNOWN_COUNTRY = _("unknown country")
 INF_USING_ALL_SERVERS = _("Using all servers")
 # interactive messages
 I_TITLE = _("Manjaro mirrors by response time")
+I_TITLE_RANDOM = _("Manjaro mirrors in random order")
 I_LIST_TITLE = _("Check mirrors for your personal list")
 I_USE = _("Use")
 I_COUNTRY = _("Country")
@@ -118,3 +121,6 @@ SERVER_RES = "99.99"  # default response status
 # options
 OPT_COUNTRY = " '-c/--country' "
 OPT_NOUPDATE = " 'NoUpdate = True' "
+OPT_RANDOM = " '-m/--method random "
+# colored
+DEBUG = "\033[1;31m:: DEBUG >>> \033[1;m"

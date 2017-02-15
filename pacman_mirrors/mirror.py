@@ -2,80 +2,48 @@
 """Pacman-Mirrors Mirrors Module"""
 
 from operator import itemgetter
+from random import shuffle
+from . import txt
 
 
 class Mirror:
     """Pacman-Mirrors Mirrors Class"""
 
-    mirrors = []
-    countries = []
+    def __init__(self):
+        self.countrylist = []
+        self.mirrorlist = []
 
-    @property
-    def mirrorlist(self):
-        """Returns mirrorlist"""
-        return self.mirrors
-
-    @property
-    def countrylist(self):
-        for country in self.mirrors:
-            self.countries.append(country["country"])
-        return self.countries
-
-    def add_mirror(self, country, url, protocols, branches=None, last_sync="99:99", resp_time="99.99"):
+    def add(self, country, url, protocols, branches=None, last_sync="99:99", resp_time="99.99"):
         """Append mirror
         :param country:
         :param url:
         :param protocols:
-        :param branches:
-        :param last_sync:
-        :param resp_time:
+        :param branches: optional from status.json
+        :param last_sync: optional from status.json
+        :param resp_time: optional from status.json
         """
         if branches is None:
-            branches = []
+            branches = [0, 0, 0]
+        if country not in self.countrylist:
+            self.countrylist.append(country)
         mirror = {
-            "country": country,
-            "url": url,
-            "protocols": protocols,
             "branches": branches,
+            "country": country,
             "last_sync": last_sync,
-            "resp_time": resp_time
+            "protocols": protocols,
+            "resp_time": resp_time,
+            "url": url
         }
-        self.mirrors.append(mirror)
+        self.mirrorlist.append(mirror)
 
     def seed(self, mirrors, status=False):
-        """Seed mirrorlist"""
+        """Seed mirrorlist
+        :param mirrors:
+        :param status:
+        """
         for server in mirrors:
             if status:
-                self.add_mirror(server["country"],
-                                server["url"],
-                                server["protocols"],
-                                server["branches"],
-                                server["last_sync"])
+                self.add(server["country"], server["url"], server["protocols"],
+                         server["branches"], server["last_sync"])
             else:
-                self.add_mirror(server["country"],
-                                server["url"],
-                                server["protocols"])
-
-    def filter(self, selection):
-        """Returns mirrors for country selection
-        :param selection: list of country names
-        :return: a condensed list with countries
-        """
-        result = []
-        for mirror in self.mirrors:
-            if mirror["country"] in selection:
-                result.append(mirror)
-        print(str(result))
-        return result
-
-    @staticmethod
-    def sort_country(mirrors):
-        """Returns a country sorted mirror list"""
-        result = sorted(mirrors, key=itemgetter('country'))
-        return result
-
-    @staticmethod
-    def sort_response(mirrors):
-        """Returns a country sorted mirror list"""
-        result = sorted(mirrors, key=itemgetter('resp_time'))
-        return result
+                self.add(server["country"], server["url"], server["protocols"])
