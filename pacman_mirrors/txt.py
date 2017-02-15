@@ -58,6 +58,8 @@ HLP_ARG_QUIET = _("Quiet mode - less verbose output")
 HLP_ARG_TIMEOUT = _("Maximum waiting time for server response")
 HLP_ARG_VERSION = _("Print the pacman-mirrors version")
 # error messages
+ERR_DOWNLOAD_MIRROR_FILE = _("Could not download mirrors")
+ERR_DOWNLOAD_STATUS_FILE = _("Could not download mirrors status")
 ERR_FILE_READ = _("Cannot read file")
 ERR_FILE_UPDATE = _("Cannot update file")
 ERR_FILE_WRITE = _("Cannot write file")
