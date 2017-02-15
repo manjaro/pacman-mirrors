@@ -27,10 +27,11 @@ class CustomFn:
                         continue
                     mirror_protocol = CustomHelper.get_protocol(mirror_url)
                     # add to mirrors
-                    mirror.add_mirror(
+                    mirror.add(
                         mirror_country, mirror_url, [mirror_protocol])
                 # write new file
                 JsonFn.write_json_file(mirror.mirrorlist, CUSTOM_FILE)
+                # TODO: remove env check
                 if not ENV:
                     CustomHelper.cleanup()
 
