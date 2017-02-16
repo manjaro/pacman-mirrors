@@ -20,7 +20,7 @@ class ValidFn:
         print(str(only_country))
         if only_country == ["Custom"]:
             if not os.path.isfile(CUSTOM_FILE):
-                print(".:> {}: {} '{} {}'\n".format(
+                print(".: {}: {} '{} {}'\n".format(
                     txt.WARN, txt.INF_CUSTOM_MIRROR_FILE, CUSTOM_FILE, txt.INF_DOES_NOT_EXIST))
                 only_country = []
         return only_country == ["Custom"]
@@ -47,7 +47,7 @@ class ValidFn:
         """
         for country in selection:
             if country not in countrylist:
-                print(".:>{}: {}{}: '{}: {}'.\n\n{}".format(txt.INFO, txt.INF_OPTION, txt.OPT_COUNTRY,
+                print(".:{}: {}{}: '{}: {}'.\n\n{}".format(txt.INFO, txt.INF_OPTION, txt.OPT_COUNTRY,
                                                             txt.INF_UNKNOWN_COUNTRY, country,
                                                             txt.INF_USING_ALL_SERVERS))
                 return False

@@ -1,40 +1,49 @@
 ##
 ## Manjaro Linux mirrorlist
-## Generated on 16 February 2017 18:44
+## Generated on 16 February 2017 20:12
 ##
 ## Use pacman-mirrors to modify
 ##
+
+## Country       : Denmark
+Server = http://www.uex.dk/repos/manjaro/stable/$repo/$arch
+
+## Country       : Netherlands
+Server = ftp://ftp.nluug.nl/pub/os/Linux/distr/manjaro/stable/$repo/$arch
+
+## Country       : Netherlands
+Server = http://ftp.nluug.nl/pub/os/Linux/distr/manjaro/stable/$repo/$arch
+
+## Country       : Belgium
+Server = ftp://ftp.belnet.be/manjaro/stable/$repo/$arch
+
+## Country       : Belgium
+Server = http://ftp.belnet.be/manjaro/stable/$repo/$arch
+
+## Country       : Sweden
+Server = http://mirror.zetup.net/manjaro/stable/$repo/$arch
+
+## Country       : Germany
+Server = http://mirror.ragenetwork.de/manjaro/stable/$repo/$arch
+
+## Country       : United_Kingdom
+Server = http://manjaro.mirrors.uk2.net/stable/$repo/$arch
+
+## Country       : France
+Server = http://manjarolinux.polymorf.fr/stable/$repo/$arch
+
+## Country       : United_Kingdom
+Server = http://repo.manjaro.org.uk/stable/$repo/$arch
+
+## Country       : France
+Server = ftp://ftp.free.org/mirrors/repo.manjaro.org/repos/stable/$repo/$arch
+
+## Country       : France
+Server = http://ftp.free.org/mirrors/repo.manjaro.org/repos/stable/$repo/$arch
 
 ## Country       : Germany
 Server = ftp://ftp.halifax.rwth-aachen.de/manjaro/stable/$repo/$arch
 
 ## Country       : Germany
 Server = http://ftp.halifax.rwth-aachen.de/manjaro/stable/$repo/$arch
-
-## Country       : Australia
-Server = http://mirror.ventraip.net.au/Manjaro/stable/$repo/$arch
-
-## Country       : Vietnam
-Server = https://mirror.freedif.org/Manjaro/stable/$repo/$arch
-
-## Country       : Italy
-Server = http://manjaro.mirror.garr.it/mirrors/manjaro/stable/$repo/$arch
-
-## Country       : Russia
-Server = ftp://kibo.remi.lu/pub/stable/$repo/$arch
-
-## Country       : Ecuador
-Server = http://mirror.cedia.org.ec/manjaro/stable/$repo/$arch
-
-## Country       : Ecuador
-Server = https://mirror.cedia.org.ec/manjaro/stable/$repo/$arch
-
-## Country       : United_States
-Server = http://distro.ibiblio.org/manjaro/stable/$repo/$arch
-
-## Country       : United_Kingdom
-Server = http://manjaro.mirrors.uk2.net/stable/$repo/$arch
-
-## Country       : Singapore
-Server = http://download.nus.edu.sg/mirror/manjaro/stable/$repo/$arch
 

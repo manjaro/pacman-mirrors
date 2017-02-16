@@ -6,6 +6,7 @@ import json
 import time
 from http.client import HTTPException
 from os import system as system_call
+from socket import timeout
 from urllib.error import URLError
 from urllib.request import urlopen
 from .configuration import \
@@ -39,7 +40,7 @@ class HttpFn:
                 countries = json.loads(response.read().decode(
                     "utf8"), object_pairs_hook=collections.OrderedDict)
         except URLError:
-            print(".:> {}: {} {}".format(txt.ERROR, txt.ERR_DOWNLOAD_FAIL, url))
+            print(".: {}: {} {}".format(txt.ERROR, txt.ERR_DOWNLOAD_FAIL, url))
         if countries:
             success = True
             if url == URL_STATUS_JSON:
@@ -75,29 +76,28 @@ class HttpFn:
         return country_name
 
     @staticmethod
-    def get_mirror_response(url, timeout, count=1):
+    def get_mirror_response(url, maxwait=2, count=1):
         """Query mirrors availability
         :returns string with response time
         """
-        url += "state"
         probe_start = time.time()
         response_time = txt.SERVER_RES
         probe_stop = None
         _c = ""
         try:
             for _ in range(count):
-                res = urlopen(url, timeout=timeout)
+                res = urlopen(url + "state", timeout=maxwait)
                 _c = res.read().decode("utf8")
             probe_stop = time.time()
         except URLError as err:
             if hasattr(err, "reason"):
-                print("\n.:> {}: {}".format(txt.ERROR, err.reason))
+                print("\n.: {}: {}".format(txt.ERROR, err.reason))
             elif hasattr(err, "code"):
-                print("\n.:> {}: {}".format(txt.ERROR, err.reason))
+                print("\n.: {}: {}".format(txt.ERROR, err.reason))
         except timeout:
-            print("\n.:> {}: {}".format(txt.ERROR, txt.TIMEOUT))
+            print("\n.: {}: {}".format(txt.ERROR, txt.TIMEOUT))
         except HTTPException:
-            print("\n.:> {}: {}".format(txt.ERROR, txt.HTTP_EXCEPTION))
+            print("\n.: {}: {}".format(txt.ERROR, txt.HTTP_EXCEPTION))
         if probe_stop:
             calc = round((probe_stop - probe_start), 3)
             response_time = str(format(calc, ".3f"))
@@ -108,12 +108,12 @@ class HttpFn:
         """Checking repo.manjaro.org"""
         mjro_online = HttpFn.check_host_online("repo.manjaro.org", count=1)
         if mjro_online:
-            print(".:>{}: {}".format(txt.INFO, txt.INF_DOWNLOAD_MIRROR_FILE))
+            print(".:{}: {}".format(txt.INFO, txt.INF_DOWNLOAD_MIRROR_FILE))
             HttpFn.download_mirrors(URL_MIRROR_JSON)
             HttpFn.download_mirrors(URL_STATUS_JSON)
             return True
         else:
             if not FileFn.check_file(MIRROR_FILE):
-                print(".:>{}: {} {} {}".format(txt.INFO, txt.INF_MIRROR_FILE, MIRROR_FILE, txt.INF_IS_MISSING))
-                print(".:>{}: {} {}".format(txt.INFO, txt.INF_FALLING_BACK, FALLBACK))
+                print(".:{}: {} {} {}".format(txt.INFO, txt.INF_MIRROR_FILE, MIRROR_FILE, txt.INF_IS_MISSING))
+                print(".:{}: {} {}".format(txt.INFO, txt.INF_FALLING_BACK, FALLBACK))
             return False
