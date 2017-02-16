@@ -1,9 +1,7 @@
 #!/usr/bin/env python3
 """Pacman-Mirror Mirror Functions"""
-import os
+
 import datetime
-import tempfile
-from . import txt
 
 
 class MirrorFn:

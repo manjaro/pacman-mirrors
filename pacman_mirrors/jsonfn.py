@@ -1,9 +1,8 @@
 #!/usr/env/python3
 """Pacman-Mirrors JSON Module"""
 
-from collections import OrderedDict
+import collections
 import json
-from . import txt
 
 
 class JsonFn:
@@ -16,7 +15,7 @@ class JsonFn:
             if dictionary:
                 with open(filename, "rb") as infile:
                     result = json.loads(infile.read().decode(
-                        "utf8"), object_pairs_hook=OrderedDict)
+                        "utf8"), object_pairs_hook=collections.OrderedDict)
             else:
                 with open(filename, "r") as infile:
                     result = json.load(infile)
