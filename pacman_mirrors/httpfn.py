@@ -9,7 +9,7 @@ from os import system as system_call
 from urllib.error import URLError
 from urllib.request import urlopen
 from .configuration import \
-    FALLBACK, MANJARO_FILE, MIRROR_FILE, \
+    FALLBACK, MIRROR_FILE, \
     STATUS_FILE, URL_MIRROR_JSON, URL_STATUS_JSON
 from .filefn import FileFn
 from .jsonfn import JsonFn
