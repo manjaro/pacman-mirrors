@@ -26,7 +26,6 @@ Graphical UI Module
 import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
-
 from . import i18n
 from . import txt
 
@@ -135,7 +134,7 @@ class GraphicalUI(Gtk.Window):
             dialog.destroy()  # Go back to selection
 
 
-def run(server_list, random=False):
+def run(server_list, random):
     """Run"""
     window = GraphicalUI(server_list, random)
     window.connect("delete-event", Gtk.main_quit)

@@ -97,7 +97,7 @@ class ConsoleUI(npyscreen.NPSAppManaged):
         self.setNextForm(None)
 
 
-def run(server_list, random=False):
+def run(server_list, random):
     """Run"""
     app = ConsoleUI(server_list, random)
     app.run()

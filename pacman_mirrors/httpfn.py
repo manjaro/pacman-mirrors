@@ -101,7 +101,7 @@ class HttpFn:
         """Checking repo.manjaro.org"""
         mjro_online = HttpFn.check_host_online("repo.manjaro.org", count=1)
         if mjro_online:
-            print(".:> {}".format(txt.INF_DOWNLOAD_MIRROR_FILE))
+            print(".:>{}: {}".format(txt.INFO, txt.INF_DOWNLOAD_MIRROR_FILE))
             HttpFn.download_mirrors(URL_MIRROR_JSON)
             HttpFn.download_mirrors(URL_STATUS_JSON)
             return True

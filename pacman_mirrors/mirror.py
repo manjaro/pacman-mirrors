@@ -1,9 +1,9 @@
 #!/usr/env python3
 """Pacman-Mirrors Mirrors Module"""
 
-from operator import itemgetter
+# from operator import itemgetter
 from random import shuffle
-from . import txt
+# from . import txt
 
 
 class Mirror:
@@ -13,7 +13,7 @@ class Mirror:
         self.countrylist = []
         self.mirrorlist = []
 
-    def add(self, country, url, protocols, branches=None, last_sync="99:99", resp_time="99.99"):
+    def add(self, country, url, protocols, branches=None, last_sync="00:00", resp_time="00.00"):
         """Append mirror
         :param country:
         :param url:
@@ -26,6 +26,10 @@ class Mirror:
             branches = [0, 0, 0]
         if country not in self.countrylist:
             self.countrylist.append(country)
+        # workaround for negative integer in status.json
+        if last_sync == -1:
+            last_sync = "9999:99"
+            resp_time = "9999.99"
         mirror = {
             "branches": branches,
             "country": country,
@@ -47,3 +51,7 @@ class Mirror:
                          server["branches"], server["last_sync"])
             else:
                 self.add(server["country"], server["url"], server["protocols"])
+
+    def randomize(self):
+        """Shuffle mirrorlist"""
+        shuffle(self.mirrorlist)

@@ -1,22 +1,25 @@
 ##
 ## Manjaro Linux mirrorlist
-## Generated on 16 February 2017 13:25
+## Generated on 16 February 2017 15:36
 ##
 ## Use pacman-mirrors to modify
 ##
 
-## Country       : France
-Server = http://manjarolinux.polymorf.fr/stable/$repo/$arch
+## Country       : Colombia
+Server = http://mirror.edatel.net.co/manjaro/stable/$repo/$arch
+
+## Country       : United_States
+Server = http://mirror.solarvps.com/manjaro/stable/$repo/$arch
+
+## Country       : Portugal
+Server = http://repo.barata.website/stable/$repo/$arch
 
 ## Country       : Chile
-Server = http://manjaro.dcc.uchile.cl/stable/$repo/$arch
+Server = http://doge.ing.puc.cl/Mirrors/Manjaro/stable/$repo/$arch
 
 ## Country       : Germany
-Server = http://mirror.netcologne.de/manjaro/stable/$repo/$arch
+Server = ftp://ftp.halifax.rwth-aachen.de/manjaro/stable/$repo/$arch
 
-## Country       : Austria
-Server = http://mirror.inode.at/manjaro/stable/$repo/$arch
-
-## Country       : Ecuador
-Server = http://mirror.cedia.org.ec/manjaro/stable/$repo/$arch
+## Country       : Germany
+Server = http://ftp.halifax.rwth-aachen.de/manjaro/stable/$repo/$arch
 

@@ -49,15 +49,15 @@ class ConsoleFn:
         :param joiner: string used to join tuple items
         :return lines: list of nicely formatted lines
         """
-        lines = []
+        rows = []
         if not servers:
-            return lines
+            return rows
 
         # calculate max col width
-        col_width = [max(len(x) for x in col) for col in zip(*servers)]
+        col_width = [max(len(text) for text in col) for col in zip(*servers)]
 
         # generate linies
         for line in servers:
-            lines.append(joiner.join("{:{}}".format(x, col_width[i])
-                                     for i, x in enumerate(line)))
-        return lines
+            rows.append(joiner.join("{:{}}".format(text, col_width[i])
+                                    for i, text in enumerate(line)))
+        return rows

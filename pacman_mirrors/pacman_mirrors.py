@@ -31,7 +31,9 @@ import importlib.util
 import sys
 import os
 import tempfile
+from operator import itemgetter
 from pacman_mirrors import __version__
+from random import shuffle
 from .configuration import ENV, CONFIG_FILE, CUSTOM_FILE, FALLBACK, \
     MIRROR_DIR, MIRROR_LIST, MIRROR_FILE, O_CUST_FILE, \
     STATUS_FILE, REPO_ARCH
@@ -42,7 +44,7 @@ from .httpfn import HttpFn
 from .jsonfn import JsonFn
 from .mirror import Mirror
 from .mirrorfn import MirrorFn
-from .validatefn import ValidateFn
+from .validfn import ValidFn
 from . import i18n
 from . import txt
 
@@ -66,7 +68,7 @@ class PacmanMirrors:
         self.good_servers = []        # respond updated < 24h
         self.random_servers = []
         self.resp_servers = []        # respond updated > 24h
-        self.selection = []  # users selected countries
+        self.only_country = []        # users selected countries
         # Decisions
         self.custom = False
         self.geolocation = False
@@ -186,7 +188,7 @@ class PacmanMirrors:
         config = {
             "mirror_file": MIRROR_FILE,
             "branch": "stable",
-            "method": "rank",
+            "method": "random",
             "mirror_dir": MIRROR_DIR,
             "mirror_list": MIRROR_LIST,
             "no_update": False,
@@ -226,14 +228,15 @@ class PacmanMirrors:
 
     def gen_mirror_list_common(self):
         """Generate common mirrorlist"""
-        server_list = self.good_servers + self.resp_servers + self.bad_servers
+        server_list = self.good_servers + self.resp_servers
         if self.config["method"] == "random":
-            server_list = self.random_servers
+            server_list = self.mirrors.mirrorlist
         if server_list:
             if self.custom:
                 self.modify_config(custom=True)
             else:
                 self.modify_config()
+            server_list = sorted(server_list, key=itemgetter("resp_time"))
             self.output_mirror_list(server_list, write_file=True)
         else:
             print("\n.: {}: {}\n".format(txt.ERROR, txt.ERR_NO_MIRRORS))
@@ -244,9 +247,10 @@ class PacmanMirrors:
         * Outputs a "custom" mirror file
         * Modify the configuration file to use the "custom" file.
         """
+        random = self.config["method"] == "random"
         mirrorlist = []
         interactive_list = []
-        for country in self.selection:
+        for country in self.only_country:
             for mirror in self.mirrors.mirrorlist:
                 if country == mirror["country"]:
                     mirrorlist.append(mirror)
@@ -256,12 +260,13 @@ class PacmanMirrors:
                         "last_sync": mirror["last_sync"],
                         "url": mirror["url"]
                     })
+                    if random:
+                        shuffle(interactive_list)
         if self.no_display:
             from . import consoleui as ui
         else:
             from . import graphical_ui as ui
-        interactive = ui.run(interactive_list)
-
+        interactive = ui.run(interactive_list, random)
         if interactive.is_done:
             selected = []
             mirrorfile = []
@@ -281,6 +286,7 @@ class PacmanMirrors:
                 print(".:> {}: {}: `{}`".format(txt.INFO, txt.INF_MIRROR_FILE_SAVED, CUSTOM_FILE))
                 # output pacman mirrorlist
                 self.output_mirror_list(selected, write_file=True)
+                self.config["only_country"] = ["Custom"]
                 self.modify_config(custom=True)
                 print(".:> {}: {}: `{}`".format(txt.INFO, txt.INF_INTERACTIVE_LIST_SAVED, CUSTOM_FILE))
             else:
@@ -291,19 +297,16 @@ class PacmanMirrors:
 
     def gen_server_lists(self):
         """Generate server lists"""
-        method = self.config["method"]
-        if method == "rank" and not self.manjaro_online:
-            print(".:> {}: {}".format(txt.INFO, txt.INF_NETWORK_DOWN))
-            print(".:> {}: {} {}".format(txt.INFO, txt.INF_FALLING_BACK, txt.OPT_RANDOM))
-            method = "random"
-
-        if method == "rank":
+        if self.config["method"] == "rank":
             self.validate_mirror()
-        else:
-            self.randomize_servers()
+        elif self.config["method"] == "random":
+            print(".:> {}: {}".format(txt.INFO, txt.INF_RANDOMIZE_SERVERS))
+            self.mirrors.randomize()
 
     def load_mirror_file(self):
         """Load mirror file"""
+        self.custom = ValidFn.is_custom_conf_valid(self.config["only_country"])
+        self.only_country = self.validate_country_selection()
         seed_status = False
         if self.custom:
             servers = JsonFn.read_json_file(CUSTOM_FILE, dictionary=True)
@@ -321,17 +324,14 @@ class PacmanMirrors:
         else:
             self.mirrors.seed(servers)
             if self.custom:
-                self.selection = self.mirrors.countrylist
+                self.only_country = self.mirrors.countrylist
 
     def mirror_to_server_list(self, mirror):
         """Append mirror to relevant list based on elapsed hours
         :param: mirror: object
         :param: last_sync: mirror last sync
         """
-        if mirror["last_sync"] == -1:
-                elapsed_hours = -1
-        else:
-            elapsed_hours = int(mirror["last_sync"][:-3])
+        elapsed_hours = int(mirror["last_sync"][:-3])
         if elapsed_hours <= int(txt.LASTSYNC_OK[:-3]):
             self.good_servers.append(mirror)
         elif elapsed_hours <= int(txt.LASTSYNC_NA[:-3]):
@@ -345,7 +345,7 @@ class PacmanMirrors:
             # remove custom mirror file
             if os.path.isfile(CUSTOM_FILE):
                 os.remove(CUSTOM_FILE)
-        self.write_custom_config(CONFIG_FILE, self.selection, custom)
+        self.write_custom_config(CONFIG_FILE, self.only_country, custom)
 
     def output_mirror_list(self, servers, write_file=False):
         """Write servers to /etc/pacman.d/mirrorlist
@@ -376,16 +376,6 @@ class PacmanMirrors:
             print(".:> {}: {}: {}: {}".format(txt.ERROR, txt.ERR_FILE_WRITE, err.filename, err.strerror))
             exit(1)
 
-    def randomize_servers(self):
-        """Randomize selected servers"""
-        print(".:> {}: {}".format(txt.INFO, txt.INF_RANDOMIZE_SERVERS))
-        mirrors = []
-        for country in self.selection:
-            for mirror in self.mirrors.mirrorlist:
-                if country == mirror["country"]:
-                    mirrors.append(mirror)
-        self.random_servers = mirrors
-
     def validate_mirror(self):
         """Query server for response time"""
         if self.custom:
@@ -395,7 +385,7 @@ class PacmanMirrors:
             print(".:> {}: {}".format(txt.INFO, txt.INF_QUERY_SERVERS))
             print(".:> {}: {}".format(txt.INFO, txt.INF_QUERY_DEFAULT_FILE))
 
-        for country in self.selection:
+        for country in self.only_country:
             for mirror in self.mirrors.mirrorlist:
                 if country == mirror["country"]:
                     print("    ..... {}: `{}`".format(mirror["country"], mirror["url"]),
@@ -408,20 +398,20 @@ class PacmanMirrors:
 
     def validate_country_selection(self):
         """Do a check on the users country selection"""
-        temp = self.config["only_country"]
+        selection = self.config["only_country"]
         countries = self.mirrors.countrylist
-        if temp == ["all"]:
-            self.config = False
-            self.selection = countries
+        if selection == ["all"]:
+            self.custom = False
+            return countries
         elif self.geolocation:
-            result = ValidateFn.is_geoip_valid(countries)
+            result = ValidFn.is_geoip_valid(countries)
             if result:
-                self.selection = [result]
+                return [result]
             else:
-                self.selection = countries
+                return countries
         else:
-            if not ValidateFn.is_list_valid(self.selection, countries):
-                self.selection = countries
+            if not ValidFn.is_list_valid(self.only_country, countries):
+                return countries
 
     @staticmethod
     def write_custom_config(filename, selection, custom=False):
@@ -466,12 +456,10 @@ class PacmanMirrors:
             CustomFn.convert_to_json()
         else:
             FileFn.check_directory(MIRROR_DIR)
+        self.manjaro_online = HttpFn.manjaro_online_update()
         self.config = self.load_conf()
         self.command_line_parse()
-        self.manjaro_online = HttpFn.manjaro_online_update()
-        self.custom = ValidateFn.is_custom_conf_valid()
         self.load_mirror_file()
-        self.validate_country_selection()
         self.gen_server_lists()
         if self.interactive:
             self.gen_mirror_list_interactive()
