@@ -188,7 +188,7 @@ class PacmanMirrors:
         config = {
             "mirror_file": MIRROR_FILE,
             "branch": "stable",
-            "method": "random",
+            "method": "rank",
             "mirror_dir": MIRROR_DIR,
             "mirror_list": MIRROR_LIST,
             "no_update": False,
