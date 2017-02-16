@@ -1,25 +1,40 @@
 ##
 ## Manjaro Linux mirrorlist
-## Generated on 16 February 2017 15:36
+## Generated on 16 February 2017 18:44
 ##
 ## Use pacman-mirrors to modify
 ##
-
-## Country       : Colombia
-Server = http://mirror.edatel.net.co/manjaro/stable/$repo/$arch
-
-## Country       : United_States
-Server = http://mirror.solarvps.com/manjaro/stable/$repo/$arch
-
-## Country       : Portugal
-Server = http://repo.barata.website/stable/$repo/$arch
-
-## Country       : Chile
-Server = http://doge.ing.puc.cl/Mirrors/Manjaro/stable/$repo/$arch
 
 ## Country       : Germany
 Server = ftp://ftp.halifax.rwth-aachen.de/manjaro/stable/$repo/$arch
 
 ## Country       : Germany
 Server = http://ftp.halifax.rwth-aachen.de/manjaro/stable/$repo/$arch
+
+## Country       : Australia
+Server = http://mirror.ventraip.net.au/Manjaro/stable/$repo/$arch
+
+## Country       : Vietnam
+Server = https://mirror.freedif.org/Manjaro/stable/$repo/$arch
+
+## Country       : Italy
+Server = http://manjaro.mirror.garr.it/mirrors/manjaro/stable/$repo/$arch
+
+## Country       : Russia
+Server = ftp://kibo.remi.lu/pub/stable/$repo/$arch
+
+## Country       : Ecuador
+Server = http://mirror.cedia.org.ec/manjaro/stable/$repo/$arch
+
+## Country       : Ecuador
+Server = https://mirror.cedia.org.ec/manjaro/stable/$repo/$arch
+
+## Country       : United_States
+Server = http://distro.ibiblio.org/manjaro/stable/$repo/$arch
+
+## Country       : United_Kingdom
+Server = http://manjaro.mirrors.uk2.net/stable/$repo/$arch
+
+## Country       : Singapore
+Server = http://download.nus.edu.sg/mirror/manjaro/stable/$repo/$arch
 

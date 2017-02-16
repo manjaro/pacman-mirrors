@@ -17,12 +17,13 @@ class ValidFn:
         :return: True or False
         :rtype: bool
         """
+        print(str(only_country))
         if only_country == ["Custom"]:
             if not os.path.isfile(CUSTOM_FILE):
                 print(".:> {}: {} '{} {}'\n".format(
                     txt.WARN, txt.INF_CUSTOM_MIRROR_FILE, CUSTOM_FILE, txt.INF_DOES_NOT_EXIST))
-                return False
-        return True
+                only_country = []
+        return only_country == ["Custom"]
 
     @staticmethod
     def is_geoip_valid(country_list):

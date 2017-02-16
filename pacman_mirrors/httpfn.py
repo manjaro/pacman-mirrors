@@ -39,7 +39,7 @@ class HttpFn:
                 countries = json.loads(response.read().decode(
                     "utf8"), object_pairs_hook=collections.OrderedDict)
         except URLError:
-            print(".:> {}: {} `{}`".format(txt.ERROR, txt.ERR_DOWNLOAD_FAIL, url))
+            print(".:> {}: {} {}".format(txt.ERROR, txt.ERR_DOWNLOAD_FAIL, url))
         if countries:
             success = True
             if url == URL_STATUS_JSON:
@@ -89,8 +89,15 @@ class HttpFn:
                 res = urlopen(url, timeout=timeout)
                 _c = res.read().decode("utf8")
             probe_stop = time.time()
-        except URLError:
-            _c
+        except URLError as err:
+            if hasattr(err, "reason"):
+                print("\n.:> {}: {}".format(txt.ERROR, err.reason))
+            elif hasattr(err, "code"):
+                print("\n.:> {}: {}".format(txt.ERROR, err.reason))
+        except timeout:
+            print("\n.:> {}: {}".format(txt.ERROR, txt.TIMEOUT))
+        except HTTPException:
+            print("\n.:> {}: {}".format(txt.ERROR, txt.HTTP_EXCEPTION))
         if probe_stop:
             calc = round((probe_stop - probe_start), 3)
             response_time = str(format(calc, ".3f"))
@@ -107,6 +114,6 @@ class HttpFn:
             return True
         else:
             if not FileFn.check_file(MIRROR_FILE):
-                print(".:>{}: {} `{}` {}".format(txt.INFO, txt.INF_MIRROR_FILE, MIRROR_FILE, txt.INF_IS_MISSING))
-                print(".:>{}: {} `{}`".format(txt.INFO, txt.INF_FALLING_BACK, FALLBACK))
+                print(".:>{}: {} {} {}".format(txt.INFO, txt.INF_MIRROR_FILE, MIRROR_FILE, txt.INF_IS_MISSING))
+                print(".:>{}: {} {}".format(txt.INFO, txt.INF_FALLING_BACK, FALLBACK))
             return False
