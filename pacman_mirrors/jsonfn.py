@@ -3,6 +3,7 @@
 
 from collections import OrderedDict
 import json
+from . import txt
 
 
 class JsonFn:
@@ -39,6 +40,6 @@ class JsonFn:
                 with open(filename, "w") as outfile:
                     json.dump(data, outfile, sort_keys=True, indent=4)
             return True
-
         except OSError:
             return False
+

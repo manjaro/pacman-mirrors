@@ -28,24 +28,21 @@ Main Module
 
 import argparse
 import importlib.util
-import os
 import sys
-import datetime
 import os
-import tempfile
-from operator import itemgetter
 from pacman_mirrors import __version__
-from random import shuffle
-from .configuration import \
+from .configuration import Config, \
     ENV, CONFIG_FILE, CUSTOM_FILE, FALLBACK, \
-    MIRROR_DIR, MIRROR_FILE, MIRROR_LIST, STATUS_FILE, \
-    REPO_ARCH, BRANCHES
+    MIRROR_DIR, MIRROR_FILE, O_CUST_FILE, \
+    STATUS_FILE, REPO_ARCH
 from .customfn import CustomFn
 from .custom_help_formatter import CustomHelpFormatter
 from .filefn import FileFn
 from .httpfn import HttpFn
 from .jsonfn import JsonFn
 from .mirror import Mirror
+from .mirrorfn import MirrorFn
+from .validatefn import ValidateFn
 from . import i18n
 from . import txt
 
@@ -183,7 +180,7 @@ class PacmanMirrors:
 
     def gen_mirror_list_common(self):
         """Generate common mirrorlist"""
-        server_list = self.good_servers + self.resp_servers
+        server_list = self.good_servers + self.resp_servers + self.bad_servers
         if self.config["method"] == "random":
             server_list = self.random_servers
         if server_list:
@@ -234,8 +231,8 @@ class PacmanMirrors:
             if mirrorfile:
                 print("\n.:> {}: {}".format(txt.INFO, txt.INF_INTERACTIVE_LIST))
                 print("--------------------------")
-                # write custom mirror file
                 JsonFn.write_json_file(mirrorfile, CUSTOM_FILE)
+                print(".:> {}: {}: `{}`".format(txt.INFO, txt.INF_MIRROR_FILE_SAVED, CUSTOM_FILE))
                 # output pacman mirrorlist
                 self.output_mirror_list(mirrorfile, write_file=True)
                 self.modify_config()
@@ -246,12 +243,13 @@ class PacmanMirrors:
         else:
             return
 
-    def gen_server_list(self):
+    def gen_server_lists(self):
         """Generate server lists"""
         if not self.manjaro_online:
             self.config["method"] = "random"
             print(".:> {}: {}".format(txt.INFO, txt.INF_NETWORK_DOWN))
             print(".:> {}: {} {}".format(txt.INFO, txt.INF_FALLING_BACK, txt.OPT_RANDOM))
+
         if self.config["method"] == "rank":
             self.validate_mirror()
         elif self.config["method"] == "random":
@@ -259,22 +257,24 @@ class PacmanMirrors:
 
     def load_mirror_file(self):
         """Load mirror file"""
-        load_status = False
+        seed_status = False
         if self.custom:
             servers = JsonFn.read_json_file(CUSTOM_FILE, dictionary=True)
         else:
             if FileFn.check_file(STATUS_FILE):
-                load_status = True
+                seed_status = True
                 servers = JsonFn.read_json_file(STATUS_FILE, dictionary=True)
             elif FileFn.check_file(MIRROR_FILE):
                 servers = JsonFn.read_json_file(MIRROR_FILE, dictionary=True)
             else:
                 servers = JsonFn.read_json_file(FALLBACK, dictionary=True)
                 JsonFn.write_json_file(servers, MIRROR_FILE)
-        if load_status:
-            self.mirrors.seed(servers, status=True)
+        if seed_status:
+            self.mirrors.seed(servers, seed_status)
         else:
             self.mirrors.seed(servers)
+            if self.custom:
+                self.selection = self.mirrors.countrylist
 
     def mirror_to_server_list(self, mirror):
         """Append mirror to relevant list based on elapsed hours
@@ -282,7 +282,7 @@ class PacmanMirrors:
         :param: last_sync: mirror last sync
         """
         if mirror["last_sync"] == -1:
-            elapsed_hours = -1
+                elapsed_hours = -1
         else:
             elapsed_hours = int(mirror["last_sync"][:-3])
         if elapsed_hours <= int(txt.LASTSYNC_OK[:-3]):
@@ -298,7 +298,7 @@ class PacmanMirrors:
             # remove custom mirror file
             if os.path.isfile(CUSTOM_FILE):
                 os.remove(CUSTOM_FILE)
-        self.write_mirror_config(CONFIG_FILE, self.selection, custom)
+        Config.write_custom_config(CONFIG_FILE, self.selection, custom)
 
     def output_mirror_list(self, servers, write_file=False):
         """Write servers to /etc/pacman.d/mirrorlist
@@ -309,7 +309,8 @@ class PacmanMirrors:
             with open(self.config["mirror_list"], "w") as outfile:
                 if write_file:
                     print(".:> {}: {}".format(txt.INFO, txt.INF_MIRROR_LIST_WRITE))
-                    self.write_mirror_list_header(outfile)
+                    # write list header
+                    MirrorFn.write_mirrorlist_header(outfile)
                 for server in servers:
                     if write_file:
                         url = server["url"]
@@ -319,7 +320,8 @@ class PacmanMirrors:
                                                               url[pos:],
                                                               self.config["branch"],
                                                               REPO_ARCH)
-                            self.write_mirror_list_server(outfile, server)
+                            # write list entry
+                            MirrorFn.write_mirrorlist_entry(outfile, server)
                             if not self.quiet:
                                 print(".:> {} : `{}`".format(server["country"], server["url"]))
                 print(".:> {}: {}: `{}`".format(txt.INFO, txt.INF_MIRROR_LIST_SAVED, self.config["mirror_list"]))
@@ -340,211 +342,55 @@ class PacmanMirrors:
     def validate_mirror(self):
         """Query server for response time"""
         if self.custom:
-            print(".:> {}: {}".format(txt.INFO, txt.INF_QUERY_CUSTOM_SERVERS))
-            print(".:> {}: {}".format(txt.INFO, txt.INF_QUERY_CUSTOM))
+            print(".:> {}: {}".format(txt.INFO, txt.INF_QUERY_SERVERS))
+            print(".:> {}: {}".format(txt.INFO, txt.INF_QUERY_CUSTOM_FILE))
         else:
-            print(".:> {}: {}".format(txt.INFO, txt.INF_QUERY_ALL_SERVERS))
-            print(".:> {}: {}".format(txt.INFO, txt.INF_QUERY_DEFAULT))
+            print(".:> {}: {}".format(txt.INFO, txt.INF_QUERY_SERVERS))
+            print(".:> {}: {}".format(txt.INFO, txt.INF_QUERY_DEFAULT_FILE))
 
-        mirrors = []
         for country in self.selection:
             for mirror in self.mirrors.mirrorlist:
                 if country == mirror["country"]:
-                    mirrors.append(mirror)
-
-        for mirror in mirrors:
-            print("-> ..... {}: `{}`".format(mirror["country"], mirror["url"]),
-                  end='')
-            sys.stdout.flush()
-            resp_time = HttpFn.get_mirror_response(mirror["url"], timeout=2, count=1)
-            print("\r-> {} ".format(resp_time))
-            mirror["resp_time"] = resp_time
-            self.mirror_to_server_list(mirror)
+                    print("    ..... {}: `{}`".format(mirror["country"], mirror["url"]),
+                          end='')
+                    sys.stdout.flush()
+                    resp_time = HttpFn.get_mirror_response(mirror["url"], timeout=2, count=1)
+                    print("\r    {} ".format(resp_time))
+                    mirror["resp_time"] = resp_time
+                    self.mirror_to_server_list(mirror)
 
     def validate_country_selection(self):
         """Do a check on the users country selection"""
-        self.selection = self.check_list(self.config["only_country"],
-                                         self.mirrors.countrylist)
-        self.selection = self.check_selection(self.selection,
-                                              self.mirrors.countrylist,
-                                              self.geolocation)
-        if self.selection == self.mirrors.countrylist:
+        temp = self.config["only_country"]
+        countries = self.mirrors.countrylist
+        if temp == ["all"]:
+            self.selection = []
+        elif self.geolocation:
+            result = ValidateFn.is_geoip_valid(countries)
+            if result:
+                self.selection = [result]
+            else:
+                self.selection = countries
+        else:
+            if not ValidateFn.is_list_valid(self.selection, countries):
+                self.selection = countries
+        if self.selection == countries:
             self.config["only_country"] = []
-
-    @staticmethod
-    def check_list(selection, countrylist):
-        """Check if the list of countries are valid.
-        :param selection: list of countries to check
-        :param countrylist: list of available countries
-        """
-        if not selection == ["all"]:
-            for country in selection:
-                if country not in countrylist:
-                    print(".:> {}{}: '{}: {}'.\n\n{}".format(
-                        txt.INF_OPTION,
-                        txt.OPT_COUNTRY,
-                        txt.INF_UNKNOWN_COUNTRY,
-                        country,
-                        txt.INF_USING_ALL_SERVERS))
-                    selection = []
-        return selection
-
-    @staticmethod
-    def check_selection(selection, country_list, geoip):
-        """Check validity of country selection"""
-        if selection:
-            if selection == ["Custom"]:
-                if not os.path.isfile(CUSTOM_FILE):
-                    print(".:> {}: {} '{} {}'\n".format(
-                        txt.WARN, txt.INF_CUSTOM_MIRROR_FILE, CUSTOM_FILE, txt.INF_DOES_NOT_EXIST))
-                    print(".:> {}")
-                    selection = []
-            if geoip or selection == ["all"]:
-                selection = []
-
-        if not selection:
-            if geoip:
-                geoip_country = HttpFn.get_geoip_country()
-                if geoip_country and geoip_country in country_list:
-                    selection = [geoip_country]
-            else:
-                selection = country_list
-        return selection
-
-    @staticmethod
-    def config_init():
-        """Get config informations"""
-        # initialising defaults
-        # information which can differ from these defaults
-        # is fetched from config file
-        config = {
-            "mirror_file": MIRROR_FILE,
-            "branch": "stable",
-            "method": "rank",
-            "mirror_dir": MIRROR_DIR,
-            "mirror_list": MIRROR_LIST,
-            "no_update": False,
-            "only_country": [],
-        }
-        try:
-            # read configuration from file
-            with open(CONFIG_FILE) as conf:
-                for line in conf:
-                    line = line.strip()
-                    if line.startswith("#") or "=" not in line:
-                        continue
-                    (key, value) = line.split("=", 1)
-                    key = key.rstrip()
-                    value = value.lstrip()
-                    if key and value:
-                        if value.startswith("\"") and value.endswith("\""):
-                            value = value[1:-1]
-                        if key == "Method":
-                            config["method"] = value
-                        elif key == "Branch":
-                            config["branch"] = value
-                        elif key == "OnlyCountry":
-                            config["only_country"] = value.split(",")
-                        elif key == "MirrorlistsDir":
-                            config["mirror_dir"] = value
-                        elif key == "OutputMirrorlist":
-                            config["mirror_list"] = value
-                        elif key == "NoUpdate":
-                            config["no_update"] = value
-        except (PermissionError, OSError) as err:
-            print(".:> {}: {}: {}: {}".format(txt.ERROR,
-                                            txt.ERR_FILE_READ,
-                                            err.filename,
-                                            err.strerror))
-        return config
-
-    @staticmethod
-    def write_mirror_config(config_file, selection, custom=False):
-        """Writes the configuration to file
-        :param config_file:
-        :param selection:
-        :param custom:
-        """
-        if custom:
-            if selection == ["Custom"]:
-                selection = "OnlyCountry = Custom\n"
-            else:
-                selection = "OnlyCountry = {list}\n".format(
-                    list=",".join(selection))
-        else:
-            selection = "# OnlyCountry = \n"
-        try:
-            with open(
-                config_file) as cnf, tempfile.NamedTemporaryFile(
-                "w+t", dir=os.path.dirname(
-                    config_file), delete=False) as tmp:
-                replaced = False
-                for line in cnf:
-                    if "OnlyCountry" in line:
-                        tmp.write(selection)
-                        replaced = True
-                    else:
-                        tmp.write("{}".format(line))
-                if not replaced:
-                    tmp.write(selection)
-            os.replace(tmp.name, config_file)
-            os.chmod(config_file, 0o644)
-        except OSError as err:
-            print(".:> {}: {}: {}: {}".format(txt.ERROR, txt.ERR_FILE_READ,
-                                          err.filename, err.strerror))
-            exit(1)
-
-    @staticmethod
-    def write_mirror_list_header(handle, custom=False):
-        """Write mirrorlist header
-        :param handle: handle to a file opened for writing
-        :param custom: controls content of the header
-        """
-        handle.write("##\n")
-        if custom:
-            handle.write("## Manjaro Linux Custom mirrorlist\n")
-            handle.write("## Generated on {}\n".format(
-                datetime.datetime.now().strftime("%d %B %Y %H:%M")))
-            handle.write("##\n")
-            handle.write("## Use 'pacman-mirrors -c all' to reset\n")
-        else:
-            handle.write("## Manjaro Linux mirrorlist\n")
-            handle.write("## Generated on {}\n".format(
-                datetime.datetime.now().strftime("%d %B %Y %H:%M")))
-            handle.write("##\n")
-            handle.write("## Use pacman-mirrors to modify\n")
-        handle.write("##\n\n")
-
-    @staticmethod
-    def write_mirror_list_server(handle, mirror):
-        """Write mirror to mirror list or file
-        :param handle: handle to a file opened for writing
-        :param mirror: mirror object
-        """
-        workitem = mirror
-        handle.write("## Country       : {}\n".format(workitem["country"]))
-        # if workitem["resp_time"] == txt.SERVER_RES:
-        #     workitem["resp_time"] = "N/A"
-        # handle.write("## Response time : {}\n".format(
-        #     workitem["resp_time"]))
-        # if workitem["last_sync"] == txt.SERVER_BAD or \
-        #         workitem["last_sync"] == txt.LASTSYNC_NA:
-        #     workitem["last_sync"] = "N/A"
-        # handle.write("## Last Upd hh:mm: {}\n".format(
-        #     workitem["last_sync"]))
-        handle.write("Server = {}\n\n".format(workitem["url"]))
 
     def run(self):
         """Run"""
-        FileFn.check_directory(MIRROR_DIR)
-        CustomFn.convert_to_json()
-        self.config = self.config_init()
+
+        if os.path.isfile(O_CUST_FILE):
+            CustomFn.convert_to_json()
+        else:
+            FileFn.check_directory(MIRROR_DIR)
+        self.config = Config.initialize()
         self.command_line_parse()
         self.manjaro_online = HttpFn.manjaro_online_update()
+        self.custom = ValidateFn.is_custom_conf_valid()
         self.load_mirror_file()
         self.validate_country_selection()
-
-        self.gen_server_list()
+        self.gen_server_lists()
         if self.interactive:
             self.gen_mirror_list_interactive()
         else:

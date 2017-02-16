@@ -82,7 +82,6 @@ class HttpFn:
         if mjro_online:
             print(".:> {}".format(txt.INF_DOWNLOAD_MIRROR_FILE))
             HttpFn.download_mirrors(URL_MIRROR_JSON)
-            print(".:> {}".format(txt.INF_DOWNLOAD_STATUS_FILE))
             HttpFn.download_mirrors(URL_STATUS_JSON)
             return True
         else:
