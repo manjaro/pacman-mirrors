@@ -32,9 +32,7 @@ class CustomFn:
                 })
             # write new file
             JsonFn.write_json_file(mirrors, CUSTOM_FILE)
-            # TODO: remove env check
-            if not ENV:
-                CustomHelper.cleanup()
+            CustomHelper.cleanup()
 
 
 class CustomHelper:
