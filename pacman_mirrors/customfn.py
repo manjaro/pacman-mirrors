@@ -42,7 +42,6 @@ class CustomHelper:
     @staticmethod
     def cleanup():
         os.remove(O_CUST_FILE)
-        os.rmdir(os.path.dirname(O_CUST_FILE))
 
     @staticmethod
     def get_protocol(data):
