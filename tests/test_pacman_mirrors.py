@@ -11,6 +11,7 @@ import unittest
 from unittest.mock import patch
 
 from pacman_mirrors import pacman_mirrors
+from pacman_mirrors.configuration import MIRROR_DIR
 
 
 class TestPacmanMirrors(unittest.TestCase):
@@ -29,6 +30,8 @@ class TestPacmanMirrors(unittest.TestCase):
             app = pacman_mirrors.PacmanMirrors()
             app.config = app.load_conf()
             app.command_line_parse()
+            app.FileFn.dir_must_exist(MIRROR_DIR)
+            app.manjaro_online = app.HttpFn.manjaro_online_update()
             app.load_mirror_file()
             app.validate_custom_config()
             app.validate_country_selection()
@@ -48,6 +51,8 @@ class TestPacmanMirrors(unittest.TestCase):
             app = pacman_mirrors.PacmanMirrors()
             app.config = app.load_conf()
             app.command_line_parse()
+            app.FileFn.dir_must_exist(MIRROR_DIR)
+            app.manjaro_online = app.HttpFn.manjaro_online_update()
             app.load_mirror_file()
             app.validate_custom_config()
             app.validate_country_selection()
@@ -65,6 +70,8 @@ class TestPacmanMirrors(unittest.TestCase):
             app = pacman_mirrors.PacmanMirrors()
             app.config = app.load_conf()
             app.command_line_parse()
+            app.FileFn.dir_must_exist(MIRROR_DIR)
+            app.manjaro_online = app.HttpFn.manjaro_online_update()
             app.load_mirror_file()
             app.validate_custom_config()
             app.validate_country_selection()
@@ -82,6 +89,8 @@ class TestPacmanMirrors(unittest.TestCase):
             app = pacman_mirrors.PacmanMirrors()
             app.config = app.load_conf()
             app.command_line_parse()
+            app.FileFn.dir_must_exist(MIRROR_DIR)
+            app.manjaro_online = app.HttpFn.manjaro_online_update()
             app.load_mirror_file()
             app.validate_custom_config()
             app.validate_country_selection()
