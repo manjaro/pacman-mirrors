@@ -53,9 +53,11 @@ class TestPacmanMirrors(unittest.TestCase):
             app.validate_country_selection()
             assert app.only_country == ["Germany"]
 
+    @patch("os.getuid")
     @patch.object(pacman_mirrors.HttpFn, "get_geoip_country")
-    def test_get_geoip_country(self, mock_geoip):
+    def test_get_geoip_country(self, mock_geoip, mock_os_getuid):
         """Geoip country IS available"""
+        mock_os_getuid.return_value = 0
         mock_geoip.return_value = "France"
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
@@ -68,9 +70,11 @@ class TestPacmanMirrors(unittest.TestCase):
             app.validate_country_selection()
             assert app.only_country == ["France"]
 
+    @patch("os.getuid")
     @patch.object(pacman_mirrors.HttpFn, "get_geoip_country")
-    def test_get_geoip_country(self, mock_geoip):
+    def test_get_geoip_country(self, mock_geoip, mock_os_getuid):
         """Geoip country IS NOT available"""
+        mock_os_getuid.return_value = 0
         mock_geoip.return_value = "Antartica"
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
