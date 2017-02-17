@@ -394,6 +394,8 @@ class PacmanMirrors:
             if result:
                 self.config["only_country"] = []
                 self.only_country = [result]
+            else:
+                self.only_country = countries
         # validate the selected countries
         elif ValidFn.is_list_valid(selection, countries):
             self.only_country = selection
