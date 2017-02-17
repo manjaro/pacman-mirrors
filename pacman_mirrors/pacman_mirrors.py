@@ -380,7 +380,7 @@ class PacmanMirrors:
             elif ["all"] == self.config["only_country"]:
                 self.config["only_country"] = []
             else:
-                if not ValidFn.is_list_valid(onlycountry, self.mirrors.countrylist):
+                if not ValidFn.is_list_valid(self.config["only_country"], self.mirrors.countrylist):
                     self.config["only_country"] = []
 
         if not self.config["only_country"]:
