@@ -45,11 +45,15 @@ class Mirror:
         new_list = sorted(self.mirrorlist, key=itemgetter(sort_key))
         return new_list
 
-    def seed(self, mirrors, status=False):
+    def seed(self, mirrors, status=False, custom=False):
         """Seed mirrorlist
         :param mirrors:
         :param status:
+        :param custom:
         """
+        if custom:  # clear previous data
+            self.countrylist = []
+            self.mirrorlist = []
         for server in mirrors:
             if status:
                 self.add(server["country"], server["url"], server["protocols"],

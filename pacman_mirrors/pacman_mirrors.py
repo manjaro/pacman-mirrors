@@ -35,9 +35,7 @@ from operator import itemgetter
 from pacman_mirrors import __version__
 from random import shuffle
 from .configuration import ENV, CONFIG_FILE, CUSTOM_FILE, FALLBACK, \
-    MIRROR_DIR, MIRROR_LIST, MIRROR_FILE, O_CUST_FILE, \
-    STATUS_FILE, REPO_ARCH
-from .customfn import CustomFn
+    MIRROR_DIR, MIRROR_LIST, MIRROR_FILE, STATUS_FILE, REPO_ARCH
 from .custom_help_formatter import CustomHelpFormatter
 from .filefn import FileFn
 from .httpfn import HttpFn
@@ -79,6 +77,10 @@ class PacmanMirrors:
         # Time out
         self.max_wait_time = 2
         self.config = {}
+
+    @staticmethod
+    def debug(where, what, value):
+        print("{} ´Function {}´ ´item {}´ is ´{}´".format(txt.DBG_CLR, where, what, value))
 
     def command_line_parse(self):
         """Read the arguments of the command line"""
@@ -174,55 +176,9 @@ class PacmanMirrors:
         # geoip and country are mutually exclusive
         if args.geoip:
             self.geolocation = True
+
         if args.country and not args.geoip:
             self.config["only_country"] = args.country.split(",")
-
-    @staticmethod
-    def load_conf():
-        """Get config informations"""
-        # initialising defaults
-        # information which can differ from these defaults
-        # is fetched from config file
-        config = {
-            "mirror_file": MIRROR_FILE,
-            "branch": "stable",
-            "method": "rank",
-            "mirror_dir": MIRROR_DIR,
-            "mirror_list": MIRROR_LIST,
-            "no_update": False,
-            "only_country": [],
-        }
-        try:
-            # read configuration from file
-            with open(CONFIG_FILE) as conf:
-                for line in conf:
-                    line = line.strip()
-                    if line.startswith("#") or "=" not in line:
-                        continue
-                    (key, value) = line.split("=", 1)
-                    key = key.rstrip()
-                    value = value.lstrip()
-                    if key and value:
-                        if value.startswith("\"") and value.endswith("\""):
-                            value = value[1:-1]
-                        if key == "Method":
-                            config["method"] = value
-                        elif key == "Branch":
-                            config["branch"] = value
-                        elif key == "OnlyCountry":
-                            config["only_country"] = value.split(",")
-                        elif key == "MirrorlistsDir":
-                            config["mirror_dir"] = value
-                        elif key == "OutputMirrorlist":
-                            config["mirror_list"] = value
-                        elif key == "NoUpdate":
-                            config["no_update"] = value
-        except (PermissionError, OSError) as err:
-            print(".: {} {}: {}: {}".format(txt.ERR_CLR,
-                                             txt.ERR_FILE_READ,
-                                             err.filename,
-                                             err.strerror))
-        return config
 
     def gen_mirror_list_common(self):
         """Generate common mirrorlist"""
@@ -305,28 +261,67 @@ class PacmanMirrors:
             print(".: {} {}".format(txt.INF_CLR, txt.INF_RANDOMIZE_SERVERS))
             self.mirrors.randomize()
 
+    @staticmethod
+    def load_conf():
+        """Get config informations"""
+        # initialising defaults
+        # information which can differ from these defaults
+        # is fetched from config file
+        config = {
+            "mirror_file": MIRROR_FILE,
+            "branch": "stable",
+            "method": "rank",
+            "mirror_dir": MIRROR_DIR,
+            "mirror_list": MIRROR_LIST,
+            "no_update": False,
+            "only_country": [],
+        }
+        try:
+            # read configuration from file
+            with open(CONFIG_FILE) as conf:
+                for line in conf:
+                    line = line.strip()
+                    if line.startswith("#") or "=" not in line:
+                        continue
+                    (key, value) = line.split("=", 1)
+                    key = key.rstrip()
+                    value = value.lstrip()
+                    if key and value:
+                        if value.startswith("\"") and value.endswith("\""):
+                            value = value[1:-1]
+                        if key == "Method":
+                            config["method"] = value
+                        elif key == "Branch":
+                            config["branch"] = value
+                        elif key == "OnlyCountry":
+                            config["only_country"] = value.split(",")
+                        elif key == "MirrorlistsDir":
+                            config["mirror_dir"] = value
+                        elif key == "OutputMirrorlist":
+                            config["mirror_list"] = value
+                        elif key == "NoUpdate":
+                            config["no_update"] = value
+        except (PermissionError, OSError) as err:
+            print(".: {} {}: {}: {}".format(txt.ERR_CLR,
+                                            txt.ERR_FILE_READ,
+                                            err.filename,
+                                            err.strerror))
+        return config
+
     def load_mirror_file(self):
         """Load mirror file"""
         seed_status = False
-        # check custom config
-        self.custom = ValidFn.is_custom_conf_valid(self.config["only_country"])
-        if self.custom:
-            servers = JsonFn.read_json_file(CUSTOM_FILE, dictionary=True)
+        if FileFn.check_file(STATUS_FILE):
+            seed_status = True
+            servers = JsonFn.read_json_file(STATUS_FILE, dictionary=True)
+        elif FileFn.check_file(MIRROR_FILE):
+            servers = JsonFn.read_json_file(MIRROR_FILE, dictionary=True)
         else:
-            self.only_country = self.validate_country_selection()
-            if FileFn.check_file(STATUS_FILE):
-                seed_status = True
-                servers = JsonFn.read_json_file(STATUS_FILE, dictionary=True)
-            elif FileFn.check_file(MIRROR_FILE):
-                servers = JsonFn.read_json_file(MIRROR_FILE, dictionary=True)
-            else:
-                servers = JsonFn.read_json_file(FALLBACK, dictionary=True)
+            servers = JsonFn.read_json_file(FALLBACK, dictionary=True)
         if seed_status:
             self.mirrors.seed(servers, seed_status)
         else:
             self.mirrors.seed(servers)
-        if self.custom:  # assign country list
-            self.only_country = self.mirrors.countrylist
 
     def mirror_to_server_list(self, mirror):
         """Append mirror to relevant list based on elapsed hours
@@ -378,6 +373,42 @@ class PacmanMirrors:
             print(".: {} {}: {}: {}".format(txt.ERR_CLR, txt.ERR_FILE_WRITE, err.filename, err.strerror))
             exit(1)
 
+    def validate_country_selection(self):
+        """Do a check on the users country selection"""
+        # work variables
+        selection = self.config["only_country"]
+        countries = self.mirrors.countrylist
+        # custom
+        if selection == ["Custom"]:  # if Custom in config file
+            # the custom file has been loaded earlier so
+            # assign a valid country list instead of ["Custom"]
+            self.only_country = self.mirrors.countrylist
+        # this resets custom
+        if selection == ["all"]:
+            self.config["only_country"] = []
+            self.only_country = []
+        # geolocation overrules country list
+        #  but custom rules them all
+        if self.geolocation and not self.custom:
+            result = ValidFn.is_geoip_valid(countries)
+            if result:
+                self.config["only_country"] = []
+                self.only_country = [result]
+        # validate the selected countries
+        elif ValidFn.is_list_valid(selection, countries):
+            self.only_country = selection
+        else:
+            # if nothing checks
+            self.only_country = countries
+
+    def validate_custom_config(self):
+        """Check for custom config and validate it"""
+        self.custom = ValidFn.is_custom_conf_valid(self.config["only_country"])
+        if self.custom:
+            servers = JsonFn.read_json_file(CUSTOM_FILE, dictionary=True)
+            self.mirrors.seed(servers, custom=True)
+            self.only_country = self.mirrors.countrylist
+
     def validate_mirror(self):
         """Query server for response time"""
         if not self.config["only_country"] == ["Custom"]:
@@ -398,29 +429,6 @@ class PacmanMirrors:
                     if resp_time == "99.99":
                         continue
                     print("\r   {:<5}{}{} ".format(txt.GS, resp_time, txt.CE))
-
-    def validate_country_selection(self):
-        """Do a check on the users country selection"""
-        # work variables
-        selection = self.only_country
-        countries = self.mirrors.countrylist
-
-        if selection == ["Custom"]:  # if Custom in config file
-            # assign a valid country list instead of ["Custom"]
-            selection = self.mirrors.countrylist
-
-        if selection == ["all"] or selection == []:
-            self.config["only_country"] = []
-        elif self.geolocation:
-            result = ValidFn.is_geoip_valid(countries)
-            if result:
-                self.config["only_country"] = []
-                return [result]
-        else:
-            if ValidFn.is_list_valid(selection, countries):
-                return selection
-
-        return countries
 
     @staticmethod
     def write_custom_config(filename, selection, custom=False):
@@ -455,20 +463,18 @@ class PacmanMirrors:
             os.chmod(filename, 0o644)
         except OSError as err:
             print(".: {} {}: {}: {}".format(txt.ERR_CLR, txt.ERR_FILE_READ,
-                                             err.filename, err.strerror))
+                                            err.filename, err.strerror))
             exit(1)
 
     def run(self):
         """Run"""
-
-        if os.path.isfile(O_CUST_FILE):
-            CustomFn.convert_to_json()
-        else:
-            FileFn.check_directory(MIRROR_DIR)
+        FileFn.dir_must_exist(MIRROR_DIR)
         self.manjaro_online = HttpFn.manjaro_online_update()
         self.config = self.load_conf()
         self.command_line_parse()
         self.load_mirror_file()
+        self.validate_custom_config()
+        self.validate_country_selection()
         self.gen_server_lists()
         if self.interactive:
             self.gen_mirror_list_interactive()

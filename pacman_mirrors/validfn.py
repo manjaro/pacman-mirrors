@@ -19,12 +19,13 @@ class ValidFn:
         """
         if only_country == ["Custom"]:
             if not os.path.isfile(CUSTOM_FILE):
-                print(".: {} {} '{} {}'\n".format(txt.WRN_CLR,
-                                                   txt.INF_CUSTOM_MIRROR_FILE,
-                                                   CUSTOM_FILE,
-                                                   txt.INF_DOES_NOT_EXIST))
-                return []
-        return only_country
+                print(".: {} {} {} {}\n".format(txt.WRN_CLR,
+                                                txt.INF_CUSTOM_MIRROR_FILE,
+                                                CUSTOM_FILE,
+                                                txt.INF_DOES_NOT_EXIST))
+                return False  # filecheck failed
+            return True  # valid
+        return False  # not valid
 
     @staticmethod
     def is_geoip_valid(country_list):
@@ -34,7 +35,7 @@ class ValidFn:
         """
         geoip_country = HttpFn.get_geoip_country()
         if geoip_country and geoip_country in country_list:
-            return [geoip_country]
+            return geoip_country
         else:
             return None
 
@@ -49,11 +50,11 @@ class ValidFn:
         for country in selection:
             if country not in countrylist:
                 print(".: {} {}{}: '{}: {}'.\n\n{}".format(txt.WRN_CLR,
-                                                            txt.INF_OPTION,
-                                                            txt.OPT_COUNTRY,
-                                                            txt.INF_UNKNOWN_COUNTRY,
-                                                            country,
-                                                            txt.INF_USING_ALL_SERVERS))
+                                                           txt.INF_OPTION,
+                                                           txt.OPT_COUNTRY,
+                                                           txt.INF_UNKNOWN_COUNTRY,
+                                                           country,
+                                                           txt.INF_USING_ALL_SERVERS))
                 return False
         return True
 

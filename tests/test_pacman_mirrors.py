@@ -23,21 +23,36 @@ class TestPacmanMirrors(unittest.TestCase):
         """Run pacman-mirrors"""
         mock_os_getuid.return_value = 0
         with unittest.mock.patch("sys.argv",
-                                 ["pacman-mirrors"]):
+                                 ["pacman-mirrors",
+                                  "-m", "random"]):
             app = pacman_mirrors.PacmanMirrors()
-            app.config = app.config_init()
+            # if os.path.isfile(O_CUST_FILE):
+            #     app.CustomFn.convert_to_json()
+            # else:
+            #     app.FileFn.check_directory(MIRROR_DIR)
+            # app.manjaro_online = app.HttpFn.manjaro_online_update()
+            app.config = app.load_conf()
+            app.command_line_parse()
+            app.load_mirror_file()
+            app.gen_server_lists()
+            if app.interactive:
+                app.gen_mirror_list_interactive()
+            else:
+                app.gen_mirror_list_common()
 
-    # @patch.object(pacman_mirrors.HttpFn, "get_geoip_country")
-    # def test_get_geoip_country(self, mock_geoip):
-    #     """Geoip country IS available"""
-    #     mock_countries = ["France", "Germany", "Denmark"]
-    #     mock_geoip.return_value = "France"
-    #     with unittest.mock.patch("sys.argv",
-    #                              ["pacman-mirrors",
-    #                               "--geoip"]):
-    #         app = pacman_mirrors.PacmanMirrors()
-    #     app.available_countries = mock_countries
-    #     assert app.config["only_country"] == ["France"]
+    @patch.object(pacman_mirrors.HttpFn, "get_geoip_country")
+    def test_get_geoip_country(self, mock_geoip):
+        """Geoip country IS available"""
+        mock_geoip.return_value = "France"
+        with unittest.mock.patch("sys.argv",
+                                 ["pacman-mirrors",
+                                  "--geoip"]):
+            app = pacman_mirrors.PacmanMirrors()
+            app.config = app.load_conf()
+            app.command_line_parse()
+            app.load_mirror_file()
+            print(str(app.only_country))
+            assert app.only_country == ["France"]
 
     def tearDown(self):
         pass
