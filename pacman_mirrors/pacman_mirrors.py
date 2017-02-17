@@ -34,7 +34,7 @@ import tempfile
 from operator import itemgetter
 from pacman_mirrors import __version__
 from random import shuffle
-from .configuration import ENV, CONFIG_FILE, CUSTOM_FILE, FALLBACK, \
+from .configuration import CONFIG_FILE, CUSTOM_FILE, FALLBACK, \
     MIRROR_DIR, MIRROR_LIST, MIRROR_FILE, STATUS_FILE, REPO_ARCH
 from .custom_help_formatter import CustomHelpFormatter
 from .filefn import FileFn
