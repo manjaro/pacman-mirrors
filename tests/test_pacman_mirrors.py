@@ -16,6 +16,7 @@ from pacman_mirrors import pacman_mirrors
 class TestPacmanMirrors(unittest.TestCase):
     """Pacman Mirrors Test suite"""
     def setUp(self):
+        """Setup tests"""
         pass
 
     @patch("os.getuid")
@@ -83,6 +84,7 @@ class TestPacmanMirrors(unittest.TestCase):
             assert app.only_country == app.mirrors.countrylist
 
     def tearDown(self):
+        """Tear down"""
         pass
 
 
