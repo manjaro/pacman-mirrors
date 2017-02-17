@@ -1,8 +1,27 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [x.x.x] - 2017-mm-dd - @fhdk
+- Add: Class JSON file functions
+- Add: Class Custom mirror file conversion and helpers
+- Add: Class Http functions
+- Add: Class Mirror
+- Add: Class Mirror functions
+- Add: Class Generic file functions
+- Add: Class Validation functions
+- Add: Download mirrors from repo.manjaro.org
+- Add: Ping status of repo.manjaro.org
+- Add: Fallback to package mirrorfile if ping fail
+- Add: Fallback to package mirrorfile if any file is missing
+- Add: Messages to reflect new functions
+- Rewrite: internals for json handling
+- Rewrite: internals for mirror handling
+- Rewrite: internals for mirror ranking
+- Modified GUI and TUI to reflect rank/random method
+- Colorized console output by message type
+
 ## [3.2.2] - 2017-02-12
-- Fix issue with multible country select.
+- Fix issue with multiple country select.
 - Bug fixes.
 
 ## [3.2.1] - 2017-02-10
