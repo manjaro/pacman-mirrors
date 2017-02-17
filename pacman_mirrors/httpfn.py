@@ -99,11 +99,9 @@ class HttpFn:
         probe_start = time.time()
         response_time = txt.SERVER_RES
         probe_stop = None
-        _c = ""
         try:
             for _ in range(count):
-                res = urlopen(url + "state", timeout=maxwait)
-                _c = res.read().decode("utf8")
+                urlopen(url + "state", timeout=maxwait)
             probe_stop = time.time()
         except URLError as err:
             if hasattr(err, "reason"):
