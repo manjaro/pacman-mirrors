@@ -399,7 +399,9 @@ class PacmanMirrors:
     def validate_custom_config(self):
         """Check for custom config and validate it"""
         self.custom = ValidFn.is_custom_conf_valid(self.config["only_country"])
-        if self.custom:
+        if not self.custom:
+            self.config["only_country"] = []
+        else:
             servers = JsonFn.read_json_file(CUSTOM_FILE, dictionary=True)
             self.mirrors.seed(servers, custom=True)
             self.only_country = self.mirrors.countrylist
