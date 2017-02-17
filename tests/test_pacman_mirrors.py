@@ -34,6 +34,8 @@ class TestPacmanMirrors(unittest.TestCase):
             app.config = app.load_conf()
             app.command_line_parse()
             app.load_mirror_file()
+            app.validate_custom_config()
+            app.validate_country_selection()
             app.gen_server_lists()
             if app.interactive:
                 app.gen_mirror_list_interactive()
@@ -51,7 +53,9 @@ class TestPacmanMirrors(unittest.TestCase):
             app.config = app.load_conf()
             app.command_line_parse()
             app.load_mirror_file()
-            print(str(app.only_country))
+            app.validate_custom_config()
+            app.validate_country_selection()
+            app.gen_server_lists()
             assert app.only_country == ["France"]
 
     def tearDown(self):
