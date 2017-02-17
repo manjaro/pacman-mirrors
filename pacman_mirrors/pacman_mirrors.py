@@ -373,33 +373,23 @@ class PacmanMirrors:
 
     def validate_country_selection(self):
         """Do a check on the users country selection"""
-        # work variables
-        selection = self.config["only_country"]
-        countries = self.mirrors.countrylist
-        # custom
-        if selection == ["Custom"]:  # if Custom in config file
-            # the custom file has been loaded earlier so
-            # assign a valid country list instead of ["Custom"]
-            self.only_country = self.mirrors.countrylist
-        # this resets custom
-        if selection == ["all"]:
-            self.config["only_country"] = []
-            self.only_country = []
-        # geolocation overrules country list
-        #  but custom rules them all
-        if self.geolocation and not self.custom:
-            result = ValidFn.is_geoip_valid(countries)
-            if result:
+        if self.config["only_country"]:
+            if ["Custom"] == self.config["only_country"]:  # if Custom in config file
+                self.only_country = countrylist
+
+            elif ["all"] == self.config["only_country"]:
                 self.config["only_country"] = []
-                self.only_country = [result]
             else:
-                self.only_country = countries
-        # validate the selected countries
-        elif ValidFn.is_list_valid(selection, countries):
-            self.only_country = selection
-        else:
-            # if nothing checks
-            self.only_country = countries
+                if not ValidFn.is_list_valid(onlycountry, self.mirrors.countrylist):
+                    self.config["only_country"] = []
+
+        if not self.config["only_country"]:
+            if self.geolocation:
+                country = ValidFn.is_geoip_valid(self.mirrors.countrylist)
+                if country:
+                    self.only_country = [country]
+            else:
+                self.only_country = self.mirrors.countrylist
 
     def validate_custom_config(self):
         """Check for custom config and validate it"""
