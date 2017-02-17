@@ -65,6 +65,8 @@ class ValidFn:
         :return: True or False
         :rtype: bool
         """
+        if selection == "all":
+            return True
         for country in selection:
             if country not in countrylist:
                 print(".: {} {}{}: '{}: {}'.\n\n{}".format(txt.WRN_CLR,
