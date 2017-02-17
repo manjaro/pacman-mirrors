@@ -11,7 +11,6 @@ import unittest
 from unittest.mock import patch
 
 from pacman_mirrors import pacman_mirrors
-from pacman_mirrors.configuration import MIRROR_DIR
 
 
 class TestPacmanMirrors(unittest.TestCase):
@@ -24,14 +23,13 @@ class TestPacmanMirrors(unittest.TestCase):
     def test_run(self, mock_os_getuid):
         """Run pacman-mirrors"""
         mock_os_getuid.return_value = 0
+
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
                                   "-m", "random"]):
             app = pacman_mirrors.PacmanMirrors()
             app.config = app.load_conf()
             app.command_line_parse()
-            app.FileFn.dir_must_exist(MIRROR_DIR)
-            app.manjaro_online = app.HttpFn.manjaro_online_update()
             app.load_mirror_file()
             app.validate_custom_config()
             app.validate_country_selection()
@@ -51,8 +49,6 @@ class TestPacmanMirrors(unittest.TestCase):
             app = pacman_mirrors.PacmanMirrors()
             app.config = app.load_conf()
             app.command_line_parse()
-            app.FileFn.dir_must_exist(MIRROR_DIR)
-            app.manjaro_online = app.HttpFn.manjaro_online_update()
             app.load_mirror_file()
             app.validate_custom_config()
             app.validate_country_selection()
@@ -60,7 +56,7 @@ class TestPacmanMirrors(unittest.TestCase):
 
     @patch("os.getuid")
     @patch.object(pacman_mirrors.HttpFn, "get_geoip_country")
-    def test_get_geoip_country(self, mock_geoip, mock_os_getuid):
+    def test_get_geoip_country(self, mock_os_getuid, mock_geoip):
         """Geoip country IS available"""
         mock_os_getuid.return_value = 0
         mock_geoip.return_value = "France"
@@ -70,8 +66,6 @@ class TestPacmanMirrors(unittest.TestCase):
             app = pacman_mirrors.PacmanMirrors()
             app.config = app.load_conf()
             app.command_line_parse()
-            app.FileFn.dir_must_exist(MIRROR_DIR)
-            app.manjaro_online = app.HttpFn.manjaro_online_update()
             app.load_mirror_file()
             app.validate_custom_config()
             app.validate_country_selection()
@@ -79,7 +73,7 @@ class TestPacmanMirrors(unittest.TestCase):
 
     @patch("os.getuid")
     @patch.object(pacman_mirrors.HttpFn, "get_geoip_country")
-    def test_get_geoip_country(self, mock_geoip, mock_os_getuid):
+    def test_get_geoip_country(self, mock_os_getuid, mock_geoip):
         """Geoip country IS NOT available"""
         mock_os_getuid.return_value = 0
         mock_geoip.return_value = "Antartica"
@@ -89,8 +83,6 @@ class TestPacmanMirrors(unittest.TestCase):
             app = pacman_mirrors.PacmanMirrors()
             app.config = app.load_conf()
             app.command_line_parse()
-            app.FileFn.dir_must_exist(MIRROR_DIR)
-            app.manjaro_online = app.HttpFn.manjaro_online_update()
             app.load_mirror_file()
             app.validate_custom_config()
             app.validate_country_selection()
