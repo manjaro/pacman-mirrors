@@ -17,13 +17,14 @@ class ValidFn:
         :return: True or False
         :rtype: bool
         """
-        print(str(only_country))
         if only_country == ["Custom"]:
             if not os.path.isfile(CUSTOM_FILE):
-                print(".: {}: {} '{} {}'\n".format(
-                    txt.WARN, txt.INF_CUSTOM_MIRROR_FILE, CUSTOM_FILE, txt.INF_DOES_NOT_EXIST))
-                only_country = []
-        return only_country == ["Custom"]
+                print(".: {} {} '{} {}'\n".format(txt.WRN_CLR,
+                                                   txt.INF_CUSTOM_MIRROR_FILE,
+                                                   CUSTOM_FILE,
+                                                   txt.INF_DOES_NOT_EXIST))
+                return []
+        return only_country
 
     @staticmethod
     def is_geoip_valid(country_list):
@@ -47,8 +48,11 @@ class ValidFn:
         """
         for country in selection:
             if country not in countrylist:
-                print(".:{}: {}{}: '{}: {}'.\n\n{}".format(txt.INFO, txt.INF_OPTION, txt.OPT_COUNTRY,
-                                                            txt.INF_UNKNOWN_COUNTRY, country,
+                print(".: {} {}{}: '{}: {}'.\n\n{}".format(txt.WRN_CLR,
+                                                            txt.INF_OPTION,
+                                                            txt.OPT_COUNTRY,
+                                                            txt.INF_UNKNOWN_COUNTRY,
+                                                            country,
                                                             txt.INF_USING_ALL_SERVERS))
                 return False
         return True

@@ -40,7 +40,7 @@ class HttpFn:
                 countries = json.loads(response.read().decode(
                     "utf8"), object_pairs_hook=collections.OrderedDict)
         except URLError:
-            print(".: {}: {} {}".format(txt.ERROR, txt.ERR_DOWNLOAD_FAIL, url))
+            print(".: {} {} {}".format(txt.ERROR, txt.ERR_DOWNLOAD_FAIL, url))
         if countries:
             success = True
             if url == URL_STATUS_JSON:
@@ -91,13 +91,13 @@ class HttpFn:
             probe_stop = time.time()
         except URLError as err:
             if hasattr(err, "reason"):
-                print("\n.: {}: {}".format(txt.ERR_CLR, err.reason))
+                print("\n.: {} {}".format(txt.ERR_CLR, err.reason))
             elif hasattr(err, "code"):
-                print("\n.: {}: {}".format(txt.ERR_CLR, err.reason))
+                print("\n.: {} {}".format(txt.ERR_CLR, err.reason))
         except timeout:
-            print("\n.: {}: {}".format(txt.ERR_CLR, txt.TIMEOUT))
+            print("\n.: {} {}".format(txt.ERR_CLR, txt.TIMEOUT))
         except HTTPException:
-            print("\n.: {}: {}".format(txt.ERR_CLR, txt.HTTP_EXCEPTION))
+            print("\n.: {} {}".format(txt.ERR_CLR, txt.HTTP_EXCEPTION))
         if probe_stop:
             calc = round((probe_stop - probe_start), 3)
             response_time = str(format(calc, ".3f"))
@@ -108,12 +108,12 @@ class HttpFn:
         """Checking repo.manjaro.org"""
         mjro_online = HttpFn.check_host_online("repo.manjaro.org", count=1)
         if mjro_online:
-            print(".: {}: {}".format(txt.INF_CLR, txt.INF_DOWNLOAD_MIRROR_FILE))
+            print(".: {} {}".format(txt.INF_CLR, txt.INF_DOWNLOAD_MIRROR_FILE))
             HttpFn.download_mirrors(URL_MIRROR_JSON)
             HttpFn.download_mirrors(URL_STATUS_JSON)
             return True
         else:
             if not FileFn.check_file(MIRROR_FILE):
-                print(".: {}: {} {} {}".format(txt.WRN_CLR, txt.INF_MIRROR_FILE, MIRROR_FILE, txt.INF_IS_MISSING))
-                print(".: {}: {} {}".format(txt.WRN_CLR, txt.INF_FALLING_BACK, FALLBACK))
+                print(".: {} {} {} {}".format(txt.WRN_CLR, txt.INF_MIRROR_FILE, MIRROR_FILE, txt.INF_IS_MISSING))
+                print(".: {} {} {}".format(txt.WRN_CLR, txt.INF_FALLING_BACK, FALLBACK))
             return False

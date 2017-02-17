@@ -139,7 +139,7 @@ class PacmanMirrors:
         if not ENV:
             # TODO: Remove ENV check in command_line_parse
             if os.getuid() != 0:
-                print(".: {}: {}".format(txt.ERR_CLR, txt.ERR_NOT_ROOT))
+                print(".: {} {}".format(txt.ERR_CLR, txt.ERR_NOT_ROOT))
                 exit(1)
 
         if args.no_update:
@@ -218,7 +218,7 @@ class PacmanMirrors:
                         elif key == "NoUpdate":
                             config["no_update"] = value
         except (PermissionError, OSError) as err:
-            print(".: {}: {}: {}: {}".format(txt.ERR_CLR,
+            print(".: {} {}: {}: {}".format(txt.ERR_CLR,
                                              txt.ERR_FILE_READ,
                                              err.filename,
                                              err.strerror))
@@ -284,16 +284,16 @@ class PacmanMirrors:
                 print("--------------------------")
                 # output mirror file
                 JsonFn.write_json_file(mirrorfile, CUSTOM_FILE)
-                print(".: {}: {}: {}".format(txt.INF_CLR, txt.INF_MIRROR_FILE_SAVED, CUSTOM_FILE))
+                print(".: {} {}: {}".format(txt.INF_CLR, txt.INF_MIRROR_FILE_SAVED, CUSTOM_FILE))
                 # output pacman mirrorlist
                 self.output_mirror_list(selected, write_file=True)
                 # output custom configuration
                 self.config["only_country"] = ["Custom"]
                 self.modify_config(custom=True)
-                print(".: {}: {}: {}".format(txt.INF_CLR, txt.INF_INTERACTIVE_LIST_SAVED, CUSTOM_FILE))
+                print(".: {} {}: {}".format(txt.INF_CLR, txt.INF_INTERACTIVE_LIST_SAVED, CUSTOM_FILE))
             else:
-                print(".: {}: {}".format(txt.WRN_CLR, txt.INF_NO_SELECTION))
-                print(".: {}: {}".format(txt.WRN_CLR, txt.INF_NO_CHANGES))
+                print(".: {} {}".format(txt.WRN_CLR, txt.INF_NO_SELECTION))
+                print(".: {} {}".format(txt.WRN_CLR, txt.INF_NO_CHANGES))
         else:
             return
 
@@ -302,7 +302,7 @@ class PacmanMirrors:
         if self.config["method"] == "rank":
             self.validate_mirror()
         elif self.config["method"] == "random":
-            print(".: {}: {}".format(txt.INF_CLR, txt.INF_RANDOMIZE_SERVERS))
+            print(".: {} {}".format(txt.INF_CLR, txt.INF_RANDOMIZE_SERVERS))
             self.mirrors.randomize()
 
     def load_mirror_file(self):
@@ -357,7 +357,7 @@ class PacmanMirrors:
         try:
             with open(self.config["mirror_list"], "w") as outfile:
                 if write_file:
-                    print(".: {}: {}".format(txt.INF_CLR, txt.INF_MIRROR_LIST_WRITE))
+                    print(".: {} {}".format(txt.INF_CLR, txt.INF_MIRROR_LIST_WRITE))
                     # write list header
                     MirrorFn.write_mirrorlist_header(outfile)
                 for server in servers:
@@ -372,24 +372,24 @@ class PacmanMirrors:
                             # write list entry
                             MirrorFn.write_mirrorlist_entry(outfile, server)
                             if not self.quiet:
-                                print(".: {} : {}".format(server["country"], server["url"]))
-                print(".: {}: {}: {}".format(txt.INF_CLR, txt.INF_MIRROR_LIST_SAVED, self.config["mirror_list"]))
+                                print("   {}{:<15}{} : {}".format(txt.YS, server["country"], txt.CE, server["url"]))
+                print(".: {} {}: {}".format(txt.INF_CLR, txt.INF_MIRROR_LIST_SAVED, self.config["mirror_list"]))
         except OSError as err:
-            print(".: {}: {}: {}: {}".format(txt.ERR_CLR, txt.ERR_FILE_WRITE, err.filename, err.strerror))
+            print(".: {} {}: {}: {}".format(txt.ERR_CLR, txt.ERR_FILE_WRITE, err.filename, err.strerror))
             exit(1)
 
     def validate_mirror(self):
         """Query server for response time"""
         if not self.config["only_country"] == ["Custom"]:
-            print(".: {}: {}".format(txt.INF_CLR, txt.INF_QUERY_SERVERS))
-            print(".: {}: {}".format(txt.INF_CLR, txt.INF_QUERY_DEFAULT_FILE))
+            print(".: {} {}".format(txt.INF_CLR, txt.INF_QUERY_SERVERS))
+            print(".: {} {}".format(txt.INF_CLR, txt.INF_QUERY_DEFAULT_FILE))
         else:
-            print(".: {}: {}".format(txt.INF_CLR, txt.INF_QUERY_SERVERS))
-            print(".: {}: {}".format(txt.INF_CLR, txt.INF_QUERY_CUSTOM_FILE))
+            print(".: {} {}".format(txt.INF_CLR, txt.INF_QUERY_SERVERS))
+            print(".: {} {}".format(txt.INF_CLR, txt.INF_QUERY_CUSTOM_FILE))
         for country in self.only_country:
             for mirror in self.mirrors.mirrorlist:
                 if country == mirror["country"]:
-                    print("    ..... {}: {}".format(mirror["country"], mirror["url"]),
+                    print("   ..... {:<15}: {}".format(mirror["country"], mirror["url"]),
                           end='')
                     sys.stdout.flush()
                     resp_time = HttpFn.get_mirror_response(mirror["url"])
@@ -397,7 +397,7 @@ class PacmanMirrors:
                     self.mirror_to_server_list(mirror)
                     if resp_time == "99.99":
                         continue
-                    print("\r    {} ".format(resp_time))
+                    print("\r   {:<5}{}{} ".format(txt.GS, resp_time, txt.CE))
 
     def validate_country_selection(self):
         """Do a check on the users country selection"""
@@ -454,7 +454,7 @@ class PacmanMirrors:
             os.replace(tmp.name, filename)
             os.chmod(filename, 0o644)
         except OSError as err:
-            print(".: {}: {}: {}: {}".format(txt.ERR_CLR, txt.ERR_FILE_READ,
+            print(".: {} {}: {}: {}".format(txt.ERR_CLR, txt.ERR_FILE_READ,
                                              err.filename, err.strerror))
             exit(1)
 

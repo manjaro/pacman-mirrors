@@ -4,6 +4,7 @@
 
 import os
 
+
 class FileFn:
     """FileMethods class"""
 

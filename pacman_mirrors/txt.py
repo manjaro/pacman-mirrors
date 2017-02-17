@@ -125,12 +125,14 @@ SERVER_RES = "99.99"  # default response status
 OPT_COUNTRY = " '-c/--country' "
 OPT_NOUPDATE = " 'NoUpdate = True' "
 OPT_RANDOM = " '-m/--method random "
-# colored
-DBG_CLR = "\033[1;31m:: {} >>> \033[1;m".format("DEBUG")
-ERR_CLR = "\033[1;31m {} \033[1;m".format(ERROR)
-INF_CLR = "\033[1;34m {} \033[1;m".format(INFO)
-WRN_CLR = "\033[1;33m {} \033[1;m".format(WARN)
+# colors
+DBG_CLR = "\033[1;31m.: {} >>> \033[1;m".format("DEBUG")
+ERR_CLR = "\033[1;31m{}\033[1;m".format(ERROR)
+INF_CLR = "\033[1;37m{}\033[1;m".format(INFO)
+WRN_CLR = "\033[1;33m{}\033[1;m".format(WARN)
 CE = "\033[1;m"
+GS = "\033[1;32m"
 RS = "\033[1;31m::"
 YS = "\033[1;33m"
 BS = "\033[1;34m"
+WS = "\033[1;37m"

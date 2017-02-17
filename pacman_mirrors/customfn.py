@@ -2,7 +2,7 @@
 """Conversion Module"""
 
 import os
-from .configuration import ENV, O_CUST_FILE, CUSTOM_FILE
+from .configuration import O_CUST_FILE, CUSTOM_FILE
 from .jsonfn import JsonFn
 from . import txt
 
@@ -11,7 +11,7 @@ class CustomFn:
     @staticmethod
     def convert_to_json():
         """Convert custom mirror file to json"""
-        print(".: {}: {}".format(txt.INF_CLR, txt.INF_CONVERT_MIRROR_FILE))
+        print(".: {} {}".format(txt.INF_CLR, txt.INF_CONVERT_MIRROR_FILE))
         mirrors = []
         with open(O_CUST_FILE, "r") as mirrorfile:
             mirror_country = None
