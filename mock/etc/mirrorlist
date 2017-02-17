@@ -1,36 +1,24 @@
 ##
 ## Manjaro Linux mirrorlist
-## Generated on 16 February 2017 20:12
+## Generated on 17 February 2017 10:34
 ##
 ## Use pacman-mirrors to modify
 ##
 
-## Country       : Denmark
-Server = http://www.uex.dk/repos/manjaro/stable/$repo/$arch
+## Country       : Germany
+Server = ftp://ftp.halifax.rwth-aachen.de/manjaro/stable/$repo/$arch
 
-## Country       : Netherlands
-Server = ftp://ftp.nluug.nl/pub/os/Linux/distr/manjaro/stable/$repo/$arch
+## Country       : Germany
+Server = http://ftp.halifax.rwth-aachen.de/manjaro/stable/$repo/$arch
 
-## Country       : Netherlands
-Server = http://ftp.nluug.nl/pub/os/Linux/distr/manjaro/stable/$repo/$arch
+## Country       : United_Kingdom
+Server = http://manjaro.mirrors.uk2.net/stable/$repo/$arch
 
 ## Country       : Belgium
 Server = ftp://ftp.belnet.be/manjaro/stable/$repo/$arch
 
 ## Country       : Belgium
 Server = http://ftp.belnet.be/manjaro/stable/$repo/$arch
-
-## Country       : Sweden
-Server = http://mirror.zetup.net/manjaro/stable/$repo/$arch
-
-## Country       : Germany
-Server = http://mirror.ragenetwork.de/manjaro/stable/$repo/$arch
-
-## Country       : United_Kingdom
-Server = http://manjaro.mirrors.uk2.net/stable/$repo/$arch
-
-## Country       : France
-Server = http://manjarolinux.polymorf.fr/stable/$repo/$arch
 
 ## Country       : United_Kingdom
 Server = http://repo.manjaro.org.uk/stable/$repo/$arch
@@ -41,9 +29,21 @@ Server = ftp://ftp.free.org/mirrors/repo.manjaro.org/repos/stable/$repo/$arch
 ## Country       : France
 Server = http://ftp.free.org/mirrors/repo.manjaro.org/repos/stable/$repo/$arch
 
-## Country       : Germany
-Server = ftp://ftp.halifax.rwth-aachen.de/manjaro/stable/$repo/$arch
+## Country       : Denmark
+Server = http://www.uex.dk/repos/manjaro/stable/$repo/$arch
+
+## Country       : Netherlands
+Server = ftp://ftp.nluug.nl/pub/os/Linux/distr/manjaro/stable/$repo/$arch
+
+## Country       : Netherlands
+Server = http://ftp.nluug.nl/pub/os/Linux/distr/manjaro/stable/$repo/$arch
+
+## Country       : Sweden
+Server = http://mirror.zetup.net/manjaro/stable/$repo/$arch
+
+## Country       : France
+Server = http://manjarolinux.polymorf.fr/stable/$repo/$arch
 
 ## Country       : Germany
-Server = http://ftp.halifax.rwth-aachen.de/manjaro/stable/$repo/$arch
+Server = http://mirror.ragenetwork.de/manjaro/stable/$repo/$arch
 

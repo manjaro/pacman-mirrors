@@ -11,7 +11,7 @@ class CustomFn:
     @staticmethod
     def convert_to_json():
         """Convert custom mirror file to json"""
-        print(".: {}: {}".format(txt.INFO, txt.INF_CONVERT_MIRROR_FILE))
+        print(".: {}: {}".format(txt.INF_CLR, txt.INF_CONVERT_MIRROR_FILE))
         mirrors = []
         with open(O_CUST_FILE, "r") as mirrorfile:
             mirror_country = None
