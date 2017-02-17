@@ -1,1 +1,1 @@
-__version__ = "3.3b0"
+__version__ = "3.3-unstable-json"
