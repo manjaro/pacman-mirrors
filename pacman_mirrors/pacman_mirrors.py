@@ -138,11 +138,9 @@ class PacmanMirrors:
             print("pacman-mirrors {}".format(__version__))
             exit(0)
 
-        if not ENV:
-            # TODO: Remove ENV check in command_line_parse
-            if os.getuid() != 0:
-                print(".: {} {}".format(txt.ERR_CLR, txt.ERR_NOT_ROOT))
-                exit(1)
+        if os.getuid() != 0:
+            print(".: {} {}".format(txt.ERR_CLR, txt.ERR_NOT_ROOT))
+            exit(1)
 
         if args.no_update:
             if self.config["no_update"] == "True":
@@ -470,10 +468,10 @@ class PacmanMirrors:
 
     def run(self):
         """Run"""
-        FileFn.dir_must_exist(MIRROR_DIR)
-        self.manjaro_online = HttpFn.manjaro_online_update()
         self.config = self.load_conf()
         self.command_line_parse()
+        FileFn.dir_must_exist(MIRROR_DIR)
+        self.manjaro_online = HttpFn.manjaro_online_update()
         self.load_mirror_file()
         self.validate_custom_config()
         self.validate_country_selection()
