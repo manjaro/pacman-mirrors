@@ -34,6 +34,7 @@ import tempfile
 from operator import itemgetter
 from pacman_mirrors import __version__
 from random import shuffle
+from .configuration import ENV
 from .configuration import CONFIG_FILE, CUSTOM_FILE, FALLBACK, \
     MIRROR_DIR, MIRROR_LIST, MIRROR_FILE, STATUS_FILE, REPO_ARCH
 from .custom_help_formatter import CustomHelpFormatter
@@ -80,7 +81,7 @@ class PacmanMirrors:
 
     @staticmethod
     def debug(where, what, value):
-        print("{} ´Function {}´ ´item {}´ is ´{}´".format(txt.DBG_CLR, where, what, value))
+        print("\n{} @Function {} -> Object {} = {}".format(txt.DBG_CLR, where, what, value))
 
     def command_line_parse(self):
         """Read the arguments of the command line"""
@@ -138,9 +139,10 @@ class PacmanMirrors:
             print("pacman-mirrors {}".format(__version__))
             exit(0)
 
-        if os.getuid() != 0:
-            print(".: {} {}".format(txt.ERR_CLR, txt.ERR_NOT_ROOT))
-            exit(1)
+        if not ENV:
+            if os.getuid() != 0:
+                print(".: {} {}".format(txt.ERR_CLR, txt.ERR_NOT_ROOT))
+                exit(1)
 
         if args.no_update:
             if self.config["no_update"] == "True":
@@ -382,12 +384,15 @@ class PacmanMirrors:
             else:
                 if not ValidFn.is_list_valid(self.config["only_country"], self.mirrors.countrylist):
                     self.config["only_country"] = []
+                self.only_country = self.config["only_country"]
 
         if not self.config["only_country"]:
             if self.geolocation:
                 country = ValidFn.is_geoip_valid(self.mirrors.countrylist)
                 if country:
                     self.only_country = [country]
+                else:
+                    self.only_country = self.mirrors.countrylist
             else:
                 self.only_country = self.mirrors.countrylist
 
