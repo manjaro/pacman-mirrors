@@ -26,6 +26,7 @@ class TestPacmanMirrors(unittest.TestCase):
 
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
+                                  "--quiet",
                                   "-m", "random"]):
             app = pacman_mirrors.PacmanMirrors()
             app.config = app.load_conf()
@@ -40,8 +41,8 @@ class TestPacmanMirrors(unittest.TestCase):
                 app.gen_mirror_list_common()
 
     @patch("os.getuid")
-    def test_run_country(self, mock_os_getuid):
-        """Single country via commandline"""
+    def test_country_commandline(self, mock_os_getuid):
+        """Single country from argument"""
         mock_os_getuid.return_value = 0
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
