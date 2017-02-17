@@ -24,13 +24,8 @@ class TestPacmanMirrors(unittest.TestCase):
         mock_os_getuid.return_value = 0
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
-                                  "-m", "random", "--quiet"]):
+                                  "-m", "random"]):
             app = pacman_mirrors.PacmanMirrors()
-            # if os.path.isfile(O_CUST_FILE):
-            #     app.CustomFn.convert_to_json()
-            # else:
-            #     app.FileFn.check_directory(MIRROR_DIR)
-            # app.manjaro_online = app.HttpFn.manjaro_online_update()
             app.config = app.load_conf()
             app.command_line_parse()
             app.load_mirror_file()
