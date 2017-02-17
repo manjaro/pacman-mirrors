@@ -384,14 +384,14 @@ class PacmanMirrors:
             else:
                 if not ValidFn.is_list_valid(self.config["only_country"], self.mirrors.countrylist):
                     self.config["only_country"] = []
-                self.only_country = self.config["only_country"]
-
+                else:
+                    self.only_country = self.config["only_country"]
         if not self.config["only_country"]:
             if self.geolocation:
                 country = ValidFn.is_geoip_valid(self.mirrors.countrylist)
-                if country:
+                if country:  # geoip ok
                     self.only_country = [country]
-                else:
+                else:  # validation fail
                     self.only_country = self.mirrors.countrylist
             else:
                 self.only_country = self.mirrors.countrylist
@@ -399,9 +399,7 @@ class PacmanMirrors:
     def validate_custom_config(self):
         """Check for custom config and validate it"""
         self.custom = ValidFn.is_custom_conf_valid(self.config["only_country"])
-        if not self.custom:
-            self.config["only_country"] = []
-        else:
+        if self.custom:
             servers = JsonFn.read_json_file(CUSTOM_FILE, dictionary=True)
             self.mirrors.seed(servers, custom=True)
             self.only_country = self.mirrors.countrylist
