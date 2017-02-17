@@ -21,7 +21,6 @@
 
 from operator import itemgetter
 from random import shuffle
-# from . import txt
 
 
 class Mirror:
