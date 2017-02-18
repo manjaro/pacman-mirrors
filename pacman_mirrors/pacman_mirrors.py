@@ -192,7 +192,6 @@ class PacmanMirrors:
             self.fasttrack = args.fasttrack
             self.config["only_country"] = []
             self.geolocation = False
-            self.interactive = False
 
     def gen_mirror_list_common(self):
         """Generate common mirrorlist"""

@@ -55,7 +55,7 @@ HLP_ARG_PATH = _("Mirrors list path")
 HLP_ARG_QUIET = _("Quiet mode - less verbose output")
 HLP_ARG_TIMEOUT = _("Maximum waiting time for server response")
 HLP_ARG_VERSION = _("Print the pacman-mirrors version")
-HLP_ARG_FASTTRACK = _("A quick mirrorlist. Overrides -m/-c/--geoip")
+HLP_ARG_FASTTRACK = _("A quick mirrorlist. Overrides -cim --geoip")
 # error messages
 ERR_DOWNLOAD_FAIL = _("Could not download from")
 ERR_FILE_READ = _("Cannot read file")
