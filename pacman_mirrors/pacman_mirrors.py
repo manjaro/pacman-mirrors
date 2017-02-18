@@ -32,7 +32,7 @@ from operator import itemgetter
 from pacman_mirrors import __version__
 from random import shuffle
 # CHANGE CONTENT IN configuration
-from .configuration import ENV, DESCRIPTION
+from .configuration import DEVELOPMENT, DESCRIPTION
 from .configuration import CONFIG_FILE, CUSTOM_FILE, FALLBACK, \
     MIRROR_DIR, MIRROR_LIST, MIRROR_FILE, STATUS_FILE, REPO_ARCH
 from .custom_help_formatter import CustomHelpFormatter
@@ -134,13 +134,13 @@ class PacmanMirrors:
             exit(0)
 
         if args.version:
-            if ENV:
+            if DEVELOPMENT:
                 print("pacman-mirrors {}".format(__version__) + DESCRIPTION)
             else:
                 print("pacman-mirrors {}".format(__version__))
             exit(0)
 
-        if not ENV:
+        if not DEVELOPMENT:
             if os.getuid() != 0:
                 print(".: {} {}".format(txt.ERR_CLR, txt.ERR_NOT_ROOT))
                 exit(1)
@@ -479,7 +479,7 @@ class PacmanMirrors:
         else:
             self.gen_mirror_list_common()
         # TODO: Eventually remove in production
-        if ENV:
+        if DEVELOPMENT:
             print("pacman-mirrors {}".format(__version__) + DESCRIPTION)
 if __name__ == "__main__":
     app = PacmanMirrors()
