@@ -73,7 +73,7 @@ class PacmanMirrors:
         self.manjaro_online = True
         self.no_display = False
         self.quiet = False
-        self.cli_installer = False
+        self.fasttrack = None
         # Time out
         self.max_wait_time = 2
         self.config = {}
@@ -128,6 +128,11 @@ class PacmanMirrors:
         parser.add_argument("-q", "--quiet",
                             action="store_true",
                             help=txt.HLP_ARG_QUIET)
+        # TODO: experimental arguments
+        parser.add_argument("--fasttrack",
+                            type=int,
+                            action="store_true")
+
         args = parser.parse_args()
 
         if len(sys.argv) == 1:
@@ -181,6 +186,9 @@ class PacmanMirrors:
 
         if args.country and not args.geoip:
             self.config["only_country"] = args.country.split(",")
+
+        if args.fasttrack:
+            self.fasttrack = args.fasttrack
 
     def gen_mirror_list_common(self):
         """Generate common mirrorlist"""
@@ -373,6 +381,21 @@ class PacmanMirrors:
             print(".: {} {}: {}: {}".format(txt.ERR_CLR, txt.ERR_FILE_WRITE, err.filename, err.strerror))
             exit(1)
 
+    def run_fast_track(self, number=5):
+        """Fast-track the mirrorlist by filtering mirrorlist"""
+        self.mirrors.mirrorlist = sorted(self.mirrors.mirrorlist, key=itemgetter("last_sync"))
+        fastlist = []
+        print("\n.: {}: {}\n".format(txt.INF_CLR, txt.INF_QUERY_SERVERS))
+        for x in range(number - 1):  # counter is zero based
+            mir = self.mirrors.mirrorlist[x]
+            res = HttpFn.fastcheck_mirror(mir["url"])
+            mir["resp_time"] = res
+            print(".: {}: {} {} {}".format(txt.INF_CLR, mir["last_sync"], res, mir["url"]))
+            fastlist.append(mir)
+        fastlist = sorted(fastlist, key=itemgetter("resp_time"))
+        self.output_mirror_list(fastlist, write_file=True)
+        print("\n.: {}: {}\n".format(txt.INF_CLR, txt.INF_MIRROR_LIST_SAVED))
+
     def validate_country_selection(self):
         """Do a check on the users country selection"""
         if self.config["only_country"]:
@@ -474,6 +497,9 @@ class PacmanMirrors:
         self.load_mirror_file()
         self.validate_custom_config()
         self.validate_country_selection()
+        if self.fasttrack:
+            self.run_fast_track()
+            exit(0)
         self.gen_server_lists()
         if self.interactive:
             self.gen_mirror_list_interactive()

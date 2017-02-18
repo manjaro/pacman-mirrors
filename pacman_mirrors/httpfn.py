@@ -27,6 +27,7 @@ from os import system as system_call
 from socket import timeout
 from urllib.error import URLError
 from urllib.request import urlopen
+from urllib.parse import urlparse
 from .configuration import FALLBACK, MIRROR_FILE, STATUS_FILE, URL_MIRROR_JSON, URL_STATUS_JSON
 from .filefn import FileFn
 from .jsonfn import JsonFn
@@ -36,7 +37,7 @@ from . import txt
 class HttpFn:
     """Http Function Class"""
     @staticmethod
-    def check_host_online(host, count=1):
+    def ping_host(host, count=1):
         """Check a hosts availability
         :rtype: boolean
         """
@@ -64,6 +65,20 @@ class HttpFn:
             else:
                 JsonFn.write_json_file(countries, MIRROR_FILE)
         return success
+
+    @staticmethod
+    def fastcheck_mirror(url):
+        """Fastcheck mirror using ping"""
+        host = urlparse(url).netloc
+        probe_start = time.time()
+        probe_stop = None
+        response_time = "99.99"
+        if HttpFn.ping_host(host, 3):
+            probe_stop = time.time()
+        if probe_stop:
+            calc = round((probe_stop - probe_start), 3)
+            response_time = str(format(calc, ".3f"))
+        return response_time
 
     @staticmethod
     def get_geoip_country():
@@ -120,7 +135,7 @@ class HttpFn:
     @staticmethod
     def manjaro_online_update():
         """Checking repo.manjaro.org"""
-        mjro_online = HttpFn.check_host_online("repo.manjaro.org", count=1)
+        mjro_online = HttpFn.ping_host("repo.manjaro.org", count=1)
         if mjro_online:
             print(".: {} {}".format(txt.INF_CLR, txt.INF_DOWNLOAD_MIRROR_FILE))
             HttpFn.download_mirrors(URL_MIRROR_JSON)
