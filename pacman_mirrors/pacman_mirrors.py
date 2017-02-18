@@ -134,7 +134,10 @@ class PacmanMirrors:
             exit(0)
 
         if args.version:
-            print("pacman-mirrors {}".format(__version__) + DESCRIPTION)
+            if ENV:
+                print("pacman-mirrors {}".format(__version__) + DESCRIPTION)
+            else:
+                print("pacman-mirrors {}".format(__version__))
             exit(0)
 
         if not ENV:
@@ -476,7 +479,8 @@ class PacmanMirrors:
         else:
             self.gen_mirror_list_common()
         # TODO: Eventually remove in production
-        print("pacman-mirrors {}".format(__version__) + DESCRIPTION)
+        if ENV:
+            print("pacman-mirrors {}".format(__version__) + DESCRIPTION)
 if __name__ == "__main__":
     app = PacmanMirrors()
     app.run()
