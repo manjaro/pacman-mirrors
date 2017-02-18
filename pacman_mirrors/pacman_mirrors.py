@@ -28,7 +28,7 @@ import importlib.util
 import sys
 import os
 import tempfile
-from operator import itemgetter
+from operator import itemgetter, attrgetter
 from pacman_mirrors import __version__
 from random import shuffle
 # CHANGE CONTENT IN configuration
@@ -130,8 +130,7 @@ class PacmanMirrors:
                             help=txt.HLP_ARG_QUIET)
         # TODO: experimental arguments
         parser.add_argument("--fasttrack",
-                            type=int,
-                            action="store_true")
+                            type=int)
 
         args = parser.parse_args()
 
@@ -383,18 +382,22 @@ class PacmanMirrors:
 
     def run_fast_track(self, number=5):
         """Fast-track the mirrorlist by filtering mirrorlist"""
-        self.mirrors.mirrorlist = sorted(self.mirrors.mirrorlist, key=itemgetter("last_sync"))
+        temp = sorted(self.mirrors.mirrorlist, key=itemgetter("branches", "last_sync"), reverse=True)
+        temp = sorted(temp, key=itemgetter("last_sync"), reverse=False)
         fastlist = []
-        print("\n.: {}: {}\n".format(txt.INF_CLR, txt.INF_QUERY_SERVERS))
-        for x in range(number - 1):  # counter is zero based
-            mir = self.mirrors.mirrorlist[x]
-            res = HttpFn.fastcheck_mirror(mir["url"])
-            mir["resp_time"] = res
-            print(".: {}: {} {} {}".format(txt.INF_CLR, mir["last_sync"], res, mir["url"]))
-            fastlist.append(mir)
+        print(".: {}: {}".format(txt.INF_CLR, txt.INF_QUERY_SERVERS))
+        for x in range(number):
+            mirror = temp[x]
+            res = HttpFn.get_mirror_response(mirror["url"])
+            if res == "99.99":
+                number += 1
+                continue
+            mirror["resp_time"] = res
+            print("   {}: {} {} {}".format(txt.INF_CLR, mirror["last_sync"], res, mirror["url"]))
+            fastlist.append(mirror)
         fastlist = sorted(fastlist, key=itemgetter("resp_time"))
         self.output_mirror_list(fastlist, write_file=True)
-        print("\n.: {}: {}\n".format(txt.INF_CLR, txt.INF_MIRROR_LIST_SAVED))
+        print(".: {}: {}".format(txt.INF_CLR, txt.INF_MIRROR_LIST_SAVED))
 
     def validate_country_selection(self):
         """Do a check on the users country selection"""
@@ -498,7 +501,7 @@ class PacmanMirrors:
         self.validate_custom_config()
         self.validate_country_selection()
         if self.fasttrack:
-            self.run_fast_track()
+            self.run_fast_track(self.fasttrack)
             exit(0)
         self.gen_server_lists()
         if self.interactive:

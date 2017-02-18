@@ -67,20 +67,6 @@ class HttpFn:
         return success
 
     @staticmethod
-    def fastcheck_mirror(url):
-        """Fastcheck mirror using ping"""
-        host = urlparse(url).netloc
-        probe_start = time.time()
-        probe_stop = None
-        response_time = "99.99"
-        if HttpFn.ping_host(host, 3):
-            probe_stop = time.time()
-        if probe_stop:
-            calc = round((probe_stop - probe_start), 3)
-            response_time = str(format(calc, ".3f"))
-        return response_time
-
-    @staticmethod
     def get_geoip_country():
         """Try to get the user country via GeoIP
         :return: country name or nothing
@@ -116,7 +102,7 @@ class HttpFn:
         probe_stop = None
         try:
             for _ in range(count):
-                urlopen(url + "state", timeout=maxwait)
+                urlopen(url, timeout=maxwait)
             probe_stop = time.time()
         except URLError as err:
             if hasattr(err, "reason"):
