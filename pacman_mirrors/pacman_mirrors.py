@@ -475,7 +475,8 @@ class PacmanMirrors:
             self.gen_mirror_list_interactive()
         else:
             self.gen_mirror_list_common()
-
+        # TODO: Eventually remove in production
+        print("pacman-mirrors {}".format(__version__) + DESCRIPTION)
 if __name__ == "__main__":
     app = PacmanMirrors()
     app.run()
