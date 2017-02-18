@@ -250,8 +250,6 @@ class PacmanMirrors:
             else:
                 print(".: {} {}".format(txt.WRN_CLR, txt.INF_NO_SELECTION))
                 print(".: {} {}".format(txt.WRN_CLR, txt.INF_NO_CHANGES))
-        else:
-            return
 
     def gen_server_lists(self):
         """Generate server lists"""
