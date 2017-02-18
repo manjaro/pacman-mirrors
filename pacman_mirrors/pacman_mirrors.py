@@ -129,8 +129,10 @@ class PacmanMirrors:
                             action="store_true",
                             help=txt.HLP_ARG_QUIET)
         # TODO: experimental arguments
-        parser.add_argument("--fasttrack",
-                            type=int)
+        parser.add_argument("-f", "--fasttrack",
+                            type=int,
+                            metavar=txt.DIGIT,
+                            help=txt.HLP_ARG_FASTTRACK)
 
         args = parser.parse_args()
 
@@ -188,6 +190,9 @@ class PacmanMirrors:
 
         if args.fasttrack:
             self.fasttrack = args.fasttrack
+            self.config["only_country"] = []
+            self.geolocation = False
+            self.interactive = False
 
     def gen_mirror_list_common(self):
         """Generate common mirrorlist"""
