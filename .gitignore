@@ -19,7 +19,7 @@ lib
 lib64
 
 # mock data files
-mock
+./mock/**/*
 
 # Installer logs
 pip-log.txt
