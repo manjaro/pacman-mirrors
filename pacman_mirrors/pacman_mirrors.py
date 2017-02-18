@@ -73,6 +73,7 @@ class PacmanMirrors:
         self.manjaro_online = True
         self.no_display = False
         self.quiet = False
+        self.cli_installer = False
         # Time out
         self.max_wait_time = 2
         self.config = {}
@@ -135,7 +136,7 @@ class PacmanMirrors:
 
         if args.version:
             if DEVELOPMENT:
-                print("pacman-mirrors {}".format(__version__) + DESCRIPTION)
+                print("{}pacman-mirrors {} {} {}".format(txt.YS, __version__, DESCRIPTION, txt.CE))
             else:
                 print("pacman-mirrors {}".format(__version__))
             exit(0)
@@ -480,7 +481,7 @@ class PacmanMirrors:
             self.gen_mirror_list_common()
         # TODO: Eventually remove in production
         if DEVELOPMENT:
-            print("pacman-mirrors {}".format(__version__) + DESCRIPTION)
+            print("{}pacman-mirrors {} {} {}".format(txt.YS, __version__, DESCRIPTION, txt.CE))
 if __name__ == "__main__":
     app = PacmanMirrors()
     app.run()
