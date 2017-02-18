@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 #
 # This file is part of pacman-mirrors.
 #
@@ -43,7 +43,7 @@ class Mirror:
             branches = [0, 0, 0]
         if country not in self.countrylist:
             self.countrylist.append(country)
-        # workaround for negative integer in status.json
+        # translate negative integer in status.json
         if last_sync == -1:
             last_sync = "9999:99"
             resp_time = "9999.99"
