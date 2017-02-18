@@ -116,7 +116,7 @@ class PacmanMirrors:
                             type=int,
                             metavar=txt.SECONDS,
                             help=txt.HLP_ARG_TIMEOUT)
-        parser.add_argument("--no_update",
+        parser.add_argument("--no-update",
                             action="store_true",
                             help=txt.HLP_ARG_NOUPDATE_P1 + txt.OPT_NOUPDATE +
                             txt.HLP_ARG_NOUPDATE_P2)
