@@ -15,16 +15,13 @@
 # You should have received a copy of the GNU General Public License
 # along with pacman-mirrors.  If not, see <http://www.gnu.org/licenses/>.
 #
-# Authors   : Esclapion
-#             philm
-#             Ramon Buldó <rbuldo@gmail.com>
-#             Hugo Posnic <huluti@manjaro.org>
-#             Frede Hundewadt <frede@hundewadt.dk>
+# Authors: Esclapion
+#          philm
+#          Ramon Buldó <rbuldo@gmail.com>
+#          Hugo Posnic <huluti@manjaro.org>
+#          Frede Hundewadt <frede@hundewadt.dk>
 
-"""
-Pacman-Mirrors
-Main Module
-"""
+"""Pacman-Mirrors Main Module"""
 
 import argparse
 import importlib.util

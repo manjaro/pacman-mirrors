@@ -17,10 +17,7 @@
 #
 # Authors: Frede Hundewadt <frede@hundewadt.dk>
 
-"""
-Pacman-Mirrors
-Console UI Module
-"""
+"""Pacman-Mirrors TUI Module"""
 
 from collections import namedtuple
 import npyscreen

@@ -18,10 +18,7 @@
 # Authors: Esclapion
 #          Hugo Posnic <huluti@manjaro.org>
 
-"""
-Pacman-Mirrors
-Graphical UI Module
-"""
+"""Pacman-Mirrors GUI Module"""
 
 import gi
 gi.require_version("Gtk", "3.0")

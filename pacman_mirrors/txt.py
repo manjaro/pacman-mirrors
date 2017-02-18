@@ -17,10 +17,7 @@
 #
 # Authors: Frede Hundewadt <frede@hundewadt.dk>
 
-"""
-Pacman-Mirrors
-Text Module
-"""
+"""Pacman-Mirrors Text Module"""
 
 from . import i18n
 
