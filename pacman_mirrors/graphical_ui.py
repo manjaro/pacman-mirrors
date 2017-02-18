@@ -36,10 +36,11 @@ _ = i18n.language.gettext
 class GraphicalUI(Gtk.Window):
     """Class GraphicalUI"""
     def __init__(self, server_list, random):
-        if not random:
-            Gtk.Window.__init__(self, title=txt.I_TITLE)
-        else:
+        if random:
             Gtk.Window.__init__(self, title=txt.I_TITLE_RANDOM)
+        else:
+            Gtk.Window.__init__(self, title=txt.I_TITLE)
+
         self.set_size_request(700, 350)
         self.set_border_width(10)
         self.set_position(Gtk.WindowPosition.CENTER)
