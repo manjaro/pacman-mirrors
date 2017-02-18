@@ -389,8 +389,7 @@ class PacmanMirrors:
         for x in range(number):
             mirror = temp[x]
             res = HttpFn.get_mirror_response(mirror["url"])
-            if res == "99.99":
-                number += 1
+            if res == txt.SERVER_RES:
                 continue
             mirror["resp_time"] = res
             print("   {}: {} {} {}".format(txt.INF_CLR, mirror["last_sync"], res, mirror["url"]))
