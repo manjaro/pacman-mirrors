@@ -20,7 +20,8 @@
 """Pacman-Mirrors Configuration"""
 
 # this is for runing in dev environment
-# TODO: set to none in production
+# TODO: CHANGE BELOW IN PRODUCTION
+DESCRIPTION = "BETA UNSTABLE"
 ENV = "dev"
 if ENV:
     # http constants
