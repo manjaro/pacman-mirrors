@@ -118,7 +118,7 @@ class HttpFn:
         return response_time
 
     @staticmethod
-    def manjaro_online_update():
+    def update_mirrors():
         """Checking repo.manjaro.org"""
         mjro_online = HttpFn.get_mirror_response("http://repo.manjaro.org")
         if mjro_online != "99.99":

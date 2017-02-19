@@ -21,7 +21,7 @@
 
 import os
 import tempfile
-from .configuration import O_CUST_FILE, CUSTOM_FILE
+from .configuration import CONFIG_FILE, CUSTOM_FILE, O_CUST_FILE
 from .jsonfn import JsonFn
 from . import txt
 
@@ -52,6 +52,14 @@ class CustomFn:
             # write new file
             JsonFn.write_json_file(mirrors, CUSTOM_FILE)
             CustomHelper.cleanup()
+
+    @staticmethod
+    def modify_config(onlycountry, custom=False):
+        """Modify configuration"""
+        if not custom:
+            if os.path.isfile(CUSTOM_FILE):
+                os.remove(CUSTOM_FILE)
+        CustomFn.write_custom_config(CONFIG_FILE, onlycountry, custom)
 
     @staticmethod
     def write_custom_config(filename, selection, custom=False):

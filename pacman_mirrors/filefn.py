@@ -21,7 +21,9 @@
 
 import os
 import datetime
+from .configuration import REPO_ARCH
 from .jsonfn import JsonFn
+from .miscfn import MiscFn
 from . import txt
 
 
@@ -37,6 +39,41 @@ class FileFn:
     def dir_must_exist(dir_name):
         """Check necessary directory"""
         os.makedirs(dir_name, mode=0o755, exist_ok=True)
+
+    @staticmethod
+    def output_mirror_list(branch, mirrorlistfile, servers, quiet):
+        """Write servers to /etc/pacman.d/mirrorlist
+        :param: servers: list of servers to write
+        """
+        try:
+            with open(mirrorlistfile, "w") as outfile:
+                print(".: {} {}".format(txt.INF_CLR, txt.INF_MIRROR_LIST_WRITE))
+                # write list header
+                FileFn.write_mirrorlist_header(outfile)
+                for server in servers:
+                    url = server["url"]
+                    for protocol in enumerate(server["protocols"]):
+                        pos = url.find(":")
+                        server["url"] = "{}{}{}{}".format(protocol[1],
+                                                          url[pos:],
+                                                          branch,
+                                                          REPO_ARCH)
+                        # write list entry
+                        FileFn.write_mirrorlist_entry(outfile, server)
+                        if not quiet:
+                            print("   {}{:<15}{} : {}".format(txt.YS,
+                                                              server["country"],
+                                                              txt.CE,
+                                                              server["url"]))
+                print(".: {} {}: {}".format(txt.INF_CLR,
+                                            txt.INF_MIRROR_LIST_SAVED,
+                                            mirrorlistfile))
+        except OSError as err:
+            print(".: {} {}: {}: {}".format(txt.ERR_CLR,
+                                            txt.ERR_FILE_WRITE,
+                                            err.filename,
+                                            err.strerror))
+            exit(1)
 
     @staticmethod
     def read_mirror_file(filename):

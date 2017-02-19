@@ -20,6 +20,7 @@
 """Pacman-Mirror Mirror Functions"""
 
 from .httpfn import HttpFn
+from .miscfn import MiscFn
 from .validfn import ValidFn
 
 
@@ -67,6 +68,7 @@ class MirrorFn:
         :param countrylist:
         :rtype: list
         """
+
         result = []
         for mirror in mirrorlist:
             if mirror["country"] in countrylist:

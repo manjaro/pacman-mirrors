@@ -27,4 +27,4 @@ class MiscFn:
 
     @staticmethod
     def debug(where, what, value):
-        print("{} @Function {} -> Object {} = {}".format(txt.DBG_CLR, where, what, value))
+        print("{} In function {} -> '{} = {}'".format(txt.DBG_CLR, where, what, value))
