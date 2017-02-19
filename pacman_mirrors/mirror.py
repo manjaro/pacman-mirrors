@@ -19,9 +19,6 @@
 
 """Pacman-Mirrors Mirror"""
 
-from operator import itemgetter
-from random import shuffle
-
 
 class Mirror:
     """Mirror Class"""
