@@ -235,7 +235,9 @@ class PacmanMirrors:
             from . import consoleui as ui
         else:
             from . import graphical_ui as ui
+
         interactive = ui.run(interactive_list, random)
+
         if interactive.is_done:
             selected = []
             mirrorfile = []
@@ -411,9 +413,7 @@ class PacmanMirrors:
             elif ["all"] == self.config["only_country"]:
                 self.config["only_country"] = []  # reset to default
             else:
-                if not ValidFn.is_list_valid(self.config["only_country"], self.mirrors.countrylist):
-                    self.config["only_country"] = []  # validation fail
-                else:
+                if ValidFn.is_selection_valid(self.config["only_country"], self.mirrors.countrylist):
                     self.only_country = self.config["only_country"]
 
         if not self.config["only_country"]:
@@ -428,7 +428,7 @@ class PacmanMirrors:
 
     def validate_custom_config(self):
         """Check for custom config and validate it"""
-        self.custom = ValidFn.is_custom_conf_valid(self.config["only_country"])
+        self.custom = ValidFn.is_custom_config_valid(self.config["only_country"])
         if self.custom:
             # read custom file
             servers = JsonFn.read_json_file(CUSTOM_FILE, dictionary=True)
