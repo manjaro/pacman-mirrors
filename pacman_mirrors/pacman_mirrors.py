@@ -300,11 +300,15 @@ class PacmanMirrors:
                 FileFn.output_mirror_list(self.config["branch"],
                                           self.config["mirror_list"],
                                           worklist,
-                                          self.quiet)
+                                          custom=True,
+                                          quiet=self.quiet)
                 # output custom configuration
                 self.config["only_country"] = ["Custom"]
                 CustomFn.modify_config(self.config["only_country"], custom=True)
-                print(".: {} {}: {}".format(txt.INF_CLR, txt.INF_INTERACTIVE_LIST_SAVED, CUSTOM_FILE))
+                print(".: {} {}: {}".format(txt.INF_CLR,
+                                            txt.INF_INTERACTIVE_LIST_SAVED,
+                                            CUSTOM_FILE))
+                print(".: {} {}".format(txt.INF_CLR, txt.INF_RESET_CUSTOM_CONFIG))
             else:
                 print(".: {} {}".format(txt.WRN_CLR, txt.INF_NO_SELECTION))
                 print(".: {} {}".format(txt.INF_CLR, txt.INF_NO_CHANGES))
@@ -322,11 +326,13 @@ class PacmanMirrors:
         """Load mirrors"""
         self.selected_countries = self.config["only_country"]
         # decision on custom or default
-        if self.config["only_country"] == ["Custom"]:
+        if ValidFn.custom_config_is_valid():
             self.custom = True
             self.load_custom_mirrors()
-            # assign countrylist
-            self.selected_countries = self.mirrors.countrylist
+            if self.config["only_country"] == ["Custom"]:
+                self.selected_countries = self.mirrors.countrylist
+            else:
+                self.selected_countries = self.config["only_country"]
         else:
             self.load_default_mirrors()
         # build country list
@@ -335,13 +341,8 @@ class PacmanMirrors:
                                                               self.geoip)
 
     def load_custom_mirrors(self):
-        """Load custom mirror file"""
-        valid = ValidFn.custom_config_is_valid()
-        # decision on validity of custom config
-        if valid:
-            servers = FileFn.read_mirror_file(CUSTOM_FILE)
-            # seed mirror object
-            self.mirrors.seed(servers)
+        servers = FileFn.read_mirror_file(CUSTOM_FILE)
+        self.mirrors.seed(servers)
 
     def load_default_mirrors(self):
         """Load default mirror file"""
@@ -385,11 +386,10 @@ class PacmanMirrors:
                                   self.config["mirror_list"],
                                   ftlist,
                                   self.quiet)
-        print(".: {}: {}".format(txt.INF_CLR, txt.INF_MIRROR_LIST_SAVED))
 
     def test_mirror_list(self):
         """Query server for response time"""
-        if self.config["only_country"] == ["Custom"]:
+        if self.custom:
             print(".: {} {}".format(txt.INF_CLR, txt.INF_QUERY_SERVERS))
             print(".: {} {}".format(txt.INF_CLR, txt.INF_QUERY_CUSTOM_FILE))
         else:

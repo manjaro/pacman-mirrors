@@ -41,7 +41,7 @@ class FileFn:
         os.makedirs(dir_name, mode=0o755, exist_ok=True)
 
     @staticmethod
-    def output_mirror_list(branch, mirrorlistfile, servers, quiet):
+    def output_mirror_list(branch, mirrorlistfile, servers, custom=False, quiet=False):
         """Write servers to /etc/pacman.d/mirrorlist
         :param: servers: list of servers to write
         """
@@ -49,7 +49,7 @@ class FileFn:
             with open(mirrorlistfile, "w") as outfile:
                 print(".: {} {}".format(txt.INF_CLR, txt.INF_MIRROR_LIST_WRITE))
                 # write list header
-                FileFn.write_mirrorlist_header(outfile)
+                FileFn.write_mirrorlist_header(outfile, custom=custom)
                 for server in servers:
                     url = server["url"]
                     for protocol in enumerate(server["protocols"]):
