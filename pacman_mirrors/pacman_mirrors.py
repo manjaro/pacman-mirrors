@@ -41,6 +41,7 @@ from .httpfn import HttpFn
 from .jsonfn import JsonFn
 from .mirror import Mirror
 from .mirrorfn import MirrorFn
+from .miscfn import MiscFn
 from .validfn import ValidFn
 from . import i18n
 from . import txt
@@ -73,10 +74,9 @@ class PacmanMirrors:
         # Time out
         self.max_wait_time = 2
         self.config = {}
-        self.rank = True
 
     @staticmethod
-    def build_configuration():
+    def build_config():
         """Get config informations"""
         # initialising defaults
         # information which can differ from these defaults
@@ -335,32 +335,19 @@ class PacmanMirrors:
 
     def load_default_mirrors(self):
         """Load default mirror file"""
-        seed_status = False  # status.json or mirrors.json
+        seeds = False  # status.json or mirrors.json
         if FileFn.check_file(STATUS_FILE):
-            seed_status = True
+            seeds = True
             file = STATUS_FILE
         elif FileFn.check_file(MIRROR_FILE):
             file = MIRROR_FILE
         else:
             file = FALLBACK
-        servers = FileFn.read_mirror_file(file)
-        if seed_status:
-            self.mirrors.seed(servers, status=True)
+        mirrors = FileFn.read_mirror_file(file)
+        if seeds:
+            self.mirrors.seed(mirrors, status=True)
         else:
-            self.mirrors.seed(servers)
-
-    def mirror_to_server_list(self, mirror):
-        """Append mirror to relevant list based on elapsed hours
-        :param: mirror: object
-        :param: last_sync: mirror last sync
-        """
-        elapsed_hours = int(mirror["last_sync"][:-3])
-        if elapsed_hours <= int(txt.LASTSYNC_OK[:-3]):
-            self.good_servers.append(mirror)
-        elif elapsed_hours <= int(txt.LASTSYNC_NA[:-3]):
-            self.resp_servers.append(mirror)
-        elif elapsed_hours == int(txt.SERVER_BAD[:-3]):
-            self.bad_servers.append(mirror)
+            self.mirrors.seed(mirrors)
 
     def modify_config(self, custom=False):
         """Modify configuration"""
@@ -436,9 +423,9 @@ class PacmanMirrors:
 
     def run(self):
         """Run"""
-        self.config = self.build_configuration()
-        self.command_line_parse()
         FileFn.dir_must_exist(MIRROR_DIR)
+        self.config = self.build_config()
+        self.command_line_parse()
         self.manjaro_online = HttpFn.manjaro_online_update()
         self.load_all_mirrors()
         # actual generation
