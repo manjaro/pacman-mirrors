@@ -20,19 +20,38 @@
 """Pacman-Mirror Mirror Functions"""
 
 import datetime
+from random import shuffle
 from .jsonfn import JsonFn
-from .mirror import Mirror
 
 
 class MirrorFn:
     """Mirror Functions"""
 
     @staticmethod
-    def load_mirror_file(filename):
+    def rand_mirrorlist(mirrorlist):
+        """Shuffle mirrorlist"""
+        temp = shuffle(mirrorlist)
+        return temp
+
+    @staticmethod
+    def read_mirror_file(filename):
         """Load mirror file
         :returns: list of mirrors
         """
         return JsonFn.read_json_file(filename, dictionary=True)
+
+    @staticmethod
+    def filter_mirror_list(mirrorlist, countrylist):
+        """Return new list with selection
+        :param mirrorlist:
+        :param countrylist:
+        :rtype: list
+        """
+        result = []
+        for mirror in mirrorlist:
+            if mirror["country"] in countrylist:
+                result.append(mirror)
+        return result
 
     @staticmethod
     def write_mirrorlist_header(handle, custom=False):
