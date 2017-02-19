@@ -10,7 +10,8 @@ Tests for `pacman-mirrors` module.
 import unittest
 from unittest.mock import patch
 
-from pacman_mirrors.mirrorfn import MirrorFn
+from pacman_mirrors.httpfn import HttpFn
+from pacman_mirrors.pacman_mirrors import PacmanMirrors
 
 
 class TestPacmanMirrors(unittest.TestCase):
@@ -19,13 +20,77 @@ class TestPacmanMirrors(unittest.TestCase):
         """Setup tests"""
         pass
 
-    # @patch.object(MirrorFn, "build_country_list")
-    # def test_build_list(self, mock_country_list):
-    #     """TEST: Build country list"""
-    #     mock_onlycountry = ["all"]
-    #     mock_countrylist = ["Denmark", "France", "Austria"]
-    #     assert MirrorFn.build_country_list(
-    #         mock_onlycountry, mock_countrylist) == ["Denmark", "France", "Austria"]
+    @patch("os.getuid")
+    def test_run(self, mock_os_getuid):
+        """Run pacman-mirrors"""
+        mock_os_getuid.return_value = 0
+        with unittest.mock.patch("sys.argv",
+                                 ["pacman-mirrors",
+                                  "-g",
+                                  "-m", "random"]):
+            app = PacmanMirrors()
+            app.config = app.build_config()
+            app.command_line_parse()
+            app.load_all_mirrors()
+            # actual generation
+            if app.fasttrack:
+                app.run_fast_track(app.fasttrack)
+            else:
+                app.generate_server_lists()
+                if app.interactive:
+                    app.run_mirror_list_interactive()
+                else:
+                    app.run_mirror_list_common()
+
+    @patch("os.getuid")
+    def test_run_country(self, mock_os_getuid):
+        """Single country via commandline"""
+        mock_os_getuid.return_value = 0
+        with unittest.mock.patch("sys.argv",
+                                 ["pacman-mirrors",
+                                  "-g",
+                                  "-c", "Germany"]):
+            app = PacmanMirrors()
+            app.config = app.build_config()
+            app.command_line_parse()
+            app.load_all_mirrors()
+
+            assert app.config["only_country"] == ["Germany"]
+
+    @patch("os.getuid")
+    @patch.object(HttpFn, "get_geoip_country")
+    def test_geoip_is_available(self, mock_geoip, mock_os_getuid):
+        """Geoip mirror country IS avaiable"""
+        mock_os_getuid.return_value = 0
+        mock_geoip.return_value = "France"
+        with unittest.mock.patch("sys.argv",
+                                 ["pacman-mirrors",
+                                  "-g",
+                                  "--geoip"]):
+            app = PacmanMirrors()
+            app.config = app.build_config()
+            app.command_line_parse()
+            app.load_all_mirrors()
+
+            assert app.config["only_country"] == ["France"]
+
+    @patch("os.getuid")
+    @patch.object(HttpFn, "get_geoip_country")
+    def test_geoip_not_available(self, mock_geoip, mock_os_getuid):
+        """Geoip mirror country IS NOT available"""
+        mock_os_getuid.return_value = 0
+        mock_geoip.return_value = "Antarctica"
+        with unittest.mock.patch("sys.argv",
+                                 ["pacman-mirrors",
+                                  "-g",
+                                  "--geoip"]):
+            app = PacmanMirrors()
+            app.config = app.build_config()
+            app.command_line_parse()
+            app.load_all_mirrors()
+            app.config["only_country"] = []
+
+            assert app.config["only_country"] == app.mirrors.countrylist
 
     def tearDown(self):
         """Tear down"""
