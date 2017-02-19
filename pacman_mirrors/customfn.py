@@ -20,6 +20,7 @@
 """Pacman-Mirrors Custom Functions"""
 
 import os
+import tempfile
 from .configuration import O_CUST_FILE, CUSTOM_FILE
 from .jsonfn import JsonFn
 from . import txt
@@ -51,6 +52,42 @@ class CustomFn:
             # write new file
             JsonFn.write_json_file(mirrors, CUSTOM_FILE)
             CustomHelper.cleanup()
+
+    @staticmethod
+    def write_custom_config(filename, selection, custom=False):
+        """Writes the configuration to file
+        :param filename:
+        :param selection:
+        :param custom:
+        """
+        if custom:
+            if selection == ["Custom"]:
+                new_config = "OnlyCountry = Custom\n"
+            else:
+                new_config = "OnlyCountry = {list}\n".format(
+                    list=",".join(selection))
+        else:
+            new_config = "# OnlyCountry = \n"
+        try:
+            with open(
+                filename) as cnf, tempfile.NamedTemporaryFile(
+                "w+t", dir=os.path.dirname(
+                    filename), delete=False) as tmp:
+                replaced = False
+                for line in cnf:
+                    if "OnlyCountry" in line:
+                        tmp.write(new_config)
+                        replaced = True
+                    else:
+                        tmp.write("{}".format(line))
+                if not replaced:
+                    tmp.write(new_config)
+            os.replace(tmp.name, filename)
+            os.chmod(filename, 0o644)
+        except OSError as err:
+            print(".: {} {}: {}: {}".format(txt.ERR_CLR, txt.ERR_FILE_READ,
+                                            err.filename, err.strerror))
+            exit(1)
 
 
 class CustomHelper:
