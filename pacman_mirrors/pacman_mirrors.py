@@ -235,22 +235,22 @@ class PacmanMirrors:
 
     def run_mirror_list_common(self):
         """Generate common mirrorlist"""
-        args_c = self.config["only_country"] != self.mirrors.mirrorlist
+        worklist = MirrorFn.filter_mirror_list(self.mirrors.mirrorlist,
+                                               self.selected_countries)
         if self.config["method"] == "random":
-            shuffle(self.mirrors.mirrorlist)
+            shuffle(worklist)
         else:
-            templist = sorted(self.mirrors.mirrorlist, key=itemgetter("resp_time"))
-            templist = MirrorFn.filter_mirror_list(templist,
-                                                   self.config["only_country"])
-            FileFn.output_mirror_list(self.config["branch"],
-                                      self.config["mirror_list"],
-                                      templist,
-                                      self.quiet)
-            if self.custom or args_c:
-                CustomFn.modify_config(self.config["only_country"],
-                                       custom=True)
-            else:
-                CustomFn.modify_config(self.config["only_country"])
+            worklist = sorted(worklist, key=itemgetter("resp_time"))
+
+        FileFn.output_mirror_list(self.config["branch"],
+                                  self.config["mirror_list"],
+                                  worklist,
+                                  self.quiet)
+        if self.custom or self.config["only_country"] != self.mirrors.mirrorlist:
+            CustomFn.modify_config(self.config["only_country"],
+                                   custom=True)
+        else:
+            CustomFn.modify_config(self.config["only_country"])
 
     def run_mirror_list_interactive(self):
         """Prompt the user to select the mirrors with a gui.
@@ -258,22 +258,19 @@ class PacmanMirrors:
         * Outputs a "custom" mirror file
         * Modify the configuration file to use the "custom" file.
         """
-        random = self.config["method"] == "random"
-        mirrorlist = []
         interactive_list = []
-        for country in self.selected_countries:
-            for mirror in self.mirrors.mirrorlist:
-                if country == mirror["country"]:
-                    mirrorlist.append(mirror)
-                    interactive_list.append({
-                        "country": mirror["country"],
-                        "resp_time": mirror["resp_time"],
-                        "last_sync": mirror["last_sync"],
-                        "url": mirror["url"]
-                    })
-                    interactive_list = sorted(interactive_list, key=itemgetter("resp_time"))
-                    if random:
-                        shuffle(interactive_list)
+        worklist = MirrorFn.filter_mirror_list(self.mirrors.mirrorlist, countrylist)
+        for mirror in worklist:
+            interactive_list.append({
+                "country": mirror["country"],
+                "resp_time": mirror["resp_time"],
+                "last_sync": mirror["last_sync"],
+                "url": mirror["url"]
+            })
+        if self.config["method"] == "random":
+            shuffle(interactive_list)
+        else:
+            interactive_list = sorted(interactive_list, key=itemgetter("resp_time"))
         if self.no_display:
             from . import consoleui as ui
         else:
@@ -300,14 +297,17 @@ class PacmanMirrors:
                 JsonFn.write_json_file(mirrorfile, CUSTOM_FILE)
                 print(".: {} {}: {}".format(txt.INF_CLR, txt.INF_MIRROR_FILE_SAVED, CUSTOM_FILE))
                 # output pacman mirrorlist
-                self.output_mirror_list(selected)
+                FileFn.output_mirror_list(self.config["branch"],
+                                          self.config["mirror_list"],
+                                          worklist,
+                                          self.quiet)
                 # output custom configuration
                 self.config["only_country"] = ["Custom"]
-                self.modify_config(self.config["only_country"], custom=True)
+                CustomFn.modify_config(self.config["only_country"], custom=True)
                 print(".: {} {}: {}".format(txt.INF_CLR, txt.INF_INTERACTIVE_LIST_SAVED, CUSTOM_FILE))
             else:
                 print(".: {} {}".format(txt.WRN_CLR, txt.INF_NO_SELECTION))
-                print(".: {} {}".format(txt.WRN_CLR, txt.INF_NO_CHANGES))
+                print(".: {} {}".format(txt.INF_CLR, txt.INF_NO_CHANGES))
 
     def generate_server_lists(self):
         """Generate server lists"""
@@ -426,7 +426,10 @@ class PacmanMirrors:
 
         # # TODO: Eventually remove in production
         if DEVELOPMENT:
-            print("{}pacman-mirrors {} {} {}".format(txt.YS, __version__, DESCRIPTION, txt.CE))
+            print("{}.:! Pacman-Mirrors {} - {} {}".format(txt.YS,
+                                                           __version__,
+                                                           DESCRIPTION,
+                                                           txt.CE))
 
 
 if __name__ == "__main__":

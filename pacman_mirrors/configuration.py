@@ -22,7 +22,7 @@
 # this is for runing in dev environment
 # TODO: CHANGE BELOW IN PRODUCTION
 DEVELOPMENT = "dev"
-DESCRIPTION = "BETA UNSTABLE"
+DESCRIPTION = "unstable development"
 if DEVELOPMENT:
     # http constants
     URL_MIRROR_JSON = "http://repo.manjaro.org/mirrors.json"
