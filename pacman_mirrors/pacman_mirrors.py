@@ -36,6 +36,7 @@ from .configuration import DEVELOPMENT, DESCRIPTION
 from .configuration import CONFIG_FILE, CUSTOM_FILE, FALLBACK, \
     MIRROR_DIR, MIRROR_LIST, MIRROR_FILE, STATUS_FILE, REPO_ARCH
 from .custom_help_formatter import CustomHelpFormatter
+from .customfn import CustomFn
 from .filefn import FileFn
 from .httpfn import HttpFn
 from .jsonfn import JsonFn
@@ -355,7 +356,7 @@ class PacmanMirrors:
             # remove custom mirror file
             if os.path.isfile(CUSTOM_FILE):
                 os.remove(CUSTOM_FILE)
-        self.write_custom_config(CONFIG_FILE, self.config["only_country"], custom)
+        CustomFn.write_custom_config(CONFIG_FILE, self.config["only_country"], custom)
 
     def output_mirror_list(self, servers, write_file=False):
         """Write servers to /etc/pacman.d/mirrorlist
@@ -404,28 +405,6 @@ class PacmanMirrors:
         self.output_mirror_list(fastlist, write_file=True)
         print(".: {}: {}".format(txt.INF_CLR, txt.INF_MIRROR_LIST_SAVED))
 
-    def validate_country_selection(self):
-        """Do a check on the users country selection"""
-        if self.config["only_country"]:
-            if ["Custom"] == self.config["only_country"]:
-                self.validate_custom_config()
-
-            elif ["all"] == self.config["only_country"]:
-                self.config["only_country"] = []  # reset to default
-            else:
-                if ValidFn.is_selection_valid(self.config["only_country"], self.mirrors.countrylist):
-                    self.only_country = self.config["only_country"]
-
-        if not self.config["only_country"]:
-            if self.geolocation:
-                country = ValidFn.is_geoip_valid(self.mirrors.countrylist)
-                if country:  # geoip ok
-                    self.only_country = [country]
-                else:  # validation fail
-                    self.only_country = self.mirrors.countrylist
-            else:
-                self.only_country = self.mirrors.countrylist
-
     def validate_custom_config(self):
         """Check for custom config and validate it"""
         self.custom = ValidFn.is_custom_config_valid(self.config["only_country"])
@@ -458,42 +437,6 @@ class PacmanMirrors:
                         continue
                     print("\r   {:<5}{}{} ".format(txt.GS, resp_time, txt.CE))
 
-    @staticmethod
-    def write_custom_config(filename, selection, custom=False):
-        """Writes the configuration to file
-        :param filename:
-        :param selection:
-        :param custom:
-        """
-        if custom:
-            if selection == ["Custom"]:
-                new_config = "OnlyCountry = Custom\n"
-            else:
-                new_config = "OnlyCountry = {list}\n".format(
-                    list=",".join(selection))
-        else:
-            new_config = "# OnlyCountry = \n"
-        try:
-            with open(
-                filename) as cnf, tempfile.NamedTemporaryFile(
-                "w+t", dir=os.path.dirname(
-                    filename), delete=False) as tmp:
-                replaced = False
-                for line in cnf:
-                    if "OnlyCountry" in line:
-                        tmp.write(new_config)
-                        replaced = True
-                    else:
-                        tmp.write("{}".format(line))
-                if not replaced:
-                    tmp.write(new_config)
-            os.replace(tmp.name, filename)
-            os.chmod(filename, 0o644)
-        except OSError as err:
-            print(".: {} {}: {}: {}".format(txt.ERR_CLR, txt.ERR_FILE_READ,
-                                            err.filename, err.strerror))
-            exit(1)
-
     def run(self):
         """Run"""
         self.config = self.load_conf()
@@ -514,6 +457,8 @@ class PacmanMirrors:
         # TODO: Eventually remove in production
         if DEVELOPMENT:
             print("{}pacman-mirrors {} {} {}".format(txt.YS, __version__, DESCRIPTION, txt.CE))
+
+
 if __name__ == "__main__":
     app = PacmanMirrors()
     app.run()
