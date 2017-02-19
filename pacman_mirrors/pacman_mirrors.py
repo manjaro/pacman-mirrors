@@ -27,7 +27,7 @@ import argparse
 import importlib.util
 import sys
 import os
-from operator import itemgetter, attrgetter
+from operator import itemgetter
 from pacman_mirrors import __version__
 from random import shuffle
 # CHANGE CONTENT IN configuration
