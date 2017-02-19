@@ -48,7 +48,9 @@ class ValidFn:
                                           txt.INF_CUSTOM_MIRROR_FILE,
                                           CUSTOM_FILE,
                                           txt.INF_DOES_NOT_EXIST))
-            print(".: {} {}".format(txt.INF_CLR, txt.INF_QUERY_ALL_SERVERS))
+            print(".: {} {}: {}".format(txt.INF_CLR,
+                                        txt.INF_FALLING_BACK,
+                                        txt.INF_USING_ALL_SERVERS))
             return False
 
     @staticmethod

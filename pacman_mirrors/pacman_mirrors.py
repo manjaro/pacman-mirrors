@@ -330,6 +330,8 @@ class PacmanMirrors:
     def load_all_mirrors(self):
         """Load mirrors"""
         self.selected_countries = self.config["only_country"]
+        if self.selected_countries == ["all"]:
+            self.config["only_country"] = []
         # decision on custom or default
         if ValidFn.custom_config_is_valid():
             self.custom = True

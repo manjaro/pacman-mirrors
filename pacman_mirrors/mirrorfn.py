@@ -20,7 +20,6 @@
 """Pacman-Mirror Mirror Functions"""
 
 from .httpfn import HttpFn
-from .miscfn import MiscFn
 from .validfn import ValidFn
 
 
