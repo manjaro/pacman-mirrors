@@ -320,6 +320,11 @@ class PacmanMirrors:
             self.test_mirror_list()
         else:
             print(".: {} {}".format(txt.INF_CLR, txt.INF_RANDOMIZE_SERVERS))
+        if self.custom:
+            print(".: {} {}".format(txt.INF_CLR, txt.INF_QUERY_CUSTOM_FILE))
+        else:
+            print(".: {} {}".format(txt.INF_CLR, txt.INF_QUERY_DEFAULT_FILE))
+
             shuffle(self.mirrors.mirrorlist)
 
     def load_all_mirrors(self):
@@ -389,11 +394,10 @@ class PacmanMirrors:
 
     def test_mirror_list(self):
         """Query server for response time"""
+        print(".: {} {}".format(txt.INF_CLR, txt.INF_QUERY_SERVERS))
         if self.custom:
-            print(".: {} {}".format(txt.INF_CLR, txt.INF_QUERY_SERVERS))
             print(".: {} {}".format(txt.INF_CLR, txt.INF_QUERY_CUSTOM_FILE))
         else:
-            print(".: {} {}".format(txt.INF_CLR, txt.INF_QUERY_SERVERS))
             print(".: {} {}".format(txt.INF_CLR, txt.INF_QUERY_DEFAULT_FILE))
 
         for country in self.selected_countries:
