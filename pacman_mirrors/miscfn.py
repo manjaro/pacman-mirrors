@@ -19,7 +19,12 @@
 
 """Pacman-Mirrors Niscellaneous Functions"""
 
+from . import txt
+
 
 class MiscFn:
     """Niscellaneous Functions"""
 
+    @staticmethod
+    def debug(where, what, value):
+        print("{} @Function {} -> Object {} = {}".format(txt.DBG_CLR, where, what, value))

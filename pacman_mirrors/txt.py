@@ -97,6 +97,7 @@ INF_QUERY_CUSTOM_FILE = _("Using custom mirror file")
 INF_QUERY_DEFAULT_FILE = _("Using default mirror file")
 INF_QUERY_WRONG_DATE_FORMAT = _("Wrong date format in state file")
 INF_RANDOMIZE_SERVERS = _("Randomizing server list")
+INF_RESET_CUSTOM_CONFIG = _("To reset custom config run `pacman-mirrors -c all`")
 INF_UNKNOWN_COUNTRY = _("unknown country")
 INF_USING_ALL_SERVERS = _("Using all servers")
 # interactive messages

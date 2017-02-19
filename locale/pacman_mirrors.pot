@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pacman-mirrors 3.3.0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2017-02-18 20:28+0100\n"
+"POT-Creation-Date: 2017-02-19 15:11+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -111,7 +111,7 @@ msgid "Print the pacman-mirrors version"
 msgstr ""
 
 #: pacman_mirrors/txt.py:58
-msgid "A quick mirrorlist. Overrides -m/-c/--geoip"
+msgid "A quick mirrorlist. Overrides -cim --geoip"
 msgstr ""
 
 #: pacman_mirrors/txt.py:60
@@ -271,58 +271,62 @@ msgid "Randomizing server list"
 msgstr ""
 
 #: pacman_mirrors/txt.py:100
-msgid "unknown country"
+msgid "To reset custom config run `pacman-mirrors -c all`"
 msgstr ""
 
 #: pacman_mirrors/txt.py:101
+msgid "unknown country"
+msgstr ""
+
+#: pacman_mirrors/txt.py:102
 msgid "Using all servers"
 msgstr ""
 
-#: pacman_mirrors/txt.py:103
+#: pacman_mirrors/txt.py:104
 msgid "Manjaro mirrors by response time"
 msgstr ""
 
-#: pacman_mirrors/txt.py:104
+#: pacman_mirrors/txt.py:105
 msgid "Manjaro mirrors in random order"
 msgstr ""
 
-#: pacman_mirrors/txt.py:105
+#: pacman_mirrors/txt.py:106
 msgid "Check mirrors for your personal list"
 msgstr ""
 
-#: pacman_mirrors/txt.py:106
+#: pacman_mirrors/txt.py:107
 msgid "Use"
 msgstr ""
 
-#: pacman_mirrors/txt.py:107
+#: pacman_mirrors/txt.py:108
 msgid "Country"
 msgstr ""
 
-#: pacman_mirrors/txt.py:108
+#: pacman_mirrors/txt.py:109
 msgid "Resp"
 msgstr ""
 
-#: pacman_mirrors/txt.py:109
+#: pacman_mirrors/txt.py:110
 msgid "Sync"
 msgstr ""
 
-#: pacman_mirrors/txt.py:110
+#: pacman_mirrors/txt.py:111
 msgid "URL"
 msgstr ""
 
-#: pacman_mirrors/txt.py:111
+#: pacman_mirrors/txt.py:112
 msgid "Cancel"
 msgstr ""
 
-#: pacman_mirrors/txt.py:112
+#: pacman_mirrors/txt.py:113
 msgid "OK"
 msgstr ""
 
-#: pacman_mirrors/txt.py:113
+#: pacman_mirrors/txt.py:114
 msgid "Confirm selections"
 msgstr ""
 
-#: pacman_mirrors/txt.py:114
+#: pacman_mirrors/txt.py:115
 msgid "I want to use these mirrors"
 msgstr ""
 

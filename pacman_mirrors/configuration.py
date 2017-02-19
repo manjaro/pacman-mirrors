@@ -31,7 +31,7 @@ if DEVELOPMENT:
     CONFIG_FILE = "mock/etc/pacman-mirrors.conf"
     MIRROR_LIST = "mock/etc/mirrorlist"
     # pacman-mirrors
-    MIRROR_DIR = "mock/var/pacman-mirrors/"
+    MIRROR_DIR = "mock/var/"
     CUSTOM_FILE = MIRROR_DIR + "custom-mirrors.json"
     MIRROR_FILE = MIRROR_DIR + "mirrors.json"
     STATUS_FILE = MIRROR_DIR + "status.json"

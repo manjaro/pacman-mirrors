@@ -121,8 +121,8 @@ class HttpFn:
     @staticmethod
     def manjaro_online_update():
         """Checking repo.manjaro.org"""
-        mjro_online = HttpFn.ping_host("repo.manjaro.org", count=1)
-        if mjro_online:
+        mjro_online = HttpFn.get_mirror_response("http://repo.manjaro.org")
+        if mjro_online != "99.99":
             print(".: {} {}".format(txt.INF_CLR, txt.INF_DOWNLOAD_MIRROR_FILE))
             HttpFn.download_mirrors(URL_MIRROR_JSON)
             HttpFn.download_mirrors(URL_STATUS_JSON)

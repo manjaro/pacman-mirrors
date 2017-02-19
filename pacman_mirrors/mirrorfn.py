@@ -19,26 +19,46 @@
 
 """Pacman-Mirror Mirror Functions"""
 
-import datetime
-from random import shuffle
-from .jsonfn import JsonFn
+from .httpfn import HttpFn
+from .validfn import ValidFn
 
 
 class MirrorFn:
     """Mirror Functions"""
 
     @staticmethod
-    def rand_mirrorlist(mirrorlist):
-        """Shuffle mirrorlist"""
-        temp = shuffle(mirrorlist)
-        return temp
+    def build_country_list(only_country, countrylist, geoip=False):
+        """Do a check on the users country selection
+        :return: list of valid countries
+        :rtype: list
+        """
+        result = []
+        if only_country:
+            if ["all"] == only_country:
+                result = countrylist
+            else:
+                if ValidFn.country_list_is_valid(only_country, countrylist):
+                    result = only_country
+        if not result:
+            if geoip:
+                country = MirrorFn.get_geoip_country(countrylist)
+                if country:  # valid geoip
+                    result = country
+                else:
+                    result = countrylist
+        return result
 
     @staticmethod
-    def read_mirror_file(filename):
-        """Load mirror file
-        :returns: list of mirrors
+    def get_geoip_country(countrylist):
+        """Check if geoip is possible
+        :param countrylist:
+        :return: country name if found
         """
-        return JsonFn.read_json_file(filename, dictionary=True)
+        g_country = HttpFn.get_geoip_country()
+        if ValidFn.country_is_in_countrylist(g_country, countrylist):
+            return g_country
+        else:
+            return None
 
     @staticmethod
     def filter_mirror_list(mirrorlist, countrylist):
@@ -52,46 +72,3 @@ class MirrorFn:
             if mirror["country"] in countrylist:
                 result.append(mirror)
         return result
-
-    @staticmethod
-    def write_mirrorlist_header(handle, custom=False):
-        """Write mirrorlist header
-        :param handle: handle to a file opened for writing
-        :param custom: controls content of the header
-        """
-        handle.write("##\n")
-        if custom:
-            handle.write("## Manjaro Linux Custom mirrorlist\n")
-            handle.write("## Generated on {}\n".format(
-                datetime.datetime.now().strftime("%d %B %Y %H:%M")))
-            handle.write("##\n")
-            handle.write("## Use 'pacman-mirrors -c all' to reset\n")
-        else:
-            handle.write("## Manjaro Linux mirrorlist\n")
-            handle.write("## Generated on {}\n".format(
-                datetime.datetime.now().strftime("%d %B %Y %H:%M")))
-            handle.write("##\n")
-            handle.write("## Use pacman-mirrors to modify\n")
-        handle.write("##\n\n")
-
-    @staticmethod
-    def write_mirrorlist_entry(handle, mirror):
-        """Write mirror to mirror list or file
-        :param handle: handle to a file opened for writing
-        :param mirror: mirror object
-        """
-        workitem = mirror
-        handle.write("## Country       : {}\n".format(workitem["country"]))
-        # TODO: approval to remove useless lines
-        # Commented since the info after a short time
-        # is no longer valid
-        # if workitem["resp_time"] == txt.SERVER_RES:
-        #     workitem["resp_time"] = "N/A"
-        # handle.write("## Response time : {}\n".format(
-        #     workitem["resp_time"]))
-        # if workitem["last_sync"] == txt.SERVER_BAD or \
-        #         workitem["last_sync"] == txt.LASTSYNC_NA:
-        #     workitem["last_sync"] = "N/A"
-        # handle.write("## Last Upd hh:mm: {}\n".format(
-        #     workitem["last_sync"]))
-        handle.write("Server = {}\n\n".format(workitem["url"]))

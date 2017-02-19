@@ -21,7 +21,6 @@
 
 import os
 from .configuration import CUSTOM_FILE
-from .httpfn import HttpFn
 from . import txt
 
 
@@ -29,79 +28,48 @@ class ValidFn:
     """Validation Functions"""
 
     @staticmethod
-    def is_custom_config_valid():
+    def country_is_in_countrylist(country, countrylist):
+        """Check if country is in list"""
+        if country in countrylist:
+            return True  # good
+        return False
+
+    @staticmethod
+    def custom_config_is_valid():
         """Check validity of custom selection
         :return: True or False
         :rtype: bool
         """
-        if not os.path.isfile(CUSTOM_FILE):
-            print(".: {} {} {} {}\n".format(txt.WRN_CLR,
-                                            txt.INF_CUSTOM_MIRROR_FILE,
-                                            CUSTOM_FILE,
-                                            txt.INF_DOES_NOT_EXIST))
-            return False  # filecheck failed
-        return True  # valid
-
-    @staticmethod
-    def is_geoip_valid(country_list):
-        """Check if geoip is possible
-        :param country_list:
-        :return: country name if found
-        """
-        geoip_country = HttpFn.get_geoip_country()
-        if geoip_country and geoip_country in country_list:
-            return geoip_country
+        if os.path.isfile(CUSTOM_FILE):
+            return True  # valid
         else:
-            return None
+            # validation fail - inform user and exit
+            print(".: {} {} {} {}".format(txt.ERR_CLR,
+                                          txt.INF_CUSTOM_MIRROR_FILE,
+                                          CUSTOM_FILE,
+                                          txt.INF_DOES_NOT_EXIST))
+            print(".: {} {}".format(txt.INF_CLR, txt.INF_RESET_CUSTOM_CONFIG))
+            exit(1)  # exit gracefully
 
     @staticmethod
-    def is_selection_valid(selection, countrylist):
+    def country_list_is_valid(onlycountry, countrylist):
         """Check if the list of countries are valid.
-        :param selection: list of countries to check
+        :param onlycountry: list of countries to check
         :param countrylist: list of available countries
         :return: True or False
         :rtype: bool
         """
-        if selection == "all":
-            return True
-        for country in selection:
-            if country not in countrylist:
-                print(".: {} {}{}: '{}: {}'.\n\n".format(txt.WRN_CLR,
-                                                         txt.INF_OPTION,
-                                                         txt.OPT_COUNTRY,
-                                                         txt.INF_UNKNOWN_COUNTRY,
-                                                         country))
-                exit(1)  # exit gracefully if validation fail
+        for country in onlycountry:
+            if ValidFn.country_is_in_countrylist(country, countrylist):
+                continue  # good
+            else:  # validation fail - inform user and exit
+                print(".: {} {}{}: {}: '{}'".format(txt.WRN_CLR,
+                                                    txt.INF_OPTION,
+                                                    txt.OPT_COUNTRY,
+                                                    txt.INF_UNKNOWN_COUNTRY,
+                                                    country))
+                print(".: {} {}:".format(txt.INF_CLR,
+                                         txt.INF_AVAILABLE_COUNTRIES))
+                print("{}".format(", ".join(countrylist)))
+                exit(1)  # exit gracefully
         return True
-
-    @staticmethod
-    def get_valid_country_list(only_country, countrylist, geoip):
-        """Do a check on the users country selection
-        :return: countrylist and custom flag
-        :rtype: tuple
-        """
-        validlist = []
-        custom = False
-        if only_country:
-            if ["Custom"] == only_country:
-                if ValidFn.is_custom_config_valid():
-                    custom = True
-
-            elif ["all"] == only_country:
-                validlist = countrylist  # reset to default
-            else:
-                if ValidFn.is_selection_valid(only_country, countrylist):
-                    validlist = only_country
-
-        if not custom:
-            if geoip:
-                country = ValidFn.is_geoip_valid(countrylist)
-                if country:  # valid geoip
-                    validlist = [country]
-                else:  # validation fail
-                    validlist = countrylist
-            else:
-                validlist = countrylist
-
-        result = (validlist, custom)
-        return result
