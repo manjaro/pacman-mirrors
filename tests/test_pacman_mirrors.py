@@ -89,6 +89,23 @@ class TestPacmanMirrors(unittest.TestCase):
             app.validate_country_selection()
             assert app.only_country == app.mirrors.countrylist
 
+    @patch("os.getuid")
+    @patch.object(pacman_mirrors.ValidFn, "get_valid_country_list")
+    @patch.object(pacman_mirrors.ValidFn, "is_custom_config_valid")
+    def test_valid_country_list(self, mock_os_getuid, mock_list_valid, mock_custom_valid):
+        """Custom config IS valid"""
+        mock_os_getuid.return_value = 0
+        mock_custom_valid.returvalue = True
+        mock_only_in = ["Custom"]
+        mock_list_in = ["Denmark", "France", "Austria"]
+        mock_geoip_in = False
+        mock_result = ([], True)
+        mock_list_valid.return_value = "Antartica"
+        app = pacman_mirrors.PacmanMirrors()
+        assert app.ValidFn.get_valid_country_list(
+            mock_only_in, mock_list_in, mock_geoip_in) == mock_result
+
+
     def tearDown(self):
         """Tear down"""
         pass

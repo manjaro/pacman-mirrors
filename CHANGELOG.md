@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [y.y.y] - 2017-mm-dd - @fhdk
+- Add: --fasttrack {n} argument  
+  Creates a list of (n) mirrors which are responsive and uptodate
+
 ## [x.x.x] - 2017-mm-dd - @fhdk
 - Add: Class JSON file functions
 - Add: Class Custom mirror file conversion and helpers
