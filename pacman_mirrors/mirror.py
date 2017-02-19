@@ -57,11 +57,6 @@ class Mirror:
         }
         self.mirrorlist.append(mirror)
 
-    def sort(self, sort_key):
-        """Sort mirrorlist"""
-        new_list = sorted(self.mirrorlist, key=itemgetter(sort_key))
-        return new_list
-
     def seed(self, mirrors, status=False, custom=False):
         """Seed mirrorlist
         :param mirrors:
@@ -77,8 +72,3 @@ class Mirror:
                          server["branches"], server["last_sync"])
             else:
                 self.add(server["country"], server["url"], server["protocols"])
-
-    def randomize(self):
-        """Shuffle mirrorlist"""
-        shuffle(self.mirrorlist)
-        return self.mirrorlist
