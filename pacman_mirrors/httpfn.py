@@ -27,7 +27,6 @@ from os import system as system_call
 from socket import timeout
 from urllib.error import URLError
 from urllib.request import urlopen
-from urllib.parse import urlparse
 from .configuration import FALLBACK, MIRROR_FILE, STATUS_FILE, URL_MIRROR_JSON, URL_STATUS_JSON
 from .filefn import FileFn
 from .jsonfn import JsonFn
