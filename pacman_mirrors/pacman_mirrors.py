@@ -408,6 +408,8 @@ class PacmanMirrors:
                     sys.stdout.flush()
                     resp_time = HttpFn.get_mirror_response(mirror["url"])
                     mirror["resp_time"] = resp_time
+                    if resp_time == txt.SERVER_RES:
+                        continue
                     print("\r   {:<5}{}{} ".format(txt.GS, resp_time, txt.CE))
 
     def run(self):

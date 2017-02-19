@@ -48,8 +48,8 @@ class ValidFn:
                                           txt.INF_CUSTOM_MIRROR_FILE,
                                           CUSTOM_FILE,
                                           txt.INF_DOES_NOT_EXIST))
-            print(".: {} {}".format(txt.INF_CLR, txt.INF_RESET_CUSTOM_CONFIG))
-            exit(1)  # exit gracefully
+            print(".: {} {}".format(txt.INF_CLR, txt.INF_QUERY_ALL_SERVERS))
+            return False
 
     @staticmethod
     def country_list_is_valid(onlycountry, countrylist):
