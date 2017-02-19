@@ -29,7 +29,7 @@ class ValidFn:
     """Validation Functions"""
 
     @staticmethod
-    def is_custom_conf_valid(only_country):
+    def is_custom_config_valid(only_country):
         """Check validity of custom selection
         :param only_country:
         :return: True or False
@@ -58,7 +58,7 @@ class ValidFn:
             return None
 
     @staticmethod
-    def is_list_valid(selection, countrylist):
+    def is_selection_valid(selection, countrylist):
         """Check if the list of countries are valid.
         :param selection: list of countries to check
         :param countrylist: list of available countries
@@ -69,12 +69,11 @@ class ValidFn:
             return True
         for country in selection:
             if country not in countrylist:
-                print(".: {} {}{}: '{}: {}'.\n\n{}".format(txt.WRN_CLR,
-                                                           txt.INF_OPTION,
-                                                           txt.OPT_COUNTRY,
-                                                           txt.INF_UNKNOWN_COUNTRY,
-                                                           country,
-                                                           txt.INF_USING_ALL_SERVERS))
-                return False
+                print(".: {} {}{}: '{}: {}'.\n\n".format(txt.WRN_CLR,
+                                                         txt.INF_OPTION,
+                                                         txt.OPT_COUNTRY,
+                                                         txt.INF_UNKNOWN_COUNTRY,
+                                                         country))
+                exit(1)  # exit gracefully if validation fail
         return True
 
