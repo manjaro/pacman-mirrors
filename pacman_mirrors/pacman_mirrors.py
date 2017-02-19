@@ -327,11 +327,13 @@ class PacmanMirrors:
         seed_status = False
         if FileFn.check_file(STATUS_FILE):
             seed_status = True
-            servers = JsonFn.read_json_file(STATUS_FILE, dictionary=True)
+            file = STATUS_FILE
         elif FileFn.check_file(MIRROR_FILE):
-            servers = JsonFn.read_json_file(MIRROR_FILE, dictionary=True)
+            file = MIRROR_FILE
         else:
-            servers = JsonFn.read_json_file(FALLBACK, dictionary=True)
+            file = FALLBACK
+
+        servers = MirrorFn.load_mirror_file(file)
         if seed_status:
             self.mirrors.seed(servers, seed_status)
         else:
@@ -407,7 +409,7 @@ class PacmanMirrors:
 
     def validate_custom_config(self):
         """Check for custom config and validate it"""
-        self.custom = ValidFn.is_custom_config_valid(self.config["only_country"])
+        self.custom = ValidFn.is_custom_config_valid()
         if self.custom:
             # read custom file
             servers = JsonFn.read_json_file(CUSTOM_FILE, dictionary=True)
@@ -444,8 +446,12 @@ class PacmanMirrors:
         FileFn.dir_must_exist(MIRROR_DIR)
         self.manjaro_online = HttpFn.manjaro_online_update()
         self.load_mirror_file()
-        self.validate_custom_config()
-        self.validate_country_selection()
+
+        # self.validate_custom_config()
+
+        # self.validate_country_selection()
+
+        # actual generation
         if self.fasttrack:
             self.run_fast_track(self.fasttrack)
             exit(0)

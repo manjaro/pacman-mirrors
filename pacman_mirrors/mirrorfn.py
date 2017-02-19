@@ -20,10 +20,19 @@
 """Pacman-Mirror Mirror Functions"""
 
 import datetime
+from .jsonfn import JsonFn
+from .mirror import Mirror
 
 
 class MirrorFn:
     """Mirror Functions"""
+
+    @staticmethod
+    def load_mirror_file(filename):
+        """Load mirror file
+        :returns: list of mirrors
+        """
+        return JsonFn.read_json_file(filename, dictionary=True)
 
     @staticmethod
     def write_mirrorlist_header(handle, custom=False):
