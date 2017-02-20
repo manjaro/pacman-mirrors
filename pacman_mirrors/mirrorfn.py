@@ -29,6 +29,9 @@ class MirrorFn:
     @staticmethod
     def build_country_list(selectedcountries, countrylist, geoip=False):
         """Do a check on the users country selection
+        :param selectedcountries:
+        :param countrylist:
+        :param geoip:
         :return: list of valid countries
         :rtype: list
         """
