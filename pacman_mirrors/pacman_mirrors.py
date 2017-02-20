@@ -32,8 +32,7 @@ from pacman_mirrors import __version__
 from random import shuffle
 # CHANGE CONTENT IN configuration
 from .configuration import DEVELOPMENT, DESCRIPTION
-from .configuration import CONFIG_FILE, CUSTOM_FILE, FALLBACK, \
-    MIRROR_DIR, MIRROR_LIST, MIRROR_FILE, STATUS_FILE
+from .configuration import CONFIG_FILE, CUSTOM_FILE, MIRROR_DIR, MIRROR_LIST, MIRROR_FILE
 from .custom_help_formatter import CustomHelpFormatter
 from .customfn import CustomFn
 from .filefn import FileFn
@@ -41,7 +40,6 @@ from .httpfn import HttpFn
 from .jsonfn import JsonFn
 from .mirror import Mirror
 from .mirrorfn import MirrorFn
-from .miscfn import MiscFn
 from .validfn import ValidFn
 from . import i18n
 from . import txt
