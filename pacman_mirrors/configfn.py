@@ -34,6 +34,7 @@ class ConfigFn:
         # is fetched from config file
         config = {
             "branch": "stable",
+            "config_file": CONFIG_FILE,
             "method": "rank",
             "mirror_dir": MIRROR_DIR,
             "mirror_file": MIRROR_FILE,
@@ -43,7 +44,7 @@ class ConfigFn:
         }
         try:
             # read configuration from file
-            with open(CONFIG_FILE) as conf:
+            with open(config["config_file"]) as conf:
                 for line in conf:
                     line = line.strip()
                     if line.startswith("#") or "=" not in line:
