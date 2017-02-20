@@ -31,7 +31,6 @@ class TestPacmanMirrors(unittest.TestCase):
                                   "-qc", "all",
                                   "-m", "random"]):
             app = PacmanMirrors()
-
             app.config = ConfigFn.build_config()
             app.command_line_parse()
             FileFn.dir_must_exist(app.config["mirror_dir"])
