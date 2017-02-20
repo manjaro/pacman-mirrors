@@ -12,6 +12,7 @@ from unittest.mock import patch
 
 from pacman_mirrors.httpfn import HttpFn
 from pacman_mirrors.pacman_mirrors import PacmanMirrors
+from pacman_mirrors.mirrorfn import MirrorFn
 
 
 class TestPacmanMirrors(unittest.TestCase):
@@ -22,16 +23,16 @@ class TestPacmanMirrors(unittest.TestCase):
 
     @patch("os.getuid")
     def test_run(self, mock_os_getuid):
-        """Run pacman-mirrors"""
+        """TEST: pacman-mirrors -qc all -m random"""
         mock_os_getuid.return_value = 0
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
-                                  "-g",
-                                  "-c", "all",
+                                  "-qc", "all",
                                   "-m", "random"]):
             app = PacmanMirrors()
             app.config = app.build_config()
             app.command_line_parse()
+            # app.network = HttpFn.update_mirrors()
             app.load_all_mirrors()
             # actual generation
             if app.fasttrack:
@@ -44,23 +45,20 @@ class TestPacmanMirrors(unittest.TestCase):
 
     @patch("os.getuid")
     def test_run_country(self, mock_os_getuid):
-        """Single country from argument -c"""
+        """pacman-mirrors -c Germany"""
         mock_os_getuid.return_value = 0
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
-                                  "-g",
                                   "-c", "Germany"]):
             app = PacmanMirrors()
             app.config = app.build_config()
             app.command_line_parse()
-            app.network = HttpFn.update_mirrors()
             app.load_all_mirrors()
-
             assert app.config["only_country"] == ["Germany"]
 
     # @patch("os.getuid")
     # @patch.object(HttpFn, "get_geoip_country")
-    # def test_geoip_is_available(self, mock_geoip, mock_os_getuid):
+    # def test_geoip_available(self, mock_geoip, mock_os_getuid):
     #     """Geoip mirror country IS avaiable"""
     #     mock_os_getuid.return_value = 0
     #     mock_geoip.return_value = "France"
@@ -70,10 +68,10 @@ class TestPacmanMirrors(unittest.TestCase):
     #         app = PacmanMirrors()
     #         app.config = app.build_config()
     #         app.command_line_parse()
-    #         app.load_all_mirrors()
     #
-    #         assert app.selected_countries == ["France"]
-    #
+    #         country = HttpFn.get_geoip_country()
+    #         assert country == "Denmark"
+
     # @patch("os.getuid")
     # @patch.object(HttpFn, "get_geoip_country")
     # def test_geoip_not_available(self, mock_geoip, mock_os_getuid):
