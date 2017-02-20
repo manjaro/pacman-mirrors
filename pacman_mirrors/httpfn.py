@@ -35,12 +35,6 @@ from . import txt
 
 class HttpFn:
     """Http Function Class"""
-    @staticmethod
-    def ping_host(host, count=1):
-        """Check a hosts availability
-        :rtype: boolean
-        """
-        return system_call("ping -c{} {} > /dev/null".format(count, host)) == 0
 
     @staticmethod
     def download_mirrors(url):
@@ -56,7 +50,10 @@ class HttpFn:
                 countries = json.loads(response.read().decode(
                     "utf8"), object_pairs_hook=collections.OrderedDict)
         except URLError:
-            print(".: {} {} {}".format(txt.ERROR, txt.ERR_DOWNLOAD_FAIL, url))
+            print(".: {} {} {}".format(txt.ERROR, txt.CANNOT_DOWNLOAD_FILE, url))
+        except (HTTPException, json.JSONDecodeError):
+            pass
+
         if countries:
             success = True
             if url == URL_STATUS_JSON:
@@ -118,16 +115,28 @@ class HttpFn:
         return response_time
 
     @staticmethod
+    def ping_host(host, count=1):
+        """Check a hosts availability
+        :rtype: boolean
+        """
+        return system_call("ping -c{} {} > /dev/null".format(count, host)) == 0
+
+    @staticmethod
     def update_mirrors():
         """Checking repo.manjaro.org"""
         mjro_online = HttpFn.get_mirror_response("http://repo.manjaro.org")
         if mjro_online != "99.99":
-            print(".: {} {}".format(txt.INF_CLR, txt.INF_DOWNLOAD_MIRROR_FILE))
+            print(".: {} {}".format(txt.INF_CLR, txt.DOWNLOADING_MIRROR_FILE))
             HttpFn.download_mirrors(URL_MIRROR_JSON)
             HttpFn.download_mirrors(URL_STATUS_JSON)
             return True
         else:
             if not FileFn.check_file(MIRROR_FILE):
-                print(".: {} {} {} {}".format(txt.WRN_CLR, txt.INF_MIRROR_FILE, MIRROR_FILE, txt.INF_IS_MISSING))
-                print(".: {} {} {}".format(txt.WRN_CLR, txt.INF_FALLING_BACK, FALLBACK))
+                print(".: {} {} {} {}".format(txt.WRN_CLR,
+                                              txt.MIRROR_FILE,
+                                              MIRROR_FILE,
+                                              txt.IS_MISSING))
+                print(".: {} {} {}".format(txt.WRN_CLR,
+                                           txt.FALLING_BACK,
+                                           FALLBACK))
             return False

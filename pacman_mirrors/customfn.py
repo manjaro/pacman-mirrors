@@ -30,7 +30,7 @@ class CustomFn:
     @staticmethod
     def convert_to_json():
         """Convert custom mirror file to json"""
-        print(".: {} {}".format(txt.INF_CLR, txt.INF_CONVERT_MIRROR_FILE))
+        print(".: {} {}".format(txt.INF_CLR, txt.CONVERT_CUSTOM_MIRROR_FILE))
         mirrors = []
         with open(O_CUST_FILE, "r") as mirrorfile:
             mirror_country = None
@@ -93,7 +93,7 @@ class CustomFn:
             os.replace(tmp.name, filename)
             os.chmod(filename, 0o644)
         except OSError as err:
-            print(".: {} {}: {}: {}".format(txt.ERR_CLR, txt.ERR_FILE_READ,
+            print(".: {} {}: {}: {}".format(txt.ERR_CLR, txt.CANNOT_READ_FILE,
                                             err.filename, err.strerror))
             exit(1)
 

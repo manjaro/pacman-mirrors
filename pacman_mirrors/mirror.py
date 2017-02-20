@@ -37,7 +37,7 @@ class Mirror:
         :param resp_time: optional from status.json
         """
         if branches is None:
-            branches = [0, 0, 0]
+            branches = [-1, -1, -1]
         if country not in self.countrylist:
             self.countrylist.append(country)
         # translate negative integer in status.json

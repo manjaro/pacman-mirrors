@@ -47,7 +47,7 @@ class FileFn:
         """
         try:
             with open(mirrorlistfile, "w") as outfile:
-                print(".: {} {}".format(txt.INF_CLR, txt.INF_MIRROR_LIST_WRITE))
+                print(".: {} {}".format(txt.INF_CLR, txt.WRITING_MIRROR_LIST))
                 # write list header
                 FileFn.write_mirrorlist_header(outfile, custom=custom)
                 for server in servers:
@@ -66,11 +66,11 @@ class FileFn:
                                                               txt.CE,
                                                               server["url"]))
                 print(".: {} {}: {}".format(txt.INF_CLR,
-                                            txt.INF_MIRROR_LIST_SAVED,
+                                            txt.MIRROR_LIST_SAVED,
                                             mirrorlistfile))
         except OSError as err:
             print(".: {} {}: {}: {}".format(txt.ERR_CLR,
-                                            txt.ERR_FILE_WRITE,
+                                            txt.CANNOT_WRITE_FILE,
                                             err.filename,
                                             err.strerror))
             exit(1)

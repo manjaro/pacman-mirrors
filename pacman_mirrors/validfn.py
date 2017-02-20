@@ -45,12 +45,12 @@ class ValidFn:
         else:
             # validation fail - inform user and exit
             print(".: {} {} {} {}".format(txt.ERR_CLR,
-                                          txt.INF_CUSTOM_MIRROR_FILE,
+                                          txt.CUSTOM_MIRROR_FILE,
                                           CUSTOM_FILE,
-                                          txt.INF_DOES_NOT_EXIST))
+                                          txt.DOES_NOT_EXIST))
             print(".: {} {}: {}".format(txt.INF_CLR,
-                                        txt.INF_FALLING_BACK,
-                                        txt.INF_USING_ALL_SERVERS))
+                                        txt.FALLING_BACK,
+                                        txt.USING_ALL_MIRRORS))
             return False
 
     @staticmethod
@@ -66,12 +66,12 @@ class ValidFn:
                 continue  # good
             else:  # validation fail - inform user and exit
                 print(".: {} {}{}: {}: '{}'".format(txt.WRN_CLR,
-                                                    txt.INF_OPTION,
+                                                    txt.OPTION,
                                                     txt.OPT_COUNTRY,
-                                                    txt.INF_UNKNOWN_COUNTRY,
+                                                    txt.UNKNOWN_COUNTRY,
                                                     country))
                 print(".: {} {}:".format(txt.INF_CLR,
-                                         txt.INF_AVAILABLE_COUNTRIES))
+                                         txt.AVAILABLE_COUNTRIES))
                 print("{}".format(", ".join(countrylist)))
                 exit(1)  # exit gracefully
         return True
