@@ -27,18 +27,18 @@ class MirrorFn:
     """Mirror Functions"""
 
     @staticmethod
-    def build_country_list(only_country, countrylist, geoip=False):
+    def build_country_list(selectedcountries, countrylist, geoip=False):
         """Do a check on the users country selection
         :return: list of valid countries
         :rtype: list
         """
         result = []
-        if only_country:
-            if ["all"] == only_country:
+        if selectedcountries:
+            if selectedcountries == ["all"]:
                 result = countrylist
             else:
-                if ValidFn.country_list_is_valid(only_country, countrylist):
-                    result = only_country
+                if ValidFn.country_list_is_valid(selectedcountries, countrylist):
+                    result = selectedcountries
         if not result:
             if geoip:
                 country = MirrorFn.get_geoip_country(countrylist)
@@ -47,7 +47,7 @@ class MirrorFn:
                 else:
                     result = countrylist
             else:
-                return countrylist
+                result = countrylist
         return result
 
     @staticmethod
