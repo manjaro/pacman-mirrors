@@ -19,8 +19,6 @@
 
 """Pacman-Mirrors Configuration"""
 
-from . import txt
-
 # this is for runing in dev environment
 # TODO: CHANGE BELOW IN PRODUCTION
 DEVELOPMENT = "dev"
@@ -31,15 +29,15 @@ if DEVELOPMENT:
     URL_STATUS_JSON = "http://repo.manjaro.org/status.json"
     # etc
     CONFIG_FILE = "mock/etc/pacman-mirrors.conf"
-    MIRROR_LIST = "mock/etc/mirrorlist"
+    MIRROR_LIST = "mock/mirrorlist"
     # pacman-mirrors
     MIRROR_DIR = "mock/var/"
     CUSTOM_FILE = MIRROR_DIR + "custom-mirrors.json"
     MIRROR_FILE = MIRROR_DIR + "mirrors.json"
     STATUS_FILE = MIRROR_DIR + "status.json"
     # special cases
-    FALLBACK = "mock/usr/mirrors.json"
     O_CUST_FILE = MIRROR_DIR + "Custom"
+    FALLBACK = "mock/usr/mirrors.json"
     # repo constants
     BRANCHES = ("stable", "testing", "unstable")
     REPO_ARCH = "/$repo/$arch"
@@ -56,8 +54,8 @@ else:
     MIRROR_FILE = MIRROR_DIR + "mirrors.json"
     STATUS_FILE = MIRROR_DIR + "status.json"
     # special cases
-    FALLBACK = "/usr/share/pacman-mirrors/mirrors.json"
     O_CUST_FILE = MIRROR_DIR + "Custom"
+    FALLBACK = "/usr/share/pacman-mirrors/mirrors.json"
     # repo constants
     BRANCHES = ("stable", "testing", "unstable")
     REPO_ARCH = "/$repo/$arch"
