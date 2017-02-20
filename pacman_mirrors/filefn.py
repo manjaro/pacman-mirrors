@@ -21,7 +21,7 @@
 
 import os
 import datetime
-from .configuration import REPO_ARCH
+from .configuration import FALLBACK, MIRROR_FILE, REPO_ARCH, STATUS_FILE
 from .jsonfn import JsonFn
 from .miscfn import MiscFn
 from . import txt
@@ -39,6 +39,30 @@ class FileFn:
     def dir_must_exist(dir_name):
         """Check necessary directory"""
         os.makedirs(dir_name, mode=0o755, exist_ok=True)
+
+    @staticmethod
+    def return_mirror_filename():
+        """Load default mirror file
+        :returns tuple with file and status
+        """
+        filename = ""
+        status = False  # status.json or mirrors.json
+        # decision on file avaiablity
+        if FileFn.check_file(STATUS_FILE):
+            status = True
+            filename = STATUS_FILE
+        elif FileFn.check_file(MIRROR_FILE):
+            filename = MIRROR_FILE
+        else:
+            if FileFn.check_file(FALLBACK):
+                filename = FALLBACK
+        if not filename:
+            print("\n{}.:! {}{}\n".format(txt.RS,
+                                          "Houston?! we have a problem",
+                                          txt.CE))
+            exit(1)
+        result = (filename, status)
+        return result
 
     @staticmethod
     def output_mirror_list(branch, mirrorlistfile, servers, custom=False, quiet=False):

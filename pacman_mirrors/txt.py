@@ -110,7 +110,7 @@ OPT_COUNTRY = " '-c/--country' "
 OPT_NOUPDATE = " 'NoUpdate = True' "
 OPT_RANDOM = " '-m/--method random "
 # colors
-DBG_CLR = "\033[1;31m.: {} >>> \033[1;m".format("DEBUG")
+DBG_CLR = "\033[1;46m.: {} >>> \033[1;m".format("DEBUG")
 ERR_CLR = "\033[1;31m{}\033[1;m".format(ERROR)
 INF_CLR = "\033[1;37m{}\033[1;m".format(INFO)
 WRN_CLR = "\033[1;33m{}\033[1;m".format(WARN)

@@ -322,54 +322,6 @@ class PacmanMirrors:
                 print(".: {} {}".format(txt.WRN_CLR, txt.NO_SELECTION))
                 print(".: {} {}".format(txt.INF_CLR, txt.NO_CHANGE))
 
-    def load_all_mirrors(self):
-        """Load mirrors"""
-        self.selected_countries = self.config["only_country"]
-        if self.selected_countries == ["all"]:
-            self.config["only_country"] = []
-            self.custom = False  # reset args -c
-        # decision on custom or default
-        if self.custom is True:
-            if self.config["only_country"] == ["Custom"]:
-                if ValidFn.custom_config_is_valid():
-                    self.load_custom_mirrors()
-                    self.selected_countries = self.mirrors.countrylist
-            else:
-                self.selected_countries = self.config["only_country"]
-                self.load_default_mirrors()
-        else:
-            self.load_default_mirrors()
-        # build country list
-        self.selected_countries = MirrorFn.build_country_list(self.selected_countries,
-                                                              self.mirrors.countrylist,
-                                                              self.geoip)
-
-    def load_custom_mirrors(self):
-        servers = FileFn.read_mirror_file(CUSTOM_FILE)
-        self.mirrors.seed(servers)
-
-    def load_default_mirrors(self):
-        """Load default mirror file"""
-        file = ""
-        status = False  # status.json or mirrors.json
-        # decision on file avaiablity
-        if FileFn.check_file(STATUS_FILE):
-            status = True
-            file = STATUS_FILE
-        elif FileFn.check_file(MIRROR_FILE):
-            file = MIRROR_FILE
-        elif FileFn.check_file(FALLBACK):
-            file = FALLBACK
-        else:
-            print("\n{}.:! {}{}\n".format(txt.RS, "Houston?! we have a problem", txt.CE))
-            exit(1)
-        mirrors = FileFn.read_mirror_file(file)
-        # seed mirror object
-        if status:
-            self.mirrors.seed(mirrors, status)
-        else:
-            self.mirrors.seed(mirrors)
-
     def build_fasttrack_mirror_list(self, number):
         """Fast-track the mirrorlist by aggressive sorting"""
         temp = sorted(self.mirrors.mirrorlist, key=itemgetter("branches",
@@ -400,13 +352,59 @@ class PacmanMirrors:
                                   ftlist,
                                   self.quiet)
 
+    def disable_custom_config(self):
+        """Perform reset of custom configuration"""
+        self.config["only_country"] = []
+        self.custom = False
+
+    def load_all_mirrors(self):
+        """Load mirrors"""
+        if self.config["only_country"] == ["all"]:
+            self.disable_custom_config()
+
+        # decision on custom or default
+        if self.config["only_country"] == ["Custom"]:
+            if not ValidFn.custom_config_is_valid():
+                self.disable_custom_config()
+        else:
+            self.selected_countries = self.config["only_country"]
+
+        if self.custom:
+            self.load_custom_mirrors()
+            self.selected_countries = self.mirrors.countrylist
+        else:
+            self.load_default_mirrors()
+
+        # build country list
+        self.selected_countries = MirrorFn.build_country_list(self.selected_countries,
+                                                              self.mirrors.countrylist,
+                                                              self.geoip)
+
+    def load_custom_mirrors(self):
+        """Load available custom mirrors"""
+        self.seed_mirrors(CUSTOM_FILE)
+
+    def load_default_mirrors(self):
+        """Load all available mirrors"""
+        (file, status) = FileFn.return_mirror_filename()
+        self.seed_mirrors(file, status)
+
+    def seed_mirrors(self, file, status=False):
+        """Seed mirrors"""
+        mirrors = FileFn.read_mirror_file(file)
+        # seed mirror object
+        if status:
+            self.mirrors.seed(mirrors, status=status)
+        else:
+            self.mirrors.seed(mirrors)
+
     def test_mirrors(self):
         """Query server for response time"""
-        print(".: {} {} - {}".format(txt.INF_CLR, txt.QUERY_MIRRORS, txt.TAKES_TIME))
         if self.custom:
             print(".: {} {}".format(txt.INF_CLR, txt.USING_CUSTOM_FILE))
         else:
             print(".: {} {}".format(txt.INF_CLR, txt.USING_DEFAULT_FILE))
+        print(".: {} {} - {}".format(txt.INF_CLR, txt.QUERY_MIRRORS, txt.TAKES_TIME))
 
         for mirror in self.mirrors.mirrorlist:
             if mirror["country"] in self.selected_countries:

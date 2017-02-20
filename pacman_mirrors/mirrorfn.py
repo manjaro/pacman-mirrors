@@ -46,6 +46,8 @@ class MirrorFn:
                     result = country
                 else:
                     result = countrylist
+            else:
+                return countrylist
         return result
 
     @staticmethod
