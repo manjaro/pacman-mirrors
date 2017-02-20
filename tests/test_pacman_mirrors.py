@@ -27,6 +27,7 @@ class TestPacmanMirrors(unittest.TestCase):
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
                                   "-g",
+                                  "-c", "all"
                                   "-m", "random"]):
             app = PacmanMirrors()
             app.config = app.build_config()
