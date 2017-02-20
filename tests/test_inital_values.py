@@ -41,7 +41,7 @@ class TestInitialValues(unittest.TestCase):
 
     @patch("os.getuid")
     def test_initial_geoip(self, mock_os_getuid):
-        """TEST: custom is False"""
+        """TEST: geoip is False"""
         mock_os_getuid.return_value = 0
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
@@ -51,7 +51,7 @@ class TestInitialValues(unittest.TestCase):
 
     @patch("os.getuid")
     def test_initial_interactive(self, mock_os_getuid):
-        """TEST: custom is False"""
+        """TEST: interactive is False"""
         mock_os_getuid.return_value = 0
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
@@ -61,7 +61,7 @@ class TestInitialValues(unittest.TestCase):
 
     @patch("os.getuid")
     def test_initial_max_wait_time(self, mock_os_getuid):
-        """TEST: custom is False"""
+        """TEST: max_wait_time = 2"""
         mock_os_getuid.return_value = 0
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
@@ -71,7 +71,7 @@ class TestInitialValues(unittest.TestCase):
 
     @patch("os.getuid")
     def test_initial_network(self, mock_os_getuid):
-        """TEST: custom is False"""
+        """TEST: network is True"""
         mock_os_getuid.return_value = 0
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
@@ -81,7 +81,7 @@ class TestInitialValues(unittest.TestCase):
 
     @patch("os.getuid")
     def test_initial_nodisplay(self, mock_os_getuid):
-        """TEST: custom is False"""
+        """TEST: no_display is False"""
         mock_os_getuid.return_value = 0
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
@@ -91,7 +91,7 @@ class TestInitialValues(unittest.TestCase):
 
     @patch("os.getuid")
     def test_initial_quiet(self, mock_os_getuid):
-        """TEST: custom is False"""
+        """TEST: quiet is False"""
         mock_os_getuid.return_value = 0
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
