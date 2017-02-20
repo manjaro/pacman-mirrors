@@ -264,7 +264,7 @@ class PacmanMirrors:
         else:
             from . import graphical_ui as ui
 
-        interactive = ui.run(interactive_list, random)
+        interactive = ui.run(interactive_list, (self.config["method"] == "random"))
 
         if interactive.is_done:
             selected = []
