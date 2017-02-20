@@ -13,6 +13,7 @@ from unittest.mock import patch
 from pacman_mirrors.httpfn import HttpFn
 from pacman_mirrors.pacman_mirrors import PacmanMirrors
 from pacman_mirrors.configfn import ConfigFn
+from pacman_mirrors.filefn import FileFn
 
 
 class TestPacmanMirrors(unittest.TestCase):
@@ -30,8 +31,10 @@ class TestPacmanMirrors(unittest.TestCase):
                                   "-qc", "all",
                                   "-m", "random"]):
             app = PacmanMirrors()
+
             app.config = ConfigFn.build_config()
             app.command_line_parse()
+            FileFn.dir_must_exist(app.config["mirror_dir"])
             app.network = HttpFn.update_mirrors()
             app.load_all_mirrors()
             # actual generation
