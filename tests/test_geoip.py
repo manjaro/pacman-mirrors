@@ -34,7 +34,6 @@ class TestGeoip(unittest.TestCase):
             app.config = app.build_config()
             app.command_line_parse()
             app.load_all_mirrors()
-            # country = HttpFn.get_geoip_country()
             assert app.selected_countries == "France"
 
     @patch("os.getuid")
@@ -52,7 +51,6 @@ class TestGeoip(unittest.TestCase):
             app.command_line_parse()
             app.load_all_mirrors()
             app.config["only_country"] = []
-
             assert app.selected_countries == app.mirrors.countrylist
 
     def tearDown(self):
