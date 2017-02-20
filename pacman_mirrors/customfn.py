@@ -22,6 +22,7 @@
 import os
 import tempfile
 from .configuration import CONFIG_FILE, CUSTOM_FILE, O_CUST_FILE
+from .configuration import DEVELOPMENT
 from .jsonfn import JsonFn
 from . import txt
 
@@ -51,7 +52,8 @@ class CustomFn:
                 })
             # write new file
             JsonFn.write_json_file(mirrors, CUSTOM_FILE)
-            CustomHelper.cleanup()
+            if not DEVELOPMENT:
+                CustomHelper.cleanup()
 
     @staticmethod
     def modify_config(onlycountry, custom=False):

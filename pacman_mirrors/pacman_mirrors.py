@@ -139,9 +139,10 @@ class PacmanMirrors:
                 print("pacman-mirrors {}".format(__version__))
             exit(0)
 
-        if os.getuid() != 0:
-            print(".: {} {}".format(txt.ERR_CLR, txt.MUST_BE_ROOT))
-            exit(1)
+        if not DEVELOPMENT:
+            if os.getuid() != 0:
+                print(".: {} {}".format(txt.ERR_CLR, txt.MUST_BE_ROOT))
+                exit(1)
 
         if args.no_update:
             if self.config["no_update"] == "True":
