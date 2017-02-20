@@ -226,7 +226,6 @@ class PacmanMirrors:
         # geoip and country are mutually exclusive
         if args.geoip:
             self.geoip = True
-
         if args.country and not args.geoip:
             self.custom = True
             self.config["only_country"] = args.country.split(",")
@@ -249,7 +248,7 @@ class PacmanMirrors:
         FileFn.output_mirror_list(self.config["branch"],
                                   self.config["mirror_list"],
                                   worklist,
-                                  self.quiet)
+                                  quiet=self.quiet)
         if self.custom or self.config["only_country"] != self.mirrors.mirrorlist:
             CustomFn.modify_config(self.config["only_country"],
                                    custom=True)
@@ -335,7 +334,7 @@ class PacmanMirrors:
         print(".: {}: {} - {}".format(txt.INF_CLR, txt.QUERY_MIRRORS, txt.TAKES_TIME))
         counter = 0
         for mirror in temp:
-            resp_time = HttpFn.get_mirror_response(mirror["url"])
+            resp_time = HttpFn.get_mirror_response(mirror["url"], quiet=self.quiet)
             print("   ..... {:<15}: {}: {}".format(mirror["country"],
                                                    mirror["last_sync"],
                                                    mirror["url"]),
@@ -410,14 +409,16 @@ class PacmanMirrors:
         print(".: {} {} - {}".format(txt.INF_CLR, txt.QUERY_MIRRORS, txt.TAKES_TIME))
 
         for mirror in worklist:
-            print("   ..... {:<15}: {}".format(mirror["country"],
-                                               mirror["url"]), end='')
+            if not self.quiet:
+                print("   ..... {:<15}: {}".format(mirror["country"],
+                                                   mirror["url"]), end='')
             # sys.stdout.flush()
-            resp_time = HttpFn.get_mirror_response(mirror["url"])
+            resp_time = HttpFn.get_mirror_response(mirror["url"], quiet=self.quiet)
             mirror["resp_time"] = resp_time
             if resp_time == txt.SERVER_RES:
                 continue
-            print("\r   {:<5}{}{} ".format(txt.GS, resp_time, txt.CE))
+            if not self.quiet:
+                print("\r   {:<5}{}{} ".format(txt.GS, resp_time, txt.CE))
         return worklist
 
     def run(self):

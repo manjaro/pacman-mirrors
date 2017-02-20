@@ -37,9 +37,10 @@ class HttpFn:
     """Http Function Class"""
 
     @staticmethod
-    def download_mirrors(url):
+    def download_mirrors(url, quiet=False):
         """Retrieve mirrors from manjaro.org
         :param url:
+        :param quiet:
         :return: True on success
         :rtype: boolean
         """
@@ -50,7 +51,8 @@ class HttpFn:
                 countries = json.loads(response.read().decode(
                     "utf8"), object_pairs_hook=collections.OrderedDict)
         except URLError:
-            print(".: {} {} {}".format(txt.ERROR, txt.CANNOT_DOWNLOAD_FILE, url))
+            if not quiet:
+                print(".: {} {} {}".format(txt.ERROR, txt.CANNOT_DOWNLOAD_FILE, url))
         except (HTTPException, json.JSONDecodeError):
             pass
 
@@ -89,26 +91,33 @@ class HttpFn:
         return country_name
 
     @staticmethod
-    def get_mirror_response(url, maxwait=2, count=1):
+    def get_mirror_response(url, maxwait=2, count=1, quiet=False):
         """Query mirrors availability
+        :param url:
+        :param maxwait:
+        :param count:
+        :param quiet:
         :returns string with response time
         """
         probe_start = time.time()
         response_time = txt.SERVER_RES
         probe_stop = None
+        message = ""
         try:
             for _ in range(count):
                 urlopen(url, timeout=maxwait)
             probe_stop = time.time()
         except URLError as err:
             if hasattr(err, "reason"):
-                print("\n.: {} {}".format(txt.ERR_CLR, err.reason))
+                message = "\n.: {} {} '{}'".format(txt.ERR_CLR, err.reason, url)
             elif hasattr(err, "code"):
-                print("\n.: {} {}".format(txt.ERR_CLR, err.reason))
+                message = "\n.: {} {} '{}'".format(txt.ERR_CLR, err.reason, url)
         except timeout:
-            print("\n.: {} {}".format(txt.ERR_CLR, txt.TIMEOUT))
+            message = "\n.: {} {} '{}'".format(txt.ERR_CLR, txt.TIMEOUT, url)
         except HTTPException:
-            print("\n.: {} {}".format(txt.ERR_CLR, txt.HTTP_EXCEPTION))
+            message = "\n.: {} {} '{}'".format(txt.ERR_CLR, txt.HTTP_EXCEPTION, url)
+        if message and not quiet:
+            print(message)
         if probe_stop:
             calc = round((probe_stop - probe_start), 3)
             response_time = str(format(calc, ".3f"))
@@ -117,13 +126,15 @@ class HttpFn:
     @staticmethod
     def ping_host(host, count=1):
         """Check a hosts availability
+        :param host:
+        :param count:
         :rtype: boolean
         """
         return system_call("ping -c{} {} > /dev/null".format(count, host)) == 0
 
     @staticmethod
     def update_mirrors():
-        """Checking repo.manjaro.org"""
+        """Download updates from repo.manjaro.org"""
         mjro_online = HttpFn.get_mirror_response("http://repo.manjaro.org")
         if mjro_online != "99.99":
             print(".: {} {}".format(txt.INF_CLR, txt.DOWNLOADING_MIRROR_FILE))
