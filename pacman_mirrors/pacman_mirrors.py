@@ -190,10 +190,9 @@ class PacmanMirrors:
                 print("pacman-mirrors {}".format(__version__))
             exit(0)
 
-        if not DEVELOPMENT:
-            if os.getuid() != 0:
-                print(".: {} {}".format(txt.ERR_CLR, txt.MUST_BE_ROOT))
-                exit(1)
+        if os.getuid() != 0:
+            print(".: {} {}".format(txt.ERR_CLR, txt.MUST_BE_ROOT))
+            exit(1)
 
         if args.no_update:
             if self.config["no_update"] == "True":
@@ -241,11 +240,11 @@ class PacmanMirrors:
         """Generate common mirrorlist"""
         worklist = MirrorFn.filter_mirror_list(self.mirrors.mirrorlist,
                                                self.selected_countries)
-        if self.config["method"] == "random":
-            shuffle(worklist)
-        else:
-            self.test_mirrors()
+        if self.config["method"] == "rank":
+            worklist = self.test_mirrors(worklist)
             worklist = sorted(worklist, key=itemgetter("resp_time"))
+        else:
+            shuffle(worklist)
 
         FileFn.output_mirror_list(self.config["branch"],
                                   self.config["mirror_list"],
@@ -263,10 +262,12 @@ class PacmanMirrors:
         * Outputs a "custom" mirror file
         * Modify the configuration file to use the "custom" file.
         """
+        worklist = MirrorFn.filter_mirror_list(self.mirrors.mirrorlist,
+                                               self.selected_countries)
         if self.config["method"] == "rank":
-            self.test_mirrors()
+            worklist = self.test_mirrors(worklist)
+
         interactive_list = []
-        worklist = MirrorFn.filter_mirror_list(self.mirrors.mirrorlist, self.selected_countries)
         for mirror in worklist:
             interactive_list.append({
                 "country": mirror["country"],
@@ -274,10 +275,12 @@ class PacmanMirrors:
                 "last_sync": mirror["last_sync"],
                 "url": mirror["url"]
             })
+
         if self.config["method"] == "random":
             shuffle(interactive_list)
         else:
             interactive_list = sorted(interactive_list, key=itemgetter("resp_time"))
+
         if self.no_display:
             from . import consoleui as ui
         else:
@@ -311,7 +314,7 @@ class PacmanMirrors:
                                           worklist,
                                           custom=True,
                                           quiet=self.quiet)
-                # output custom configuration
+                # always use "Custom" from interactive
                 self.config["only_country"] = ["Custom"]
                 CustomFn.modify_config(self.config["only_country"], custom=True)
                 print(".: {} {}: {}".format(txt.INF_CLR,
@@ -398,7 +401,7 @@ class PacmanMirrors:
         else:
             self.mirrors.seed(mirrors)
 
-    def test_mirrors(self):
+    def test_mirrors(self, worklist):
         """Query server for response time"""
         if self.custom:
             print(".: {} {}".format(txt.INF_CLR, txt.USING_CUSTOM_FILE))
@@ -406,16 +409,16 @@ class PacmanMirrors:
             print(".: {} {}".format(txt.INF_CLR, txt.USING_DEFAULT_FILE))
         print(".: {} {} - {}".format(txt.INF_CLR, txt.QUERY_MIRRORS, txt.TAKES_TIME))
 
-        for mirror in self.mirrors.mirrorlist:
-            if mirror["country"] in self.selected_countries:
-                print("   ..... {:<15}: {}".format(mirror["country"],
-                                                   mirror["url"]), end='')
-                # sys.stdout.flush()
-                resp_time = HttpFn.get_mirror_response(mirror["url"])
-                mirror["resp_time"] = resp_time
-                if resp_time == txt.SERVER_RES:
-                    continue
-                print("\r   {:<5}{}{} ".format(txt.GS, resp_time, txt.CE))
+        for mirror in worklist:
+            print("   ..... {:<15}: {}".format(mirror["country"],
+                                               mirror["url"]), end='')
+            # sys.stdout.flush()
+            resp_time = HttpFn.get_mirror_response(mirror["url"])
+            mirror["resp_time"] = resp_time
+            if resp_time == txt.SERVER_RES:
+                continue
+            print("\r   {:<5}{}{} ".format(txt.GS, resp_time, txt.CE))
+        return worklist
 
     def run(self):
         """Run"""
