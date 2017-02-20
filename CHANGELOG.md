@@ -1,11 +1,9 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## [y.y.y] - 2017-mm-dd - @fhdk
+## [3.3.0 unstable development] - 2017-mm-dd - @fhdk
 - Add: --fasttrack {n} argument  
   Creates a list of (n) mirrors which are responsive and uptodate
-
-## [x.x.x] - 2017-mm-dd - @fhdk
 - Add: Class JSON file functions
 - Add: Class Custom mirror file conversion and helpers
 - Add: Class Http functions
@@ -23,6 +21,11 @@ All notable changes to this project will be documented in this file.
 - Rewrite: internals for mirror ranking
 - Modified GUI and TUI to reflect rank/random method
 - Colorized console output by message type
+- Added tests
+        Commandline parsing
+        Default configuration
+        Geoip
+        Initial vaules of internal variables
 
 ## [3.2.2] - 2017-02-12
 - Fix issue with multiple country select.
