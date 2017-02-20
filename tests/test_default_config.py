@@ -85,17 +85,17 @@ class TestDefaultConfig(unittest.TestCase):
             app.config = app.build_config()
             assert app.config["no_update"] is False
 
-    @patch("os.getuid")
-    def test_default_onlycountry(self, mock_os_getuid):
-        """TEST: config[only_country] = []"""
-        mock_os_getuid.return_value = 0
-        with unittest.mock.patch("sys.argv",
-                                 ["pacman-mirrors",
-                                  "-g"]):
-            app = PacmanMirrors()
-            app.config = {}
-            app.config = app.build_config()
-            assert app.config["only_country"] == []
+    # @patch("os.getuid")
+    # def test_default_onlycountry(self, mock_os_getuid):
+    #     """TEST: config[only_country] = []"""
+    #     mock_os_getuid.return_value = 0
+    #     with unittest.mock.patch("sys.argv",
+    #                              ["pacman-mirrors",
+    #                               "-g"]):
+    #         app = PacmanMirrors()
+    #         app.config = {}
+    #         app.config = app.build_config()
+    #         assert app.config["only_country"] == []
 
     def tearDown(self):
         """Tear down"""
