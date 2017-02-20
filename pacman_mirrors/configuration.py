@@ -19,6 +19,8 @@
 
 """Pacman-Mirrors Configuration"""
 
+from . import txt
+
 # this is for runing in dev environment
 # TODO: CHANGE BELOW IN PRODUCTION
 DEVELOPMENT = "dev"

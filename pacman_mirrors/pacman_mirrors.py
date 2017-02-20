@@ -32,7 +32,8 @@ from pacman_mirrors import __version__
 from random import shuffle
 # CHANGE CONTENT IN configuration
 from .configuration import DEVELOPMENT, DESCRIPTION
-from .configuration import CONFIG_FILE, CUSTOM_FILE, MIRROR_DIR, MIRROR_LIST, MIRROR_FILE
+from .configuration import CUSTOM_FILE, MIRROR_DIR
+from .configfn import ConfigFn
 from .custom_help_formatter import CustomHelpFormatter
 from .customfn import CustomFn
 from .filefn import FileFn
@@ -69,53 +70,6 @@ class PacmanMirrors:
         self.no_display = False
         self.quiet = False
         self.selected_countries = []        # users selected countries
-
-    @staticmethod
-    def build_config():
-        """Get config informations"""
-        # initialising defaults
-        # information which can differ from these defaults
-        # is fetched from config file
-        config = {
-            "branch": "stable",
-            "method": "rank",
-            "mirror_dir": MIRROR_DIR,
-            "mirror_file": MIRROR_FILE,
-            "mirror_list": MIRROR_LIST,
-            "no_update": False,
-            "only_country": [],
-        }
-        try:
-            # read configuration from file
-            with open(CONFIG_FILE) as conf:
-                for line in conf:
-                    line = line.strip()
-                    if line.startswith("#") or "=" not in line:
-                        continue
-                    (key, value) = line.split("=", 1)
-                    key = key.rstrip()
-                    value = value.lstrip()
-                    if key and value:
-                        if value.startswith("\"") and value.endswith("\""):
-                            value = value[1:-1]
-                        if key == "Method":
-                            config["method"] = value
-                        elif key == "Branch":
-                            config["branch"] = value
-                        elif key == "OnlyCountry":
-                            config["only_country"] = value.split(",")
-                        elif key == "MirrorlistsDir":
-                            config["mirror_dir"] = value
-                        elif key == "OutputMirrorlist":
-                            config["mirror_list"] = value
-                        elif key == "NoUpdate":
-                            config["no_update"] = value
-        except (PermissionError, OSError) as err:
-            print(".: {} {}: {}: {}".format(txt.ERR_CLR,
-                                            txt.CANNOT_READ_FILE,
-                                            err.filename,
-                                            err.strerror))
-        return config
 
     def command_line_parse(self):
         """Read the arguments of the command line"""
@@ -250,6 +204,36 @@ class PacmanMirrors:
         else:
             CustomFn.modify_config(self.config["only_country"])
 
+    def build_fasttrack_mirror_list(self, number):
+        """Fast-track the mirrorlist by aggressive sorting"""
+        temp = sorted(self.mirrors.mirrorlist, key=itemgetter("branches",
+                                                              "last_sync"),
+                      reverse=True)
+        temp = sorted(temp, key=itemgetter("last_sync"), reverse=False)
+        ftlist = []
+        print(".: {}: {} - {}".format(txt.INF_CLR, txt.QUERY_MIRRORS, txt.TAKES_TIME))
+        counter = 0
+        for mirror in temp:
+            resp_time = HttpFn.get_mirror_response(mirror["url"], quiet=self.quiet)
+            print("   ..... {:<15}: {}: {}".format(mirror["country"],
+                                                   mirror["last_sync"],
+                                                   mirror["url"]),
+                  end='')
+            sys.stdout.flush()
+            mirror["resp_time"] = resp_time
+            print("\r   {:<5}{}{} ".format(txt.GS, resp_time, txt.CE))
+            if resp_time == txt.SERVER_RES:
+                continue
+            ftlist.append(mirror)
+            counter += 1
+            if counter == number:
+                break
+        ftlist = sorted(ftlist, key=itemgetter("resp_time"))
+        FileFn.output_mirror_list(self.config["branch"],
+                                  self.config["mirror_list"],
+                                  ftlist,
+                                  self.quiet)
+
     def build_interactive_mirror_list(self):
         """Prompt the user to select the mirrors with a gui.
         * Outputs a pacman mirrorlist,
@@ -318,36 +302,6 @@ class PacmanMirrors:
             else:
                 print(".: {} {}".format(txt.WRN_CLR, txt.NO_SELECTION))
                 print(".: {} {}".format(txt.INF_CLR, txt.NO_CHANGE))
-
-    def build_fasttrack_mirror_list(self, number):
-        """Fast-track the mirrorlist by aggressive sorting"""
-        temp = sorted(self.mirrors.mirrorlist, key=itemgetter("branches",
-                                                              "last_sync"),
-                      reverse=True)
-        temp = sorted(temp, key=itemgetter("last_sync"), reverse=False)
-        ftlist = []
-        print(".: {}: {} - {}".format(txt.INF_CLR, txt.QUERY_MIRRORS, txt.TAKES_TIME))
-        counter = 0
-        for mirror in temp:
-            resp_time = HttpFn.get_mirror_response(mirror["url"], quiet=self.quiet)
-            print("   ..... {:<15}: {}: {}".format(mirror["country"],
-                                                   mirror["last_sync"],
-                                                   mirror["url"]),
-                  end='')
-            sys.stdout.flush()
-            mirror["resp_time"] = resp_time
-            print("\r   {:<5}{}{} ".format(txt.GS, resp_time, txt.CE))
-            if resp_time == txt.SERVER_RES:
-                continue
-            ftlist.append(mirror)
-            counter += 1
-            if counter == number:
-                break
-        ftlist = sorted(ftlist, key=itemgetter("resp_time"))
-        FileFn.output_mirror_list(self.config["branch"],
-                                  self.config["mirror_list"],
-                                  ftlist,
-                                  self.quiet)
 
     def disable_custom_config(self):
         """Perform reset of custom configuration"""
@@ -419,7 +373,7 @@ class PacmanMirrors:
     def run(self):
         """Run"""
         FileFn.dir_must_exist(MIRROR_DIR)
-        self.config = self.build_config()
+        self.config = ConfigFn.build_config()
         self.command_line_parse()
         self.network = HttpFn.update_mirrors()
         self.load_all_mirrors()

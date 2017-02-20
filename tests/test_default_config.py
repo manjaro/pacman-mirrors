@@ -11,6 +11,7 @@ import unittest
 from unittest.mock import patch
 
 from pacman_mirrors.pacman_mirrors import PacmanMirrors
+from pacman_mirrors.configfn import ConfigFn
 
 
 class TestDefaultConfig(unittest.TestCase):
@@ -27,7 +28,7 @@ class TestDefaultConfig(unittest.TestCase):
                                  ["pacman-mirrors",
                                   "-g"]):
             app = PacmanMirrors()
-            app.config = app.build_config()
+            app.config = ConfigFn.build_config()
             assert app.config["branch"] == "stable"
 
     @patch("os.getuid")
@@ -38,7 +39,7 @@ class TestDefaultConfig(unittest.TestCase):
                                  ["pacman-mirrors",
                                   "-g"]):
             app = PacmanMirrors()
-            app.config = app.build_config()
+            app.config = ConfigFn.build_config()
             assert app.config["method"] == "rank"
 
     @patch("os.getuid")
@@ -49,7 +50,7 @@ class TestDefaultConfig(unittest.TestCase):
                                  ["pacman-mirrors",
                                   "-g"]):
             app = PacmanMirrors()
-            app.config = app.build_config()
+            app.config = ConfigFn.build_config()
             assert app.config["mirror_dir"] == "mock/var/"
 
     @patch("os.getuid")
@@ -60,7 +61,7 @@ class TestDefaultConfig(unittest.TestCase):
                                  ["pacman-mirrors",
                                   "-g"]):
             app = PacmanMirrors()
-            app.config = app.build_config()
+            app.config = ConfigFn.build_config()
             assert app.config["mirror_file"] == "mock/var/mirrors.json"
 
     @patch("os.getuid")
@@ -71,7 +72,7 @@ class TestDefaultConfig(unittest.TestCase):
                                  ["pacman-mirrors",
                                   "-g"]):
             app = PacmanMirrors()
-            app.config = app.build_config()
+            app.config = ConfigFn.build_config()
             assert app.config["mirror_list"] == "mock/etc/mirrorlist"
 
     @patch("os.getuid")
@@ -82,7 +83,7 @@ class TestDefaultConfig(unittest.TestCase):
                                  ["pacman-mirrors",
                                   "-g"]):
             app = PacmanMirrors()
-            app.config = app.build_config()
+            app.config = ConfigFn.build_config()
             assert app.config["no_update"] is False
 
     # @patch("os.getuid")
@@ -94,7 +95,7 @@ class TestDefaultConfig(unittest.TestCase):
     #                               "-g"]):
     #         app = PacmanMirrors()
     #         app.config = {}
-    #         app.config = app.build_config()
+    #         app.config = ConfigFn.build_config()
     #         assert app.config["only_country"] == []
 
     def tearDown(self):

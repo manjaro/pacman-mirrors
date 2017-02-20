@@ -12,7 +12,7 @@ from unittest.mock import patch
 
 from pacman_mirrors.httpfn import HttpFn
 from pacman_mirrors.pacman_mirrors import PacmanMirrors
-from pacman_mirrors.mirrorfn import MirrorFn
+from pacman_mirrors.configfn import ConfigFn
 
 
 class TestGeoip(unittest.TestCase):
@@ -31,7 +31,7 @@ class TestGeoip(unittest.TestCase):
                                  ["pacman-mirrors",
                                   "--geoip"]):
             app = PacmanMirrors()
-            app.config = app.build_config()
+            app.config = ConfigFn.build_config()
             app.command_line_parse()
             app.load_all_mirrors()
             assert app.selected_countries == "France"
@@ -47,7 +47,7 @@ class TestGeoip(unittest.TestCase):
                                   "-g",
                                   "--geoip"]):
             app = PacmanMirrors()
-            app.config = app.build_config()
+            app.config = ConfigFn.build_config()
             app.command_line_parse()
             app.load_all_mirrors()
             assert app.selected_countries == app.mirrors.countrylist
