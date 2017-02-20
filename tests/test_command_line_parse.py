@@ -133,7 +133,7 @@ class TestCommandLineParse(unittest.TestCase):
         mock_os_getuid.return_value = 0
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
-                                  "-f 5"]):
+                                  "-i"]):
             app = PacmanMirrors()
             app.config = app.build_config()
             app.command_line_parse()
