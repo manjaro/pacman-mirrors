@@ -13,89 +13,101 @@ from unittest.mock import patch
 from pacman_mirrors.pacman_mirrors import PacmanMirrors
 
 
-class TestDefaultConfig(unittest.TestCase):
+class TestInitialValues(unittest.TestCase):
     """Pacman Mirrors Test suite"""
     def setUp(self):
         """Setup tests"""
         pass
 
     @patch("os.getuid")
-    def test_default_branch(self, mock_os_getuid):
-        """TEST: config[branch] = stable"""
+    def test_initial_custom(self, mock_os_getuid):
+        """TEST: custom is False"""
         mock_os_getuid.return_value = 0
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
                                   "-g"]):
             app = PacmanMirrors()
-            app.config = app.build_config()
-            assert app.config["branch"] == "stable"
+            assert app.custom is False
 
     @patch("os.getuid")
-    def test_default_method(self, mock_os_getuid):
-        """TEST: config[method] = rank"""
+    def test_initial_fasttrack(self, mock_os_getuid):
+        """TEST: fasttrack is False"""
         mock_os_getuid.return_value = 0
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
                                   "-g"]):
             app = PacmanMirrors()
-            app.config = app.build_config()
-            assert app.config["method"] == "rank"
+            assert app.fasttrack is False
 
     @patch("os.getuid")
-    def test_default_mirrordir(self, mock_os_getuid):
-        """TEST: config[mirror_dir] = mock/var/"""
+    def test_initial_geoip(self, mock_os_getuid):
+        """TEST: custom is False"""
         mock_os_getuid.return_value = 0
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
                                   "-g"]):
             app = PacmanMirrors()
-            app.config = app.build_config()
-            assert app.config["mirror_dir"] == "mock/var/"
+            assert app.geoip is False
 
     @patch("os.getuid")
-    def test_default_mirrorfile(self, mock_os_getuid):
-        """TEST: config[mirror_file] = mock/var/mirrors.json"""
+    def test_initial_interactive(self, mock_os_getuid):
+        """TEST: custom is False"""
         mock_os_getuid.return_value = 0
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
                                   "-g"]):
             app = PacmanMirrors()
-            app.config = app.build_config()
-            assert app.config["mirror_file"] == "mock/var/mirrors.json"
+            assert app.interactive is False
 
     @patch("os.getuid")
-    def test_default_mirrorlist(self, mock_os_getuid):
-        """TEST: config[mirror_list] = mock/etc/mirrorlist"""
+    def test_initial_max_wait_time(self, mock_os_getuid):
+        """TEST: custom is False"""
         mock_os_getuid.return_value = 0
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
                                   "-g"]):
             app = PacmanMirrors()
-            app.config = app.build_config()
-            assert app.config["mirror_list"] == "mock/etc/mirrorlist"
+            assert app.max_wait_time == 2
 
     @patch("os.getuid")
-    def test_default_noupdate(self, mock_os_getuid):
-        """TEST: config[no_update] = False"""
+    def test_initial_network(self, mock_os_getuid):
+        """TEST: custom is False"""
         mock_os_getuid.return_value = 0
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
                                   "-g"]):
             app = PacmanMirrors()
-            app.config = app.build_config()
-            assert app.config["no_update"] is False
+            assert app.network is True
 
     @patch("os.getuid")
-    def test_default_onlycountry(self, mock_os_getuid):
-        """TEST: config[only_country] = []"""
+    def test_initial_nodisplay(self, mock_os_getuid):
+        """TEST: custom is False"""
         mock_os_getuid.return_value = 0
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
                                   "-g"]):
             app = PacmanMirrors()
-            app.config = {}
-            app.config = app.build_config()
-            assert app.config["only_country"] == []
+            assert app.no_display is False
+
+    @patch("os.getuid")
+    def test_initial_quiet(self, mock_os_getuid):
+        """TEST: custom is False"""
+        mock_os_getuid.return_value = 0
+        with unittest.mock.patch("sys.argv",
+                                 ["pacman-mirrors",
+                                  "-g"]):
+            app = PacmanMirrors()
+            assert app.quiet is False
+
+    @patch("os.getuid")
+    def test_initial_selected_countries(self, mock_os_getuid):
+        """TEST: selected_countries = []"""
+        mock_os_getuid.return_value = 0
+        with unittest.mock.patch("sys.argv",
+                                 ["pacman-mirrors",
+                                  "-g"]):
+            app = PacmanMirrors()
+            assert app.selected_countries == []
 
     def tearDown(self):
         """Tear down"""

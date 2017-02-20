@@ -103,6 +103,18 @@ class TestCommandLineParse(unittest.TestCase):
             app.command_line_parse()
             assert app.geoip is True
 
+    @patch("os.getuid")
+    def test_args_geoip(self, mock_os_getuid):
+        """TEST: self.custom from arg -c Denmark"""
+        mock_os_getuid.return_value = 0
+        with unittest.mock.patch("sys.argv",
+                                 ["pacman-mirrors",
+                                  "-c Denmark"]):
+            app = PacmanMirrors()
+            app.config = app.build_config()
+            app.command_line_parse()
+            assert app.custom is True
+
     def tearDown(self):
         """Tear down"""
         pass
