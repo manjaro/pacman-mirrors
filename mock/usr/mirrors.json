@@ -129,14 +129,6 @@
         "url": "http://mirrors.tuna.tsinghua.edu.cn/manjaro/"
     },
     {
-        "country": "China",
-        "protocols": [
-            "http",
-            "https"
-        ],
-        "url": "https://mirrors.zju.edu.cn/manjaro/"
-    },
-    {
         "country": "Colombia",
         "protocols": [
             "http"
@@ -273,9 +265,9 @@
     {
         "country": "Germany",
         "protocols": [
-            "http"
+            "https"
         ],
-        "url": "http://mirrors.cicku.me/manjaro/"
+        "url": "https://mirrors.cicku.me/manjaro/"
     },
     {
         "country": "Germany",
