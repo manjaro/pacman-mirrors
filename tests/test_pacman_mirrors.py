@@ -31,6 +31,7 @@ class TestPacmanMirrors(unittest.TestCase):
                                   "-m", "random"]):
             app = PacmanMirrors()
             app.config = ConfigFn.build_config()
+            app.config["config_file"] = "conf/pacman-mirrors.conf"
             app.command_line_parse()
             app.network = HttpFn.update_mirrors()
             app.load_all_mirrors()

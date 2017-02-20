@@ -200,10 +200,14 @@ class PacmanMirrors:
                                   worklist,
                                   quiet=self.quiet)
         if self.custom or self.config["only_country"] != self.mirrors.mirrorlist:
-            CustomFn.modify_config(self.config["only_country"],
+            CustomFn.modify_config(self.config["config_file"],
+                                   self.config["custom_file"],
+                                   self.config["only_country"],
                                    custom=True)
         else:
-            CustomFn.modify_config(self.config["only_country"])
+            CustomFn.modify_config(self.config["config_file"],
+                                   self.config["custom_file"],
+                                   self.config["only_country"])
 
     def build_fasttrack_mirror_list(self, number):
         """Fast-track the mirrorlist by aggressive sorting"""
@@ -293,9 +297,12 @@ class PacmanMirrors:
                                           worklist,
                                           custom=True,
                                           quiet=self.quiet)
-                # always use "Custom" from interactive
+                # always use "Custom" when interactive mode
                 self.config["only_country"] = ["Custom"]
-                CustomFn.modify_config(self.config["only_country"], custom=True)
+                CustomFn.modify_config(self.config["config_file"],
+                                       self.config["custom_file"],
+                                       self.config["only_country"],
+                                       custom=True)
                 print(".: {} {}: {}".format(txt.INF_CLR,
                                             txt.MIRROR_LIST_SAVED,
                                             CUSTOM_FILE))

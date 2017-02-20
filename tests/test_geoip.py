@@ -32,6 +32,7 @@ class TestGeoip(unittest.TestCase):
                                   "--geoip"]):
             app = PacmanMirrors()
             app.config = ConfigFn.build_config()
+            app.config["config_file"] = "conf/pacman-mirrors.conf"
             app.command_line_parse()
             app.load_all_mirrors()
             assert app.selected_countries == "France"
@@ -48,6 +49,7 @@ class TestGeoip(unittest.TestCase):
                                   "--geoip"]):
             app = PacmanMirrors()
             app.config = ConfigFn.build_config()
+            app.config["config_file"] = "conf/pacman-mirrors.conf"
             app.command_line_parse()
             app.load_all_mirrors()
             assert app.selected_countries == app.mirrors.countrylist

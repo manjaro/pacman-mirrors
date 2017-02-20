@@ -56,44 +56,44 @@ class CustomFn:
                 CustomHelper.cleanup()
 
     @staticmethod
-    def modify_config(onlycountry, custom=False):
+    def modify_config(configfile, customfile, onlycountry, custom=False):
         """Modify configuration"""
         if not custom:
-            if os.path.isfile(CUSTOM_FILE):
-                os.remove(CUSTOM_FILE)
-        CustomFn.write_custom_config(CONFIG_FILE, onlycountry, custom)
+            if os.path.isfile(customfile):
+                os.remove(customfile)
+        CustomFn.write_custom_config(configfile, onlycountry, custom)
 
     @staticmethod
-    def write_custom_config(filename, selection, custom=False):
+    def write_custom_config(configfile, selectedcountries, custom=False):
         """Writes the configuration to file
-        :param filename:
-        :param selection:
+        :param configfile:
+        :param selectedcountries:
         :param custom:
         """
         if custom:
-            if selection == ["Custom"]:
-                new_config = "OnlyCountry = Custom\n"
+            if selectedcountries == ["Custom"]:
+                selectedcountries = "OnlyCountry = Custom\n"
             else:
-                new_config = "OnlyCountry = {list}\n".format(
-                    list=",".join(selection))
+                selectedcountries = "OnlyCountry = {list}\n".format(
+                    list=",".join(selectedcountries))
         else:
-            new_config = "# OnlyCountry = \n"
+            selectedcountries = "# OnlyCountry = \n"
         try:
             with open(
-                filename) as cnf, tempfile.NamedTemporaryFile(
+                configfile) as cnf, tempfile.NamedTemporaryFile(
                 "w+t", dir=os.path.dirname(
-                    filename), delete=False) as tmp:
+                    configfile), delete=False) as tmp:
                 replaced = False
                 for line in cnf:
                     if "OnlyCountry" in line:
-                        tmp.write(new_config)
+                        tmp.write(selectedcountries)
                         replaced = True
                     else:
                         tmp.write("{}".format(line))
                 if not replaced:
-                    tmp.write(new_config)
-            os.replace(tmp.name, filename)
-            os.chmod(filename, 0o644)
+                    tmp.write(selectedcountries)
+            os.replace(tmp.name, configfile)
+            os.chmod(configfile, 0o644)
         except OSError as err:
             print(".: {} {}: {}: {}".format(txt.ERR_CLR, txt.CANNOT_READ_FILE,
                                             err.filename, err.strerror))
