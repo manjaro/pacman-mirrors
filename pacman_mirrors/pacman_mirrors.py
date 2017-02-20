@@ -73,6 +73,7 @@ class PacmanMirrors:
         self.quiet = False
         # Time out
         self.max_wait_time = 2
+        # default config
         self.config = {}
 
     @staticmethod
@@ -81,7 +82,7 @@ class PacmanMirrors:
         # initialising defaults
         # information which can differ from these defaults
         # is fetched from config file
-        build_cfg = {
+        config = {
             "mirror_file": MIRROR_FILE,
             "branch": "stable",
             "method": "rank",
@@ -104,23 +105,23 @@ class PacmanMirrors:
                         if value.startswith("\"") and value.endswith("\""):
                             value = value[1:-1]
                         if key == "Method":
-                            build_cfg["method"] = value
+                            config["method"] = value
                         elif key == "Branch":
-                            build_cfg["branch"] = value
+                            config["branch"] = value
                         elif key == "OnlyCountry":
-                            build_cfg["only_country"] = value.split(",")
+                            config["only_country"] = value.split(",")
                         elif key == "MirrorlistsDir":
-                            build_cfg["mirror_dir"] = value
+                            config["mirror_dir"] = value
                         elif key == "OutputMirrorlist":
-                            build_cfg["mirror_list"] = value
+                            config["mirror_list"] = value
                         elif key == "NoUpdate":
-                            build_cfg["no_update"] = value
+                            config["no_update"] = value
         except (PermissionError, OSError) as err:
             print(".: {} {}: {}: {}".format(txt.ERR_CLR,
                                             txt.CANNOT_READ_FILE,
                                             err.filename,
                                             err.strerror))
-        return build_cfg
+        return config
 
     def command_line_parse(self):
         """Read the arguments of the command line"""
