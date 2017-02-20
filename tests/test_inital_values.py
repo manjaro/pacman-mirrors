@@ -37,7 +37,7 @@ class TestInitialValues(unittest.TestCase):
                                  ["pacman-mirrors",
                                   "-g"]):
             app = PacmanMirrors()
-            assert app.fasttrack is False
+            assert app.fasttrack is None
 
     @patch("os.getuid")
     def test_initial_geoip(self, mock_os_getuid):

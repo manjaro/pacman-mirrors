@@ -92,8 +92,20 @@ class TestCommandLineParse(unittest.TestCase):
             assert app.config["only_country"] == ["France", "Germany"]
 
     @patch("os.getuid")
+    def test_args_custom_country(self, mock_os_getuid):
+        """TEST: custom is True from arg -c Denmark"""
+        mock_os_getuid.return_value = 0
+        with unittest.mock.patch("sys.argv",
+                                 ["pacman-mirrors",
+                                  "-c Denmark"]):
+            app = PacmanMirrors()
+            app.config = app.build_config()
+            app.command_line_parse()
+            assert app.custom is True
+
+    @patch("os.getuid")
     def test_args_geoip(self, mock_os_getuid):
-        """TEST: self.geoip from arg --geoip"""
+        """TEST: geoip True from arg --geoip"""
         mock_os_getuid.return_value = 0
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
@@ -104,16 +116,52 @@ class TestCommandLineParse(unittest.TestCase):
             assert app.geoip is True
 
     @patch("os.getuid")
-    def test_args_geoip(self, mock_os_getuid):
-        """TEST: self.custom from arg -c Denmark"""
+    def test_args_fasttrack(self, mock_os_getuid):
+        """TEST: fasttrack is 5 from arg -f 5"""
         mock_os_getuid.return_value = 0
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
-                                  "-c Denmark"]):
+                                  "-f 5"]):
             app = PacmanMirrors()
             app.config = app.build_config()
             app.command_line_parse()
-            assert app.custom is True
+            assert app.fasttrack == 5
+
+    @patch("os.getuid")
+    def test_args_interactive(self, mock_os_getuid):
+        """TEST: interactive is true from arg -i"""
+        mock_os_getuid.return_value = 0
+        with unittest.mock.patch("sys.argv",
+                                 ["pacman-mirrors",
+                                  "-f 5"]):
+            app = PacmanMirrors()
+            app.config = app.build_config()
+            app.command_line_parse()
+            assert app.interactive is True
+
+    @patch("os.getuid")
+    def test_args_max_wait_time(self, mock_os_getuid):
+        """TEST: max_wait_time is 5 from arg -t 5"""
+        mock_os_getuid.return_value = 0
+        with unittest.mock.patch("sys.argv",
+                                 ["pacman-mirrors",
+                                  "-t 5"]):
+            app = PacmanMirrors()
+            app.config = app.build_config()
+            app.command_line_parse()
+            assert app.max_wait_time == 5
+
+    @patch("os.getuid")
+    def test_args_quiet(self, mock_os_getuid):
+        """TEST: quiet is True from arg -q"""
+        mock_os_getuid.return_value = 0
+        with unittest.mock.patch("sys.argv",
+                                 ["pacman-mirrors",
+                                  "-q"]):
+            app = PacmanMirrors()
+            app.config = app.build_config()
+            app.command_line_parse()
+            assert app.quiet is True
 
     def tearDown(self):
         """Tear down"""
