@@ -23,6 +23,7 @@ import os
 import datetime
 from .configuration import FALLBACK, MIRROR_FILE, REPO_ARCH, STATUS_FILE
 from .jsonfn import JsonFn
+from .miscfn import MiscFn
 from . import txt
 
 

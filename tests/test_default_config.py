@@ -29,7 +29,6 @@ class TestDefaultConfig(unittest.TestCase):
                                   "-g"]):
             app = PacmanMirrors()
             app.config = ConfigFn.build_config()
-            app.config["config_file"] = "conf/pacman-mirrors.conf"
             assert app.config["branch"] == "stable"
 
     @patch("os.getuid")
@@ -41,7 +40,6 @@ class TestDefaultConfig(unittest.TestCase):
                                   "-g"]):
             app = PacmanMirrors()
             app.config = ConfigFn.build_config()
-            app.config["config_file"] = "conf/pacman-mirrors.conf"
             assert app.config["method"] == "rank"
 
     @patch("os.getuid")
@@ -53,7 +51,6 @@ class TestDefaultConfig(unittest.TestCase):
                                   "-g"]):
             app = PacmanMirrors()
             app.config = ConfigFn.build_config()
-            app.config["config_file"] = "conf/pacman-mirrors.conf"
             assert app.config["mirror_dir"] == "mock/var/"
 
     @patch("os.getuid")
@@ -65,7 +62,6 @@ class TestDefaultConfig(unittest.TestCase):
                                   "-g"]):
             app = PacmanMirrors()
             app.config = ConfigFn.build_config()
-            app.config["config_file"] = "conf/pacman-mirrors.conf"
             assert app.config["mirror_file"] == "mock/var/mirrors.json"
 
     @patch("os.getuid")
@@ -77,7 +73,6 @@ class TestDefaultConfig(unittest.TestCase):
                                   "-g"]):
             app = PacmanMirrors()
             app.config = ConfigFn.build_config()
-            app.config["config_file"] = "conf/pacman-mirrors.conf"
             assert app.config["mirror_list"] == "mock/etc/mirrorlist"
 
     @patch("os.getuid")
@@ -89,7 +84,6 @@ class TestDefaultConfig(unittest.TestCase):
                                   "-g"]):
             app = PacmanMirrors()
             app.config = ConfigFn.build_config()
-            app.config["config_file"] = "conf/pacman-mirrors.conf"
             assert app.config["no_update"] is False
 
     # @patch("os.getuid")
