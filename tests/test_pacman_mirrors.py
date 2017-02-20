@@ -12,7 +12,6 @@ from unittest.mock import patch
 
 from pacman_mirrors.httpfn import HttpFn
 from pacman_mirrors.pacman_mirrors import PacmanMirrors
-from pacman_mirrors.mirrorfn import MirrorFn
 
 
 class TestPacmanMirrors(unittest.TestCase):
@@ -32,7 +31,7 @@ class TestPacmanMirrors(unittest.TestCase):
             app = PacmanMirrors()
             app.config = app.build_config()
             app.command_line_parse()
-            # app.network = HttpFn.update_mirrors()
+            app.network = HttpFn.update_mirrors()
             app.load_all_mirrors()
             # actual generation
             if app.fasttrack:
@@ -42,19 +41,6 @@ class TestPacmanMirrors(unittest.TestCase):
                     app.build_interactive_mirror_list()
                 else:
                     app.build_common_mirror_list()
-
-    @patch("os.getuid")
-    def test_run_country(self, mock_os_getuid):
-        """pacman-mirrors -c Germany"""
-        mock_os_getuid.return_value = 0
-        with unittest.mock.patch("sys.argv",
-                                 ["pacman-mirrors",
-                                  "-c", "Germany"]):
-            app = PacmanMirrors()
-            app.config = app.build_config()
-            app.command_line_parse()
-            app.load_all_mirrors()
-            assert app.config["only_country"] == ["Germany"]
 
     # @patch("os.getuid")
     # @patch.object(HttpFn, "get_geoip_country")

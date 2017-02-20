@@ -10,9 +10,7 @@ Tests for `pacman-mirrors` module.
 import unittest
 from unittest.mock import patch
 
-from pacman_mirrors.httpfn import HttpFn
 from pacman_mirrors.pacman_mirrors import PacmanMirrors
-from pacman_mirrors.mirrorfn import MirrorFn
 
 
 class TestDefaultConfig(unittest.TestCase):
