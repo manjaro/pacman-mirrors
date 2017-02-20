@@ -29,7 +29,7 @@ if DEVELOPMENT:
     URL_STATUS_JSON = "http://repo.manjaro.org/status.json"
     # etc
     CONFIG_FILE = "mock/etc/pacman-mirrors.conf"
-    MIRROR_LIST = "mock/mirrorlist"
+    MIRROR_LIST = "mock/etc/mirrorlist"
     # pacman-mirrors
     MIRROR_DIR = "mock/var/"
     CUSTOM_FILE = MIRROR_DIR + "custom-mirrors.json"
