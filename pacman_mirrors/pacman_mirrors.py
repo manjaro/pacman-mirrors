@@ -60,21 +60,17 @@ class PacmanMirrors:
 
     def __init__(self):
         """Init"""
-        # Lists
-        self.mirrors = Mirror()
-        self.selected_countries = []        # users selected countries
-        # Decisions
+        self.config = {}
         self.custom = False
         self.fasttrack = None
         self.geoip = False
         self.interactive = False
+        self.max_wait_time = 2
+        self.mirrors = Mirror()
         self.network = True
         self.no_display = False
         self.quiet = False
-        # Time out
-        self.max_wait_time = 2
-        # default config
-        self.config = {}
+        self.selected_countries = []        # users selected countries
 
     @staticmethod
     def build_config():
@@ -83,10 +79,10 @@ class PacmanMirrors:
         # information which can differ from these defaults
         # is fetched from config file
         config = {
-            "mirror_file": MIRROR_FILE,
             "branch": "stable",
             "method": "rank",
             "mirror_dir": MIRROR_DIR,
+            "mirror_file": MIRROR_FILE,
             "mirror_list": MIRROR_LIST,
             "no_update": False,
             "only_country": [],
