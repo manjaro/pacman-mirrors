@@ -20,27 +20,26 @@ class TestPacmanMirrors(unittest.TestCase):
         """Setup tests"""
         pass
 
-    # @patch("os.getuid")
-    # def test_run(self, mock_os_getuid):
-    #     """Run pacman-mirrors"""
-    #     mock_os_getuid.return_value = 0
-    #     with unittest.mock.patch("sys.argv",
-    #                              ["pacman-mirrors",
-    #                               "-g",
-    #                               "-m", "random"]):
-    #         app = PacmanMirrors()
-    #         app.config = app.build_config()
-    #         app.command_line_parse()
-    #         app.load_all_mirrors()
-    #         # actual generation
-    #         if app.fasttrack:
-    #             app.build_fasttrack_mirror_list(app.fasttrack)
-    #         else:
-    #             app.generate_server_lists()
-    #             if app.interactive:
-    #                 app.build_interactive_mirror_list()
-    #             else:
-    #                 app.build_common_mirror_list()
+    @patch("os.getuid")
+    def test_run(self, mock_os_getuid):
+        """Run pacman-mirrors"""
+        mock_os_getuid.return_value = 0
+        with unittest.mock.patch("sys.argv",
+                                 ["pacman-mirrors",
+                                  "-g",
+                                  "-m", "random"]):
+            app = PacmanMirrors()
+            app.config = app.build_config()
+            app.command_line_parse()
+            app.load_all_mirrors()
+            # actual generation
+            if app.fasttrack:
+                app.build_fasttrack_mirror_list(app.fasttrack)
+            else:
+                if app.interactive:
+                    app.build_interactive_mirror_list()
+                else:
+                    app.build_common_mirror_list()
     #
     # @patch("os.getuid")
     # def test_run_country(self, mock_os_getuid):
