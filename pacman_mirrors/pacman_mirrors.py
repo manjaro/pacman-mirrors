@@ -266,7 +266,7 @@ class PacmanMirrors:
         if self.config["method"] == "rank":
             self.test_mirrors()
         interactive_list = []
-        worklist = MirrorFn.filter_mirror_list(self.mirrors.mirrorlist, countrylist)
+        worklist = MirrorFn.filter_mirror_list(self.mirrors.mirrorlist, self.selected_countries)
         for mirror in worklist:
             interactive_list.append({
                 "country": mirror["country"],
