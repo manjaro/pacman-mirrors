@@ -42,21 +42,22 @@ class TestPacmanMirrors(unittest.TestCase):
                 else:
                     app.build_common_mirror_list()
 
-    # @patch("os.getuid")
-    # def test_run_country(self, mock_os_getuid):
-    #     """Single country via commandline"""
-    #     mock_os_getuid.return_value = 0
-    #     with unittest.mock.patch("sys.argv",
-    #                              ["pacman-mirrors",
-    #                               "-c", "Germany"]):
-    #         app = PacmanMirrors()
-    #         app.config = app.build_config()
-    #         app.command_line_parse()
-    #         app.load_all_mirrors()
-    #
-    #         assert app.config["only_country"] == ["Germany"]
-    #         assert app.selected_countries == ["Germany"]
-    #
+    @patch("os.getuid")
+    def test_run_country(self, mock_os_getuid):
+        """Single country from argument -c"""
+        mock_os_getuid.return_value = 0
+        with unittest.mock.patch("sys.argv",
+                                 ["pacman-mirrors",
+                                  "-g",
+                                  "-c", "Germany"]):
+            app = PacmanMirrors()
+            app.config = app.build_config()
+            app.command_line_parse()
+            app.network = HttpFn.update_mirrors()
+            app.load_all_mirrors()
+
+            assert app.config["only_country"] == ["Germany"]
+
     # @patch("os.getuid")
     # @patch.object(HttpFn, "get_geoip_country")
     # def test_geoip_is_available(self, mock_geoip, mock_os_getuid):
