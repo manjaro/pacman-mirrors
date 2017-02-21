@@ -15,7 +15,7 @@ from pacman_mirrors.pacman_mirrors import PacmanMirrors
 from pacman_mirrors.configfn import ConfigFn
 
 
-class TestGeoip(unittest.TestCase):
+class TestHttpFn(unittest.TestCase):
     """Pacman Mirrors Test suite"""
     def setUp(self):
         """Setup tests"""
