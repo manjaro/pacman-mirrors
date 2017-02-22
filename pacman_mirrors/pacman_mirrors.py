@@ -245,6 +245,9 @@ class PacmanMirrors:
                                                self.selected_countries)
         if self.config["method"] == "rank":
             worklist = self.test_mirrors(worklist)
+            sorted(worklist, key=itemgetter("resp_time"))
+        else:
+            shuffle(worklist)
 
         interactive_list = []
         for mirror in worklist:
@@ -254,11 +257,6 @@ class PacmanMirrors:
                 "last_sync": mirror["last_sync"],
                 "url": mirror["url"]
             })
-
-        if self.config["method"] == "random":
-            shuffle(interactive_list)
-        else:
-            interactive_list = sorted(interactive_list, key=itemgetter("resp_time"))
 
         if self.no_display:
             from . import consoleui as ui
