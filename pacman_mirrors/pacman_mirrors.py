@@ -41,6 +41,7 @@ from .httpfn import HttpFn
 from .jsonfn import JsonFn
 from .mirror import Mirror
 from .mirrorfn import MirrorFn
+from .miscfn import MiscFn
 from .validfn import ValidFn
 from . import i18n
 from . import txt
@@ -245,7 +246,7 @@ class PacmanMirrors:
                                                self.selected_countries)
         if self.config["method"] == "rank":
             worklist = self.test_mirrors(worklist)
-            sorted(worklist, key=itemgetter("resp_time"))
+            worklist = sorted(worklist, key=itemgetter("resp_time"))
         else:
             shuffle(worklist)
 
@@ -309,6 +310,7 @@ class PacmanMirrors:
 
     def load_all_mirrors(self):
         """Load mirrors"""
+        MiscFn.debug("ENTER: load_all_mirrors", "config['only_country']", self.config["only_country"])
         if self.config["only_country"] == ["all"]:
             self.disable_custom_config()
 
@@ -316,6 +318,8 @@ class PacmanMirrors:
         if self.config["only_country"] == ["Custom"]:
             if not ValidFn.custom_config_is_valid():
                 self.disable_custom_config()
+            else:
+                self.custom = True
         else:
             self.selected_countries = self.config["only_country"]
 
