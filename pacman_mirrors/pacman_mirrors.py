@@ -118,7 +118,6 @@ class PacmanMirrors:
         parser.add_argument("-q", "--quiet",
                             action="store_true",
                             help=txt.HLP_ARG_QUIET)
-        # TODO: experimental arguments
         parser.add_argument("-f", "--fasttrack",
                             type=int,
                             metavar=txt.DIGIT,
@@ -389,12 +388,10 @@ class PacmanMirrors:
             else:
                 self.build_common_mirror_list()
 
-        # # TODO: Eventually remove in production
-        if DEVELOPMENT:
-            print("{}.:! Pacman-Mirrors {} - {} {}".format(txt.YS,
-                                                           __version__,
-                                                           DESCRIPTION,
-                                                           txt.CE))
+        print("{}.:! Pacman-Mirrors {} - {} {}".format(txt.YS,
+                                                       __version__,
+                                                       DESCRIPTION,
+                                                       txt.CE))
 
 
 if __name__ == "__main__":
