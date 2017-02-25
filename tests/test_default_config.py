@@ -28,6 +28,7 @@ class TestDefaultConfig(unittest.TestCase):
                                  ["pacman-mirrors",
                                   "-g"]):
             app = PacmanMirrors()
+            app.configfile = "conf/pacman-mirrors.conf"
             app.config = ConfigFn.build_config()
             assert app.config["branch"] == "stable"
 
@@ -39,6 +40,7 @@ class TestDefaultConfig(unittest.TestCase):
                                  ["pacman-mirrors",
                                   "-g"]):
             app = PacmanMirrors()
+            app.configfile = "conf/pacman-mirrors.conf"
             app.config = ConfigFn.build_config()
             assert app.config["method"] == "rank"
 
@@ -50,6 +52,7 @@ class TestDefaultConfig(unittest.TestCase):
                                  ["pacman-mirrors",
                                   "-g"]):
             app = PacmanMirrors()
+            app.configfile = "conf/pacman-mirrors.conf"
             app.config = ConfigFn.build_config()
             assert app.config["mirror_dir"] == "mock/var/"
 
@@ -61,6 +64,7 @@ class TestDefaultConfig(unittest.TestCase):
                                  ["pacman-mirrors",
                                   "-g"]):
             app = PacmanMirrors()
+            app.configfile = "conf/pacman-mirrors.conf"
             app.config = ConfigFn.build_config()
             assert app.config["mirror_file"] == "mock/var/mirrors.json"
 
@@ -72,6 +76,7 @@ class TestDefaultConfig(unittest.TestCase):
                                  ["pacman-mirrors",
                                   "-g"]):
             app = PacmanMirrors()
+            app.configfile = "conf/pacman-mirrors.conf"
             app.config = ConfigFn.build_config()
             assert app.config["mirror_list"] == "mock/etc/mirrorlist"
 
@@ -83,6 +88,7 @@ class TestDefaultConfig(unittest.TestCase):
                                  ["pacman-mirrors",
                                   "-g"]):
             app = PacmanMirrors()
+            app.configfile = "conf/pacman-mirrors.conf"
             app.config = ConfigFn.build_config()
             assert app.config["no_update"] is False
 

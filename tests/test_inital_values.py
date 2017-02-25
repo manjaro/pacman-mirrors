@@ -27,6 +27,7 @@ class TestInitialValues(unittest.TestCase):
                                  ["pacman-mirrors",
                                   "-g"]):
             app = PacmanMirrors()
+            app.configfile = "conf/pacman-mirrors.conf"
             assert app.custom is False
 
     @patch("os.getuid")
@@ -37,6 +38,7 @@ class TestInitialValues(unittest.TestCase):
                                  ["pacman-mirrors",
                                   "-g"]):
             app = PacmanMirrors()
+            app.configfile = "conf/pacman-mirrors.conf"
             assert app.fasttrack is None
 
     @patch("os.getuid")
@@ -47,6 +49,7 @@ class TestInitialValues(unittest.TestCase):
                                  ["pacman-mirrors",
                                   "-g"]):
             app = PacmanMirrors()
+            app.configfile = "conf/pacman-mirrors.conf"
             assert app.geoip is False
 
     @patch("os.getuid")
@@ -57,6 +60,7 @@ class TestInitialValues(unittest.TestCase):
                                  ["pacman-mirrors",
                                   "-g"]):
             app = PacmanMirrors()
+            app.configfile = "conf/pacman-mirrors.conf"
             assert app.interactive is False
 
     @patch("os.getuid")
@@ -67,6 +71,7 @@ class TestInitialValues(unittest.TestCase):
                                  ["pacman-mirrors",
                                   "-g"]):
             app = PacmanMirrors()
+            app.configfile = "conf/pacman-mirrors.conf"
             assert app.max_wait_time == 2
 
     @patch("os.getuid")
@@ -77,6 +82,7 @@ class TestInitialValues(unittest.TestCase):
                                  ["pacman-mirrors",
                                   "-g"]):
             app = PacmanMirrors()
+            app.configfile = "conf/pacman-mirrors.conf"
             assert app.network is True
 
     @patch("os.getuid")
@@ -87,6 +93,7 @@ class TestInitialValues(unittest.TestCase):
                                  ["pacman-mirrors",
                                   "-g"]):
             app = PacmanMirrors()
+            app.configfile = "conf/pacman-mirrors.conf"
             assert app.no_display is False
 
     @patch("os.getuid")
@@ -97,6 +104,7 @@ class TestInitialValues(unittest.TestCase):
                                  ["pacman-mirrors",
                                   "-g"]):
             app = PacmanMirrors()
+            app.configfile = "conf/pacman-mirrors.conf"
             assert app.quiet is False
 
     @patch("os.getuid")
@@ -107,6 +115,7 @@ class TestInitialValues(unittest.TestCase):
                                  ["pacman-mirrors",
                                   "-g"]):
             app = PacmanMirrors()
+            app.configfile = "conf/pacman-mirrors.conf"
             assert app.selected_countries == []
 
     def tearDown(self):

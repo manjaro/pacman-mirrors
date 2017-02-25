@@ -32,7 +32,7 @@ from pacman_mirrors import __version__
 from random import shuffle
 # CHANGE CONTENT IN configuration
 from .configuration import DEVELOPMENT, DESCRIPTION
-from .configuration import CUSTOM_FILE, MIRROR_DIR
+from .configuration import CONFIG_FILE, CUSTOM_FILE, MIRROR_DIR
 from .configfn import ConfigFn
 from .custom_help_formatter import CustomHelpFormatter
 from .customfn import CustomFn
@@ -60,7 +60,7 @@ class PacmanMirrors:
 
     def __init__(self):
         """Init"""
-        self.config = {}
+        self.configfile = CONFIG_FILE
         self.custom = False
         self.fasttrack = None
         self.geoip = False
@@ -310,7 +310,6 @@ class PacmanMirrors:
 
     def load_all_mirrors(self):
         """Load mirrors"""
-        MiscFn.debug("ENTER: load_all_mirrors", "config['only_country']", self.config["only_country"])
         if self.config["only_country"] == ["all"]:
             self.disable_custom_config()
 
@@ -376,7 +375,7 @@ class PacmanMirrors:
     def run(self):
         """Run"""
         FileFn.dir_must_exist(MIRROR_DIR)
-        self.config = ConfigFn.build_config()
+        self.config = ConfigFn.build_config(self.configfile)
         self.command_line_parse()
         self.network = HttpFn.update_mirrors()
         self.load_all_mirrors()

@@ -31,6 +31,7 @@ class TestHttpFn(unittest.TestCase):
                                  ["pacman-mirrors",
                                   "--geoip"]):
             app = PacmanMirrors()
+            app.configfile = "conf/pacman-mirrors.conf"
             app.config = ConfigFn.build_config()
             app.command_line_parse()
             app.load_all_mirrors()
@@ -47,6 +48,7 @@ class TestHttpFn(unittest.TestCase):
                                   "-g",
                                   "--geoip"]):
             app = PacmanMirrors()
+            app.configfile = "conf/pacman-mirrors.conf"
             app.config = ConfigFn.build_config()
             app.command_line_parse()
             app.load_all_mirrors()
