@@ -33,6 +33,7 @@ class TestHttpFn(unittest.TestCase):
             app = PacmanMirrors()
             app.configfile = "conf/pacman-mirrors.conf"
             app.config = ConfigFn.build_config(app.configfile)
+            app.config["mirror_file"] = "mock/var/mirrors.json"
             app.command_line_parse()
             app.load_all_mirrors()
             assert app.selected_countries == "France"
@@ -50,6 +51,7 @@ class TestHttpFn(unittest.TestCase):
             app = PacmanMirrors()
             app.configfile = "conf/pacman-mirrors.conf"
             app.config = ConfigFn.build_config(app.configfile)
+            app.config["mirror_file"] = "mock/var/mirrors.json"
             app.command_line_parse()
             app.load_all_mirrors()
             assert app.selected_countries == app.mirrors.countrylist

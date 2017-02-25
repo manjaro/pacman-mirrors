@@ -33,6 +33,9 @@ class TestPacmanMirrors(unittest.TestCase):
             app = PacmanMirrors()
             app.configfile = "conf/pacman-mirrors.conf"
             app.config = ConfigFn.build_config(app.configfile)
+            app.config["mirror_dir"] = "mock/var/"
+            app.config["mirror_file"] = "mock/var/mirrors.json"
+            app.config["mirror_list"] = "mock/etc/mirrorlist"
             app.command_line_parse()
             FileFn.dir_must_exist(app.config["mirror_dir"])
             app.network = HttpFn.update_mirrors()
