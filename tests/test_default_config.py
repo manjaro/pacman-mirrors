@@ -44,7 +44,7 @@ class TestDefaultConfig(unittest.TestCase):
 
     @patch("os.getuid")
     def test_default_mirrordir(self, mock_os_getuid):
-        """TEST: config[mirror_dir] = mock/"""
+        """TEST: config[mirror_dir] = mock/var/"""
         mock_os_getuid.return_value = 0
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
@@ -55,7 +55,7 @@ class TestDefaultConfig(unittest.TestCase):
 
     @patch("os.getuid")
     def test_default_mirrorfile(self, mock_os_getuid):
-        """TEST: config[mirror_file] = mock/mirrors.json"""
+        """TEST: config[mirror_file] = mock/var/mirrors.json"""
         mock_os_getuid.return_value = 0
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
@@ -66,7 +66,7 @@ class TestDefaultConfig(unittest.TestCase):
 
     @patch("os.getuid")
     def test_default_mirrorlist(self, mock_os_getuid):
-        """TEST: config[mirror_list] = mock/mirrorlist"""
+        """TEST: config[mirror_list] = mock/etc/mirrorlist"""
         mock_os_getuid.return_value = 0
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
