@@ -390,12 +390,8 @@ class PacmanMirrors:
             else:
                 self.build_common_mirror_list()
 
-        # # TODO: Eventually remove in production
-        if DEVELOPMENT:
-            print("{}.:! Pacman-Mirrors {} - {} {}".format(txt.YS,
-                                                           __version__,
-                                                           DESCRIPTION,
-                                                           txt.CE))
+        # TODO: Eventually remove in production
+        print("{}.:! Pacman-Mirrors {} - {} {}".format(txt.YS, __version__, DESCRIPTION, txt.CE))
 
 
 if __name__ == "__main__":
