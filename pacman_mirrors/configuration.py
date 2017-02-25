@@ -21,7 +21,7 @@
 
 # this is for runing in dev environment
 # TODO: CHANGE BELOW IN PRODUCTION
-DEVELOPMENT = ""
+DEVELOPMENT = "dev"
 DESCRIPTION = "unstable development"
 if DEVELOPMENT:
     # http constants

@@ -20,20 +20,21 @@
 """Pacman-Mirrors Configuration Functions"""
 
 from . import txt
-from .configuration import MIRROR_DIR, MIRROR_FILE, MIRROR_LIST
+from .configuration import CONFIG_FILE, MIRROR_DIR, MIRROR_FILE, MIRROR_LIST
 
 
 class ConfigFn:
     """Configuration Functions"""
 
     @staticmethod
-    def build_config(configfile):
+    def build_config():
         """Get config informations"""
         # initialising defaults
         # information which can differ from these defaults
         # is fetched from config file
         config = {
             "branch": "stable",
+            "config_file": CONFIG_FILE,
             "method": "rank",
             "mirror_dir": MIRROR_DIR,
             "mirror_file": MIRROR_FILE,
@@ -43,7 +44,7 @@ class ConfigFn:
         }
         try:
             # read configuration from file
-            with open(configfile) as conf:
+            with open(config["config_file"]) as conf:
                 for line in conf:
                     line = line.strip()
                     if line.startswith("#") or "=" not in line:
