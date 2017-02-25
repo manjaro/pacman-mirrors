@@ -17,42 +17,40 @@
 #
 # Authors: Frede Hundewadt <frede@hundewadt.dk>
 
-"""
-Pacman-Mirrors
-Console UI Module
-"""
+"""Pacman-Mirrors TUI Module"""
 
 from collections import namedtuple
 import npyscreen
 
-from . console_helpers import ConsoleHelpers
+from . consolefn import ConsoleFn
 from . import i18n
 from . import txt
 
 
-Util = ConsoleHelpers
+Util = ConsoleFn
 _ = i18n.language.gettext
 
 
 class ConsoleUI(npyscreen.NPSAppManaged):
     """App"""
 
-    def __init__(self, server_list):
+    def __init__(self, server_list, random):
         npyscreen.NPSAppManaged.__init__(self)
         # Server lists
         self.server_list = server_list
         self.custom_list = []
         self.is_done = False
+        self.random = random
 
     def main(self):
         """Main"""
         main_server_list = []
         server = namedtuple("Server", ["country",
-                                       "response_time",
+                                       "resp_time",
                                        "last_sync",
                                        "url"])
         header_cols = ({"country": txt.I_COUNTRY,
-                        "response_time": txt.I_RESPONSE,
+                        "resp_time": txt.I_RESPONSE,
                         "last_sync": txt.I_LAST_SYNC,
                         "url": txt.I_URL})
         main_server_list.append(header_cols)
@@ -63,7 +61,10 @@ class ConsoleUI(npyscreen.NPSAppManaged):
                       (server_rows[0].replace("|", " ").strip()))
         del server_rows[0]
         # setup form
-        mainform = npyscreen.Form(name=txt.I_TITLE)
+        if self.random:
+            mainform = npyscreen.Form(name=txt.I_TITLE_RANDOM)
+        else:
+            mainform = npyscreen.Form(name=txt.I_TITLE)
         mainform.add(npyscreen.TitleFixedText, name=txt.I_LIST_TITLE)
         mainform.add(npyscreen.TitleFixedText, name=header_row)
         selected_servers = mainform.add(npyscreen.MultiSelect,
@@ -93,8 +94,8 @@ class ConsoleUI(npyscreen.NPSAppManaged):
         self.setNextForm(None)
 
 
-def run(server_list):
+def run(server_list, random):
     """Run"""
-    app = ConsoleUI(server_list)
+    app = ConsoleUI(server_list, random)
     app.run()
     return app

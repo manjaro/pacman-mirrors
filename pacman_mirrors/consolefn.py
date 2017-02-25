@@ -17,14 +17,11 @@
 #
 # Authors: Frede Hundewadt <frede@hundewadt.dk>
 
-"""
-Pacman-Mirrors
-Utilities Module
-"""
+"""Pacman-Mirrors Console Functions"""
 import json
 
 
-class ConsoleHelpers:
+class ConsoleFn:
     """Console Helpers class"""
 
     @staticmethod
@@ -47,18 +44,17 @@ class ConsoleHelpers:
 
         :param servers: named tuples
         :param joiner: string used to join tuple items
-        :param cols: column names
         :return lines: list of nicely formatted lines
         """
-        lines = []
+        rows = []
         if not servers:
-            return lines
+            return rows
 
         # calculate max col width
-        col_width = [max(len(x) for x in col) for col in zip(*servers)]
+        col_width = [max(len(text) for text in col) for col in zip(*servers)]
 
         # generate linies
         for line in servers:
-            lines.append(joiner.join("{:{}}".format(x, col_width[i])
-                                     for i, x in enumerate(line)))
-        return lines
+            rows.append(joiner.join("{:{}}".format(text, col_width[i])
+                                    for i, text in enumerate(line)))
+        return rows
