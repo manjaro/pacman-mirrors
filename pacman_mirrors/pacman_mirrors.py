@@ -310,7 +310,6 @@ class PacmanMirrors:
 
     def load_all_mirrors(self):
         """Load mirrors"""
-        MiscFn.debug("ENTER: load_all_mirrors", "config['only_country']", self.config["only_country"])
         if self.config["only_country"] == ["all"]:
             self.disable_custom_config()
 
