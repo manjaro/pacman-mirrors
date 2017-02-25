@@ -29,7 +29,7 @@ class TestCommandLineParse(unittest.TestCase):
                                   "-b", "unstable"]):
             app = PacmanMirrors()
             app.configfile = "conf/pacman-mirrors.conf"
-            app.config = ConfigFn.build_config()
+            app.config = ConfigFn.build_config(app.configfile)
             app.command_line_parse()
             assert app.config["branch"] == "unstable"
 
@@ -42,7 +42,7 @@ class TestCommandLineParse(unittest.TestCase):
                                   "-b", "testing"]):
             app = PacmanMirrors()
             app.configfile = "conf/pacman-mirrors.conf"
-            app.config = ConfigFn.build_config()
+            app.config = ConfigFn.build_config(app.configfile)
             app.command_line_parse()
             assert app.config["branch"] == "testing"
 
@@ -55,7 +55,7 @@ class TestCommandLineParse(unittest.TestCase):
                                   "-m", "random"]):
             app = PacmanMirrors()
             app.configfile = "conf/pacman-mirrors.conf"
-            app.config = ConfigFn.build_config()
+            app.config = ConfigFn.build_config(app.configfile)
             app.command_line_parse()
             assert app.config["method"] == "random"
 
@@ -68,7 +68,7 @@ class TestCommandLineParse(unittest.TestCase):
                                   "-d", "/another/dir/"]):
             app = PacmanMirrors()
             app.configfile = "conf/pacman-mirrors.conf"
-            app.config = ConfigFn.build_config()
+            app.config = ConfigFn.build_config(app.configfile)
             app.command_line_parse()
             assert app.config["mirror_dir"] == "/another/dir/"
 
@@ -81,7 +81,7 @@ class TestCommandLineParse(unittest.TestCase):
                                   "-o", "/another/list"]):
             app = PacmanMirrors()
             app.configfile = "conf/pacman-mirrors.conf"
-            app.config = ConfigFn.build_config()
+            app.config = ConfigFn.build_config(app.configfile)
             app.command_line_parse()
             assert app.config["mirror_list"] == "/another/list"
 
@@ -94,7 +94,7 @@ class TestCommandLineParse(unittest.TestCase):
                                   "-c", "France,Germany"]):
             app = PacmanMirrors()
             app.configfile = "conf/pacman-mirrors.conf"
-            app.config = ConfigFn.build_config()
+            app.config = ConfigFn.build_config(app.configfile)
             app.command_line_parse()
             assert app.config["only_country"] == ["France", "Germany"]
 
@@ -107,7 +107,7 @@ class TestCommandLineParse(unittest.TestCase):
                                   "-c Denmark"]):
             app = PacmanMirrors()
             app.configfile = "conf/pacman-mirrors.conf"
-            app.config = ConfigFn.build_config()
+            app.config = ConfigFn.build_config(app.configfile)
             app.command_line_parse()
             assert app.custom is True
 
@@ -120,7 +120,7 @@ class TestCommandLineParse(unittest.TestCase):
                                   "--geoip"]):
             app = PacmanMirrors()
             app.configfile = "conf/pacman-mirrors.conf"
-            app.config = ConfigFn.build_config()
+            app.config = ConfigFn.build_config(app.configfile)
             app.command_line_parse()
             assert app.geoip is True
 
@@ -133,7 +133,7 @@ class TestCommandLineParse(unittest.TestCase):
                                   "-f 5"]):
             app = PacmanMirrors()
             app.configfile = "conf/pacman-mirrors.conf"
-            app.config = ConfigFn.build_config()
+            app.config = ConfigFn.build_config(app.configfile)
             app.command_line_parse()
             assert app.fasttrack == 5
 
@@ -146,7 +146,7 @@ class TestCommandLineParse(unittest.TestCase):
                                   "-i"]):
             app = PacmanMirrors()
             app.configfile = "conf/pacman-mirrors.conf"
-            app.config = ConfigFn.build_config()
+            app.config = ConfigFn.build_config(app.configfile)
             app.command_line_parse()
             assert app.interactive is True
 
@@ -159,7 +159,7 @@ class TestCommandLineParse(unittest.TestCase):
                                   "-t 5"]):
             app = PacmanMirrors()
             app.configfile = "conf/pacman-mirrors.conf"
-            app.config = ConfigFn.build_config()
+            app.config = ConfigFn.build_config(app.configfile)
             app.command_line_parse()
             assert app.max_wait_time == 5
 
@@ -172,7 +172,7 @@ class TestCommandLineParse(unittest.TestCase):
                                   "-q"]):
             app = PacmanMirrors()
             app.configfile = "conf/pacman-mirrors.conf"
-            app.config = ConfigFn.build_config()
+            app.config = ConfigFn.build_config(app.configfile)
             app.command_line_parse()
             assert app.quiet is True
 
