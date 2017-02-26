@@ -56,4 +56,3 @@ def write_json_file(data, filename, dictionary=False):
         return True
     except OSError:
         return False
-
