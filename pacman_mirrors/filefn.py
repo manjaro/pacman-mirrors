@@ -21,6 +21,7 @@
 
 import os
 import datetime
+
 from .configuration import FALLBACK, MIRROR_FILE, REPO_ARCH, STATUS_FILE
 from . import jsonfn
 from . import txt
@@ -60,7 +61,11 @@ def return_mirror_filename():
     return result
 
 
-def output_mirror_list(branch, mirrorlistfile, servers, custom=False, quiet=False):
+def output_mirror_list(branch,
+                       mirrorlistfile,
+                       servers,
+                       custom=False,
+                       quiet=False):
     """Write servers to /etc/pacman.d/mirrorlist
     :param: servers: list of servers to write
     """
