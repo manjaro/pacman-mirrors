@@ -2,7 +2,8 @@
 All notable changes to this project will be documented in this file.
 
 ## [3.3.0 unstable development] - 2017-mm-dd - @fhdk
-- Add: --fasttrack {n} argument  
+- Add: Network check - do not run mirror ranking if no internet
+- Add: --fasttrack N argument  
   Creates a list of (n) mirrors which are responsive and uptodate
 - Add: Class JSON file functions
 - Add: Class Custom mirror file conversion and helpers
