@@ -16,7 +16,6 @@ from pacman_mirrors import httpfn
 from pacman_mirrors.pacman_mirrors import PacmanMirrors
 
 
-
 class TestPacmanMirrors(unittest.TestCase):
     """Pacman Mirrors Test suite"""
     def setUp(self):
