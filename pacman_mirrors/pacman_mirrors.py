@@ -191,7 +191,7 @@ class PacmanMirrors:
                 worklist = sorted(worklist, key=itemgetter("resp_time"))
             else:
                 miscfn.internet_message()
-                mischfn.shuffle_message()
+                miscfn.shuffle_message()
                 shuffle(worklist)
         else:
             miscfn.shuffle_message()

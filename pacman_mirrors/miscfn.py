@@ -39,6 +39,6 @@ def internet_message(required=False):
         print(".: {} {}".format(txt.INF_CLR, txt.MIRROR_RANKING_NA))
 
 
-def shuffe_message():
+def shuffle_message():
     """print shuffle message"""
     print(".: {} {}".format(txt.INF_CLR, txt.RANDOMIZING_SERVERS))
