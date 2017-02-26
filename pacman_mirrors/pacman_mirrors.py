@@ -28,9 +28,9 @@ import importlib.util
 import sys
 import os
 from operator import itemgetter
-from pacman_mirrors import __version__
 from random import shuffle
-# CHANGE CONTENT IN configuration
+
+from pacman_mirrors import __version__
 from .custom_help_formatter import CustomHelpFormatter
 from .mirror import Mirror
 from . import mirrorfn
@@ -196,7 +196,8 @@ class PacmanMirrors:
                                   self.config["mirror_list"],
                                   worklist,
                                   quiet=self.quiet)
-        if self.custom or self.config["only_country"] != self.mirrors.mirrorlist:
+        if self.custom or \
+                self.config["only_country"] != self.mirrors.mirrorlist:
             customfn.modify_config(self.config["only_country"],
                                    custom=True)
         else:
@@ -209,10 +210,13 @@ class PacmanMirrors:
                       reverse=True)
         temp = sorted(temp, key=itemgetter("last_sync"), reverse=False)
         ftlist = []
-        print(".: {}: {} - {}".format(txt.INF_CLR, txt.QUERY_MIRRORS, txt.TAKES_TIME))
+        print(".: {}: {} - {}".format(txt.INF_CLR,
+                                      txt.QUERY_MIRRORS,
+                                      txt.TAKES_TIME))
         counter = 0
         for mirror in temp:
-            resp_time = httpfn.get_mirror_response(mirror["url"], quiet=self.quiet)
+            resp_time = httpfn.get_mirror_response(mirror["url"],
+                                                   quiet=self.quiet)
             print("   ..... {:<15}: {}: {}".format(mirror["country"],
                                                    mirror["last_sync"],
                                                    mirror["url"]),
@@ -260,7 +264,8 @@ class PacmanMirrors:
         else:
             from . import graphical_ui as ui
 
-        interactive = ui.run(interactive_list, (self.config["method"] == "random"))
+        interactive = ui.run(interactive_list,
+                             self.config["method"] == "random")
 
         if interactive.is_done:
             selected = []
@@ -275,13 +280,14 @@ class PacmanMirrors:
                             "url": server["url"]
                         })
             if mirrorfile:
-                print("\n.: {}: {}".format(txt.INF_CLR, txt.CUSTOM_MIRROR_LIST))
+                print("\n.: {}: {}".format(txt.INF_CLR,
+                                           txt.CUSTOM_MIRROR_LIST))
                 print("--------------------------")
                 # output mirror file
-                jsonfn.write_json_file(mirrorfile, CUSTOM_FILE)
+                jsonfn.write_json_file(mirrorfile, conf.CUSTOM_FILE)
                 print(".: {} {}: {}".format(txt.INF_CLR,
                                             txt.CUSTOM_MIRROR_FILE_SAVED,
-                                            CUSTOM_FILE))
+                                            conf.CUSTOM_FILE))
                 # output pacman mirrorlist
                 filefn.output_mirror_list(self.config["branch"],
                                           self.config["mirror_list"],
@@ -290,10 +296,11 @@ class PacmanMirrors:
                                           quiet=self.quiet)
                 # always use "Custom" from interactive
                 self.config["only_country"] = ["Custom"]
-                customfn.modify_config(self.config["only_country"], custom=True)
+                customfn.modify_config(self.config["only_country"],
+                                       custom=True)
                 print(".: {} {}: {}".format(txt.INF_CLR,
                                             txt.MIRROR_LIST_SAVED,
-                                            CUSTOM_FILE))
+                                            conf.CUSTOM_FILE))
                 print(".: {} {}".format(txt.INF_CLR, txt.RESET_CUSTOM_CONFIG))
             else:
                 print(".: {} {}".format(txt.WRN_CLR, txt.NO_SELECTION))
@@ -325,13 +332,12 @@ class PacmanMirrors:
             self.load_default_mirrors()
 
         # build country list
-        self.selected_countries = mirrorfn.build_country_list(self.selected_countries,
-                                                              self.mirrors.countrylist,
-                                                              self.geoip)
+        self.selected_countries = mirrorfn.build_country_list(
+            self.selected_countries, self.mirrors.countrylist, self.geoip)
 
     def load_custom_mirrors(self):
         """Load available custom mirrors"""
-        self.seed_mirrors(CUSTOM_FILE)
+        self.seed_mirrors(conf.CUSTOM_FILE)
 
     def load_default_mirrors(self):
         """Load all available mirrors"""
@@ -353,15 +359,19 @@ class PacmanMirrors:
             print(".: {} {}".format(txt.INF_CLR, txt.USING_CUSTOM_FILE))
         else:
             print(".: {} {}".format(txt.INF_CLR, txt.USING_DEFAULT_FILE))
-        print(".: {} {} - {}".format(txt.INF_CLR, txt.QUERY_MIRRORS, txt.TAKES_TIME))
+        print(".: {} {} - {}".format(txt.INF_CLR,
+                                     txt.QUERY_MIRRORS,
+                                     txt.TAKES_TIME))
 
         if self.network:
             for mirror in worklist:
                 if not self.quiet:
                     print("   ..... {:<15}: {}".format(mirror["country"],
-                                                       mirror["url"]), end='')
-                # sys.stdout.flush()
-                resp_time = httpfn.get_mirror_response(mirror["url"], quiet=self.quiet)
+                                                       mirror["url"]),
+                          end='')
+                sys.stdout.flush()
+                resp_time = httpfn.get_mirror_response(mirror["url"],
+                                                       quiet=self.quiet)
                 mirror["resp_time"] = resp_time
                 if resp_time == txt.SERVER_RES:
                     continue
@@ -372,7 +382,7 @@ class PacmanMirrors:
 
     def run(self):
         """Run"""
-        filefn.dir_must_exist(MIRROR_DIR)
+        filefn.dir_must_exist(conf.MIRROR_DIR)
         self.config = configfn.build_config()
         self.command_line_parse()
         self.network = httpfn.update_mirrors()
@@ -390,7 +400,10 @@ class PacmanMirrors:
             else:
                 self.build_common_mirror_list()
 
-        print("{}.:! Pacman-Mirrors {} - {} {}".format(txt.YS, __version__, conf.DESCRIPTION, txt.CE))
+        print("{}.:! Pacman-Mirrors {} - {} {}".format(txt.YS,
+                                                       __version__,
+                                                       conf.DESCRIPTION,
+                                                       txt.CE))
 
 
 if __name__ == "__main__":
