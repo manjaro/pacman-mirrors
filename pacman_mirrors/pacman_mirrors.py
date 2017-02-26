@@ -376,8 +376,8 @@ class PacmanMirrors:
                                      txt.TAKES_TIME))
         for mirror in worklist:
             if not self.quiet:
-                print("   ..... {:<15}: {:<50}...".format(mirror["country"],
-                                                          mirror["url"]), end='')
+                print("   ..... {:<15}: {}".format(mirror["country"],
+                                                   mirror["url"]), end='')
             sys.stdout.flush()
             resp_time = httpfn.get_mirror_response(mirror["url"],
                                                    quiet=self.quiet)
