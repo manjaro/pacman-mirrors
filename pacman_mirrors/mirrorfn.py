@@ -19,62 +19,58 @@
 
 """Pacman-Mirror Mirror Functions"""
 
-from .httpfn import HttpFn
-from .validfn import ValidFn
+from . import httpfn
+from . import validfn
 
 
-class MirrorFn:
-    """Mirror Functions"""
-
-    @staticmethod
-    def build_country_list(selectedcountries, countrylist, geoip=False):
-        """Do a check on the users country selection
-        :param selectedcountries:
-        :param countrylist:
-        :param geoip:
-        :return: list of valid countries
-        :rtype: list
-        """
-        result = []
-        if selectedcountries:
-            if selectedcountries == ["all"]:
-                result = countrylist
-            else:
-                if ValidFn.country_list_is_valid(selectedcountries, countrylist):
-                    result = selectedcountries
-        if not result:
-            if geoip:
-                country = MirrorFn.get_geoip_country(countrylist)
-                if country:  # valid geoip
-                    result = country
-                else:
-                    result = countrylist
-            else:
-                result = countrylist
-        return result
-
-    @staticmethod
-    def get_geoip_country(countrylist):
-        """Check if geoip is possible
-        :param countrylist:
-        :return: country name if found
-        """
-        g_country = HttpFn.get_geoip_country()
-        if ValidFn.country_is_in_countrylist(g_country, countrylist):
-            return g_country
+def build_country_list(selectedcountries, countrylist, geoip=False):
+    """Do a check on the users country selection
+    :param selectedcountries:
+    :param countrylist:
+    :param geoip:
+    :return: list of valid countries
+    :rtype: list
+    """
+    result = []
+    if selectedcountries:
+        if selectedcountries == ["all"]:
+            result = countrylist
         else:
-            return None
+            if validfn.country_list_is_valid(selectedcountries, countrylist):
+                result = selectedcountries
+    if not result:
+        if geoip:
+            country = get_geoip_country(countrylist)
+            if country:  # valid geoip
+                result = country
+            else:
+                result = countrylist
+        else:
+            result = countrylist
+    return result
 
-    @staticmethod
-    def filter_mirror_list(mirrorlist, countrylist):
-        """Return new list with selection
-        :param mirrorlist:
-        :param countrylist:
-        :rtype: list
-        """
 
-        result = []
-        for mirror in mirrorlist:
-            if mirror["country"] in countrylist:
-                result.append(mirror)
-        return result
+def get_geoip_country(countrylist):
+    """Check if geoip is possible
+    :param countrylist:
+    :return: country name if found
+    """
+    g_country = httpfn.get_geoip_country()
+    if validfn.country_is_in_countrylist(g_country, countrylist):
+        return g_country
+    else:
+        return None
+
+
+def filter_mirror_list(mirrorlist, countrylist):
+    """Return new list with selection
+    :param mirrorlist:
+    :param countrylist:
+    :rtype: list
+    """
+
+    result = []
+    for mirror in mirrorlist:
+        if mirror["country"] in countrylist:
+            result.append(mirror)
+    return result

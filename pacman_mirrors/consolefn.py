@@ -21,40 +21,36 @@
 import json
 
 
-class ConsoleFn:
-    """Console Helpers class"""
+def list_to_tuple(list_data, named_tuple):
+    """
+    Comvert list to a list with named tuples
 
-    @staticmethod
-    def list_to_tuple(list_data, named_tuple):
-        """
-        Comvert list to a list with named tuples
+    :param list_data: the list to convert
+    :param named_tuple: tuple list item converts to
+    :return data: list of named tuples
+    """
+    tdata = json.dumps(list_data)
+    data = json.loads(tdata, object_hook=lambda x: named_tuple(**x))
+    return data
 
-        :param list_data: the list to convert
-        :param named_tuple: tuple list item converts to
-        :return data: list of named tuples
-        """
-        tdata = json.dumps(list_data)
-        data = json.loads(tdata, object_hook=lambda x: named_tuple(**x))
-        return data
 
-    @staticmethod
-    def rows_from_tuple(servers, joiner=" | "):
-        """
-        Generates equal formatted lines
+def rows_from_tuple(servers, joiner=" | "):
+    """
+    Generates equal formatted lines
 
-        :param servers: named tuples
-        :param joiner: string used to join tuple items
-        :return lines: list of nicely formatted lines
-        """
-        rows = []
-        if not servers:
-            return rows
-
-        # calculate max col width
-        col_width = [max(len(text) for text in col) for col in zip(*servers)]
-
-        # generate linies
-        for line in servers:
-            rows.append(joiner.join("{:{}}".format(text, col_width[i])
-                                    for i, text in enumerate(line)))
+    :param servers: named tuples
+    :param joiner: string used to join tuple items
+    :return lines: list of nicely formatted lines
+    """
+    rows = []
+    if not servers:
         return rows
+
+    # calculate max col width
+    col_width = [max(len(text) for text in col) for col in zip(*servers)]
+
+    # generate linies
+    for line in servers:
+        rows.append(joiner.join("{:{}}".format(text, col_width[i])
+                                for i, text in enumerate(line)))
+    return rows

@@ -23,53 +23,49 @@ from . import txt
 from .configuration import CONFIG_FILE, MIRROR_DIR, MIRROR_FILE, MIRROR_LIST
 
 
-class ConfigFn:
-    """Configuration Functions"""
-
-    @staticmethod
-    def build_config():
-        """Get config informations"""
-        # initialising defaults
-        # information which can differ from these defaults
-        # is fetched from config file
-        config = {
-            "branch": "stable",
-            "config_file": CONFIG_FILE,
-            "method": "rank",
-            "mirror_dir": MIRROR_DIR,
-            "mirror_file": MIRROR_FILE,
-            "mirror_list": MIRROR_LIST,
-            "no_update": False,
-            "only_country": [],
-        }
-        try:
-            # read configuration from file
-            with open(config["config_file"]) as conf:
-                for line in conf:
-                    line = line.strip()
-                    if line.startswith("#") or "=" not in line:
-                        continue
-                    (key, value) = line.split("=", 1)
-                    key = key.rstrip()
-                    value = value.lstrip()
-                    if key and value:
-                        if value.startswith("\"") and value.endswith("\""):
-                            value = value[1:-1]
-                        if key == "Method":
-                            config["method"] = value
-                        elif key == "Branch":
-                            config["branch"] = value
-                        elif key == "OnlyCountry":
-                            config["only_country"] = value.split(",")
-                        elif key == "MirrorlistsDir":
-                            config["mirror_dir"] = value
-                        elif key == "OutputMirrorlist":
-                            config["mirror_list"] = value
-                        elif key == "NoUpdate":
-                            config["no_update"] = value
-        except (PermissionError, OSError) as err:
-            print(".: {} {}: {}: {}".format(txt.ERR_CLR,
-                                            txt.CANNOT_READ_FILE,
-                                            err.filename,
-                                            err.strerror))
-        return config
+def build_config():
+    """Get config informations"""
+    # initialising defaults
+    # information which can differ from these defaults
+    # is fetched from config file
+    config = {
+        "branch": "stable",
+        "config_file": CONFIG_FILE,
+        "method": "rank",
+        "mirror_dir": MIRROR_DIR,
+        "mirror_file": MIRROR_FILE,
+        "mirror_list": MIRROR_LIST,
+        "no_update": False,
+        "only_country": [],
+    }
+    try:
+        # read configuration from file
+        with open(config["config_file"]) as conf:
+            for line in conf:
+                line = line.strip()
+                if line.startswith("#") or "=" not in line:
+                    continue
+                (key, value) = line.split("=", 1)
+                key = key.rstrip()
+                value = value.lstrip()
+                if key and value:
+                    if value.startswith("\"") and value.endswith("\""):
+                        value = value[1:-1]
+                    if key == "Method":
+                        config["method"] = value
+                    elif key == "Branch":
+                        config["branch"] = value
+                    elif key == "OnlyCountry":
+                        config["only_country"] = value.split(",")
+                    elif key == "MirrorlistsDir":
+                        config["mirror_dir"] = value
+                    elif key == "OutputMirrorlist":
+                        config["mirror_list"] = value
+                    elif key == "NoUpdate":
+                        config["no_update"] = value
+    except (PermissionError, OSError) as err:
+        print(".: {} {}: {}: {}".format(txt.ERR_CLR,
+                                        txt.CANNOT_READ_FILE,
+                                        err.filename,
+                                        err.strerror))
+    return config

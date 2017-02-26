@@ -10,10 +10,11 @@ Tests for `pacman-mirrors` module.
 import unittest
 from unittest.mock import patch
 
-from pacman_mirrors.httpfn import HttpFn
+from pacman_mirrors import configfn
+from pacman_mirrors import filefn
+from pacman_mirrors import httpfn
 from pacman_mirrors.pacman_mirrors import PacmanMirrors
-from pacman_mirrors.configfn import ConfigFn
-from pacman_mirrors.filefn import FileFn
+
 
 
 class TestPacmanMirrors(unittest.TestCase):
@@ -31,10 +32,10 @@ class TestPacmanMirrors(unittest.TestCase):
                                   "-qc", "all",
                                   "-m", "random"]):
             app = PacmanMirrors()
-            app.config = ConfigFn.build_config()
+            app.config = configfn.build_config()
             app.command_line_parse()
-            FileFn.dir_must_exist(app.config["mirror_dir"])
-            app.network = HttpFn.update_mirrors()
+            filefn.dir_must_exist(app.config["mirror_dir"])
+            app.network = httpfn.update_mirrors()
             app.load_all_mirrors()
             # actual generation
             if app.fasttrack:

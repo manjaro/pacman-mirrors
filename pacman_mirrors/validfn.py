@@ -24,54 +24,50 @@ from .configuration import CUSTOM_FILE
 from . import txt
 
 
-class ValidFn:
-    """Validation Functions"""
+def country_is_in_countrylist(country, countrylist):
+    """Check if country is in list"""
+    if country in countrylist:
+        return True  # good
+    return False
 
-    @staticmethod
-    def country_is_in_countrylist(country, countrylist):
-        """Check if country is in list"""
-        if country in countrylist:
-            return True  # good
+
+def custom_config_is_valid():
+    """Check validity of custom selection
+    :return: True or False
+    :rtype: bool
+    """
+    if os.path.isfile(CUSTOM_FILE):
+        return True  # valid
+    else:
+        # validation fail - inform user and exit
+        print(".: {} {} {} {}".format(txt.ERR_CLR,
+                                      txt.CUSTOM_MIRROR_FILE,
+                                      CUSTOM_FILE,
+                                      txt.DOES_NOT_EXIST))
+        print(".: {} {}: {}".format(txt.INF_CLR,
+                                    txt.FALLING_BACK,
+                                    txt.USING_ALL_MIRRORS))
         return False
 
-    @staticmethod
-    def custom_config_is_valid():
-        """Check validity of custom selection
-        :return: True or False
-        :rtype: bool
-        """
-        if os.path.isfile(CUSTOM_FILE):
-            return True  # valid
-        else:
-            # validation fail - inform user and exit
-            print(".: {} {} {} {}".format(txt.ERR_CLR,
-                                          txt.CUSTOM_MIRROR_FILE,
-                                          CUSTOM_FILE,
-                                          txt.DOES_NOT_EXIST))
-            print(".: {} {}: {}".format(txt.INF_CLR,
-                                        txt.FALLING_BACK,
-                                        txt.USING_ALL_MIRRORS))
-            return False
 
-    @staticmethod
-    def country_list_is_valid(onlycountry, countrylist):
-        """Check if the list of countries are valid.
-        :param onlycountry: list of countries to check
-        :param countrylist: list of available countries
-        :return: True or False
-        :rtype: bool
-        """
-        for country in onlycountry:
-            if ValidFn.country_is_in_countrylist(country, countrylist):
-                continue  # good
-            else:  # validation fail - inform user and exit
-                print(".: {} {}{}: {}: '{}'".format(txt.WRN_CLR,
-                                                    txt.OPTION,
-                                                    txt.OPT_COUNTRY,
-                                                    txt.UNKNOWN_COUNTRY,
-                                                    country))
-                print(".: {} {}:".format(txt.INF_CLR,
-                                         txt.AVAILABLE_COUNTRIES))
-                print("{}".format(", ".join(countrylist)))
-                exit(1)  # exit gracefully
-        return True
+def country_list_is_valid(onlycountry, countrylist):
+    """Check if the list of countries are valid.
+    :param onlycountry: list of countries to check
+    :param countrylist: list of available countries
+    :return: True or False
+    :rtype: bool
+    """
+    for country in onlycountry:
+        if country_is_in_countrylist(country, countrylist):
+            continue  # good
+        else:  # validation fail - inform user and exit
+            print(".: {} {}{}: {}: '{}'".format(txt.WRN_CLR,
+                                                txt.OPTION,
+                                                txt.OPT_COUNTRY,
+                                                txt.UNKNOWN_COUNTRY,
+                                                country))
+            print(".: {} {}:".format(txt.INF_CLR,
+                                     txt.AVAILABLE_COUNTRIES))
+            print("{}".format(", ".join(countrylist)))
+            exit(1)  # exit gracefully
+    return True

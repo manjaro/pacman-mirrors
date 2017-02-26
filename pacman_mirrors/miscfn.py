@@ -22,19 +22,15 @@
 from . import txt
 
 
-class MiscFn:
-    """Niscellaneous Functions"""
+def debug(where, what, value):
+    """Helper for printing debug messages"""
+    print("{} In function {} -> '{} = {}'".format(txt.DBG_CLR, where, what, value))
 
-    @staticmethod
-    def debug(where, what, value):
-        """Helper for printing debug messages"""
-        print("{} In function {} -> '{} = {}'".format(txt.DBG_CLR, where, what, value))
 
-    @staticmethod
-    def internet_connection_message(required=False):
-        """Message when internet connection is down"""
-        print(".: {} {}".format(txt.INF_CLR, txt.INTERNET_DOWN))
-        if required:
-            print(".: {} {}".format(txt.INF_CLR, txt.INTERNET_REQUIRED))
-        else:
-            print(".: {} {}".format(txt.INF_CLR, txt.MIRROR_RANKING_NA))
+def internet_connection_message(required=False):
+    """Message when internet connection is down"""
+    print(".: {} {}".format(txt.INF_CLR, txt.INTERNET_DOWN))
+    if required:
+        print(".: {} {}".format(txt.INF_CLR, txt.INTERNET_REQUIRED))
+    else:
+        print(".: {} {}".format(txt.INF_CLR, txt.MIRROR_RANKING_NA))
