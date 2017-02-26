@@ -85,10 +85,10 @@ def output_mirror_list(branch,
                     # write list entry
                     write_mirrorlist_entry(outfile, server)
                     if not quiet:
-                        print("   {}{:<15}{} : {}".format(txt.YS,
-                                                          server["country"],
-                                                          txt.CE,
-                                                          server["url"]))
+                        print("   {}{:<15}{} : {:<50}".format(txt.YS,
+                                                              server["country"],
+                                                              txt.CE,
+                                                              server["url"]))
             print(".: {} {}: {}".format(txt.INF_CLR,
                                         txt.MIRROR_LIST_SAVED,
                                         mirrorlistfile))
