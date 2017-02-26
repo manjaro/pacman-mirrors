@@ -21,8 +21,9 @@
 
 import os
 import tempfile
-from .configuration import CONFIG_FILE, CUSTOM_FILE, O_CUST_FILE
-from .configuration import DEVELOPMENT
+
+from .configuration import CONFIG_FILE, \
+    CUSTOM_FILE, O_CUST_FILE, DEVELOPMENT
 from . import jsonfn
 from . import txt
 
