@@ -58,4 +58,3 @@ FALLBACK = "/usr/share/pacman-mirrors/mirrors.json"
 # repo constants
 BRANCHES = ("stable", "testing", "unstable")
 REPO_ARCH = "/$repo/$arch"
-
