@@ -27,7 +27,9 @@ from os import system as system_call
 from socket import timeout
 from urllib.error import URLError
 from urllib.request import urlopen
-from .configuration import FALLBACK, MIRROR_FILE, STATUS_FILE, URL_MIRROR_JSON, URL_STATUS_JSON
+
+from .configuration import FALLBACK, MIRROR_FILE, \
+    STATUS_FILE, URL_MIRROR_JSON, URL_STATUS_JSON
 from . import filefn
 from . import jsonfn
 from . import txt
@@ -48,7 +50,9 @@ def download_mirrors(url, quiet=False):
                 "utf8"), object_pairs_hook=collections.OrderedDict)
     except URLError:
         if not quiet:
-            print(".: {} {} {}".format(txt.ERROR, txt.CANNOT_DOWNLOAD_FILE, url))
+            print(".: {} {} {}".format(txt.ERROR,
+                                       txt.CANNOT_DOWNLOAD_FILE,
+                                       url))
     except (HTTPException, json.JSONDecodeError):
         pass
 
@@ -105,13 +109,21 @@ def get_mirror_response(url, maxwait=2, count=1, quiet=False):
         probe_stop = time.time()
     except URLError as err:
         if hasattr(err, "reason"):
-            message = "\n.: {} {} '{}'".format(txt.ERR_CLR, err.reason, url)
+            message = "\n.: {} {} '{}'".format(txt.ERR_CLR,
+                                               err.reason,
+                                               url)
         elif hasattr(err, "code"):
-            message = "\n.: {} {} '{}'".format(txt.ERR_CLR, err.reason, url)
+            message = "\n.: {} {} '{}'".format(txt.ERR_CLR,
+                                               err.reason,
+                                               url)
     except timeout:
-        message = "\n.: {} {} '{}'".format(txt.ERR_CLR, txt.TIMEOUT, url)
+        message = "\n.: {} {} '{}'".format(txt.ERR_CLR,
+                                           txt.TIMEOUT,
+                                           url)
     except HTTPException:
-        message = "\n.: {} {} '{}'".format(txt.ERR_CLR, txt.HTTP_EXCEPTION, url)
+        message = "\n.: {} {} '{}'".format(txt.ERR_CLR,
+                                           txt.HTTP_EXCEPTION,
+                                           url)
     if message and not quiet:
         print(message)
     if probe_stop:
