@@ -117,7 +117,6 @@ class PacmanMirrors:
         parser.add_argument("-q", "--quiet",
                             action="store_true",
                             help=txt.HLP_ARG_QUIET)
-        # TODO: experimental arguments
         parser.add_argument("-f", "--fasttrack",
                             type=int,
                             metavar=txt.DIGIT,
@@ -187,9 +186,15 @@ class PacmanMirrors:
         worklist = mirrorfn.filter_mirror_list(self.mirrors.mirrorlist,
                                                self.selected_countries)
         if self.config["method"] == "rank":
-            worklist = self.test_mirrors(worklist)
-            worklist = sorted(worklist, key=itemgetter("resp_time"))
+            if self.network:
+                worklist = self.test_mirrors(worklist)
+                worklist = sorted(worklist, key=itemgetter("resp_time"))
+            else:
+                miscfn.internet_message()
+                mischfn.shuffle_message()
+                shuffle(worklist)
         else:
+            miscfn.shuffle_message()
             shuffle(worklist)
 
         filefn.output_mirror_list(self.config["branch"],
@@ -205,36 +210,37 @@ class PacmanMirrors:
 
     def build_fasttrack_mirror_list(self, number):
         """Fast-track the mirrorlist by aggressive sorting"""
-        temp = sorted(self.mirrors.mirrorlist, key=itemgetter("branches",
-                                                              "last_sync"),
-                      reverse=True)
-        temp = sorted(temp, key=itemgetter("last_sync"), reverse=False)
-        ftlist = []
-        print(".: {}: {} - {}".format(txt.INF_CLR,
-                                      txt.QUERY_MIRRORS,
-                                      txt.TAKES_TIME))
-        counter = 0
-        for mirror in temp:
-            resp_time = httpfn.get_mirror_response(mirror["url"],
-                                                   quiet=self.quiet)
-            print("   ..... {:<15}: {}: {}".format(mirror["country"],
-                                                   mirror["last_sync"],
-                                                   mirror["url"]),
-                  end='')
-            sys.stdout.flush()
-            mirror["resp_time"] = resp_time
-            print("\r   {:<5}{}{} ".format(txt.GS, resp_time, txt.CE))
-            if resp_time == txt.SERVER_RES:
-                continue
-            ftlist.append(mirror)
-            counter += 1
-            if counter == number:
-                break
-        ftlist = sorted(ftlist, key=itemgetter("resp_time"))
-        filefn.output_mirror_list(self.config["branch"],
-                                  self.config["mirror_list"],
-                                  ftlist,
-                                  self.quiet)
+        if self.network:
+            temp = sorted(self.mirrors.mirrorlist,
+                          key=itemgetter("branches", "last_sync"), reverse=True)
+            temp = sorted(temp, key=itemgetter("last_sync"), reverse=False)
+            ftlist = []
+            print(".: {}: {} - {}".format(txt.INF_CLR,
+                                          txt.QUERY_MIRRORS,
+                                          txt.TAKES_TIME))
+            counter = 0
+            for mirror in temp:
+                resp_time = httpfn.get_mirror_response(mirror["url"],
+                                                       quiet=self.quiet)
+                print("   ..... {:<15}: {}: {}".format(mirror["country"],
+                                                       mirror["last_sync"],
+                                                       mirror["url"]), end='')
+                sys.stdout.flush()
+                mirror["resp_time"] = resp_time
+                print("\r   {:<5}{}{} ".format(txt.GS, resp_time, txt.CE))
+                if resp_time == txt.SERVER_RES:
+                    continue
+                ftlist.append(mirror)
+                counter += 1
+                if counter == number:
+                    break
+            ftlist = sorted(ftlist, key=itemgetter("resp_time"))
+            filefn.output_mirror_list(self.config["branch"],
+                                      self.config["mirror_list"],
+                                      ftlist,
+                                      self.quiet)
+        else:
+            miscfn.internet_message(True)
 
     def build_interactive_mirror_list(self):
         """Prompt the user to select the mirrors with a gui.
@@ -245,9 +251,15 @@ class PacmanMirrors:
         worklist = mirrorfn.filter_mirror_list(self.mirrors.mirrorlist,
                                                self.selected_countries)
         if self.config["method"] == "rank":
-            worklist = self.test_mirrors(worklist)
-            worklist = sorted(worklist, key=itemgetter("resp_time"))
+            if self.network:
+                worklist = self.test_mirrors(worklist)
+                worklist = sorted(worklist, key=itemgetter("resp_time"))
+            else:
+                miscfn.internet_message()
+                miscfn.shuffle_message()
+                shuffle(worklist)
         else:
+            miscfn.shuffle_message()
             shuffle(worklist)
 
         interactive_list = []
@@ -362,38 +374,33 @@ class PacmanMirrors:
         print(".: {} {} - {}".format(txt.INF_CLR,
                                      txt.QUERY_MIRRORS,
                                      txt.TAKES_TIME))
-
-        if self.network:
-            for mirror in worklist:
-                if not self.quiet:
-                    print("   ..... {:<15}: {:<50}...".format(mirror["country"],
-                                                              mirror["url"]),
-                          end='')
-                sys.stdout.flush()
-                resp_time = httpfn.get_mirror_response(mirror["url"],
-                                                       quiet=self.quiet)
-                mirror["resp_time"] = resp_time
-                if resp_time == txt.SERVER_RES:
-                    continue
-                if not self.quiet:
-                    print("\r   {:<5}{}{} ".format(txt.GS, resp_time, txt.CE))
-            return worklist
-        miscfn.internet_connection_message()
+        for mirror in worklist:
+            if not self.quiet:
+                print("   ..... {:<15}: {:<50}...".format(mirror["country"],
+                                                          mirror["url"]), end='')
+            sys.stdout.flush()
+            resp_time = httpfn.get_mirror_response(mirror["url"],
+                                                   quiet=self.quiet)
+            mirror["resp_time"] = resp_time
+            if resp_time == txt.SERVER_RES:
+                continue
+            if not self.quiet:
+                print("\r   {:<5}{}{} ".format(txt.GS, resp_time, txt.CE))
+        return worklist
 
     def run(self):
         """Run"""
         filefn.dir_must_exist(conf.MIRROR_DIR)
         self.config = configfn.build_config()
         self.command_line_parse()
-        self.network = httpfn.update_mirrors()
+        self.network = httpfn.ping_host("repo.manjaro.org", 3)
         self.load_all_mirrors()
+        if self.network:
+            httpfn.update_mirrors()
 
         # actual generation
         if self.fasttrack:
-            if self.network:
-                self.build_fasttrack_mirror_list(self.fasttrack)
-            else:
-                miscfn.internet_connection_message(True)
+            self.build_fasttrack_mirror_list(self.fasttrack)
         else:
             if self.interactive:
                 self.build_interactive_mirror_list()

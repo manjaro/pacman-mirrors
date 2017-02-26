@@ -30,10 +30,15 @@ def debug(where, what, value):
                                                   value))
 
 
-def internet_connection_message(required=False):
+def internet_message(required=False):
     """Message when internet connection is down"""
     print(".: {} {}".format(txt.INF_CLR, txt.INTERNET_DOWN))
     if required:
         print(".: {} {}".format(txt.INF_CLR, txt.INTERNET_REQUIRED))
     else:
         print(".: {} {}".format(txt.INF_CLR, txt.MIRROR_RANKING_NA))
+
+
+def shuffe_message():
+    """print shuffle message"""
+    print(".: {} {}".format(txt.INF_CLR, txt.RANDOMIZING_SERVERS))
