@@ -20,6 +20,7 @@
 """Pacman-Mirrors TUI Module"""
 
 from collections import namedtuple
+
 import npyscreen
 
 from . import consolefn
@@ -27,7 +28,6 @@ from . import i18n
 from . import txt
 
 
-Util = consolefn
 _ = i18n.language.gettext
 
 
