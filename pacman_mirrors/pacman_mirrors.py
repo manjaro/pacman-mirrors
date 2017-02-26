@@ -382,14 +382,17 @@ class PacmanMirrors:
 
         # actual generation
         if self.fasttrack:
-            self.build_fasttrack_mirror_list(self.fasttrack)
+            if self.network:
+                self.build_fasttrack_mirror_list(self.fasttrack)
+            else:
+                print(".: {} {}".format(txt.INF_CLR, txt.NETWORK_DOWN))
+                print(".: {} {}".format(txt.INF_CLR, txt.NETWORK_REQUIRED))
         else:
             if self.interactive:
                 self.build_interactive_mirror_list()
             else:
                 self.build_common_mirror_list()
 
-        # TODO: Eventually remove in production
         print("{}.:! Pacman-Mirrors {} - {} {}".format(txt.YS, __version__, DESCRIPTION, txt.CE))
 
 
