@@ -20,7 +20,6 @@
 """Pacman-Mirrors Configuration"""
 
 # this is for runing in dev environment
-# TODO: CHANGE BELOW IN PRODUCTION
 DEVELOPMENT = ""
 DESCRIPTION = "unstable development"
 # if DEVELOPMENT:

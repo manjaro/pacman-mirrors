@@ -81,8 +81,8 @@ class CustomFn:
         try:
             with open(
                 filename) as cnf, tempfile.NamedTemporaryFile(
-                "w+t", dir=os.path.dirname(
-                    filename), delete=False) as tmp:
+                    "w+t", dir=os.path.dirname(
+                        filename), delete=False) as tmp:
                 replaced = False
                 for line in cnf:
                     if "OnlyCountry" in line:

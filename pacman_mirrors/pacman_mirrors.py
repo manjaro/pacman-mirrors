@@ -359,18 +359,20 @@ class PacmanMirrors:
             print(".: {} {}".format(txt.INF_CLR, txt.USING_DEFAULT_FILE))
         print(".: {} {} - {}".format(txt.INF_CLR, txt.QUERY_MIRRORS, txt.TAKES_TIME))
 
-        for mirror in worklist:
-            if not self.quiet:
-                print("   ..... {:<15}: {}".format(mirror["country"],
-                                                   mirror["url"]), end='')
-            # sys.stdout.flush()
-            resp_time = HttpFn.get_mirror_response(mirror["url"], quiet=self.quiet)
-            mirror["resp_time"] = resp_time
-            if resp_time == txt.SERVER_RES:
-                continue
-            if not self.quiet:
-                print("\r   {:<5}{}{} ".format(txt.GS, resp_time, txt.CE))
-        return worklist
+        if self.network:
+            for mirror in worklist:
+                if not self.quiet:
+                    print("   ..... {:<15}: {}".format(mirror["country"],
+                                                       mirror["url"]), end='')
+                # sys.stdout.flush()
+                resp_time = HttpFn.get_mirror_response(mirror["url"], quiet=self.quiet)
+                mirror["resp_time"] = resp_time
+                if resp_time == txt.SERVER_RES:
+                    continue
+                if not self.quiet:
+                    print("\r   {:<5}{}{} ".format(txt.GS, resp_time, txt.CE))
+            return worklist
+        MiscFn.internet_connection_message()
 
     def run(self):
         """Run"""
@@ -385,8 +387,7 @@ class PacmanMirrors:
             if self.network:
                 self.build_fasttrack_mirror_list(self.fasttrack)
             else:
-                print(".: {} {}".format(txt.INF_CLR, txt.NETWORK_DOWN))
-                print(".: {} {}".format(txt.INF_CLR, txt.NETWORK_REQUIRED))
+                MiscFn.internet_connection_message(True)
         else:
             if self.interactive:
                 self.build_interactive_mirror_list()

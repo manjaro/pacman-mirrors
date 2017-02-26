@@ -57,7 +57,7 @@ class FileFn:
                 filename = FALLBACK
         if not filename:
             print("\n{}.:! {}{}\n".format(txt.RS,
-                                          "Houston?! we have a problem",
+                                          txt.HOUSTON,
                                           txt.CE))
             exit(1)
         result = (filename, status)
@@ -134,16 +134,4 @@ class FileFn:
         """
         workitem = mirror
         handle.write("## Country       : {}\n".format(workitem["country"]))
-        # TODO: approval to remove useless lines
-        # Commented since the info after a short time
-        # is no longer valid
-        if workitem["resp_time"] == txt.SERVER_RES:
-            workitem["resp_time"] = "N/A"
-        handle.write("## Response time : {}\n".format(
-            workitem["resp_time"]))
-        if workitem["last_sync"] == txt.SERVER_BAD or \
-                workitem["last_sync"] == txt.LASTSYNC_NA:
-            workitem["last_sync"] = "N/A"
-        handle.write("## Last Upd hh:mm: {}\n".format(
-            workitem["last_sync"]))
         handle.write("Server = {}\n\n".format(workitem["url"]))

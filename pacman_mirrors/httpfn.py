@@ -150,4 +150,6 @@ class HttpFn:
                 print(".: {} {} {}".format(txt.WRN_CLR,
                                            txt.FALLING_BACK,
                                            FALLBACK))
+            if not FileFn.check_file(FALLBACK):
+                print(".: {} {}".format(txt.ERR_CLR, txt.HOUSTON))
             return False
