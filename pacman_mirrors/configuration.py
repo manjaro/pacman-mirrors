@@ -20,42 +20,42 @@
 """Pacman-Mirrors Configuration"""
 
 # this is for runing in dev environment
-DEVELOPMENT = "dev"
+DEVELOPMENT = ""
 DESCRIPTION = "unstable development"
-if DEVELOPMENT:
-    # http constants
-    URL_MIRROR_JSON = "http://repo.manjaro.org/mirrors.json"
-    URL_STATUS_JSON = "http://repo.manjaro.org/status.json"
-    # etc
-    CONFIG_FILE = "mock/etc/pacman-mirrors.conf"
-    MIRROR_LIST = "mock/etc/mirrorlist"
-    # pacman-mirrors
-    MIRROR_DIR = "mock/var/"
-    CUSTOM_FILE = MIRROR_DIR + "custom-mirrors.json"
-    MIRROR_FILE = MIRROR_DIR + "mirrors.json"
-    STATUS_FILE = MIRROR_DIR + "status.json"
-    # special cases
-    O_CUST_FILE = MIRROR_DIR + "Custom"
-    FALLBACK = "mock/usr/mirrors.json"
-    # repo constants
-    BRANCHES = ("stable", "testing", "unstable")
-    REPO_ARCH = "/$repo/$arch"
+# if DEVELOPMENT:
+#     # http constants
+#     URL_MIRROR_JSON = "http://repo.manjaro.org/mirrors.json"
+#     URL_STATUS_JSON = "http://repo.manjaro.org/status.json"
+#     # etc
+#     CONFIG_FILE = "mock/etc/pacman-mirrors.conf"
+#     MIRROR_LIST = "mock/etc/mirrorlist"
+#     # pacman-mirrors
+#     MIRROR_DIR = "mock/var/"
+#     CUSTOM_FILE = MIRROR_DIR + "custom-mirrors.json"
+#     MIRROR_FILE = MIRROR_DIR + "mirrors.json"
+#     STATUS_FILE = MIRROR_DIR + "status.json"
+#     # special cases
+#     O_CUST_FILE = MIRROR_DIR + "Custom"
+#     FALLBACK = "mock/usr/mirrors.json"
+#     # repo constants
+#     BRANCHES = ("stable", "testing", "unstable")
+#     REPO_ARCH = "/$repo/$arch"
 
-# # http constants
-# URL_MIRROR_JSON = "http://repo.manjaro.org/mirrors.json"
-# URL_STATUS_JSON = "http://repo.manjaro.org/status.json"
-# # etc
-# CONFIG_FILE = "/etc/pacman-mirrors.conf"
-# MIRROR_LIST = "/etc/pacman.d/mirrorlist"
-# # pacman-mirrors
-# MIRROR_DIR = "/var/lib/pacman-mirrors/"
-# CUSTOM_FILE = MIRROR_DIR + "custom-mirrors.json"
-# MIRROR_FILE = MIRROR_DIR + "mirrors.json"
-# STATUS_FILE = MIRROR_DIR + "status.json"
-# # special cases
-# O_CUST_FILE = MIRROR_DIR + "Custom"
-# FALLBACK = "/usr/share/pacman-mirrors/mirrors.json"
-# # repo constants
-# BRANCHES = ("stable", "testing", "unstable")
-# REPO_ARCH = "/$repo/$arch"
+# http constants
+URL_MIRROR_JSON = "http://repo.manjaro.org/mirrors.json"
+URL_STATUS_JSON = "http://repo.manjaro.org/status.json"
+# etc
+CONFIG_FILE = "/etc/pacman-mirrors.conf"
+MIRROR_LIST = "/etc/pacman.d/mirrorlist"
+# pacman-mirrors
+MIRROR_DIR = "/var/lib/pacman-mirrors/"
+CUSTOM_FILE = MIRROR_DIR + "custom-mirrors.json"
+MIRROR_FILE = MIRROR_DIR + "mirrors.json"
+STATUS_FILE = MIRROR_DIR + "status.json"
+# special cases
+O_CUST_FILE = MIRROR_DIR + "Custom"
+FALLBACK = "/usr/share/pacman-mirrors/mirrors.json"
+# repo constants
+BRANCHES = ("stable", "testing", "unstable")
+REPO_ARCH = "/$repo/$arch"
 
