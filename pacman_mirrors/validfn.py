@@ -20,6 +20,7 @@
 """Pacman-Mirrors Validation Functions"""
 
 import os
+
 from .configuration import CUSTOM_FILE
 from . import txt
 
