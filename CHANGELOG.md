@@ -3,8 +3,8 @@ All notable changes to this project will be documented in this file.
 
 ## [3.3.0-beta unstable development] - 2017-02-27
 - Add: Network check - do not run mirror ranking if no internet
-- Add: --fasttrack (n) argument  
-  Creates a list of (n) mirrors which are responsive and uptodate
+- Add: --fasttrack [n] argument  
+  Creates a list of [n] mirrors which are responsive and uptodate
 - Add: Module JSON file functions
 - Add: Module Custom mirror file conversion and helpers
 - Add: Module Http functions
