@@ -2,12 +2,12 @@
 # -*- coding: utf-8 -*-
 
 import collections
-import glob
 import io
 import json
 import re
 import os
 from urllib.request import urlopen
+
 
 from setuptools import setup
 
