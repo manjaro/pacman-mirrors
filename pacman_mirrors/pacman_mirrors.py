@@ -393,14 +393,16 @@ class PacmanMirrors:
                     self.build_interactive_mirror_list()
                 else:
                     self.build_common_mirror_list()
-        # only random is available if network is down
-        if not self.network and self.config["method"] == "random":
-            if self.interactive:
-                self.build_interactive_mirror_list()
+
+        if not self.network:
+            # only random is available if network is down
+            if self.config["method"] == "random":
+                if self.interactive:
+                    self.build_interactive_mirror_list()
+                else:
+                    self.build_common_mirror_list()
             else:
-                self.build_common_mirror_list()
-        else:  # print message
-            miscfn.internet_message()
+                miscfn.internet_message()
 
         print("{}.:! Pacman-Mirrors {} - {} {}".format(txt.YS,
                                                        __version__,
