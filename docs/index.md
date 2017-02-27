@@ -36,6 +36,9 @@ Detect country by using geolocation.
 `-d`, `--mirror_dir`
 Change directory of mirrors to use.
 
+`-f [n]`, `--fasttrack [n]`
+Generates an updated and responsive mirrorlist of [n] mirrors.
+
 `-o`, `--output`
 Change path of the output file.
 
