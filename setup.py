@@ -7,17 +7,24 @@ import json
 import re
 import os
 from urllib.request import urlopen
-
+from http.client import HTTPException
+from socket import timeout
+from urllib.error import URLError
 
 from setuptools import setup
 
 
 def update_mirror_file():
     """update mirrors.json from github"""
-    with urlopen("https://github.com/manjaro/manjaro-web-repo/raw/master/mirrors.json") as response:
-        countries = json.loads(response.read().decode("utf8"), object_pairs_hook=collections.OrderedDict)
-    with open("data/mirrors.json", "w") as outfile:
-        json.dump(countries, outfile)
+    countries = list()
+    try:
+        with urlopen("https://github.com/manjaro/manjaro-web-repo/raw/master/mirrors.json") as response:
+            countries = json.loads(response.read().decode("utf8"), object_pairs_hook=collections.OrderedDict)
+    except (HTTPException, json.JSONDecodeError, URLError, timeout):
+        pass
+    if countries:
+        with open("data/mirrors.json", "w") as outfile:
+            json.dump(countries, outfile)
 
 
 def read(*names, **kwargs):
