@@ -277,8 +277,8 @@ class PacmanMirrors:
                             "url": server["url"]
                         })
             if mirrorfile:
-                print("\n.: {}: {}".format(txt.INF_CLR,
-                                           txt.CUSTOM_MIRROR_LIST))
+                print("\n.: {} {}".format(txt.INF_CLR,
+                                          txt.CUSTOM_MIRROR_LIST))
                 print("--------------------------")
                 # output mirror file
                 jsonfn.write_json_file(mirrorfile, conf.CUSTOM_FILE)
