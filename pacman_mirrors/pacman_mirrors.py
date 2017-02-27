@@ -245,7 +245,6 @@ class PacmanMirrors:
             worklist = self.test_mirrors(worklist)
             worklist = sorted(worklist, key=itemgetter("resp_time"))
         else:
-            miscfn.shuffle_message()
             shuffle(worklist)
 
         interactive_list = []
