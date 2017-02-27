@@ -1,17 +1,17 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## [3.3.0-beta unstable development] - 2017-02-26
+## [3.3.0-beta unstable development] - 2017-02-27
 - Add: Network check - do not run mirror ranking if no internet
 - Add: --fasttrack (n) argument  
   Creates a list of (n) mirrors which are responsive and uptodate
-- Add: Class JSON file functions
-- Add: Class Custom mirror file conversion and helpers
-- Add: Class Http functions
+- Add: Module JSON file functions
+- Add: Module Custom mirror file conversion and helpers
+- Add: Module Http functions
 - Add: Class Mirror
-- Add: Class Mirror functions
-- Add: Class Generic file functions
-- Add: Class Validation functions
+- Add: Module Mirror functions
+- Add: Module Generic file functions
+- Add: Module Validation functions
 - Add: Download mirrors from repo.manjaro.org
 - Add: Ping status of repo.manjaro.org
 - Add: Fallback to package mirrorfile if ping fail
