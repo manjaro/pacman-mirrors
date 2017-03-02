@@ -196,10 +196,12 @@ class PacmanMirrors:
         if self.custom or \
                 self.config["only_country"] != self.mirrors.mirrorlist:
             configfn.modify_config(self.config["config_file"],
+                                   self.config["custom_file"],
                                    self.config["only_country"],
                                    custom=True)
         else:
             configfn.modify_config(self.config["config_file"],
+                                   self.config["custom_file"],
                                    self.config["only_country"])
 
     def build_fasttrack_mirror_list(self, number):
@@ -281,10 +283,10 @@ class PacmanMirrors:
                                           txt.CUSTOM_MIRROR_LIST))
                 print("--------------------------")
                 # output mirror file
-                jsonfn.write_json_file(mirrorfile, conf.CUSTOM_FILE)
+                jsonfn.write_json_file(mirrorfile, self.config["custom_file"])
                 print(".: {} {}: {}".format(txt.INF_CLR,
                                             txt.CUSTOM_MIRROR_FILE_SAVED,
-                                            conf.CUSTOM_FILE))
+                                            self.config["custom_file"]))
                 # output pacman mirrorlist
                 filefn.output_mirror_list(self.config["branch"],
                                           self.config["mirror_list"],
@@ -294,11 +296,12 @@ class PacmanMirrors:
                 # always use "Custom" from interactive
                 self.config["only_country"] = ["Custom"]
                 configfn.modify_config(self.config["config_file"],
+                                       self.config["custom_file"],
                                        self.config["only_country"],
                                        custom=True)
                 print(".: {} {}: {}".format(txt.INF_CLR,
                                             txt.MIRROR_LIST_SAVED,
-                                            conf.CUSTOM_FILE))
+                                            self.config["custom_file"]))
                 print(".: {} {}".format(txt.INF_CLR, txt.RESET_CUSTOM_CONFIG))
             else:
                 print(".: {} {}".format(txt.WRN_CLR, txt.NO_SELECTION))
@@ -335,7 +338,7 @@ class PacmanMirrors:
 
     def load_custom_mirrors(self):
         """Load available custom mirrors"""
-        self.seed_mirrors(conf.CUSTOM_FILE)
+        self.seed_mirrors(self.config["custom_file"])
 
     def load_default_mirrors(self):
         """Load all available mirrors"""
@@ -376,7 +379,7 @@ class PacmanMirrors:
 
     def run(self):
         """Run"""
-        filefn.dir_must_exist(conf.MIRROR_DIR)
+        filefn.dir_must_exist(self.config["mirror_dir"])
         self.config = configfn.build_config()
         self.command_line_parse()
         self.load_all_mirrors()
