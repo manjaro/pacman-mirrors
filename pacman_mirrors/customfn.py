@@ -20,19 +20,18 @@
 """Pacman-Mirrors Custom Functions"""
 
 import os
-import tempfile
 
 from . import jsonfn
 from . import txt
-from .configuration import CONFIG_FILE, \
-    CUSTOM_FILE, O_CUST_FILE
+from . import configuration as conf
+from . import configfn
 
 
 def convert_to_json():
     """Convert custom mirror file to json"""
     print(".: {} {}".format(txt.INF_CLR, txt.CONVERT_CUSTOM_MIRROR_FILE))
     mirrors = []
-    with open(O_CUST_FILE, "r") as mirrorfile:
+    with open(conf.O_CUST_FILE, "r") as mirrorfile:
         mirror_country = None
         for line in mirrorfile:
             country = get_country(line)
@@ -50,56 +49,20 @@ def convert_to_json():
                 "url": mirror_url
             })
         # write new file
-        jsonfn.write_json_file(mirrors, CUSTOM_FILE)
+        jsonfn.write_json_file(mirrors, conf.CUSTOM_FILE)
         cleanup()
 
 
 def modify_config(onlycountry, custom=False):
     """Modify configuration"""
     if not custom:
-        if os.path.isfile(CUSTOM_FILE):
-            os.remove(CUSTOM_FILE)
-    write_custom_config(CONFIG_FILE, onlycountry, custom)
-
-
-def write_custom_config(filename, selection, custom=False):
-    """Writes the configuration to file
-    :param filename:
-    :param selection:
-    :param custom:
-    """
-    if custom:
-        if selection == ["Custom"]:
-            new_config = "OnlyCountry = Custom\n"
-        else:
-            new_config = "OnlyCountry = {list}\n".format(
-                list=",".join(selection))
-    else:
-        new_config = "# OnlyCountry = \n"
-    try:
-        with open(
-            filename) as cnf, tempfile.NamedTemporaryFile(
-                "w+t", dir=os.path.dirname(
-                    filename), delete=False) as tmp:
-            replaced = False
-            for line in cnf:
-                if "OnlyCountry" in line:
-                    tmp.write(new_config)
-                    replaced = True
-                else:
-                    tmp.write("{}".format(line))
-            if not replaced:
-                tmp.write(new_config)
-        os.replace(tmp.name, filename)
-        os.chmod(filename, 0o644)
-    except OSError as err:
-        print(".: {} {}: {}: {}".format(txt.ERR_CLR, txt.CANNOT_READ_FILE,
-                                        err.filename, err.strerror))
-        exit(1)
+        if os.path.isfile(conf.CUSTOM_FILE):
+            os.remove(conf.CUSTOM_FILE)
+    configfn.write_configuration(conf.CONFIG_FILE, onlycountry, custom)
 
 
 def cleanup():
-    os.remove(O_CUST_FILE)
+    os.remove(conf.O_CUST_FILE)
 
 
 def get_protocol(data):
