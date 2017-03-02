@@ -33,6 +33,7 @@ def build_config():
     config = {
         "branch": "stable",
         "config_file": conf.CONFIG_FILE,
+        "custom_file": conf.CUSTOM_FILE,
         "method": "rank",
         "mirror_dir": conf.MIRROR_DIR,
         "mirror_file": conf.MIRROR_FILE,
@@ -73,12 +74,12 @@ def build_config():
     return config
 
 
-def modify_config(filename, onlycountry, custom=False):
+def modify_config(conf_file, cust_file, onlycountry, custom=False):
     """Modify configuration"""
     if not custom:
-        if os.path.isfile(conf.CUSTOM_FILE):
-            os.remove(conf.CUSTOM_FILE)
-    write_configuration(filename, onlycountry, custom)
+        if os.path.isfile(cust_file):
+            os.remove(cust_file)
+    write_configuration(conf_file, onlycountry, custom)
 
 
 def write_configuration(filename, selection, custom=False):
