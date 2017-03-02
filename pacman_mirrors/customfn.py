@@ -22,10 +22,10 @@
 import os
 import tempfile
 
-from .configuration import CONFIG_FILE, \
-    CUSTOM_FILE, O_CUST_FILE, DEVELOPMENT
 from . import jsonfn
 from . import txt
+from .configuration import CONFIG_FILE, \
+    CUSTOM_FILE, O_CUST_FILE
 
 
 def convert_to_json():
@@ -51,8 +51,7 @@ def convert_to_json():
             })
         # write new file
         jsonfn.write_json_file(mirrors, CUSTOM_FILE)
-        if not DEVELOPMENT:
-            cleanup()
+        cleanup()
 
 
 def modify_config(onlycountry, custom=False):
