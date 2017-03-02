@@ -379,8 +379,8 @@ class PacmanMirrors:
 
     def run(self):
         """Run"""
-        filefn.dir_must_exist(self.config["mirror_dir"])
         self.config = configfn.build_config()
+        filefn.dir_must_exist(self.config["mirror_dir"])
         self.command_line_parse()
         self.load_all_mirrors()
         # network check
