@@ -1,7 +1,0 @@
-##
-## Pacman Mirrorlist
-##
-
-[Chile]
-Server = http://manjaro.dcc.uchile.cl/$branch/$repo/$arch
-Server = http://doge.ing.puc.cl/Mirrors/Manjaro/$branch/$repo/$arch

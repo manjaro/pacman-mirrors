@@ -1,6 +1,0 @@
-##
-## Pacman Mirrorlist
-##
-
-[Colombia]
-Server = http://mirror.edatel.net.co/manjaro/$branch/$repo/$arch

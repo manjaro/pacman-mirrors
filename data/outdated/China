@@ -1,6 +1,0 @@
-##
-## Pacman Mirrorlist
-##
-
-[China]
-Server = http://mirror.bjtu.edu.cn/manjaro/$branch/$repo/$arch

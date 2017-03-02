@@ -1,6 +1,0 @@
-##
-## Pacman Mirrorlist
-##
-
-[Turkey]
-Server = http://ftp.linux.org.tr/manjaro/$branch/$repo/$arch

@@ -1,6 +1,0 @@
-##
-## Pacman Mirrorlist
-##
-
-[Singapore]
-Server = http://download.nus.edu.sg/mirror/manjaro/$branch/$repo/$arch

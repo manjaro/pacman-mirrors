@@ -43,8 +43,6 @@ class TestPacmanMirrors(unittest.TestCase):
                                   "-c", "all",
                                   "-m", "random"]):
             app = PacmanMirrors()
-            app.config["config_file"] = conf.CONFIG_FILE
-            print(app.config["config_file"])
             app.config = configfn.build_config()
             app.command_line_parse()
             filefn.dir_must_exist(app.config["mirror_dir"])

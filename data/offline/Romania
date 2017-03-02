@@ -1,7 +1,0 @@
-##
-## Pacman Mirrorlist
-##
-
-[Romania]
-Server = http://mirrors.xservers.ro/manjaro/$branch/$repo/$arch
-Server = http://manjaro.mirrors.linux.ro/repos/$branch/$repo/$arch
