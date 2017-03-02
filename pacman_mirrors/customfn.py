@@ -53,14 +53,6 @@ def convert_to_json():
         cleanup()
 
 
-def modify_config(onlycountry, custom=False):
-    """Modify configuration"""
-    if not custom:
-        if os.path.isfile(conf.CUSTOM_FILE):
-            os.remove(conf.CUSTOM_FILE)
-    configfn.write_configuration(conf.CONFIG_FILE, onlycountry, custom)
-
-
 def cleanup():
     os.remove(conf.O_CUST_FILE)
 
