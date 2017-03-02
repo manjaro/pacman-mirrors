@@ -23,7 +23,7 @@ def update_mirror_file():
     except (HTTPException, json.JSONDecodeError, URLError, timeout):
         pass
     if countries:
-        with open("data/mirrors.json", "w") as outfile:
+        with open("share/mirrors.json", "w") as outfile:
             json.dump(countries, outfile)
 
 
@@ -72,7 +72,7 @@ setup(
     packages=['pacman_mirrors'],
     package_dir={'pacman_mirrors': 'pacman_mirrors'},
     data_files=[('/etc', ['conf/pacman-mirrors.conf']),
-                ('share/pacman-mirrors', ['data/mirrors.json']),
+                ('share/pacman-mirrors', ['share/mirrors.json']),
                 ('share/locale/bg/LC_MESSAGES', ['locale/bg/LC_MESSAGES/pacman_mirrors.mo']),
                 ('share/locale/ca/LC_MESSAGES', ['locale/ca/LC_MESSAGES/pacman_mirrors.mo']),
                 ('share/locale/cs/LC_MESSAGES', ['locale/cs/LC_MESSAGES/pacman_mirrors.mo']),
