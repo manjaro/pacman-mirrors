@@ -12,6 +12,7 @@ from unittest.mock import patch
 
 from pacman_mirrors.pacman_mirrors import PacmanMirrors
 from pacman_mirrors import configfn
+from . import test_configuration as conf
 
 
 class TestDefaultConfig(unittest.TestCase):
@@ -28,6 +29,7 @@ class TestDefaultConfig(unittest.TestCase):
                                  ["pacman-mirrors",
                                   "-g"]):
             app = PacmanMirrors()
+            app.config["config_file"] = conf.CONFIG_FILE
             app.config = configfn.build_config()
             assert app.config["branch"] == "stable"
 
@@ -39,46 +41,91 @@ class TestDefaultConfig(unittest.TestCase):
                                  ["pacman-mirrors",
                                   "-g"]):
             app = PacmanMirrors()
+            app.config["config_file"] = conf.CONFIG_FILE
             app.config = configfn.build_config()
             assert app.config["method"] == "rank"
 
     @patch("os.getuid")
-    def test_default_mirrordir(self, mock_os_getuid):
-        """TEST: config[mirror_dir] = mock/var/"""
+    @patch.object(configfn, "build_config")
+    def test_default_mirrordir(self, mock_build_config, mock_os_getuid):
+        """TEST: config[mirror_dir] = tests/mock/var/"""
         mock_os_getuid.return_value = 0
+        mock_build_config.return_value = {
+            "branch": "stable",
+            "config_file": conf.CONFIG_FILE,
+            "method": "rank",
+            "mirror_dir": conf.MIRROR_DIR,
+            "mirror_file": conf.MIRROR_FILE,
+            "mirror_list": conf.MIRROR_LIST,
+            "no_update": False,
+            "only_country": [],
+        }
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
                                   "-g"]):
             app = PacmanMirrors()
             app.config = configfn.build_config()
-            assert app.config["mirror_dir"] == "mock/var/"
+            assert app.config["mirror_dir"] == "tests/mock/var/"
 
     @patch("os.getuid")
-    def test_default_mirrorfile(self, mock_os_getuid):
-        """TEST: config[mirror_file] = mock/var/mirrors.json"""
+    @patch.object(configfn, "build_config")
+    def test_default_mirrorfile(self, mock_build_config, mock_os_getuid):
+        """TEST: config[mirror_file] = tests/mock/var/mirrors.json"""
         mock_os_getuid.return_value = 0
+        mock_build_config.return_value = {
+            "branch": "stable",
+            "config_file": conf.CONFIG_FILE,
+            "method": "rank",
+            "mirror_dir": conf.MIRROR_DIR,
+            "mirror_file": conf.MIRROR_FILE,
+            "mirror_list": conf.MIRROR_LIST,
+            "no_update": False,
+            "only_country": [],
+        }
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
                                   "-g"]):
             app = PacmanMirrors()
             app.config = configfn.build_config()
-            assert app.config["mirror_file"] == "mock/var/mirrors.json"
+            assert app.config["mirror_file"] == "tests/mock/var/mirrors.json"
 
     @patch("os.getuid")
-    def test_default_mirrorlist(self, mock_os_getuid):
-        """TEST: config[mirror_list] = mock/etc/mirrorlist"""
+    @patch.object(configfn, "build_config")
+    def test_default_mirrorlist(self, mock_build_config, mock_os_getuid):
+        """TEST: config[mirror_list] = tests/mock/etc/mirrorlist"""
         mock_os_getuid.return_value = 0
+        mock_build_config.return_value = {
+            "branch": "stable",
+            "config_file": conf.CONFIG_FILE,
+            "method": "rank",
+            "mirror_dir": conf.MIRROR_DIR,
+            "mirror_file": conf.MIRROR_FILE,
+            "mirror_list": conf.MIRROR_LIST,
+            "no_update": False,
+            "only_country": [],
+        }
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
                                   "-g"]):
             app = PacmanMirrors()
             app.config = configfn.build_config()
-            assert app.config["mirror_list"] == "mock/etc/mirrorlist"
+            assert app.config["mirror_list"] == "tests/mock/etc/mirrorlist"
 
     @patch("os.getuid")
-    def test_default_noupdate(self, mock_os_getuid):
+    @patch.object(configfn, "build_config")
+    def test_default_noupdate(self, mock_build_config, mock_os_getuid):
         """TEST: config[no_update] = False"""
         mock_os_getuid.return_value = 0
+        mock_build_config.return_value = {
+            "branch": "stable",
+            "config_file": conf.CONFIG_FILE,
+            "method": "rank",
+            "mirror_dir": conf.MIRROR_DIR,
+            "mirror_file": conf.MIRROR_FILE,
+            "mirror_list": conf.MIRROR_LIST,
+            "no_update": False,
+            "only_country": [],
+        }
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
                                   "-g"]):
@@ -86,17 +133,28 @@ class TestDefaultConfig(unittest.TestCase):
             app.config = configfn.build_config()
             assert app.config["no_update"] is False
 
-    # @patch("os.getuid")
-    # def test_default_onlycountry(self, mock_os_getuid):
-    #     """TEST: config[only_country] = []"""
-    #     mock_os_getuid.return_value = 0
-    #     with unittest.mock.patch("sys.argv",
-    #                              ["pacman-mirrors",
-    #                               "-g"]):
-    #         app = PacmanMirrors()
-    #         app.config = {}
-    #         app.config = configfn.build_config()
-    #         assert app.config["only_country"] == []
+    @patch("os.getuid")
+    @patch.object(configfn, "build_config")
+    def test_default_onlycountry(self, mock_build_config, mock_os_getuid):
+        """TEST: config[only_country] = []"""
+        mock_os_getuid.return_value = 0
+        mock_build_config.return_value = {
+            "branch": "stable",
+            "config_file": conf.CONFIG_FILE,
+            "method": "rank",
+            "mirror_dir": conf.MIRROR_DIR,
+            "mirror_file": conf.MIRROR_FILE,
+            "mirror_list": conf.MIRROR_LIST,
+            "no_update": False,
+            "only_country": [],
+        }
+        with unittest.mock.patch("sys.argv",
+                                 ["pacman-mirrors",
+                                  "-g"]):
+            app = PacmanMirrors()
+            app.config["config_file"] = conf.CONFIG_FILE
+            app.config = configfn.build_config()
+            assert app.config["only_country"] == []
 
     def tearDown(self):
         """Tear down"""
