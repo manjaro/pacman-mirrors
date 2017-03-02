@@ -31,6 +31,7 @@ class TestHttpFn(unittest.TestCase):
         mock_build_config.return_value = {
             "branch": "stable",
             "config_file": conf.CONFIG_FILE,
+            "custom_file": conf.CUSTOM_FILE,
             "method": "rank",
             "mirror_dir": conf.MIRROR_DIR,
             "mirror_file": conf.MIRROR_FILE,
@@ -58,6 +59,7 @@ class TestHttpFn(unittest.TestCase):
         mock_build_config.return_value = {
             "branch": "stable",
             "config_file": conf.CONFIG_FILE,
+            "custom_file": conf.CUSTOM_FILE,
             "method": "rank",
             "mirror_dir": conf.MIRROR_DIR,
             "mirror_file": conf.MIRROR_FILE,
