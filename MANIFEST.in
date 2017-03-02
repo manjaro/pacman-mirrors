@@ -3,7 +3,7 @@ include CONTRIBUTING.md
 include CHANGELOG.md
 include LICENSE
 include README.md
-include data/mirrors/*
+include share/mirrors.json
 include scripts/pacman-mirrors
 
 recursive-include tests *
