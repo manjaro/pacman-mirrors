@@ -18,6 +18,7 @@
 # Authors: Frede Hundewadt <frede@hundewadt.dk>
 
 """Pacman-Mirrors Configuration Functions"""
+import tempfile
 
 from . import txt
 from .configuration import CONFIG_FILE, MIRROR_DIR, MIRROR_FILE, MIRROR_LIST
@@ -69,3 +70,39 @@ def build_config():
                                         err.filename,
                                         err.strerror))
     return config
+
+
+def write_configuration(filename, selection, custom=False):
+    """Writes the configuration to file
+    :param filename:
+    :param selection:
+    :param custom:
+    """
+    if custom:
+        if selection == ["Custom"]:
+            new_config = "OnlyCountry = Custom\n"
+        else:
+            new_config = "OnlyCountry = {list}\n".format(
+                list=",".join(selection))
+    else:
+        new_config = "# OnlyCountry = \n"
+    try:
+        with open(
+            filename) as cnf, tempfile.NamedTemporaryFile(
+            "w+t", dir=os.path.dirname(
+                filename), delete=False) as tmp:
+            replaced = False
+            for line in cnf:
+                if "OnlyCountry" in line:
+                    tmp.write(new_config)
+                    replaced = True
+                else:
+                    tmp.write("{}".format(line))
+            if not replaced:
+                tmp.write(new_config)
+        os.replace(tmp.name, filename)
+        os.chmod(filename, 0o644)
+    except OSError as err:
+        print(".: {} {}: {}: {}".format(txt.ERR_CLR, txt.CANNOT_READ_FILE,
+                                        err.filename, err.strerror))
+        exit(1)
