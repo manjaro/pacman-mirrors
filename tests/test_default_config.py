@@ -22,9 +22,20 @@ class TestDefaultConfig(unittest.TestCase):
         pass
 
     @patch("os.getuid")
-    def test_default_branch(self, mock_os_getuid):
+    @patch.object(configfn, "build_config")
+    def test_default_branch(self, mock_build_config, mock_os_getuid):
         """TEST: config[branch] = stable"""
         mock_os_getuid.return_value = 0
+        mock_build_config.return_value = {
+            "branch": "stable",
+            "config_file": conf.CONFIG_FILE,
+            "method": "rank",
+            "mirror_dir": conf.MIRROR_DIR,
+            "mirror_file": conf.MIRROR_FILE,
+            "mirror_list": conf.MIRROR_LIST,
+            "no_update": False,
+            "only_country": [],
+        }
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
                                   "-g"]):
@@ -34,9 +45,20 @@ class TestDefaultConfig(unittest.TestCase):
             assert app.config["branch"] == "stable"
 
     @patch("os.getuid")
-    def test_default_method(self, mock_os_getuid):
+    @patch.object(configfn, "build_config")
+    def test_default_method(self, mock_build_config, mock_os_getuid):
         """TEST: config[method] = rank"""
         mock_os_getuid.return_value = 0
+        mock_build_config.return_value = {
+            "branch": "stable",
+            "config_file": conf.CONFIG_FILE,
+            "method": "rank",
+            "mirror_dir": conf.MIRROR_DIR,
+            "mirror_file": conf.MIRROR_FILE,
+            "mirror_list": conf.MIRROR_LIST,
+            "no_update": False,
+            "only_country": [],
+        }
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
                                   "-g"]):
