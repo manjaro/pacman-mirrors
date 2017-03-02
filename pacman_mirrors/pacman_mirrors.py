@@ -59,7 +59,9 @@ class PacmanMirrors:
 
     def __init__(self):
         """Init"""
-        self.config = {}
+        self.config = {
+            "config_file": conf.CONFIG_FILE  # purpose - testability
+        }
         self.custom = False
         self.fasttrack = None
         self.geoip = False
@@ -129,16 +131,12 @@ class PacmanMirrors:
             exit(0)
 
         if args.version:
-            print("{}pacman-mirrors {} {} {}".format(txt.YS,
-                                                     __version__,
-                                                     conf.DESCRIPTION,
-                                                     txt.CE))
+            print("pacman-mirrors {}".format(__version__))
             exit(0)
 
-        if not conf.DEVELOPMENT:
-            if os.getuid() != 0:
-                print(".: {} {}".format(txt.ERR_CLR, txt.MUST_BE_ROOT))
-                exit(1)
+        if os.getuid() != 0:
+            print(".: {} {}".format(txt.ERR_CLR, txt.MUST_BE_ROOT))
+            exit(1)
 
         if args.no_update:
             if self.config["no_update"] == "True":
@@ -402,11 +400,6 @@ class PacmanMirrors:
                     self.build_common_mirror_list()
             else:
                 miscfn.internet_message()
-
-        print("{}.:! Pacman-Mirrors {} - {} {}".format(txt.YS,
-                                                       __version__,
-                                                       conf.DESCRIPTION,
-                                                       txt.CE))
 
 
 if __name__ == "__main__":
