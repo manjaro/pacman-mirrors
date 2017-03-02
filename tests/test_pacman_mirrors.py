@@ -45,10 +45,10 @@ class TestPacmanMirrors(unittest.TestCase):
                                   "-m", "random"]):
             app = PacmanMirrors()
             app.config = configfn.build_config()
+            filefn.dir_must_exist(conf.MIRROR_DIR)
             app.command_line_parse()
-            filefn.dir_must_exist(app.config["mirror_dir"])
-            app.network = httpfn.update_mirrors()
             app.load_all_mirrors()
+            app.network = httpfn.update_mirrors()
             # actual generation
             if app.fasttrack:
                 app.build_fasttrack_mirror_list(app.fasttrack)
