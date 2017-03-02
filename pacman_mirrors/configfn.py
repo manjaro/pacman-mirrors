@@ -22,7 +22,7 @@ import os
 import tempfile
 
 from . import txt
-from .configuration import CONFIG_FILE, MIRROR_DIR, MIRROR_FILE, MIRROR_LIST
+from . import configuration as conf
 
 
 def build_config():
@@ -32,18 +32,18 @@ def build_config():
     # is fetched from config file
     config = {
         "branch": "stable",
-        "config_file": CONFIG_FILE,
+        "config_file": conf.CONFIG_FILE,
         "method": "rank",
-        "mirror_dir": MIRROR_DIR,
-        "mirror_file": MIRROR_FILE,
-        "mirror_list": MIRROR_LIST,
+        "mirror_dir": conf.MIRROR_DIR,
+        "mirror_file": conf.MIRROR_FILE,
+        "mirror_list": conf.MIRROR_LIST,
         "no_update": False,
         "only_country": [],
     }
     try:
         # read configuration from file
-        with open(config["config_file"]) as conf:
-            for line in conf:
+        with open(config["config_file"]) as conf_file:
+            for line in conf_file:
                 line = line.strip()
                 if line.startswith("#") or "=" not in line:
                     continue
@@ -71,6 +71,14 @@ def build_config():
                                         err.filename,
                                         err.strerror))
     return config
+
+
+def modify_config(filename, onlycountry, custom=False):
+    """Modify configuration"""
+    if not custom:
+        if os.path.isfile(conf.CUSTOM_FILE):
+            os.remove(conf.CUSTOM_FILE)
+    write_configuration(filename, onlycountry, custom)
 
 
 def write_configuration(filename, selection, custom=False):
