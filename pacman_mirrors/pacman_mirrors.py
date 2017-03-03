@@ -335,6 +335,7 @@ class PacmanMirrors:
         # build country list
         self.selected_countries = mirrorfn.build_country_list(
             self.selected_countries, self.mirrors.countrylist, self.geoip)
+        self.config["only_country"] = self.selected_countries
 
     def load_custom_mirrors(self):
         """Load available custom mirrors"""
