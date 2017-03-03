@@ -100,11 +100,14 @@ def write_configuration(filename, selection, custom=False):
     if custom:
         if selection == ["Custom"]:
             selection = "OnlyCountry = Custom\n"
+        elif not selection:
+            selection = "# OnlyCountry = \n"
         else:
             selection = "OnlyCountry = {list}\n".format(
                 list=",".join(selection))
     else:
         selection = "# OnlyCountry = \n"
+
     try:
         with open(
             filename) as cnf, tempfile.NamedTemporaryFile(
