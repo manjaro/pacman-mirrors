@@ -39,6 +39,7 @@ class TestPacmanMirrors(unittest.TestCase):
             "mirror_list": conf.MIRROR_LIST,
             "no_update": False,
             "only_country": [],
+            "repo_arch": conf.REPO_ARCH,
             "status_file": conf.STATUS_FILE
         }
         with unittest.mock.patch("sys.argv",
