@@ -79,12 +79,15 @@ def build_config():
     return config
 
 
-def modify_config(conf_file, cust_file, onlycountry, custom=False):
-    """Modify configuration"""
+def modify_config(config, custom=False):
+    """Modify configuration
+    :param config: dictionary
+    :param custom:
+    """
     if not custom:
-        if os.path.isfile(cust_file):
-            os.remove(cust_file)
-    write_configuration(conf_file, onlycountry, custom)
+        if os.path.isfile(config["custom_file"]):
+            os.remove(config["custom_file"])
+    write_configuration(config["config_file"], config["only_country"], custom=custom)
 
 
 def write_configuration(filename, selection, custom=False):
@@ -95,12 +98,12 @@ def write_configuration(filename, selection, custom=False):
     """
     if custom:
         if selection == ["Custom"]:
-            new_config = "OnlyCountry = Custom\n"
+            selection = "OnlyCountry = Custom\n"
         else:
-            new_config = "OnlyCountry = {list}\n".format(
+            selection = "OnlyCountry = {list}\n".format(
                 list=",".join(selection))
     else:
-        new_config = "# OnlyCountry = \n"
+        selection = "# OnlyCountry = \n"
     try:
         with open(
             filename) as cnf, tempfile.NamedTemporaryFile(
@@ -109,12 +112,12 @@ def write_configuration(filename, selection, custom=False):
             replaced = False
             for line in cnf:
                 if "OnlyCountry" in line:
-                    tmp.write(new_config)
+                    tmp.write(selection)
                     replaced = True
                 else:
                     tmp.write("{}".format(line))
             if not replaced:
-                tmp.write(new_config)
+                tmp.write(selection)
         os.replace(tmp.name, filename)
         os.chmod(filename, 0o644)
     except OSError as err:
