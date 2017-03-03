@@ -22,6 +22,7 @@ import os
 import tempfile
 
 from . import txt
+from . import configuration as conf
 
 
 def build_config():
@@ -31,20 +32,20 @@ def build_config():
     # is fetched from config file
     config = {
         "branch": "stable",
-        "branches": ("stable", "testing", "unstable"),
-        "config_file": "/etc/pacman-mirrors.conf",
-        "custom_file": "/var/lib/pacman-mirrors/custom-mirrors.json",
-        "fallback_file": "/usr/share/pacman-mirrors/mirrors.json",
+        "branches": conf.BRANCHES,
+        "config_file": conf.CONFIG_FILE,
+        "custom_file": conf.CUSTOM_FILE,
+        "fallback_file": conf.FALLBACK,
         "method": "rank",
-        "mirror_dir": "/var/lib/pacman-mirrors/",
-        "mirror_file": "/var/lib/pacman-mirrors/mirrors.json",
-        "mirror_list": "/etc/pacman.d/mirrorlist",
+        "mirror_dir": conf.MIRROR_DIR,
+        "mirror_file": conf.MIRROR_FILE,
+        "mirror_list": conf.MIRROR_LIST,
         "no_update": False,
         "only_country": [],
-        "repo_arch": "/$repo/$arch",
-        "status_file": "/var/lib/pacman-mirrors/status.json",
-        "url_mirrors": "http://repo.manjaro.org/mirrors.json",
-        "url_status": "http://repo.manjaro.org/status.json"
+        "repo_arch": conf.REPO_ARCH,
+        "status_file": conf.STATUS_FILE,
+        "url_mirrors_json": conf.URL_MIRROR_JSON,
+        "url_status_json": conf.URL_STATUS_JSON
     }
     try:
         # read configuration from file
