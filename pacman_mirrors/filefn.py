@@ -22,7 +22,7 @@
 import os
 import datetime
 
-from .configuration import FALLBACK, MIRROR_FILE, REPO_ARCH, STATUS_FILE
+from . import configuration as conf
 from . import jsonfn
 from . import txt
 
@@ -44,14 +44,14 @@ def return_mirror_filename():
     filename = ""
     status = False  # status.json or mirrors.json
     # decision on file avaiablity
-    if check_file(STATUS_FILE):
+    if check_file(conf.STATUS_FILE):
         status = True
-        filename = STATUS_FILE
-    elif check_file(MIRROR_FILE):
-        filename = MIRROR_FILE
+        filename = conf.STATUS_FILE
+    elif check_file(conf.MIRROR_FILE):
+        filename = conf.MIRROR_FILE
     else:
-        if check_file(FALLBACK):
-            filename = FALLBACK
+        if check_file(conf.FALLBACK):
+            filename = conf.FALLBACK
     if not filename:
         print("\n{}.:! {}{}\n".format(txt.RS,
                                       txt.HOUSTON,
@@ -81,7 +81,7 @@ def output_mirror_list(branch,
                     server["url"] = "{}{}{}{}".format(protocol[1],
                                                       url[pos:],
                                                       branch,
-                                                      REPO_ARCH)
+                                                      conf.REPO_ARCH)
                     # write list entry
                     write_mirrorlist_entry(outfile, server)
                     if not quiet:

@@ -21,7 +21,7 @@
 
 import os
 
-from .configuration import CUSTOM_FILE
+from . import configuration as conf
 from . import txt
 
 
@@ -37,13 +37,13 @@ def custom_config_is_valid():
     :return: True or False
     :rtype: bool
     """
-    if os.path.isfile(CUSTOM_FILE):
+    if os.path.isfile(conf.CUSTOM_FILE):
         return True  # valid
     else:
         # validation fail - inform user and exit
         print(".: {} {} {} {}".format(txt.ERR_CLR,
                                       txt.CUSTOM_MIRROR_FILE,
-                                      CUSTOM_FILE,
+                                      conf.CUSTOM_FILE,
                                       txt.DOES_NOT_EXIST))
         print(".: {} {}: {}".format(txt.INF_CLR,
                                     txt.FALLING_BACK,

@@ -28,8 +28,7 @@ from socket import timeout
 from urllib.error import URLError
 from urllib.request import urlopen
 
-from .configuration import FALLBACK, MIRROR_FILE, \
-    STATUS_FILE, URL_MIRROR_JSON, URL_STATUS_JSON
+from . import configuration as conf
 from . import filefn
 from . import jsonfn
 from . import txt
@@ -58,10 +57,10 @@ def download_mirrors(url, quiet=False):
 
     if countries:
         success = True
-        if url == URL_STATUS_JSON:
-            jsonfn.write_json_file(countries, STATUS_FILE)
+        if url == conf.URL_STATUS_JSON:
+            jsonfn.write_json_file(countries, conf.STATUS_FILE)
         else:
-            jsonfn.write_json_file(countries, MIRROR_FILE)
+            jsonfn.write_json_file(countries, conf.MIRROR_FILE)
     return success
 
 
@@ -146,18 +145,18 @@ def update_mirrors():
     mjro_online = get_mirror_response("http://repo.manjaro.org")
     if mjro_online != "99.99":
         print(".: {} {}".format(txt.INF_CLR, txt.DOWNLOADING_MIRROR_FILE))
-        download_mirrors(URL_MIRROR_JSON)
-        download_mirrors(URL_STATUS_JSON)
+        download_mirrors(conf.URL_MIRROR_JSON)
+        download_mirrors(conf.URL_STATUS_JSON)
         return True
     else:
-        if not filefn.check_file(MIRROR_FILE):
+        if not filefn.check_file(conf.MIRROR_FILE):
             print(".: {} {} {} {}".format(txt.WRN_CLR,
                                           txt.MIRROR_FILE,
-                                          MIRROR_FILE,
+                                          conf.MIRROR_FILE,
                                           txt.IS_MISSING))
             print(".: {} {} {}".format(txt.WRN_CLR,
                                        txt.FALLING_BACK,
-                                       FALLBACK))
-        if not filefn.check_file(FALLBACK):
+                                       conf.FALLBACK))
+        if not filefn.check_file(conf.FALLBACK):
             print(".: {} {}".format(txt.ERR_CLR, txt.HOUSTON))
         return False
