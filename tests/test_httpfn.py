@@ -13,6 +13,7 @@ from unittest.mock import patch
 from pacman_mirrors import httpfn
 from pacman_mirrors.pacman_mirrors import PacmanMirrors
 from pacman_mirrors import configfn
+from . import mock_configuration as conf
 
 
 class TestHttpFn(unittest.TestCase):
@@ -31,6 +32,7 @@ class TestHttpFn(unittest.TestCase):
                                  ["pacman-mirrors",
                                   "--geoip"]):
             app = PacmanMirrors()
+            app.config["config_file"] = conf.CONFIG_FILE
             app.config = configfn.build_config()
             app.command_line_parse()
             app.load_all_mirrors()
@@ -47,6 +49,7 @@ class TestHttpFn(unittest.TestCase):
                                   "-g",
                                   "--geoip"]):
             app = PacmanMirrors()
+            app.config["config_file"] = conf.CONFIG_FILE
             app.config = configfn.build_config()
             app.command_line_parse()
             app.load_all_mirrors()
