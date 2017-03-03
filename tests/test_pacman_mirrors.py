@@ -30,7 +30,8 @@ class TestPacmanMirrors(unittest.TestCase):
         mock_os_getuid.return_value = 0
         mock_build_config.return_value = {
             "branch": "stable",
-            "config_file": "tests/mock/etc/pacman-mirrors.conf",
+            "branches": conf.BRANCHES,
+            "config_file": conf.CONFIG_FILE,
             "custom_file": conf.CUSTOM_FILE,
             "fallback_file": conf.FALLBACK,
             "method": "rank",
@@ -41,8 +42,8 @@ class TestPacmanMirrors(unittest.TestCase):
             "only_country": [],
             "repo_arch": conf.REPO_ARCH,
             "status_file": conf.STATUS_FILE,
-            "url_mirrors": conf.URL_MIRROR_JSON,
-            "url_status": conf.URL_STATUS_JSON
+            "url_mirrors_json": conf.URL_MIRROR_JSON,
+            "url_status_json": conf.URL_STATUS_JSON
         }
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",

@@ -6,11 +6,11 @@ CONFIG_FILE = "tests/mock/etc/pacman-mirrors.conf"
 MIRROR_LIST = "tests/mock/etc/mirrorlist"
 # pacman-mirrors
 MIRROR_DIR = "tests/mock/var/"
-CUSTOM_FILE = MIRROR_DIR + "custom-mirrors.json"
-MIRROR_FILE = MIRROR_DIR + "mirrors.json"
-STATUS_FILE = MIRROR_DIR + "status.json"
+CUSTOM_FILE = "tests/mock/var/custom-mirrors.json"
+MIRROR_FILE = "tests/mock/var/mirrors.json"
+STATUS_FILE = "tests/mock/var/status.json"
 # special cases
-O_CUST_FILE = MIRROR_DIR + "Custom"
+O_CUST_FILE = "tests/mock/var/Custom"
 FALLBACK = "tests/mock/usr/mirrors.json"
 # repo constants
 BRANCHES = ("stable", "testing", "unstable")
