@@ -37,35 +37,31 @@ from . import txt
 def download_mirrors(config):
     """Retrieve mirrors from manjaro.org
     :param config:
-    :return: True on success
-    :rtype: boolean
+    :returns: tuple with success for mirrors.json and status.json
+    :rtype: tuple
     """
-    mirrors = list()
-    status = list()
-    success = False
+    fetchmirrors = False
+    fetchstatus = False
     try:
-        with urlopen(config["url_mirrors"]) as response:
-            mirrors = json.loads(response.read().decode(
+        with urlopen(config["url_mirrors_json"]) as response:
+            mirrorlist = json.loads(response.read().decode(
                 "utf8"), object_pairs_hook=collections.OrderedDict)
+        fetchmirrors = True
+        jsonfn.write_json_file(mirrorlist, config["mirror_file"])
     except (HTTPException, json.JSONDecodeError, URLError):
         pass
 
     try:
-        with urlopen(config["url_status"]) as response:
-            status = json.loads(response.read().decode(
+        with urlopen(config["url_status_json"]) as response:
+            statuslist = json.loads(response.read().decode(
                 "utf8"), object_pairs_hook=collections.OrderedDict)
+        fetchstatus = True
+        jsonfn.write_json_file(statuslist, config["status_file"])
     except (HTTPException, json.JSONDecodeError, URLError):
         pass
 
-    if mirrors:
-        success = True
-        jsonfn.write_json_file(mirrors, config["mirror_file"])
-
-    if status:
-        success = True
-        jsonfn.write_json_file(mirrors, config["status_file"])
-
-    return success
+    result = (fetchmirrors, fetchstatus)
+    return result
 
 
 def get_geoip_country():
@@ -147,14 +143,14 @@ def ping_host(host, count=1):
 def update_mirrors(config):
     """Download updates from repo.manjaro.org
     :param config:
-    :returns: True on successfull update
-    :rtype: boolean
+    :returns: tuple with result for mirrors.json and status.json
+    :rtype: tuple
     """
+    result = None
     mjro_online = get_mirror_response("http://repo.manjaro.org")
     if mjro_online != "99.99":
         print(".: {} {}".format(txt.INF_CLR, txt.DOWNLOADING_MIRROR_FILE))
-        download_mirrors(config)
-        return True
+        result = download_mirrors(config)
     else:
         if not filefn.check_file(config["mirror_file"]):
             print(".: {} {} {} {}".format(txt.WRN_CLR,
@@ -164,6 +160,9 @@ def update_mirrors(config):
             print(".: {} {} {}".format(txt.WRN_CLR,
                                        txt.FALLING_BACK,
                                        conf.FALLBACK))
+            result = (True, False)
         if not filefn.check_file(config["fallback_file"]):
             print(".: {} {}".format(txt.ERR_CLR, txt.HOUSTON))
-        return False
+            result = (False, False)
+
+    return result
