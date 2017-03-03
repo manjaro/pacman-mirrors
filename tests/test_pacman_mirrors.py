@@ -14,7 +14,7 @@ from pacman_mirrors import configfn
 from pacman_mirrors import filefn
 from pacman_mirrors import httpfn
 from pacman_mirrors.pacman_mirrors import PacmanMirrors
-from . import test_configuration as conf
+from . import mock_configuration as conf
 
 
 class TestPacmanMirrors(unittest.TestCase):
