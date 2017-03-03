@@ -22,23 +22,27 @@
 import os
 import datetime
 
-from . import configuration as conf
 from . import jsonfn
 from . import txt
 
 
 def check_file(filename):
-    """Check if file exist"""
+    """Check if file exist
+    :param filename:
+    """
     return os.path.isfile(filename)
 
 
 def dir_must_exist(dir_name):
-    """Check necessary directory"""
+    """Check necessary directory
+    :param dir_name:
+    """
     os.makedirs(dir_name, mode=0o755, exist_ok=True)
 
 
 def return_mirror_filename(config):
     """Load default mirror file
+    :param config:
     :returns tuple with file and status
     """
     filename = ""
@@ -61,16 +65,15 @@ def return_mirror_filename(config):
     return result
 
 
-def output_mirror_list(branch,
-                       mirrorlistfile,
-                       servers,
-                       custom=False,
-                       quiet=False):
+def output_mirror_list(config, servers, custom=False, quiet=False):
     """Write servers to /etc/pacman.d/mirrorlist
-    :param: servers: list of servers to write
+    :param config:
+    :param servers: list of servers to write
+    :param custom:
+    :param quiet:
     """
     try:
-        with open(mirrorlistfile, "w") as outfile:
+        with open(config["mirror_list"], "w") as outfile:
             print(".: {} {}".format(txt.INF_CLR, txt.WRITING_MIRROR_LIST))
             # write list header
             write_mirrorlist_header(outfile, custom=custom)
@@ -80,8 +83,8 @@ def output_mirror_list(branch,
                     pos = url.find(":")
                     server["url"] = "{}{}{}{}".format(protocol[1],
                                                       url[pos:],
-                                                      branch,
-                                                      conf.REPO_ARCH)
+                                                      config["branch"],
+                                                      config.REPO_ARCH)
                     # write list entry
                     write_mirrorlist_entry(outfile, server)
                     if not quiet:
@@ -91,7 +94,7 @@ def output_mirror_list(branch,
                                                           server["url"]))
             print(".: {} {}: {}".format(txt.INF_CLR,
                                         txt.MIRROR_LIST_SAVED,
-                                        mirrorlistfile))
+                                        config["mirror_list"]))
     except OSError as err:
         print(".: {} {}: {}: {}".format(txt.ERR_CLR,
                                         txt.CANNOT_WRITE_FILE,
@@ -102,6 +105,7 @@ def output_mirror_list(branch,
 
 def read_mirror_file(filename):
     """Read a mirror file
+    :param filename:
     :returns: list of mirrors
     """
     return jsonfn.read_json_file(filename, dictionary=True)
