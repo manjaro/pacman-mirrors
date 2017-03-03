@@ -30,14 +30,20 @@ class TestPacmanMirrors(unittest.TestCase):
         mock_os_getuid.return_value = 0
         mock_build_config.return_value = {
             "branch": "stable",
+            "branches": ("stable", "testing", "unstable"),
             "config_file": conf.CONFIG_FILE,
             "custom_file": conf.CUSTOM_FILE,
+            "fallback_file": conf.FALLBACK,
             "method": "rank",
             "mirror_dir": conf.MIRROR_DIR,
             "mirror_file": conf.MIRROR_FILE,
             "mirror_list": conf.MIRROR_LIST,
             "no_update": False,
             "only_country": [],
+            "repo_arch": "/$repo/$arch",
+            "status_file": conf.STATUS_FILE,
+            "url_mirrors": "http://repo.manjaro.org/mirrors.json",
+            "url_status": "http://repo.manjaro.org/status.json"
         }
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
