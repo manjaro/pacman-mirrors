@@ -66,7 +66,7 @@ setup(
     version=find_version("pacman_mirrors", "__init__.py"),
     description="Package that provides all mirrors for Manjaro Linux.",
     long_description=README + '\n\n' + CHANGELOG,
-    author="Roland Singer, Esclapion, philm, Ramon Buldó",
+    author="Roland Singer, Esclapion, philm, Ramon Buldó, Hugo Posnic, Frede Hundewadt",
     author_email='ramon@manjaro.org',
     url='https://github.com/manjaro/pacman-mirrors',
     packages=['pacman_mirrors'],
