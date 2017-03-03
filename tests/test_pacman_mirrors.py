@@ -40,7 +40,9 @@ class TestPacmanMirrors(unittest.TestCase):
             "no_update": False,
             "only_country": [],
             "repo_arch": conf.REPO_ARCH,
-            "status_file": conf.STATUS_FILE
+            "status_file": conf.STATUS_FILE,
+            "url_mirrors": conf.URL_MIRROR_JSON,
+            "url_status": conf.URL_STATUS_JSON
         }
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
@@ -51,7 +53,7 @@ class TestPacmanMirrors(unittest.TestCase):
             filefn.dir_must_exist(conf.MIRROR_DIR)
             app.command_line_parse()
             app.load_all_mirrors()
-            app.network = httpfn.update_mirrors()
+            app.network = httpfn.update_mirrors(app.config)
             # actual generation
             if app.fasttrack:
                 app.build_fasttrack_mirror_list(app.fasttrack)
