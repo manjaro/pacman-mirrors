@@ -1,6 +1,8 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [4.0.0rc1] - 2017-03-03
+
 ## [3.3.0-beta unstable development] - 2017-02-27
 - Add: Network check - do not run mirror ranking if no internet
 - Add: --fasttrack [n] argument  
