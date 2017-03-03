@@ -31,15 +31,16 @@ class TestHttpFn(unittest.TestCase):
         mock_get_geoip_country.return_value = "France"
         mock_build_config.return_value = {
             "branch": "stable",
-            # "config_file": os.getcwd() + "/tests/mock/etc/pacman-mirrors.conf",
             "config_file": "tests/mock/etc/pacman-mirrors.conf",
             "custom_file": conf.CUSTOM_FILE,
+            "fallback_file": conf.FALLBACK,
             "method": "rank",
             "mirror_dir": conf.MIRROR_DIR,
             "mirror_file": conf.MIRROR_FILE,
             "mirror_list": conf.MIRROR_LIST,
             "no_update": False,
-            "only_country": []
+            "only_country": [],
+            "status_file": conf.STATUS_FILE
         }
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
@@ -59,15 +60,16 @@ class TestHttpFn(unittest.TestCase):
         mock_get_geoip_country.return_value = "Antarctica"
         mock_build_config.return_value = {
             "branch": "stable",
-            # "config_file": os.getcwd() + "/tests/mock/etc/pacman-mirrors.conf",
             "config_file": "tests/mock/etc/pacman-mirrors.conf",
             "custom_file": conf.CUSTOM_FILE,
+            "fallback_file": conf.FALLBACK,
             "method": "rank",
             "mirror_dir": conf.MIRROR_DIR,
             "mirror_file": conf.MIRROR_FILE,
             "mirror_list": conf.MIRROR_LIST,
             "no_update": False,
-            "only_country": []
+            "only_country": [],
+            "status_file": conf.STATUS_FILE
         }
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
