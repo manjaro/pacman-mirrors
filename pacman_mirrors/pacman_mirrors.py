@@ -188,27 +188,19 @@ class PacmanMirrors:
         else:
             shuffle(worklist)
 
-        filefn.output_mirror_list(self.config["branch"],
-                                  self.config["mirror_list"],
-                                  worklist,
-                                  quiet=self.quiet)
+        filefn.output_mirror_list(self.config, worklist, quiet=self.quiet)
         if self.custom or \
                 self.config["only_country"] != self.mirrors.mirrorlist:
-            configfn.modify_config(self.config["config_file"],
-                                   self.config["custom_file"],
-                                   self.config["only_country"],
-                                   custom=True)
+            configfn.modify_config(self.config, custom=True)
         else:
-            configfn.modify_config(self.config["config_file"],
-                                   self.config["custom_file"],
-                                   self.config["only_country"])
+            configfn.modify_config(self.config)
 
     def build_fasttrack_mirror_list(self, number):
         """Fast-track the mirrorlist by aggressive sorting"""
         temp = sorted(self.mirrors.mirrorlist,
                       key=itemgetter("branches", "last_sync"), reverse=True)
         temp = sorted(temp, key=itemgetter("last_sync"), reverse=False)
-        ftlist = []
+        worklist = []
         print(".: {}: {} - {}".format(txt.INF_CLR,
                                       txt.QUERY_MIRRORS,
                                       txt.TAKES_TIME))
@@ -224,15 +216,12 @@ class PacmanMirrors:
             print("\r   {:<5}{}{} ".format(txt.GS, resp_time, txt.CE))
             if resp_time == txt.SERVER_RES:
                 continue
-            ftlist.append(mirror)
+            worklist.append(mirror)
             counter += 1
             if counter == number:
                 break
-        ftlist = sorted(ftlist, key=itemgetter("resp_time"))
-        filefn.output_mirror_list(self.config["branch"],
-                                  self.config["mirror_list"],
-                                  ftlist,
-                                  self.quiet)
+        worklist = sorted(worklist, key=itemgetter("resp_time"))
+        filefn.output_mirror_list(self.config, worklist, quiet=self.quiet)
 
     def build_interactive_mirror_list(self):
         """Prompt the user to select the mirrors with a gui.
@@ -287,17 +276,10 @@ class PacmanMirrors:
                                             txt.CUSTOM_MIRROR_FILE_SAVED,
                                             self.config["custom_file"]))
                 # output pacman mirrorlist
-                filefn.output_mirror_list(self.config["branch"],
-                                          self.config["mirror_list"],
-                                          worklist,
-                                          custom=True,
-                                          quiet=self.quiet)
+                filefn.output_mirror_list(self.config, worklist, custom=True, quiet=self.quiet)
                 # always use "Custom" from interactive
                 self.config["only_country"] = ["Custom"]
-                configfn.modify_config(self.config["config_file"],
-                                       self.config["custom_file"],
-                                       self.config["only_country"],
-                                       custom=True)
+                configfn.modify_config(self.config, custom=True)
                 print(".: {} {}: {}".format(txt.INF_CLR,
                                             txt.MIRROR_LIST_SAVED,
                                             self.config["custom_file"]))
