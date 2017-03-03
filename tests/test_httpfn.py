@@ -49,7 +49,7 @@ class TestHttpFn(unittest.TestCase):
                                   "-g",
                                   "--geoip"]):
             app = PacmanMirrors()
-            app.config["config_file"] = conf.CONFIG_FILE
+            app.config["config_file"] = "tests/mock/etc/pacman-mirrors.conf"
             app.config = configfn.build_config()
             app.command_line_parse()
             app.load_all_mirrors()
