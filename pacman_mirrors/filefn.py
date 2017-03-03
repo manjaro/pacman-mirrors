@@ -84,7 +84,7 @@ def output_mirror_list(config, servers, custom=False, quiet=False):
                     server["url"] = "{}{}{}{}".format(protocol[1],
                                                       url[pos:],
                                                       config["branch"],
-                                                      config.REPO_ARCH)
+                                                      config["repo_arch"])
                     # write list entry
                     write_mirrorlist_entry(outfile, server)
                     if not quiet:
