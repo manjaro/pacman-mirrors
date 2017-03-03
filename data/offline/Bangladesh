@@ -1,6 +1,0 @@
-##
-## Pacman Mirrorlist
-##
-
-[Bangladesh]
-Server = http://mirrors.ispros.com.bd/manjaro/$branch/$repo/$arch

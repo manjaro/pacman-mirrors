@@ -1,15 +1,34 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import glob
+import collections
 import io
+import json
 import re
 import os
+from urllib.request import urlopen
+from http.client import HTTPException
+from socket import timeout
+from urllib.error import URLError
 
 from setuptools import setup
 
 
+def update_mirror_file():
+    """update mirrors.json from github"""
+    countries = list()
+    try:
+        with urlopen("https://github.com/manjaro/manjaro-web-repo/raw/master/mirrors.json") as response:
+            countries = json.loads(response.read().decode("utf8"), object_pairs_hook=collections.OrderedDict)
+    except (HTTPException, json.JSONDecodeError, URLError, timeout):
+        pass
+    if countries:
+        with open("share/mirrors.json", "w") as outfile:
+            json.dump(countries, outfile)
+
+
 def read(*names, **kwargs):
+    """read"""
     with io.open(
         os.path.join(os.path.dirname(__file__), *names),
         encoding=kwargs.get("encoding", "utf8")
@@ -18,6 +37,7 @@ def read(*names, **kwargs):
 
 
 def find_version(*file_paths):
+    """find version"""
     version_file = read(*file_paths)
     version_match = re.search(r"^__version__ = ['\"]([^'\"]*)['\"]",
                               version_file, re.M)
@@ -26,10 +46,10 @@ def find_version(*file_paths):
     raise RuntimeError("Unable to find version string.")
 
 with open('README.md') as readme_file:
-    readme = readme_file.read()
+    README = readme_file.read()
 
 with open('CHANGELOG.md') as changelog_file:
-    changelog = changelog_file.read()
+    CHANGELOG = changelog_file.read()
 
 requirements = [
     # TODO: put package requirements here
@@ -39,20 +59,20 @@ test_requirements = [
     # TODO: put package test requirements here
 ]
 
-mirror_files = glob.glob('data/mirrors/*')
+update_mirror_file()
 
 setup(
     name='pacman-mirrors',
     version=find_version("pacman_mirrors", "__init__.py"),
     description="Package that provides all mirrors for Manjaro Linux.",
-    long_description=readme + '\n\n' + changelog,
-    author="Roland Singer, Esclapion, philm, Ramon Buldó",
+    long_description=README + '\n\n' + CHANGELOG,
+    author="Roland Singer, Esclapion, philm, Ramon Buldó, Hugo Posnic, Frede Hundewadt",
     author_email='ramon@manjaro.org',
     url='https://github.com/manjaro/pacman-mirrors',
     packages=['pacman_mirrors'],
     package_dir={'pacman_mirrors': 'pacman_mirrors'},
     data_files=[('/etc', ['conf/pacman-mirrors.conf']),
-                ('/etc/pacman.d/mirrors', mirror_files),
+                ('share/pacman-mirrors', ['share/mirrors.json']),
                 ('share/locale/bg/LC_MESSAGES', ['locale/bg/LC_MESSAGES/pacman_mirrors.mo']),
                 ('share/locale/ca/LC_MESSAGES', ['locale/ca/LC_MESSAGES/pacman_mirrors.mo']),
                 ('share/locale/cs/LC_MESSAGES', ['locale/cs/LC_MESSAGES/pacman_mirrors.mo']),

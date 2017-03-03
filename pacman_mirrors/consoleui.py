@@ -20,14 +20,14 @@
 """Pacman-Mirrors TUI Module"""
 
 from collections import namedtuple
+
 import npyscreen
 
-from . consolefn import ConsoleFn
+from . import consolefn
 from . import i18n
 from . import txt
 
 
-Util = ConsoleFn
 _ = i18n.language.gettext
 
 
@@ -55,8 +55,8 @@ class ConsoleUI(npyscreen.NPSAppManaged):
                         "url": txt.I_URL})
         main_server_list.append(header_cols)
         main_server_list.extend(self.server_list)
-        servers = Util.list_to_tuple(main_server_list, server)
-        server_rows = Util.rows_from_tuple(servers)
+        servers = consolefn.list_to_tuple(main_server_list, server)
+        server_rows = consolefn.rows_from_tuple(servers)
         header_row = ("{:<5}".format(txt.I_USE) +
                       (server_rows[0].replace("|", " ").strip()))
         del server_rows[0]

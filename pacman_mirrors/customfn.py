@@ -20,109 +20,59 @@
 """Pacman-Mirrors Custom Functions"""
 
 import os
-import tempfile
-from .configuration import CONFIG_FILE, CUSTOM_FILE, O_CUST_FILE
-from .configuration import DEVELOPMENT
-from .jsonfn import JsonFn
+
+from . import jsonfn
 from . import txt
+from . import configuration as conf
 
 
-class CustomFn:
-    @staticmethod
-    def convert_to_json():
-        """Convert custom mirror file to json"""
-        print(".: {} {}".format(txt.INF_CLR, txt.CONVERT_CUSTOM_MIRROR_FILE))
-        mirrors = []
-        with open(O_CUST_FILE, "r") as mirrorfile:
-            mirror_country = None
-            for line in mirrorfile:
-                country = CustomHelper.get_country(line)
-                if country:
-                    mirror_country = country
-                    continue
-                mirror_url = CustomHelper.get_url(line)
-                if not mirror_url:
-                    continue
-                mirror_protocol = CustomHelper.get_protocol(mirror_url)
-                # add to mirrors
-                mirrors.append({
-                    "country": mirror_country,
-                    "protocols": [mirror_protocol],
-                    "url": mirror_url
-                })
-            # write new file
-            JsonFn.write_json_file(mirrors, CUSTOM_FILE)
-            if not DEVELOPMENT:
-                CustomHelper.cleanup()
-
-    @staticmethod
-    def modify_config(onlycountry, custom=False):
-        """Modify configuration"""
-        if not custom:
-            if os.path.isfile(CUSTOM_FILE):
-                os.remove(CUSTOM_FILE)
-        CustomFn.write_custom_config(CONFIG_FILE, onlycountry, custom)
-
-    @staticmethod
-    def write_custom_config(filename, selection, custom=False):
-        """Writes the configuration to file
-        :param filename:
-        :param selection:
-        :param custom:
-        """
-        if custom:
-            if selection == ["Custom"]:
-                new_config = "OnlyCountry = Custom\n"
-            else:
-                new_config = "OnlyCountry = {list}\n".format(
-                    list=",".join(selection))
-        else:
-            new_config = "# OnlyCountry = \n"
-        try:
-            with open(
-                filename) as cnf, tempfile.NamedTemporaryFile(
-                "w+t", dir=os.path.dirname(
-                    filename), delete=False) as tmp:
-                replaced = False
-                for line in cnf:
-                    if "OnlyCountry" in line:
-                        tmp.write(new_config)
-                        replaced = True
-                    else:
-                        tmp.write("{}".format(line))
-                if not replaced:
-                    tmp.write(new_config)
-            os.replace(tmp.name, filename)
-            os.chmod(filename, 0o644)
-        except OSError as err:
-            print(".: {} {}: {}: {}".format(txt.ERR_CLR, txt.CANNOT_READ_FILE,
-                                            err.filename, err.strerror))
-            exit(1)
+def convert_to_json():
+    """Convert custom mirror file to json"""
+    print(".: {} {}".format(txt.INF_CLR, txt.CONVERT_CUSTOM_MIRROR_FILE))
+    mirrors = []
+    with open(conf.O_CUST_FILE, "r") as mirrorfile:
+        mirror_country = None
+        for line in mirrorfile:
+            country = get_country(line)
+            if country:
+                mirror_country = country
+                continue
+            mirror_url = get_url(line)
+            if not mirror_url:
+                continue
+            mirror_protocol = get_protocol(mirror_url)
+            # add to mirrors
+            mirrors.append({
+                "country": mirror_country,
+                "protocols": [mirror_protocol],
+                "url": mirror_url
+            })
+        # write new file
+        jsonfn.write_json_file(mirrors, conf.CUSTOM_FILE)
+        cleanup()
 
 
-class CustomHelper:
-    @staticmethod
-    def cleanup():
-        os.remove(O_CUST_FILE)
+def cleanup():
+    os.remove(conf.O_CUST_FILE)
 
-    @staticmethod
-    def get_protocol(data):
-        """Extract protocol from url"""
-        pos = data.find(":")
-        return data[:pos]
 
-    @staticmethod
-    def get_country(data):
-        """Extract mirror country from data"""
-        line = data.strip()
-        if line.startswith("[") and line.endswith("]"):
-            return line[1:-1]
-        elif line.startswith("## Country") or line.startswith("## Location"):
-            return line[19:]
+def get_protocol(data):
+    """Extract protocol from url"""
+    pos = data.find(":")
+    return data[:pos]
 
-    @staticmethod
-    def get_url(data):
-        """Extract mirror url from data"""
-        line = data.strip()
-        if line.startswith("Server"):
-            return line[9:].replace("$branch/$repo/$arch", "")
+
+def get_country(data):
+    """Extract mirror country from data"""
+    line = data.strip()
+    if line.startswith("[") and line.endswith("]"):
+        return line[1:-1]
+    elif line.startswith("## Country") or line.startswith("## Location"):
+        return line[19:]
+
+
+def get_url(data):
+    """Extract mirror url from data"""
+    line = data.strip()
+    if line.startswith("Server"):
+        return line[9:].replace("$branch/$repo/$arch", "")

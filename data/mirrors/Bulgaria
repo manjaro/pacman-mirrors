@@ -1,8 +1,0 @@
-##
-## Pacman Mirrorlist
-##
-
-[Bulgaria]
-Server = http://mirrors.netix.net/manjaro/$branch/$repo/$arch
-Server = http://manjaro.ipacct.com/manjaro/$branch/$repo/$arch
-Server = http://manjaro.telecoms.bg/$branch/$repo/$arch

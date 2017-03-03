@@ -1,7 +1,0 @@
-##
-## Pacman Mirrorlist
-##
-
-[Brasil]
-Server = http://manjaro.fis.unb.br/$branch/$repo/$arch
-Server = http://www.las.ic.unicamp.br/pub/manjarolinux/$branch/$repo/$arch

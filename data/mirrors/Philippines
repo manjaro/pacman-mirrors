@@ -1,6 +1,0 @@
-##
-## Pacman Mirrorlist
-##
-
-[Philippines]
-Server = http://mirror.rise.ph/manjaro/$branch/$repo/$arch

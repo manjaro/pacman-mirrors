@@ -51,7 +51,7 @@ coverage:
 	coverage run --source pacman_mirrors setup.py test
 	coverage report -m
 	coverage html
-	open htmlcov/index.html
+	firefox htmlcov/index.html
 
 docs:
 	mkdocs build

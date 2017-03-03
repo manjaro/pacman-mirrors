@@ -1,6 +1,0 @@
-##
-## Pacman Mirrorlist
-##
-
-[Hungary]
-Server = http://mirror.infotronik.hu/mirrors/pub/manjaro/$branch/$repo/$arch

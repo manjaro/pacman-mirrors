@@ -1,7 +1,0 @@
-##
-## Pacman Mirrorlist
-##
-
-[Japan]
-Server = http://ftp.tsukuba.wide.ad.jp/Linux/manjaro/$branch/$repo/$arch
-Server = http://ftp.riken.jp/Linux/manjaro/$branch/$repo/$arch

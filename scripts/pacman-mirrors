@@ -23,7 +23,7 @@ import shutil
 from pacman_mirrors import pacman_mirrors
 from pacman_mirrors import i18n
 from pacman_mirrors.configuration import O_CUST_FILE
-from pacman_mirrors.customfn import CustomFn
+from pacman_mirrors import customfn
 
 _ = i18n.language.gettext
 
@@ -50,7 +50,7 @@ if os.path.isfile("/etc/pacman.d/mirrors/Custom"):
 
 if os.path.isfile(O_CUST_FILE):
     if os.getuid() == 0:
-        CustomFn.convert_to_json()
+        customfn.convert_to_json()
 try:
     pm = pacman_mirrors.PacmanMirrors()
     pm.run()

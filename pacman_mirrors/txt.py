@@ -71,7 +71,12 @@ FALLING_BACK = _("Falling back to")
 IS_MISSING = _("is missing")
 MIRROR_FILE = _("The mirror file")
 MIRROR_LIST_SAVED = _("Mirrorlist generated and saved to")
+MIRROR_RANKING_NA = _("Mirror ranking is not available")
 MUST_BE_ROOT = _("Must have root privileges")
+INTERNET_DOWN = _("Internet connection appears to be down")
+INTERNET_REQUIRED = _("Internet access is required to proceed")
+INTERNET_ALTERNATIVE = _(
+    "Pacman needs a mirrorlist. Use -m random to create a it without network")
 NO_CHANGE = _("The mirror list is not changed")
 NO_SELECTION = _("No mirrors in selection")
 OPTION = _("Option")
@@ -99,7 +104,7 @@ I_CONFIRM_SELECTION = _("Confirm selections")
 I_USE_THESE_MIRRORS = _("I want to use these mirrors")
 
 # NON TRANSLATABLE STRINGS
-
+HOUSTON = "Houston?! We have a problem."
 # mirror status constants
 LASTSYNC_OK = "24:00"  # last syncronize in the past 24 hours
 LASTSYNC_NA = "98:00"  # last syncronization not available

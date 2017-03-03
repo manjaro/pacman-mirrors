@@ -27,7 +27,8 @@ class Mirror:
         self.countrylist = []
         self.mirrorlist = []
 
-    def add(self, country, url, protocols, branches=None, last_sync="00:00", resp_time="00.00"):
+    def add(self, country, url, protocols,
+            branches=None, last_sync="00:00", resp_time="00.00"):
         """Append mirror
         :param country:
         :param url:

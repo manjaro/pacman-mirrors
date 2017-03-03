@@ -1,7 +1,0 @@
-##
-## Pacman Mirrorlist
-##
-
-[Portugal]
-Server = http://ftp.dei.uc.pt/pub/linux/manjaro/$branch/$repo/$arch
-Server = http://repo.barata.website/$branch/$repo/$arch

@@ -1,6 +1,0 @@
-##
-## Pacman Mirrorlist
-##
-
-[France]
-Server = http://mirror.finn.lu/manjaro/$branch/$repo/$arch
