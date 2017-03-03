@@ -27,8 +27,6 @@ class TestHttpFn(unittest.TestCase):
     @patch.object(httpfn, "get_geoip_country")
     def test_geoip_available(self, mock_build_config, mock_get_geoip_country, mock_os_getuid):
         """TEST: Geoip country IS avaiable"""
-        mock_os_getuid.return_value = 0
-        mock_get_geoip_country.return_value = "France"
         mock_build_config.return_value = {
             "branch": "stable",
             "config_file": conf.CONFIG_FILE,
@@ -40,6 +38,8 @@ class TestHttpFn(unittest.TestCase):
             "no_update": False,
             "only_country": [],
         }
+        mock_get_geoip_country.return_value = "France"
+        mock_os_getuid.return_value = 0
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
                                   "--geoip"]):
