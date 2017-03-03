@@ -37,21 +37,21 @@ def dir_must_exist(dir_name):
     os.makedirs(dir_name, mode=0o755, exist_ok=True)
 
 
-def return_mirror_filename():
+def return_mirror_filename(config):
     """Load default mirror file
     :returns tuple with file and status
     """
     filename = ""
     status = False  # status.json or mirrors.json
     # decision on file avaiablity
-    if check_file(conf.STATUS_FILE):
+    if check_file(config["status_file"]):
         status = True
-        filename = conf.STATUS_FILE
-    elif check_file(conf.MIRROR_FILE):
-        filename = conf.MIRROR_FILE
+        filename = config["status_file"]
+    elif check_file(config["mirror_file"]):
+        filename = config["mirror_file"]
     else:
-        if check_file(conf.FALLBACK):
-            filename = conf.FALLBACK
+        if check_file(config["fallback_file"]):
+            filename = config["fallback_file"]
     if not filename:
         print("\n{}.:! {}{}\n".format(txt.RS,
                                       txt.HOUSTON,
