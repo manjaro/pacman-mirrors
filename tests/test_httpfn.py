@@ -24,15 +24,27 @@ class TestHttpFn(unittest.TestCase):
 
     @patch("os.getuid")
     @patch.object(httpfn, "get_geoip_country")
-    def test_geoip_available(self, mock_get_geoip_country, mock_os_getuid):
+    @patch.object(configfn, "build_config")
+    def test_geoip_available(self, mock_build_config, mock_get_geoip_country, mock_os_getuid):
         """TEST: Geoip country IS avaiable"""
         mock_os_getuid.return_value = 0
         mock_get_geoip_country.return_value = "France"
+        mock_build_config.return_value = {
+            "branch": "stable",
+            # "config_file": os.getcwd() + "/tests/mock/etc/pacman-mirrors.conf",
+            "config_file": "tests/mock/etc/pacman-mirrors.conf",
+            "custom_file": conf.CUSTOM_FILE,
+            "method": "rank",
+            "mirror_dir": conf.MIRROR_DIR,
+            "mirror_file": conf.MIRROR_FILE,
+            "mirror_list": conf.MIRROR_LIST,
+            "no_update": False,
+            "only_country": []
+        }
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
                                   "--geoip"]):
             app = PacmanMirrors()
-            app.config["config_file"] = conf.CONFIG_FILE
             app.config = configfn.build_config()
             app.command_line_parse()
             app.load_all_mirrors()
@@ -40,16 +52,28 @@ class TestHttpFn(unittest.TestCase):
 
     @patch("os.getuid")
     @patch.object(httpfn, "get_geoip_country")
-    def test_geoip_not_available(self, mock_get_geoip_country, mock_os_getuid):
+    @patch.object(configfn, "build_config")
+    def test_geoip_not_available(self, mock_build_config, mock_get_geoip_country, mock_os_getuid):
         """TEST: Geoip country IS NOT available"""
         mock_os_getuid.return_value = 0
         mock_get_geoip_country.return_value = "Antarctica"
+        mock_build_config.return_value = {
+            "branch": "stable",
+            # "config_file": os.getcwd() + "/tests/mock/etc/pacman-mirrors.conf",
+            "config_file": "tests/mock/etc/pacman-mirrors.conf",
+            "custom_file": conf.CUSTOM_FILE,
+            "method": "rank",
+            "mirror_dir": conf.MIRROR_DIR,
+            "mirror_file": conf.MIRROR_FILE,
+            "mirror_list": conf.MIRROR_LIST,
+            "no_update": False,
+            "only_country": []
+        }
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
                                   "-g",
                                   "--geoip"]):
             app = PacmanMirrors()
-            app.config["config_file"] = "tests/mock/etc/pacman-mirrors.conf"
             app.config = configfn.build_config()
             app.command_line_parse()
             app.load_all_mirrors()
