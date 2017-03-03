@@ -341,7 +341,7 @@ class PacmanMirrors:
 
     def load_default_mirrors(self):
         """Load all available mirrors"""
-        (file, status) = filefn.return_mirror_filename()
+        (file, status) = filefn.return_mirror_filename(self.config)
         self.seed_mirrors(file, status)
 
     def seed_mirrors(self, file, status=False):
