@@ -36,7 +36,6 @@ from .mirror import Mirror
 from . import mirrorfn
 from . import configuration as conf
 from . import configfn
-from . import customfn
 from . import filefn
 from . import httpfn
 from . import i18n

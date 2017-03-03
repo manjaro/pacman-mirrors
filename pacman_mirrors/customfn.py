@@ -24,7 +24,6 @@ import os
 from . import jsonfn
 from . import txt
 from . import configuration as conf
-from . import configfn
 
 
 def convert_to_json():
