@@ -34,33 +34,37 @@ from . import jsonfn
 from . import txt
 
 
-def download_mirrors(url, quiet=False):
+def download_mirrors(config):
     """Retrieve mirrors from manjaro.org
-    :param url:
-    :param quiet:
+    :param config:
     :return: True on success
     :rtype: boolean
     """
-    countries = list()
+    mirrors = list()
+    status = list()
     success = False
     try:
-        with urlopen(url) as response:
-            countries = json.loads(response.read().decode(
+        with urlopen(config["url_mirrors"]) as response:
+            mirrors = json.loads(response.read().decode(
                 "utf8"), object_pairs_hook=collections.OrderedDict)
-    except URLError:
-        if not quiet:
-            print(".: {} {} {}".format(txt.ERROR,
-                                       txt.CANNOT_DOWNLOAD_FILE,
-                                       url))
-    except (HTTPException, json.JSONDecodeError):
+    except (HTTPException, json.JSONDecodeError, URLError):
         pass
 
-    if countries:
+    try:
+        with urlopen(config["url_status"]) as response:
+            status = json.loads(response.read().decode(
+                "utf8"), object_pairs_hook=collections.OrderedDict)
+    except (HTTPException, json.JSONDecodeError, URLError):
+        pass
+
+    if mirrors:
         success = True
-        if url == conf.URL_STATUS_JSON:
-            jsonfn.write_json_file(countries, conf.STATUS_FILE)
-        else:
-            jsonfn.write_json_file(countries, conf.MIRROR_FILE)
+        jsonfn.write_json_file(mirrors, config["mirror_file"])
+
+    if status:
+        success = True
+        jsonfn.write_json_file(mirrors, config["status_file"])
+
     return success
 
 
@@ -140,23 +144,26 @@ def ping_host(host, count=1):
     return system_call("ping -c{} {} > /dev/null".format(count, host)) == 0
 
 
-def update_mirrors():
-    """Download updates from repo.manjaro.org"""
+def update_mirrors(config):
+    """Download updates from repo.manjaro.org
+    :param config:
+    :returns: True on successfull update
+    :rtype: boolean
+    """
     mjro_online = get_mirror_response("http://repo.manjaro.org")
     if mjro_online != "99.99":
         print(".: {} {}".format(txt.INF_CLR, txt.DOWNLOADING_MIRROR_FILE))
-        download_mirrors(conf.URL_MIRROR_JSON)
-        download_mirrors(conf.URL_STATUS_JSON)
+        download_mirrors(config)
         return True
     else:
-        if not filefn.check_file(conf.MIRROR_FILE):
+        if not filefn.check_file(config["mirror_file"]):
             print(".: {} {} {} {}".format(txt.WRN_CLR,
                                           txt.MIRROR_FILE,
-                                          conf.MIRROR_FILE,
+                                          config["mirror_file"],
                                           txt.IS_MISSING))
             print(".: {} {} {}".format(txt.WRN_CLR,
                                        txt.FALLING_BACK,
                                        conf.FALLBACK))
-        if not filefn.check_file(conf.FALLBACK):
+        if not filefn.check_file(config["fallback_file"]):
             print(".: {} {}".format(txt.ERR_CLR, txt.HOUSTON))
         return False
