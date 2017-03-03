@@ -368,7 +368,7 @@ class PacmanMirrors:
         self.network = httpfn.ping_host("google.com", 3)
         # all methods is available
         if self.network:
-            httpfn.update_mirrors()
+            httpfn.update_mirrors(self.config)
             # actual generation
             if self.fasttrack:
                 self.build_fasttrack_mirror_list(self.fasttrack)
