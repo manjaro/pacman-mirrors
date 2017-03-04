@@ -25,10 +25,10 @@ All notable changes to this project will be documented in this file.
 - Modified GUI and TUI to reflect rank/random method
 - Colorized console output by message type
 - Added tests
-  Commandline parsing
-  Default configuration
-  Geoip
-  Initial vaules of internal variables
+  Commandline parsing  
+  Default configuration  
+  Geoip  
+  Initial vaules of internal variables  
 
 ## [3.2.2] - 2017-02-12
 - Fix issue with multiple country select.
