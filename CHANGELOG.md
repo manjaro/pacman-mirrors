@@ -24,7 +24,7 @@ All notable changes to this project will be documented in this file.
 - Rewrite: internals for mirror ranking
 - Modified GUI and TUI to reflect rank/random method
 - Colorized console output by message type
-- Added tests
+- Added tests  
   Commandline parsing  
   Default configuration  
   Geoip  
