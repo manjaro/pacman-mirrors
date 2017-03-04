@@ -18,16 +18,13 @@
 # Authors: Esclapion
 #          Hugo Posnic <huluti@manjaro.org>
 
-"""
-Pacman-Mirrors
-Graphical UI Module
-"""
+"""Pacman-Mirrors GUI Module"""
 
 import gi
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
-
 from . import i18n
+
 from . import txt
 
 
@@ -36,8 +33,12 @@ _ = i18n.language.gettext
 
 class GraphicalUI(Gtk.Window):
     """Class GraphicalUI"""
-    def __init__(self, server_list):
-        Gtk.Window.__init__(self, title=txt.I_TITLE)
+    def __init__(self, server_list, random):
+        if random:
+            Gtk.Window.__init__(self, title=txt.I_TITLE_RANDOM)
+        else:
+            Gtk.Window.__init__(self, title=txt.I_TITLE)
+
         self.set_size_request(700, 350)
         self.set_border_width(10)
         self.set_position(Gtk.WindowPosition.CENTER)
@@ -132,9 +133,9 @@ class GraphicalUI(Gtk.Window):
             dialog.destroy()  # Go back to selection
 
 
-def run(server_list):
+def run(server_list, random):
     """Run"""
-    window = GraphicalUI(server_list)
+    window = GraphicalUI(server_list, random)
     window.connect("delete-event", Gtk.main_quit)
     window.show_all()
     Gtk.main()

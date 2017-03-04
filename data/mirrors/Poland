@@ -1,6 +1,0 @@
-##
-## Pacman Mirrorlist
-##
-
-[Poland]
-Server = http://mirror.chmuri.net/manjaro/$branch/$repo/$arch

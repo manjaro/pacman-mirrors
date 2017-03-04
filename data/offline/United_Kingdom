@@ -1,6 +1,0 @@
-##
-## Pacman Mirrorlist
-##
-
-[United_Kingdom]
-Server = http://sorch.uk/manjaro/$branch/$repo/$arch

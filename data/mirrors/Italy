@@ -1,8 +1,0 @@
-##
-## Pacman Mirrorlist
-##
-
-[Italy]
-Server = http://manjaro.mirror.garr.it/mirrors/manjaro/$branch/$repo/$arch
-Server = http://ba.mirror.garr.it/mirrors/manjaro/$branch/$repo/$arch
-Server = http://ct.mirror.garr.it/mirrors/manjaro/$branch/$repo/$arch

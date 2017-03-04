@@ -1,6 +1,0 @@
-##
-## Pacman Mirrorlist
-##
-
-[Africa]
-Server = http://mirror.is.co.za/mirrors/manjaro.org/$branch/$repo/$arch

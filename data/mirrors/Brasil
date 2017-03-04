@@ -1,6 +1,0 @@
-##
-## Pacman Mirrorlist
-##
-
-[Brasil]
-Server = http://linorg.usp.br/manjaro/$branch/$repo/$arch

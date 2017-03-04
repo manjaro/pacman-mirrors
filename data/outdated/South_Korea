@@ -1,6 +1,0 @@
-##
-## Pacman Mirrorlist
-##
-
-[South_Korea]
-Server = http://mirror.premi.st/manjaro/$branch/$repo/$arch

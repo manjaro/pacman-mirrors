@@ -1,6 +1,0 @@
-##
-## Pacman Mirrorlist
-##
-
-[Indonesia]
-Server = http://jaran.undip.ac.id/index.php/manjaro/$branch/$repo/$arch
