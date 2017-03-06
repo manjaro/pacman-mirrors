@@ -30,13 +30,13 @@ No. `pacman-mirors -f 2` will be faster than `pacman-mirrors -f 20` since only 2
 No. `pacman-mirrors -f N` always ranks by response time but before the actual ranking, the mirrors are sorted so it will be the first **n** mirrors which are uptodate which are actually probed, not mirrors which is not uptodate
 
 ### Beware
-There is a little overhead because it always checks if network is online. Doing so by pinging google with 3 packets.
+The smaller number you choose to write to the mirrorlist will increase the possibility of not getting a responsive mirror since only the first **n** in the list are tested not all of them.
 
 A reasonable number is between 5 and 10.
 
-The smaller number you choose to write to the mirrorlist will increase the possibility of not getting a responsive mirror since only the first **n** in the list are tested not all of them.
+There is a little overhead because it always checks if network is online. Doing so by pinging google with 3 packets.
 
-The force of this approach is that we know forehand if the mirror is uptodate and thus only have to rank **n** mirrors from the uptodate listed mirrors.
+The force of this approach is that we know forehand if the mirror is uptodate and thus only have to rank **n** mirrors from the mirrors known to be uptodate.
 
 If you need a complete ranking then `pacman-mirrors -g` is the way to go.
 
