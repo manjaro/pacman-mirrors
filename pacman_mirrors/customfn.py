@@ -49,11 +49,7 @@ def convert_to_json():
             })
         # write new file
         jsonfn.write_json_file(mirrors, conf.CUSTOM_FILE)
-        cleanup()
-
-
-def cleanup():
-    os.remove(conf.O_CUST_FILE)
+        os.remove(conf.O_CUST_FILE)
 
 
 def get_protocol(data):

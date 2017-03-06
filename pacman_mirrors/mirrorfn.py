@@ -68,7 +68,6 @@ def filter_mirror_list(mirrorlist, countrylist):
     :param countrylist:
     :rtype: list
     """
-
     result = []
     for mirror in mirrorlist:
         if mirror["country"] in countrylist:
