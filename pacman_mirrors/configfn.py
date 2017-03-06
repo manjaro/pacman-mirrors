@@ -18,6 +18,7 @@
 # Authors: Frede Hundewadt <frede@hundewadt.dk>
 
 """Pacman-Mirrors Configuration Functions"""
+
 import os
 import tempfile
 
