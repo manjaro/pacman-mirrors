@@ -36,7 +36,7 @@ def read_json_file(filename, dictionary=True):
                 result = json.load(infile)
 
     except OSError:
-        return result
+        pass
     return result
 
 
