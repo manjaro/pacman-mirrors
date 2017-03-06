@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 
 ## [3.3.0-beta unstable development] - 2017-02-27
 - Add: Network check - do not run mirror ranking if no internet
-- Add: --fasttrack [n] argument  
+- Add: -f/--fasttrack [n] argument  
   Creates a list of [n] mirrors which are responsive and uptodate
 - Add: Module JSON file functions
 - Add: Module Custom mirror file conversion and helpers
@@ -24,11 +24,11 @@ All notable changes to this project will be documented in this file.
 - Rewrite: internals for mirror ranking
 - Modified GUI and TUI to reflect rank/random method
 - Colorized console output by message type
-- Added tests
-        Commandline parsing
-        Default configuration
-        Geoip
-        Initial vaules of internal variables
+- Added tests  
+  Commandline parsing  
+  Default configuration  
+  Geoip  
+  Initial vaules of internal variables  
 
 ## [3.2.2] - 2017-02-12
 - Fix issue with multiple country select.
