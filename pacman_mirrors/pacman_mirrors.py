@@ -207,7 +207,8 @@ class PacmanMirrors:
         counter = 0
         for mirror in temp:
             resp_time = httpfn.get_mirror_response(mirror["url"],
-                                                   quiet=self.quiet)
+                                                   quiet=self.quiet,
+                                                   maxwait=self.max_wait_time)
             print("   ..... {:<15}: {}: {}".format(mirror["country"],
                                                    mirror["last_sync"],
                                                    mirror["url"]), end='')
@@ -350,7 +351,8 @@ class PacmanMirrors:
                                                    mirror["url"]), end='')
             sys.stdout.flush()
             resp_time = httpfn.get_mirror_response(mirror["url"],
-                                                   quiet=self.quiet)
+                                                   quiet=self.quiet,
+                                                   maxwait=self.max_wait_time)
             mirror["resp_time"] = resp_time
             if resp_time == txt.SERVER_RES:
                 continue
