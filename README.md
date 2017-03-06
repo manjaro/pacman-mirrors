@@ -12,6 +12,8 @@ Package that provides all mirrors for Manjaro Linux.
     - method: rank or random.
     - branch: stable, testing or unstable.
     - country: a single, a list or all.
+    - fasttrack: updated and responsive mirrors
+    - geoip: mirrors for country if available
 - A GUI for selecting the mirrors to used to generate a custom list.
 
 ## Technologies
