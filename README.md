@@ -18,6 +18,8 @@ Package that provides all mirrors for Manjaro Linux.
 
 ### How does fasttrack work
 First of all, a working internet connection is mandatory. Pacman-Mirrors always checks if network is online. It is doing so by pinging google with 3 packets.
+
+The folloing arguments `-c -i -m --geoip` will not work in conjunction with `-f`. 
 #### Question:
 So, `pacman-mirrors -f 2` takes the same time to create `/etc/pacman.d/mirrorlist` as `pacman-mirrors -f 20`?
 ##### Answer:
