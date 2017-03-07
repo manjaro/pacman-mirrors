@@ -1,7 +1,7 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## [4.0.0] Release Candidate - 2017-03-03
+## [4.0.0] Release Candidate - 2017-03-07
 - Add: Network check; do not run rank if no internet
 - Add: -f/--fasttrack [n] argument  
 - Colorized console output by message type
