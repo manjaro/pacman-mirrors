@@ -32,6 +32,10 @@ pacman-mirrors could always use more documentation, whether as part of the
 official pacman-mirrors docs, in docstrings, or even on the web in blog posts,
 articles, and such.
 
+### Translations
+
+Help us to ship pacman-mirrors in your language by helping our translators on [Transifex](https://www.transifex.com/manjarolinux/manjaro-pacman-mirrors/dashboard/).
+
 ### Submit Feedback
 
 The best way to send feedback is to file an issue at https://github.com/manjaro/pacman-mirrors/issues.

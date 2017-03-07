@@ -56,7 +56,7 @@ def get_geoip_country(countrylist):
     :return: country name if found
     """
     g_country = httpfn.get_geoip_country()
-    if validfn.country_is_in_countrylist(g_country, countrylist):
+    if g_country in countrylist:
         return g_country
     else:
         return None
@@ -68,7 +68,6 @@ def filter_mirror_list(mirrorlist, countrylist):
     :param countrylist:
     :rtype: list
     """
-
     result = []
     for mirror in mirrorlist:
         if mirror["country"] in countrylist:

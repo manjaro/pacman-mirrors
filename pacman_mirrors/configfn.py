@@ -18,6 +18,7 @@
 # Authors: Frede Hundewadt <frede@hundewadt.dk>
 
 """Pacman-Mirrors Configuration Functions"""
+
 import os
 import tempfile
 
@@ -27,9 +28,7 @@ from . import configuration as conf
 
 def build_config():
     """Get config informations"""
-    # initialising defaults
-    # information which can differ from these defaults
-    # is fetched from config file
+    # default config
     config = {
         "branch": "stable",
         "branches": conf.BRANCHES,
@@ -47,8 +46,8 @@ def build_config():
         "url_mirrors_json": conf.URL_MIRROR_JSON,
         "url_status_json": conf.URL_STATUS_JSON
     }
+    # try to replace default entries by reading conf file
     try:
-        # read configuration from file
         with open(config["config_file"]) as conf_file:
             for line in conf_file:
                 line = line.strip()

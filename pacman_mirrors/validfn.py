@@ -25,21 +25,13 @@ from . import configuration as conf
 from . import txt
 
 
-def country_is_in_countrylist(country, countrylist):
-    """Check if country is in list"""
-    if country in countrylist:
-        return True  # good
-    return False
-
-
 def custom_config_is_valid():
     """Check validity of custom selection
     :return: True or False
     :rtype: bool
     """
-    if os.path.isfile(conf.CUSTOM_FILE):
-        return True  # valid
-    else:
+    valid = os.path.isfile(conf.CUSTOM_FILE)
+    if not valid:
         # validation fail - inform user and exit
         print(".: {} {} {} {}".format(txt.ERR_CLR,
                                       txt.CUSTOM_MIRROR_FILE,
@@ -48,7 +40,7 @@ def custom_config_is_valid():
         print(".: {} {}: {}".format(txt.INF_CLR,
                                     txt.FALLING_BACK,
                                     txt.USING_ALL_MIRRORS))
-        return False
+    return valid
 
 
 def country_list_is_valid(onlycountry, countrylist):
@@ -59,9 +51,7 @@ def country_list_is_valid(onlycountry, countrylist):
     :rtype: bool
     """
     for country in onlycountry:
-        if country_is_in_countrylist(country, countrylist):
-            continue  # good
-        else:  # validation fail - inform user and exit
+        if not country in countrylist:
             print(".: {} {}{}: {}: '{}'".format(txt.WRN_CLR,
                                                 txt.OPTION,
                                                 txt.OPT_COUNTRY,

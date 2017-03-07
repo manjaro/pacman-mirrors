@@ -18,6 +18,7 @@
 # Authors: Frede Hundewadt <frede@hundewadt.dk>
 
 """Pacman-Mirrors Console Functions"""
+
 import json
 
 
