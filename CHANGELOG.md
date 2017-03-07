@@ -6,8 +6,7 @@ All notable changes to this project will be documented in this file.
 - Add: -f/--fasttrack [n] argument  
 - Colorized console output by message type
 - Internal rewrite to use json files from repo.manjaro.org
-- The mirrors dir has been removed
-- All data files now exisit in `/var/lib/pacman-mirrors`
+- The `/etc/pacman.d/mirrors` dir has been removed. All data files now exist in `/var/lib/pacman-mirrors`
 
 ## [3.2.2] - 2017-02-12
 - Fix issue with multiple country select.
