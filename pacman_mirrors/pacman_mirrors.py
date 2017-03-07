@@ -219,7 +219,6 @@ class PacmanMirrors:
                 continue
             if not self.quiet:
                 print("\r   {:<5}{}{} ".format(txt.GS, resp_time, txt.CE))
-            sys.stdout.flush()
             worklist.append(mirror)
             counter += 1
             if counter == number:
@@ -361,7 +360,6 @@ class PacmanMirrors:
                 continue
             if not self.quiet:
                 print("\r   {:<5}{}{} ".format(txt.GS, resp_time, txt.CE))
-            sys.stdout.flush()
         return worklist
 
     def run(self):
