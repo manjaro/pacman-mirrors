@@ -1,32 +1,13 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## [4.0.0rc1] - 2017-03-03
-- Add: Network check - do not run mirror ranking if no internet
+## [4.0.0] Release Candidate - 2017-03-07
+- Add: Network check; do not run rank if no internet
 - Add: -f/--fasttrack [n] argument  
-  Creates a list of [n] mirrors which are responsive and uptodate
-- Add: Module JSON file functions
-- Add: Module Custom mirror file conversion and helpers
-- Add: Module Http functions
-- Add: Class Mirror
-- Add: Module Mirror functions
-- Add: Module Generic file functions
-- Add: Module Validation functions
-- Add: Download mirrors from repo.manjaro.org
-- Add: Ping status of repo.manjaro.org
-- Add: Fallback to package mirrorfile if ping fail
-- Add: Fallback to package mirrorfile if any file is missing
-- Add: Messages to reflect new functions
-- Rewrite: internals for json handling
-- Rewrite: internals for mirror handling
-- Rewrite: internals for mirror ranking
 - Modified GUI and TUI to reflect rank/random method
 - Colorized console output by message type
-- Added tests  
-  Commandline parsing  
-  Default configuration  
-  Geoip  
-  Initial vaules of internal variables  
+- Internal rewrite to use json files from repo.manjaro.org
+- The `/etc/pacman.d/mirrors` dir has been removed. All data files now exist in `/var/lib/pacman-mirrors`
 
 ## [3.2.2] - 2017-02-12
 - Fix issue with multiple country select.
