@@ -121,13 +121,13 @@ class PacmanMirrors:
         parser.add_argument("-f", "--fasttrack",
                             type=int,
                             metavar=txt.DIGIT,
-                            help=txt.HLP_ARG_FASTTRACK)
+                            help="{} {}".format(txt.HLP_ARG_FASTTRACK, txt.OVERRIDE_OPT))
 
         args = parser.parse_args()
 
         if len(sys.argv) == 1:
-            print("pacman-mirrors {}".format(__version__))
             parser.print_help()
+            print("{}pacman-mirrors {}{}".format(txt.GS, __version__, txt.CE))
             exit(0)
 
         if args.version:
@@ -287,7 +287,7 @@ class PacmanMirrors:
                 print(".: {} {}: {}".format(txt.INF_CLR,
                                             txt.MIRROR_LIST_SAVED,
                                             self.config["custom_file"]))
-                print(".: {} {}".format(txt.INF_CLR, txt.RESET_CUSTOM_CONFIG))
+                print(".: {} {} {}".format(txt.INF_CLR, txt.RESET_CUSTOM_CONFIG, txt.RESET_TIP))
             else:
                 print(".: {} {}".format(txt.WRN_CLR, txt.NO_SELECTION))
                 print(".: {} {}".format(txt.INF_CLR, txt.NO_CHANGE))
