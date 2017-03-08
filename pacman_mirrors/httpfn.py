@@ -149,7 +149,7 @@ def update_mirrors(config):
     result = None
     mjro_online = get_mirror_response("http://repo.manjaro.org")
     if mjro_online != "99.99":
-        print(".: {} {}".format(txt.INF_CLR, txt.DOWNLOADING_MIRROR_FILE))
+        print(".: {} {} {}".format(txt.INF_CLR, txt.DOWNLOADING_MIRROR_FILE, txt.REPO_SERVER))
         result = download_mirrors(config)
     else:
         if not filefn.check_file(config["mirror_file"]):
