@@ -55,7 +55,7 @@ HLP_ARG_PATH = _("Mirrors list path")
 HLP_ARG_QUIET = _("Quiet mode - less verbose output")
 HLP_ARG_TIMEOUT = _("Maximum waiting time for server response")
 HLP_ARG_VERSION = _("Print the pacman-mirrors version")
-HLP_ARG_FASTTRACK = _("A quick mirrorlist. Overrides") + "-cim --geoip"
+HLP_ARG_FASTTRACK = _("A quick mirrorlist. Overrides")
 # messages
 AVAILABLE_COUNTRIES = _("Available countries are")
 CANNOT_DOWNLOAD_FILE = _("Could not download from")
@@ -66,7 +66,7 @@ CUSTOM_MIRROR_FILE = _("Custom mirror file")
 CUSTOM_MIRROR_FILE_SAVED = _("Custom mirror file saved")
 CUSTOM_MIRROR_LIST = _("User generated mirror list")
 DOES_NOT_EXIST = _("doesn't exist.")
-DOWNLOADING_MIRROR_FILE = _("Downloading mirrors from") + "repo.manjaro.org"
+DOWNLOADING_MIRROR_FILE = _("Downloading mirrors from")
 FALLING_BACK = _("Falling back to")
 IS_MISSING = _("is missing")
 MIRROR_FILE = _("The mirror file")
@@ -83,7 +83,7 @@ OPTION = _("Option")
 WRITING_MIRROR_LIST = _("Writing mirror list")
 QUERY_MIRRORS = _("Querying mirrors")
 RANDOMIZING_SERVERS = _("Randomizing mirror list")
-RESET_CUSTOM_CONFIG = _("To reset custom config run ") + "pacman-mirrors -c all"
+RESET_CUSTOM_CONFIG = _("To reset custom config run ")
 TAKES_TIME = _("This may take some time")
 UNKNOWN_COUNTRY = _("unknown country")
 USING_ALL_MIRRORS = _("Using all mirrors")
@@ -105,6 +105,9 @@ I_USE_THESE_MIRRORS = _("I want to use these mirrors")
 
 # NON TRANSLATABLE STRINGS
 HOUSTON = "Houston?! We have a problem."
+OVERRIDE_OPT = "-c -i -m --geoip"
+REPO_SERVER = "repo.manjaro.org"
+RESET_TIP = "pacman-mirror -c all"
 # mirror status constants
 LASTSYNC_OK = "24:00"  # last syncronize in the past 24 hours
 LASTSYNC_NA = "98:00"  # last syncronization not available
