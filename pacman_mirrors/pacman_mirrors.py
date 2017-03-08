@@ -126,6 +126,7 @@ class PacmanMirrors:
         args = parser.parse_args()
 
         if len(sys.argv) == 1:
+            print("pacman-mirrors {}".format(__version__))
             parser.print_help()
             exit(0)
 
