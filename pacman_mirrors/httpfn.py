@@ -137,6 +137,7 @@ def ping_host(host, count=1):
     :param count:
     :rtype: boolean
     """
+    print(".: {} ping {} x {}".format(txt.INF_CLR, host, count))
     return system_call("ping -c{} {} > /dev/null".format(count, host)) == 0
 
 
@@ -147,7 +148,7 @@ def update_mirrors(config):
     :rtype: tuple
     """
     result = None
-    mjro_online = get_mirror_response("http://repo.manjaro.org")
+    mjro_online = ping_host("repo.manjaro.org", 1)
     if mjro_online != "99.99":
         print(".: {} {} {}".format(txt.INF_CLR, txt.DOWNLOADING_MIRROR_FILE, txt.REPO_SERVER))
         result = download_mirrors(config)
