@@ -149,7 +149,7 @@ def update_mirrors(config):
     """
     result = None
     mjro_online = ping_host("repo.manjaro.org", 1)
-    if mjro_online != "99.99":
+    if mjro_online:
         print(".: {} {} {}".format(txt.INF_CLR, txt.DOWNLOADING_MIRROR_FILE, txt.REPO_SERVER))
         result = download_mirrors(config)
     else:
