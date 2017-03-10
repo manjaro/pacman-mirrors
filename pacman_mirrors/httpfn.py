@@ -104,7 +104,7 @@ def get_mirror_response(url, maxwait=2, count=1, quiet=False):
     message = ""
     try:
         for _ in range(count):
-            urlopen(url, timeout=maxwait)
+            urlopen(url + "state", timeout=maxwait)
         probe_stop = time.time()
     except URLError as err:
         if hasattr(err, "reason"):
