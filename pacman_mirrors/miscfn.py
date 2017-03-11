@@ -18,9 +18,6 @@
 # Authors: Frede Hundewadt <frede@hundewadt.dk>
 
 """Pacman-Mirrors Niscellaneous Functions"""
-import fcntl
-import termios
-import struct
 import shutil
 
 from . import txt
