@@ -206,11 +206,13 @@ class PacmanMirrors:
                                       txt.QUERY_MIRRORS,
                                       txt.TAKES_TIME))
         counter = 0
+        c, r = miscfn.terminal_size()
         for mirror in temp:
             if not self.quiet:
-                print("   ..... {:<15}: {}: {}".format(mirror["country"],
-                                                       mirror["last_sync"],
-                                                       mirror["url"]), end='')
+                message = "   ..... {:<15}: {}: {}".format(mirror["country"],
+                                                           mirror["last_sync"],
+                                                           mirror["url"])
+                print("{:.{}}".format(message, c), end='')
                 sys.stdout.flush()
             resp_time = httpfn.get_mirror_response(mirror["url"],
                                                    quiet=self.quiet,
@@ -348,10 +350,12 @@ class PacmanMirrors:
         print(".: {} {} - {}".format(txt.INF_CLR,
                                      txt.QUERY_MIRRORS,
                                      txt.TAKES_TIME))
+        c, r = miscfn.terminal_size()
         for mirror in worklist:
             if not self.quiet:
-                print("   ..... {:<15}: {}".format(mirror["country"],
-                                                   mirror["url"]), end='')
+                message = "   ..... {:<15}: {}".format(mirror["country"],
+                                                       mirror["url"])
+                print("{:.{}}".format(message, c), end='')
                 sys.stdout.flush()
             resp_time = httpfn.get_mirror_response(mirror["url"],
                                                    quiet=self.quiet,
