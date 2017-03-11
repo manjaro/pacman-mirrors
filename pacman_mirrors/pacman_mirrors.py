@@ -219,6 +219,8 @@ class PacmanMirrors:
                                                    maxwait=self.max_wait_time)
             mirror["resp_time"] = resp_time
             if resp_time == txt.SERVER_RES:
+                if not self.quiet:
+                    print("\r")
                 continue
             if not self.quiet:
                 print("\r   {:<5}{}{} ".format(txt.GS, resp_time, txt.CE))
@@ -362,6 +364,8 @@ class PacmanMirrors:
                                                    maxwait=self.max_wait_time)
             mirror["resp_time"] = resp_time
             if resp_time == txt.SERVER_RES:
+                if not self.quiet:
+                    print("\r")
                 continue
             if not self.quiet:
                 print("\r   {:<5}{}{} ".format(txt.GS, resp_time, txt.CE))
