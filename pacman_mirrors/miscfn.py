@@ -42,17 +42,9 @@ def internet_message():
     print(".: {} {}".format(txt.INF_CLR, txt.INTERNET_ALTERNATIVE))
 
 
-def terminal_size_ll():
-    # http://www.w3resource.com/python-exercises/python-basic-exercise-56.php
-
-    th, tw, hp, wp = struct.unpack('HHHH',
-                                   fcntl.ioctl(0, termios.TIOCGWINSZ,
-                                               struct.pack('HHHH', 0, 0, 0, 0)))
-    return tw, th
-
-
 def terminal_size():
     """get terminal size"""
+    # http://www.programcreek.com/python/example/85471/shutil.get_terminal_size
     cols = shutil.get_terminal_size().columns
     lines = shutil.get_terminal_size().lines
     result = (cols, lines)
