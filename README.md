@@ -23,7 +23,7 @@ The following arguments `-c -i -m --geoip` will not work in conjunction with `-f
 #### Question:
 So, `pacman-mirrors -f 2` takes the same time to create `/etc/pacman.d/mirrorlist` as `pacman-mirrors -f 20`?
 ##### Answer:
-No. `pacman-mirors -f 2` will be faster than `pacman-mirrors -f 20` since only 2 mirrors are probed vs 20 mirrors but since most mirrors respond within the first second I think it is barely noticeable.
+No. `pacman-mirors -f 2` will be faster than `pacman-mirrors -f 20` since only 2 mirrors are probed vs 20 mirrors but since most mirrors respond within the first second it is barely noticeable.
 #### Question:
 `pacman-mirrors -f n` always ranks ALL mirrors by response time (the same as `pacman-mirrors -g` does) and additionally takes up-to-date mirrors and writes only **n** mirrors to `/etc/pacman.d/mirrorlist`?
 ##### Answer: 
