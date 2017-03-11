@@ -206,25 +206,20 @@ class PacmanMirrors:
                                       txt.QUERY_MIRRORS,
                                       txt.TAKES_TIME))
         counter = 0
-        c, r = miscfn.terminal_size()
         for mirror in temp:
-            if not self.quiet:
-                msg = "   ..... {:<15}: {}: {}".format(mirror["country"],
-                                                       mirror["last_sync"],
-                                                       mirror["url"])
-                print("{:.{}}".format(msg, c), end='')
-
             resp_time = httpfn.get_mirror_response(mirror["url"],
                                                    quiet=self.quiet,
                                                    maxwait=self.max_wait_time)
+            if not self.quiet:
+                print("   ..... {:<15}: {}: {}".format(mirror["country"],
+                                                       mirror["last_sync"],
+                                                       mirror["url"]), end='')
             sys.stdout.flush()
             mirror["resp_time"] = resp_time
             if resp_time == txt.SERVER_RES:
                 continue
             if not self.quiet:
                 print("\r   {:<5}{}{} ".format(txt.GS, resp_time, txt.CE))
-            else:
-                print("\r")
             worklist.append(mirror)
             counter += 1
             if counter == number:
@@ -353,11 +348,10 @@ class PacmanMirrors:
         print(".: {} {} - {}".format(txt.INF_CLR,
                                      txt.QUERY_MIRRORS,
                                      txt.TAKES_TIME))
-        c, r = miscfn.terminal_size()
         for mirror in worklist:
             if not self.quiet:
-                msg = "   ..... {:<15}: {}".format(mirror["country"], mirror["url"])
-                print("{:.{}}".format(msg, c), end='')
+                print("   ..... {:<15}: {}".format(mirror["country"],
+                                                   mirror["url"]), end='')
             sys.stdout.flush()
             resp_time = httpfn.get_mirror_response(mirror["url"],
                                                    quiet=self.quiet,
@@ -367,8 +361,6 @@ class PacmanMirrors:
                 continue
             if not self.quiet:
                 print("\r   {:<5}{}{} ".format(txt.GS, resp_time, txt.CE))
-            else:
-                print("\r")
         return worklist
 
     def run(self):
