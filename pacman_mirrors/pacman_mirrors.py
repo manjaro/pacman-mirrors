@@ -213,7 +213,6 @@ class PacmanMirrors:
                                                            mirror["last_sync"],
                                                            mirror["url"])
                 print("{:.{}}".format(message, cols), end='')
-                # print("{}".format(message), end='')
                 sys.stdout.flush()
             resp_time = httpfn.get_mirror_response(mirror["url"],
                                                    quiet=self.quiet,
@@ -359,7 +358,6 @@ class PacmanMirrors:
                 message = "   ..... {:<15}: {}".format(mirror["country"],
                                                        mirror["url"])
                 print("{:.{}}".format(message, cols), end='')
-                # print("{}".format(message), end='')
                 sys.stdout.flush()
             resp_time = httpfn.get_mirror_response(mirror["url"],
                                                    quiet=self.quiet,

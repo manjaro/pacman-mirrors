@@ -94,7 +94,6 @@ def output_mirror_list(config, servers, custom=False, quiet=False):
                         message = "   {:<15} : {}".format(server["country"],
                                                           mb_url)
                         print("{:.{}}".format(message, cols))
-                        # print("{}".format(message))
             print(".: {} {}: {}".format(txt.INF_CLR,
                                         txt.MIRROR_LIST_SAVED,
                                         config["mirror_list"]))
