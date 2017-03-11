@@ -385,13 +385,11 @@ class PacmanMirrors:
             # actual generation
             if self.fasttrack:
                 self.build_fasttrack_mirror_list(self.fasttrack)
+            elif self.interactive:
+                self.build_interactive_mirror_list()
             else:
-                if self.interactive:
-                    self.build_interactive_mirror_list()
-                else:
-                    self.build_common_mirror_list()
-
-        if not self.network:
+                self.build_common_mirror_list()
+        else:
             # only random is available if network is down
             if self.config["method"] == "random":
                 if self.interactive:
