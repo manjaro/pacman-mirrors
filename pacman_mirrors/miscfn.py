@@ -21,6 +21,7 @@
 import fcntl
 import termios
 import struct
+import shutil
 
 from . import txt
 
@@ -41,10 +42,18 @@ def internet_message():
     print(".: {} {}".format(txt.INF_CLR, txt.INTERNET_ALTERNATIVE))
 
 
-def terminal_size():
+def terminal_size_ll():
     # http://www.w3resource.com/python-exercises/python-basic-exercise-56.php
 
     th, tw, hp, wp = struct.unpack('HHHH',
                                    fcntl.ioctl(0, termios.TIOCGWINSZ,
                                                struct.pack('HHHH', 0, 0, 0, 0)))
     return tw, th
+
+
+def terminal_size():
+    """get terminal size"""
+    c = shutil.get_terminal_size().columns
+    r = shutil.get_terminal_size().rows
+    result = (c, r)
+    return result

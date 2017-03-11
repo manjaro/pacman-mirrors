@@ -78,7 +78,7 @@ def output_mirror_list(config, servers, custom=False, quiet=False):
             print(".: {} {}".format(txt.INF_CLR, txt.WRITING_MIRROR_LIST))
             # write list header
             write_mirrorlist_header(outfile, custom=custom)
-            # c, r = miscfn.terminal_size()
+            c, r = miscfn.terminal_size()
             for server in servers:
                 url = server["url"]
                 for protocol in enumerate(server["protocols"]):
@@ -93,8 +93,8 @@ def output_mirror_list(config, servers, custom=False, quiet=False):
                     if not quiet:
                         message = "   {:<15} : {}".format(server["country"],
                                                           mb_url)
-                        # print("{:.{}}".format(message, c))
-                        print("{}".format(message))
+                        print("{:.{}}".format(message, c))
+                        # print("{}".format(message))
             print(".: {} {}: {}".format(txt.INF_CLR,
                                         txt.MIRROR_LIST_SAVED,
                                         config["mirror_list"]))
