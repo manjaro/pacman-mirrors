@@ -53,7 +53,7 @@ def terminal_size_ll():
 
 def terminal_size():
     """get terminal size"""
-    c = shutil.get_terminal_size().columns
-    r = shutil.get_terminal_size().rows
-    result = (c, r)
+    cols = shutil.get_terminal_size().columns
+    lines = shutil.get_terminal_size().lines
+    result = (cols, lines)
     return result
