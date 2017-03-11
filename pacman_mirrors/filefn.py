@@ -23,6 +23,7 @@ import os
 import datetime
 
 from . import jsonfn
+from . import miscfn
 from . import txt
 
 
@@ -77,10 +78,12 @@ def output_mirror_list(config, servers, custom=False, quiet=False):
             print(".: {} {}".format(txt.INF_CLR, txt.WRITING_MIRROR_LIST))
             # write list header
             write_mirrorlist_header(outfile, custom=custom)
+            c, r = miscfn.terminal_size()
             for server in servers:
                 url = server["url"]
                 for protocol in enumerate(server["protocols"]):
                     pos = url.find(":")
+                    mb_url = "{}{}".format(url, config["branch"])
                     server["url"] = "{}{}{}{}".format(protocol[1],
                                                       url[pos:],
                                                       config["branch"],
@@ -88,10 +91,9 @@ def output_mirror_list(config, servers, custom=False, quiet=False):
                     # write list entry
                     write_mirrorlist_entry(outfile, server)
                     if not quiet:
-                        print("   {}{:<15}{} : {}".format(txt.YS,
-                                                          server["country"],
-                                                          txt.CE,
-                                                          server["url"]))
+                        message = "   {:<15} : {}".format(server["country"],
+                                                          mb_url)
+                        print("{:.{}}".format(message, c))
             print(".: {} {}: {}".format(txt.INF_CLR,
                                         txt.MIRROR_LIST_SAVED,
                                         config["mirror_list"]))
