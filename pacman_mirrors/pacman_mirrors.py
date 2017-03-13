@@ -198,9 +198,10 @@ class PacmanMirrors:
 
     def build_fasttrack_mirror_list(self, number):
         """Fast-track the mirrorlist by aggressive sorting"""
-        shuffle(self.mirrors.mirrorlist)
-        temp = sorted(self.mirrors.mirrorlist,
-                      key=itemgetter("branches", "last_sync"), reverse=True)
+        temp = [item for item in self.mirrors.mirrorlist if item["branches"] == [1, 1, 1]]
+        shuffle(temp)
+        # temp = sorted(self.mirrors.mirrorlist,
+        #               key=itemgetter("branches", "last_sync"), reverse=True)
         # temp = sorted(temp, key=itemgetter("last_sync"), reverse=False)
         worklist = []
         print(".: {}: {} - {}".format(txt.INF_CLR,
@@ -209,6 +210,7 @@ class PacmanMirrors:
         counter = 0
         cols, lines = miscfn.terminal_size()
         for mirror in temp:
+            miscfn.debug("build_fasttrack_mirror_lilst", "mirror.branches", mirror["branches"])
             if not self.quiet:
                 message = "   ..... {:<15}: {}: {}".format(mirror["country"],
                                                            mirror["last_sync"],
