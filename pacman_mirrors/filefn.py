@@ -48,7 +48,7 @@ def return_mirror_filename(config):
     """
     filename = ""
     status = False  # status.json or mirrors.json
-    # decision on file avaiablity
+    # decision on file availablity
     if check_file(config["status_file"]):
         status = True
         filename = config["status_file"]
