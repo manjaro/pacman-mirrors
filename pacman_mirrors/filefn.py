@@ -61,7 +61,7 @@ def return_mirror_filename(config):
                                       txt.HOUSTON,
                                       txt.CE))
         exit(1)
-    return (filename, status)
+    return filename, status
 
 
 def output_mirror_list(config, servers, custom=False, quiet=False):
