@@ -197,7 +197,7 @@ class PacmanMirrors:
             configfn.modify_config(self.config)
 
     def build_fasttrack_mirror_list(self, number):
-        """Fast-track the mirrorlist by aggressive sorting"""
+        """Fast-track the mirrorlist by filtering only up2date mirrors"""
         temp = [item for item in self.mirrors.mirrorlist if item["branches"] == [1, 1, 1]]
         shuffle(temp)
         # temp = sorted(self.mirrors.mirrorlist,
