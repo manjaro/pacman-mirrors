@@ -210,7 +210,6 @@ class PacmanMirrors:
         counter = 0
         cols, lines = miscfn.terminal_size()
         for mirror in temp:
-            miscfn.debug("build_fasttrack_mirror_lilst", "mirror.branches", mirror["branches"])
             if not self.quiet:
                 message = "   ..... {:<15}: {}: {}".format(mirror["country"],
                                                            mirror["last_sync"],
