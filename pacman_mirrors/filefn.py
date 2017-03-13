@@ -54,16 +54,14 @@ def return_mirror_filename(config):
         filename = config["status_file"]
     elif check_file(config["mirror_file"]):
         filename = config["mirror_file"]
-    else:
-        if check_file(config["fallback_file"]):
+    elif check_file(config["fallback_file"]):
             filename = config["fallback_file"]
     if not filename:
         print("\n{}.:! {}{}\n".format(txt.RS,
                                       txt.HOUSTON,
                                       txt.CE))
         exit(1)
-    result = (filename, status)
-    return result
+    return (filename, status)
 
 
 def output_mirror_list(config, servers, custom=False, quiet=False):

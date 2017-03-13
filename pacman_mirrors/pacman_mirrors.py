@@ -222,11 +222,11 @@ class PacmanMirrors:
             if resp_time == txt.SERVER_RES:
                 if not self.quiet:
                     print("\r")
-                continue
-            if not self.quiet:
-                print("\r   {:<5}{}{} ".format(txt.GS, resp_time, txt.CE))
-            worklist.append(mirror)
-            counter += 1
+            else:
+                if not self.quiet:
+                    print("\r   {:<5}{}{} ".format(txt.GS, resp_time, txt.CE))
+                worklist.append(mirror)
+                counter += 1
             if counter == number:
                 break
         worklist = sorted(worklist, key=itemgetter("resp_time"))
@@ -367,9 +367,9 @@ class PacmanMirrors:
             if resp_time == txt.SERVER_RES:
                 if not self.quiet:
                     print("\r")
-                continue
-            if not self.quiet:
-                print("\r   {:<5}{}{} ".format(txt.GS, resp_time, txt.CE))
+            else:
+                if not self.quiet:
+                    print("\r   {:<5}{}{} ".format(txt.GS, resp_time, txt.CE))
         return worklist
 
     def run(self):
@@ -386,13 +386,11 @@ class PacmanMirrors:
             # actual generation
             if self.fasttrack:
                 self.build_fasttrack_mirror_list(self.fasttrack)
+            elif self.interactive:
+                self.build_interactive_mirror_list()
             else:
-                if self.interactive:
-                    self.build_interactive_mirror_list()
-                else:
-                    self.build_common_mirror_list()
-
-        if not self.network:
+                self.build_common_mirror_list()
+        else:
             # only random is available if network is down
             if self.config["method"] == "random":
                 if self.interactive:
