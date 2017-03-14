@@ -1,13 +1,14 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## [4.0.0] Release Candidate - 2017-03-07
+## [4.0.0] 2017-03-14
 - Add: Network check; do not run rank if no internet.
 - Add: -f/--fasttrack [n] argument.
 - Modified GUI and TUI to reflect rank/random method.
 - Colorized console output by message type.
 - Internal rewrite to use json files from repo.manjaro.org.
 - The `/etc/pacman.d/mirrors` dir has been removed. All data files now exist in `/var/lib/pacman-mirrors`.
+- If the `Custom` mirrorfile exist is will convert to `custom-mirrors.json`
 
 ## [3.2.2] - 2017-02-12
 - Fix issue with multiple country select.
