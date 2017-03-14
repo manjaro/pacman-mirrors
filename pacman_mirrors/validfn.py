@@ -47,11 +47,11 @@ def country_list_is_valid(onlycountry, countrylist):
     """Check if the list of countries are valid.
     :param onlycountry: list of countries to check
     :param countrylist: list of available countries
-    :return: True or False
+    :return: True
     :rtype: bool
     """
     for country in onlycountry:
-        if not country in countrylist:
+        if country not in countrylist:
             print(".: {} {}{}: {}: '{}'".format(txt.WRN_CLR,
                                                 txt.OPTION,
                                                 txt.OPT_COUNTRY,
