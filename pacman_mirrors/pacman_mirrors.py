@@ -373,13 +373,11 @@ class PacmanMirrors:
         self.config = configfn.build_config()
         filefn.dir_must_exist(self.config["mirror_dir"])
         self.command_line_parse()
-        self.load_all_mirrors()
-        # network check
         self.network = httpfn.ping_host("google.com", 3)
-        # all methods is available
         if self.network:
+            # all methods is available
             httpfn.update_mirrors(self.config)
-            # actual generation
+            self.load_all_mirrors()
             if self.fasttrack:
                 self.build_fasttrack_mirror_list(self.fasttrack)
             elif self.interactive:
@@ -388,6 +386,7 @@ class PacmanMirrors:
                 self.build_common_mirror_list()
         else:
             # only random is available if network is down
+            self.load_all_mirrors()
             if self.config["method"] == "random":
                 if self.interactive:
                     self.build_interactive_mirror_list()
