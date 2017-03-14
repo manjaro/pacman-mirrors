@@ -217,7 +217,7 @@ class PacmanMirrors:
                                                    quiet=self.quiet,
                                                    maxwait=self.max_wait_time)
             mirror["resp_time"] = resp_time
-            if resp_time == txt.SERVER_RES:
+            if float(resp_time) > self.max_wait_time:
                 if not self.quiet:
                     print("\r")
             else:
@@ -362,7 +362,7 @@ class PacmanMirrors:
                                                    quiet=self.quiet,
                                                    maxwait=self.max_wait_time)
             mirror["resp_time"] = resp_time
-            if resp_time == txt.SERVER_RES:
+            if float(resp_time) >= self.max_wait_time * 5:
                 if not self.quiet:
                     print("\r")
             else:
