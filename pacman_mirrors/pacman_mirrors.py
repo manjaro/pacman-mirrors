@@ -198,15 +198,16 @@ class PacmanMirrors:
 
     def build_fasttrack_mirror_list(self, number):
         """Fast-track the mirrorlist by filtering only up2date mirrors"""
+        # randomize the load on up2date mirrors
         shuffle(self.mirrors.mirrorlist)
-        temp = [item for item in self.mirrors.mirrorlist if item["branches"] == [1, 1, 1]]
+        up2date = [item for item in self.mirrors.mirrorlist if item["branches"] == [1, 1, 1]]
         worklist = []
         print(".: {}: {} - {}".format(txt.INF_CLR,
                                       txt.QUERY_MIRRORS,
                                       txt.TAKES_TIME))
         counter = 0
         cols, lines = miscfn.terminal_size()
-        for mirror in temp:
+        for mirror in up2date:
             if not self.quiet:
                 message = "   ..... {:<15}: {}: {}".format(mirror["country"],
                                                            mirror["last_sync"],
