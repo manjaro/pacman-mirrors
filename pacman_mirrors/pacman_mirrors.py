@@ -176,8 +176,6 @@ class PacmanMirrors:
 
         if args.fasttrack:
             self.fasttrack = args.fasttrack
-            self.config["only_country"] = []
-            self.geoip = False
 
     def build_common_mirror_list(self):
         """Generate common mirrorlist"""
@@ -315,12 +313,11 @@ class PacmanMirrors:
         else:
             self.selected_countries = self.config["only_country"]
 
-        if self.custom:
+        if self.custom and not self.selected_countries:
             self.load_custom_mirrors()
             self.selected_countries = self.mirrors.countrylist
         else:
             self.load_default_mirrors()
-
         # build country list
         self.selected_countries = mirrorfn.build_country_list(
             self.selected_countries, self.mirrors.countrylist, self.geoip)
