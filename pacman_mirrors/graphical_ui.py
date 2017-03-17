@@ -45,11 +45,10 @@ class GraphicalUI(Gtk.Window):
 
         mirrors_list = []
         for server in server_list:
-            mirrors_list.append((
-                False, server["country"],
-                "{}h {}m".format(server["last_sync"][:2],
-                                 server["last_sync"][-2:],
-                                 server["url"])))  # server["url"][:-20]))
+            mirrors_list.append((False,
+                                 server["country"], "{}h {}m".format(server["last_sync"][:2],
+                                                                     server["last_sync"][-2:]),
+                                 server["url"]))  # server["url"][:-20]))
 
         self.mirrors_liststore = Gtk.ListStore(bool, str, str, str)
         for mirror_ref in mirrors_list:
