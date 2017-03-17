@@ -85,9 +85,13 @@ def modify_config(config, custom=False):
     :param custom:
     """
     if not custom:
+        # remove custom file if present
         if os.path.isfile(config["custom_file"]):
             os.remove(config["custom_file"])
-    write_configuration(config["config_file"], config["only_country"], custom=custom)
+
+    write_configuration(config["config_file"],
+                        config["only_country"],
+                        custom=custom)
 
 
 def write_configuration(filename, selection, custom=False):
@@ -99,8 +103,6 @@ def write_configuration(filename, selection, custom=False):
     if custom:
         if selection == ["Custom"]:
             selection = "OnlyCountry = Custom\n"
-        elif not selection:
-            selection = "# OnlyCountry = \n"
         else:
             selection = "OnlyCountry = {list}\n".format(
                 list=",".join(selection))
@@ -112,6 +114,7 @@ def write_configuration(filename, selection, custom=False):
             filename) as cnf, tempfile.NamedTemporaryFile(
             "w+t", dir=os.path.dirname(
                 filename), delete=False) as tmp:
+
             replaced = False
             for line in cnf:
                 if "OnlyCountry" in line:
