@@ -271,9 +271,10 @@ class PacmanMirrors:
                              self.config["method"] == "random")
 
         if interactive.is_done:
+            custom_list = interactive.custom_list
             selected = []
             mirrorfile = []
-            for item in interactive.custom_list:
+            for item in custom_list:
                 for server in self.mirrors.mirrorlist:
                     if item["url"] == server["url"]:
                         selected.append(server)
