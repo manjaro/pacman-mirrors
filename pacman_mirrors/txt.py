@@ -56,6 +56,7 @@ HLP_ARG_QUIET = _("Quiet mode - less verbose output")
 HLP_ARG_TIMEOUT = _("Maximum waiting time for server response")
 HLP_ARG_VERSION = _("Print the pacman-mirrors version")
 HLP_ARG_FASTTRACK = _("A quick mirrorlist. Overrides")
+HLP_ARG_LIST = _("List all available countries")
 # messages
 AVAILABLE_COUNTRIES = _("Available countries are")
 CANNOT_DOWNLOAD_FILE = _("Could not download from")
