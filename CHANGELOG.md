@@ -2,6 +2,7 @@
 All notable changes to this project will be documented in this file.
 
 ## [4.0.0] 2017-03-14
+- Add: -l/--list Print available mirror countries
 - Add: Network check; do not run rank if no internet.
 - Add: -f/--fasttrack [n] argument.
 - Modified GUI and TUI to reflect rank/random method.

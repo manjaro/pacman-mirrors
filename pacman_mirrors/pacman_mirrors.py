@@ -122,6 +122,9 @@ class PacmanMirrors:
                             type=int,
                             metavar=txt.DIGIT,
                             help="{} {}".format(txt.HLP_ARG_FASTTRACK, txt.OVERRIDE_OPT))
+        parser.add_argument("-l", "--list",
+                            action="store_true",
+                            help=txt.HLP_ARG_LIST)
 
         args = parser.parse_args()
 
@@ -134,13 +137,17 @@ class PacmanMirrors:
             print("pacman-mirrors {}".format(__version__))
             exit(0)
 
-        if os.getuid() != 0:
-            print(".: {} {}".format(txt.ERR_CLR, txt.MUST_BE_ROOT))
-            exit(1)
-
         if args.no_update:
             if self.config["no_update"] == "True":
                 exit(0)
+
+        if args.list:
+            self.list_all_countries()
+            exit(0)
+
+        if os.getuid() != 0:
+            print(".: {} {}".format(txt.ERR_CLR, txt.MUST_BE_ROOT))
+            exit(1)
 
         if args.method:
             self.config["method"] = args.method
@@ -176,6 +183,8 @@ class PacmanMirrors:
 
         if args.fasttrack:
             self.fasttrack = args.fasttrack
+            self.geoip = False
+            self.config["only_country"] = []
 
     def build_common_mirror_list(self):
         """Generate common mirrorlist"""
@@ -188,11 +197,12 @@ class PacmanMirrors:
             shuffle(worklist)
 
         filefn.output_mirror_list(self.config, worklist, quiet=self.quiet)
-        if self.custom or \
-                self.config["only_country"] != self.mirrors.mirrorlist:
-            configfn.modify_config(self.config, custom=True)
+        # if self.custom or \
+        #         self.config["only_country"] != self.mirrors.mirrorlist:
+        if self.custom:
+            configfn.modify_config(self.config, custom=self.custom)
         else:
-            configfn.modify_config(self.config)
+            configfn.modify_config(self.config, custom=self.custom)
 
     def build_fasttrack_mirror_list(self, number):
         """Fast-track the mirrorlist by filtering only up2date mirrors"""
@@ -299,6 +309,13 @@ class PacmanMirrors:
         self.config["only_country"] = []
         self.custom = False
 
+    def list_all_countries(self):
+        """List all available countries"""
+        self.load_default_mirrors()
+        print(".: {}{}{}:".format(txt.GS, txt.AVAILABLE_COUNTRIES, txt.CE))
+        print("{}".format(", ".join(self.mirrors.countrylist)))
+        print("")
+
     def load_all_mirrors(self):
         """Load mirrors"""
         if self.config["only_country"] == ["all"]:
@@ -306,19 +323,20 @@ class PacmanMirrors:
 
         # decision on custom or default
         if self.config["only_country"] == ["Custom"]:
-            if not validfn.custom_config_is_valid():
-                self.disable_custom_config()
-            else:
+            if validfn.custom_config_is_valid():
                 self.custom = True
+            else:
+                self.disable_custom_config()
         else:
             self.selected_countries = self.config["only_country"]
 
+        # decision on custom vs countries from conf or argument
         if self.custom and not self.selected_countries:
             self.load_custom_mirrors()
             self.selected_countries = self.mirrors.countrylist
         else:
             self.load_default_mirrors()
-        # build country list
+        # validate selection and build country list
         self.selected_countries = mirrorfn.build_country_list(
             self.selected_countries, self.mirrors.countrylist, self.geoip)
 
@@ -373,7 +391,7 @@ class PacmanMirrors:
         self.config = configfn.build_config()
         filefn.dir_must_exist(self.config["mirror_dir"])
         self.command_line_parse()
-        self.network = httpfn.ping_host("google.com", 3)
+        self.network = httpfn.ping_host("google.com", 1)
         if self.network:
             # all methods is available
             httpfn.update_mirrors(self.config)
