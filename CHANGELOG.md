@@ -8,8 +8,10 @@ All notable changes to this project will be documented in this file.
 - Modified GUI and TUI to reflect rank/random method.
 - Colorized console output by message type.
 - Internal rewrite to use json files from repo.manjaro.org.
-- The `/etc/pacman.d/mirrors` dir has been removed. All data files now exist in `/var/lib/pacman-mirrors`.
-- If the `Custom` mirrorfile exist it will convert to `custom-mirrors.json`
+- The `/etc/pacman.d/mirrors` dir has been removed.
+  - All data files now exist in `/var/lib/pacman-mirrors`.
+  - If the `Custom` mirrorfile exist it will convert to `custom-mirrors.json`
+- A lot of inevitable small fixes
 
 ## [3.2.2] - 2017-02-12
 - Fix issue with multiple country select.
