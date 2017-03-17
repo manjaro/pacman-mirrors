@@ -108,7 +108,7 @@ I_USE_THESE_MIRRORS = _("I want to use these mirrors")
 HOUSTON = "Houston?! We have a problem."
 OVERRIDE_OPT = "-c -i -m --geoip"
 REPO_SERVER = "repo.manjaro.org"
-RESET_TIP = "pacman-mirror -c all"
+RESET_TIP = "pacman-mirrors -c all"
 # mirror status constants
 LASTSYNC_OK = "24:00"  # last syncronize in the past 24 hours
 LASTSYNC_NA = "98:00"  # last syncronization not available
