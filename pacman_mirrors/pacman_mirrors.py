@@ -295,7 +295,7 @@ class PacmanMirrors:
                 # always use "Custom" from interactive
                 self.config["only_country"] = ["Custom"]
                 configfn.modify_config(self.config, custom=True)
-                print(".: {} {}: {}".format(txt.INF_CLR, txt.MIRROR_LIST_SAVED, self.config["mirror_list"]))
+                # print(".: {} {}: {}".format(txt.INF_CLR, txt.MIRROR_LIST_SAVED, self.config["mirror_list"]))
                 print(".: {} {} {}".format(txt.INF_CLR, txt.RESET_CUSTOM_CONFIG, txt.RESET_TIP))
             else:
                 print(".: {} {}".format(txt.WRN_CLR, txt.NO_SELECTION))
