@@ -48,8 +48,9 @@ class GraphicalUI(Gtk.Window):
             mirrors_list.append((
                 False, server["country"],
                 "{}h {}m".format(server["last_sync"][:2],
-                                 server["last_sync"][-2:]),
-                server["url"][:-20]))
+                                 server["last_sync"][-2:],
+                                 server["url"])))  # server["url"][:-20]))
+
         self.mirrors_liststore = Gtk.ListStore(bool, str, str, str)
         for mirror_ref in mirrors_list:
             self.mirrors_liststore.append(list(mirror_ref))
@@ -97,11 +98,13 @@ class GraphicalUI(Gtk.Window):
         self.mirrors_liststore[path][0] = not self.mirrors_liststore[path][0]
         if self.mirrors_liststore[path][0]:
             for server in self.server_list:
-                if server["url"][:-20] == self.mirrors_liststore[path][3]:
+                # if server["url"][:-20] == self.mirrors_liststore[path][3]:
+                if server["url"] == self.mirrors_liststore[path][3]:
                     self.custom_list.append(server)
         else:
             for server in self.custom_list:
-                if server["url"][:-20] == self.mirrors_liststore[path][3]:
+                # if server["url"][:-20] == self.mirrors_liststore[path][3]:
+                if server["url"] == self.mirrors_liststore[path][3]:
                     self.custom_list.remove(server)
         self.button_done.set_sensitive(bool(self.custom_list))
 
