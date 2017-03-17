@@ -312,9 +312,7 @@ class PacmanMirrors:
     def list_all_countries(self):
         """List all available countries"""
         self.load_default_mirrors()
-        print(".: {}{}{}:".format(txt.GS, txt.AVAILABLE_COUNTRIES, txt.CE))
-        print("{}".format(", ".join(self.mirrors.countrylist)))
-        print("")
+        print("{}".format("\n".join(self.mirrors.countrylist)))
 
     def load_all_mirrors(self):
         """Load mirrors"""
