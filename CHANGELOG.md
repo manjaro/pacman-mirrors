@@ -1,7 +1,7 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## [4.0.0] 2017-03-14
+## [4.0.0-rc] 2017-03-18
 - Add: -l/--list Print available mirror countries
 - Add: Network check; do not run rank if no internet.
 - Add: -f/--fasttrack [n] argument.
