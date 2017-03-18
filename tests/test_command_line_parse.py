@@ -24,7 +24,7 @@ class TestCommandLineParse(unittest.TestCase):
     @patch("os.getuid")
     @patch.object(configfn, "build_config")
     def test_arg_branch_unstable(self, mock_build_config, mock_os_getuid):
-        """TEST: config[branch] from arg -b unstable"""
+        """TEST: CLI config[branch] from ARG '-b unstable'"""
         mock_os_getuid.return_value = 0
         mock_build_config.return_value = {
             "branch": "stable",
@@ -55,7 +55,7 @@ class TestCommandLineParse(unittest.TestCase):
     @patch("os.getuid")
     @patch.object(configfn, "build_config")
     def test_arg_branch_testing(self, mock_build_config, mock_os_getuid):
-        """TEST: config[branch] from arg -b testing"""
+        """TEST: CLI config[branch] from ARG '-b testing'"""
         mock_os_getuid.return_value = 0
         mock_build_config.return_value = {
             "branch": "stable",
@@ -86,7 +86,7 @@ class TestCommandLineParse(unittest.TestCase):
     @patch("os.getuid")
     @patch.object(configfn, "build_config")
     def test_arg_method(self, mock_build_config, mock_os_getuid):
-        """TEST: config[method] from arg -m random"""
+        """TEST: CLI config[method] from ARG '-m random'"""
         mock_os_getuid.return_value = 0
         mock_build_config.return_value = {
             "branch": "stable",
@@ -117,7 +117,7 @@ class TestCommandLineParse(unittest.TestCase):
     @patch("os.getuid")
     @patch.object(configfn, "build_config")
     def test_arg_mirrordir(self, mock_build_config, mock_os_getuid):
-        """TEST: config[mirror_dir] from arg -d /another/dir"""
+        """TEST: CLI config[mirror_dir] from ARG '-d /another/dir'"""
         mock_os_getuid.return_value = 0
         mock_build_config.return_value = {
             "branch": "stable",
@@ -148,7 +148,7 @@ class TestCommandLineParse(unittest.TestCase):
     @patch("os.getuid")
     @patch.object(configfn, "build_config")
     def test_arg_mirrorlist(self, mock_build_config, mock_os_getuid):
-        """TEST: config[mirror_list] from arg -o /another/list"""
+        """TEST: CLI config[mirror_list] from ARG '-o /another/list'"""
         mock_os_getuid.return_value = 0
         mock_build_config.return_value = {
             "branch": "stable",
@@ -179,7 +179,7 @@ class TestCommandLineParse(unittest.TestCase):
     @patch("os.getuid")
     @patch.object(configfn, "build_config")
     def test_arg_onlycountry(self, mock_build_config, mock_os_getuid):
-        """TEST: config[only_country] from arg -c France,Germany"""
+        """TEST: CLI config[only_country] from ARG '-c France,Germany'"""
         mock_os_getuid.return_value = 0
         mock_build_config.return_value = {
             "branch": "stable",
@@ -210,7 +210,7 @@ class TestCommandLineParse(unittest.TestCase):
     @patch("os.getuid")
     @patch.object(configfn, "build_config")
     def test_arg_custom_country(self, mock_build_config, mock_os_getuid):
-        """TEST: custom is True from arg -c Denmark"""
+        """TEST: CLI custom is True from ARG '-c Denmark'"""
         mock_os_getuid.return_value = 0
         mock_build_config.return_value = {
             "branch": "stable",
@@ -241,7 +241,7 @@ class TestCommandLineParse(unittest.TestCase):
     @patch("os.getuid")
     @patch.object(configfn, "build_config")
     def test_arg_geoip(self, mock_build_config, mock_os_getuid):
-        """TEST: geoip True from arg --geoip"""
+        """TEST: CLI geoip is True from ARG '--geoip'"""
         mock_os_getuid.return_value = 0
         mock_build_config.return_value = {
             "branch": "stable",
@@ -272,7 +272,7 @@ class TestCommandLineParse(unittest.TestCase):
     @patch("os.getuid")
     @patch.object(configfn, "build_config")
     def test_arg_fasttrack(self, mock_build_config, mock_os_getuid):
-        """TEST: fasttrack is 5 from arg -f 5"""
+        """TEST: CLI fasttrack is 5 from ARG '-f 5'"""
         mock_os_getuid.return_value = 0
         mock_build_config.return_value = {
             "branch": "stable",
@@ -303,7 +303,7 @@ class TestCommandLineParse(unittest.TestCase):
     @patch("os.getuid")
     @patch.object(configfn, "build_config")
     def test_arg_interactive(self, mock_build_config, mock_os_getuid):
-        """TEST: interactive is true from arg -i"""
+        """TEST: CLI interactive is true from ARG '-i'"""
         mock_os_getuid.return_value = 0
         mock_build_config.return_value = {
             "branch": "stable",
@@ -334,7 +334,7 @@ class TestCommandLineParse(unittest.TestCase):
     @patch("os.getuid")
     @patch.object(configfn, "build_config")
     def test_arg_max_wait_time(self, mock_build_config, mock_os_getuid):
-        """TEST: max_wait_time is 5 from arg -t 5"""
+        """TEST: CLI max_wait_time is 5 from ARG '-t 5'"""
         mock_os_getuid.return_value = 0
         mock_build_config.return_value = {
             "branch": "stable",
@@ -365,7 +365,7 @@ class TestCommandLineParse(unittest.TestCase):
     @patch("os.getuid")
     @patch.object(configfn, "build_config")
     def test_arg_quiet(self, mock_build_config, mock_os_getuid):
-        """TEST: quiet is True from arg -q"""
+        """TEST: CLI quiet is True from ARG '-q'"""
         mock_os_getuid.return_value = 0
         mock_build_config.return_value = {
             "branch": "stable",

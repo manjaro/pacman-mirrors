@@ -21,7 +21,7 @@ class TestInitialValues(unittest.TestCase):
 
     @patch("os.getuid")
     def test_initial_custom(self, mock_os_getuid):
-        """TEST: custom is False"""
+        """TEST: self.custom is False"""
         mock_os_getuid.return_value = 0
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
@@ -31,7 +31,7 @@ class TestInitialValues(unittest.TestCase):
 
     @patch("os.getuid")
     def test_initial_fasttrack(self, mock_os_getuid):
-        """TEST: fasttrack is False"""
+        """TEST: self.fasttrack is False"""
         mock_os_getuid.return_value = 0
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
@@ -41,7 +41,7 @@ class TestInitialValues(unittest.TestCase):
 
     @patch("os.getuid")
     def test_initial_geoip(self, mock_os_getuid):
-        """TEST: geoip is False"""
+        """TEST: self.geoip is False"""
         mock_os_getuid.return_value = 0
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
@@ -51,7 +51,7 @@ class TestInitialValues(unittest.TestCase):
 
     @patch("os.getuid")
     def test_initial_interactive(self, mock_os_getuid):
-        """TEST: interactive is False"""
+        """TEST: self.interactive is False"""
         mock_os_getuid.return_value = 0
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
@@ -61,7 +61,7 @@ class TestInitialValues(unittest.TestCase):
 
     @patch("os.getuid")
     def test_initial_max_wait_time(self, mock_os_getuid):
-        """TEST: max_wait_time = 2"""
+        """TEST: self.max_wait_time = 2"""
         mock_os_getuid.return_value = 0
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
@@ -71,7 +71,7 @@ class TestInitialValues(unittest.TestCase):
 
     @patch("os.getuid")
     def test_initial_network(self, mock_os_getuid):
-        """TEST: network is True"""
+        """TEST: self.network is True"""
         mock_os_getuid.return_value = 0
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
@@ -81,7 +81,7 @@ class TestInitialValues(unittest.TestCase):
 
     @patch("os.getuid")
     def test_initial_nodisplay(self, mock_os_getuid):
-        """TEST: no_display is False"""
+        """TEST: self.no_display is False"""
         mock_os_getuid.return_value = 0
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
@@ -91,7 +91,7 @@ class TestInitialValues(unittest.TestCase):
 
     @patch("os.getuid")
     def test_initial_quiet(self, mock_os_getuid):
-        """TEST: quiet is False"""
+        """TEST: self.quiet is False"""
         mock_os_getuid.return_value = 0
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
@@ -101,7 +101,7 @@ class TestInitialValues(unittest.TestCase):
 
     @patch("os.getuid")
     def test_initial_selected_countries(self, mock_os_getuid):
-        """TEST: selected_countries = []"""
+        """TEST: self.selected_countries = []"""
         mock_os_getuid.return_value = 0
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
