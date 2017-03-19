@@ -2,6 +2,7 @@
 All notable changes to this project will be documented in this file.
 
 ## [4.0.1-dev] - 2017-0X-XX
+- GUI: Add sorting functionality.
 - Update translations.
 
 ## [4.0.0] - 2017-03-19
