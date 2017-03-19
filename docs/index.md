@@ -39,6 +39,9 @@ Change directory of mirrors to use.
 `-f [n]`, `--fasttrack [n]`
 Generates an updated and responsive mirrorlist of [n] mirrors.
 
+`-l`, `--list`
+Lists available mirror countries
+
 `-o`, `--output`
 Change path of the output file.
 
