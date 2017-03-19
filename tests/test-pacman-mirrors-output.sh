@@ -35,7 +35,9 @@ sudo pacman-mirrors -c France -b unstable -m random -o france-random-unstable-mi
 echo -e "\e[1m\e[41mResult was written to\e[m france-random-unstable-mirrorlist.txt"
 #
 sudo pacman-mirrors -c Italy -b stable -o italy-interactive-mirrorlist.txt
+echo -e "\e[1m\e[41mResult was written to\e[m italy-interactive-mirrorlist.txt"
 sudo pacman-mirrors -c all -b stable -m random -o interactive-reset-mirrorlist.txt
+echo -e "\e[1m\e[41mResult was written to\e[m interactive-reset-mirrorlist.txt"
 sudo chmod 0777 *-mirrorlist.txt
 
 
