@@ -265,7 +265,7 @@ class PacmanMirrors:
         if self.no_display:
             from . import consoleui as ui
         else:
-            from . import graphical_ui as ui
+            from . import graphicalui as ui
 
         interactive = ui.run(interactive_list,
                              self.config["method"] == "random")
