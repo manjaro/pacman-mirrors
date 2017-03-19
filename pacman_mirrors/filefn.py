@@ -81,7 +81,10 @@ def output_mirror_list(config, servers, custom=False, quiet=False):
                 url = server["url"]
                 for protocol in enumerate(server["protocols"]):
                     pos = url.find(":")
-                    mb_url = "{}{}".format(url, config["branch"])
+                    msg_url = server["url"] = "{}{}{}".format(protocol[1],
+                                                              url[pos:],
+                                                              config["branch"])
+
                     server["url"] = "{}{}{}{}".format(protocol[1],
                                                       url[pos:],
                                                       config["branch"],
@@ -90,8 +93,9 @@ def output_mirror_list(config, servers, custom=False, quiet=False):
                     write_mirrorlist_entry(outfile, server)
                     if not quiet:
                         message = "   {:<15} : {}".format(server["country"],
-                                                          mb_url)
+                                                          msg_url)
                         print("{:.{}}".format(message, cols))
+
             print(".: {} {}: {}".format(txt.INF_CLR,
                                         txt.MIRROR_LIST_SAVED,
                                         config["mirror_list"]))
