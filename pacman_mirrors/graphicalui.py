@@ -47,26 +47,33 @@ class GraphicalUI(Gtk.Window):
                                                                      server["last_sync"][-2:]),
                                  server["url"]))
 
-        self.mirrors_liststore = Gtk.ListStore(bool, str, str, str)
+        self.store = Gtk.ListStore(bool, str, str, str)
         for mirror_ref in mirrors_list:
-            self.mirrors_liststore.append(list(mirror_ref))
-        self.mirror_filter = Gtk.TreeModelSort(self.mirrors_liststore)
+            self.store.append(list(mirror_ref))
         scrolled_tree = Gtk.ScrolledWindow()
-        self.treeview = Gtk.TreeView.new_with_model(self.mirror_filter)
-        self.treeview.set_vexpand(True)
+        self.tree = Gtk.TreeView(self.store)
+        self.tree.set_vexpand(True)
+
         renderer = Gtk.CellRendererToggle()
         renderer.connect("toggled", self.on_toggle)
         column = Gtk.TreeViewColumn(txt.I_USE, renderer, active=0)
-        self.treeview.append_column(column)
-        for i, column_title in enumerate([txt.I_COUNTRY,
-                                          txt.I_LAST_SYNC,
-                                          txt.I_URL]):
-            renderer = Gtk.CellRendererText()
-            column = Gtk.TreeViewColumn(column_title, renderer, text=i+1)
-            if i+1 != 2:
-                column.set_sort_column_id(i+1)
-            self.treeview.append_column(column)
-        scrolled_tree.add(self.treeview)
+        self.tree.append_column(column)
+
+        renderer = Gtk.CellRendererText()
+        column = Gtk.TreeViewColumn(txt.I_COUNTRY, renderer, text=1)
+        column.set_sort_column_id(1)
+        self.tree.append_column(column)
+
+        renderer = Gtk.CellRendererText()
+        column = Gtk.TreeViewColumn(txt.I_LAST_SYNC, renderer, text=2)
+        self.tree.append_column(column)
+
+        renderer = Gtk.CellRendererText()
+        column = Gtk.TreeViewColumn(txt.I_URL, renderer, text=3)
+        column.set_sort_column_id(3)
+        self.tree.append_column(column)
+
+        scrolled_tree.add(self.tree)
 
         header = Gtk.Label(txt.I_LIST_TITLE)
         button_cancel = Gtk.Button(txt.I_CANCEL)
@@ -93,14 +100,14 @@ class GraphicalUI(Gtk.Window):
 
     def on_toggle(self, widget, path):
         """Add or remove server from custom list"""
-        self.mirrors_liststore[path][0] = not self.mirrors_liststore[path][0]
-        if self.mirrors_liststore[path][0]:
+        self.store[path][0] = not self.store[path][0]
+        if self.store[path][0]:
             for server in self.server_list:
-                if server["url"] == self.mirrors_liststore[path][3]:
+                if server["url"] == self.store[path][3]:
                     self.custom_list.append(server)
         else:
             for server in self.custom_list:
-                if server["url"] == self.mirrors_liststore[path][3]:
+                if server["url"] == self.store[path][3]:
                     self.custom_list.remove(server)
         self.button_done.set_sensitive(bool(self.custom_list))
 
