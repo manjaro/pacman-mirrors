@@ -65,6 +65,7 @@ class GraphicalUI(Gtk.Window):
 
         renderer = Gtk.CellRendererText()
         column = Gtk.TreeViewColumn(txt.I_LAST_SYNC, renderer, text=2)
+        column.set_sort_column_id(2)
         self.tree.append_column(column)
 
         renderer = Gtk.CellRendererText()
