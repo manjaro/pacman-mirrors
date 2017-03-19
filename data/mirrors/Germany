@@ -9,7 +9,6 @@ Server = http://ftp.tu-chemnitz.de/pub/linux/manjaro/$branch/$repo/$arch
 Server = http://mirror.netzspielplatz.de/manjaro/packages/$branch/$repo/$arch
 Server = http://mirror.netcologne.de/manjaro/$branch/$repo/$arch
 Server = http://repo.rhindon.net/manjaro/$branch/$repo/$arch
-Server = http://mirrors.cicku.me/manjaro/$branch/$repo/$arch
 Server = http://repo.stdout.net/manjaro/$branch/$repo/$arch
 Server = http://ftp.rz.tu-bs.de/pub/mirror/manjaro.org/repos/$branch/$repo/$arch
 Server = http://manjaro-mirror-a.alpix.eu/$branch/$repo/$arch

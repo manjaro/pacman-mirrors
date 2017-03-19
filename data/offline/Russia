@@ -1,0 +1,6 @@
+##
+## Pacman Mirrorlist
+##
+
+[Russia]
+Server = ftp://kibo.remi.lu/pub/$branch/$repo/$arch
