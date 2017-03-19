@@ -27,12 +27,15 @@ echo -e "\e[1m\e[41mResult was written to\e[m germany-testing-mirrorlist.txt"
 sudo pacman-mirrors -c Germany -b unstable -o germany-unstable-mirrorlist.txt
 echo -e "\e[1m\e[41mResult was written to\e[m germany-unstable-mirrorlist.txt"
 #
-sudo pacman-mirrors -c Germany -b stable -m random -o germany-random-stable-mirrorlist.txt
-echo -e "\e[1m\e[41mResult was written to\e[m germany-random-stable-mirrorlist.txt"
-sudo pacman-mirrors -c Germany -b testing -m random -o germany-random-testing-mirrorlist.txt
-echo -e "\e[1m\e[41mResult was written to\e[m germany-random-testing-mirrorlist.txt"
-sudo pacman-mirrors -c Germany -b unstable -m random -o germany-random-unstable-mirrorlist.txt
-echo -e "\e[1m\e[41mResult was written to\e[m germany-random-unstable-mirrorlist.txt"
+sudo pacman-mirrors -c France -b stable -m random -o france-random-stable-mirrorlist.txt
+echo -e "\e[1m\e[41mResult was written to\e[m france-random-stable-mirrorlist.txt"
+sudo pacman-mirrors -c France -b testing -m random -o france-random-testing-mirrorlist.txt
+echo -e "\e[1m\e[41mResult was written to\e[m france-random-testing-mirrorlist.txt"
+sudo pacman-mirrors -c France -b unstable -m random -o france-random-unstable-mirrorlist.txt
+echo -e "\e[1m\e[41mResult was written to\e[m france-random-unstable-mirrorlist.txt"
+#
+sudo pacman-mirrors -c Italy -b stable -o italy-interactive-mirrorlist.txt
+sudo pacman-mirrors -c all -b stable -m random -o interactive-reset-mirrorlist.txt
 sudo chmod 0777 *-mirrorlist.txt
 
 
