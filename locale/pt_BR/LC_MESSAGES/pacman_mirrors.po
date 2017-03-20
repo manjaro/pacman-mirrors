@@ -4,254 +4,254 @@
 # project.
 # 
 # Translators:
-# Demiray Muhterem <mdemiray@msn.com>, 2017
-# ilkeryus <ilkeryus@gmail.com>, 2016
+# Gabriel Henrique <gabrielmmoderno@gmail.com>, 2017
+# Matheus Campagnol <mate175@gmail.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: manjaro-pacman-mirrors\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2017-02-20 15:44+0100\n"
-"PO-Revision-Date: 2017-03-09 18:09+0000\n"
-"Last-Translator: Demiray Muhterem <mdemiray@msn.com>\n"
-"Language-Team: Turkish (Turkey) (http://www.transifex.com/manjarolinux/manjaro-pacman-mirrors/language/tr_TR/)\n"
+"PO-Revision-Date: 2017-03-02 13:46+0000\n"
+"Last-Translator: Matheus Campagnol <mate175@gmail.com>\n"
+"Language-Team: Portuguese (Brazil) (http://www.transifex.com/manjarolinux/manjaro-pacman-mirrors/language/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.3.4\n"
-"Language: tr_TR\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"Language: pt_BR\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: pacman_mirrors/txt.py:31
 msgid "Error"
-msgstr "Hata"
+msgstr "Erro"
 
 #: pacman_mirrors/txt.py:32
 msgid "Info"
-msgstr "Bilgi"
+msgstr "Informação"
 
 #: pacman_mirrors/txt.py:33
 msgid "Warning"
-msgstr "Uyarı"
+msgstr "Atenção"
 
 #: pacman_mirrors/txt.py:35
 msgid "Timeout"
-msgstr "Zaman aşımı"
+msgstr "Tempo esgotado"
 
 #: pacman_mirrors/txt.py:36
 msgid "HTTPException"
-msgstr "HTTPHariç"
+msgstr "Exceção HTTP"
 
 #: pacman_mirrors/txt.py:38
 msgid "PATH"
-msgstr "YOL"
+msgstr "CAMINHO"
 
 #: pacman_mirrors/txt.py:39
 msgid "FILE"
-msgstr "DOSYA"
+msgstr "ARQUIVO"
 
 #: pacman_mirrors/txt.py:40
 msgid "SECONDS"
-msgstr "SANİYE"
+msgstr "SEGUNDOS"
 
 #: pacman_mirrors/txt.py:41
 msgid "DIGIT"
-msgstr "RAKAM"
+msgstr "DIGITO"
 
 #: pacman_mirrors/txt.py:43
 msgid "Branch name"
-msgstr "Kol adı"
+msgstr "Nome da filial"
 
 #: pacman_mirrors/txt.py:44
 msgid "Comma separated list of countries, from which mirrors will be used"
-msgstr "Yansıların kullanılacağı, virgülle ayrılmış ülkelerin listesi"
+msgstr "Lista de países separados por vírgulas, a partir dos quais serão utilizados os espelhos"
 
 #: pacman_mirrors/txt.py:46
 msgid "Output file"
-msgstr "Çıktı dosyası"
+msgstr "Arquivo de saída"
 
 #: pacman_mirrors/txt.py:47
 msgid "Generate mirrorlist"
-msgstr "Yansı listesi oluştur"
+msgstr "Gerar lista de espelhos"
 
 #: pacman_mirrors/txt.py:48
 msgid "Get current country using geolocation. Ignored if"
-msgstr "Coğrafi konum kullanarak ülkenizi öğrenin. Yok sayarsan"
+msgstr "Obter país atual usando geolocalização. Ignorado se"
 
 #: pacman_mirrors/txt.py:49
 msgid "is supplied"
-msgstr "tedarik edildi"
+msgstr "é fornecido"
 
 #: pacman_mirrors/txt.py:50
 msgid "Generate custom mirrorlist"
-msgstr "Özel yansı listesi oluştur"
+msgstr "Gerar lista de espelhos personalizada"
 
 #: pacman_mirrors/txt.py:51
 msgid "Generation method"
-msgstr "Oluşturma yöntemi"
+msgstr "Método de geração"
 
 #: pacman_mirrors/txt.py:52
 msgid "Don't generate mirrorlist if"
-msgstr "Eğer var ise yansı listesi oluşturmayın"
+msgstr "Não gerar lista de espelhos se"
 
 #: pacman_mirrors/txt.py:53
 msgid "in the configuration file"
-msgstr "yapılandırma dosyasında"
+msgstr "no arquivo de configuração"
 
 #: pacman_mirrors/txt.py:54
 msgid "Mirrors list path"
-msgstr "yansı listesi yolu"
+msgstr "Caminho da lista de espelhos"
 
 #: pacman_mirrors/txt.py:55
 msgid "Quiet mode - less verbose output"
-msgstr "Sessiz mod - daha detaysız çıktı"
+msgstr "Modo silencioso - saída menos detalhada"
 
 #: pacman_mirrors/txt.py:56
 msgid "Maximum waiting time for server response"
-msgstr "Sunucu yanıtı için azami bekleme süresi"
+msgstr "Tempo máximo de espera para a resposta do servidor"
 
 #: pacman_mirrors/txt.py:57
 msgid "Print the pacman-mirrors version"
-msgstr "pacman-mirrors sürümünü yazdır"
+msgstr "Imprima a versão do pacman-mirrors"
 
 #: pacman_mirrors/txt.py:58
 msgid "A quick mirrorlist. Overrides -cim --geoip"
-msgstr "Hızlı bir yansı listesi. -cim --geoip'i geçersiz kılar"
+msgstr "Uma lista rápida de espelhos. Sobrescreve -cim --geoip"
 
 #: pacman_mirrors/txt.py:60
 msgid "Available countries are"
-msgstr "Mevcut ülkeler"
+msgstr "Os países disponíveis são"
 
 #: pacman_mirrors/txt.py:61
 msgid "Could not download from"
-msgstr "Adresinden indirilemedi"
+msgstr "Não foi possível baixar de"
 
 #: pacman_mirrors/txt.py:62
 msgid "Cannot read file"
-msgstr "Dosya okunamadı"
+msgstr "Impossível ler o arquivo"
 
 #: pacman_mirrors/txt.py:63
 msgid "Cannot write file"
-msgstr "Dosyaya yazılamadı"
+msgstr "Impossível escrever o arquivo"
 
 #: pacman_mirrors/txt.py:64
 msgid "Converting custom mirror file to new format"
-msgstr "Özel yansı listesini yeni biçime dönüştür"
+msgstr "Convertendo arquivo personalizado de espelhos para um novo formato"
 
 #: pacman_mirrors/txt.py:65
 msgid "Custom mirror file"
-msgstr "Özel yansı dosyası"
+msgstr "Arquivo de espelhos personalizado"
 
 #: pacman_mirrors/txt.py:66
 msgid "Custom mirror file saved"
-msgstr "Özel yansı dpsyası kaydedildi"
+msgstr "Aquivo de espelho personalizado salvo"
 
 #: pacman_mirrors/txt.py:67
 msgid "User generated mirror list"
-msgstr "Kullanıcı tarafından oluşturulan yansı listesi"
+msgstr "Lista de espelhos gerada pelo usuário"
 
 #: pacman_mirrors/txt.py:68
 msgid "doesn't exist."
-msgstr "varolmayan."
+msgstr "Inexistente."
 
 #: pacman_mirrors/txt.py:69
 msgid "Downloading mirrors from repo.manjaro.org"
-msgstr "Yansı listesi repo.manjaro.org adresinden indiriliyor"
+msgstr "Baixando espelhos de repo.manjaro.org"
 
 #: pacman_mirrors/txt.py:70
 msgid "Falling back to"
-msgstr "Geri düşüm"
+msgstr "Retrocedendo"
 
 #: pacman_mirrors/txt.py:71
 msgid "is missing"
-msgstr "kayıp"
+msgstr "está faltando"
 
 #: pacman_mirrors/txt.py:72
 msgid "The mirror file"
-msgstr "Yansı dosyası"
+msgstr "O arquivo de espelho"
 
 #: pacman_mirrors/txt.py:73
 msgid "Mirrorlist generated and saved to"
-msgstr "Yansı oluşturuldu ve kaydedildi"
+msgstr "Lista de espelhos gerada e salvada em"
 
 #: pacman_mirrors/txt.py:74
 msgid "Must have root privileges"
-msgstr "Root yetkisine sahip olmalısınız"
+msgstr "Deve ter privilégios de root"
 
 #: pacman_mirrors/txt.py:75
 msgid "The mirror list is not changed"
-msgstr "Yansı listesi değiştirilmedi"
+msgstr "A lista de espelhos não é alterada"
 
 #: pacman_mirrors/txt.py:76
 msgid "No mirrors in selection"
-msgstr "Yansı seçilmedi"
+msgstr "Sem espelhos na seleção"
 
 #: pacman_mirrors/txt.py:77
 msgid "Option"
-msgstr "Seçenek"
+msgstr "Opção"
 
 #: pacman_mirrors/txt.py:78
 msgid "Writing mirror list"
-msgstr "Yansı listesi yazılıyor"
+msgstr "Escrevendo lista espelho"
 
 #: pacman_mirrors/txt.py:79
 msgid "Querying mirrors"
-msgstr "Yansı sorgulama"
+msgstr "Consultando espelhos"
 
 #: pacman_mirrors/txt.py:80
 msgid "Randomizing mirror list"
-msgstr "Rastgele yansı listesi seç"
+msgstr "Aleatorizando a lista de espelhos"
 
 #: pacman_mirrors/txt.py:81
 msgid "To reset custom config run `pacman-mirrors -c all`"
-msgstr "Özel yansıları sıfırlamak için `pacman-mirrors -c all` kullanın"
+msgstr "Para redefinir uma configuração personalizada use  `pacman-mirrors -c all`"
 
 #: pacman_mirrors/txt.py:82
 msgid "This may take some time"
-msgstr "Bu işlem biraz zaman alabilir"
+msgstr "Isso pode levar algum tempo"
 
 #: pacman_mirrors/txt.py:83
 msgid "unknown country"
-msgstr "bilinmeyen ülke"
+msgstr "país desconhecido"
 
 #: pacman_mirrors/txt.py:84
 msgid "Using all mirrors"
-msgstr "Tüm yansılar kullanılsın"
+msgstr "Usando todos os espelhos"
 
 #: pacman_mirrors/txt.py:85
 msgid "Using custom mirror file"
-msgstr "Özel yansı dosyası kullanılsın"
+msgstr "Usando o arquivo personalizado de espelho"
 
 #: pacman_mirrors/txt.py:86
 msgid "Using default mirror file"
-msgstr "Varsayılan yansı dosyası kullanılsın"
+msgstr "Usando o arquivo padrão de espelho"
 
 #: pacman_mirrors/txt.py:88
 msgid "Manjaro mirrors by response time"
-msgstr "Hızına göre yansılar kullanılsın"
+msgstr "Espelhos do Manjaro por tempo de resposta"
 
 #: pacman_mirrors/txt.py:89
 msgid "Manjaro mirrors in random order"
-msgstr "Rastgele sıralanmış yansılar kullanılsın"
+msgstr "Espelhos do Manjaro em ordem aleatória"
 
 #: pacman_mirrors/txt.py:90
 msgid "Check mirrors for your personal list"
-msgstr "Özel listeniz için yansıları kontrol edin"
+msgstr "Verificar espelhos para sua lista pessoal"
 
 #: pacman_mirrors/txt.py:91
 msgid "Use"
-msgstr "Kullan"
+msgstr "Usar"
 
 #: pacman_mirrors/txt.py:92
 msgid "Country"
-msgstr "Ülke"
+msgstr "País"
 
 #: pacman_mirrors/txt.py:93
 msgid "Resp"
-msgstr "Kısa"
+msgstr "Resposta"
 
 #: pacman_mirrors/txt.py:94
 msgid "Sync"
-msgstr "Senk"
+msgstr "Sincronizar"
 
 #: pacman_mirrors/txt.py:95
 msgid "URL"
@@ -259,16 +259,16 @@ msgstr "URL"
 
 #: pacman_mirrors/txt.py:96
 msgid "Cancel"
-msgstr "Vazgeç"
+msgstr "Cancelar"
 
 #: pacman_mirrors/txt.py:97
 msgid "OK"
-msgstr "TAMAM"
+msgstr "OK"
 
 #: pacman_mirrors/txt.py:98
 msgid "Confirm selections"
-msgstr "Seçimleri onayla"
+msgstr "Confirmar seleções"
 
 #: pacman_mirrors/txt.py:99
 msgid "I want to use these mirrors"
-msgstr "Bu yansıları kullanmak istiyorum"
+msgstr "Desejo usar esses espelhos"

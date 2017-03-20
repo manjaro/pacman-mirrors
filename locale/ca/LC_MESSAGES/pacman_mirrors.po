@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: manjaro-pacman-mirrors\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2017-01-19 15:16+0100\n"
-"PO-Revision-Date: 2017-02-02 16:04+0000\n"
+"POT-Creation-Date: 2017-02-20 15:44+0100\n"
+"PO-Revision-Date: 2017-03-15 15:18+0000\n"
 "Last-Translator: acutbal <acutbal@gmail.com>\n"
 "Language-Team: Catalan (http://www.transifex.com/manjarolinux/manjaro-pacman-mirrors/language/ca/)\n"
 "MIME-Version: 1.0\n"
@@ -21,222 +21,254 @@ msgstr ""
 "Language: ca\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: pacman_mirrors/pacman_mirrors.py:80
+#: pacman_mirrors/txt.py:31
 msgid "Error"
 msgstr "Error"
 
-#: pacman_mirrors/pacman_mirrors.py:81
+#: pacman_mirrors/txt.py:32
 msgid "Info"
 msgstr "Informació"
 
-#: pacman_mirrors/pacman_mirrors.py:82
+#: pacman_mirrors/txt.py:33
 msgid "Warning"
 msgstr "Avís"
 
-#: pacman_mirrors/pacman_mirrors.py:84
+#: pacman_mirrors/txt.py:35
 msgid "Timeout"
 msgstr "Temps d'espera"
 
-#: pacman_mirrors/pacman_mirrors.py:85
+#: pacman_mirrors/txt.py:36
 msgid "HTTPException"
 msgstr "HTTPException"
 
-#: pacman_mirrors/pacman_mirrors.py:87
+#: pacman_mirrors/txt.py:38
 msgid "PATH"
 msgstr "CAMÍ"
 
-#: pacman_mirrors/pacman_mirrors.py:88
+#: pacman_mirrors/txt.py:39
 msgid "FILE"
 msgstr "ARXIU"
 
-#: pacman_mirrors/pacman_mirrors.py:89
+#: pacman_mirrors/txt.py:40
 msgid "SECONDS"
 msgstr "SEGONS"
 
-#: pacman_mirrors/pacman_mirrors.py:91
+#: pacman_mirrors/txt.py:41
+msgid "DIGIT"
+msgstr "DIGIT"
+
+#: pacman_mirrors/txt.py:43
 msgid "Branch name"
 msgstr "Nom de la branca"
 
-#: pacman_mirrors/pacman_mirrors.py:92
+#: pacman_mirrors/txt.py:44
 msgid "Comma separated list of countries, from which mirrors will be used"
-msgstr "Llista de països separats per comes, des d'on s'utilitzen els miralls"
+msgstr "Llista de països separats per comes, des d'on s'utilitzen les rèpliques"
 
-#: pacman_mirrors/pacman_mirrors.py:93
+#: pacman_mirrors/txt.py:46
 msgid "Output file"
 msgstr "Fitxer de sortida"
 
-#: pacman_mirrors/pacman_mirrors.py:94
+#: pacman_mirrors/txt.py:47
 msgid "Generate mirrorlist"
-msgstr "Generar llista de miralls"
+msgstr "Generar llista de rèpliques"
 
-#: pacman_mirrors/pacman_mirrors.py:95
+#: pacman_mirrors/txt.py:48
 msgid "Get current country using geolocation. Ignored if"
 msgstr "Obtenir país actual utilitzant geolocalització. S'ignora si"
 
-#: pacman_mirrors/pacman_mirrors.py:96
+#: pacman_mirrors/txt.py:49
 msgid "is supplied"
 msgstr "és subministrat"
 
-#: pacman_mirrors/pacman_mirrors.py:97
+#: pacman_mirrors/txt.py:50
 msgid "Generate custom mirrorlist"
-msgstr "Generar llista de miralls personalitzada"
+msgstr "Generar llista de rèpliques personalitzada"
 
-#: pacman_mirrors/pacman_mirrors.py:98
+#: pacman_mirrors/txt.py:51
 msgid "Generation method"
 msgstr "mètode de generació"
 
-#: pacman_mirrors/pacman_mirrors.py:99
+#: pacman_mirrors/txt.py:52
 msgid "Don't generate mirrorlist if"
-msgstr "No generar la llista de miralls si"
+msgstr "No generar la llista de rèpliques si"
 
-#: pacman_mirrors/pacman_mirrors.py:100
+#: pacman_mirrors/txt.py:53
 msgid "in the configuration file"
 msgstr "a l'arxiu de configuració"
 
-#: pacman_mirrors/pacman_mirrors.py:101
+#: pacman_mirrors/txt.py:54
 msgid "Mirrors list path"
-msgstr "Camí de la llista de miralls"
+msgstr "Camí de la llista de rèpliques"
 
-#: pacman_mirrors/pacman_mirrors.py:102
+#: pacman_mirrors/txt.py:55
 msgid "Quiet mode - less verbose output"
 msgstr "Mode silenciós - Sortida menys detallada"
 
-#: pacman_mirrors/pacman_mirrors.py:103
+#: pacman_mirrors/txt.py:56
 msgid "Maximum waiting time for server response"
 msgstr "Temps màxim d'espera de resposta del servidor"
 
-#: pacman_mirrors/pacman_mirrors.py:104
+#: pacman_mirrors/txt.py:57
 msgid "Print the pacman-mirrors version"
 msgstr "Imprimeix la versió de pacman-mirrors"
 
-#: pacman_mirrors/pacman_mirrors.py:106
-msgid "Cannot read file"
-msgstr "No es pot llegir el fitxer"
+#: pacman_mirrors/txt.py:58
+msgid "A quick mirrorlist. Overrides -cim --geoip"
+msgstr "Una llista breu de rèpliques. Sobreescriu -cim --geoip"
 
-#: pacman_mirrors/pacman_mirrors.py:107
-msgid "Cannot update file"
-msgstr "No es pot actualitzar el fitxer"
-
-#: pacman_mirrors/pacman_mirrors.py:108
-msgid "Cannot write file"
-msgstr "No es pot escriure el fitxer"
-
-#: pacman_mirrors/pacman_mirrors.py:109
-msgid "Must have root privileges"
-msgstr "S'han de tenir privilegis root"
-
-#: pacman_mirrors/pacman_mirrors.py:110
-msgid "Cannot read server response"
-msgstr "No es pot llegir la resposta del servidor"
-
-#: pacman_mirrors/pacman_mirrors.py:111
-msgid "No server available"
-msgstr "No hi ha cap servidor disponible"
-
-#: pacman_mirrors/pacman_mirrors.py:112
-msgid "Failed to reach server"
-msgstr "No s'ha pogut connectar amb el servidor"
-
-#: pacman_mirrors/pacman_mirrors.py:113
-msgid "The server did not complete the request"
-msgstr "El servidor no ha completat la sol·licitud"
-
-#: pacman_mirrors/pacman_mirrors.py:115
-msgid "User generated mirror list"
-msgstr "Llista dels miralls generada per l'usuari"
-
-#: pacman_mirrors/pacman_mirrors.py:116
-msgid "Saved personalized list of mirrors in"
-msgstr "Llista personalitzada dels miralls guardada en"
-
-#: pacman_mirrors/pacman_mirrors.py:117
-msgid "Custom mirrors file"
-msgstr "Arxiu de miralls personalitzats"
-
-#: pacman_mirrors/pacman_mirrors.py:118
-msgid "doesn't exist. Querying all servers"
-msgstr "no existeix. Consultant a tots els servidors"
-
-#: pacman_mirrors/pacman_mirrors.py:119
-msgid "Writing custom mirror file"
-msgstr "Escrivint llista de miralls personalitzada"
-
-#: pacman_mirrors/pacman_mirrors.py:120
-msgid "Writing mirror list"
-msgstr "Escrivint llista de miralls"
-
-#: pacman_mirrors/pacman_mirrors.py:121
-msgid "Mirrorlist generated and saved to"
-msgstr "Llista de miralls creada i guardada en"
-
-#: pacman_mirrors/pacman_mirrors.py:122
-msgid "Querying servers, this may take some time"
-msgstr "Consultant els servidors, això pot portar el seu temps"
-
-#: pacman_mirrors/pacman_mirrors.py:123
-msgid "Using custom mirror list"
-msgstr "Fent servir llista personalitzada de miralls"
-
-#: pacman_mirrors/pacman_mirrors.py:124
-msgid "Testing mirrors in"
-msgstr "Miralls de proves en"
-
-#: pacman_mirrors/pacman_mirrors.py:125
-msgid "Wrong date format in state file"
-msgstr "Format de data incorrecta a l'arxiu d'estat"
-
-#: pacman_mirrors/pacman_mirrors.py:126
-msgid "Randomizing server list"
-msgstr "Variació aleatòria de la llista de servidors"
-
-#: pacman_mirrors/pacman_mirrors.py:127
-msgid "Option"
-msgstr "Opció"
-
-#: pacman_mirrors/pacman_mirrors.py:128
-msgid "unknown country"
-msgstr "país desconegut"
-
-#: pacman_mirrors/pacman_mirrors.py:129
+#: pacman_mirrors/txt.py:60
 msgid "Available countries are"
 msgstr "Els països disponibles són"
 
-#: pacman_mirrors/pacman_mirrors_gui.py:33
-msgid "Mirrors by response time"
-msgstr "Miralls segons temps de resposta"
+#: pacman_mirrors/txt.py:61
+msgid "Could not download from"
+msgstr "No s'ha pogut descarregar des de"
 
-#: pacman_mirrors/pacman_mirrors_gui.py:54
-msgid "Use"
-msgstr "Ús"
+#: pacman_mirrors/txt.py:62
+msgid "Cannot read file"
+msgstr "No es pot llegir el fitxer"
 
-#: pacman_mirrors/pacman_mirrors_gui.py:56
-msgid "Country"
-msgstr "País"
+#: pacman_mirrors/txt.py:63
+msgid "Cannot write file"
+msgstr "No es pot escriure el fitxer"
 
-#: pacman_mirrors/pacman_mirrors_gui.py:56
-msgid "Last sync"
-msgstr "Última sincronització"
+#: pacman_mirrors/txt.py:64
+msgid "Converting custom mirror file to new format"
+msgstr "Conversió d'arxiu de la rèplica personalitzat per a un nou format"
 
-#: pacman_mirrors/pacman_mirrors_gui.py:56
-msgid "URL"
-msgstr "URL"
+#: pacman_mirrors/txt.py:65
+msgid "Custom mirror file"
+msgstr "Arxiu de rèplica personalitzat"
 
-#: pacman_mirrors/pacman_mirrors_gui.py:62
+#: pacman_mirrors/txt.py:66
+msgid "Custom mirror file saved"
+msgstr "Arxiu de rèplica personalitzat guardat"
+
+#: pacman_mirrors/txt.py:67
+msgid "User generated mirror list"
+msgstr "Llista de rèplica generada per l'usuari"
+
+#: pacman_mirrors/txt.py:68
+msgid "doesn't exist."
+msgstr "No existeix."
+
+#: pacman_mirrors/txt.py:69
+msgid "Downloading mirrors from repo.manjaro.org"
+msgstr "Descarregant les rèpliques des de repo.manjaro.org"
+
+#: pacman_mirrors/txt.py:70
+msgid "Falling back to"
+msgstr "Tornant cap a"
+
+#: pacman_mirrors/txt.py:71
+msgid "is missing"
+msgstr "està perdut"
+
+#: pacman_mirrors/txt.py:72
+msgid "The mirror file"
+msgstr "L'arxiu de la rèplica"
+
+#: pacman_mirrors/txt.py:73
+msgid "Mirrorlist generated and saved to"
+msgstr "Llista de rèpliques creada i guardada en"
+
+#: pacman_mirrors/txt.py:74
+msgid "Must have root privileges"
+msgstr "S'han de tenir privilegis root"
+
+#: pacman_mirrors/txt.py:75
+msgid "The mirror list is not changed"
+msgstr "La llista de rèpliques no s'ha canviat"
+
+#: pacman_mirrors/txt.py:76
+msgid "No mirrors in selection"
+msgstr "No hi han rèpliques a la selecció"
+
+#: pacman_mirrors/txt.py:77
+msgid "Option"
+msgstr "Opció"
+
+#: pacman_mirrors/txt.py:78
+msgid "Writing mirror list"
+msgstr "Escrivint llista de miralls"
+
+#: pacman_mirrors/txt.py:79
+msgid "Querying mirrors"
+msgstr "Demanant rèpliques"
+
+#: pacman_mirrors/txt.py:80
+msgid "Randomizing mirror list"
+msgstr "Aleatorització de llista de rèpliques"
+
+#: pacman_mirrors/txt.py:81
+msgid "To reset custom config run `pacman-mirrors -c all`"
+msgstr "Per reajustar la configuració personalitzada fer servir `pacman-mirrors -c all`"
+
+#: pacman_mirrors/txt.py:82
+msgid "This may take some time"
+msgstr "Això pot trigar una mica"
+
+#: pacman_mirrors/txt.py:83
+msgid "unknown country"
+msgstr "país desconegut"
+
+#: pacman_mirrors/txt.py:84
+msgid "Using all mirrors"
+msgstr "Fent servir totes les rèpliques"
+
+#: pacman_mirrors/txt.py:85
+msgid "Using custom mirror file"
+msgstr "Fent servir un arxiu de rèplica personalitzat"
+
+#: pacman_mirrors/txt.py:86
+msgid "Using default mirror file"
+msgstr "Fent servir un arxiu de rèplica original"
+
+#: pacman_mirrors/txt.py:88
+msgid "Manjaro mirrors by response time"
+msgstr "Rèpliques de Manjaro segons el temps de resposta"
+
+#: pacman_mirrors/txt.py:89
+msgid "Manjaro mirrors in random order"
+msgstr "Rèpliques de Manjaro en ordre aleatori"
+
+#: pacman_mirrors/txt.py:90
 msgid "Check mirrors for your personal list"
 msgstr "Comprova els miralls per a la teva llista personal"
 
-#: pacman_mirrors/pacman_mirrors_gui.py:63
+#: pacman_mirrors/txt.py:91
+msgid "Use"
+msgstr "Ús"
+
+#: pacman_mirrors/txt.py:92
+msgid "Country"
+msgstr "País"
+
+#: pacman_mirrors/txt.py:93
+msgid "Resp"
+msgstr "Resp"
+
+#: pacman_mirrors/txt.py:94
+msgid "Sync"
+msgstr "Sincronitza"
+
+#: pacman_mirrors/txt.py:95
+msgid "URL"
+msgstr "URL"
+
+#: pacman_mirrors/txt.py:96
 msgid "Cancel"
 msgstr "Cancel · lar"
 
-#: pacman_mirrors/pacman_mirrors_gui.py:65
-msgid "Confirm"
-msgstr "Confirmar"
+#: pacman_mirrors/txt.py:97
+msgid "OK"
+msgstr "OK"
 
-#: pacman_mirrors/pacman_mirrors_gui.py:103
+#: pacman_mirrors/txt.py:98
 msgid "Confirm selections"
 msgstr "Confirmar les seleccions"
 
-#: pacman_mirrors/pacman_mirrors_gui.py:110
+#: pacman_mirrors/txt.py:99
 msgid "I want to use these mirrors"
-msgstr "Vull utilitzar aquests miralls"
+msgstr "Vull fer servir aquestes rèpliques"

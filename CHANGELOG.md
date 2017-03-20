@@ -1,7 +1,11 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## [4.0.0-rc] 2017-03-18
+## [4.0.1-dev] - 2017-0X-XX
+- GUI: Add sorting functionality.
+- Update translations.
+
+## [4.0.0] - 2017-03-19
 - Add: -l/--list Print available mirror countries
 - Add: Network check; do not run rank if no internet.
 - Add: -f/--fasttrack [n] argument.
