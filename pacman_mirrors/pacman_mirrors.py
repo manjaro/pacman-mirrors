@@ -197,9 +197,8 @@ class PacmanMirrors:
             shuffle(worklist)
 
         filefn.output_mirror_list(self.config, worklist, quiet=self.quiet)
-        # if self.custom or \
-        #         self.config["only_country"] != self.mirrors.mirrorlist:
-        if self.custom:
+        if self.custom or \
+                self.config["only_country"] != self.mirrors.mirrorlist:
             configfn.modify_config(self.config, custom=self.custom)
         else:
             configfn.modify_config(self.config, custom=self.custom)
