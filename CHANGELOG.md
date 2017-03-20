@@ -3,7 +3,8 @@ All notable changes to this project will be documented in this file.
 
 ## [4.0.1-dev] - 2017-0X-XX
 - GUI: Add sorting functionality.
-- Fix issue with not only displaying selected mirrors
+- Fix issue with not only displaying selected mirrors.
+- Fix connectivity check.
 - Update translations.
 
 ## [4.0.0] - 2017-03-19
