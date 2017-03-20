@@ -291,7 +291,7 @@ class PacmanMirrors:
                 jsonfn.write_json_file(mirrorfile, self.config["custom_file"])
                 print(".: {} {}: {}".format(txt.INF_CLR, txt.CUSTOM_MIRROR_FILE_SAVED, self.config["custom_file"]))
                 # output pacman mirrorlist
-                filefn.output_mirror_list(self.config, worklist, custom=True, quiet=self.quiet)
+                filefn.output_mirror_list(self.config, selected, custom=True, quiet=self.quiet)
                 # always use "Custom" from interactive
                 self.config["only_country"] = ["Custom"]
                 configfn.modify_config(self.config, custom=True)
