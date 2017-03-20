@@ -79,6 +79,8 @@
   - check `interactive-reset-mirrorlist` Should contain mirrors/stable in random order
   - check `/etc/pacman-mirrors.conf` OnlyCountry should equal nothing
 
+### Single mirror interactive
+
 * `-c all -b stable -m random -o check-interactive-mirrorlist.txt`
   - action: select ONE mirror on the list 
   - check `/var/lib/pacman-mirrors/custom-mirrors.json` Should be created
