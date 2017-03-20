@@ -197,8 +197,9 @@ class PacmanMirrors:
             shuffle(worklist)
 
         filefn.output_mirror_list(self.config, worklist, quiet=self.quiet)
-        if self.custom or \
-                self.config["only_country"] != self.mirrors.mirrorlist:
+        # if self.custom or \
+        #         self.config["only_country"] != self.mirrors.mirrorlist:
+        if self.custom:
             configfn.modify_config(self.config, custom=self.custom)
         else:
             configfn.modify_config(self.config, custom=self.custom)
@@ -383,6 +384,10 @@ class PacmanMirrors:
     def run(self):
         """Run"""
         self.config = configfn.build_config()
+        # the right solution for github issue #76
+        # check if user defined countries from pacman-mirrors.conf
+        if self.config["only_country"]:
+            self.custom = True
         filefn.dir_must_exist(self.config["mirror_dir"])
         self.command_line_parse()
         self.network = httpfn.is_connected("https://google.com")
