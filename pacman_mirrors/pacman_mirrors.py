@@ -272,8 +272,8 @@ class PacmanMirrors:
 
         if interactive.is_done:
             custom_list = interactive.custom_list
-            selected = []
-            mirrorfile = []
+            selected = []  # written to mirrorlist
+            mirrorfile = []  # written to custom-mirror.json
             for item in custom_list:
                 for server in self.mirrors.mirrorlist:
                     if item["url"] == server["url"]:
