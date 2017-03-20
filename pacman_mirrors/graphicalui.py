@@ -131,6 +131,10 @@ class GraphicalUI(Gtk.Window):
         if response == Gtk.ResponseType.OK:
             # Quit GUI
             dialog.destroy()
+            if self.random:
+                 shuffle(self.custom_list)
+            else:
+                self.custom_list.sort(key=itemgetter("resp_time"))
             self.is_done = True
             Gtk.main_quit()
         elif response == Gtk.ResponseType.CANCEL:
