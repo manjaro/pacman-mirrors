@@ -3,6 +3,7 @@ All notable changes to this project will be documented in this file.
 
 ## [4.0.1-dev] - 2017-0X-XX
 - GUI: Add sorting functionality.
+- Fix issue with OnlyCountry unexpected reset
 - Fix issue with not only displaying selected mirrors.
 - Fix connectivity check.
 - Update translations.
