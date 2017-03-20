@@ -38,6 +38,9 @@ sudo pacman-mirrors -i -c Italy -b stable -o italy-interactive-mirrorlist.txt
 echo -e "\e[1m\e[41mResult was written to italy-interactive-mirrorlist.txt\e[m"
 sudo pacman-mirrors -c all -b stable -m random -o interactive-reset-mirrorlist.txt
 echo -e "\e[1m\e[41mResult was written to interactive-reset-mirrorlist.txt\e[m"
+sudo pacman-mirrors -i -c all -m random -o check-interactive-mirrorlist.txt
+echo -e "\e[1m\e[41mResult was written to check-len-interactive-mirrorlist.txt\e[m"
+
 sudo chmod 0777 *-mirrorlist.txt
 
 
