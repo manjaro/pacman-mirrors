@@ -15,8 +15,8 @@
 # You should have received a copy of the GNU General Public License
 # along with pacman-mirrors.  If not, see <http://www.gnu.org/licenses/>.
 #
-# Authors: Esclapion
-#          philm
+# Authors: Esclapion <esclapion@manjaro.org>
+#          philm <philm@manjaro.org>
 #          Ramon Buldó <rbuldo@gmail.com>
 #          Hugo Posnic <huluti@manjaro.org>
 #          Frede Hundewadt <frede@hundewadt.dk>
@@ -390,7 +390,7 @@ class PacmanMirrors:
             self.custom = True
         filefn.dir_must_exist(self.config["mirror_dir"])
         self.command_line_parse()
-        self.network = httpfn.is_connected("https://google.com")
+        self.network = httpfn.is_connected("https://manjaro.org")
         if self.network:
             # all methods is available
             httpfn.update_mirrors(self.config)
