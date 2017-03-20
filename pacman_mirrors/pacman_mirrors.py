@@ -386,7 +386,7 @@ class PacmanMirrors:
         self.config = configfn.build_config()
         filefn.dir_must_exist(self.config["mirror_dir"])
         self.command_line_parse()
-        self.network = httpfn.ping_host("google.com", 1)
+        self.network = httpfn.is_connected("https://google.com")
         if self.network:
             # all methods is available
             httpfn.update_mirrors(self.config)
