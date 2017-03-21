@@ -43,6 +43,7 @@ DIGIT = _("DIGIT")
 HLP_ARG_BRANCH = _("Branch name")
 HLP_ARG_COUNTRY = _(
     "Comma separated list of countries, from which mirrors will be used")
+HLP_ARG_DEFAULT = _("Load default mirror file")
 HLP_ARG_FILE = _("Output file")
 HLP_ARG_GENERATE = _("Generate mirrorlist")
 HLP_ARG_GEOIP_P1 = _("Get current country using geolocation. Ignored if")

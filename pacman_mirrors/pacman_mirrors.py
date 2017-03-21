@@ -256,11 +256,12 @@ class PacmanMirrors:
         """
         worklist = mirrorfn.filter_mirror_list(self.mirrors.mirrorlist,
                                                self.selected_countries)
-        if self.config["method"] == "rank":
-            worklist = self.test_mirrors(worklist)
-            worklist = sorted(worklist, key=itemgetter("resp_time"))
-        else:
-            shuffle(worklist)
+        if not self.default:
+            if self.config["method"] == "rank":
+                worklist = self.test_mirrors(worklist)
+                worklist = sorted(worklist, key=itemgetter("resp_time"))
+            else:
+                shuffle(worklist)
 
         interactive_list = []
         for mirror in worklist:
@@ -346,9 +347,11 @@ class PacmanMirrors:
 
     def load_custom_mirrors(self):
         """Load available custom mirrors"""
+        status = False
         if self.default:
-            self.config["custom_file"] = "mirrors.json"
-        self.seed_mirrors(self.config["custom_file"])
+            self.load_default_mirrors()
+        else:
+            self.seed_mirrors(self.config["custom_file"])
 
     def load_default_mirrors(self):
         """Load all available mirrors"""
