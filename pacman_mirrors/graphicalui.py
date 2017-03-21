@@ -148,7 +148,7 @@ class GraphicalUI(Gtk.Window):
 
 def run(server_list, random, default=False):
     """Run"""
-    window = GraphicalUI(server_list, random)
+    window = GraphicalUI(server_list, random, default)
     window.connect("delete-event", Gtk.main_quit)
     window.show_all()
     Gtk.main()
