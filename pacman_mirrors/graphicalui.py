@@ -21,18 +21,20 @@
 """Pacman-Mirrors GUI Module"""
 
 import gi
+
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
+from operator import itemgetter
+from random import shuffle
 from . import i18n
-
 from . import txt
-
 
 _ = i18n.language.gettext
 
 
 class GraphicalUI(Gtk.Window):
     """Class GraphicalUI"""
+
     def __init__(self, server_list, random):
         title = txt.I_TITLE_RANDOM if random else txt.I_TITLE
         Gtk.Window.__init__(self, title=title)
@@ -83,8 +85,7 @@ class GraphicalUI(Gtk.Window):
         self.button_done = Gtk.Button(txt.I_CONFIRM, sensitive=False)
         self.button_done.connect("clicked", self.done)
 
-        grid = Gtk.Grid(column_homogeneous=True, column_spacing=10,
-                            row_spacing=10)
+        grid = Gtk.Grid(column_homogeneous=True, column_spacing=10, row_spacing=10)
         grid.attach(header, 0, 0, 2, 1)
         grid.attach(scrolled_tree, 0, 1, 2, 1)
         grid.attach(button_cancel, 0, 2, 1, 1)
@@ -134,7 +135,7 @@ class GraphicalUI(Gtk.Window):
             # Quit GUI
             dialog.destroy()
             if self.random:
-                 shuffle(self.custom_list)
+                shuffle(self.custom_list)
             else:
                 self.custom_list.sort(key=itemgetter("resp_time"))
             self.is_done = True
