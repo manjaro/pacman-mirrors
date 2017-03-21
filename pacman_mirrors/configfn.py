@@ -27,7 +27,11 @@ from . import configuration as conf
 
 
 def build_config():
-    """Get config informations"""
+    """Get config informations
+    :returns: config, custom
+    :rtype: tuple
+    """
+    custom = False
     # default config
     config = {
         "branch": "stable",
@@ -64,6 +68,7 @@ def build_config():
                     elif key == "Branch":
                         config["branch"] = value
                     elif key == "OnlyCountry":
+                        custom = True
                         config["only_country"] = value.split(",")
                     elif key == "MirrorlistsDir":
                         config["mirror_dir"] = value
@@ -76,7 +81,7 @@ def build_config():
                                         txt.CANNOT_READ_FILE,
                                         err.filename,
                                         err.strerror))
-    return config
+    return config, custom
 
 
 def modify_config(config, custom=False):
