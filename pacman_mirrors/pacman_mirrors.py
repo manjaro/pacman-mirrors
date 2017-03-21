@@ -383,11 +383,7 @@ class PacmanMirrors:
 
     def run(self):
         """Run"""
-        self.config = configfn.build_config()
-        # the right solution for github issue #76
-        # check if user defined countries from pacman-mirrors.conf
-        if self.config["only_country"]:
-            self.custom = True
+        (self.config, self.custom) = configfn.build_config()
         filefn.dir_must_exist(self.config["mirror_dir"])
         self.command_line_parse()
         self.network = httpfn.is_connected("https://manjaro.org")
