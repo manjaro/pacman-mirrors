@@ -278,7 +278,8 @@ class PacmanMirrors:
             from . import graphicalui as ui
 
         interactive = ui.run(interactive_list,
-                             self.config["method"] == "random", self.default)
+                             self.config["method"] == "random",
+                             self.default)
 
         if interactive.is_done:
             custom_list = interactive.custom_list
