@@ -347,7 +347,6 @@ class PacmanMirrors:
 
     def load_custom_mirrors(self):
         """Load available custom mirrors"""
-        status = False
         if self.default:
             self.load_default_mirrors()
         else:
