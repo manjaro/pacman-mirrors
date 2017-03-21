@@ -63,6 +63,7 @@ class PacmanMirrors:
             "config_file": conf.CONFIG_FILE  # purpose - testability
         }
         self.custom = False
+        self.default = False
         self.fasttrack = None
         self.geoip = False
         self.interactive = False
@@ -126,6 +127,9 @@ class PacmanMirrors:
         parser.add_argument("-l", "--list",
                             action="store_true",
                             help=txt.HLP_ARG_LIST)
+        parser.add_argument("--default",
+                            action="store_true",
+                            help=txt.HLP_ARG_DEFAULT)
 
         args = parser.parse_args()
 
@@ -175,6 +179,9 @@ class PacmanMirrors:
             self.interactive = True
             if not os.environ.get("DISPLAY") or not GTK_AVAILABLE:
                 self.no_display = True
+
+        if args.interactive and args.default:
+            self.default = True
 
         # geoip and country are mutually exclusive
         if args.geoip:
@@ -339,6 +346,8 @@ class PacmanMirrors:
 
     def load_custom_mirrors(self):
         """Load available custom mirrors"""
+        if self.default:
+            self.config["custom_file"] = "mirrors.json"
         self.seed_mirrors(self.config["custom_file"])
 
     def load_default_mirrors(self):
@@ -387,7 +396,6 @@ class PacmanMirrors:
         """Run"""
         (self.config, self.custom) = configfn.build_config()
         filefn.dir_must_exist(self.config["mirror_dir"])
-        customfn.convert_to_json()
         self.command_line_parse()
         self.network = httpfn.is_connected("https://manjaro.org")
         if self.network:
