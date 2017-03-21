@@ -71,7 +71,7 @@ setup(
     packages=['pacman_mirrors'],
     package_dir={'pacman_mirrors': 'pacman_mirrors'},
     data_files=[('/etc', ['conf/pacman-mirrors.conf']),
-                ('/etc/pacman.d', ['conf/mirrorlist']),
+                ('/etc/pacman.d', []),
                 ('share/pacman-mirrors', ['share/mirrors.json']),
                 ('share/locale/bg/LC_MESSAGES', ['locale/bg/LC_MESSAGES/pacman_mirrors.mo']),
                 ('share/locale/ca/LC_MESSAGES', ['locale/ca/LC_MESSAGES/pacman_mirrors.mo']),
