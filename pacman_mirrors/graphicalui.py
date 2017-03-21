@@ -36,16 +36,18 @@ class GraphicalUI(Gtk.Window):
     def __init__(self, server_list, random):
         title = txt.I_TITLE_RANDOM if random else txt.I_TITLE
         Gtk.Window.__init__(self, title=title)
+        self.random = random
         self.set_size_request(700, 350)
         self.set_border_width(10)
         self.set_position(Gtk.WindowPosition.CENTER)
 
         mirrors_list = []
         for server in server_list:
-            mirrors_list.append((False, server["country"],
-                                    "{}h {}m".format(server["last_sync"][:2],
-                                        server["last_sync"][-2:]),
-                                    server["url"]))
+            mirrors_list.append((False,
+                                 server["country"],
+                                 "{}h {}m".format(server["last_sync"][:2],
+                                                  server["last_sync"][-2:]),
+                                 server["url"]))
 
         self.store = Gtk.ListStore(bool, str, str, str)
         for mirror_ref in mirrors_list:
