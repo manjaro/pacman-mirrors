@@ -36,6 +36,7 @@ from .mirror import Mirror
 from . import mirrorfn
 from . import configuration as conf
 from . import configfn
+from . import customfn
 from . import filefn
 from . import httpfn
 from . import i18n
@@ -174,6 +175,7 @@ class PacmanMirrors:
             self.interactive = True
             if not os.environ.get("DISPLAY") or not GTK_AVAILABLE:
                 self.no_display = True
+
         # geoip and country are mutually exclusive
         if args.geoip:
             self.geoip = True
@@ -385,6 +387,7 @@ class PacmanMirrors:
         """Run"""
         (self.config, self.custom) = configfn.build_config()
         filefn.dir_must_exist(self.config["mirror_dir"])
+        customfn.convert_to_json()
         self.command_line_parse()
         self.network = httpfn.is_connected("https://manjaro.org")
         if self.network:
