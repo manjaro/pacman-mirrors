@@ -1,7 +1,15 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## [4.0.0] 2017-03-19
+## [4.0.1-dev] - 2017-0X-XX
+- GUI: Add sorting functionality.
+- Add: --default argument
+- Fix issue with OnlyCountry unexpected reset
+- Fix issue with not only displaying selected mirrors.
+- Fix connectivity check.
+- Update translations.
+
+## [4.0.0] - 2017-03-19
 - Add: -l/--list Print available mirror countries
 - Add: Network check; do not run rank if no internet.
 - Add: -f/--fasttrack [n] argument.
@@ -11,7 +19,7 @@ All notable changes to this project will be documented in this file.
 - The `/etc/pacman.d/mirrors` dir has been removed.
   - All data files now exist in `/var/lib/pacman-mirrors`.
   - If the `Custom` mirrorfile exist it will convert to `custom-mirrors.json`
-- A lot of inevitable small fixes
+- A lot of inevitable small fixes.
 
 ## [3.2.2] - 2017-02-12
 - Fix issue with multiple country select.

@@ -35,6 +35,7 @@ htmlcov
 .project
 .pydevproject
 .idea
+.vscode
 
 # Complexity
 output/*.html
@@ -42,3 +43,5 @@ output/*/index.html
 
 # Sphinx
 docs/_build
+pacman_mirrors/__pycache__/
+tests/__pycache__/

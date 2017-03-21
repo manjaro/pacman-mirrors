@@ -21,24 +21,26 @@
 """Pacman-Mirrors GUI Module"""
 
 import gi
+
 gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
+from operator import itemgetter
+from random import shuffle
 from . import i18n
-
 from . import txt
-
 
 _ = i18n.language.gettext
 
 
 class GraphicalUI(Gtk.Window):
     """Class GraphicalUI"""
-    def __init__(self, server_list, random):
-        if random:
-            Gtk.Window.__init__(self, title=txt.I_TITLE_RANDOM)
-        else:
-            Gtk.Window.__init__(self, title=txt.I_TITLE)
 
+    def __init__(self, server_list, random, default):
+        title = txt.I_TITLE_RANDOM if random else txt.I_TITLE
+        if default:
+            title = "Manjaro Mirrors"
+        Gtk.Window.__init__(self, title=title)
+        self.random = random
         self.set_size_request(700, 350)
         self.set_border_width(10)
         self.set_position(Gtk.WindowPosition.CENTER)
@@ -46,39 +48,46 @@ class GraphicalUI(Gtk.Window):
         mirrors_list = []
         for server in server_list:
             mirrors_list.append((False,
-                                 server["country"], "{}h {}m".format(server["last_sync"][:2],
-                                                                     server["last_sync"][-2:]),
-                                 server["url"]))  # server["url"][:-20]))
+                                 server["country"],
+                                 "{}h {}m".format(server["last_sync"][:2],
+                                                  server["last_sync"][-2:]),
+                                 server["url"]))
 
-        self.mirrors_liststore = Gtk.ListStore(bool, str, str, str)
+        self.store = Gtk.ListStore(bool, str, str, str)
         for mirror_ref in mirrors_list:
-            self.mirrors_liststore.append(list(mirror_ref))
-        self.mirror_filter = Gtk.TreeModelSort(self.mirrors_liststore)
+            self.store.append(list(mirror_ref))
         scrolled_tree = Gtk.ScrolledWindow()
-        self.treeview = Gtk.TreeView.new_with_model(self.mirror_filter)
-        self.treeview.set_vexpand(True)
+        self.tree = Gtk.TreeView(self.store, vexpand=True)
+
         renderer = Gtk.CellRendererToggle()
         renderer.connect("toggled", self.on_toggle)
         column = Gtk.TreeViewColumn(txt.I_USE, renderer, active=0)
-        self.treeview.append_column(column)
-        for i, column_title in enumerate([txt.I_COUNTRY,
-                                          txt.I_LAST_SYNC,
-                                          txt.I_URL]):
-            renderer = Gtk.CellRendererText()
-            column = Gtk.TreeViewColumn(column_title, renderer, text=i+1)
-            self.treeview.append_column(column)
-        scrolled_tree.add(self.treeview)
+        self.tree.append_column(column)
+
+        renderer = Gtk.CellRendererText()
+        column = Gtk.TreeViewColumn(txt.I_COUNTRY, renderer, text=1)
+        column.set_sort_column_id(1)
+        self.tree.append_column(column)
+
+        renderer = Gtk.CellRendererText()
+        column = Gtk.TreeViewColumn(txt.I_LAST_SYNC, renderer, text=2)
+        column.set_sort_column_id(2)
+        self.tree.append_column(column)
+
+        renderer = Gtk.CellRendererText()
+        column = Gtk.TreeViewColumn(txt.I_URL, renderer, text=3)
+        column.set_sort_column_id(3)
+        self.tree.append_column(column)
+
+        scrolled_tree.add(self.tree)
 
         header = Gtk.Label(txt.I_LIST_TITLE)
         button_cancel = Gtk.Button(txt.I_CANCEL)
         button_cancel.connect("clicked", self.cancel)
-        self.button_done = Gtk.Button(txt.I_CONFIRM)
-        self.button_done.set_sensitive(False)
+        self.button_done = Gtk.Button(txt.I_CONFIRM, sensitive=False)
         self.button_done.connect("clicked", self.done)
 
-        grid = Gtk.Grid(column_homogeneous=True,
-                        column_spacing=10,
-                        row_spacing=10)
+        grid = Gtk.Grid(column_homogeneous=True, column_spacing=10, row_spacing=10)
         grid.attach(header, 0, 0, 2, 1)
         grid.attach(scrolled_tree, 0, 1, 2, 1)
         grid.attach(button_cancel, 0, 2, 1, 1)
@@ -94,16 +103,14 @@ class GraphicalUI(Gtk.Window):
 
     def on_toggle(self, widget, path):
         """Add or remove server from custom list"""
-        self.mirrors_liststore[path][0] = not self.mirrors_liststore[path][0]
-        if self.mirrors_liststore[path][0]:
+        self.store[path][0] = not self.store[path][0]
+        if self.store[path][0]:
             for server in self.server_list:
-                # if server["url"][:-20] == self.mirrors_liststore[path][3]:
-                if server["url"] == self.mirrors_liststore[path][3]:
+                if server["url"] == self.store[path][3]:
                     self.custom_list.append(server)
         else:
             for server in self.custom_list:
-                # if server["url"][:-20] == self.mirrors_liststore[path][3]:
-                if server["url"] == self.mirrors_liststore[path][3]:
+                if server["url"] == self.store[path][3]:
                     self.custom_list.remove(server)
         self.button_done.set_sensitive(bool(self.custom_list))
 
@@ -129,15 +136,19 @@ class GraphicalUI(Gtk.Window):
         if response == Gtk.ResponseType.OK:
             # Quit GUI
             dialog.destroy()
+            if self.random:
+                shuffle(self.custom_list)
+            else:
+                self.custom_list.sort(key=itemgetter("resp_time"))
             self.is_done = True
             Gtk.main_quit()
         elif response == Gtk.ResponseType.CANCEL:
             dialog.destroy()  # Go back to selection
 
 
-def run(server_list, random):
+def run(server_list, random, default=False):
     """Run"""
-    window = GraphicalUI(server_list, random)
+    window = GraphicalUI(server_list, random, default)
     window.connect("delete-event", Gtk.main_quit)
     window.show_all()
     Gtk.main()

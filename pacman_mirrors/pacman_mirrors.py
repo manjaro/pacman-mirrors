@@ -15,8 +15,8 @@
 # You should have received a copy of the GNU General Public License
 # along with pacman-mirrors.  If not, see <http://www.gnu.org/licenses/>.
 #
-# Authors: Esclapion
-#          philm
+# Authors: Esclapion <esclapion@manjaro.org>
+#          philm <philm@manjaro.org>
 #          Ramon Buldó <rbuldo@gmail.com>
 #          Hugo Posnic <huluti@manjaro.org>
 #          Frede Hundewadt <frede@hundewadt.dk>
@@ -36,6 +36,7 @@ from .mirror import Mirror
 from . import mirrorfn
 from . import configuration as conf
 from . import configfn
+from . import customfn
 from . import filefn
 from . import httpfn
 from . import i18n
@@ -62,6 +63,7 @@ class PacmanMirrors:
             "config_file": conf.CONFIG_FILE  # purpose - testability
         }
         self.custom = False
+        self.default = False
         self.fasttrack = None
         self.geoip = False
         self.interactive = False
@@ -125,6 +127,9 @@ class PacmanMirrors:
         parser.add_argument("-l", "--list",
                             action="store_true",
                             help=txt.HLP_ARG_LIST)
+        parser.add_argument("--default",
+                            action="store_true",
+                            help=txt.HLP_ARG_DEFAULT)
 
         args = parser.parse_args()
 
@@ -174,6 +179,10 @@ class PacmanMirrors:
             self.interactive = True
             if not os.environ.get("DISPLAY") or not GTK_AVAILABLE:
                 self.no_display = True
+
+        if args.interactive and args.default:
+            self.default = True
+
         # geoip and country are mutually exclusive
         if args.geoip:
             self.geoip = True
@@ -247,11 +256,12 @@ class PacmanMirrors:
         """
         worklist = mirrorfn.filter_mirror_list(self.mirrors.mirrorlist,
                                                self.selected_countries)
-        if self.config["method"] == "rank":
-            worklist = self.test_mirrors(worklist)
-            worklist = sorted(worklist, key=itemgetter("resp_time"))
-        else:
-            shuffle(worklist)
+        if not self.default:
+            if self.config["method"] == "rank":
+                worklist = self.test_mirrors(worklist)
+                worklist = sorted(worklist, key=itemgetter("resp_time"))
+            else:
+                shuffle(worklist)
 
         interactive_list = []
         for mirror in worklist:
@@ -265,15 +275,23 @@ class PacmanMirrors:
         if self.no_display:
             from . import consoleui as ui
         else:
-            from . import graphical_ui as ui
+            from . import graphicalui as ui
 
         interactive = ui.run(interactive_list,
-                             self.config["method"] == "random")
+                             self.config["method"] == "random",
+                             self.default)
 
         if interactive.is_done:
             custom_list = interactive.custom_list
-            selected = []
-            mirrorfile = []
+            if self.default and custom_list:
+                if self.config["method"] == "rank":
+                    custom_list = self.test_mirrors(custom_list)
+                    custom_list = sorted(custom_list, key=itemgetter("resp_time"))
+                else:
+                    shuffle(custom_list)
+
+            selected = []  # written to mirrorlist
+            mirrorfile = []  # written to custom-mirror.json
             for item in custom_list:
                 for server in self.mirrors.mirrorlist:
                     if item["url"] == server["url"]:
@@ -291,7 +309,7 @@ class PacmanMirrors:
                 jsonfn.write_json_file(mirrorfile, self.config["custom_file"])
                 print(".: {} {}: {}".format(txt.INF_CLR, txt.CUSTOM_MIRROR_FILE_SAVED, self.config["custom_file"]))
                 # output pacman mirrorlist
-                filefn.output_mirror_list(self.config, worklist, custom=True, quiet=self.quiet)
+                filefn.output_mirror_list(self.config, selected, custom=True, quiet=self.quiet)
                 # always use "Custom" from interactive
                 self.config["only_country"] = ["Custom"]
                 configfn.modify_config(self.config, custom=True)
@@ -337,7 +355,10 @@ class PacmanMirrors:
 
     def load_custom_mirrors(self):
         """Load available custom mirrors"""
-        self.seed_mirrors(self.config["custom_file"])
+        if self.default:
+            self.load_default_mirrors()
+        else:
+            self.seed_mirrors(self.config["custom_file"])
 
     def load_default_mirrors(self):
         """Load all available mirrors"""
@@ -383,10 +404,10 @@ class PacmanMirrors:
 
     def run(self):
         """Run"""
-        self.config = configfn.build_config()
+        (self.config, self.custom) = configfn.build_config()
         filefn.dir_must_exist(self.config["mirror_dir"])
         self.command_line_parse()
-        self.network = httpfn.ping_host("google.com", 1)
+        self.network = httpfn.is_connected("https://manjaro.org")
         if self.network:
             # all methods is available
             httpfn.update_mirrors(self.config)

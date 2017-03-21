@@ -34,13 +34,17 @@ _ = i18n.language.gettext
 class ConsoleUI(npyscreen.NPSAppManaged):
     """App"""
 
-    def __init__(self, server_list, random):
+    def __init__(self, server_list, random, default):
         npyscreen.NPSAppManaged.__init__(self)
         # Server lists
         self.server_list = server_list
         self.custom_list = []
         self.is_done = False
         self.random = random
+        self.default = default
+        self.title = txt.I_TITLE_RANDOM if random else txt.I_TITLE
+        if default:
+            self.title = "Pacman-Mirrors"
 
     def main(self):
         """Main"""
@@ -61,10 +65,7 @@ class ConsoleUI(npyscreen.NPSAppManaged):
                       (server_rows[0].replace("|", " ").strip()))
         del server_rows[0]
         # setup form
-        if self.random:
-            mainform = npyscreen.Form(name=txt.I_TITLE_RANDOM)
-        else:
-            mainform = npyscreen.Form(name=txt.I_TITLE)
+        mainform = npyscreen.Form(name=self.title)
         mainform.add(npyscreen.TitleFixedText, name=txt.I_LIST_TITLE)
         mainform.add(npyscreen.TitleFixedText, name=header_row)
         selected_servers = mainform.add(npyscreen.MultiSelect,
@@ -94,8 +95,8 @@ class ConsoleUI(npyscreen.NPSAppManaged):
         self.setNextForm(None)
 
 
-def run(server_list, random):
+def run(server_list, random, default):
     """Run"""
-    app = ConsoleUI(server_list, random)
+    app = ConsoleUI(server_list, random, default)
     app.run()
     return app

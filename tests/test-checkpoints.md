@@ -69,6 +69,7 @@
 ### Single country interactive
 
 * `-c Italy -i -b stable -o italy-interactive-mirrorlist.txt`
+  - action: select all mirrors from the list
   - check `/var/lib/pacman-mirrors/custom-mirrors.json` Should be created
   - check `italy-interactive-mirrorlist.txt` Should contain mirrors/stable from Italy
   - check `/etc/pacman-mirrors.conf` OnlyCountry should equal Custom
@@ -78,4 +79,11 @@
   - check `interactive-reset-mirrorlist` Should contain mirrors/stable in random order
   - check `/etc/pacman-mirrors.conf` OnlyCountry should equal nothing
 
+### Single mirror interactive
 
+* `-c all -b stable -m random -o check-interactive-mirrorlist.txt`
+  - action: select ONE mirror on the list 
+  - check `/var/lib/pacman-mirrors/custom-mirrors.json` Should be created
+  - check `/var/lib/pacman-mirrors/custom-mirrors.json` Should contain one mirror
+  - check `check-interactive-mirrorlist` Should contain exactly one mirror/stable - maybe several protocols
+  - check `/etc/pacman-mirrors.conf` OnlyCountry should equal Custom

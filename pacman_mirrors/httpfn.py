@@ -31,6 +31,7 @@ from urllib.request import urlopen
 from . import configuration as conf
 from . import filefn
 from . import jsonfn
+from . import miscfn
 from . import txt
 
 
@@ -131,6 +132,18 @@ def get_mirror_response(url, maxwait=2, count=1, quiet=False):
     return response_time
 
 
+def is_connected(remote_host, maxwait=2):
+    """Check for internet connection"""
+    # noinspection PyBroadException
+    try:
+        data = urlopen(remote_host, timeout=maxwait)
+        if data:
+            return True
+    except:
+        pass
+    return False
+
+
 def ping_host(host, count=1):
     """Check a hosts availability
     :param host:
@@ -148,7 +161,7 @@ def update_mirrors(config):
     :rtype: tuple
     """
     result = None
-    mjro_online = ping_host("repo.manjaro.org", 1)
+    mjro_online = is_connected("http://repo.manjaro.org")
     if mjro_online:
         print(".: {} {} {}".format(txt.INF_CLR, txt.DOWNLOADING_MIRROR_FILE, txt.REPO_SERVER))
         result = download_mirrors(config)
