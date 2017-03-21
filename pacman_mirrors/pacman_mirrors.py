@@ -283,7 +283,7 @@ class PacmanMirrors:
 
         if interactive.is_done:
             custom_list = interactive.custom_list
-            if self.default:
+            if self.default and custom_list:
                 if self.config["method"] == "rank":
                     custom_list = self.test_mirrors(custom_list)
                     custom_list = sorted(custom_list, key=itemgetter("resp_time"))
