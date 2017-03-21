@@ -1,7 +1,7 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## [4.0.1-dev] - 2017-0X-XX
+## [4.0.1] - 2017-03-21
 - GUI: Add sorting functionality.
 - Add: --default argument
 - Fix issue with OnlyCountry unexpected reset
