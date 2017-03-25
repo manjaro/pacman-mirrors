@@ -7,9 +7,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: pacman-mirrors 4.0.1.dev0\n"
+"Project-Id-Version: pacman-mirrors 4.0.3.dev0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2017-03-21 15:45+0100\n"
+"POT-Creation-Date: 2017-03-25 13:23+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -195,7 +195,7 @@ msgid "Internet access is required to proceed"
 msgstr ""
 
 #: pacman_mirrors/txt.py:80
-msgid "Pacman needs a mirrorlist. Use -m random to create a it without network"
+msgid "Pacman needs a mirrorlist. Use -m random to create one without network"
 msgstr ""
 
 #: pacman_mirrors/txt.py:82

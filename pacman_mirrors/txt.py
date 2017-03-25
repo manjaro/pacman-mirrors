@@ -78,7 +78,7 @@ MUST_BE_ROOT = _("Must have root privileges")
 INTERNET_DOWN = _("Internet connection appears to be down")
 INTERNET_REQUIRED = _("Internet access is required to proceed")
 INTERNET_ALTERNATIVE = _(
-    "Pacman needs a mirrorlist. Use -m random to create a it without network")
+    "Pacman needs a mirrorlist. Use -m random to create one without network")
 NO_CHANGE = _("The mirror list is not changed")
 NO_SELECTION = _("No mirrors in selection")
 OPTION = _("Option")
