@@ -112,8 +112,8 @@ REPO_SERVER = "repo.manjaro.org"
 RESET_TIP = "pacman-mirrors -c all"
 # mirror status constants
 LASTSYNC_OK = "24:00"  # last syncronize in the past 24 hours
-LASTSYNC_NA = "98:00"  # last syncronization not available
-SERVER_BAD = "99:99"  # default last syncronization status
+LASTSYNC_NA = "9800:00"  # last syncronization not available
+SERVER_BAD = "9999:99"  # default last syncronization status
 SERVER_RES = "99.99"  # default response status
 # options
 OPT_COUNTRY = " '-c/--country' "
