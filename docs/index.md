@@ -54,6 +54,11 @@ Don't generate mirrorlist.
 `-i`, `--interactive`
 Launch a graphical tool to select mirrors to generate a custom mirrorlist.
 
+`--default`
+Used in conjunction with `-i/--interactive` ignores custom mirrorfile,  
+loading the default mirrorfile and executes the ranking/randomizing process  
+after the selection of mirrors.
+
 `-v`, `--version`
 Show the version of pacman-mirrors.
 

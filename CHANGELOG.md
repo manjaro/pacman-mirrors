@@ -2,9 +2,10 @@
 All notable changes to this project will be documented in this file.
 
 ## [4.0.3-dev]
+- updated translations
+- updated docs
 
 ## [4.0.2] - 2017-03-21
-
 ## [4.0.1] - 2017-03-21
 - GUI: Add sorting functionality.
 - Add: --default argument
