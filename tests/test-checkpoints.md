@@ -26,6 +26,13 @@
 * `-f 5 -b unstable -o fasttrack-5-unstable-mirrorlist.txt`
   - check `fasttrack-5-unstable-mirrorlist.txt` Should contain 5 mirrors/unstable - some hosts have several protocols
   - check `/etc/pacman-mirrors.conf` OnlyCountry should equal nothing
+  
+* `-i -o fasttrack-only_country_is_custom.txt`
+  - select 2 mirrors and save
+  - check `pacman-mirrors.conf` should have `OnlyCountry = Custom`
+  - run `-f 5 -o fasttrack-only_country_is_custom.txt`
+  - check `fasttrack-only_country_is_custom.txt` should countain 5 mirrors
+  - check `pacman-mirrors.con` should have `OnlyCountry = Custom`
 
 ### Default generation method = rank
 
