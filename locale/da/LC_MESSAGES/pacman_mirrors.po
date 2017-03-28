@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: manjaro-pacman-mirrors\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2017-02-20 15:44+0100\n"
-"PO-Revision-Date: 2017-03-25 11:47+0000\n"
+"PO-Revision-Date: 2017-03-27 14:54+0000\n"
 "Last-Translator: Frede H. <frede@hundewadt.dk>\n"
 "Language-Team: Danish (http://www.transifex.com/manjarolinux/manjaro-pacman-mirrors/language/da/)\n"
 "MIME-Version: 1.0\n"
@@ -195,7 +195,7 @@ msgstr "Skriver serverliste"
 
 #: pacman_mirrors/txt.py:79
 msgid "Querying mirrors"
-msgstr "Forespørger spejlservere"
+msgstr "Forespørger servere"
 
 #: pacman_mirrors/txt.py:80
 msgid "Randomizing mirror list"
@@ -271,4 +271,4 @@ msgstr "Bekræft valgene"
 
 #: pacman_mirrors/txt.py:99
 msgid "I want to use these mirrors"
-msgstr "Jeg vil bruge disse spejlservere"
+msgstr "Jeg vil bruge disse servere"
