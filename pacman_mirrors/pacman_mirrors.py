@@ -193,6 +193,7 @@ class PacmanMirrors:
         if args.fasttrack:
             self.fasttrack = args.fasttrack
             self.geoip = False
+            self.custom = False
             self.config["only_country"] = []
 
     def build_common_mirror_list(self):
