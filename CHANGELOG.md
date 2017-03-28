@@ -4,15 +4,14 @@ All notable changes to this project will be documented in this file.
 ## [4.0.4-dev]
 
 ## [4.0.3] - 2017-03-28
-- Fix issue with --fasttrack and OnlyCountry = Custom
-- updated translations
-- updated docs
+- Fix issue with --fasttrack and OnlyCountry = Custom.
+- Update translations.
+- Update docs.
 
 ## [4.0.2] - 2017-03-21
-## [4.0.1] - 2017-03-21
 - GUI: Add sorting functionality.
-- Add: --default argument
-- Fix issue with OnlyCountry unexpected reset
+- Add: --default argument.
+- Fix issue with OnlyCountry unexpected reset.
 - Fix issue with not only displaying selected mirrors.
 - Fix connectivity check.
 - Update translations.
