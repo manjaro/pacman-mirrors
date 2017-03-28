@@ -2,9 +2,10 @@
 All notable changes to this project will be documented in this file.
 
 ## [4.0.4-dev]
+- improvement on `--interactive`: select mirrors by protocol
 
 ## [4.0.3] - 2017-03-28
-- Fix issue with --fasttrack and OnlyCountry = Custom.
+- Fix issue with `--fasttrack` and `OnlyCountry = Custom`.
 - Update translations.
 - Update docs.
 

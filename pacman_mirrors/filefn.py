@@ -64,7 +64,7 @@ def return_mirror_filename(config):
     return filename, status
 
 
-def output_mirror_list(config, servers, custom=False, quiet=False):
+def output_mirror_list(config, servers, custom=False, quiet=False, interactive=False):
     """Write servers to /etc/pacman.d/mirrorlist
     :param config:
     :param servers: list of servers to write
@@ -78,23 +78,32 @@ def output_mirror_list(config, servers, custom=False, quiet=False):
             write_mirrorlist_header(outfile, custom=custom)
             cols, lines = miscfn.terminal_size()
             for server in servers:
-                url = server["url"]
-                for protocol in enumerate(server["protocols"]):
-                    pos = url.find(":")
-                    msg_url = server["url"] = "{}{}{}".format(protocol[1],
-                                                              url[pos:],
-                                                              config["branch"])
-
-                    server["url"] = "{}{}{}{}".format(protocol[1],
-                                                      url[pos:],
-                                                      config["branch"],
-                                                      config["repo_arch"])
+                if interactive:
                     # write list entry
                     write_mirrorlist_entry(outfile, server)
                     if not quiet:
-                        message = "   {:<15} : {}".format(server["country"],
-                                                          msg_url)
+                        message = "   {:<15} : {}{}".format(server["country"],
+                                                            server["url"],
+                                                            config["branch"])
                         print("{:.{}}".format(message, cols))
+                else:
+                    url = server["url"]
+                    for protocol in enumerate(server["protocols"]):
+                        pos = url.find(":")
+                        msg_url = server["url"] = "{}{}{}".format(protocol[1],
+                                                                  url[pos:],
+                                                                  config["branch"])
+
+                        server["url"] = "{}{}{}{}".format(protocol[1],
+                                                          url[pos:],
+                                                          config["branch"],
+                                                          config["repo_arch"])
+                        # write list entry
+                        write_mirrorlist_entry(outfile, server)
+                        if not quiet:
+                            message = "   {:<15} : {}".format(server["country"],
+                                                              msg_url)
+                            print("{:.{}}".format(message, cols))
 
             print(".: {} {}: {}".format(txt.INF_CLR,
                                         txt.MIRROR_LIST_SAVED,

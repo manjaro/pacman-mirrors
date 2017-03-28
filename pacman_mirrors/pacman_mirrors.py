@@ -266,12 +266,14 @@ class PacmanMirrors:
 
         interactive_list = []
         for mirror in worklist:
-            interactive_list.append({
-                "country": mirror["country"],
-                "resp_time": mirror["resp_time"],
-                "last_sync": mirror["last_sync"],
-                "url": mirror["url"]
-            })
+            for protocol in enumerate(mirror["protocols"]):
+                pos = mirror["url"].find(":")
+                interactive_list.append({
+                    "country": mirror["country"],
+                    "resp_time": mirror["resp_time"],
+                    "last_sync": mirror["last_sync"],
+                    "url": "{}{}".format(protocol[1], mirror["url"][pos:])
+                })
 
         if self.no_display:
             from . import consoleui as ui
@@ -310,7 +312,7 @@ class PacmanMirrors:
                 jsonfn.write_json_file(mirrorfile, self.config["custom_file"])
                 print(".: {} {}: {}".format(txt.INF_CLR, txt.CUSTOM_MIRROR_FILE_SAVED, self.config["custom_file"]))
                 # output pacman mirrorlist
-                filefn.output_mirror_list(self.config, selected, custom=True, quiet=self.quiet)
+                filefn.output_mirror_list(self.config, selected, custom=True, quiet=self.quiet, interactive=True)
                 # always use "Custom" from interactive
                 self.config["only_country"] = ["Custom"]
                 configfn.modify_config(self.config, custom=True)
