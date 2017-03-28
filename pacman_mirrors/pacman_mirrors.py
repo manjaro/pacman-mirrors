@@ -410,25 +410,19 @@ class PacmanMirrors:
         self.command_line_parse()
         self.network = httpfn.is_connected("https://manjaro.org")
         if self.network:
-            # all methods is available
             httpfn.update_mirrors(self.config)
-            self.load_all_mirrors()
-            if self.fasttrack:
-                self.build_fasttrack_mirror_list(self.fasttrack)
-            elif self.interactive:
-                self.build_interactive_mirror_list()
-            else:
-                self.build_common_mirror_list()
         else:
-            # only random is available if network is down
-            self.load_all_mirrors()
-            if self.config["method"] == "random":
-                if self.interactive:
-                    self.build_interactive_mirror_list()
-                else:
-                    self.build_common_mirror_list()
-            else:
-                miscfn.internet_message()
+            # negative on network
+            miscfn.internet_message()
+            self.config["method"] = "random"  # use random method instead of rank
+            self.fasttrack = False  # using fasttrack is not possible
+        self.load_all_mirrors()
+        if self.fasttrack:
+            self.build_fasttrack_mirror_list(self.fasttrack)
+        elif self.interactive:
+            self.build_interactive_mirror_list()
+        else:
+            self.build_common_mirror_list()
 
 
 if __name__ == "__main__":
