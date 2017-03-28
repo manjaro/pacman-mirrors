@@ -1,6 +1,11 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [4.0.3] - 2017-03-28
+- Fix issue with --fasttrack and OnlyCountry = Custom
+- updated translations
+- updated docs
+
 ## [4.0.2] - 2017-03-21
 
 ## [4.0.1] - 2017-03-21
