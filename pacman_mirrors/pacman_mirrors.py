@@ -198,8 +198,8 @@ class PacmanMirrors:
 
     def build_common_mirror_list(self):
         """Generate common mirrorlist"""
-        worklist = mirrorfn.filter_mirror_list(self.mirrors.mirrorlist,
-                                               self.selected_countries)
+        worklist = mirrorfn.filter_mirror_country(self.mirrors.mirrorlist,
+                                                  self.selected_countries)
         if self.config["method"] == "rank":
             worklist = self.test_mirrors(worklist)
             worklist = sorted(worklist, key=itemgetter("resp_time"))
@@ -255,8 +255,8 @@ class PacmanMirrors:
         * Outputs a "custom" mirror file
         * Modify the configuration file to use the "custom" file.
         """
-        worklist = mirrorfn.filter_mirror_list(self.mirrors.mirrorlist,
-                                               self.selected_countries)
+        worklist = mirrorfn.filter_mirror_country(self.mirrors.mirrorlist,
+                                                  self.selected_countries)
         if not self.default:
             if self.config["method"] == "rank":
                 worklist = self.test_mirrors(worklist)
