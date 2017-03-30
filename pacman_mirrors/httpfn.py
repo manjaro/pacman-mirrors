@@ -137,11 +137,9 @@ def is_connected(remote_host, maxwait=2):
     # noinspection PyBroadException
     try:
         data = urlopen(remote_host, timeout=maxwait)
-        if data:
-            return True
     except:
         pass
-    return False
+    return bool(data)
 
 
 def ping_host(host, count=1):
