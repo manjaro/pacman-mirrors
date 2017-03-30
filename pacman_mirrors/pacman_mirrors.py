@@ -201,7 +201,7 @@ class PacmanMirrors:
         worklist = mirrorfn.filter_mirror_country(self.mirrors.mirrorlist,
                                                   self.selected_countries)
         if self.config["ssl"]:
-            worklist = mirrorfn.filter_mirror_ssl(self.mirrors.mirrorlist)
+            worklist = mirrorfn.filter_mirror_ssl(worklist)
 
         if self.config["method"] == "rank":
             worklist = self.test_mirrors(worklist)
