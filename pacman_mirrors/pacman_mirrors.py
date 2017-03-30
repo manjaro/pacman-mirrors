@@ -207,8 +207,7 @@ class PacmanMirrors:
             shuffle(worklist)
 
         filefn.output_mirror_list(self.config, worklist, quiet=self.quiet)
-        # if self.custom or \
-        #         self.config["only_country"] != self.mirrors.mirrorlist:
+
         if self.custom:
             configfn.modify_config(self.config, custom=self.custom)
         else:
@@ -316,7 +315,6 @@ class PacmanMirrors:
                 # always use "Custom" from interactive
                 self.config["only_country"] = ["Custom"]
                 configfn.modify_config(self.config, custom=True)
-                # print(".: {} {}: {}".format(txt.INF_CLR, txt.MIRROR_LIST_SAVED, self.config["mirror_list"]))
                 print(".: {} {} {}".format(txt.INF_CLR, txt.RESET_CUSTOM_CONFIG, txt.RESET_TIP))
             else:
                 print(".: {} {}".format(txt.WRN_CLR, txt.NO_SELECTION))
@@ -393,6 +391,7 @@ class PacmanMirrors:
                                                        mirror["url"])
                 print("{:.{}}".format(message, cols), end='')
                 sys.stdout.flush()
+            # let's see how responsive you are
             resp_time = httpfn.get_mirror_response(mirror["url"],
                                                    quiet=self.quiet,
                                                    maxwait=self.max_wait_time)
