@@ -209,12 +209,15 @@ class PacmanMirrors:
         else:
             shuffle(worklist)
 
-        filefn.output_mirror_list(self.config, worklist, quiet=self.quiet)
-
-        if self.custom:
-            configfn.modify_config(self.config, custom=self.custom)
+        if worklist:
+            filefn.output_mirror_list(self.config, worklist, quiet=self.quiet)
+            if self.custom:
+                configfn.modify_config(self.config, custom=self.custom)
+            else:
+                configfn.modify_config(self.config, custom=self.custom)
         else:
-            configfn.modify_config(self.config, custom=self.custom)
+            print(".: {} {}".format(txt.WRN_CLR, txt.NO_SELECTION))
+            print(".: {} {}".format(txt.INF_CLR, txt.NO_CHANGE))
 
     def build_fasttrack_mirror_list(self, number):
         """Fast-track the mirrorlist by filtering only up2date mirrors"""
@@ -253,7 +256,11 @@ class PacmanMirrors:
             if counter == number:
                 break
         worklist = sorted(worklist, key=itemgetter("resp_time"))
-        filefn.output_mirror_list(self.config, worklist, quiet=self.quiet)
+        if worklist:
+            filefn.output_mirror_list(self.config, worklist, quiet=self.quiet)
+        else:
+            print(".: {} {}".format(txt.WRN_CLR, txt.NO_SELECTION))
+            print(".: {} {}".format(txt.INF_CLR, txt.NO_CHANGE))
 
     def build_interactive_mirror_list(self):
         """Prompt the user to select the mirrors with a gui.
