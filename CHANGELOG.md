@@ -4,6 +4,7 @@ All notable changes to this project will be documented in this file.
 ## [4.0.4-dev]
 - Improvement on `--interactive`: select mirrors by protocol.
 - Added to config `# SSL = False`.
+- Some optimizations.
 - Update translations.
 
 ## [4.0.3] - 2017-03-28
