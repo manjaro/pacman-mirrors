@@ -62,7 +62,7 @@ def get_geoip_country(countrylist):
         return None
 
 
-def filter_mirror_list(mirrorlist, countrylist):
+def filter_mirror_country(mirrorlist, countrylist):
     """Return new list with selection
     :param mirrorlist:
     :param countrylist:
@@ -72,4 +72,17 @@ def filter_mirror_list(mirrorlist, countrylist):
     for mirror in mirrorlist:
         if mirror["country"] in countrylist:
             result.append(mirror)
+    return result
+
+
+def filter_mirror_ssl(mirrorlist):
+    """Return a new list with ssl
+    :param mirrorlist:
+    :rtype: list
+    """
+    result = []
+    for mirror in mirrorlist:
+        for proto in enumerate(mirror["protocols"]):
+            if proto == "https":
+                result.append(mirror)
     return result
