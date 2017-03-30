@@ -200,6 +200,9 @@ class PacmanMirrors:
         """Generate common mirrorlist"""
         worklist = mirrorfn.filter_mirror_country(self.mirrors.mirrorlist,
                                                   self.selected_countries)
+        if self.config["ssl"]:
+            worklist = mirrorfn.filter_mirror_ssl(self.mirrors.mirrorlist)
+
         if self.config["method"] == "rank":
             worklist = self.test_mirrors(worklist)
             worklist = sorted(worklist, key=itemgetter("resp_time"))
@@ -216,8 +219,12 @@ class PacmanMirrors:
     def build_fasttrack_mirror_list(self, number):
         """Fast-track the mirrorlist by filtering only up2date mirrors"""
         # randomize the load on up2date mirrors
-        shuffle(self.mirrors.mirrorlist)
-        up2date = [item for item in self.mirrors.mirrorlist if item["branches"] == [1, 1, 1]]
+        worklist = self.mirrors.mirrorlist
+        shuffle(worklist)
+        if self.config["ssl"]:
+            worklist = mirrorfn.filter_mirror_ssl(worklist)
+
+        up2date = [item for item in worklist if item["branches"] == [1, 1, 1]]
         worklist = []
         print(".: {}: {} - {}".format(txt.INF_CLR,
                                       txt.QUERY_MIRRORS,
@@ -256,6 +263,9 @@ class PacmanMirrors:
         """
         worklist = mirrorfn.filter_mirror_country(self.mirrors.mirrorlist,
                                                   self.selected_countries)
+        if self.config["ssl"]:
+            worklist = mirrorfn.filter_mirror_ssl(worklist)
+
         if not self.default:
             if self.config["method"] == "rank":
                 worklist = self.test_mirrors(worklist)
