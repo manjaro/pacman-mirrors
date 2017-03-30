@@ -55,7 +55,7 @@ def return_mirror_filename(config):
     elif check_file(config["mirror_file"]):
         filename = config["mirror_file"]
     elif check_file(config["fallback_file"]):
-            filename = config["fallback_file"]
+        filename = config["fallback_file"]
     if not filename:
         print("\n{}.:! {}{}\n".format(txt.RS,
                                       txt.HOUSTON,
