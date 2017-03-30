@@ -67,6 +67,6 @@ class Mirror:
         for server in mirrors:
             if status:
                 self.add(server["country"], server["url"], server["protocols"],
-                         server["branches"], server["last_sync"])
+                            server["branches"], server["last_sync"])
             else:
                 self.add(server["country"], server["url"], server["protocols"])

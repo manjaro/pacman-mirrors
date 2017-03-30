@@ -31,23 +31,15 @@ def build_country_list(selectedcountries, countrylist, geoip=False):
     :return: list of valid countries
     :rtype: list
     """
-    result = []
-    if selectedcountries:
-        if selectedcountries == ["all"]:
-            result = countrylist
-        else:
-            if validfn.country_list_is_valid(selectedcountries, countrylist):
-                result = selectedcountries
-    if not result:
-        if geoip:
-            country = get_geoip_country(countrylist)
-            if country:  # valid geoip
-                result = country
-            else:
-                result = countrylist
-        else:
-            result = countrylist
-    return result
+    if selectedcountries == ["all"]:
+        return countrylist
+    elif validfn.country_list_is_valid(selectedcountries, countrylist):
+        return selectedcountries
+    elif geoip:
+        country = get_geoip_country(countrylist)
+        if country:  # valid geoip
+            return country
+    return countrylist
 
 
 def get_geoip_country(countrylist):
