@@ -46,6 +46,7 @@ def build_config():
         "no_update": False,
         "only_country": [],
         "repo_arch": conf.REPO_ARCH,
+        "ssl": False,
         "status_file": conf.STATUS_FILE,
         "url_mirrors_json": conf.URL_MIRROR_JSON,
         "url_status_json": conf.URL_STATUS_JSON
@@ -76,6 +77,8 @@ def build_config():
                         config["mirror_list"] = value
                     elif key == "NoUpdate":
                         config["no_update"] = value
+                    elif key == "SSL":
+                        config["ssl"] = value
     except (PermissionError, OSError) as err:
         print(".: {} {}: {}: {}".format(txt.ERR_CLR,
                                         txt.CANNOT_READ_FILE,
