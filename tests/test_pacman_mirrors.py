@@ -42,6 +42,7 @@ class TestPacmanMirrors(unittest.TestCase):
             "only_country": [],
             "repo_arch": conf.REPO_ARCH,
             "status_file": conf.STATUS_FILE,
+            "ssl": False,
             "url_mirrors_json": conf.URL_MIRROR_JSON,
             "url_status_json": conf.URL_STATUS_JSON
         }
@@ -87,6 +88,7 @@ class TestPacmanMirrors(unittest.TestCase):
             "only_country": [],
             "repo_arch": conf.REPO_ARCH,
             "status_file": conf.STATUS_FILE,
+            "ssl": False,
             "url_mirrors_json": conf.URL_MIRROR_JSON,
             "url_status_json": conf.URL_STATUS_JSON
         }
@@ -131,6 +133,7 @@ class TestPacmanMirrors(unittest.TestCase):
             "only_country": [],
             "repo_arch": conf.REPO_ARCH,
             "status_file": conf.STATUS_FILE,
+            "ssl": False,
             "url_mirrors_json": conf.URL_MIRROR_JSON,
             "url_status_json": conf.URL_STATUS_JSON
         }
