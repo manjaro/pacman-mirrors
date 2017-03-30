@@ -159,8 +159,8 @@ def update_mirrors(config):
     :rtype: tuple
     """
     result = None
-    mjro_online = is_connected("http://repo.manjaro.org")
-    if mjro_online:
+    connected = is_connected("http://repo.manjaro.org")
+    if connected:
         print(".: {} {} {}".format(txt.INF_CLR, txt.DOWNLOADING_MIRROR_FILE,
                                         txt.REPO_SERVER))
         result = download_mirrors(config)
