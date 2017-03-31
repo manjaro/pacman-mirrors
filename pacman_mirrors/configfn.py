@@ -29,7 +29,10 @@ from . import configuration as conf
 
 def api_write_branch(branch, filename):
     """Write branch"""
-    branch = "Branch = {}".format(branch)
+    if branch == "stable":
+        branch = "# Branch = stable\n"
+    else:
+        branch = "Branch = {}\n".format(branch)
 
     try:
         with open(
@@ -38,7 +41,7 @@ def api_write_branch(branch, filename):
                 filename), delete=False) as tmp:
             replaced = False
             for line in cnf:
-                if "Branch" in line:
+                if "Branch = " in line:
                     tmp.write(branch)
                     replaced = True
                 else:
