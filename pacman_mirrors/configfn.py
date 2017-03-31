@@ -106,8 +106,10 @@ def build_config():
                     elif key == "SSL":
                         config["ssl"] = value
     except (PermissionError, OSError) as err:
-        print(".: {} {}: {}: {}".format(txt.ERR_CLR, txt.CANNOT_READ_FILE,
-                                            err.filename, err.strerror))
+        print(".: {} {}: {}: {}".format(txt.ERR_CLR,
+                                        txt.CANNOT_READ_FILE,
+                                        err.filename,
+                                        err.strerror))
     return config, custom
 
 
