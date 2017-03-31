@@ -20,6 +20,7 @@
 """Pacman-Mirrors Configuration Functions"""
 
 import os
+import sys
 import tempfile
 
 from . import txt
@@ -163,4 +164,4 @@ def write_configuration(filename, selection, custom=False):
     except OSError as err:
         print(".: {} {}: {}: {}".format(txt.ERR_CLR, txt.CANNOT_READ_FILE,
                                         err.filename, err.strerror))
-        exit(1)
+        sys.exit(1)

@@ -20,6 +20,7 @@
 """Pacman-Mirrors Validation Functions"""
 
 import os
+import sys
 
 from . import configuration as conf
 from . import txt
@@ -60,5 +61,5 @@ def country_list_is_valid(onlycountry, countrylist):
             print(".: {} {}:".format(txt.INF_CLR,
                                      txt.AVAILABLE_COUNTRIES))
             print("{}".format(", ".join(countrylist)))
-            exit(1)  # exit gracefully
+            sys.exit(1)  # exit gracefully
     return True

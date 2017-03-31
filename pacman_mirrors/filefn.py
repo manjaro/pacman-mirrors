@@ -19,8 +19,10 @@
 
 """Manjaro-Mirrors File Functions"""
 
-import os
 import datetime
+import os
+import sys
+
 
 from . import jsonfn
 from . import miscfn
@@ -60,7 +62,7 @@ def return_mirror_filename(config):
         print("\n{}.:! {}{}\n".format(txt.RS,
                                       txt.HOUSTON,
                                       txt.CE))
-        exit(1)
+        sys.exit(1)
     return filename, status
 
 
@@ -113,7 +115,7 @@ def output_mirror_list(config, servers, custom=False, quiet=False, interactive=F
                                         txt.CANNOT_WRITE_FILE,
                                         err.filename,
                                         err.strerror))
-        exit(1)
+        sys.exit(1)
 
 
 def read_mirror_file(filename):
