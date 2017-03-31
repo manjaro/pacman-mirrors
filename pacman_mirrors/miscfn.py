@@ -25,8 +25,10 @@ from . import txt
 
 def debug(where, what, value):
     """Helper for printing debug messages"""
-    print("{} In function {} -> '{} = {}'".format(txt.DBG_CLR, where, what,
-                                                    value))
+    print("{} In function {} -> '{} = {}'".format(txt.DBG_CLR,
+                                                  where,
+                                                  what,
+                                                  value))
 
 
 def internet_message():

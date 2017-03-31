@@ -132,15 +132,14 @@ class PacmanMirrors:
                             action="store_true",
                             help=txt.HLP_ARG_DEFAULT)
         # api arguments
-        parser.add_argument("-a/--api",
+        parser.add_argument("-a", "--api",
                             action="store_true")
         parser.add_argument("--get-branch",
                             type=bool)
         parser.add_argument("--set-branch",
                             type=bool)
         parser.add_argument("--prefix",
-                            type=str,
-                            action="store_true")
+                            type=str)
 
         args = parser.parse_args()
 
