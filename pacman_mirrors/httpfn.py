@@ -136,14 +136,13 @@ def get_mirror_response(url, maxwait=2, count=1, quiet=False):
 
 def is_connected(remote_host, maxwait=2):
     """Check for internet connection"""
+    data = None
     # noinspection PyBroadException
     try:
         data = urlopen(remote_host, timeout=maxwait)
-        if data:
-            return True
     except:
         pass
-    return False
+    return bool(data)
 
 
 def ping_host(host, count=1):
