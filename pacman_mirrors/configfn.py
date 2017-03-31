@@ -33,7 +33,6 @@ def api_write_branch(branch, filename):
         branch = "# Branch = stable\n"
     else:
         branch = "Branch = {}\n".format(branch)
-
     try:
         with open(
             filename) as cnf, tempfile.NamedTemporaryFile(
@@ -53,7 +52,7 @@ def api_write_branch(branch, filename):
     except OSError as err:
         print(".: {} {}: {}: {}".format(txt.ERR_CLR, txt.CANNOT_READ_FILE,
                                         err.filename, err.strerror))
-        exit(1)
+        sys.exit(1)
 
 
 def build_config():
@@ -126,7 +125,6 @@ def modify_config(config, custom=False):
         # remove custom file if present
         if os.path.isfile(config["custom_file"]):
             os.remove(config["custom_file"])
-
     write_configuration(config["config_file"],
                         config["only_country"],
                         custom=custom)
@@ -146,7 +144,6 @@ def write_configuration(filename, selection, custom=False):
                 list=",".join(selection))
     else:
         selection = "# OnlyCountry = \n"
-
     try:
         with open(
             filename) as cnf, tempfile.NamedTemporaryFile(
