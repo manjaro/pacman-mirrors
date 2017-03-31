@@ -61,8 +61,7 @@ def download_mirrors(config):
     except (HTTPException, json.JSONDecodeError, URLError):
         pass
 
-    result = (fetchmirrors, fetchstatus)
-    return result
+    return (fetchmirrors, fetchstatus)
 
 
 def get_geoip_country():
@@ -137,11 +136,9 @@ def is_connected(remote_host, maxwait=2):
     # noinspection PyBroadException
     try:
         data = urlopen(remote_host, timeout=maxwait)
-        if data:
-            return True
     except:
         pass
-    return False
+    return bool(data)
 
 
 def ping_host(host, count=1):
@@ -161,12 +158,13 @@ def update_mirrors(config):
     :rtype: tuple
     """
     result = None
-    mjro_online = is_connected("http://repo.manjaro.org")
-    if mjro_online:
-        print(".: {} {} {}".format(txt.INF_CLR, txt.DOWNLOADING_MIRROR_FILE, txt.REPO_SERVER))
+    connected = is_connected("http://repo.manjaro.org")
+    if connected:
+        print(".: {} {} {}".format(txt.INF_CLR, txt.DOWNLOADING_MIRROR_FILE,
+                                        txt.REPO_SERVER))
         result = download_mirrors(config)
     else:
-        if not filefn.check_file(config["mirror_file"]):
+        if not os.path.isfile(config["mirror_file"]):
             print(".: {} {} {} {}".format(txt.WRN_CLR,
                                           txt.MIRROR_FILE,
                                           config["mirror_file"],
@@ -175,8 +173,7 @@ def update_mirrors(config):
                                        txt.FALLING_BACK,
                                        conf.FALLBACK))
             result = (True, False)
-        if not filefn.check_file(config["fallback_file"]):
+        if not os.path.isfile(config["fallback_file"]):
             print(".: {} {}".format(txt.ERR_CLR, txt.HOUSTON))
             result = (False, False)
-
     return result
