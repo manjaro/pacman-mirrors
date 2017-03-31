@@ -78,9 +78,7 @@ class ConsoleUI(npyscreen.NPSAppManaged):
         self.done(selected_servers.get_selected_objects())  # done
 
     def done(self, selection):
-        """
-        After editing
-
+        """After editing
         :param selection:
         """
         if selection:
