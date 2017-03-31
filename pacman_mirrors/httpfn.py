@@ -61,7 +61,8 @@ def download_mirrors(config):
     except (HTTPException, json.JSONDecodeError, URLError):
         pass
 
-    return (fetchmirrors, fetchstatus)
+    result = (fetchmirrors, fetchstatus)
+    return result
 
 
 def get_geoip_country():
@@ -176,4 +177,5 @@ def update_mirrors(config):
         if not os.path.isfile(config["fallback_file"]):
             print(".: {} {}".format(txt.ERR_CLR, txt.HOUSTON))
             result = (False, False)
+
     return result

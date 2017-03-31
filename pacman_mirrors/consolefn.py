@@ -42,12 +42,14 @@ def rows_from_tuple(servers, joiner=" | "):
     :return lines: list of nicely formatted lines
     """
     rows = []
-    if servers:
-        # calculate max col width
-        col_width = [max(len(text) for text in col) for col in zip(*servers)]
+    if not servers:
+        return rows
 
-        # generate lines
-        for line in servers:
-            rows.append(joiner.join("{:{}}".format(text, col_width[i])
-                                    for i, text in enumerate(line)))
+    # calculate max col width
+    col_width = [max(len(text) for text in col) for col in zip(*servers)]
+
+    # generate linies
+    for line in servers:
+        rows.append(joiner.join("{:{}}".format(text, col_width[i])
+                                for i, text in enumerate(line)))
     return rows

@@ -122,8 +122,10 @@ def modify_config(config, custom=False):
         # remove custom file if present
         if os.path.isfile(config["custom_file"]):
             os.remove(config["custom_file"])
-    write_configuration(config["config_file"], config["only_country"],
-                            custom=custom)
+
+    write_configuration(config["config_file"],
+                        config["only_country"],
+                        custom=custom)
 
 
 def write_configuration(filename, selection, custom=False):
@@ -142,8 +144,11 @@ def write_configuration(filename, selection, custom=False):
         selection = "# OnlyCountry = \n"
 
     try:
-        with open(filename) as cnf, tempfile.NamedTemporaryFile("w+t",
-                            dir=os.path.dirname(filename), delete=False) as tmp:
+        with open(
+            filename) as cnf, tempfile.NamedTemporaryFile(
+            "w+t", dir=os.path.dirname(
+                filename), delete=False) as tmp:
+
             replaced = False
             for line in cnf:
                 if "OnlyCountry" in line:
@@ -157,5 +162,5 @@ def write_configuration(filename, selection, custom=False):
         os.chmod(filename, 0o644)
     except OSError as err:
         print(".: {} {}: {}: {}".format(txt.ERR_CLR, txt.CANNOT_READ_FILE,
-                                            err.filename, err.strerror))
+                                        err.filename, err.strerror))
         exit(1)
