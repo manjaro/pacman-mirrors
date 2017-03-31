@@ -45,8 +45,9 @@ def download_mirrors(config):
     fetchstatus = False
     try:
         with urlopen(config["url_mirrors_json"]) as response:
-            mirrorlist = json.loads(response.read().decode(
-                "utf8"), object_pairs_hook=collections.OrderedDict)
+            mirrorlist = json.loads(
+                response.read().decode("utf8"),
+                object_pairs_hook=collections.OrderedDict)
         fetchmirrors = True
         jsonfn.write_json_file(mirrorlist, config["mirror_file"])
     except (HTTPException, json.JSONDecodeError, URLError):
@@ -54,8 +55,9 @@ def download_mirrors(config):
 
     try:
         with urlopen(config["url_status_json"]) as response:
-            statuslist = json.loads(response.read().decode(
-                "utf8"), object_pairs_hook=collections.OrderedDict)
+            statuslist = json.loads(
+                response.read().decode("utf8"),
+                object_pairs_hook=collections.OrderedDict)
         fetchstatus = True
         jsonfn.write_json_file(statuslist, config["status_file"])
     except (HTTPException, json.JSONDecodeError, URLError):
@@ -163,7 +165,9 @@ def update_mirrors(config):
     result = None
     mjro_online = is_connected("http://repo.manjaro.org")
     if mjro_online:
-        print(".: {} {} {}".format(txt.INF_CLR, txt.DOWNLOADING_MIRROR_FILE, txt.REPO_SERVER))
+        print(".: {} {} {}".format(txt.INF_CLR,
+                                   txt.DOWNLOADING_MIRROR_FILE,
+                                   txt.REPO_SERVER))
         result = download_mirrors(config)
     else:
         if not filefn.check_file(config["mirror_file"]):

@@ -29,8 +29,9 @@ def read_json_file(filename, dictionary=True):
     try:
         if dictionary:
             with open(filename, "rb") as infile:
-                result = json.loads(infile.read().decode(
-                    "utf8"), object_pairs_hook=collections.OrderedDict)
+                result = json.loads(
+                    infile.read().decode("utf8"),
+                    object_pairs_hook=collections.OrderedDict)
         else:
             with open(filename, "r") as infile:
                 result = json.load(infile)

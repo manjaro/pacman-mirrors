@@ -72,7 +72,7 @@ class PacmanMirrors:
         self.network = True
         self.no_display = False
         self.quiet = False
-        self.selected_countries = []        # users selected countries
+        self.selected_countries = []  # users selected countries
 
     def command_line_parse(self):
         """Read the arguments of the command line"""
@@ -93,8 +93,9 @@ class PacmanMirrors:
                             help=txt.HLP_ARG_COUNTRY)
         parser.add_argument("--geoip",
                             action="store_true",
-                            help=txt.HLP_ARG_GEOIP_P1 + txt.OPT_COUNTRY +
-                            txt.HLP_ARG_GEOIP_P2)
+                            help="{} {} {}".format(txt.HLP_ARG_GEOIP_P1,
+                                                   txt.OPT_COUNTRY,
+                                                   txt.HLP_ARG_GEOIP_P2))
         parser.add_argument("-d", "--mirror_dir",
                             type=str,
                             metavar=txt.PATH,
@@ -109,8 +110,9 @@ class PacmanMirrors:
                             help=txt.HLP_ARG_TIMEOUT)
         parser.add_argument("--no-update",
                             action="store_true",
-                            help=txt.HLP_ARG_NOUPDATE_P1 + txt.OPT_NOUPDATE +
-                            txt.HLP_ARG_NOUPDATE_P2)
+                            help="{} {} {}".format(txt.HLP_ARG_NOUPDATE_P1,
+                                                   txt.OPT_NOUPDATE,
+                                                   txt.HLP_ARG_NOUPDATE_P2))
         parser.add_argument("-i", "--interactive",
                             action="store_true",
                             help=txt.HLP_ARG_INTERACTIVE)
@@ -123,7 +125,8 @@ class PacmanMirrors:
         parser.add_argument("-f", "--fasttrack",
                             type=int,
                             metavar=txt.DIGIT,
-                            help="{} {}".format(txt.HLP_ARG_FASTTRACK, txt.OVERRIDE_OPT))
+                            help="{} {}".format(txt.HLP_ARG_FASTTRACK,
+                                                txt.OVERRIDE_OPT))
         parser.add_argument("-l", "--list",
                             action="store_true",
                             help=txt.HLP_ARG_LIST)
@@ -221,16 +224,24 @@ class PacmanMirrors:
         if prefix:
             if "$" in prefix:
                 prefix = os.environ.get(prefix)
-            self.config["config_file"] = prefix + self.config["config_file"]
-            self.config["custom_file"] = prefix + self.config["custom_file"]
-            self.config["fallback_file"] = prefix + self.config["fallback_file"]
-            self.config["mirror_dir"] = prefix + self.config["mirror_dir"]
-            self.config["mirror_file"] = prefix + self.config["mirror_file"]
-            self.config["mirror_list"] = prefix + self.config["mirror_list"]
-            self.config["status_file"] = prefix + self.config["status_file"]
+            self.config["config_file"] = \
+                prefix + self.config["config_file"]
+            self.config["custom_file"] = \
+                prefix + self.config["custom_file"]
+            self.config["fallback_file"] = \
+                prefix + self.config["fallback_file"]
+            self.config["mirror_dir"] = \
+                prefix + self.config["mirror_dir"]
+            self.config["mirror_file"] = \
+                prefix + self.config["mirror_file"]
+            self.config["mirror_list"] = \
+                prefix + self.config["mirror_list"]
+            self.config["status_file"] = \
+                prefix + self.config["status_file"]
 
         if set_branch:
-            configfn.api_write_branch(self.config["branch"], self.config["config_file"])
+            configfn.api_write_branch(self.config["branch"],
+                                      self.config["config_file"])
 
         if get_branch:
             if self.config["branch"] == "stable":
@@ -280,9 +291,8 @@ class PacmanMirrors:
         cols, lines = miscfn.terminal_size()
         for mirror in up2date:
             if not self.quiet:
-                message = "   ..... {:<15}: {}: {}".format(mirror["country"],
-                                                           mirror["last_sync"],
-                                                           mirror["url"])
+                message = "   ..... {:<15}: {}: {}".format(
+                    mirror["country"], mirror["last_sync"], mirror["url"])
                 print("{:.{}}".format(message, cols), end='')
                 sys.stdout.flush()
             resp_time = httpfn.get_mirror_response(mirror["url"],
@@ -349,7 +359,8 @@ class PacmanMirrors:
             if self.default and custom_list:
                 if self.config["method"] == "rank":
                     custom_list = self.test_mirrors(custom_list)
-                    custom_list = sorted(custom_list, key=itemgetter("resp_time"))
+                    custom_list = sorted(custom_list,
+                                         key=itemgetter("resp_time"))
                 else:
                     shuffle(custom_list)
 
@@ -369,14 +380,23 @@ class PacmanMirrors:
                                           txt.CUSTOM_MIRROR_LIST))
                 print("--------------------------")
                 # output mirror file
-                jsonfn.write_json_file(mirrorfile, self.config["custom_file"])
-                print(".: {} {}: {}".format(txt.INF_CLR, txt.CUSTOM_MIRROR_FILE_SAVED, self.config["custom_file"]))
+                jsonfn.write_json_file(mirrorfile,
+                                       self.config["custom_file"])
+                print(".: {} {}: {}".format(txt.INF_CLR,
+                                            txt.CUSTOM_MIRROR_FILE_SAVED,
+                                            self.config["custom_file"]))
                 # output pacman mirrorlist
-                filefn.output_mirror_list(self.config, selected, custom=True, quiet=self.quiet, interactive=True)
+                filefn.output_mirror_list(self.config,
+                                          selected,
+                                          custom=True,
+                                          quiet=self.quiet,
+                                          interactive=True)
                 # always use "Custom" from interactive
                 self.config["only_country"] = ["Custom"]
                 configfn.modify_config(self.config, custom=True)
-                print(".: {} {} {}".format(txt.INF_CLR, txt.RESET_CUSTOM_CONFIG, txt.RESET_TIP))
+                print(".: {} {} {}".format(txt.INF_CLR,
+                                           txt.RESET_CUSTOM_CONFIG,
+                                           txt.RESET_TIP))
             else:
                 print(".: {} {}".format(txt.WRN_CLR, txt.NO_SELECTION))
                 print(".: {} {}".format(txt.INF_CLR, txt.NO_CHANGE))
@@ -476,7 +496,7 @@ class PacmanMirrors:
         else:
             # negative on network
             miscfn.internet_message()
-            self.config["method"] = "random"  # use random method instead of rank
+            self.config["method"] = "random"  # use random instead of rank
             self.fasttrack = False  # using fasttrack is not possible
         self.load_all_mirrors()
         if self.fasttrack:

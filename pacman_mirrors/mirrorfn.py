@@ -36,7 +36,8 @@ def build_country_list(selectedcountries, countrylist, geoip=False):
         if selectedcountries == ["all"]:
             result = countrylist
         else:
-            if validfn.country_list_is_valid(selectedcountries, countrylist):
+            if validfn.country_list_is_valid(selectedcountries,
+                                             countrylist):
                 result = selectedcountries
     if not result:
         if geoip:

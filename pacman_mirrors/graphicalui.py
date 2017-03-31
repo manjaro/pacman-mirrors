@@ -47,11 +47,12 @@ class GraphicalUI(Gtk.Window):
 
         mirrors_list = []
         for server in server_list:
-            mirrors_list.append((False,
-                                 server["country"],
-                                 "{}h {}m".format(server["last_sync"][:2],
-                                                  server["last_sync"][-2:]),
-                                 server["url"]))
+            mirrors_list.append(
+                (False,
+                 server["country"],
+                 "{}h {}m".format(server["last_sync"][:2],
+                                  server["last_sync"][-2:]),
+                 server["url"]))
 
         self.store = Gtk.ListStore(bool, str, str, str)
         for mirror_ref in mirrors_list:
@@ -70,12 +71,16 @@ class GraphicalUI(Gtk.Window):
         self.tree.append_column(column)
 
         renderer = Gtk.CellRendererText()
-        column = Gtk.TreeViewColumn(txt.I_LAST_SYNC, renderer, text=2)
+        column = Gtk.TreeViewColumn(txt.I_LAST_SYNC,
+                                    renderer,
+                                    text=2)
         column.set_sort_column_id(2)
         self.tree.append_column(column)
 
         renderer = Gtk.CellRendererText()
-        column = Gtk.TreeViewColumn(txt.I_URL, renderer, text=3)
+        column = Gtk.TreeViewColumn(txt.I_URL,
+                                    renderer,
+                                    text=3)
         column.set_sort_column_id(3)
         self.tree.append_column(column)
 
@@ -84,10 +89,13 @@ class GraphicalUI(Gtk.Window):
         header = Gtk.Label(txt.I_LIST_TITLE)
         button_cancel = Gtk.Button(txt.I_CANCEL)
         button_cancel.connect("clicked", self.cancel)
-        self.button_done = Gtk.Button(txt.I_CONFIRM, sensitive=False)
+        self.button_done = Gtk.Button(txt.I_CONFIRM,
+                                      sensitive=False)
         self.button_done.connect("clicked", self.done)
 
-        grid = Gtk.Grid(column_homogeneous=True, column_spacing=10, row_spacing=10)
+        grid = Gtk.Grid(column_homogeneous=True,
+                        column_spacing=10,
+                        row_spacing=10)
         grid.attach(header, 0, 0, 2, 1)
         grid.attach(scrolled_tree, 0, 1, 2, 1)
         grid.attach(button_cancel, 0, 2, 1, 1)

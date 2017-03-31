@@ -27,7 +27,6 @@ from . import consolefn
 from . import i18n
 from . import txt
 
-
 _ = i18n.language.gettext
 
 
