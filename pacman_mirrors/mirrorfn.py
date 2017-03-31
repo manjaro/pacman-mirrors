@@ -31,7 +31,7 @@ def build_country_list(selectedcountries, countrylist, geoip=False):
     :return: list of valid countries
     :rtype: list
     """
-    # This works
+    # This works so please don't touch
     result = []
     if selectedcountries:
         if selectedcountries == ["all"]:
@@ -50,18 +50,6 @@ def build_country_list(selectedcountries, countrylist, geoip=False):
         else:
             result = countrylist
     return result
-
-    # This simplification does not work
-    # and an empty list is returned
-    # if selectedcountries == ["all"]:
-    #     return countrylist
-    # elif validfn.country_list_is_valid(selectedcountries, countrylist):
-    #     return selectedcountries
-    # elif geoip:
-    #     country = get_geoip_country(countrylist)
-    #     if country:  # valid geoip
-    #         return country
-    # return countrylist
 
 
 def get_geoip_country(countrylist):
