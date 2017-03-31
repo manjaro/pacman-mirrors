@@ -123,8 +123,7 @@ class PacmanMirrors:
         parser.add_argument("-f", "--fasttrack",
                             type=int,
                             metavar=txt.DIGIT,
-                            help="{} {}".format(txt.HLP_ARG_FASTTRACK,
-                                                    txt.OVERRIDE_OPT))
+                            help="{} {}".format(txt.HLP_ARG_FASTTRACK, txt.OVERRIDE_OPT))
         parser.add_argument("-l", "--list",
                             action="store_true",
                             help=txt.HLP_ARG_LIST)
@@ -350,8 +349,7 @@ class PacmanMirrors:
             if self.default and custom_list:
                 if self.config["method"] == "rank":
                     custom_list = self.test_mirrors(custom_list)
-                    custom_list = sorted(custom_list,
-                                            key=itemgetter("resp_time"))
+                    custom_list = sorted(custom_list, key=itemgetter("resp_time"))
                 else:
                     shuffle(custom_list)
 
@@ -372,18 +370,13 @@ class PacmanMirrors:
                 print("--------------------------")
                 # output mirror file
                 jsonfn.write_json_file(mirrorfile, self.config["custom_file"])
-                print(".: {} {}: {}".format(txt.INF_CLR,
-                                                txt.CUSTOM_MIRROR_FILE_SAVED,
-                                                self.config["custom_file"]))
+                print(".: {} {}: {}".format(txt.INF_CLR, txt.CUSTOM_MIRROR_FILE_SAVED, self.config["custom_file"]))
                 # output pacman mirrorlist
-                filefn.output_mirror_list(self.config, selected,
-                                            custom=True, quiet=self.quiet,
-                                            interactive=True)
+                filefn.output_mirror_list(self.config, selected, custom=True, quiet=self.quiet, interactive=True)
                 # always use "Custom" from interactive
                 self.config["only_country"] = ["Custom"]
                 configfn.modify_config(self.config, custom=True)
-                print(".: {} {} {}".format(txt.INF_CLR, txt.RESET_CUSTOM_CONFIG,
-                                            txt.RESET_TIP))
+                print(".: {} {} {}".format(txt.INF_CLR, txt.RESET_CUSTOM_CONFIG, txt.RESET_TIP))
             else:
                 print(".: {} {}".format(txt.WRN_CLR, txt.NO_SELECTION))
                 print(".: {} {}".format(txt.INF_CLR, txt.NO_CHANGE))

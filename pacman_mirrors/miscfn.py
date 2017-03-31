@@ -44,4 +44,5 @@ def terminal_size():
     # http://www.programcreek.com/python/example/85471/shutil.get_terminal_size
     cols = shutil.get_terminal_size().columns
     lines = shutil.get_terminal_size().lines
-    return (cols, lines)
+    result = (cols, lines)
+    return result
