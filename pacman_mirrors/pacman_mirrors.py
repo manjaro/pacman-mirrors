@@ -243,7 +243,6 @@ class PacmanMirrors:
             configfn.api_write_branch(self.config["branch"],
                                       self.config["config_file"])
         if get_branch:
-            miscfn.debug("api_config", "branch", self.config["branch"])
             if self.config["branch"] == "stable":
                 sys.exit(-1)
             if self.config["branch"] == "testing":
