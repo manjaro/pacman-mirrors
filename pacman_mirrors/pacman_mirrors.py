@@ -209,11 +209,12 @@ class PacmanMirrors:
             self.config["only_country"] = []
 
         if args.api:
-            if args.branch:
-                self.api_config(prefix=args.prefix,
-                                set_branch=args.set_branch)
+            if args.set_branch:
+                self.api_config(prefix=args.prefix, set_branch=True)
+            elif args.get_branch:
+                self.api_config(prefix=args.prefix, get_branch=True)
             else:
-                self.api_config(get_branch=args.get_branch)
+                self.api_config(prefix=args.prefix)
 
     def api_config(self, prefix=None, set_branch=False, get_branch=False):
         """Api functions
@@ -221,7 +222,6 @@ class PacmanMirrors:
         :param set_branch: writes branch to pacman-mirrors
         :param get_branch: exit with -1 -2 -3
         """
-        miscfn.debug("api_config", "prefix", prefix)
         if prefix:
             if "$" in prefix:
                 prefix = os.environ.get(prefix)
@@ -239,15 +239,12 @@ class PacmanMirrors:
                 prefix + self.config["mirror_list"]
             self.config["status_file"] = \
                 prefix + self.config["status_file"]
-            miscfn.debug("api_config", "prefix/mirror_dir", self.config["mirror_dir"])
 
-        miscfn.debug("api_config", "set_branch", set_branch)
         if set_branch:
             miscfn.debug("api_config", "branch", self.config["branch"])
             configfn.api_write_branch(self.config["branch"],
                                       self.config["config_file"])
 
-        miscfn.debug("api_config", "get_branch", get_branch)
         if get_branch:
             miscfn.debug("api_config", "branch", self.config["branch"])
             if self.config["branch"] == "stable":
