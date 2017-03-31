@@ -81,6 +81,7 @@ class ConsoleUI(npyscreen.NPSAppManaged):
     def done(self, selection):
         """
         After editing
+
         :param selection:
         """
         if selection:

@@ -161,10 +161,9 @@ def update_mirrors(config):
     :rtype: tuple
     """
     result = None
-    connected = is_connected("http://repo.manjaro.org")
-    if connected:
-        print(".: {} {} {}".format(txt.INF_CLR, txt.DOWNLOADING_MIRROR_FILE,
-                                        txt.REPO_SERVER))
+    mjro_online = is_connected("http://repo.manjaro.org")
+    if mjro_online:
+        print(".: {} {} {}".format(txt.INF_CLR, txt.DOWNLOADING_MIRROR_FILE, txt.REPO_SERVER))
         result = download_mirrors(config)
     else:
         if not filefn.check_file(config["mirror_file"]):
