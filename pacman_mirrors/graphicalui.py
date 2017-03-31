@@ -87,8 +87,7 @@ class GraphicalUI(Gtk.Window):
         self.button_done = Gtk.Button(txt.I_CONFIRM, sensitive=False)
         self.button_done.connect("clicked", self.done)
 
-        grid = Gtk.Grid(column_homogeneous=True, column_spacing=10,
-                            row_spacing=10)
+        grid = Gtk.Grid(column_homogeneous=True, column_spacing=10, row_spacing=10)
         grid.attach(header, 0, 0, 2, 1)
         grid.attach(scrolled_tree, 0, 1, 2, 1)
         grid.attach(button_cancel, 0, 2, 1, 1)
@@ -124,8 +123,8 @@ class GraphicalUI(Gtk.Window):
     def done(self, button):
         """Confirm choice"""
         dialog = Gtk.Dialog(txt.I_CONFIRM_SELECTION, None, 0, (
-                                Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
-                                Gtk.STOCK_OK, Gtk.ResponseType.OK))
+            Gtk.STOCK_CANCEL, Gtk.ResponseType.CANCEL,
+            Gtk.STOCK_OK, Gtk.ResponseType.OK))
         dialog.set_transient_for(self)
         dialog.set_border_width(10)
         box = dialog.get_content_area()
