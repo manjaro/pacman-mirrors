@@ -231,7 +231,7 @@ class PacmanMirrors:
             self.config["status_file"] = prefix + self.config["status_file"]
 
         if set_branch:
-            configfn.api_branch(self.config["branch"], self.config["config_file"])
+            configfn.api_write_branch(self.config["branch"], self.config["config_file"])
 
         if get_branch:
             if self.config["branch"] == "stable":
