@@ -65,6 +65,8 @@ Show the version of pacman-mirrors.
 `--quiet`
 Make pacman-mirrors silent.
 
+`-a`, `--api` [--prefix] [{--get-branch | --set-branch}]
+
 ## pacman-mirrors.conf
 ```
 ## Branch Pacman should use (stable, testing, unstable)
