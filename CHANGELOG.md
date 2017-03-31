@@ -2,10 +2,8 @@
 All notable changes to this project will be documented in this file.
 
 ## [4.0.4-dev]
-- Improvement on `--interactive`: select mirrors by protocol.
-- Added to config `# SSL = False`.
-- Some optimizations.
-- Update translations.
+- improvement on `--interactive`: select mirrors by protocol
+- added to config `# SSL = False`
 
 ## [4.0.3] - 2017-03-28
 - Fix issue with `--fasttrack` and `OnlyCountry = Custom`.
