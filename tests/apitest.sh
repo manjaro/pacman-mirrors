@@ -1,2 +1,4 @@
 #!/usr/bin/env bash
-sudo pacman-mirrors --api --get-branch
+
+BRANCH=$( (pacman-mirrors --api --get-branch >&1) 2>&1 )
+echo "branch is '${BRANCH}'"
