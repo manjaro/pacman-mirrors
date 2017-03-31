@@ -165,7 +165,7 @@ def update_mirrors(config):
                                         txt.REPO_SERVER))
         result = download_mirrors(config)
     else:
-        if not os.path.isfile(config["mirror_file"]):
+        if not filefn.check_file(config["mirror_file"]):
             print(".: {} {} {} {}".format(txt.WRN_CLR,
                                           txt.MIRROR_FILE,
                                           config["mirror_file"],
@@ -174,7 +174,7 @@ def update_mirrors(config):
                                        txt.FALLING_BACK,
                                        conf.FALLBACK))
             result = (True, False)
-        if not os.path.isfile(config["fallback_file"]):
+        if not filefn.check_file(config["fallback_file"]):
             print(".: {} {}".format(txt.ERR_CLR, txt.HOUSTON))
             result = (False, False)
 

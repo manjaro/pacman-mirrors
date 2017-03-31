@@ -27,6 +27,13 @@ from . import miscfn
 from . import txt
 
 
+def check_file(filename):
+    """Check if file exist
+    :param filename:
+    """
+    return os.path.isfile(filename)
+
+
 def dir_must_exist(dir_name):
     """Check necessary directory
     :param dir_name:
@@ -42,12 +49,12 @@ def return_mirror_filename(config):
     filename = ""
     status = False  # status.json or mirrors.json
     # decision on file availablity
-    if os.path.isfile(config["status_file"]):
+    if check_file(config["status_file"]):
         status = True
         filename = config["status_file"]
-    elif os.path.isfile(config["mirror_file"]):
+    elif check_file(config["mirror_file"]):
         filename = config["mirror_file"]
-    elif os.path.isfile(config["fallback_file"]):
+    elif check_file(config["fallback_file"]):
         filename = config["fallback_file"]
     if not filename:
         print("\n{}.:! {}{}\n".format(txt.RS,
