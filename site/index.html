@@ -87,6 +87,7 @@
     <ul class="nav bs-sidenav">
         <li class="main active"><a href="#documentation-of-pacman-mirrors">Documentation of pacman-mirrors</a></li>
             <li><a href="#commands">Commands</a></li>
+            <li><a href="#pacman-mirrorsconf">pacman-mirrors.conf</a></li>
     </ul>
 </div></div>
                 <div class="col-md-9" role="main">
@@ -141,7 +142,35 @@ after the selection of mirrors.</p>
 <p><code>-v</code>, <code>--version</code>
 Show the version of pacman-mirrors.</p>
 <p><code>--quiet</code>
-Make pacman-mirrors silent.</p></div>
+Make pacman-mirrors silent.</p>
+<h2 id="pacman-mirrorsconf">pacman-mirrors.conf</h2>
+<pre><code>## Branch Pacman should use (stable, testing, unstable)
+# Branch = stable
+
+## Generation method
+## 1) rank   - rank mirrors depending on their access time
+## 2) random - randomly generate the output mirrorlist
+# Method = rank
+
+## Specify to use only mirrors from specific a country.
+## Can add multiple countries separated by a comma (ex: Germany,France)
+## Empty means all
+# OnlyCountry =
+
+## Mirrors directory
+# MirrorlistsDir = /var/lib/pacman-mirrors
+
+## Output file
+# OutputMirrorlist = /etc/pacman.d/mirrorlist
+
+## When set to True prevents the regeneration of the mirrorlist if
+## pacman-mirrors is invoked with the --no-update argument.
+## Useful if you don't want the mirrorlist regenerated after a
+## pacman-mirrors package upgrade.
+# NoUpdate = False
+
+# SSL = False
+</code></pre></div>
         </div>
 
         <footer class="col-md-12">
@@ -180,5 +209,5 @@ Make pacman-mirrors silent.</p></div>
 
 <!--
 MkDocs version : 0.16.1
-Build Date UTC : 2017-03-25 12:34:57
+Build Date UTC : 2017-03-31 10:53:18
 -->
