@@ -243,13 +243,7 @@ class PacmanMirrors:
             configfn.api_write_branch(self.config["branch"],
                                       self.config["config_file"])
         if get_branch:
-            if self.config["branch"] == "stable":
-                sys.exit(-1)
-            if self.config["branch"] == "testing":
-                sys.exit(-2)
-            if self.config["branch"] == "unstable":
-                sys.exit(-3)
-        sys.exit(0)
+            sys.exit(self.config["branch"])
 
     def build_common_mirror_list(self):
         """Generate common mirrorlist"""
