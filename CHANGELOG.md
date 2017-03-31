@@ -3,9 +3,10 @@ All notable changes to this project will be documented in this file.
 
 ## [4.1.0-dev]
 - Improvement on `--interactive`: select mirrors by protocol.
-- Added to config `# SSL = False`.
+- Added to config `# SSL = False` [#86](https://github.com/manjaro/pacman-mirrors/issues/86).
 - Added a simple API [#81](https://github.com/manjaro/pacman-mirrors/issues/81).
 - Update translations.
+- Code optimizing
 
 ## [4.0.3] - 2017-03-28
 - Fix issue with `--fasttrack` and `OnlyCountry = Custom`.
