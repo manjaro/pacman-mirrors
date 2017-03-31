@@ -148,7 +148,7 @@ class PacmanMirrors:
             exit(0)
 
         if args.version:
-            print("pacman-mirrors {}".format(__version__))
+            print("{}pacman-mirrors {}{}".format(txt.GS, __version__, txt.CE))
             exit(0)
 
         if args.no_update:
