@@ -67,6 +67,10 @@ Make pacman-mirrors silent.
 
 `-a`, `--api` [--prefix] [{--get-branch | --set-branch}]
 
+- `--prefix` for pacman-mirrors file-handling eg. /mnt/install or $mnt
+- `--get-branch` returns branch from config in prefix`config_file`. If used with `--branch` and you get the arguments value.
+- `--set-branch` writes branch from `--branch` to prefix`config_file`
+
 ## pacman-mirrors.conf
 ```
 ## Branch Pacman should use (stable, testing, unstable)

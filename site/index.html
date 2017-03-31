@@ -144,6 +144,11 @@ Show the version of pacman-mirrors.</p>
 <p><code>--quiet</code>
 Make pacman-mirrors silent.</p>
 <p><code>-a</code>, <code>--api</code> [--prefix] [{--get-branch | --set-branch}]</p>
+<ul>
+<li><code>--prefix</code> for pacman-mirrors file-handling eg. /mnt/install or $mnt</li>
+<li><code>--get-branch</code> returns branch from config in prefix<code>config_file</code>. If used with <code>--branch</code> and you get the arguments value.</li>
+<li><code>--set-branch</code> writes branch from <code>--branch</code> to prefix<code>config_file</code></li>
+</ul>
 <h2 id="pacman-mirrorsconf">pacman-mirrors.conf</h2>
 <pre><code>## Branch Pacman should use (stable, testing, unstable)
 # Branch = stable
@@ -210,5 +215,5 @@ Make pacman-mirrors silent.</p>
 
 <!--
 MkDocs version : 0.16.1
-Build Date UTC : 2017-03-31 11:23:06
+Build Date UTC : 2017-03-31 12:53:51
 -->
