@@ -130,6 +130,16 @@ class PacmanMirrors:
         parser.add_argument("--default",
                             action="store_true",
                             help=txt.HLP_ARG_DEFAULT)
+        # api arguments
+        parser.add_argument("-a/--api",
+                            action="store_true")
+        parser.add_argument("--get-branch",
+                            type=bool)
+        parser.add_argument("--set-branch",
+                            type=bool)
+        parser.add_argument("--prefix",
+                            type=str,
+                            action="store_true")
 
         args = parser.parse_args()
 
@@ -195,6 +205,41 @@ class PacmanMirrors:
             self.geoip = False
             self.custom = False
             self.config["only_country"] = []
+
+        if args.api:
+            if args.branch:
+                self.api_config(prefix=args.prefix,
+                                set_branch=args.set_branch)
+            else:
+                self.api_config(get_branch=args.get_branch)
+
+    def api_config(self, prefix=None, set_branch=False, get_branch=False):
+        """Api functions
+        :param prefix: prefix to the config paths
+        :param set_branch: writes branch to pacman-mirrors
+        :param get_branch: exit with -1 -2 -3
+        """
+        if prefix:
+            if "$" in prefix:
+                prefix = os.environ.get(prefix)
+            self.config["config_file"] = prefix + self.config["config_file"]
+            self.config["custom_file"] = prefix + self.config["custom_file"]
+            self.config["fallback_file"] = prefix + self.config["fallback_file"]
+            self.config["mirror_dir"] = prefix + self.config["mirror_dir"]
+            self.config["mirror_file"] = prefix + self.config["mirror_file"]
+            self.config["mirror_list"] = prefix + self.config["mirror_list"]
+            self.config["status_file"] = prefix + self.config["status_file"]
+
+        if set_branch:
+            configfn.api_branch(self.config["branch"], self.config["config_file"])
+
+        if get_branch:
+            if self.config["branch"] == "stable":
+                exit(-1)
+            if self.config["branch"] == "testing":
+                exit(-2)
+            if self.config["branch"] == "unstable":
+                exit(-3)
 
     def build_common_mirror_list(self):
         """Generate common mirrorlist"""

@@ -26,6 +26,32 @@ from . import txt
 from . import configuration as conf
 
 
+def api_branch(branch, filename):
+    """Write branch"""
+    branch = "Branch = {}".format(branch)
+
+    try:
+        with open(
+            filename) as cnf, tempfile.NamedTemporaryFile(
+            "w+t", dir=os.path.dirname(
+                filename), delete=False) as tmp:
+            replaced = False
+            for line in cnf:
+                if "Branch" in line:
+                    tmp.write(branch)
+                    replaced = True
+                else:
+                    tmp.write("{}".format(line))
+            if not replaced:
+                tmp.write(branch)
+        os.replace(tmp.name, filename)
+        os.chmod(filename, 0o644)
+    except OSError as err:
+        print(".: {} {}: {}: {}".format(txt.ERR_CLR, txt.CANNOT_READ_FILE,
+                                        err.filename, err.strerror))
+        exit(1)
+
+
 def build_config():
     """Get config informations
     :returns: config, custom
