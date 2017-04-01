@@ -249,7 +249,7 @@ class PacmanMirrors:
         """Generate common mirrorlist"""
         worklist = mirrorfn.filter_mirror_country(self.mirrors.mirrorlist,
                                                   self.selected_countries)
-        if self.config["ssl"] is True:
+        if self.config["ssl"]:
             worklist = mirrorfn.filter_mirror_ssl(worklist)
 
         if self.config["method"] == "rank":
@@ -273,7 +273,7 @@ class PacmanMirrors:
         # randomize the load on up2date mirrors
         worklist = self.mirrors.mirrorlist
         shuffle(worklist)
-        if self.config["ssl"] is True:
+        if self.config["ssl"]:
             worklist = mirrorfn.filter_mirror_ssl(worklist)
 
         up2date = [item for item in worklist if item["branches"] == [1, 1, 1]]
@@ -318,7 +318,7 @@ class PacmanMirrors:
         """
         worklist = mirrorfn.filter_mirror_country(self.mirrors.mirrorlist,
                                                   self.selected_countries)
-        if self.config["ssl"] is True:
+        if self.config["ssl"]:
             worklist = mirrorfn.filter_mirror_ssl(worklist)
 
         if not self.default:

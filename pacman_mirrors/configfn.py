@@ -107,7 +107,8 @@ def build_config():
                     elif key == "NoUpdate":
                         config["no_update"] = value
                     elif key == "SSL":
-                        config["ssl"] = value
+                        if value == "True":
+                            config["ssl"] = True
     except (PermissionError, OSError) as err:
         print(".: {} {}: {}: {}".format(txt.ERR_CLR,
                                         txt.CANNOT_READ_FILE,
