@@ -1,0 +1,273 @@
+# Translations template for pacman-mirrors.
+# Copyright (C) 2017 ORGANIZATION
+# This file is distributed under the same license as the pacman-mirrors
+# project.
+# 
+# Translators:
+# Toldi Zoltán <ifj.toldi.zoltan@gmail.com>, 2017
+msgid ""
+msgstr ""
+"Project-Id-Version: manjaro-pacman-mirrors\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2017-02-20 15:44+0100\n"
+"PO-Revision-Date: 2017-04-03 07:23+0000\n"
+"Last-Translator: Toldi Zoltán <ifj.toldi.zoltan@gmail.com>\n"
+"Language-Team: Hungarian (http://www.transifex.com/manjarolinux/manjaro-pacman-mirrors/language/hu/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.3.4\n"
+"Language: hu\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: pacman_mirrors/txt.py:31
+msgid "Error"
+msgstr "Hiba"
+
+#: pacman_mirrors/txt.py:32
+msgid "Info"
+msgstr "Információ"
+
+#: pacman_mirrors/txt.py:33
+msgid "Warning"
+msgstr "Figyelmeztetés"
+
+#: pacman_mirrors/txt.py:35
+msgid "Timeout"
+msgstr "Időtúllépés"
+
+#: pacman_mirrors/txt.py:36
+msgid "HTTPException"
+msgstr "HTTP-Kivétel"
+
+#: pacman_mirrors/txt.py:38
+msgid "PATH"
+msgstr "ÚTVONAL"
+
+#: pacman_mirrors/txt.py:39
+msgid "FILE"
+msgstr "FÁJL"
+
+#: pacman_mirrors/txt.py:40
+msgid "SECONDS"
+msgstr "MÁSODPERC"
+
+#: pacman_mirrors/txt.py:41
+msgid "DIGIT"
+msgstr " SZÁMJEGY"
+
+#: pacman_mirrors/txt.py:43
+msgid "Branch name"
+msgstr "Ág neve"
+
+#: pacman_mirrors/txt.py:44
+msgid "Comma separated list of countries, from which mirrors will be used"
+msgstr "Vesszővel elválasztott lista az országokról, ahonnan a tükrök használva lesznek"
+
+#: pacman_mirrors/txt.py:46
+msgid "Output file"
+msgstr "Eredmény fájl"
+
+#: pacman_mirrors/txt.py:47
+msgid "Generate mirrorlist"
+msgstr "Tükörlista generálása"
+
+#: pacman_mirrors/txt.py:48
+msgid "Get current country using geolocation. Ignored if"
+msgstr "Aktuális ország felismerése helymeghatározással. Mellőzve, ha"
+
+#: pacman_mirrors/txt.py:49
+msgid "is supplied"
+msgstr "be van állítva"
+
+#: pacman_mirrors/txt.py:50
+msgid "Generate custom mirrorlist"
+msgstr "Egyéni tükörlista generálása"
+
+#: pacman_mirrors/txt.py:51
+msgid "Generation method"
+msgstr "Generálás módja"
+
+#: pacman_mirrors/txt.py:52
+msgid "Don't generate mirrorlist if"
+msgstr "Ne generáljon tükörlistát, ha"
+
+#: pacman_mirrors/txt.py:53
+msgid "in the configuration file"
+msgstr "a konfigurációs fájlban van"
+
+#: pacman_mirrors/txt.py:54
+msgid "Mirrors list path"
+msgstr "Tükörlista útvonala"
+
+#: pacman_mirrors/txt.py:55
+msgid "Quiet mode - less verbose output"
+msgstr "Csendes üzemmód - kevésbé részletes szöveges kimenet"
+
+#: pacman_mirrors/txt.py:56
+msgid "Maximum waiting time for server response"
+msgstr "Maximum várakozási idő a szerver válaszára"
+
+#: pacman_mirrors/txt.py:57
+msgid "Print the pacman-mirrors version"
+msgstr "A pacman-mirrors verzió mutatása"
+
+#: pacman_mirrors/txt.py:58
+msgid "A quick mirrorlist. Overrides -cim --geoip"
+msgstr "Egy gyors tükörlista. A -cim --geoip felülírása"
+
+#: pacman_mirrors/txt.py:60
+msgid "Available countries are"
+msgstr "Elérhető országok"
+
+#: pacman_mirrors/txt.py:61
+msgid "Could not download from"
+msgstr "Nem lehet letölteni innen:"
+
+#: pacman_mirrors/txt.py:62
+msgid "Cannot read file"
+msgstr "A fájl nem olvasható"
+
+#: pacman_mirrors/txt.py:63
+msgid "Cannot write file"
+msgstr "A fájl nem írható"
+
+#: pacman_mirrors/txt.py:64
+msgid "Converting custom mirror file to new format"
+msgstr "Az egyéni tükörlista fájl konvertálása új formátumba"
+
+#: pacman_mirrors/txt.py:65
+msgid "Custom mirror file"
+msgstr "Egyéni tükör fájl"
+
+#: pacman_mirrors/txt.py:66
+msgid "Custom mirror file saved"
+msgstr "Az egyéni tükör fájl elmentve"
+
+#: pacman_mirrors/txt.py:67
+msgid "User generated mirror list"
+msgstr "Felhasználó által generált tükörlista"
+
+#: pacman_mirrors/txt.py:68
+msgid "doesn't exist."
+msgstr "nem létezik."
+
+#: pacman_mirrors/txt.py:69
+msgid "Downloading mirrors from repo.manjaro.org"
+msgstr "Tükrök letöltése a repo.manjaro.org-ról"
+
+#: pacman_mirrors/txt.py:70
+msgid "Falling back to"
+msgstr "Visszatérés erre:"
+
+#: pacman_mirrors/txt.py:71
+msgid "is missing"
+msgstr "hiányzik"
+
+#: pacman_mirrors/txt.py:72
+msgid "The mirror file"
+msgstr "A tükör fájl"
+
+#: pacman_mirrors/txt.py:73
+msgid "Mirrorlist generated and saved to"
+msgstr "A tükörlista generálva és elmentve ide:"
+
+#: pacman_mirrors/txt.py:74
+msgid "Must have root privileges"
+msgstr "Rendszergazdai jogok kellenek"
+
+#: pacman_mirrors/txt.py:75
+msgid "The mirror list is not changed"
+msgstr "A tükörlista nem változott"
+
+#: pacman_mirrors/txt.py:76
+msgid "No mirrors in selection"
+msgstr "Nincs tükör a kiválasztásban"
+
+#: pacman_mirrors/txt.py:77
+msgid "Option"
+msgstr "Opció"
+
+#: pacman_mirrors/txt.py:78
+msgid "Writing mirror list"
+msgstr "Tükörlista írása"
+
+#: pacman_mirrors/txt.py:79
+msgid "Querying mirrors"
+msgstr "Tükrök lekérdezése"
+
+#: pacman_mirrors/txt.py:80
+msgid "Randomizing mirror list"
+msgstr "Tükörlisták véletlenszerűsítése"
+
+#: pacman_mirrors/txt.py:81
+msgid "To reset custom config run `pacman-mirrors -c all`"
+msgstr "Az egyéni konfiguráció visszaállításához futtassa a `pacman-mirrors -c all` parancsot"
+
+#: pacman_mirrors/txt.py:82
+msgid "This may take some time"
+msgstr "Ez egy kis időbe telhet"
+
+#: pacman_mirrors/txt.py:83
+msgid "unknown country"
+msgstr "ismeretlen ország"
+
+#: pacman_mirrors/txt.py:84
+msgid "Using all mirrors"
+msgstr "Összes tükör használata"
+
+#: pacman_mirrors/txt.py:85
+msgid "Using custom mirror file"
+msgstr "Egyéni tükör fájl használata"
+
+#: pacman_mirrors/txt.py:86
+msgid "Using default mirror file"
+msgstr "Alapértelmezett tükör fájl használata"
+
+#: pacman_mirrors/txt.py:88
+msgid "Manjaro mirrors by response time"
+msgstr "Manjaro tükrök a válaszidő alapján rendezve"
+
+#: pacman_mirrors/txt.py:89
+msgid "Manjaro mirrors in random order"
+msgstr "Manjaro tükrök véletlenszerűen rendezve"
+
+#: pacman_mirrors/txt.py:90
+msgid "Check mirrors for your personal list"
+msgstr "Tükrök ellenőrzése a személyes listára"
+
+#: pacman_mirrors/txt.py:91
+msgid "Use"
+msgstr "Használ"
+
+#: pacman_mirrors/txt.py:92
+msgid "Country"
+msgstr "Ország"
+
+#: pacman_mirrors/txt.py:93
+msgid "Resp"
+msgstr "Respektív"
+
+#: pacman_mirrors/txt.py:94
+msgid "Sync"
+msgstr "Szinkronizálás"
+
+#: pacman_mirrors/txt.py:95
+msgid "URL"
+msgstr "URL"
+
+#: pacman_mirrors/txt.py:96
+msgid "Cancel"
+msgstr "Megszakít"
+
+#: pacman_mirrors/txt.py:97
+msgid "OK"
+msgstr "OK"
+
+#: pacman_mirrors/txt.py:98
+msgid "Confirm selections"
+msgstr "Kiválasztás megerősítése"
+
+#: pacman_mirrors/txt.py:99
+msgid "I want to use these mirrors"
+msgstr "Ezeket a tükröket akarom használni"
