@@ -76,6 +76,7 @@ def build_config():
         "only_country": [],
         "repo_arch": conf.REPO_ARCH,
         "ssl": False,
+        "ssl_verify": True,
         "status_file": conf.STATUS_FILE,
         "url_mirrors_json": conf.URL_MIRROR_JSON,
         "url_status_json": conf.URL_STATUS_JSON
@@ -109,6 +110,9 @@ def build_config():
                     elif key == "SSL":
                         if value == "True":
                             config["ssl"] = True
+                    elif key == "SSLVerify":
+                        if value == "False":
+                            config["ssl_verify"] = False
     except (PermissionError, OSError) as err:
         print(".: {} {}: {}: {}".format(txt.ERR_CLR,
                                         txt.CANNOT_READ_FILE,
