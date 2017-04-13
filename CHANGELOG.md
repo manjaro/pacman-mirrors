@@ -8,7 +8,7 @@ All notable changes to this project will be documented in this file.
 - Update translations.
 - Code optimizing.
 - Added to config `# SSLVerify = True`.
-- Refactored mirrorcheck to ignore a mirrors certificate error.
+- Refactored mirrorcheck to ignore a mirrors certificate error if `SSLVerify = False`.
 - Refactored mirrorcheck for https-mirrors timing out during ssl-handshake.
 - Update docs.
 
