@@ -21,6 +21,7 @@
 
 import collections
 import json
+import ssl
 import time
 from http.client import HTTPException
 from os import system as system_call
@@ -90,8 +91,10 @@ def get_geoip_country():
     return country_name
 
 
-def get_mirror_response(url, maxwait=2, count=1, quiet=False):
+def get_mirror_response(url, maxwait=2, count=1, quiet=False, ssl_verify=True):
     """Query mirrors availability
+    :param ssl_verify: 
+    :param ssl_verify: 
     :param url:
     :param maxwait:
     :param count:
@@ -102,9 +105,15 @@ def get_mirror_response(url, maxwait=2, count=1, quiet=False):
     response_time = txt.SERVER_RES
     probe_stop = None
     message = ""
+    # ssl.verify_mode = ssl.CERT_NONE
+    context = None
+    if not ssl_verify:
+        context = ssl.SSLContext(ssl.PROTOCOL_SSLv23)
+        context.verify_mode = ssl.CERT_NONE
+
     try:
         for _ in range(count):
-            urlopen(url + "state", timeout=maxwait)
+            urlopen(url + "state", timeout=maxwait, context=context)
         probe_stop = time.time()
     except URLError as err:
         if hasattr(err, "reason"):
