@@ -289,9 +289,7 @@ class PacmanMirrors:
                     mirror["country"], mirror["last_sync"], mirror["url"])
                 print("{:.{}}".format(message, cols), end='')
                 sys.stdout.flush()
-            resp_time = httpfn.get_mirror_response(mirror["url"],
-                                                   quiet=self.quiet,
-                                                   maxwait=self.max_wait_time)
+            resp_time = httpfn.get_mirror_response(mirror["url"], maxwait=self.max_wait_time, quiet=self.quiet)
             mirror["resp_time"] = resp_time
             if float(resp_time) > self.max_wait_time:
                 if not self.quiet:
@@ -461,16 +459,25 @@ class PacmanMirrors:
                                      txt.QUERY_MIRRORS,
                                      txt.TAKES_TIME))
         cols, lines = miscfn.terminal_size()
+        http_wait = self.max_wait_time
+        ssl_wait = self.max_wait_time * 4
+        ssl_verify = self.config["ssl_verify"]
         for mirror in worklist:
             if not self.quiet:
                 message = "   ..... {:<15}: {}".format(mirror["country"],
                                                        mirror["url"])
                 print("{:.{}}".format(message, cols), end='')
                 sys.stdout.flush()
+            # https sometimes takes a short while for handshake
+            if "https" in mirror["url"]:
+                self.max_wait_time = ssl_wait
+            else:
+                self.max_wait_time = http_wait
             # let's see how responsive you are
             resp_time = httpfn.get_mirror_response(mirror["url"],
+                                                   maxwait=self.max_wait_time,
                                                    quiet=self.quiet,
-                                                   maxwait=self.max_wait_time)
+                                                   ssl_verify=ssl_verify)
             mirror["resp_time"] = resp_time
             if float(resp_time) >= self.max_wait_time * 5:
                 if not self.quiet:
