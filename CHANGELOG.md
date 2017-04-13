@@ -9,7 +9,8 @@ All notable changes to this project will be documented in this file.
 - Code optimizing.
 - Added to config `# SSLVerify = True`.
 - Refactored mirrorcheck to ignore a mirrors certificate error.
-- Refactored mirrorcheck for https-mirrors timing out during ssl-handshake. 
+- Refactored mirrorcheck for https-mirrors timing out during ssl-handshake.
+- Update docs.
 
 ## [4.0.3] - 2017-03-28
 - Fix issue with `--fasttrack` and `OnlyCountry = Custom`.
