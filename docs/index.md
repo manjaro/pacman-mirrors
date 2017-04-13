@@ -98,5 +98,10 @@ Make pacman-mirrors silent.
 ## pacman-mirrors package upgrade.
 # NoUpdate = False
 
+## When set to True - only https-enabled mirrors is used.
 # SSL = False
+
+## When set to False - all certificates are accepted.
+## Use only if you fully trust all https-enabled mirrors.
+# SSLVerify = True
 ```
