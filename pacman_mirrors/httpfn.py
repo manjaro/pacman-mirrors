@@ -1,5 +1,5 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python
+#
 # This file is part of pacman-mirrors.
 #
 # pacman-mirrors is free software: you can redistribute it and/or modify
@@ -32,6 +32,7 @@ from urllib.request import urlopen
 from . import configuration as conf
 from . import filefn
 from . import jsonfn
+from . import miscfn
 from . import txt
 
 
