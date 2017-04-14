@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 #
 # This file is part of pacman-mirrors.
 #
@@ -32,7 +32,6 @@ from urllib.request import urlopen
 from . import configuration as conf
 from . import filefn
 from . import jsonfn
-from . import miscfn
 from . import txt
 
 
