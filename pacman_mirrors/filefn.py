@@ -120,17 +120,18 @@ def write_mirrorlist_header(handle, custom=False):
     :param handle: handle to a file opened for writing
     :param custom: controls content of the header
     """
+    # handle creation time in unicode
+    # http://stackoverflow.com/questions/16034060/python3-datetime-datetime-strftime-failed-to-accept-utf-8-string-format
+    created = datetime.datetime.now().strftime("%d-%m-%Y %H:%M")
     handle.write("##\n")
     if custom:
         handle.write("## Manjaro Linux Custom mirrorlist\n")
-        handle.write("## Generated on {}\n".format(
-            datetime.datetime.now().strftime("%d %B %Y %H:%M")))
+        handle.write("## Generated on {}\n".format(created))
         handle.write("##\n")
         handle.write("## Use 'pacman-mirrors -c all' to reset\n")
     else:
         handle.write("## Manjaro Linux mirrorlist\n")
-        handle.write("## Generated on {}\n".format(
-            datetime.datetime.now().strftime("%d %B %Y %H:%M")))
+        handle.write("## Generated on {}\n".format(created))
         handle.write("##\n")
         handle.write("## Use pacman-mirrors to modify\n")
     handle.write("##\n\n")
