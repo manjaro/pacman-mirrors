@@ -122,7 +122,7 @@ def write_mirrorlist_header(handle, custom=False):
     """
     # handle creation time in unicode
     # http://stackoverflow.com/questions/16034060/python3-datetime-datetime-strftime-failed-to-accept-utf-8-string-format
-    created = datetime.datetime.now().strftime("%d-%m-%Y %H:%M")
+    created = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
     handle.write("##\n")
     if custom:
         handle.write("## Manjaro Linux Custom mirrorlist\n")
