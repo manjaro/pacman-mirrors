@@ -12,6 +12,9 @@ All notable changes to this project will be documented in this file.
 - Refactored mirrorcheck for https-mirrors timing out during ssl-handshake.
 - Update docs.
 
+## [4.0.4] - 2017-04-15
+- Fix issue with UnicodeEncodeError in inactive mode
+
 ## [4.0.3] - 2017-03-28
 - Fix issue with `--fasttrack` and `OnlyCountry = Custom`.
 - Update translations.
