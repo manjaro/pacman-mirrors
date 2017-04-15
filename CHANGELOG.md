@@ -21,9 +21,12 @@ All notable changes to this project will be documented in this file.
 - Update docs.
 
 ## [4.0.2] - 2017-03-21
+- Fix issue with chroot mirrorlist generation
+
+## [4.0.1] - 2017-03-21
 - GUI: Add sorting functionality.
-- Add: --default argument.
-- Fix issue with OnlyCountry unexpected reset.
+- Add: --default argument
+- Fix issue with OnlyCountry unexpected reset
 - Fix issue with not only displaying selected mirrors.
 - Fix connectivity check.
 - Update translations.
