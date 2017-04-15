@@ -43,6 +43,7 @@ class TestHttpFn(unittest.TestCase):
             "only_country": [],
             "repo_arch": conf.REPO_ARCH,
             "ssl": False,
+            "ssl_verify": True,
             "status_file": conf.STATUS_FILE,
             "url_mirrors_json": conf.URL_MIRROR_JSON,
             "url_status_json": conf.URL_STATUS_JSON
@@ -77,6 +78,7 @@ class TestHttpFn(unittest.TestCase):
             "only_country": [],
             "repo_arch": conf.REPO_ARCH,
             "ssl": False,
+            "ssl_verify": True,
             "status_file": conf.STATUS_FILE,
             "url_mirrors_json": conf.URL_MIRROR_JSON,
             "url_status_json": conf.URL_STATUS_JSON
