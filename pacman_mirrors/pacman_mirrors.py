@@ -251,7 +251,7 @@ class PacmanMirrors:
         if self.config["protocols"]:
             worklist = mirrorfn.filter_mirror_protocols(worklist, protocols=self.config["protocols"])
         if self.config["ssl"]:
-            worklist = mirrorfn.filter_mirror_protocols(worklist, protocols=None)
+            worklist = mirrorfn.filter_mirror_protocols(worklist)
         if self.config["method"] == "rank":
             worklist = self.test_mirrors(worklist)
             worklist = sorted(worklist, key=itemgetter("resp_time"))
@@ -275,7 +275,7 @@ class PacmanMirrors:
         if self.config["protocols"]:
             worklist = mirrorfn.filter_mirror_protocols(worklist, protocols=self.config["protocols"])
         if self.config["ssl"]:
-            worklist = mirrorfn.filter_mirror_protocols(worklist, protocols=None)
+            worklist = mirrorfn.filter_mirror_protocols(worklist)
         up2date = [item for item in worklist if item["branches"] == [1, 1, 1]]
         worklist = []
         print(".: {}: {} - {}".format(txt.INF_CLR,
@@ -321,7 +321,7 @@ class PacmanMirrors:
         if self.config["protocols"]:
             worklist = mirrorfn.filter_mirror_protocols(worklist, protocols=self.config["protocols"])
         if self.config["ssl"]:
-            worklist = mirrorfn.filter_mirror_protocols(worklist, protocols=None)
+            worklist = mirrorfn.filter_mirror_protocols(worklist)
         if not self.default:
             if self.config["method"] == "rank":
                 worklist = self.test_mirrors(worklist)
