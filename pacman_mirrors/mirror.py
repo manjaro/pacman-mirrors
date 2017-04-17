@@ -45,6 +45,8 @@ class Mirror:
         if last_sync == -1:
             last_sync = "9999:99"
             resp_time = "9999.99"
+        # sort protocols in reversed order https,http,ftps,ftp
+        protocols = sorted(protocols, reverse=True)
         mirror = {
             "branches": branches,
             "country": country,
