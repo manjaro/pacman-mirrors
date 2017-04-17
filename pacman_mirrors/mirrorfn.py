@@ -89,7 +89,7 @@ def filter_mirror_protocols(mirrorlist, protocols=None):
         return mirrorlist
     for mirror in mirrorlist:
         accepted = []
-        for protocol in enumerate(protocols):
+        for idx, protocol in enumerate(protocols):
             if protocol in mirror["protocols"]:
                 accepted.append(protocol)
         if accepted:
