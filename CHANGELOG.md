@@ -1,14 +1,12 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## 2017-04-17
-- Improvement on default mirrorlist
-  * mirror protocols are reverse sorted (https,http,ftps,ftp)
-  * if several protocols exist only the first is written to mirrorlist
+## [4.1.0-dev] 2017-04-17
+- Improvement on default mirrorlist.
+  * mirror protocols are reverse sorted (https,http,ftps,ftp).
+  * if several protocols exist only the first is written to mirrorlist.
 - Improvement on mirror protocol selection [#90](https://github.com/manjaro/pacman-mirrors/issues/90).
   * Added `# Protocols = ` to pacman-mirrors.conf.
-
-## [4.1.0-dev]
 - Improvement on `--interactive`: select mirrors by protocol.
 - Added to config `# SSL = False` [#86](https://github.com/manjaro/pacman-mirrors/issues/86).
 - Added a simple API [#81](https://github.com/manjaro/pacman-mirrors/issues/81).
