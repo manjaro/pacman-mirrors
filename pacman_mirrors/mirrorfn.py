@@ -76,22 +76,23 @@ def filter_mirror_country(mirrorlist, countrylist):
             result.append(mirror)
     return result
 
-
-def filter_mirror_ssl(mirrorlist):
-    """Return a new list with ssl
-    :param mirrorlist:
+def filter_mirror_protocols(mirrorlist, protocols=None):
+    """Return a new mirrorlist with protocols
+    :type mirrorlist: list
+    :type protocols: list
     :rtype: list
     """
+    if protocols is None:
+        protocols = ["https", "ftps"]
     result = []
+    if not protocols:
+        return mirrorlist
     for mirror in mirrorlist:
-        protocols = sorted(mirror["protocols"], reverse=True)
-        mirror["protocols"] = []
+        accepted = []
         for protocol in enumerate(protocols):
-            num, proto = protocol
-            if proto == "https":
-                mirror["protocols"].append(proto)
-            if proto == "ftps":
-                mirror["protocols"].append(proto)
-            if mirror["protocols"]:
-                result.append(mirror)
+            if protocol in mirror["protocols"]:
+                accepted.append(protocol)
+        if accepted:
+            mirror["protocols"] = accepted
+            result.append(mirror)
     return result
