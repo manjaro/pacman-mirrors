@@ -67,7 +67,7 @@ def build_config():
         "branches": conf.BRANCHES,
         "config_file": conf.CONFIG_FILE,
         "custom_file": conf.CUSTOM_FILE,
-        "fallback_file": conf.FALLBACK,
+        "fallback_file": conf.MIRROR_FALLBACK,
         "method": "rank",
         "mirror_dir": conf.MIRROR_DIR,
         "mirror_file": conf.MIRROR_FILE,
