@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 ## [4.1.0-dev] 2017-04-17
 - Improvement on default mirrorlist.
   * mirror protocols are reverse sorted (https,http,ftps,ftp).
-  * if several protocols exist only the first is written to mirrorlist.
+  * if several protocols exist only the first is written to mirrorlist. Thus ssl enabled protocols get priority.
 - Improvement on mirror protocol selection [#90](https://github.com/manjaro/pacman-mirrors/issues/90).
   * Added `# Protocols = ` to pacman-mirrors.conf.
 - Improvement on `--interactive`: select mirrors by protocol.
