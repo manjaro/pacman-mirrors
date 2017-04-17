@@ -187,7 +187,7 @@ def update_mirrors(config):
                                           txt.IS_MISSING))
             print(".: {} {} {}".format(txt.WRN_CLR,
                                        txt.FALLING_BACK,
-                                       conf.FALLBACK))
+                                       conf.MIRROR_FALLBACK))
             result = (True, False)
         if not filefn.check_file(config["fallback_file"]):
             print(".: {} {}".format(txt.ERR_CLR, txt.HOUSTON))
