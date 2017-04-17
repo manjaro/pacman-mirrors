@@ -29,10 +29,10 @@ MIRROR_LIST = "/etc/pacman.d/mirrorlist"
 MIRROR_DIR = "/var/lib/pacman-mirrors/"
 CUSTOM_FILE = "/var/lib/pacman-mirrors/custom-mirrors.json"
 MIRROR_FILE = "/var/lib/pacman-mirrors/mirrors.json"
+MIRROR_FALLBACK = "/usr/share/pacman-mirrors/mirrors.json"
 STATUS_FILE = "/var/lib/pacman-mirrors/status.json"
 # special cases
 O_CUST_FILE = "/var/lib/pacman-mirrors/Custom"
-FALLBACK = "/usr/share/pacman-mirrors/mirrors.json"
 # repo constants
 BRANCHES = ("stable", "testing", "unstable")
 REPO_ARCH = "/$repo/$arch"
