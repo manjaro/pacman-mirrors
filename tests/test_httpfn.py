@@ -15,6 +15,27 @@ from pacman_mirrors.pacman_mirrors import PacmanMirrors
 from pacman_mirrors import configfn
 from . import mock_configuration as conf
 
+test_conf = {
+    "branch": "stable",
+    "branches": conf.BRANCHES,
+    "config_file": conf.CONFIG_FILE,
+    "custom_file": conf.CUSTOM_FILE,
+    "fallback_file": conf.FALLBACK,
+    "method": "rank",
+    "mirror_dir": conf.MIRROR_DIR,
+    "mirror_file": conf.MIRROR_FILE,
+    "mirror_list": conf.MIRROR_LIST,
+    "no_update": False,
+    "only_country": [],
+    "protocols": [],
+    "repo_arch": conf.REPO_ARCH,
+    "status_file": conf.STATUS_FILE,
+    "ssl": False,
+    "ssl_verify": True,
+    "url_mirrors_json": conf.URL_MIRROR_JSON,
+    "url_status_json": conf.URL_STATUS_JSON
+}
+
 
 class TestHttpFn(unittest.TestCase):
     """Pacman Mirrors Test suite"""
@@ -29,25 +50,7 @@ class TestHttpFn(unittest.TestCase):
         """TEST: Geoip country IS avaiable"""
         mock_os_getuid.return_value = 0
         mock_get_geoip_country.return_value = "France"
-        mock_build_config.return_value = {
-            "branch": "stable",
-            "branches": conf.BRANCHES,
-            "config_file": conf.CONFIG_FILE,
-            "custom_file": conf.CUSTOM_FILE,
-            "fallback_file": conf.FALLBACK,
-            "method": "rank",
-            "mirror_dir": conf.MIRROR_DIR,
-            "mirror_file": conf.MIRROR_FILE,
-            "mirror_list": conf.MIRROR_LIST,
-            "no_update": False,
-            "only_country": [],
-            "repo_arch": conf.REPO_ARCH,
-            "ssl": False,
-            "ssl_verify": True,
-            "status_file": conf.STATUS_FILE,
-            "url_mirrors_json": conf.URL_MIRROR_JSON,
-            "url_status_json": conf.URL_STATUS_JSON
-        }
+        mock_build_config.return_value = test_conf
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
                                   "--geoip"]):
@@ -64,25 +67,7 @@ class TestHttpFn(unittest.TestCase):
         """TEST: Geoip country IS NOT available"""
         mock_os_getuid.return_value = 0
         mock_get_geoip_country.return_value = "Antarctica"
-        mock_build_config.return_value = {
-            "branch": "stable",
-            "branches": conf.BRANCHES,
-            "config_file": conf.CONFIG_FILE,
-            "custom_file": conf.CUSTOM_FILE,
-            "fallback_file": conf.FALLBACK,
-            "method": "rank",
-            "mirror_dir": conf.MIRROR_DIR,
-            "mirror_file": conf.MIRROR_FILE,
-            "mirror_list": conf.MIRROR_LIST,
-            "no_update": False,
-            "only_country": [],
-            "repo_arch": conf.REPO_ARCH,
-            "ssl": False,
-            "ssl_verify": True,
-            "status_file": conf.STATUS_FILE,
-            "url_mirrors_json": conf.URL_MIRROR_JSON,
-            "url_status_json": conf.URL_STATUS_JSON
-        }
+        mock_build_config.return_value = test_conf
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
                                   "-g",
