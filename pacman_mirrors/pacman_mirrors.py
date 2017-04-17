@@ -248,15 +248,15 @@ class PacmanMirrors:
         """Generate common mirrorlist"""
         worklist = mirrorfn.filter_mirror_country(self.mirrors.mirrorlist,
                                                   self.selected_countries)
+        if self.config["protocols"]:
+            worklist = mirrorfn.filter_mirror_protocols(worklist, protocols=self.config["protocols"])
         if self.config["ssl"]:
-            worklist = mirrorfn.filter_mirror_ssl(worklist)
-
+            worklist = mirrorfn.filter_mirror_protocols(worklist, protocols=None)
         if self.config["method"] == "rank":
             worklist = self.test_mirrors(worklist)
             worklist = sorted(worklist, key=itemgetter("resp_time"))
         else:
             shuffle(worklist)
-
         if worklist:
             filefn.output_mirror_list(self.config, worklist, quiet=self.quiet)
             if self.custom:
@@ -272,9 +272,10 @@ class PacmanMirrors:
         # randomize the load on up2date mirrors
         worklist = self.mirrors.mirrorlist
         shuffle(worklist)
+        if self.config["protocols"]:
+            worklist = mirrorfn.filter_mirror_protocols(worklist, protocols=self.config["protocols"])
         if self.config["ssl"]:
-            worklist = mirrorfn.filter_mirror_ssl(worklist)
-
+            worklist = mirrorfn.filter_mirror_protocols(worklist, protocols=None)
         up2date = [item for item in worklist if item["branches"] == [1, 1, 1]]
         worklist = []
         print(".: {}: {} - {}".format(txt.INF_CLR,
@@ -317,16 +318,16 @@ class PacmanMirrors:
         """
         worklist = mirrorfn.filter_mirror_country(self.mirrors.mirrorlist,
                                                   self.selected_countries)
+        if self.config["protocols"]:
+            worklist = mirrorfn.filter_mirror_protocols(worklist, protocols=self.config["protocols"])
         if self.config["ssl"]:
-            worklist = mirrorfn.filter_mirror_ssl(worklist)
-
+            worklist = mirrorfn.filter_mirror_protocols(worklist, protocols=None)
         if not self.default:
             if self.config["method"] == "rank":
                 worklist = self.test_mirrors(worklist)
                 worklist = sorted(worklist, key=itemgetter("resp_time"))
             else:
                 shuffle(worklist)
-
         interactive_list = []
         for mirror in worklist:
             for protocol in enumerate(mirror["protocols"]):
@@ -337,16 +338,13 @@ class PacmanMirrors:
                     "last_sync": mirror["last_sync"],
                     "url": "{}{}".format(protocol[1], mirror["url"][pos:])
                 })
-
         if self.no_display:
             from . import consoleui as ui
         else:
             from . import graphicalui as ui
-
         interactive = ui.run(interactive_list,
                              self.config["method"] == "random",
                              self.default)
-
         if interactive.is_done:
             custom_list = interactive.custom_list
             if self.default and custom_list:
@@ -356,7 +354,6 @@ class PacmanMirrors:
                                          key=itemgetter("resp_time"))
                 else:
                     shuffle(custom_list)
-
             selected = []  # written to mirrorlist
             mirrorfile = []  # written to custom-mirror.json
             for item in custom_list:
