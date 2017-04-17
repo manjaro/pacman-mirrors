@@ -54,8 +54,10 @@ def return_mirror_filename(config):
     if check_file(config["status_file"]):
         status = True
         filename = config["status_file"]
-    elif check_file(config["mirror_file"]):
-        filename = config["mirror_file"]
+    # confusion exist with mirror file in same folder as status file
+    # the mirror file as been removed from /var/lib/pacman-mirrors
+    # elif check_file(config["mirror_file"]):
+    #     filename = config["mirror_file"]
     elif check_file(config["fallback_file"]):
         filename = config["fallback_file"]
     if not filename:
@@ -72,6 +74,7 @@ def output_mirror_list(config, servers, custom=False, quiet=False, interactive=F
     :param servers: list of servers to write
     :param custom:
     :param quiet:
+    :param interactive: 
     """
     try:
         with open(config["mirror_list"], "w") as outfile:
@@ -132,7 +135,8 @@ def write_mirrorlist_header(handle, custom=False):
     :param custom: controls content of the header
     """
     # handle creation time in unicode
-    # http://stackoverflow.com/questions/16034060/python3-datetime-datetime-strftime-failed-to-accept-utf-8-string-format
+    # http://stackoverflow.com/questions/16034060/
+    #  python3-datetime-datetime-strftime-failed-to-accept-utf-8-string-format
     created = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
     handle.write("##\n")
     if custom:
@@ -154,5 +158,5 @@ def write_mirrorlist_entry(handle, mirror):
     :param mirror: mirror object
     """
     workitem = mirror
-    handle.write("## Country       : {}\n".format(workitem["country"]))
+    handle.write("## Country : {}\n".format(workitem["country"]))
     handle.write("Server = {}\n\n".format(workitem["url"]))
