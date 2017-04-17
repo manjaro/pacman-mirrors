@@ -72,6 +72,7 @@ Make pacman-mirrors silent.
 - `--set-branch` writes branch from `--branch` to prefix`config_file`
 
 ## pacman-mirrors.conf
+
 ```
 ## Branch Pacman should use (stable, testing, unstable)
 # Branch = stable
@@ -80,6 +81,12 @@ Make pacman-mirrors silent.
 ## 1) rank   - rank mirrors depending on their access time
 ## 2) random - randomly generate the output mirrorlist
 # Method = rank
+
+## Define protocols and priority eg. 'https,http' or 'http,https'
+## Defined protocols are written to the mirrorlist
+## Leaving a protocol out will ban the protocol from being used
+## Empty means all in no particular order
+# Protocols =
 
 ## Specify to use only mirrors from specific a country.
 ## Can add multiple countries separated by a comma (ex: Germany,France)

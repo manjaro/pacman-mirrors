@@ -158,6 +158,12 @@ Make pacman-mirrors silent.</p>
 ## 2) random - randomly generate the output mirrorlist
 # Method = rank
 
+## Define protocols and priority eg. 'https,http' or 'http,https'
+## Defined protocols are written to the mirrorlist
+## Leaving a protocol out will ban the protocol from being used
+## Empty means all in no particular order
+# Protocols =
+
 ## Specify to use only mirrors from specific a country.
 ## Can add multiple countries separated by a comma (ex: Germany,France)
 ## Empty means all
@@ -220,5 +226,5 @@ Make pacman-mirrors silent.</p>
 
 <!--
 MkDocs version : 0.16.1
-Build Date UTC : 2017-04-13 12:00:09
+Build Date UTC : 2017-04-17 13:00:30
 -->
