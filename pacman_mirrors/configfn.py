@@ -74,6 +74,7 @@ def build_config():
         "mirror_list": conf.MIRROR_LIST,
         "no_update": False,
         "only_country": [],
+        "protocols": [],
         "repo_arch": conf.REPO_ARCH,
         "ssl": False,
         "ssl_verify": True,
@@ -113,6 +114,8 @@ def build_config():
                     elif key == "SSLVerify":
                         if value == "False":
                             config["ssl_verify"] = False
+                    elif key == "Protocols":
+                        config["protocols"] = value.split(",")
     except (PermissionError, OSError) as err:
         print(".: {} {}: {}: {}".format(txt.ERR_CLR,
                                         txt.CANNOT_READ_FILE,
