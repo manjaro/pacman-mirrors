@@ -84,9 +84,14 @@ def filter_mirror_ssl(mirrorlist):
     """
     result = []
     for mirror in mirrorlist:
-        for protocol in enumerate(mirror["protocols"]):
+        protocols = sorted(mirror["protocols"], reverse=True)
+        mirror["protocols"] = []
+        for protocol in enumerate(protocols):
             num, proto = protocol
             if proto == "https":
-                mirror["protocols"] = ["https"]
+                mirror["protocols"].append(proto)
+            if proto == "ftps":
+                mirror["protocols"].append(proto)
+            if mirror["protocols"]:
                 result.append(mirror)
     return result
