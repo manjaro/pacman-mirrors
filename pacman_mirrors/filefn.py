@@ -84,8 +84,9 @@ def output_mirror_list(config, servers, custom=False, quiet=False, interactive=F
             cols, lines = miscfn.terminal_size()
             for server in servers:
                 if interactive:
-                    # write list entry
-                    write_mirrorlist_entry(outfile, server)
+                    server["url"] = "{}{}{}".format(server["url"],
+                                                    config["branch"],
+                                                    config["repo_arch"])
                     if not quiet:
                         message = "   {:<15} : {}{}".format(server["country"],
                                                             server["url"],
@@ -103,12 +104,13 @@ def output_mirror_list(config, servers, custom=False, quiet=False, interactive=F
                                                       url[pos:],
                                                       config["branch"],
                                                       config["repo_arch"])
-                    # write list entry
-                    write_mirrorlist_entry(outfile, server)
                     if not quiet:
                         message = "   {:<15} : {}".format(server["country"],
                                                           msg_url)
                         print("{:.{}}".format(message, cols))
+
+                # write list entry
+                write_mirrorlist_entry(outfile, server)
 
             print(".: {} {}: {}".format(txt.INF_CLR,
                                         txt.MIRROR_LIST_SAVED,
