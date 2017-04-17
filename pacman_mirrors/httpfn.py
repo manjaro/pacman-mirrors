@@ -24,6 +24,7 @@ import json
 import ssl
 import time
 from http.client import HTTPException
+import os
 from os import system as system_call
 from socket import timeout
 from urllib.error import URLError
@@ -50,7 +51,7 @@ def download_mirrors(config):
                 response.read().decode("utf8"),
                 object_pairs_hook=collections.OrderedDict)
         fetchmirrors = True
-        jsonfn.write_json_file(mirrorlist, config["mirror_file"])
+        jsonfn.write_json_file(mirrorlist, config["fallback_file"])
     except (HTTPException, json.JSONDecodeError, URLError):
         pass
     try:
@@ -167,6 +168,10 @@ def update_mirrors(config):
     :returns: tuple with result for mirrors.json and status.json
     :rtype: tuple
     """
+    # the mirrors.json in /var/lib/pacman-mirrors is confusing.
+    # one fallback file in /usr/share/pacman-mirrors should be enough.
+    if filefn.check_file(config["mirror_file"]):
+        os.remove(config["mirror_file"])
     result = None
     connected = is_connected("http://repo.manjaro.org")
     if connected:
@@ -175,10 +180,10 @@ def update_mirrors(config):
                                    txt.REPO_SERVER))
         result = download_mirrors(config)
     else:
-        if not filefn.check_file(config["mirror_file"]):
+        if not filefn.check_file(config["status_file"]):
             print(".: {} {} {} {}".format(txt.WRN_CLR,
                                           txt.MIRROR_FILE,
-                                          config["mirror_file"],
+                                          config["status_file"],
                                           txt.IS_MISSING))
             print(".: {} {} {}".format(txt.WRN_CLR,
                                        txt.FALLING_BACK,
