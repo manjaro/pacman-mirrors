@@ -2,8 +2,8 @@
 All notable changes to this project will be documented in this file.
 
 ## 2017-04-17
-- Improvement on mirror protocol selection [#90](https://github.com/manjaro/pacman-mirrors/issues/90)
-- Added `# Protocols = ` to pacman-mirrors.conf
+- Improvement on mirror protocol selection [#90](https://github.com/manjaro/pacman-mirrors/issues/90).
+- Added `# Protocols = ` to pacman-mirrors.conf.
 
 ## [4.1.0-dev]
 - Improvement on `--interactive`: select mirrors by protocol.
