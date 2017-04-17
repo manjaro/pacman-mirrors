@@ -93,22 +93,22 @@ def output_mirror_list(config, servers, custom=False, quiet=False, interactive=F
                         print("{:.{}}".format(message, cols))
                 else:
                     url = server["url"]
-                    for protocol in enumerate(server["protocols"]):
-                        pos = url.find(":")
-                        msg_url = server["url"] = "{}{}{}".format(protocol[1],
-                                                                  url[pos:],
-                                                                  config["branch"])
+                    protocol = server["protocols"][0]
+                    pos = url.find(":")
+                    msg_url = server["url"] = "{}{}{}".format(protocol,
+                                                              url[pos:],
+                                                              config["branch"])
 
-                        server["url"] = "{}{}{}{}".format(protocol[1],
-                                                          url[pos:],
-                                                          config["branch"],
-                                                          config["repo_arch"])
-                        # write list entry
-                        write_mirrorlist_entry(outfile, server)
-                        if not quiet:
-                            message = "   {:<15} : {}".format(server["country"],
-                                                              msg_url)
-                            print("{:.{}}".format(message, cols))
+                    server["url"] = "{}{}{}{}".format(protocol,
+                                                      url[pos:],
+                                                      config["branch"],
+                                                      config["repo_arch"])
+                    # write list entry
+                    write_mirrorlist_entry(outfile, server)
+                    if not quiet:
+                        message = "   {:<15} : {}".format(server["country"],
+                                                          msg_url)
+                        print("{:.{}}".format(message, cols))
 
             print(".: {} {}: {}".format(txt.INF_CLR,
                                         txt.MIRROR_LIST_SAVED,
