@@ -219,7 +219,7 @@ class PacmanMirrors:
         """Api functions
         :param prefix: prefix to the config paths
         :param set_branch: writes branch to pacman-mirrors
-        :param get_branch: exit with -1 -2 -3
+        :param get_branch: exit with branch
         """
         if prefix:
             if "$" in prefix:
@@ -233,7 +233,7 @@ class PacmanMirrors:
             self.config["mirror_dir"] = \
                 prefix + self.config["mirror_dir"]
             self.config["mirror_file"] = \
-                prefix + self.config["mirror_file"]
+                prefix + self.config["fallback_file"]
             self.config["mirror_list"] = \
                 prefix + self.config["mirror_list"]
             self.config["status_file"] = \
