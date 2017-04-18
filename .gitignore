@@ -1,5 +1,8 @@
 *.py[cod]
 
+# changes when build
+share/mirrors.json
+
 # C extensions
 *.so
 
