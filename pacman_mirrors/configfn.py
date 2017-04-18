@@ -65,13 +65,13 @@ def build_config():
     custom = False
     # default config
     config = {
-        "to_be_removed": conf.TO_BE_REMOVED,
+        "to_be_removed": conf.TO_BE_REMOVED,  # long after 2017-04-18
         "branch": "stable",
         "branches": conf.BRANCHES,
         "config_file": conf.CONFIG_FILE,
         "custom_file": conf.CUSTOM_FILE,
         "method": "rank",
-        "mirror_dir": conf.MIRROR_DIR,
+        "work_dir": conf.WORK_DIR,
         "mirror_file": conf.MIRROR_FILE,
         "mirror_list": conf.MIRROR_LIST,
         "no_update": False,
@@ -104,7 +104,7 @@ def build_config():
                         custom = True
                         config["only_country"] = value.split(",")
                     elif key == "MirrorlistsDir":
-                        config["mirror_dir"] = value
+                        config["work_dir"] = value
                     elif key == "OutputMirrorlist":
                         config["mirror_list"] = value
                     elif key == "NoUpdate":

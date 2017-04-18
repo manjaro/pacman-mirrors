@@ -60,12 +60,12 @@ class TestDefaultConfig(unittest.TestCase):
                                   "-g"]):
             app = PacmanMirrors()
             app.config = configfn.build_config()
-            assert app.config["mirror_dir"] == "tests/mock/var/"
+            assert app.config["work_dir"] == "tests/mock/var/"
 
     @patch("os.getuid")
     @patch.object(configfn, "build_config")
     def test_default_mirrorfile(self, mock_build_config, mock_os_getuid):
-        """TEST: config[mirror_file] = tests/mock/var/mirrors.json"""
+        """TEST: config[mirror_file] = tests/mock/usr/mirrors.json"""
         mock_os_getuid.return_value = 0
         mock_build_config.return_value = conf.test_conf
         with unittest.mock.patch("sys.argv",
@@ -73,7 +73,7 @@ class TestDefaultConfig(unittest.TestCase):
                                   "-g"]):
             app = PacmanMirrors()
             app.config = configfn.build_config()
-            assert app.config["mirror_file"] == "tests/mock/var/mirrors.json"
+            assert app.config["mirror_file"] == "tests/mock/usr/mirrors.json"
 
     @patch("os.getuid")
     @patch.object(configfn, "build_config")

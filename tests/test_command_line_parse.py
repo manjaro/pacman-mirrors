@@ -79,7 +79,7 @@ class TestCommandLineParse(unittest.TestCase):
             app.config["config_file"] = conf.CONFIG_FILE
             app.config = configfn.build_config()
             app.command_line_parse()
-            assert app.config["mirror_dir"] == "/another/dir/"
+            assert app.config["work_dir"] == "/another/dir/"
 
     @patch("os.getuid")
     @patch.object(configfn, "build_config")

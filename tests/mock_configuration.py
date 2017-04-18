@@ -5,7 +5,7 @@ URL_STATUS_JSON = "http://repo.manjaro.org/status.json"
 CONFIG_FILE = "tests/mock/etc/pacman-mirrors.conf"
 MIRROR_LIST = "tests/mock/etc/mirrorlist"
 # pacman-mirrors
-MIRROR_DIR = "tests/mock/var/"
+WORK_DIR = "tests/mock/var/"
 CUSTOM_FILE = "tests/mock/var/custom-mirrors.json"
 MIRROR_FILE = "tests/mock/usr/mirrors.json"
 STATUS_FILE = "tests/mock/var/status.json"
@@ -23,7 +23,7 @@ test_conf = {
     "config_file": CONFIG_FILE,
     "custom_file": CUSTOM_FILE,
     "method": "rank",
-    "mirror_dir": MIRROR_DIR,
+    "work_dir": WORK_DIR,
     "mirror_file": MIRROR_FILE,
     "mirror_list": MIRROR_LIST,
     "no_update": False,

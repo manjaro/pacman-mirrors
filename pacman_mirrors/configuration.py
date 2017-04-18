@@ -26,7 +26,7 @@ URL_STATUS_JSON = "http://repo.manjaro.org/status.json"
 CONFIG_FILE = "/etc/pacman-mirrors.conf"
 MIRROR_LIST = "/etc/pacman.d/mirrorlist"
 # pacman-mirrors dir/files
-MIRROR_DIR = "/var/lib/pacman-mirrors/"
+WORK_DIR = "/var/lib/pacman-mirrors/"
 CUSTOM_FILE = "/var/lib/pacman-mirrors/custom-mirrors.json"
 MIRROR_FILE = "/usr/share/pacman-mirrors/mirrors.json"
 STATUS_FILE = "/var/lib/pacman-mirrors/status.json"

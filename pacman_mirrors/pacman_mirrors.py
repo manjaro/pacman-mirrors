@@ -178,7 +178,7 @@ class PacmanMirrors:
             self.quiet = True
 
         if args.mirror_dir:
-            self.config["mirror_dir"] = args.mirror_dir
+            self.config["work_dir"] = args.mirror_dir
 
         if args.output:
             if args.output[0] == "/":
@@ -230,8 +230,8 @@ class PacmanMirrors:
                 prefix + self.config["custom_file"]
             self.config["to_be_removed"] = \
                 prefix + self.config["to_be_removed"]
-            self.config["mirror_dir"] = \
-                prefix + self.config["mirror_dir"]
+            self.config["work_dir"] = \
+                prefix + self.config["work_dir"]
             self.config["mirror_file"] = \
                 prefix + self.config["to_be_removed"]
             self.config["mirror_list"] = \
@@ -482,7 +482,7 @@ class PacmanMirrors:
     def run(self):
         """Run"""
         (self.config, self.custom) = configfn.build_config()
-        filefn.dir_must_exist(self.config["mirror_dir"])
+        filefn.dir_must_exist(self.config["work_dir"])
         self.command_line_parse()
         self.network = httpfn.is_connected("https://manjaro.org")
         if self.network:
