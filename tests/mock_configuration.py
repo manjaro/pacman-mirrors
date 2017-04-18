@@ -31,7 +31,6 @@ test_conf = {
     "protocols": [],
     "repo_arch": REPO_ARCH,
     "status_file": STATUS_FILE,
-    "ssl": False,
     "ssl_verify": True,
     "url_mirrors_json": URL_MIRROR_JSON,
     "url_status_json": URL_STATUS_JSON
