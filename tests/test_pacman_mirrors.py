@@ -16,27 +16,6 @@ from pacman_mirrors import httpfn
 from pacman_mirrors.pacman_mirrors import PacmanMirrors
 from . import mock_configuration as conf
 
-test_conf = {
-    "to_be_removed": conf.TO_BE_REMOVED,
-    "branch": "stable",
-    "branches": conf.BRANCHES,
-    "config_file": conf.CONFIG_FILE,
-    "custom_file": conf.CUSTOM_FILE,
-    "method": "rank",
-    "mirror_dir": conf.MIRROR_DIR,
-    "mirror_file": conf.MIRROR_FILE,
-    "mirror_list": conf.MIRROR_LIST,
-    "no_update": False,
-    "only_country": [],
-    "protocols": [],
-    "repo_arch": conf.REPO_ARCH,
-    "status_file": conf.STATUS_FILE,
-    "ssl": False,
-    "ssl_verify": True,
-    "url_mirrors_json": conf.URL_MIRROR_JSON,
-    "url_status_json": conf.URL_STATUS_JSON
-}
-
 
 class TestPacmanMirrors(unittest.TestCase):
     """Pacman Mirrors Test suite"""
@@ -49,7 +28,7 @@ class TestPacmanMirrors(unittest.TestCase):
     def test_full_run_random(self, mock_build_config, mock_os_getuid):
         """TEST: pacman-mirrors -c all -m random"""
         mock_os_getuid.return_value = 0
-        mock_build_config.return_value = test_conf
+        mock_build_config.return_value = conf.test_conf
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
                                   "-c", "all",
@@ -78,7 +57,7 @@ class TestPacmanMirrors(unittest.TestCase):
     def test_full_run_fasttrack(self, mock_build_config, mock_os_getuid):
         """TEST: pacman-mirrors -f 5"""
         mock_os_getuid.return_value = 0
-        mock_build_config.return_value = test_conf
+        mock_build_config.return_value = conf.test_conf
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
                                   "-f", "5"]):
@@ -107,7 +86,7 @@ class TestPacmanMirrors(unittest.TestCase):
     def test_full_run_rank(self, mock_build_config, mock_os_getuid):
         """TEST: pacman-mirrors -c all -m random"""
         mock_os_getuid.return_value = 0
-        mock_build_config.return_value = test_conf
+        mock_build_config.return_value = conf.test_conf
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
                                   "-c", "all"]):
