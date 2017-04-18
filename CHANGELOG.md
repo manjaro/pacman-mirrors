@@ -3,11 +3,12 @@ All notable changes to this project will be documented in this file.
 
 ## [4.1.0-dev] 2017-04-17
 - `/var/lib/pacman-mirrors/mirrors.json` was causing confusion so it has been removed. 
-  * Only one fallback is needed `/usr/share/pacman-mirrors/mirrors.json`.
+  * Only one fallback is needed `/usr/share/pacman-mirrors/mirrors.json`. 
 - Improvement on default mirrorlist.
   * mirror protocols are reverse sorted (https,http,ftps,ftp).
   * if several protocols exist only the first is written to mirrorlist. Thus ssl enabled protocols get priority.
 - Improvement on mirror protocol selection [#90](https://github.com/manjaro/pacman-mirrors/issues/90).
+  * If a mirror offers more than one protocol - only the first is written to the mirrorlist.
   * Added `# Protocols = ` to pacman-mirrors.conf.
   * Defined protocols are honored in the order in which they appear.
 - Improvement on `--interactive`: select mirrors by protocol.
