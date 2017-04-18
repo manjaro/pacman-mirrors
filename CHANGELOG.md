@@ -2,6 +2,8 @@
 All notable changes to this project will be documented in this file.
 
 ## [4.1.0-dev] 2017-04-17
+- `/var/lib/pacman-mirrors/mirrors.json` was causing confusion so it has been removed. 
+  * Only one fallback is needed `/usr/share/pacman-mirrors/mirrors.json`.
 - Improvement on default mirrorlist.
   * mirror protocols are reverse sorted (https,http,ftps,ftp).
   * if several protocols exist only the first is written to mirrorlist. Thus ssl enabled protocols get priority.
@@ -18,7 +20,7 @@ All notable changes to this project will be documented in this file.
 - Update docs.
 
 ## [4.0.4] - 2017-04-15
-- Fix issue with UnicodeEncodeError in inactive mode
+- Fix issue with UnicodeEncodeError in interactive mode
 
 ## [4.0.3] - 2017-03-28
 - Fix issue with `--fasttrack` and `OnlyCountry = Custom`.
