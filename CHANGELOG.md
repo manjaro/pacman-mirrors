@@ -9,8 +9,8 @@ All notable changes to this project will be documented in this file.
   * if several protocols exist only the first is written to mirrorlist. Thus ssl enabled protocols get priority.
 - Improvement on mirror protocol selection [#90](https://github.com/manjaro/pacman-mirrors/issues/90).
   * Added `# Protocols = ` to pacman-mirrors.conf.
+  * Defined protocols are honored in the order in which they appear.
 - Improvement on `--interactive`: select mirrors by protocol.
-- Added to config `# SSL = False` [#86](https://github.com/manjaro/pacman-mirrors/issues/86).
 - Added a simple API [#81](https://github.com/manjaro/pacman-mirrors/issues/81).
 - Update translations.
 - Code optimizing.
