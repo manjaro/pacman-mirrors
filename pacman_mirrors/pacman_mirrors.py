@@ -228,12 +228,12 @@ class PacmanMirrors:
                 prefix + self.config["config_file"]
             self.config["custom_file"] = \
                 prefix + self.config["custom_file"]
-            self.config["fallback_file"] = \
-                prefix + self.config["fallback_file"]
+            self.config["to_be_removed"] = \
+                prefix + self.config["to_be_removed"]
             self.config["mirror_dir"] = \
                 prefix + self.config["mirror_dir"]
             self.config["mirror_file"] = \
-                prefix + self.config["fallback_file"]
+                prefix + self.config["to_be_removed"]
             self.config["mirror_list"] = \
                 prefix + self.config["mirror_list"]
             self.config["status_file"] = \

@@ -15,11 +15,11 @@ from pacman_mirrors import configfn
 from . import mock_configuration as conf
 
 test_conf = {
+    "to_be_removed": conf.TO_BE_REMOVED,
     "branch": "stable",
     "branches": conf.BRANCHES,
     "config_file": conf.CONFIG_FILE,
     "custom_file": conf.CUSTOM_FILE,
-    "fallback_file": conf.FALLBACK,
     "method": "rank",
     "mirror_dir": conf.MIRROR_DIR,
     "mirror_file": conf.MIRROR_FILE,

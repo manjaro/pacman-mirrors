@@ -22,17 +22,17 @@
 # http constants
 URL_MIRROR_JSON = "http://repo.manjaro.org/mirrors.json"
 URL_STATUS_JSON = "http://repo.manjaro.org/status.json"
-# etc
+# etc files
 CONFIG_FILE = "/etc/pacman-mirrors.conf"
 MIRROR_LIST = "/etc/pacman.d/mirrorlist"
-# pacman-mirrors
+# pacman-mirrors dir/files
 MIRROR_DIR = "/var/lib/pacman-mirrors/"
 CUSTOM_FILE = "/var/lib/pacman-mirrors/custom-mirrors.json"
-MIRROR_FILE = "/var/lib/pacman-mirrors/mirrors.json"
-MIRROR_FALLBACK = "/usr/share/pacman-mirrors/mirrors.json"
+MIRROR_FILE = "/usr/share/pacman-mirrors/mirrors.json"
 STATUS_FILE = "/var/lib/pacman-mirrors/status.json"
-# special cases
-O_CUST_FILE = "/var/lib/pacman-mirrors/Custom"
 # repo constants
 BRANCHES = ("stable", "testing", "unstable")
 REPO_ARCH = "/$repo/$arch"
+# special cases
+O_CUST_FILE = "/var/lib/pacman-mirrors/Custom"
+TO_BE_REMOVED = "/var/lib/pacman-mirrors/mirrors.json"

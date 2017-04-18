@@ -50,8 +50,10 @@ def api_write_branch(branch, filename):
         os.replace(tmp.name, filename)
         os.chmod(filename, 0o644)
     except OSError as err:
-        print(".: {} {}: {}: {}".format(txt.ERR_CLR, txt.CANNOT_READ_FILE,
-                                        err.filename, err.strerror))
+        print(".: {} {}: {}: {}".format(txt.ERR_CLR,
+                                        txt.CANNOT_READ_FILE,
+                                        err.filename,
+                                        err.strerror))
         sys.exit(1)
 
 
@@ -63,11 +65,11 @@ def build_config():
     custom = False
     # default config
     config = {
+        "to_be_removed": conf.TO_BE_REMOVED,
         "branch": "stable",
         "branches": conf.BRANCHES,
         "config_file": conf.CONFIG_FILE,
         "custom_file": conf.CUSTOM_FILE,
-        "fallback_file": conf.MIRROR_FALLBACK,
         "method": "rank",
         "mirror_dir": conf.MIRROR_DIR,
         "mirror_file": conf.MIRROR_FILE,

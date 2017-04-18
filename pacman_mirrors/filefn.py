@@ -54,12 +54,8 @@ def return_mirror_filename(config):
     if check_file(config["status_file"]):
         status = True
         filename = config["status_file"]
-    # confusion exist with mirror file in same folder as status file
-    # the mirror file as been removed from /var/lib/pacman-mirrors
-    # elif check_file(config["mirror_file"]):
-    #     filename = config["mirror_file"]
-    elif check_file(config["fallback_file"]):
-        filename = config["fallback_file"]
+    elif check_file(config["mirror_file"]):
+        filename = config["mirror_file"]
     if not filename:
         print("\n{}.:! {}{}\n".format(txt.RS,
                                       txt.HOUSTON,
