@@ -209,9 +209,11 @@ class PacmanMirrors:
 
         if args.api:
             if args.set_branch:
-                self.api_config(prefix=args.prefix, set_branch=True)
+                if args.branch:
+                    self.api_config(prefix=args.prefix, set_branch=True)
             elif args.get_branch:
-                self.api_config(prefix=args.prefix, get_branch=True)
+                if not args.branch:
+                    self.api_config(prefix=args.prefix, get_branch=True)
             else:
                 self.api_config(prefix=args.prefix)
 
