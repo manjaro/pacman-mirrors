@@ -71,9 +71,13 @@ Make pacman-mirrors silent.
 - `--get-branch` returns branch from config in prefix`config_file`. If used with `--branch` and you get the arguments value.
 - `--set-branch` writes branch from `--branch` to prefix`config_file`
 
-## pacman-mirrors.conf
+## Content of pacman-mirrors.conf
 
 ```
+##
+## /etc/pacman-mirrors.conf
+##
+
 ## Branch Pacman should use (stable, testing, unstable)
 # Branch = stable
 
@@ -83,13 +87,15 @@ Make pacman-mirrors silent.
 # Method = rank
 
 ## Define protocols and priority eg. 'https,http' or 'http,https'
-## Defined protocols are written to the mirrorlist
-## Leaving a protocol out will ban the protocol from being used
-## Empty means all in no particular order
+## ATM available protocols are: http, https, ftp
+## Not specifying a protocol will ban the protocol from being used
+## If a mirror has more than one protocol defined only the first is written to the mirrorlist
+## Empty means all in reversed alphabetic order
 # Protocols =
 
-## Specify to use only mirrors from specific a country.
-## Can add multiple countries separated by a comma (ex: Germany,France)
+## Specify to use only mirrors from a specific country.
+## Can add multiple countries separated by a comma (example: Germany,France,Belgium)
+## Get a list of all available counties with 'pacman-mirrors -l'
 ## Empty means all
 # OnlyCountry =
 
@@ -105,10 +111,7 @@ Make pacman-mirrors silent.
 ## pacman-mirrors package upgrade.
 # NoUpdate = False
 
-## When set to True - only https-enabled mirrors is used.
-# SSL = False
-
 ## When set to False - all certificates are accepted.
-## Use only if you fully trust all https-enabled mirrors.
+## Use only if you fully trust all ssl-enabled mirrors.
 # SSLVerify = True
 ```
