@@ -39,7 +39,7 @@ def check_file(filename):
 
 def compare_files(filea, fileb):
     """Compare files with md5"""
-    md5 = haslib.md5()
+    md5 = hashlib.md5()
     with open(filea, "rb") as file1:
         bufa = file1.read()
         md5.update(bufa)
