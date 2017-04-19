@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 ## [4.1.0-dev] 2017-04-17
 - `/var/lib/pacman-mirrors/mirrors.json` is causing confusion so it has been removed. 
   * Only one fallback is needed `/usr/share/pacman-mirrors/mirrors.json`.
-  * ATM the file will be updated by pacman-mirrors when run.
+  * If a new `mirrors.json` is available - existing will be updated by pacman-mirrors.
 - Improvement on default mirrorlist.
   * mirror protocols are reverse sorted (https,http,ftps,ftp).
   * if several protocols exist only the first is written to mirrorlist. Thus ssl enabled protocols get priority.
