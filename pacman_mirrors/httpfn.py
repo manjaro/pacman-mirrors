@@ -52,6 +52,7 @@ def download_mirrors(config):
         tempfile = "/tmp/mirrors.json"
         jsonfn.json_dump_file(mirrorlist, tempfile)
         if filefn.compare_files(tempfile, config["mirror_file"]):
+            os.remove(config["mirror_file"])
             os.rename(tempfile, config["mirror_file"])
     except (HTTPException, json.JSONDecodeError, URLError):
         pass
