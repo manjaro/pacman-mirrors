@@ -47,12 +47,10 @@ def download_mirrors(config):
     fetchstatus = False
     try:
         with urlopen(config["url_mirrors_json"]) as response:
-            mirrorlist = json.loads(
-                response.read().decode("utf8"),
-                object_pairs_hook=collections.OrderedDict)
+            mirrorlist = json.loads(response.read().decode("utf8"), object_pairs_hook=collections.OrderedDict)
         fetchmirrors = True
         tempfile = "/tmp/mirrors.json"
-        jsonfn.write_json_file(mirrorlist, tempfile, dictionary=True)
+        jsonfn.json_dump_file(mirrorlist, tempfile)
         if filefn.compare_files(tempfile, config["mirror_file"]):
             os.rename(tempfile, config["mirror_file"])
     except (HTTPException, json.JSONDecodeError, URLError):

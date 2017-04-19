@@ -23,6 +23,11 @@ import collections
 import json
 
 
+def json_dump_file(data, filename):
+    with open(filename, "w") as outfile:
+        json.dump(data, outfile)
+
+
 def read_json_file(filename, dictionary=True):
     """Read json data from file"""
     result = list()

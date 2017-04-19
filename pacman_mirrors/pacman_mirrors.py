@@ -30,7 +30,7 @@ import os
 from operator import itemgetter
 from random import shuffle
 
-from __init__ import __version__
+from pacman_mirrors import __version__
 from .custom_help_formatter import CustomHelpFormatter
 from .mirror import Mirror
 from . import mirrorfn
