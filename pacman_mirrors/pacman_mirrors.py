@@ -455,28 +455,32 @@ class PacmanMirrors:
         ssl_wait = self.max_wait_time * 2
         ssl_verify = self.config["ssl_verify"]
         for mirror in worklist:
-            if not self.quiet:
-                message = "   ..... {:<15}: {}".format(mirror["country"],
-                                                       mirror["url"])
-                print("{:.{}}".format(message, cols), end="")
-                sys.stdout.flush()
-            # https sometimes takes a short while for handshake
-            if "https" in mirror["url"]:
-                self.max_wait_time = ssl_wait
-            else:
-                self.max_wait_time = http_wait
-            # let's see how responsive you are
-            resp_time = httpfn.get_mirror_response(mirror["url"],
-                                                   maxwait=self.max_wait_time,
-                                                   quiet=self.quiet,
-                                                   ssl_verify=ssl_verify)
-            mirror["resp_time"] = resp_time
-            if float(resp_time) >= self.max_wait_time:
+            url = mirror["url"]
+            pos = url.find(":")
+            for idx, proto in enumerate(mirror["protocols"]):
+                mirror["url"] = "{}{}".format(proto, url[pos:])
                 if not self.quiet:
-                    print("\r")
-            else:
-                if not self.quiet:
-                    print("\r   {:<5}{}{} ".format(txt.GS, resp_time, txt.CE))
+                    message = "   ..... {:<15}: {}".format(mirror["country"],
+                                                           mirror["url"])
+                    print("{:.{}}".format(message, cols), end="")
+                    sys.stdout.flush()
+                # https sometimes takes a short while for handshake
+                if "https" or "ftps" in mirror["url"]:
+                    self.max_wait_time = ssl_wait
+                else:
+                    self.max_wait_time = http_wait
+                # let's see how responsive you are
+                resp_time = httpfn.get_mirror_response(mirror["url"],
+                                                       maxwait=self.max_wait_time,
+                                                       quiet=self.quiet,
+                                                       ssl_verify=ssl_verify)
+                mirror["resp_time"] = resp_time
+                if float(resp_time) >= self.max_wait_time:
+                    if not self.quiet:
+                        print("\r")
+                else:
+                    if not self.quiet:
+                        print("\r   {:<5}{}{} ".format(txt.GS, resp_time, txt.CE))
         return worklist
 
     def run(self):
