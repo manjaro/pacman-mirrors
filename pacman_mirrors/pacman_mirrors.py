@@ -469,7 +469,7 @@ class PacmanMirrors:
                     print("{:.{}}".format(message, cols), end="")
                     sys.stdout.flush()
                 # https sometimes takes a short while for handshake
-                if "https" or "ftps" in mirror["url"]:
+                if proto == "https" or proto == "ftps":
                     self.max_wait_time = ssl_wait
                 else:
                     self.max_wait_time = http_wait
