@@ -20,7 +20,7 @@
 """Pacman-Mirrors Configuration"""
 
 # http constants
-URL_MIRROR_JSON = "http://repo.manjaro.org/mirrors.json"
+URL_MIRROR_JSON = "https://github.com/manjaro/manjaro-web-repo/raw/master/mirrors.json"
 URL_STATUS_JSON = "http://repo.manjaro.org/status.json"
 # etc files
 CONFIG_FILE = "/etc/pacman-mirrors.conf"
