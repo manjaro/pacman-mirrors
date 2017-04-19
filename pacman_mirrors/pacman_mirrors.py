@@ -283,7 +283,7 @@ class PacmanMirrors:
             if not self.quiet:
                 message = "   ..... {:<15}: {}: {}".format(
                     mirror["country"], mirror["last_sync"], mirror["url"])
-                print("{:.{}}".format(message, cols), end)
+                print("{:.{}}".format(message, cols), end="")
                 sys.stdout.flush()
             resp_time = httpfn.get_mirror_response(mirror["url"],
                                                    maxwait=self.max_wait_time,
@@ -458,7 +458,7 @@ class PacmanMirrors:
             if not self.quiet:
                 message = "   ..... {:<15}: {}".format(mirror["country"],
                                                        mirror["url"])
-                print("{:.{}}".format(message, cols), end)
+                print("{:.{}}".format(message, cols), end="")
                 sys.stdout.flush()
             # https sometimes takes a short while for handshake
             if "https" in mirror["url"]:
