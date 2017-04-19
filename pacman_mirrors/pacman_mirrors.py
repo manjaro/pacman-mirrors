@@ -241,6 +241,7 @@ class PacmanMirrors:
         if set_branch:
             configfn.api_write_branch(self.config["branch"],
                                       self.config["config_file"])
+            sys.exit(self.config["branch"])
         if get_branch:
             sys.exit(self.config["branch"])
 
