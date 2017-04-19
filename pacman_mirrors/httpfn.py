@@ -51,7 +51,10 @@ def download_mirrors(config):
                 response.read().decode("utf8"),
                 object_pairs_hook=collections.OrderedDict)
         fetchmirrors = True
-        jsonfn.write_json_file(mirrorlist, config["mirror_file"])
+        tempfile = "/tmp/mirrors.json"
+        jsonfn.write_json_file(mirrorlist, tempfile, dictionary=True)
+        if filefn.compare_files(tempfile, config["mirror_file"]):
+            os.rename(tempfile, config["mirror_file"])
     except (HTTPException, json.JSONDecodeError, URLError):
         pass
     try:

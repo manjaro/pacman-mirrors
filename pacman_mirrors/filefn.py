@@ -37,7 +37,7 @@ def check_file(filename):
     return os.path.isfile(filename)
 
 
-def compare_file(filea, fileb):
+def compare_files(filea, fileb):
     """Compare files with md5"""
     md5 = haslib.md5()
     with open(filea, "rb") as file1:
