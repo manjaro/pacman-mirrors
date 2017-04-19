@@ -249,7 +249,8 @@ class PacmanMirrors:
         worklist = mirrorfn.filter_mirror_country(self.mirrors.mirrorlist,
                                                   self.selected_countries)
         if self.config["protocols"]:
-            worklist = mirrorfn.filter_mirror_protocols(worklist, self.config["protocols"])
+            worklist = mirrorfn.filter_mirror_protocols(
+                worklist, self.config["protocols"])
         if self.config["method"] == "rank":
             worklist = self.test_mirrors(worklist)
             worklist = sorted(worklist, key=itemgetter("resp_time"))
@@ -271,7 +272,8 @@ class PacmanMirrors:
         worklist = self.mirrors.mirrorlist
         shuffle(worklist)
         if self.config["protocols"]:
-            worklist = mirrorfn.filter_mirror_protocols(worklist, self.config["protocols"])
+            worklist = mirrorfn.filter_mirror_protocols(
+                worklist, self.config["protocols"])
         up2date = [item for item in worklist if item["branches"] == [1, 1, 1]]
         worklist = []
         print(".: {}: {} - {}".format(txt.INF_CLR,
@@ -315,7 +317,8 @@ class PacmanMirrors:
         worklist = mirrorfn.filter_mirror_country(self.mirrors.mirrorlist,
                                                   self.selected_countries)
         if self.config["protocols"]:
-            worklist = mirrorfn.filter_mirror_protocols(worklist, self.config["protocols"])
+            worklist = mirrorfn.filter_mirror_protocols(
+                worklist, self.config["protocols"])
         if not self.default:
             if self.config["method"] == "rank":
                 worklist = self.test_mirrors(worklist)
@@ -364,8 +367,7 @@ class PacmanMirrors:
                                           txt.CUSTOM_MIRROR_LIST))
                 print("--------------------------")
                 # output mirror file
-                jsonfn.write_json_file(mirrorfile,
-                                       self.config["custom_file"])
+                jsonfn.write_json_file(mirrorfile, self.config["custom_file"])
                 print(".: {} {}: {}".format(txt.INF_CLR,
                                             txt.CUSTOM_MIRROR_FILE_SAVED,
                                             self.config["custom_file"]))
