@@ -2,6 +2,8 @@
 All notable changes to this project will be documented in this file.
 
 ## [4.1.0-dev] 2017-04-17
+- Added protocol option to api.
+  * Possible to control protocols from CLI
 - `/var/lib/pacman-mirrors/mirrors.json` is causing confusion so it has been removed. 
   * Only one fallback is needed `/usr/share/pacman-mirrors/mirrors.json`.
   * If a new `mirrors.json` is available - existing will be updated by pacman-mirrors.
