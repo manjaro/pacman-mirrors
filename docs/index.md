@@ -23,8 +23,8 @@ Choose the branch to use:
 - testing
 - unstable
 
-`-c [country]`, `--country [country]`
-Choose the country to use:
+`-c COUNTRY [COUNTRY ...]`, `--country COUNTRY [COUNTRY ...]`
+Choose the country to use (separated with comma or space):
 
 - all
 - France
@@ -65,11 +65,13 @@ Show the version of pacman-mirrors.
 `--quiet`
 Make pacman-mirrors silent.
 
-`-a`, `--api` [--prefix] [{--get-branch | --set-branch}]
-
-- `--prefix` for pacman-mirrors file-handling eg. /mnt/install or $mnt
-- `--get-branch` returns branch from config in prefix`config_file`. If used with `--branch` and you get the arguments value.
-- `--set-branch` writes branch from `--branch` to prefix`config_file`
+`-a`, `--api` [--prefix] [{--get-branch | --set-branch}] [--protocols PROTO [PROTO ...]] 
+- `--prefix` for pacman-mirrors file-handling eg. /mnt/install or $mnt.
+- `--get-branch` returns branch from config in prefix`config_file`. 
+  * Ignored if `--branch` is supplied.
+- `--set-branch` writes branch specified in `--branch` to prefix`config_file`.
+  * Ignored if `--branch` is not supplied.
+- `--protocols` write the specified protocols to prefix`pacman-mirrors.conf`.
 
 ## Content of pacman-mirrors.conf
 

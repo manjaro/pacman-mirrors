@@ -112,8 +112,8 @@ Choose the branch to use:</p>
 <li>testing</li>
 <li>unstable</li>
 </ul>
-<p><code>-c [country]</code>, <code>--country [country]</code>
-Choose the country to use:</p>
+<p><code>-c COUNTRY [COUNTRY ...]</code>, <code>--country COUNTRY [COUNTRY ...]</code>
+Choose the country to use (separated with comma or space):</p>
 <ul>
 <li>all</li>
 <li>France</li>
@@ -143,12 +143,13 @@ after the selection of mirrors.</p>
 Show the version of pacman-mirrors.</p>
 <p><code>--quiet</code>
 Make pacman-mirrors silent.</p>
-<p><code>-a</code>, <code>--api</code> [--prefix] [{--get-branch | --set-branch}]</p>
-<ul>
-<li><code>--prefix</code> for pacman-mirrors file-handling eg. /mnt/install or $mnt</li>
-<li><code>--get-branch</code> returns branch from config in prefix<code>config_file</code>. If used with <code>--branch</code> and you get the arguments value.</li>
-<li><code>--set-branch</code> writes branch from <code>--branch</code> to prefix<code>config_file</code></li>
-</ul>
+<p><code>-a</code>, <code>--api</code> [--prefix] [{--get-branch | --set-branch}] [--protocols PROTO [PROTO ...]] 
+- <code>--prefix</code> for pacman-mirrors file-handling eg. /mnt/install or $mnt.
+- <code>--get-branch</code> returns branch from config in prefix<code>config_file</code>. 
+  * Ignored if <code>--branch</code> is supplied.
+- <code>--set-branch</code> writes branch specified in <code>--branch</code> to prefix<code>config_file</code>.
+  * Ignored if <code>--branch</code> is not supplied.
+- <code>--protocols</code> write the specified protocols to prefix<code>pacman-mirrors.conf</code>.</p>
 <h2 id="content-of-pacman-mirrorsconf">Content of pacman-mirrors.conf</h2>
 <pre><code>##
 ## /etc/pacman-mirrors.conf
@@ -229,5 +230,5 @@ Make pacman-mirrors silent.</p>
 
 <!--
 MkDocs version : 0.16.1
-Build Date UTC : 2017-04-19 15:04:47
+Build Date UTC : 2017-04-20 13:37:16
 -->
