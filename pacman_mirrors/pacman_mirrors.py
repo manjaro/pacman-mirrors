@@ -134,13 +134,21 @@ class PacmanMirrors:
                             help=txt.HLP_ARG_DEFAULT)
         # api arguments
         parser.add_argument("-a", "--api",
-                            action="store_true")
+                            action="store_true",
+                            help="[--prefix] [--protocols] "
+                                 "[{--set-branch|--get-branch}]")
         parser.add_argument("--get-branch",
-                            action="store_true")
+                            action="store_true",
+                            help="get-branch")
         parser.add_argument("--set-branch",
-                            action="store_true")
+                            action="store_true",
+                            help="set-branch")
         parser.add_argument("--prefix",
-                            type=str)
+                            type=str,
+                            help="{$MNT|/mnt/install}")
+        parser.add_argument("--proto",
+                            type=str,
+                            help="http,https,ftp,ftps")
 
         args = parser.parse_args()
 
@@ -208,20 +216,25 @@ class PacmanMirrors:
             self.config["only_country"] = []
 
         if args.api:
+            proto = False
+            if args.proto:
+                proto = True
+                self.config["protocols"] = args.proto.split(",")
             if args.set_branch:
                 if args.branch:
-                    self.api_config(prefix=args.prefix, set_branch=True)
+                    self.api_config(prefix=args.prefix, set_branch=True, protocols=proto)
             elif args.get_branch:
                 if not args.branch:
                     self.api_config(prefix=args.prefix, get_branch=True)
             else:
-                self.api_config(prefix=args.prefix)
+                self.api_config(prefix=args.prefix, protocols=proto)
 
-    def api_config(self, prefix=None, set_branch=False, get_branch=False):
+    def api_config(self, prefix=None, set_branch=False, get_branch=False, protocols=False):
         """Api functions
         :param prefix: prefix to the config paths
         :param set_branch: writes branch to pacman-mirrors
         :param get_branch: exit with branch
+        :param protocols: list of protocols 
         """
         if prefix:
             if "$" in prefix:
@@ -243,6 +256,9 @@ class PacmanMirrors:
         if set_branch:
             configfn.api_write_branch(self.config["branch"],
                                       self.config["config_file"])
+        if protocols:
+            configfn.api_write_protocols(self.config["protocols"],
+                                         self.config["config_file"])
         if get_branch:
             sys.exit(self.config["branch"])
 
@@ -459,10 +475,10 @@ class PacmanMirrors:
         ssl_wait = self.max_wait_time * 2
         ssl_verify = self.config["ssl_verify"]
         for mirror in worklist:
-            url = mirror["url"]
-            pos = url.find(":")
+            pos = mirror["url"].find(":")
+            url = mirror["url"][pos:]
             for idx, proto in enumerate(mirror["protocols"]):
-                mirror["url"] = "{}{}".format(proto, url[pos:])
+                mirror["url"] = "{}{}".format(proto, url)
                 if not self.quiet:
                     message = "   ..... {:<15}: {}".format(mirror["country"],
                                                            mirror["url"])

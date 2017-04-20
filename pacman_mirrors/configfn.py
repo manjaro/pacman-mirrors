@@ -57,6 +57,36 @@ def api_write_branch(branch, filename):
         sys.exit(1)
 
 
+def api_write_protocols(protocols, filename):
+    """Write branch"""
+    if protocols:
+        protocols = "Protocols = {}\n".format(",".join(protocols))
+    else:
+        protocols = "# Protocols = \n"
+    try:
+        with open(
+            filename) as cnf, tempfile.NamedTemporaryFile(
+            "w+t", dir=os.path.dirname(
+                filename), delete=False) as tmp:
+            replaced = False
+            for line in cnf:
+                if "Protocols = " in line:
+                    tmp.write(protocols)
+                    replaced = True
+                else:
+                    tmp.write("{}".format(line))
+            if not replaced:
+                tmp.write(protocols)
+        os.replace(tmp.name, filename)
+        os.chmod(filename, 0o644)
+    except OSError as err:
+        print(".: {} {}: {}: {}".format(txt.ERR_CLR,
+                                        txt.CANNOT_READ_FILE,
+                                        err.filename,
+                                        err.strerror))
+        sys.exit(1)
+
+
 def build_config():
     """Get config informations
     :returns: config, custom
