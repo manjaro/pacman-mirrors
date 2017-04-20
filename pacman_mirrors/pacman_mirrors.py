@@ -87,14 +87,16 @@ class PacmanMirrors:
                             type=str,
                             choices=["stable", "testing", "unstable"],
                             help=txt.HLP_ARG_BRANCH)
-        parser.add_argument("-c", "--country",
-                            type=str,
-                            help=txt.HLP_ARG_COUNTRY)
-        parser.add_argument("--geoip",
-                            action="store_true",
-                            help="{} {} {}".format(txt.HLP_ARG_GEOIP_P1,
-                                                   txt.OPT_COUNTRY,
-                                                   txt.HLP_ARG_GEOIP_P2))
+        geo_country = parser.add_mutually_exclusive_group()
+        geo_country.add_argument("-c", "--country",
+                                 type=str,
+                                 nargs="+",
+                                 help=txt.HLP_ARG_COUNTRY)
+        geo_country.add_argument("--geoip",
+                                 action="store_true",
+                                 help="{} {} {}".format(txt.HLP_ARG_GEOIP_P1,
+                                                        txt.OPT_COUNTRY,
+                                                        txt.HLP_ARG_GEOIP_P2))
         parser.add_argument("-d", "--mirror_dir",
                             type=str,
                             metavar=txt.PATH,
@@ -133,25 +135,26 @@ class PacmanMirrors:
                             action="store_true",
                             help=txt.HLP_ARG_DEFAULT)
         # api arguments
-        parser.add_argument("-a", "--api",
-                            action="store_true",
-                            help="[--prefix] [--protocols] "
-                                 "[{--set-branch|--get-branch}]")
-        parser.add_argument("--get-branch",
+        api = parser.add_argument_group("API")
+        api.add_argument("-a", "--api",
+                         action="store_true",
+                         help="[--prefix] [--protocols] [{-b <branch>}--set-branch|--get-branch]")
+        branch = api.add_mutually_exclusive_group()
+        branch.add_argument("--get-branch",
                             action="store_true",
                             help="get-branch")
-        parser.add_argument("--set-branch",
+        branch.add_argument("--set-branch",
                             action="store_true",
                             help="set-branch")
-        parser.add_argument("--prefix",
-                            type=str,
-                            help="{$MNT|/mnt/install}")
-        parser.add_argument("--proto",
-                            type=str,
-                            help="http,https,ftp,ftps")
+        api.add_argument("--prefix",
+                         type=str,
+                         help="{'$MNT' | '/mnt/install'}")
+        api.add_argument("--proto",
+                         type=str,
+                         nargs="+",
+                         help="{none | http https ftp ftps}")
 
         args = parser.parse_args()
-
         if len(sys.argv) == 1:
             parser.print_help()
             print("{}pacman-mirrors {}{}".format(txt.GS, __version__, txt.CE))
@@ -207,7 +210,10 @@ class PacmanMirrors:
             self.geoip = True
         if args.country and not args.geoip:
             self.custom = True
-            self.config["only_country"] = args.country.split(",")
+            if "," in args.country[0]:
+                self.config["only_country"] = args.country[0].split(",")
+            else:
+                self.config["only_country"] = args.country
 
         if args.fasttrack:
             self.fasttrack = args.fasttrack
@@ -219,7 +225,13 @@ class PacmanMirrors:
             proto = False
             if args.proto:
                 proto = True
-                self.config["protocols"] = args.proto.split(",")
+                if args.proto == ["none"]:
+                    self.config["protocols"] = []
+                else:
+                    if "," in args.proto[0]:
+                        self.config["protocols"] = args.proto[0].split(",")
+                    else:
+                        self.config["protocols"] = args.proto
             if args.set_branch:
                 if args.branch:
                     self.api_config(prefix=args.prefix, set_branch=True, protocols=proto)
