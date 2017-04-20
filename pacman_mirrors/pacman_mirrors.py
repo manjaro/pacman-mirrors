@@ -148,7 +148,7 @@ class PacmanMirrors:
                             help="set-branch")
         api.add_argument("--prefix",
                          type=str,
-                         help="{'$MNT' | '/mnt/install'}")
+                         help="{'$MNT' | '/some/path'}")
         api.add_argument("--proto",
                          type=str,
                          nargs="+",
