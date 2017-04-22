@@ -14,7 +14,7 @@ Generate a new mirrorlist.
 Choose the generation method:
 
 - rank
-- random.
+- random
 
 `-b [branch]`, `--branch [branch]`
 Choose the branch to use:
@@ -33,7 +33,6 @@ Specifiy country or list of countries separated by comma or space:
 To reset a custom mirror file
 
 - all
-
 
 `--geoip`
 Detect country by using geolocation.
