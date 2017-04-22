@@ -2,7 +2,7 @@
 # Copyright (C) 2017 ORGANIZATION
 # This file is distributed under the same license as the pacman-mirrors
 # project.
-#
+# 
 # Translators:
 # Frede H. <frede@hundewadt.dk>, 2017
 # scootergrisen, 2017
