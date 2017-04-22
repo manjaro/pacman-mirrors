@@ -24,11 +24,16 @@ Choose the branch to use:
 - unstable
 
 `-c COUNTRY [COUNTRY ...]`, `--country COUNTRY [COUNTRY ...]`
-Choose the country to use (separated with comma or space):
+Specifiy country or list of countries separated by comma or space:
+
+- France
+- France, Germany, Austria
+- France Germany Austria
+
+To reset a custom mirror file
 
 - all
-- France
-- France, German, Spain
+
 
 `--geoip`
 Detect country by using geolocation.
@@ -56,8 +61,8 @@ Launch a graphical tool to select mirrors to generate a custom mirrorlist.
 
 `--default`
 Used in conjunction with `-i/--interactive` ignores custom mirrorfile,  
-loading the default mirrorfile and executes the ranking/randomizing process  
-after the selection of mirrors.
+loading the default mirrorfile, allowing to create a new custom mirrorfile 
+and executes the ranking/randomizing process after the selection of mirrors.
 
 `-v`, `--version`
 Show the version of pacman-mirrors.
@@ -88,15 +93,20 @@ Make pacman-mirrors silent.
 ## 2) random - randomly generate the output mirrorlist
 # Method = rank
 
-## Define protocols and priority eg. 'https,http' or 'http,https'
+## Define protocols and priority
+##   separated by comma 'https,http' or 'http,https'
+##             or space 'https http' or 'http https'
 ## ATM available protocols are: http, https, ftp
 ## Not specifying a protocol will ban the protocol from being used
-## If a mirror has more than one protocol defined only the first is written to the mirrorlist
 ## Empty means all in reversed alphabetic order
+## If a mirror has more than one protocol defined 
+##  only the first is written to the mirrorlist
 # Protocols =
 
 ## Specify to use only mirrors from a specific country.
-## Can add multiple countries separated by a comma (example: Germany,France,Belgium)
+## Can add multiple countries
+##   separated by comma 'Germany,France,Belgium'
+##             or space 'Germany France Belgium'
 ## Get a list of all available counties with 'pacman-mirrors -l'
 ## Empty means all
 # OnlyCountry =
