@@ -14,7 +14,7 @@ Package that provides all mirrors for Manjaro Linux.
     - country: a single, a list or all.
     - fasttrack: updated and responsive mirrors.
     - geoip: mirrors for country if available.
-- A GUI for selecting the mirrors to used to generate a custom list.
+- A GUI for selecting mirror/protocol combinations used to generate a custom list.
 - API
     - prefix: prefix for files handled by pacman-mirrors.
     - get-branch: get current branch from config
