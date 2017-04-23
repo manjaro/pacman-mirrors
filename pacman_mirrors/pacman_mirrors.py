@@ -152,7 +152,7 @@ class PacmanMirrors:
         api.add_argument("--proto",
                          type=str,
                          nargs="+",
-                         help="{none | http https ftp ftps}")
+                         help="{all | http https ftp ftps}")
 
         args = parser.parse_args()
         if len(sys.argv) == 1:
@@ -225,7 +225,7 @@ class PacmanMirrors:
             proto = False
             if args.proto:
                 proto = True
-                if args.proto == ["none"]:
+                if args.proto == ["all"]:
                     self.config["protocols"] = []
                 else:
                     if "," in args.proto[0]:
