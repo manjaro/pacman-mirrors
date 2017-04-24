@@ -250,9 +250,9 @@ class PacmanMirrors:
     def api_config(self, prefix=None, set_branch=False, get_branch=False, protocols=False, nolist=False):
         """Api functions
         :param prefix: prefix to the config paths
-        :param set_branch: writes branch to pacman-mirrors
+        :param set_branch: writes branch to pacman-mirrors.conf
         :param get_branch: exit with branch
-        :param protocols: list of protocols
+        :param protocols: writes list of protocols to pacman-mirrors.con
         :param nolist: skip mirrorlist generation
         """
         if prefix:
