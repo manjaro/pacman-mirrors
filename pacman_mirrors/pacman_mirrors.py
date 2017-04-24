@@ -148,11 +148,11 @@ class PacmanMirrors:
                             help="set-branch")
         api.add_argument("--prefix",
                          type=str,
-                         help="{'$MNT' | '/some/path'}")
+                         help="[--prefix {'$mnt'|'/some/path'}]")
         api.add_argument("--proto",
                          type=str,
                          nargs="+",
-                         help="{all | http https ftp ftps}")
+                         help="[--proto {all|http https ftp ftps}]")
         api.add_argument("-n", "no-mirrorlist",
                          action="store_true",
                          help="no mirrorlist")
