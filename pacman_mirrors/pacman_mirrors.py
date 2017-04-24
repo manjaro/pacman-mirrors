@@ -153,7 +153,7 @@ class PacmanMirrors:
                          type=str,
                          nargs="+",
                          help="[--proto {all|http https ftp ftps}]")
-        api.add_argument("-n", "no-mirrorlist",
+        api.add_argument("-n", "--no-mirrorlist",
                          action="store_true",
                          help="no mirrorlist")
 
