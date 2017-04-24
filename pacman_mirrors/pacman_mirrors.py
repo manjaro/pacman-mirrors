@@ -138,7 +138,7 @@ class PacmanMirrors:
         api = parser.add_argument_group("API")
         api.add_argument("-a", "--api",
                          action="store_true",
-                         help="[--prefix] [--protocols] [{-b <branch>}--set-branch|--get-branch]")
+                         help="[--prefix] [--protocols] [--set-branch|--get-branch {-b <branch>}]")
         branch = api.add_mutually_exclusive_group()
         branch.add_argument("--get-branch",
                             action="store_true",
