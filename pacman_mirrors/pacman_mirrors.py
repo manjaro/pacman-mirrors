@@ -153,6 +153,9 @@ class PacmanMirrors:
                          type=str,
                          nargs="+",
                          help="{all | http https ftp ftps}")
+        api.add_argument("-n", "no-mirrorlist",
+                         action="store_true",
+                         help="no mirrorlist")
 
         args = parser.parse_args()
         if len(sys.argv) == 1:
@@ -222,6 +225,9 @@ class PacmanMirrors:
             self.config["only_country"] = []
 
         if args.api:
+            nolist = False
+            if args.no_mirrorlist:
+                nolist = True
             proto = False
             if args.proto:
                 proto = True
@@ -234,14 +240,14 @@ class PacmanMirrors:
                         self.config["protocols"] = args.proto
             if args.set_branch:
                 if args.branch:
-                    self.api_config(prefix=args.prefix, set_branch=True, protocols=proto)
+                    self.api_config(prefix=args.prefix, set_branch=True, protocols=proto, nolist=nolist)
             elif args.get_branch:
                 if not args.branch:
                     self.api_config(prefix=args.prefix, get_branch=True)
             else:
-                self.api_config(prefix=args.prefix, protocols=proto)
+                self.api_config(prefix=args.prefix, protocols=proto, nolist=nolist)
 
-    def api_config(self, prefix=None, set_branch=False, get_branch=False, protocols=False):
+    def api_config(self, prefix=None, set_branch=False, get_branch=False, protocols=False, nolist=False):
         """Api functions
         :param prefix: prefix to the config paths
         :param set_branch: writes branch to pacman-mirrors
@@ -273,6 +279,8 @@ class PacmanMirrors:
                                          self.config["config_file"])
         if get_branch:
             sys.exit(self.config["branch"])
+        if nolist:
+            sys.exit(0)
 
     def build_common_mirror_list(self):
         """Generate common mirrorlist"""
