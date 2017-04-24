@@ -252,7 +252,8 @@ class PacmanMirrors:
         :param prefix: prefix to the config paths
         :param set_branch: writes branch to pacman-mirrors
         :param get_branch: exit with branch
-        :param protocols: list of protocols 
+        :param protocols: list of protocols
+        :param nolist: skip mirrorlist generation
         """
         if prefix:
             if "$" in prefix:
