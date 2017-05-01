@@ -69,6 +69,9 @@ Show the version of pacman-mirrors.
 `--quiet`
 Make pacman-mirrors silent.
 
+`-u`, `update`
+Run `pacman -Syy` after mirrorlist generation
+
 `-a`, `--api` [--prefix] [{--get-branch | --set-branch}] [--protocols PROTO [PROTO ...]] 
 - `--prefix` for pacman-mirrors file-handling eg. /mnt/install or $mnt.
 - `--get-branch` returns branch from config in prefix`config_file`. 

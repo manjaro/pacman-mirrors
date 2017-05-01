@@ -73,6 +73,7 @@ class PacmanMirrors:
         self.no_display = False
         self.quiet = False
         self.selected_countries = []  # users selected countries
+        self.update = False
 
     def command_line_parse(self):
         """Read the arguments of the command line"""
@@ -135,6 +136,9 @@ class PacmanMirrors:
         parser.add_argument("--default",
                             action="store_true",
                             help=txt.HLP_ARG_DEFAULT)
+        parser.add_argument("-u", "--update",
+                            action="store_true",
+                            help="pacman -Syy")
         # api arguments
         api = parser.add_argument_group("API")
         api.add_argument("-a", "--api",
@@ -191,6 +195,9 @@ class PacmanMirrors:
 
         if args.quiet:
             self.quiet = True
+
+        if args.update:
+            self.update = True
 
         if args.mirror_dir:
             self.config["work_dir"] = args.mirror_dir
@@ -545,7 +552,7 @@ class PacmanMirrors:
             self.build_interactive_mirror_list()
         else:
             self.build_common_mirror_list()
-        if self.network:
+        if self.network and self.update:
             subprocess.call(["pacman", "-Syy"])
 
 if __name__ == "__main__":
