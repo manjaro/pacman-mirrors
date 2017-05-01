@@ -67,7 +67,7 @@ class TestPacmanMirrors(unittest.TestCase):
             app.command_line_parse()
             app.load_all_mirrors()
             # network check
-            app.network = httpfn.is_connected("https://manjaro.org", 2)
+            app.network = httpfn.inet_conn_check(2)
             # all methods is available
             if app.network:
                 httpfn.update_mirrors(app.config)
@@ -95,7 +95,7 @@ class TestPacmanMirrors(unittest.TestCase):
             filefn.dir_must_exist(app.config["work_dir"])
             app.command_line_parse()
             # network check
-            app.network = httpfn.is_connected("https://manjaro.org", 2)
+            app.network = httpfn.inet_conn_check(2)
             # all methods is available
             if app.network:
                 httpfn.update_mirrors(app.config)
