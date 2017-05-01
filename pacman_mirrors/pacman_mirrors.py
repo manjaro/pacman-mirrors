@@ -29,6 +29,7 @@ import sys
 import os
 from operator import itemgetter
 from random import shuffle
+import subprocess
 
 from pacman_mirrors import __version__
 from .custom_help_formatter import CustomHelpFormatter
@@ -544,7 +545,8 @@ class PacmanMirrors:
             self.build_interactive_mirror_list()
         else:
             self.build_common_mirror_list()
-
+        if self.network:
+            subprocess.call(["pacman", "-Syy"])
 
 if __name__ == "__main__":
     app = PacmanMirrors()
