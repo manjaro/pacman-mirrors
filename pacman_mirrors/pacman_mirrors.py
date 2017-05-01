@@ -529,13 +529,7 @@ class PacmanMirrors:
         (self.config, self.custom) = configfn.build_config()
         filefn.dir_must_exist(self.config["work_dir"])
         self.command_line_parse()
-        for url in conf.INET_CONN_CHECK_URLS:
-            miscfn.debug("run", "network check url", url)
-            self.network = httpfn.inet_conn_check(url)
-            miscfn.debug("run", "self.network", self.network)
-            if self.network:
-                continue
-        exit(0)
+        self.network = httpfn.inet_conn_check()
         if self.network:
             httpfn.update_mirrors(self.config)
         else:

@@ -143,14 +143,17 @@ def get_mirror_response(url, maxwait=2, count=1, quiet=False, ssl_verify=True):
     return response_time
 
 
-def inet_conn_check(url, maxwait=2):
+def inet_conn_check(maxwait=2):
     """Check for internet connection"""
     data = None
-    # noinspection PyBroadException
-    try:
-        data = urlopen(url, timeout=maxwait)
-    except:
-        pass
+    hosts = conf.INET_CONN_CHECK_URLS
+    for host in hosts:
+        # noinspection PyBroadException
+        try:
+            data = urlopen(host, timeout=maxwait)
+            break
+        except:
+            pass
     return bool(data)
 
 
