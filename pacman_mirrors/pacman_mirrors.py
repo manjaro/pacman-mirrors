@@ -529,7 +529,13 @@ class PacmanMirrors:
         (self.config, self.custom) = configfn.build_config()
         filefn.dir_must_exist(self.config["work_dir"])
         self.command_line_parse()
-        self.network = httpfn.is_connected("https://manjaro.org")
+        for url in conf.INET_CONN_CHECK_URLS:
+            miscfn.debug("run", "network check url", url)
+            self.network = httpfn.inet_conn_check(url)
+            miscfn.debug("run", "self.network", self.network)
+            if self.network:
+                continue
+        exit(0)
         if self.network:
             httpfn.update_mirrors(self.config)
         else:

@@ -143,12 +143,12 @@ def get_mirror_response(url, maxwait=2, count=1, quiet=False, ssl_verify=True):
     return response_time
 
 
-def is_connected(remote_host, maxwait=2):
+def inet_conn_check(url, maxwait=2):
     """Check for internet connection"""
     data = None
     # noinspection PyBroadException
     try:
-        data = urlopen(remote_host, timeout=maxwait)
+        data = urlopen(url, timeout=maxwait)
     except:
         pass
     return bool(data)
@@ -176,7 +176,7 @@ def update_mirrors(config):
     if filefn.check_file(config["to_be_removed"]):
         os.remove(config["to_be_removed"])
     result = None
-    connected = is_connected("http://repo.manjaro.org")
+    connected = inet_conn_check()
     if connected:
         print(".: {} {} {}".format(txt.INF_CLR,
                                    txt.DOWNLOADING_MIRROR_FILE,
