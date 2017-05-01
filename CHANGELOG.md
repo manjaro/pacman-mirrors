@@ -1,8 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## [4.1.0] 2017-05-01
+## [4.1.1] 2017-05-01
 - Modified network check so a single site failure is not considered network failure.
+
+## [4.1.0] 2017-05-01
 - Added protocol option to api.
   * Possible to control protocols from CLI
 - `/var/lib/pacman-mirrors/mirrors.json` is causing confusion so it has been removed. 
