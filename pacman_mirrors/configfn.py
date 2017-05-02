@@ -132,7 +132,10 @@ def build_config():
                         config["branch"] = value
                     elif key == "OnlyCountry":
                         custom = True
-                        config["only_country"] = value.split(",")
+                        if "," in value:
+                            config["only_country"] = value.split(",")
+                        else:
+                            config["only_country"] = value.split(" ")
                     elif key == "MirrorlistsDir":
                         config["work_dir"] = value
                     elif key == "OutputMirrorlist":
@@ -143,7 +146,10 @@ def build_config():
                         if value == "False":
                             config["ssl_verify"] = False
                     elif key == "Protocols":
-                        config["protocols"] = value.split(",")
+                        if "," in value:
+                            config["protocols"] = value.split(",")
+                        else:
+                            config["protocols"] = value.split(" ")
     except (PermissionError, OSError) as err:
         print(".: {} {}: {}: {}".format(txt.ERR_CLR,
                                         txt.CANNOT_READ_FILE,
