@@ -40,7 +40,7 @@ def api_write_branch(branch, filename):
                 filename), delete=False) as tmp:
             replaced = False
             for line in cnf:
-                if "Branch = " in line:
+                if "Branch =" in line:
                     tmp.write(branch)
                     replaced = True
                 else:
@@ -70,7 +70,7 @@ def api_write_protocols(protocols, filename):
                 filename), delete=False) as tmp:
             replaced = False
             for line in cnf:
-                if "Protocols = " in line:
+                if "Protocols =" in line:
                     tmp.write(protocols)
                     replaced = True
                 else:
@@ -132,7 +132,10 @@ def build_config():
                         config["branch"] = value
                     elif key == "OnlyCountry":
                         custom = True
-                        config["only_country"] = value.split(",")
+                        if "," in value:
+                            config["only_country"] = value.split(",")
+                        else:
+                            config["only_country"] = value.split(" ")
                     elif key == "MirrorlistsDir":
                         config["work_dir"] = value
                     elif key == "OutputMirrorlist":
@@ -143,7 +146,10 @@ def build_config():
                         if value == "False":
                             config["ssl_verify"] = False
                     elif key == "Protocols":
-                        config["protocols"] = value.split(",")
+                        if "," in value:
+                            config["protocols"] = value.split(",")
+                        else:
+                            config["protocols"] = value.split(" ")
     except (PermissionError, OSError) as err:
         print(".: {} {}: {}: {}".format(txt.ERR_CLR,
                                         txt.CANNOT_READ_FILE,

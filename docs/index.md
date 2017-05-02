@@ -72,13 +72,17 @@ Make pacman-mirrors silent.
 `-u`, `update`
 Run `pacman -Syy` after mirrorlist generation
 
-`-a`, `--api` [--prefix] [{--get-branch | --set-branch}] [--protocols PROTO [PROTO ...]] 
+Do api tasks before generating mirrorlist.
+
+`-a`, `--api` [--prefix] [{--get-branch | --set-branch}] [--protocols PROTO [PROTO ...]]
+
 - `--prefix` for pacman-mirrors file-handling eg. /mnt/install or $mnt.
 - `--get-branch` returns branch from config in prefix`config_file`. 
   * Ignored if `--branch` is supplied.
 - `--set-branch` writes branch specified in `--branch` to prefix`config_file`.
   * Ignored if `--branch` is not supplied.
 - `--protocols` write the specified protocols to prefix`pacman-mirrors.conf`.
+- `-u`, `--no-mirrorlist` exit when api tasks finish 
 
 ## Content of pacman-mirrors.conf
 
