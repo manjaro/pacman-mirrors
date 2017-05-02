@@ -149,13 +149,17 @@ Show the version of pacman-mirrors.</p>
 Make pacman-mirrors silent.</p>
 <p><code>-u</code>, <code>update</code>
 Run <code>pacman -Syy</code> after mirrorlist generation</p>
-<p><code>-a</code>, <code>--api</code> [--prefix] [{--get-branch | --set-branch}] [--protocols PROTO [PROTO ...]] 
-- <code>--prefix</code> for pacman-mirrors file-handling eg. /mnt/install or $mnt.
-- <code>--get-branch</code> returns branch from config in prefix<code>config_file</code>. 
-  * Ignored if <code>--branch</code> is supplied.
-- <code>--set-branch</code> writes branch specified in <code>--branch</code> to prefix<code>config_file</code>.
-  * Ignored if <code>--branch</code> is not supplied.
-- <code>--protocols</code> write the specified protocols to prefix<code>pacman-mirrors.conf</code>.</p>
+<p>Do api tasks before generating mirrorlist.</p>
+<p><code>-a</code>, <code>--api</code> [--prefix] [{--get-branch | --set-branch}] [--protocols PROTO [PROTO ...]]</p>
+<ul>
+<li><code>--prefix</code> for pacman-mirrors file-handling eg. /mnt/install or $mnt.</li>
+<li><code>--get-branch</code> returns branch from config in prefix<code>config_file</code>. </li>
+<li>Ignored if <code>--branch</code> is supplied.</li>
+<li><code>--set-branch</code> writes branch specified in <code>--branch</code> to prefix<code>config_file</code>.</li>
+<li>Ignored if <code>--branch</code> is not supplied.</li>
+<li><code>--protocols</code> write the specified protocols to prefix<code>pacman-mirrors.conf</code>.</li>
+<li><code>-u</code>, <code>--no-mirrorlist</code> exit when api tasks finish </li>
+</ul>
 <h2 id="content-of-pacman-mirrorsconf">Content of pacman-mirrors.conf</h2>
 <pre><code>##
 ## /etc/pacman-mirrors.conf
@@ -241,5 +245,5 @@ Run <code>pacman -Syy</code> after mirrorlist generation</p>
 
 <!--
 MkDocs version : 0.16.1
-Build Date UTC : 2017-05-01 14:09:22
+Build Date UTC : 2017-05-02 05:37:37
 -->
