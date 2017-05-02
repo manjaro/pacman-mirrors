@@ -1,9 +1,6 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## [4.1.2] 2017-05-02
-- Fix: Issue where values from configuration was not parsed correct.
-
 ## [4.1.1] 2017-05-01
 - Added `-u` / `--update` option
   * Run `pacman -Syy` after mirrorlist generation
