@@ -57,6 +57,43 @@ def api_write_branch(branch, filename):
         sys.exit(1)
 
 
+def api_write_only_country(filename, selection, custom=False):
+    """Writes the configuration to file
+    :param filename:
+    :param selection:
+    :param custom:
+    """
+    if custom:
+        if selection == ["Custom"]:
+            selection = "OnlyCountry = Custom\n"
+        else:
+            selection = "OnlyCountry = {list}\n".format(
+                list=",".join(selection))
+    else:
+        selection = "# OnlyCountry = \n"
+    try:
+        with open(
+            filename) as cnf, tempfile.NamedTemporaryFile(
+            "w+t", dir=os.path.dirname(
+                filename), delete=False) as tmp:
+
+            replaced = False
+            for line in cnf:
+                if "OnlyCountry" in line:
+                    tmp.write(selection)
+                    replaced = True
+                else:
+                    tmp.write("{}".format(line))
+            if not replaced:
+                tmp.write(selection)
+        os.replace(tmp.name, filename)
+        os.chmod(filename, 0o644)
+    except OSError as err:
+        print(".: {} {}: {}: {}".format(txt.ERR_CLR, txt.CANNOT_READ_FILE,
+                                        err.filename, err.strerror))
+        sys.exit(1)
+
+
 def api_write_protocols(protocols, filename):
     """Write branch"""
     if protocols:
@@ -167,43 +204,6 @@ def modify_config(config, custom=False):
         # remove custom file if present
         if os.path.isfile(config["custom_file"]):
             os.remove(config["custom_file"])
-    write_configuration(config["config_file"],
-                        config["only_country"],
-                        custom=custom)
-
-
-def write_configuration(filename, selection, custom=False):
-    """Writes the configuration to file
-    :param filename:
-    :param selection:
-    :param custom:
-    """
-    if custom:
-        if selection == ["Custom"]:
-            selection = "OnlyCountry = Custom\n"
-        else:
-            selection = "OnlyCountry = {list}\n".format(
-                list=",".join(selection))
-    else:
-        selection = "# OnlyCountry = \n"
-    try:
-        with open(
-            filename) as cnf, tempfile.NamedTemporaryFile(
-            "w+t", dir=os.path.dirname(
-                filename), delete=False) as tmp:
-
-            replaced = False
-            for line in cnf:
-                if "OnlyCountry" in line:
-                    tmp.write(selection)
-                    replaced = True
-                else:
-                    tmp.write("{}".format(line))
-            if not replaced:
-                tmp.write(selection)
-        os.replace(tmp.name, filename)
-        os.chmod(filename, 0o644)
-    except OSError as err:
-        print(".: {} {}: {}: {}".format(txt.ERR_CLR, txt.CANNOT_READ_FILE,
-                                        err.filename, err.strerror))
-        sys.exit(1)
+    api_write_only_country(config["config_file"],
+                           config["only_country"],
+                           custom=custom)

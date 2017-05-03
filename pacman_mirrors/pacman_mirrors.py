@@ -84,49 +84,17 @@ class PacmanMirrors:
         parser.add_argument("-g", "--generate",
                             action="store_true",
                             help=txt.HLP_ARG_GENERATE)
-
-        # Api arguments
-        api = parser.add_argument_group("API")
-        api.add_argument("-a", "--api",
-                         action="store_true",
-                         help="[--prefix] [--protocols] [--set-branch|--get-branch] [-n]")
-        api.add_argument("--prefix",
-                         type=str,
-                         help="$mnt|/some/path")
-        api.add_argument("--proto",
-                         choices=["all", "http", "https", "ftp", "ftps"],
-                         type=str,
-                         nargs="+",
-                         help="--api --proto {all|https,http")
-
-        # Branches arguments
-        branches = parser.add_argument_group("BRANCH")
-        branch = branches.add_mutually_exclusive_group()
-        branch.add_argument("-b", "--branch",
-                            type=str,
-                            choices=["stable", "testing", "unstable"],
-                            help=txt.HLP_ARG_BRANCH)
-        branch.add_argument("--get-branch",
-                            action="store_true",
-                            help="Api: --get-branch")
-        branch.add_argument("--set-branch",
-                            choices=["stable", "testing", "unstable"],
-                            help="Api: --set-branch <branch>")
-
-        # Country arguments
         country = parser.add_argument_group("COUNTRY")
-        geo_country = country.add_mutually_exclusive_group()
-        geo_country.add_argument("-c", "--country",
-                                 type=str,
-                                 nargs="+",
-                                 help=txt.HLP_ARG_COUNTRY)
-        geo_country.add_argument("--geoip",
-                                 action="store_true",
-                                 help="{} {} {}".format(txt.HLP_ARG_GEOIP_P1,
-                                                        txt.OPT_COUNTRY,
-                                                        txt.HLP_ARG_GEOIP_P2))
-        # Method arguments
-        methods = parser.add_argument_group("METHOD")
+        country.add_argument("-c", "--country",
+                             type=str,
+                             nargs="+",
+                             help=txt.HLP_ARG_COUNTRY)
+        country.add_argument("--geoip",
+                             action="store_true",
+                             help="{} {} {}".format(txt.HLP_ARG_GEOIP_P1,
+                                                    txt.OPT_COUNTRY,
+                                                    txt.HLP_ARG_GEOIP_P2))
+        methods = parser.add_argument_group("METHODS")
         methods.add_argument("-f", "--fasttrack",
                              type=int,
                              metavar=txt.DIGIT,
@@ -139,9 +107,11 @@ class PacmanMirrors:
         methods.add_argument("-i", "--interactive",
                              action="store_true",
                              help=txt.HLP_ARG_INTERACTIVE)
-
-        # Misc arguments
         misc = parser.add_argument_group("MISC")
+        misc.add_argument("-b", "--branch",
+                          type=str,
+                          choices=["stable", "testing", "unstable"],
+                          help=txt.HLP_ARG_BRANCH)
         misc.add_argument("-d", "--mirror_dir",
                           type=str,
                           metavar=txt.PATH,
@@ -163,7 +133,11 @@ class PacmanMirrors:
         misc.add_argument("--default",
                           action="store_true",
                           help="Interactive: " + txt.HLP_ARG_DEFAULT)
-
+        misc.add_argument("--no-update",
+                          action="store_true",
+                          help="{} {} {}".format(txt.HLP_ARG_NOUPDATE_P1,
+                                                 txt.OPT_NOUPDATE,
+                                                 txt.HLP_ARG_NOUPDATE_P2))
         # Update arguments
         update = parser.add_argument_group("SYNC")
         sync = update.add_mutually_exclusive_group()
@@ -173,11 +147,26 @@ class PacmanMirrors:
         sync.add_argument("-s", "--sync", "-u", "--update",
                           action="store_true",
                           help="exec pacman -Syy")
-        sync.add_argument("--no-update",
-                          action="store_true",
-                          help="{} {} {}".format(txt.HLP_ARG_NOUPDATE_P1,
-                                                 txt.OPT_NOUPDATE,
-                                                 txt.HLP_ARG_NOUPDATE_P2))
+        # Api arguments
+        api = parser.add_argument_group("API")
+        api.add_argument("-a", "--api",
+                         action="store_true",
+                         help="[--prefix] [--set-branch|--get-branch] [--protocols] [--no-mirrorlist]")
+        api.add_argument("--prefix",
+                         type=str,
+                         help="$mnt|/some/path")
+        api.add_argument("--proto",
+                         choices=["all", "http", "https", "ftp", "ftps"],
+                         type=str,
+                         nargs="+",
+                         help="--api --proto {all|https,http")
+        branch = api.add_mutually_exclusive_group()
+        branch.add_argument("--get-branch",
+                            action="store_true",
+                            help="--api --get-branch")
+        branch.add_argument("--set-branch",
+                            action="store_true",
+                            help="--api --set-branch -b <branch>")
 
         args = parser.parse_args()
         if len(sys.argv) == 1:
