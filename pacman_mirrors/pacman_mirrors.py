@@ -275,8 +275,6 @@ class PacmanMirrors:
                 prefix + self.config["config_file"]
             self.config["custom_file"] = \
                 prefix + self.config["custom_file"]
-            self.config["to_be_removed"] = \
-                prefix + self.config["to_be_removed"]
             self.config["work_dir"] = \
                 prefix + self.config["work_dir"]
             self.config["mirror_file"] = \
@@ -285,6 +283,10 @@ class PacmanMirrors:
                 prefix + self.config["mirror_list"]
             self.config["status_file"] = \
                 prefix + self.config["status_file"]
+            # to be removed long time after 2017-04-18
+            self.config["to_be_removed"] = \
+                prefix + self.config["to_be_removed"]
+            # end removal
         if set_branch:
             configfn.api_write_branch(self.config["branch"],
                                       self.config["config_file"])
