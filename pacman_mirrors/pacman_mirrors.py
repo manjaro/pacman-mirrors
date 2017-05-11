@@ -302,7 +302,6 @@ class PacmanMirrors:
         """Generate common mirrorlist"""
         worklist = mirrorfn.filter_mirror_country(self.mirrors.mirrorlist,
                                                   self.selected_countries)
-        worklist = sorted(worklist, key=itemgetter("country"))
         if self.config["protocols"]:
             worklist = mirrorfn.filter_mirror_protocols(
                 worklist, self.config["protocols"])
@@ -324,7 +323,7 @@ class PacmanMirrors:
     def build_fasttrack_mirror_list(self, number):
         """Fast-track the mirrorlist by filtering only up2date mirrors"""
         # randomize the load on up2date mirrors
-        worklist = sorted(self.mirrors.mirrorlist, key=itemgetter("country"))
+        worklist = self.mirrors.mirrorlist
         shuffle(worklist)
         if self.config["protocols"]:
             worklist = mirrorfn.filter_mirror_protocols(
@@ -371,7 +370,6 @@ class PacmanMirrors:
         """
         worklist = mirrorfn.filter_mirror_country(self.mirrors.mirrorlist,
                                                   self.selected_countries)
-        worklist = sorted(worklist, key=itemgetter("country"))
         if self.config["protocols"]:
             worklist = mirrorfn.filter_mirror_protocols(
                 worklist, self.config["protocols"])
@@ -490,6 +488,9 @@ class PacmanMirrors:
         (file, status) = filefn.return_mirror_filename(self.config)
         self.seed_mirrors(file, status)
 
+    def sort_mirror_countries(self):
+        self.mirrors.mirrorlist = sorted(self.mirrors.mirrorlist, key=itemgetter("country"))
+
     def seed_mirrors(self, file, status=False):
         """Seed mirrors"""
         mirrors = filefn.read_mirror_file(file)
@@ -498,6 +499,8 @@ class PacmanMirrors:
             self.mirrors.seed(mirrors, status=status)
         else:
             self.mirrors.seed(mirrors)
+        # sort mirrors countrywise
+        self.sort_mirror_countries()
 
     def test_mirrors(self, worklist):
         """Query server for response time"""
