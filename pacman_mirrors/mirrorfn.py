@@ -76,14 +76,13 @@ def filter_mirror_country(mirrorlist, countrylist):
             result.append(mirror)
     return result
 
+
 def filter_mirror_protocols(mirrorlist, protocols=None):
     """Return a new mirrorlist with protocols
     :type mirrorlist: list
     :type protocols: list
     :rtype: list
     """
-    if protocols is None:
-        protocols = ["https", "ftps"]
     result = []
     if not protocols:
         return mirrorlist
