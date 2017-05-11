@@ -2,9 +2,13 @@
 All notable changes to this project will be documented in this file.
 
 ## [4.2.0dev]
-- Improvement: adding choices to `--proto`
+- Improvement: created argument groups for logic division of arguments usage
+- Improvement: making `--get-branch` and `--set-branch` mutually exclusive
+- Improvement: making `--no-mirrorlist` and `--sync` mutually exclusive
+- Improvement: adding description and choices to `--proto` [all, http, https, ftp, ftps]
 - Improvement: `--set-branch <branch>` not depending on `--branch <branch>` option 
 - Fix: Issue where values from configuration was not parsed correct.
+- Fix: Issue where location in config was not determined correctly
 
 ## [4.1.1] 2017-05-01
 - Added `-u` / `--update` option
