@@ -81,9 +81,6 @@ class PacmanMirrors:
         parser.add_argument("-v", "--version",
                             action="store_true",
                             help=txt.HLP_ARG_VERSION)
-        parser.add_argument("-g", "--generate",
-                            action="store_true",
-                            help=txt.HLP_ARG_GENERATE)
         country = parser.add_argument_group("COUNTRY")
         country.add_argument("-c", "--country",
                              type=str,
@@ -95,6 +92,9 @@ class PacmanMirrors:
                                                     txt.OPT_COUNTRY,
                                                     txt.HLP_ARG_GEOIP_P2))
         methods = parser.add_argument_group("METHODS")
+        methods.add_argument("-g", "--generate",
+                             action="store_true",
+                             help=txt.HLP_ARG_GENERATE)
         methods.add_argument("-f", "--fasttrack",
                              type=int,
                              metavar=txt.DIGIT,
@@ -144,14 +144,14 @@ class PacmanMirrors:
         sync.add_argument("-n", "--no-mirrorlist",
                           action="store_true",
                           help="--api --no-mirrorlist")
-        sync.add_argument("-s", "--sync", "-u", "--update",
+        sync.add_argument("-y", "--sync", "-u", "--update",
                           action="store_true",
-                          help="exec pacman -Syy")
+                          help="Executes pacman -Syy")
         # Api arguments
         api = parser.add_argument_group("API")
         api.add_argument("-a", "--api",
                          action="store_true",
-                         help="[--prefix] [--set-branch|--get-branch] [--protocols] [--no-mirrorlist]")
+                         help="[--prefix] [--set-branch|--get-branch] [--proto] [--no-mirrorlist]")
         api.add_argument("--prefix",
                          type=str,
                          help="$mnt|/some/path")
@@ -159,14 +159,14 @@ class PacmanMirrors:
                          choices=["all", "http", "https", "ftp", "ftps"],
                          type=str,
                          nargs="+",
-                         help="--api --proto {all|https,http")
+                         help="--api --proto {all|https http}")
         branch = api.add_mutually_exclusive_group()
         branch.add_argument("--get-branch",
                             action="store_true",
                             help="--api --get-branch")
         branch.add_argument("--set-branch",
-                            action="store_true",
-                            help="--api --set-branch -b <branch>")
+                            choices=["stable", "testing", "unstable"],
+                            help="--api --set-branch <branch>")
 
         args = parser.parse_args()
         if len(sys.argv) == 1:
@@ -241,6 +241,8 @@ class PacmanMirrors:
         if args.api:
             nolist = False
             proto = False
+            setbranch = bool(args.set_branch)
+            getbranch = args.get_branch
             if args.no_mirrorlist:
                 nolist = True
             if args.proto:
@@ -254,11 +256,9 @@ class PacmanMirrors:
                         self.config["protocols"] = args.proto
             if args.set_branch:
                 self.config["branch"] = args.set_branch
-                self.api_config(prefix=args.prefix, set_branch=True, protocols=proto, nolist=nolist)
-            elif args.get_branch and not args.branch:
-                self.api_config(prefix=args.prefix, get_branch=True)
-            else:
-                self.api_config(prefix=args.prefix, protocols=proto, nolist=nolist)
+
+            self.api_config(prefix=args.prefix, set_branch=setbranch, get_branch=getbranch,
+                            protocols=proto, nolist=nolist)
 
     def api_config(self, prefix=None, set_branch=False, get_branch=False, protocols=False, nolist=False):
         """Api functions
