@@ -86,7 +86,7 @@
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
         <li class="main active"><a href="#documentation-of-pacman-mirrors">Documentation of pacman-mirrors</a></li>
-            <li><a href="#commands">Commands</a></li>
+            <li><a href="#optional">OPTIONAL</a></li>
             <li><a href="#content-of-pacman-mirrorsconf">Content of pacman-mirrors.conf</a></li>
     </ul>
 </div></div>
@@ -94,26 +94,14 @@
 
 <h1 id="documentation-of-pacman-mirrors">Documentation of pacman-mirrors</h1>
 <p>Enhanced pacman-mirrors for Manjaro Linux</p>
-<h2 id="commands">Commands</h2>
-<p><code>-h</code>, <code>--help</code>
-Show the help message.</p>
-<p><code>-g</code>, <code>--generate</code>
-Generate a new mirrorlist.</p>
-<p><code>-m [method]</code>, <code>--method [method]</code>
-Choose the generation method:</p>
-<ul>
-<li>rank</li>
-<li>random</li>
-</ul>
-<p><code>-b [branch]</code>, <code>--branch [branch]</code>
-Choose the branch to use:</p>
-<ul>
-<li>stable</li>
-<li>testing</li>
-<li>unstable</li>
-</ul>
-<p><code>-c COUNTRY [COUNTRY ...]</code>, <code>--country COUNTRY [COUNTRY ...]</code>
-Specifiy country or list of countries separated by comma or space:</p>
+<h2 id="optional">OPTIONAL</h2>
+<p><code>-h</code>, <code>--help</code> </p>
+<p>Show the help message.</p>
+<p><code>-v</code>, <code>--version</code></p>
+<p>Show the version of pacman-mirrors.</p>
+<h3 id="country">COUNTRY:</h3>
+<p><code>-c COUNTRY [COUNTRY ...]</code>, <code>--country COUNTRY [COUNTRY ...]</code></p>
+<p>Specifiy country or list of countries separated by comma or space:</p>
 <ul>
 <li>France</li>
 <li>France, Germany, Austria</li>
@@ -123,42 +111,57 @@ Specifiy country or list of countries separated by comma or space:</p>
 <ul>
 <li>all</li>
 </ul>
-<p><code>--geoip</code>
-Detect country by using geolocation.</p>
-<p><code>-d</code>, <code>--mirror_dir</code>
-Change directory of mirrors to use.</p>
-<p><code>-f [n]</code>, <code>--fasttrack [n]</code>
-Generates an updated and responsive mirrorlist of [n] mirrors.</p>
-<p><code>-l</code>, <code>--list</code>
-Lists available mirror countries</p>
-<p><code>-o</code>, <code>--output</code>
-Change path of the output file.</p>
-<p><code>-t</code>, <code>--timeout</code>
-Change the server maximum waiting time.</p>
-<p><code>--no-update</code>
-Don't generate mirrorlist.</p>
-<p><code>-i</code>, <code>--interactive</code>
-Launch a graphical tool to select mirrors to generate a custom mirrorlist.</p>
-<p><code>--default</code>
-Used in conjunction with <code>-i/--interactive</code> ignores custom mirrorfile,<br />
+<p><code>--geoip</code> </p>
+<p>Detect country by using geolocation.</p>
+<h3 id="methods">METHODS:</h3>
+<p><code>-g</code>, <code>--generate</code></p>
+<p>Generate a new default mirrorlist.</p>
+<p><code>-f [n]</code>, <code>--fasttrack [n]</code></p>
+<p>Generates an updated mirrorlist of [n] mirrors ranked by responsiveness.</p>
+<p><code>-m [method]</code>, <code>--method [method]</code></p>
+<p>Choose the generation method:</p>
+<ul>
+<li>rank</li>
+<li>random</li>
+</ul>
+<p><code>-i</code>, <code>--interactive</code></p>
+<p>Launch a graphical tool to select mirrors to generate a custom mirrorlist.</p>
+<h3 id="misc">MISC</h3>
+<p><code>-b [branch]</code>, <code>--branch [branch]</code></p>
+<p>Choose the branch to use:</p>
+<ul>
+<li>stable</li>
+<li>testing</li>
+<li>unstable</li>
+</ul>
+<p><code>-d</code>, <code>--mirror_dir</code></p>
+<p>Change directory of mirrors to use.</p>
+<p><code>-l</code>, <code>--list</code></p>
+<p>Lists available mirror countries</p>
+<p><code>-o</code>, <code>--output</code></p>
+<p>Change path of the output file.</p>
+<p><code>-q</code>, <code>--quiet</code></p>
+<p>Make pacman-mirrors silent.</p>
+<p><code>-t</code>, <code>--timeout</code></p>
+<p>Change the server maximum waiting time.</p>
+<p><code>--default</code></p>
+<p>Used in conjunction with <code>-i/--interactive</code> ignores custom mirrorfile,<br />
 loading the default mirrorfile, allowing to create a new custom mirrorfile 
 and executes the ranking/randomizing process after the selection of mirrors.</p>
-<p><code>-v</code>, <code>--version</code>
-Show the version of pacman-mirrors.</p>
-<p><code>--quiet</code>
-Make pacman-mirrors silent.</p>
-<p><code>-u</code>, <code>update</code>
-Run <code>pacman -Syy</code> after mirrorlist generation</p>
-<p>Do api tasks before generating mirrorlist.</p>
-<p><code>-a</code>, <code>--api</code> [--prefix] [{--get-branch | --set-branch}] [--protocols PROTO [PROTO ...]]</p>
+<p><code>--no-update</code></p>
+<p>Don't generate mirrorlist.</p>
+<h3 id="sync">SYNC</h3>
+<p><code>-y</code>, <code>--sync</code>,<code>-u</code>, <code>update</code></p>
+<p>Run <code>pacman -Syy</code> after mirrorlist generation</p>
+<h3 id="api">API</h3>
+<p>Api tasks to do before generating mirrorlist.</p>
+<p><code>-a</code>, <code>--api</code> [--prefix] [--get-branch | --set-branch <branch>] [--proto PROTO [PROTO ...]] [--no-mirrorlist]</p>
 <ul>
 <li><code>--prefix</code> for pacman-mirrors file-handling eg. /mnt/install or $mnt.</li>
-<li><code>--get-branch</code> returns branch from config in prefix<code>config_file</code>. </li>
-<li>Ignored if <code>--branch</code> is supplied.</li>
-<li><code>--set-branch</code> writes branch specified in <code>--branch</code> to prefix<code>config_file</code>.</li>
-<li>Ignored if <code>--branch</code> is not supplied.</li>
-<li><code>--protocols</code> write the specified protocols to prefix<code>pacman-mirrors.conf</code>.</li>
-<li><code>-u</code>, <code>--no-mirrorlist</code> exit when api tasks finish </li>
+<li><code>--get-branch</code> returns branch from config in prefix<code>config_file</code>.   </li>
+<li><code>--set-branch &lt;branch&gt;</code> writes new branch to configuration.</li>
+<li><code>--proto</code> write the specified protocols to prefix<code>pacman-mirrors.conf</code>.</li>
+<li><code>-n</code>, <code>--no-mirrorlist</code> exit when api tasks finish </li>
 </ul>
 <h2 id="content-of-pacman-mirrorsconf">Content of pacman-mirrors.conf</h2>
 <pre><code>##
@@ -176,12 +179,12 @@ Run <code>pacman -Syy</code> after mirrorlist generation</p>
 ## Define protocols and priority
 ##   separated by comma 'https,http' or 'http,https'
 ##             or space 'https http' or 'http https'
-## ATM available protocols are: http, https, ftp
+## ATM available protocols are: http, https, ftp, ftps
 ## Not specifying a protocol will ban the protocol from being used
 ## Empty means all in reversed alphabetic order
 ## If a mirror has more than one protocol defined 
 ##  only the first is written to the mirrorlist
-# Protocols =
+# Protocols = 
 
 ## Specify to use only mirrors from a specific country.
 ## Can add multiple countries
@@ -189,7 +192,7 @@ Run <code>pacman -Syy</code> after mirrorlist generation</p>
 ##             or space 'Germany France Belgium'
 ## Get a list of all available counties with 'pacman-mirrors -l'
 ## Empty means all
-# OnlyCountry =
+# OnlyCountry = 
 
 ## Mirrors directory
 # MirrorlistsDir = /var/lib/pacman-mirrors
@@ -245,5 +248,5 @@ Run <code>pacman -Syy</code> after mirrorlist generation</p>
 
 <!--
 MkDocs version : 0.16.1
-Build Date UTC : 2017-05-02 05:37:37
+Build Date UTC : 2017-05-11 13:31:12
 -->
