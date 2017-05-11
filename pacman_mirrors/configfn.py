@@ -79,7 +79,7 @@ def api_write_only_country(filename, selection, custom=False):
 
             replaced = False
             for line in cnf:
-                if "OnlyCountry" in line:
+                if "OnlyCountry =" in line:
                     tmp.write(selection)
                     replaced = True
                 else:
@@ -107,7 +107,7 @@ def api_write_protocols(protocols, filename):
                 filename), delete=False) as tmp:
             replaced = False
             for line in cnf:
-                if "Protocols = " in line:
+                if "Protocols =" in line:
                     tmp.write(protocols)
                     replaced = True
                 else:
