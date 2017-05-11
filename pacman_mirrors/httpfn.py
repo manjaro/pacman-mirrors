@@ -23,12 +23,14 @@ import collections
 import json
 import ssl
 import time
+from pacman_mirrors import __version__
 from http.client import HTTPException
 import os
 from os import system as system_call
 from socket import timeout
 from urllib.error import URLError
 from urllib.request import urlopen
+import urllib.request
 
 from . import configuration as conf
 from . import filefn
@@ -108,15 +110,18 @@ def get_mirror_response(url, maxwait=2, count=1, quiet=False, ssl_verify=True):
     response_time = txt.SERVER_RES
     probe_stop = None
     message = ""
-    # ssl.verify_mode = ssl.CERT_NONE
-    context = None
+    # context = None
+    context = ssl.SSLContext(ssl.PROTOCOL_SSLv23)
+    headers = {"User-Agent": "pacman-mirrors {}".format(__version__)}
     if not ssl_verify:
-        context = ssl.SSLContext(ssl.PROTOCOL_SSLv23)
+        # context = ssl.SSLContext(ssl.PROTOCOL_SSLv23)
         context.verify_mode = ssl.CERT_NONE
-
+    req = urllib.request.Request(
+        url + "state", headers=headers
+    )
     try:
         for _ in range(count):
-            urlopen(url + "state", timeout=maxwait, context=context)
+            urlopen(req, timeout=maxwait, context=context)
         probe_stop = time.time()
     except URLError as err:
         if hasattr(err, "reason"):
@@ -134,6 +139,10 @@ def get_mirror_response(url, maxwait=2, count=1, quiet=False, ssl_verify=True):
     except HTTPException:
         message = "\n.: {} {} '{}'".format(txt.ERR_CLR,
                                            txt.HTTP_EXCEPTION,
+                                           url)
+    except CertificateError:
+        message = "\n.: {} {} '{}'".format(txt.ERR_CLR,
+                                           ssl.CertificateError,
                                            url)
     if message and not quiet:
         print(message)
