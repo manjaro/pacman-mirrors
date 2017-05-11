@@ -24,7 +24,6 @@ import hashlib
 import os
 import sys
 
-
 from . import jsonfn
 from . import miscfn
 from . import txt
