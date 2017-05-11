@@ -2,11 +2,17 @@
 All notable changes to this project will be documented in this file.
 
 ## [4.2.0dev]
+Breaking change to `--set-branch` argument
+
+- `--set-branch <branch>` now requires the explicit branch as argument
+
+Other improvements and fixes:
+
 - Improvement: created argument groups for logic division of arguments usage
 - Improvement: making `--get-branch` and `--set-branch` mutually exclusive
-- Improvement: making `--no-mirrorlist` and `--sync` mutually exclusive
-- Improvement: adding description and choices to `--proto` [all, http, https, ftp, ftps]
-- Improvement: `--set-branch <branch>` not depending on `--branch <branch>` option 
+- Improvement: more in the spirit of pacman `-y` `--sync` is added in addition to `-u` `--update` 
+- Improvement: making `--no-mirrorlist` and `-y --sync` mutually exclusive
+- Improvement: added protocol choices to `--proto` [all, http, https, ftp, ftps] 
 - Fix: Issue where values from configuration was not parsed correct.
 - Fix: Issue where location in config was not determined correctly
 
