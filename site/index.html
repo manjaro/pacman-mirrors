@@ -86,7 +86,7 @@
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
         <li class="main active"><a href="#documentation-of-pacman-mirrors">Documentation of pacman-mirrors</a></li>
-            <li><a href="#optional">OPTIONAL</a></li>
+            <li><a href="#commands">COMMANDS</a></li>
             <li><a href="#content-of-pacman-mirrorsconf">Content of pacman-mirrors.conf</a></li>
     </ul>
 </div></div>
@@ -94,13 +94,13 @@
 
 <h1 id="documentation-of-pacman-mirrors">Documentation of pacman-mirrors</h1>
 <p>Enhanced pacman-mirrors for Manjaro Linux</p>
-<h2 id="optional">OPTIONAL</h2>
-<p><code>-h</code>, <code>--help</code> </p>
+<h2 id="commands">COMMANDS</h2>
+<h4 id="-h-help"><code>-h</code>, <code>--help</code></h4>
 <p>Show the help message.</p>
-<p><code>-v</code>, <code>--version</code></p>
+<h4 id="-v-version"><code>-v</code>, <code>--version</code></h4>
 <p>Show the version of pacman-mirrors.</p>
 <h3 id="country">COUNTRY:</h3>
-<p><code>-c COUNTRY [COUNTRY ...]</code>, <code>--country COUNTRY [COUNTRY ...]</code></p>
+<h4 id="-c-country-country-country-country-country"><code>-c COUNTRY [COUNTRY ...]</code>, <code>--country COUNTRY [COUNTRY ...]</code></h4>
 <p>Specifiy country or list of countries separated by comma or space:</p>
 <ul>
 <li>France</li>
@@ -111,58 +111,61 @@
 <ul>
 <li>all</li>
 </ul>
-<p><code>--geoip</code> </p>
-<p>Detect country by using geolocation.</p>
+<h4 id="-geoip"><code>--geoip</code></h4>
+<p>Find current country by using geolocation.</p>
 <h3 id="methods">METHODS:</h3>
-<p><code>-g</code>, <code>--generate</code></p>
+<h4 id="-g-generate"><code>-g</code>, <code>--generate</code></h4>
 <p>Generate a new default mirrorlist.</p>
-<p><code>-f [n]</code>, <code>--fasttrack [n]</code></p>
+<h4 id="-f-n-fasttrack-n"><code>-f [n]</code>, <code>--fasttrack [n]</code></h4>
 <p>Generates an updated mirrorlist of [n] mirrors ranked by responsiveness.</p>
-<p><code>-m [method]</code>, <code>--method [method]</code></p>
+<h4 id="-m-method-method-method"><code>-m [method]</code>, <code>--method [method]</code></h4>
 <p>Choose the generation method:</p>
 <ul>
 <li>rank</li>
 <li>random</li>
 </ul>
-<p><code>-i</code>, <code>--interactive</code></p>
+<h4 id="-i-interactive"><code>-i</code>, <code>--interactive</code></h4>
 <p>Launch a graphical tool to select mirrors to generate a custom mirrorlist.</p>
 <h3 id="misc">MISC</h3>
-<p><code>-b [branch]</code>, <code>--branch [branch]</code></p>
+<h4 id="-b-branch-branch-branch"><code>-b [branch]</code>, <code>--branch [branch]</code></h4>
 <p>Choose the branch to use:</p>
 <ul>
 <li>stable</li>
 <li>testing</li>
 <li>unstable</li>
 </ul>
-<p><code>-d</code>, <code>--mirror_dir</code></p>
+<h4 id="-d-mirror_dir"><code>-d</code>, <code>--mirror_dir</code></h4>
 <p>Change directory of mirrors to use.</p>
-<p><code>-l</code>, <code>--list</code></p>
+<h4 id="-l-list"><code>-l</code>, <code>--list</code></h4>
 <p>Lists available mirror countries</p>
-<p><code>-o</code>, <code>--output</code></p>
+<h4 id="-o-output"><code>-o</code>, <code>--output</code></h4>
 <p>Change path of the output file.</p>
-<p><code>-q</code>, <code>--quiet</code></p>
+<h4 id="-q-quiet"><code>-q</code>, <code>--quiet</code></h4>
 <p>Make pacman-mirrors silent.</p>
-<p><code>-t</code>, <code>--timeout</code></p>
+<h4 id="-t-timeout"><code>-t</code>, <code>--timeout</code></h4>
 <p>Change the server maximum waiting time.</p>
-<p><code>--default</code></p>
+<h4 id="-default"><code>--default</code></h4>
 <p>Used in conjunction with <code>-i/--interactive</code> ignores custom mirrorfile,<br />
 loading the default mirrorfile, allowing to create a new custom mirrorfile 
 and executes the ranking/randomizing process after the selection of mirrors.</p>
-<p><code>--no-update</code></p>
+<h4 id="-no-update"><code>--no-update</code></h4>
 <p>Don't generate mirrorlist.</p>
 <h3 id="sync">SYNC</h3>
-<p><code>-y</code>, <code>--sync</code>,<code>-u</code>, <code>update</code></p>
+<h4 id="-y-sync-u-update"><code>-y</code>, <code>--sync</code>,<code>-u</code>, <code>update</code></h4>
 <p>Run <code>pacman -Syy</code> after mirrorlist generation</p>
 <h3 id="api">API</h3>
 <p>Api tasks to do before generating mirrorlist.</p>
-<p><code>-a</code>, <code>--api</code> [--prefix] [--get-branch | --set-branch <branch>] [--proto PROTO [PROTO ...]] [--no-mirrorlist]</p>
-<ul>
-<li><code>--prefix</code> for pacman-mirrors file-handling eg. /mnt/install or $mnt.</li>
-<li><code>--get-branch</code> returns branch from config in prefix<code>config_file</code>.   </li>
-<li><code>--set-branch &lt;branch&gt;</code> writes new branch to configuration.</li>
-<li><code>--proto</code> write the specified protocols to prefix<code>pacman-mirrors.conf</code>.</li>
-<li><code>-n</code>, <code>--no-mirrorlist</code> exit when api tasks finish </li>
-</ul>
+<h4 id="-a-api-prefix-get-branch-set-branch-proto-proto-proto-no-mirrorlist"><code>-a</code>, <code>--api</code> [--prefix] [--get-branch | --set-branch <branch>] [--proto PROTO [PROTO ...]] [--no-mirrorlist]</h4>
+<h5 id="-prefix"><code>--prefix</code></h5>
+<p>Change pacman-mirrors file-handling eg. /mnt/install or $mnt.</p>
+<h5 id="-get-branch"><code>--get-branch</code></h5>
+<p>Returns branch from config found in <code>&lt;prefix&gt;/config_file</code>.   </p>
+<h5 id="-set-branch-branch"><code>--set-branch &lt;branch&gt;</code></h5>
+<p>Writes new branch to config found in <code>&lt;prefix&gt;/config_file</code>.</p>
+<h5 id="-proto-proto-proto"><code>--proto PROTO [PROTO ...]</code></h5>
+<p>Write the specified protocols to config found in <code>&lt;prefix&gt;/config_file</code>.</p>
+<h5 id="-n-no-mirrorlist"><code>-n</code>, <code>--no-mirrorlist</code></h5>
+<p>Exit when api task is done </p>
 <h2 id="content-of-pacman-mirrorsconf">Content of pacman-mirrors.conf</h2>
 <pre><code>##
 ## /etc/pacman-mirrors.conf
@@ -248,5 +251,5 @@ and executes the ranking/randomizing process after the selection of mirrors.</p>
 
 <!--
 MkDocs version : 0.16.1
-Build Date UTC : 2017-05-11 13:31:12
+Build Date UTC : 2017-05-11 13:41:07
 -->

@@ -2,7 +2,7 @@
     "docs": [
         {
             "location": "/",
-            "text": "Documentation of pacman-mirrors\n\n\nEnhanced pacman-mirrors for Manjaro Linux\n\n\nOPTIONAL\n\n\n-h\n, \n--help\n \n\n\nShow the help message.\n\n\n-v\n, \n--version\n\n\nShow the version of pacman-mirrors.\n\n\nCOUNTRY:\n\n\n-c COUNTRY [COUNTRY ...]\n, \n--country COUNTRY [COUNTRY ...]\n\n\nSpecifiy country or list of countries separated by comma or space:\n\n\n\n\nFrance\n\n\nFrance, Germany, Austria\n\n\nFrance Germany Austria\n\n\n\n\nTo reset a custom mirror file\n\n\n\n\nall\n\n\n\n\n--geoip\n \n\n\nDetect country by using geolocation.\n\n\nMETHODS:\n\n\n-g\n, \n--generate\n\n\nGenerate a new default mirrorlist.\n\n\n-f [n]\n, \n--fasttrack [n]\n\n\nGenerates an updated mirrorlist of [n] mirrors ranked by responsiveness.\n\n\n-m [method]\n, \n--method [method]\n\n\nChoose the generation method:\n\n\n\n\nrank\n\n\nrandom\n\n\n\n\n-i\n, \n--interactive\n\n\nLaunch a graphical tool to select mirrors to generate a custom mirrorlist.\n\n\nMISC\n\n\n-b [branch]\n, \n--branch [branch]\n\n\nChoose the branch to use:\n\n\n\n\nstable\n\n\ntesting\n\n\nunstable\n\n\n\n\n-d\n, \n--mirror_dir\n\n\nChange directory of mirrors to use.\n\n\n-l\n, \n--list\n\n\nLists available mirror countries\n\n\n-o\n, \n--output\n\n\nChange path of the output file.\n\n\n-q\n, \n--quiet\n\n\nMake pacman-mirrors silent.\n\n\n-t\n, \n--timeout\n\n\nChange the server maximum waiting time.\n\n\n--default\n\n\nUsed in conjunction with \n-i/--interactive\n ignores custom mirrorfile,\n\nloading the default mirrorfile, allowing to create a new custom mirrorfile \nand executes the ranking/randomizing process after the selection of mirrors.\n\n\n--no-update\n\n\nDon't generate mirrorlist.\n\n\nSYNC\n\n\n-y\n, \n--sync\n,\n-u\n, \nupdate\n\n\nRun \npacman -Syy\n after mirrorlist generation\n\n\nAPI\n\n\nApi tasks to do before generating mirrorlist.\n\n\n-a\n, \n--api\n [--prefix] [--get-branch | --set-branch \n] [--proto PROTO [PROTO ...]] [--no-mirrorlist]\n\n\n\n\n--prefix\n for pacman-mirrors file-handling eg. /mnt/install or $mnt.\n\n\n--get-branch\n returns branch from config in prefix\nconfig_file\n.   \n\n\n--set-branch <branch>\n writes new branch to configuration.\n\n\n--proto\n write the specified protocols to prefix\npacman-mirrors.conf\n.\n\n\n-n\n, \n--no-mirrorlist\n exit when api tasks finish \n\n\n\n\nContent of pacman-mirrors.conf\n\n\n##\n## /etc/pacman-mirrors.conf\n##\n\n## Branch Pacman should use (stable, testing, unstable)\n# Branch = stable\n\n## Generation method\n## 1) rank   - rank mirrors depending on their access time\n## 2) random - randomly generate the output mirrorlist\n# Method = rank\n\n## Define protocols and priority\n##   separated by comma 'https,http' or 'http,https'\n##             or space 'https http' or 'http https'\n## ATM available protocols are: http, https, ftp, ftps\n## Not specifying a protocol will ban the protocol from being used\n## Empty means all in reversed alphabetic order\n## If a mirror has more than one protocol defined \n##  only the first is written to the mirrorlist\n# Protocols = \n\n## Specify to use only mirrors from a specific country.\n## Can add multiple countries\n##   separated by comma 'Germany,France,Belgium'\n##             or space 'Germany France Belgium'\n## Get a list of all available counties with 'pacman-mirrors -l'\n## Empty means all\n# OnlyCountry = \n\n## Mirrors directory\n# MirrorlistsDir = /var/lib/pacman-mirrors\n\n## Output file\n# OutputMirrorlist = /etc/pacman.d/mirrorlist\n\n## When set to True prevents the regeneration of the mirrorlist if\n## pacman-mirrors is invoked with the --no-update argument.\n## Useful if you don't want the mirrorlist regenerated after a\n## pacman-mirrors package upgrade.\n# NoUpdate = False\n\n## When set to False - all certificates are accepted.\n## Use only if you fully trust all ssl-enabled mirrors.\n# SSLVerify = True",
+            "text": "Documentation of pacman-mirrors\n\n\nEnhanced pacman-mirrors for Manjaro Linux\n\n\nCOMMANDS\n\n\n-h\n, \n--help\n\n\nShow the help message.\n\n\n-v\n, \n--version\n\n\nShow the version of pacman-mirrors.\n\n\nCOUNTRY:\n\n\n-c COUNTRY [COUNTRY ...]\n, \n--country COUNTRY [COUNTRY ...]\n\n\nSpecifiy country or list of countries separated by comma or space:\n\n\n\n\nFrance\n\n\nFrance, Germany, Austria\n\n\nFrance Germany Austria\n\n\n\n\nTo reset a custom mirror file\n\n\n\n\nall\n\n\n\n\n--geoip\n\n\nFind current country by using geolocation.\n\n\nMETHODS:\n\n\n-g\n, \n--generate\n\n\nGenerate a new default mirrorlist.\n\n\n-f [n]\n, \n--fasttrack [n]\n\n\nGenerates an updated mirrorlist of [n] mirrors ranked by responsiveness.\n\n\n-m [method]\n, \n--method [method]\n\n\nChoose the generation method:\n\n\n\n\nrank\n\n\nrandom\n\n\n\n\n-i\n, \n--interactive\n\n\nLaunch a graphical tool to select mirrors to generate a custom mirrorlist.\n\n\nMISC\n\n\n-b [branch]\n, \n--branch [branch]\n\n\nChoose the branch to use:\n\n\n\n\nstable\n\n\ntesting\n\n\nunstable\n\n\n\n\n-d\n, \n--mirror_dir\n\n\nChange directory of mirrors to use.\n\n\n-l\n, \n--list\n\n\nLists available mirror countries\n\n\n-o\n, \n--output\n\n\nChange path of the output file.\n\n\n-q\n, \n--quiet\n\n\nMake pacman-mirrors silent.\n\n\n-t\n, \n--timeout\n\n\nChange the server maximum waiting time.\n\n\n--default\n\n\nUsed in conjunction with \n-i/--interactive\n ignores custom mirrorfile,\n\nloading the default mirrorfile, allowing to create a new custom mirrorfile \nand executes the ranking/randomizing process after the selection of mirrors.\n\n\n--no-update\n\n\nDon't generate mirrorlist.\n\n\nSYNC\n\n\n-y\n, \n--sync\n,\n-u\n, \nupdate\n\n\nRun \npacman -Syy\n after mirrorlist generation\n\n\nAPI\n\n\nApi tasks to do before generating mirrorlist.\n\n\n-a\n, \n--api\n [--prefix] [--get-branch | --set-branch \n] [--proto PROTO [PROTO ...]] [--no-mirrorlist]\n\n\n--prefix\n\n\nChange pacman-mirrors file-handling eg. /mnt/install or $mnt.\n\n\n--get-branch\n\n\nReturns branch from config found in \n<prefix>/config_file\n.   \n\n\n--set-branch <branch>\n\n\nWrites new branch to config found in \n<prefix>/config_file\n.\n\n\n--proto PROTO [PROTO ...]\n\n\nWrite the specified protocols to config found in \n<prefix>/config_file\n.\n\n\n-n\n, \n--no-mirrorlist\n\n\nExit when api task is done \n\n\nContent of pacman-mirrors.conf\n\n\n##\n## /etc/pacman-mirrors.conf\n##\n\n## Branch Pacman should use (stable, testing, unstable)\n# Branch = stable\n\n## Generation method\n## 1) rank   - rank mirrors depending on their access time\n## 2) random - randomly generate the output mirrorlist\n# Method = rank\n\n## Define protocols and priority\n##   separated by comma 'https,http' or 'http,https'\n##             or space 'https http' or 'http https'\n## ATM available protocols are: http, https, ftp, ftps\n## Not specifying a protocol will ban the protocol from being used\n## Empty means all in reversed alphabetic order\n## If a mirror has more than one protocol defined \n##  only the first is written to the mirrorlist\n# Protocols = \n\n## Specify to use only mirrors from a specific country.\n## Can add multiple countries\n##   separated by comma 'Germany,France,Belgium'\n##             or space 'Germany France Belgium'\n## Get a list of all available counties with 'pacman-mirrors -l'\n## Empty means all\n# OnlyCountry = \n\n## Mirrors directory\n# MirrorlistsDir = /var/lib/pacman-mirrors\n\n## Output file\n# OutputMirrorlist = /etc/pacman.d/mirrorlist\n\n## When set to True prevents the regeneration of the mirrorlist if\n## pacman-mirrors is invoked with the --no-update argument.\n## Useful if you don't want the mirrorlist regenerated after a\n## pacman-mirrors package upgrade.\n# NoUpdate = False\n\n## When set to False - all certificates are accepted.\n## Use only if you fully trust all ssl-enabled mirrors.\n# SSLVerify = True",
             "title": "Home"
         },
         {
@@ -11,34 +11,149 @@
             "title": "Documentation of pacman-mirrors"
         },
         {
-            "location": "/#optional",
-            "text": "-h ,  --help    Show the help message.  -v ,  --version  Show the version of pacman-mirrors.",
-            "title": "OPTIONAL"
+            "location": "/#commands",
+            "text": "",
+            "title": "COMMANDS"
+        },
+        {
+            "location": "/#-h-help",
+            "text": "Show the help message.",
+            "title": "-h, --help"
+        },
+        {
+            "location": "/#-v-version",
+            "text": "Show the version of pacman-mirrors.",
+            "title": "-v, --version"
         },
         {
             "location": "/#country",
-            "text": "-c COUNTRY [COUNTRY ...] ,  --country COUNTRY [COUNTRY ...]  Specifiy country or list of countries separated by comma or space:   France  France, Germany, Austria  France Germany Austria   To reset a custom mirror file   all   --geoip    Detect country by using geolocation.",
+            "text": "",
             "title": "COUNTRY:"
         },
         {
+            "location": "/#-c-country-country-country-country-country",
+            "text": "Specifiy country or list of countries separated by comma or space:   France  France, Germany, Austria  France Germany Austria   To reset a custom mirror file   all",
+            "title": "-c COUNTRY [COUNTRY ...], --country COUNTRY [COUNTRY ...]"
+        },
+        {
+            "location": "/#-geoip",
+            "text": "Find current country by using geolocation.",
+            "title": "--geoip"
+        },
+        {
             "location": "/#methods",
-            "text": "-g ,  --generate  Generate a new default mirrorlist.  -f [n] ,  --fasttrack [n]  Generates an updated mirrorlist of [n] mirrors ranked by responsiveness.  -m [method] ,  --method [method]  Choose the generation method:   rank  random   -i ,  --interactive  Launch a graphical tool to select mirrors to generate a custom mirrorlist.",
+            "text": "",
             "title": "METHODS:"
         },
         {
+            "location": "/#-g-generate",
+            "text": "Generate a new default mirrorlist.",
+            "title": "-g, --generate"
+        },
+        {
+            "location": "/#-f-n-fasttrack-n",
+            "text": "Generates an updated mirrorlist of [n] mirrors ranked by responsiveness.",
+            "title": "-f [n], --fasttrack [n]"
+        },
+        {
+            "location": "/#-m-method-method-method",
+            "text": "Choose the generation method:   rank  random",
+            "title": "-m [method], --method [method]"
+        },
+        {
+            "location": "/#-i-interactive",
+            "text": "Launch a graphical tool to select mirrors to generate a custom mirrorlist.",
+            "title": "-i, --interactive"
+        },
+        {
             "location": "/#misc",
-            "text": "-b [branch] ,  --branch [branch]  Choose the branch to use:   stable  testing  unstable   -d ,  --mirror_dir  Change directory of mirrors to use.  -l ,  --list  Lists available mirror countries  -o ,  --output  Change path of the output file.  -q ,  --quiet  Make pacman-mirrors silent.  -t ,  --timeout  Change the server maximum waiting time.  --default  Used in conjunction with  -i/--interactive  ignores custom mirrorfile, \nloading the default mirrorfile, allowing to create a new custom mirrorfile \nand executes the ranking/randomizing process after the selection of mirrors.  --no-update  Don't generate mirrorlist.",
+            "text": "",
             "title": "MISC"
         },
         {
+            "location": "/#-b-branch-branch-branch",
+            "text": "Choose the branch to use:   stable  testing  unstable",
+            "title": "-b [branch], --branch [branch]"
+        },
+        {
+            "location": "/#-d-mirror_dir",
+            "text": "Change directory of mirrors to use.",
+            "title": "-d, --mirror_dir"
+        },
+        {
+            "location": "/#-l-list",
+            "text": "Lists available mirror countries",
+            "title": "-l, --list"
+        },
+        {
+            "location": "/#-o-output",
+            "text": "Change path of the output file.",
+            "title": "-o, --output"
+        },
+        {
+            "location": "/#-q-quiet",
+            "text": "Make pacman-mirrors silent.",
+            "title": "-q, --quiet"
+        },
+        {
+            "location": "/#-t-timeout",
+            "text": "Change the server maximum waiting time.",
+            "title": "-t, --timeout"
+        },
+        {
+            "location": "/#-default",
+            "text": "Used in conjunction with  -i/--interactive  ignores custom mirrorfile, \nloading the default mirrorfile, allowing to create a new custom mirrorfile \nand executes the ranking/randomizing process after the selection of mirrors.",
+            "title": "--default"
+        },
+        {
+            "location": "/#-no-update",
+            "text": "Don't generate mirrorlist.",
+            "title": "--no-update"
+        },
+        {
             "location": "/#sync",
-            "text": "-y ,  --sync , -u ,  update  Run  pacman -Syy  after mirrorlist generation",
+            "text": "",
             "title": "SYNC"
         },
         {
+            "location": "/#-y-sync-u-update",
+            "text": "Run  pacman -Syy  after mirrorlist generation",
+            "title": "-y, --sync,-u, update"
+        },
+        {
             "location": "/#api",
-            "text": "Api tasks to do before generating mirrorlist.  -a ,  --api  [--prefix] [--get-branch | --set-branch  ] [--proto PROTO [PROTO ...]] [--no-mirrorlist]   --prefix  for pacman-mirrors file-handling eg. /mnt/install or $mnt.  --get-branch  returns branch from config in prefix config_file .     --set-branch <branch>  writes new branch to configuration.  --proto  write the specified protocols to prefix pacman-mirrors.conf .  -n ,  --no-mirrorlist  exit when api tasks finish",
+            "text": "Api tasks to do before generating mirrorlist.",
             "title": "API"
+        },
+        {
+            "location": "/#-a-api-prefix-get-branch-set-branch-proto-proto-proto-no-mirrorlist",
+            "text": "",
+            "title": "-a, --api [--prefix] [--get-branch | --set-branch ] [--proto PROTO [PROTO ...]] [--no-mirrorlist]"
+        },
+        {
+            "location": "/#-prefix",
+            "text": "Change pacman-mirrors file-handling eg. /mnt/install or $mnt.",
+            "title": "--prefix"
+        },
+        {
+            "location": "/#-get-branch",
+            "text": "Returns branch from config found in  <prefix>/config_file .",
+            "title": "--get-branch"
+        },
+        {
+            "location": "/#-set-branch-branch",
+            "text": "Writes new branch to config found in  <prefix>/config_file .",
+            "title": "--set-branch &lt;branch&gt;"
+        },
+        {
+            "location": "/#-proto-proto-proto",
+            "text": "Write the specified protocols to config found in  <prefix>/config_file .",
+            "title": "--proto PROTO [PROTO ...]"
+        },
+        {
+            "location": "/#-n-no-mirrorlist",
+            "text": "Exit when api task is done",
+            "title": "-n, --no-mirrorlist"
         },
         {
             "location": "/#content-of-pacman-mirrorsconf",
