@@ -302,6 +302,7 @@ class PacmanMirrors:
         """Generate common mirrorlist"""
         worklist = mirrorfn.filter_mirror_country(self.mirrors.mirrorlist,
                                                   self.selected_countries)
+        worklist = sorted(worklist, key=itemgetter("country"))
         if self.config["protocols"]:
             worklist = mirrorfn.filter_mirror_protocols(
                 worklist, self.config["protocols"])
@@ -323,7 +324,7 @@ class PacmanMirrors:
     def build_fasttrack_mirror_list(self, number):
         """Fast-track the mirrorlist by filtering only up2date mirrors"""
         # randomize the load on up2date mirrors
-        worklist = self.mirrors.mirrorlist
+        worklist = sorted(self.mirrors.mirrorlist, key=itemgetter("country"))
         shuffle(worklist)
         if self.config["protocols"]:
             worklist = mirrorfn.filter_mirror_protocols(
@@ -370,6 +371,7 @@ class PacmanMirrors:
         """
         worklist = mirrorfn.filter_mirror_country(self.mirrors.mirrorlist,
                                                   self.selected_countries)
+        worklist = sorted(worklist, key=itemgetter("country"))
         if self.config["protocols"]:
             worklist = mirrorfn.filter_mirror_protocols(
                 worklist, self.config["protocols"])
