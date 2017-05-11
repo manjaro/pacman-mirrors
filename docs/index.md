@@ -27,10 +27,10 @@ Find current country by using geolocation.
 #### `-g`, `--generate`
 Generate a new default mirrorlist.
 
-#### `-f [n]`, `--fasttrack [n]`
-Generates an updated mirrorlist of [n] mirrors ranked by responsiveness.
+#### `-f {DIGIT}`, `--fasttrack {DIGIT}`
+Generates an updated mirrorlist of **DIGIT** mirrors ranked by responsiveness.
 
-#### `-m [method]`, `--method [method]`
+#### `-m {method}`, `--method {method}`
 Choose the generation method:
 
 - rank
@@ -40,26 +40,26 @@ Choose the generation method:
 Launch a graphical tool to select mirrors to generate a custom mirrorlist.
 
 ### MISC
-#### `-b [branch]`, `--branch [branch]`
+#### `-b {branch}`, `--branch {branch}`
 Choose the branch to use:
 
 - stable
 - testing
 - unstable
 
-#### `-d`, `--mirror_dir`
+#### `-d {new_dir}`, `--mirror_dir {new_dir}`
 Change directory of mirrors to use.
 
 #### `-l`, `--list`
 Lists available mirror countries
 
-#### `-o`, `--output`
+#### `-o {new_file}`, `--output {new_file}`
 Change path of the output file.
 
 #### `-q`, `--quiet`
 Make pacman-mirrors silent.
 
-#### `-t`, `--timeout`
+#### `-t {DIGIT}`, `--timeout {DIGIT}`
 Change the server maximum waiting time.
 
 #### `--default`
@@ -75,13 +75,13 @@ Don't generate mirrorlist.
 Run `pacman -Syy` after mirrorlist generation
 
 ###API
-Api tasks to do before generating mirrorlist.
+Api tasks to do before generating mirrorlist. The mirrorlist is written to `<prefix>/etc/pacman.d/mirrorlist` or `<prefix>/new_file`
 #### `-a`, `--api` [--prefix] [--get-branch | --set-branch <branch>] [--proto PROTO [PROTO ...]] [--no-mirrorlist]
 ##### `--prefix` 
 Change pacman-mirrors file-handling eg. /mnt/install or $mnt.
 ##### `--get-branch` 
 Returns branch from config found in `<prefix>/config_file`.   
-##### `--set-branch <branch>` 
+##### `--set-branch {branch}` 
 Writes new branch to config found in `<prefix>/config_file`.
 ##### `--proto PROTO [PROTO ...]` 
 Write the specified protocols to config found in `<prefix>/config_file`.
