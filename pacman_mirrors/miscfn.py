@@ -25,10 +25,27 @@ from . import txt
 
 def debug(where, what, value):
     """Helper for printing debug messages"""
-    print("{} In function {} -> '{} = {}'".format(txt.DBG_CLR,
-                                                  where,
-                                                  what,
-                                                  value))
+    print("{} In function {} -> '{} = {}'".format(txt.DBG_CLR, where, what, value))
+
+
+def blue(where, what, value):
+    """Helper for printing blue messages"""
+    print("{}In function{} >>{} \n\n{} = {}".format(txt.BS, where, txt.CE, what, value))
+
+
+def green(where, what, value):
+    """Helper for printing green messages"""
+    print("{}In function {} >>{} \n\n{} = {}".format(txt.GS, where, txt.CE, what, value))
+
+
+def red(where, what, value):
+    """Helper for printing yellow messages"""
+    print("{}In function {} >>{} \n\n{} = {}".format(txt.RS, where, txt.CE, what, value))
+
+
+def yellow(where, what, value):
+    """Helper for printing yellow messages"""
+    print("{}In function {} >>{} \n\n{} = {}".format(txt.YS, where, txt.CE, what, value))
 
 
 def internet_message():
