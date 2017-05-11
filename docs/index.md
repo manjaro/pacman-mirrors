@@ -1,19 +1,15 @@
 #  Documentation of pacman-mirrors
-
 Enhanced pacman-mirrors for Manjaro Linux
 
-## OPTIONAL
-`-h`, `--help` 
-
+## COMMANDS
+#### `-h`, `--help` 
 Show the help message.
 
-`-v`, `--version`
-
+#### `-v`, `--version`
 Show the version of pacman-mirrors.
 
 ### COUNTRY:
-`-c COUNTRY [COUNTRY ...]`, `--country COUNTRY [COUNTRY ...]`
-
+#### `-c COUNTRY [COUNTRY ...]`, `--country COUNTRY [COUNTRY ...]`
 Specifiy country or list of countries separated by comma or space:
 
 - France
@@ -24,85 +20,73 @@ To reset a custom mirror file
 
 - all
 
-`--geoip` 
-
-Detect country by using geolocation.
+#### `--geoip` 
+Find current country by using geolocation.
 
 ### METHODS:
-`-g`, `--generate`
-
+#### `-g`, `--generate`
 Generate a new default mirrorlist.
 
-`-f [n]`, `--fasttrack [n]`
-
+#### `-f [n]`, `--fasttrack [n]`
 Generates an updated mirrorlist of [n] mirrors ranked by responsiveness.
 
-`-m [method]`, `--method [method]`
-
+#### `-m [method]`, `--method [method]`
 Choose the generation method:
 
 - rank
 - random
 
-`-i`, `--interactive`
-
+#### `-i`, `--interactive`
 Launch a graphical tool to select mirrors to generate a custom mirrorlist.
 
 ### MISC
-
-`-b [branch]`, `--branch [branch]`
-
+#### `-b [branch]`, `--branch [branch]`
 Choose the branch to use:
 
 - stable
 - testing
 - unstable
 
-`-d`, `--mirror_dir`
-
+#### `-d`, `--mirror_dir`
 Change directory of mirrors to use.
 
-`-l`, `--list`
-
+#### `-l`, `--list`
 Lists available mirror countries
 
-`-o`, `--output`
-
+#### `-o`, `--output`
 Change path of the output file.
 
-`-q`, `--quiet`
-
+#### `-q`, `--quiet`
 Make pacman-mirrors silent.
 
-`-t`, `--timeout`
-
+#### `-t`, `--timeout`
 Change the server maximum waiting time.
 
-`--default`
-
+#### `--default`
 Used in conjunction with `-i/--interactive` ignores custom mirrorfile,  
 loading the default mirrorfile, allowing to create a new custom mirrorfile 
 and executes the ranking/randomizing process after the selection of mirrors.
 
-`--no-update`
-
+#### `--no-update`
 Don't generate mirrorlist.
 
 ### SYNC
-`-y`, `--sync`,`-u`, `update`
-
+#### `-y`, `--sync`,`-u`, `update`
 Run `pacman -Syy` after mirrorlist generation
 
 ###API
 Api tasks to do before generating mirrorlist.
-
-`-a`, `--api` [--prefix] [--get-branch | --set-branch <branch>] [--proto PROTO [PROTO ...]] [--no-mirrorlist]
-
-- `--prefix` for pacman-mirrors file-handling eg. /mnt/install or $mnt.
-- `--get-branch` returns branch from config in prefix`config_file`.   
-- `--set-branch <branch>` writes new branch to configuration.
-- `--proto` write the specified protocols to prefix`pacman-mirrors.conf`.
-- `-n`, `--no-mirrorlist` exit when api tasks finish 
+#### `-a`, `--api` [--prefix] [--get-branch | --set-branch <branch>] [--proto PROTO [PROTO ...]] [--no-mirrorlist]
+##### `--prefix` 
+Change pacman-mirrors file-handling eg. /mnt/install or $mnt.
+##### `--get-branch` 
+Returns branch from config found in `<prefix>/config_file`.   
+##### `--set-branch <branch>` 
+Writes new branch to config found in `<prefix>/config_file`.
+##### `--proto PROTO [PROTO ...]` 
+Write the specified protocols to config found in `<prefix>/config_file`.
+##### `-n`, `--no-mirrorlist` 
+Exit when api task is done 
 
 ## Content of pacman-mirrors.conf
 
