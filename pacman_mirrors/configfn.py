@@ -40,7 +40,7 @@ def api_write_branch(branch, filename):
                 filename), delete=False) as tmp:
             replaced = False
             for line in cnf:
-                if "Branch = " in line:
+                if "Branch =" in line:
                     tmp.write(branch)
                     replaced = True
                 else:
