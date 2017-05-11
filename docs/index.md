@@ -76,7 +76,7 @@ Run `pacman -Syy` after mirrorlist generation
 
 ### API
 Api tasks to do before generating mirrorlist. The mirrorlist is written to `<prefix>/etc/pacman.d/mirrorlist` or `<prefix>/new_file`
-#### `-a`, `--api` [--prefix] [--get-branch | --set-branch <branch>] [--proto PROTO [PROTO ...]] [--no-mirrorlist]
+#### `-a`, `--api` [--prefix] [--get-branch | --set-branch {branch}] [--proto PROTO [PROTO ...]] [--no-mirrorlist]
 ##### `--prefix` 
 Change pacman-mirrors file-handling eg. /mnt/install or $mnt.
 ##### `--get-branch` 
