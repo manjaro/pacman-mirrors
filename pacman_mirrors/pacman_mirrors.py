@@ -143,10 +143,10 @@ class PacmanMirrors:
         sync = update.add_mutually_exclusive_group()
         sync.add_argument("-n", "--no-mirrorlist",
                           action="store_true",
-                          help="--api --no-mirrorlist")
+                          help="API: Exit - no mirrorlist")
         sync.add_argument("-y", "--sync", "-u", "--update",
                           action="store_true",
-                          help="Executes pacman -Syy")
+                          help="Sync pacman databases")
         # Api arguments
         api = parser.add_argument_group("API")
         api.add_argument("-a", "--api",
@@ -154,19 +154,19 @@ class PacmanMirrors:
                          help="[--prefix] [--set-branch|--get-branch] [--proto] [--no-mirrorlist]")
         api.add_argument("--prefix",
                          type=str,
-                         help="$mnt|/some/path")
+                         help="API: Set prefix to `$mnt` or `/some/path`")
         api.add_argument("--proto",
                          choices=["all", "http", "https", "ftp", "ftps"],
                          type=str,
                          nargs="+",
-                         help="--api --proto {all|https http}")
+                         help="API: Set accepted protocols")
         branch = api.add_mutually_exclusive_group()
         branch.add_argument("--get-branch",
                             action="store_true",
-                            help="--api --get-branch")
+                            help="API: Get current branch")
         branch.add_argument("--set-branch",
                             choices=["stable", "testing", "unstable"],
-                            help="--api --set-branch <branch>")
+                            help="API: Set new branch")
 
         args = parser.parse_args()
         if len(sys.argv) == 1:
