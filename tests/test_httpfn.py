@@ -16,23 +16,23 @@ from pacman_mirrors import configfn
 from . import mock_configuration as conf
 
 test_conf = {
-    "to_be_removed": TO_BE_REMOVED,
+    "to_be_removed": conf.TO_BE_REMOVED,
     "branch": "stable",
-    "branches": BRANCHES,
-    "config_file": CONFIG_FILE,
-    "custom_file": CUSTOM_FILE,
+    "branches": conf.BRANCHES,
+    "config_file": conf.CONFIG_FILE,
+    "custom_file": conf.CUSTOM_FILE,
     "method": "rank",
-    "work_dir": WORK_DIR,
-    "mirror_file": MIRROR_FILE,
-    "mirror_list": MIRROR_LIST,
+    "work_dir": conf.WORK_DIR,
+    "mirror_file": conf.MIRROR_FILE,
+    "mirror_list": conf.MIRROR_LIST,
     "no_update": False,
     "only_country": [],
     "protocols": [],
-    "repo_arch": REPO_ARCH,
-    "status_file": STATUS_FILE,
+    "repo_arch": conf.REPO_ARCH,
+    "status_file": conf.STATUS_FILE,
     "ssl_verify": True,
-    "url_mirrors_json": URL_MIRROR_JSON,
-    "url_status_json": URL_STATUS_JSON
+    "url_mirrors_json": conf.URL_MIRROR_JSON,
+    "url_status_json": conf.URL_STATUS_JSON
 }
 
 
