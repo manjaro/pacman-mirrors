@@ -490,6 +490,7 @@ class PacmanMirrors:
 
     def sort_mirror_countries(self):
         self.mirrors.mirrorlist = sorted(self.mirrors.mirrorlist, key=itemgetter("country"))
+        self.mirrors.countrylist = sorted(self.mirrors.countrylist, key=itemgetter("country"))
 
     def seed_mirrors(self, file, status=False):
         """Seed mirrors"""
