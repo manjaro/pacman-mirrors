@@ -8,6 +8,7 @@ Breaking change to `--set-branch` argument
 
 Other improvements and fixes:
 
+- Improvement: Do not write bad servers to the end of the mirrorlist
 - Improvement: created argument groups for logic division of arguments usage
 - Improvement: making `--get-branch` and `--set-branch` mutually exclusive
 - Improvement: in the spirit of pacman `-y` `--sync` is added in addition to `-u` `--update` 
