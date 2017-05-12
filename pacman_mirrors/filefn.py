@@ -93,6 +93,9 @@ def output_mirror_list(config, servers, custom=False, quiet=False, interactive=F
             write_mirrorlist_header(outfile, custom=custom)
             cols, lines = miscfn.terminal_size()
             for server in servers:
+                if server["resp_time"] == "99.99":
+                    # do not write bad servers to mirrorlist
+                    continue
                 if interactive:
                     server["url"] = "{}{}{}".format(server["url"],
                                                     config["branch"],
