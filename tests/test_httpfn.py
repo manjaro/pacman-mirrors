@@ -49,7 +49,7 @@ class TestHttpFn(unittest.TestCase):
         """TEST: Geoip country IS avaiable"""
         mock_os_getuid.return_value = 0
         mock_get_geoip_country.return_value = "France"
-        mock_build_config.return_value = conf.test_conf
+        mock_build_config.return_value = test_conf
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
                                   "--geoip"]):
@@ -66,7 +66,7 @@ class TestHttpFn(unittest.TestCase):
         """TEST: Geoip country IS NOT available"""
         mock_os_getuid.return_value = 0
         mock_get_geoip_country.return_value = "Antarctica"
-        mock_build_config.return_value = conf.test_conf
+        mock_build_config.return_value = test_conf
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
                                   "-g",

@@ -46,7 +46,7 @@ class TestCommandLineParse(unittest.TestCase):
     def test_arg_branch_unstable(self, mock_build_config, mock_os_getuid):
         """TEST: CLI config[branch] from ARG '-b unstable'"""
         mock_os_getuid.return_value = 0
-        mock_build_config.return_value = conf.test_conf
+        mock_build_config.return_value = test_conf
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
                                   "-b", "unstable"]):
@@ -61,7 +61,7 @@ class TestCommandLineParse(unittest.TestCase):
     def test_arg_branch_testing(self, mock_build_config, mock_os_getuid):
         """TEST: CLI config[branch] from ARG '-b testing'"""
         mock_os_getuid.return_value = 0
-        mock_build_config.return_value = conf.test_conf
+        mock_build_config.return_value = test_conf
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
                                   "-b", "testing"]):
@@ -76,7 +76,7 @@ class TestCommandLineParse(unittest.TestCase):
     def test_arg_method(self, mock_build_config, mock_os_getuid):
         """TEST: CLI config[method] from ARG '-m random'"""
         mock_os_getuid.return_value = 0
-        mock_build_config.return_value = conf.test_conf
+        mock_build_config.return_value = test_conf
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
                                   "-m", "random"]):
@@ -91,7 +91,7 @@ class TestCommandLineParse(unittest.TestCase):
     def test_arg_mirrordir(self, mock_build_config, mock_os_getuid):
         """TEST: CLI config[mirror_dir] from ARG '-d /another/dir'"""
         mock_os_getuid.return_value = 0
-        mock_build_config.return_value = conf.test_conf
+        mock_build_config.return_value = test_conf
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
                                   "-d", "/another/dir/"]):
@@ -106,7 +106,7 @@ class TestCommandLineParse(unittest.TestCase):
     def test_arg_mirrorlist(self, mock_build_config, mock_os_getuid):
         """TEST: CLI config[mirror_list] from ARG '-o /another/list'"""
         mock_os_getuid.return_value = 0
-        mock_build_config.return_value = conf.test_conf
+        mock_build_config.return_value = test_conf
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
                                   "-o", "/another/list"]):
@@ -121,7 +121,7 @@ class TestCommandLineParse(unittest.TestCase):
     def test_arg_onlycountry(self, mock_build_config, mock_os_getuid):
         """TEST: CLI config[only_country] from ARG '-c France,Germany'"""
         mock_os_getuid.return_value = 0
-        mock_build_config.return_value = conf.test_conf
+        mock_build_config.return_value = test_conf
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
                                   "-c", "France,Germany"]):
@@ -136,7 +136,7 @@ class TestCommandLineParse(unittest.TestCase):
     def test_arg_custom_country(self, mock_build_config, mock_os_getuid):
         """TEST: CLI custom is True from ARG '-c Denmark'"""
         mock_os_getuid.return_value = 0
-        mock_build_config.return_value = conf.test_conf
+        mock_build_config.return_value = test_conf
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
                                   "-c Denmark"]):
@@ -151,7 +151,7 @@ class TestCommandLineParse(unittest.TestCase):
     def test_arg_geoip(self, mock_build_config, mock_os_getuid):
         """TEST: CLI geoip is True from ARG '--geoip'"""
         mock_os_getuid.return_value = 0
-        mock_build_config.return_value = conf.test_conf
+        mock_build_config.return_value = test_conf
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
                                   "--geoip"]):
@@ -166,7 +166,7 @@ class TestCommandLineParse(unittest.TestCase):
     def test_arg_fasttrack(self, mock_build_config, mock_os_getuid):
         """TEST: CLI fasttrack is 5 from ARG '-f 5'"""
         mock_os_getuid.return_value = 0
-        mock_build_config.return_value = conf.test_conf
+        mock_build_config.return_value = test_conf
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
                                   "-f 5"]):
@@ -181,7 +181,7 @@ class TestCommandLineParse(unittest.TestCase):
     def test_arg_interactive(self, mock_build_config, mock_os_getuid):
         """TEST: CLI interactive is true from ARG '-i'"""
         mock_os_getuid.return_value = 0
-        mock_build_config.return_value = conf.test_conf
+        mock_build_config.return_value = test_conf
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
                                   "-i"]):
@@ -196,7 +196,7 @@ class TestCommandLineParse(unittest.TestCase):
     def test_arg_max_wait_time(self, mock_build_config, mock_os_getuid):
         """TEST: CLI max_wait_time is 5 from ARG '-t 5'"""
         mock_os_getuid.return_value = 0
-        mock_build_config.return_value = conf.test_conf
+        mock_build_config.return_value = test_conf
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
                                   "-t 5"]):
@@ -211,7 +211,7 @@ class TestCommandLineParse(unittest.TestCase):
     def test_arg_quiet(self, mock_build_config, mock_os_getuid):
         """TEST: CLI quiet is True from ARG '-q'"""
         mock_os_getuid.return_value = 0
-        mock_build_config.return_value = conf.test_conf
+        mock_build_config.return_value = test_conf
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
                                   "-q"]):

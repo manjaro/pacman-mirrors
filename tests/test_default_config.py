@@ -46,7 +46,7 @@ class TestDefaultConfig(unittest.TestCase):
     def test_default_branch(self, mock_build_config, mock_os_getuid):
         """TEST: config[branch] = stable"""
         mock_os_getuid.return_value = 0
-        mock_build_config.return_value = conf.test_conf
+        mock_build_config.return_value = test_conf
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
                                   "-g"]):
@@ -60,7 +60,7 @@ class TestDefaultConfig(unittest.TestCase):
     def test_default_method(self, mock_build_config, mock_os_getuid):
         """TEST: config[method] = rank"""
         mock_os_getuid.return_value = 0
-        mock_build_config.return_value = conf.test_conf
+        mock_build_config.return_value = test_conf
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
                                   "-g"]):
@@ -74,7 +74,7 @@ class TestDefaultConfig(unittest.TestCase):
     def test_default_mirrordir(self, mock_build_config, mock_os_getuid):
         """TEST: config[mirror_dir] = tests/mock/var/"""
         mock_os_getuid.return_value = 0
-        mock_build_config.return_value = conf.test_conf
+        mock_build_config.return_value = test_conf
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
                                   "-g"]):
@@ -87,7 +87,7 @@ class TestDefaultConfig(unittest.TestCase):
     def test_default_mirrorfile(self, mock_build_config, mock_os_getuid):
         """TEST: config[mirror_file] = tests/mock/usr/mirrors.json"""
         mock_os_getuid.return_value = 0
-        mock_build_config.return_value = conf.test_conf
+        mock_build_config.return_value = test_conf
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
                                   "-g"]):
@@ -100,7 +100,7 @@ class TestDefaultConfig(unittest.TestCase):
     def test_default_mirrorlist(self, mock_build_config, mock_os_getuid):
         """TEST: config[mirror_list] = tests/mock/etc/mirrorlist"""
         mock_os_getuid.return_value = 0
-        mock_build_config.return_value = conf.test_conf
+        mock_build_config.return_value = test_conf
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
                                   "-g"]):
@@ -113,7 +113,7 @@ class TestDefaultConfig(unittest.TestCase):
     def test_default_noupdate(self, mock_build_config, mock_os_getuid):
         """TEST: config[no_update] = False"""
         mock_os_getuid.return_value = 0
-        mock_build_config.return_value = conf.test_conf
+        mock_build_config.return_value = test_conf
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
                                   "-g"]):
@@ -126,7 +126,7 @@ class TestDefaultConfig(unittest.TestCase):
     def test_default_onlycountry(self, mock_build_config, mock_os_getuid):
         """TEST: config[only_country] = []"""
         mock_os_getuid.return_value = 0
-        mock_build_config.return_value = conf.test_conf
+        mock_build_config.return_value = test_conf
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
                                   "-g"]):

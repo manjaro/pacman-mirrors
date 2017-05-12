@@ -48,7 +48,7 @@ class TestPacmanMirrors(unittest.TestCase):
     def test_full_run_random(self, mock_build_config, mock_os_getuid):
         """TEST: pacman-mirrors -c all -m random"""
         mock_os_getuid.return_value = 0
-        mock_build_config.return_value = conf.test_conf
+        mock_build_config.return_value = test_conf
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
                                   "-c", "all",
@@ -77,7 +77,7 @@ class TestPacmanMirrors(unittest.TestCase):
     def test_full_run_fasttrack(self, mock_build_config, mock_os_getuid):
         """TEST: pacman-mirrors -f 5"""
         mock_os_getuid.return_value = 0
-        mock_build_config.return_value = conf.test_conf
+        mock_build_config.return_value = test_conf
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
                                   "-f", "5"]):
@@ -106,7 +106,7 @@ class TestPacmanMirrors(unittest.TestCase):
     def test_full_run_rank(self, mock_build_config, mock_os_getuid):
         """TEST: pacman-mirrors -c all -m random"""
         mock_os_getuid.return_value = 0
-        mock_build_config.return_value = conf.test_conf
+        mock_build_config.return_value = test_conf
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
                                   "-c", "all"]):
