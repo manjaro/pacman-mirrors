@@ -55,7 +55,7 @@ class TestPacmanMirrors(unittest.TestCase):
                                   "-m", "random"]):
             app = PacmanMirrors()
             app.config = configfn.build_config()
-            # filefn.dir_must_exist(app.config["work_dir"])
+            filefn.dir_must_exist(app.config["work_dir"])
             app.command_line_parse()
             app.load_all_mirrors()
             # network check
@@ -83,7 +83,7 @@ class TestPacmanMirrors(unittest.TestCase):
                                   "-f", "5"]):
             app = PacmanMirrors()
             app.config = configfn.build_config()
-            # filefn.dir_must_exist(app.config["work_dir"])
+            filefn.dir_must_exist(app.config["work_dir"])
             app.command_line_parse()
             app.load_all_mirrors()
             # network check
@@ -112,7 +112,7 @@ class TestPacmanMirrors(unittest.TestCase):
                                   "-c", "all"]):
             app = PacmanMirrors()
             app.config = configfn.build_config()
-            # filefn.dir_must_exist(app.config["work_dir"])
+            filefn.dir_must_exist(app.config["work_dir"])
             app.command_line_parse()
             # network check
             app.network = httpfn.inet_conn_check()
