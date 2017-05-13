@@ -119,6 +119,7 @@ def get_mirror_response(url, maxwait=2, count=1, quiet=False, ssl_verify=True):
     req = urllib.request.Request(
         url + "state", headers=headers
     )
+    # noinspection PyBroadException
     try:
         for _ in range(count):
             urlopen(req, timeout=maxwait, context=context)
@@ -140,10 +141,10 @@ def get_mirror_response(url, maxwait=2, count=1, quiet=False, ssl_verify=True):
         message = "\n.: {} {} '{}'".format(txt.ERR_CLR,
                                            txt.HTTP_EXCEPTION,
                                            url)
-    # except CertificateError:
-    #     message = "\n.: {} {} '{}'".format(txt.ERR_CLR,
-    #                                        ssl.CertificateError,
-    #                                        url)
+    except:
+        message = "\n.: {} {} '{}'".format(txt.ERR_CLR,
+                                           ssl.CertificateError,
+                                           url)
     if message and not quiet:
         print(message)
     if probe_stop:
