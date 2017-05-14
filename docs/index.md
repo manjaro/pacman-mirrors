@@ -61,21 +61,23 @@ Change the server maximum waiting time.
 This setting is doubled when talking to SSL enabled mirrors.
 
 #### `--default`
-This argument must be used in conjunction with `-i/--interactive`. 
-The argument forces pacman-mirrors to load from the default mirror file. 
-This will ignore any present custom-mirrors file, 
-thus allowing for reselecting mirror for a new custom mirror file. 
-The argument executes the ranking/randomizing when the selection of mirrors is done.
+The argument only have effect in conjunction with `-i/--interactive`. 
+This forces pacman-mirrors to load the default mirror file 
+and ignore any present custom-mirrors file, thus allowing for reselecting 
+mirrors for a new custom mirror file. The argument executes the 
+ranking/randomizing when the selection of mirrors is done.
 
 #### `--no-update`
 Don't generate mirrorlist.
 
 ### SYNC:
 #### `-y`, `--sync`,`-u`, `update`
-Run `pacman -Syy` after mirrorlist generation
+Instruct pacman-mirrors to syncronise the pacman databases after mirrorlist generation. 
+This is done by calling `pacman -Syy`.
 
 ### API:
-Api tasks to do before generating mirrorlist. 
+Permanently make changes to pacman-mirrors configuration through an api. 
+The tasks is done before generating the mirrorlist. 
 The mirrorlist is written to `[prefix]/etc/pacman.d/mirrorlist`.
 #### `-a`, `--api` [--prefix] [--get-branch | --set-branch {branch}] [--proto PROTO [PROTO ...]] [--no-mirrorlist]
 
