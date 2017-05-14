@@ -87,7 +87,6 @@
     <ul class="nav bs-sidenav">
         <li class="main active"><a href="#documentation-of-pacman-mirrors">Documentation of pacman-mirrors</a></li>
             <li><a href="#usage">USAGE</a></li>
-            <li><a href="#content-of-pacman-mirrorsconf">Content of pacman-mirrors.conf</a></li>
     </ul>
 </div></div>
                 <div class="col-md-9" role="main">
@@ -147,7 +146,10 @@ and ignore any present custom-mirrors file, thus allowing for reselecting
 mirrors for a new custom mirror file. The argument executes the 
 ranking/randomizing when the selection of mirrors is done.</p>
 <h4 id="-no-update"><code>--no-update</code></h4>
-<p>Don't generate mirrorlist.</p>
+<p>This argument is tied to the <code>NoUpdate =</code> setting in the config file.<br />
+When this configuration is set to True it prevents the regeneration of 
+the mirrorlist if pacman-mirrors is invoked with the <code>--no-update</code> argument.
+Useful if you don't want the mirrorlist regenerated after a pacman-mirrors package upgrade.</p>
 <h3 id="sync">SYNC:</h3>
 <h4 id="-y-sync-u-update"><code>-y</code>, <code>--sync</code>,<code>-u</code>, <code>update</code></h4>
 <p>Instruct pacman-mirrors to syncronise the pacman databases after mirrorlist generation. 
@@ -169,51 +171,48 @@ Select <strong><em>stable</em></strong>, <strong><em>testing</em></strong> or <s
 Select <strong><em>all</em></strong> or <strong><em>http</em></strong>, <strong><em>https</em></strong>, <strong><em>ftp</em></strong> and <strong><em>ftps</em></strong></p>
 <h5 id="-n-no-mirrorlist"><code>-n</code>, <code>--no-mirrorlist</code></h5>
 <p>Exit when api task is done </p>
-<h2 id="content-of-pacman-mirrorsconf">Content of pacman-mirrors.conf</h2>
-<pre><code>##
-## /etc/pacman-mirrors.conf
-##
-
-## Branch Pacman should use (stable, testing, unstable)
-# Branch = stable
-
-## Generation method
-## 1) rank   - rank mirrors depending on their access time
-## 2) random - randomly generate the output mirrorlist
-# Method = rank
-
-## Define protocols and priority
-##   separated by comma 'https,http' or 'http,https'
-## ATM available protocols are: http, https, ftp, ftps
-## Not specifying a protocol will ban the protocol from being used
-## Empty means all in reversed alphabetic order
-## If a mirror has more than one protocol defined 
-##  only the first is written to the mirrorlist
-# Protocols = 
-
-## Specify to use only mirrors from a specific country.
-## Can add multiple countries
-##   separated by comma 'Germany,France,Belgium'
-## Get a list of all available counties with 'pacman-mirrors -l'
-## Empty means all
-# OnlyCountry = 
-
-## Mirrors directory
-# MirrorlistsDir = /var/lib/pacman-mirrors
-
-## Output file
-# OutputMirrorlist = /etc/pacman.d/mirrorlist
-
-## When set to True prevents the regeneration of the mirrorlist if
-## pacman-mirrors is invoked with the --no-update argument.
-## Useful if you don't want the mirrorlist regenerated after a
-## pacman-mirrors package upgrade.
-# NoUpdate = False
-
-## When set to False - all certificates are accepted.
-## Use only if you fully trust all ssl-enabled mirrors.
-# SSLVerify = True
-</code></pre></div>
+<h3 id="pacman-mirrorsconf">pacman-mirrors.conf</h3>
+<h4 id="manjaro-branch-to-use-for-your-system">Manjaro branch to use for your system</h4>
+<p><code># Branch = stable</code><br />
+The setting defaults to <strong><em>stable</em></strong> branch.<br />
+Select <strong><em>stable</em></strong>, <strong><em>testing</em></strong> or <strong><em>unstable</em></strong>.
+The setting can be change by invoking pacman-mirrors using the <code>--api --set-branch &lt;branch&gt;</code> argument. </p>
+<h4 id="generation-method">Generation method</h4>
+<p><code># Method = rank</code><br />
+The setting defaults to <strong><em>rank</em></strong>.<br />
+Select <strong><em>rank</em></strong> or <strong><em>random</em></strong>.
+The setting can be changed by invoking pacman-mirrors using the <code>--method &lt;method&gt;</code> argument.</p>
+<h4 id="protocols-and-priority">Protocols and priority</h4>
+<p><code># Protocols =</code><br />
+The setting defines which protocols offered by mirrors will be considered in a mirrorlist. <br />
+At the moment mirrors offers: http, https, ftp, ftps. 
+Separate the protocols with <strong><em>comma</em></strong> <strong>or</strong> <strong><em>space</em></strong>.<br />
+Not specifying a protocol will ban the protocol from being used. <br />
+The default is empty which means all protocols in reversed order.<br />
+When the mirrorlist is created and a mirror has more than one protocol defined <br />
+only the first protocol is written to the mirrorlist.</p>
+<h4 id="specify-to-use-only-mirrors-from-a-specific-country">Specify to use only mirrors from a specific country.</h4>
+<p><code># Country =</code><br />
+The setting defines which countries will be considered in a mirrorlist. 
+To get a list of available countries run <code>pacman-mirrors -l</code> and collect names of the countries you will use. <br />
+The default setting is empty which means all countries.
+You can add countries by hand or you can use the interactive mode to select mirrors and protocols to use.
+Separate your countries with <strong><em>comma</em></strong> <strong>or</strong> <strong><em>space</em></strong></p>
+<h4 id="mirrors-directory">Mirrors directory</h4>
+<p><code># MirrorlistsDir = /var/lib/pacman-mirrors</code>
+A temporary location from which to read the mirrors file.</p>
+<h4 id="output-file">Output file</h4>
+<p><code># OutputMirrorlist = /etc/pacman.d/mirrorlist</code>
+A temporary location for the generated mirrorlist.</p>
+<h4 id="noupdate">NoUpdate</h4>
+<p><code># NoUpdate = False</code>
+When this setting is <code>True</code> it prevents the regeneration of 
+the mirrorlist if pacman-mirrors is invoked with the <code>--no-update</code> argument.
+Useful if you don't want the mirrorlist regenerated after a pacman-mirrors package upgrade.</p>
+<h4 id="ssl-verification">SSL Verification</h4>
+<p><code># SSLVerify = True</code>
+When setting is <code>False</code> - <strong>all certificates</strong> are accepted.<br />
+Use only if you <strong>fully trust</strong> all ssl-enabled mirrors.</p></div>
         </div>
 
         <footer class="col-md-12">
@@ -252,5 +251,5 @@ Select <strong><em>all</em></strong> or <strong><em>http</em></strong>, <strong>
 
 <!--
 MkDocs version : 0.16.3
-Build Date UTC : 2017-05-14 09:47:10
+Build Date UTC : 2017-05-14 10:17:13
 -->

@@ -68,7 +68,10 @@ mirrors for a new custom mirror file. The argument executes the
 ranking/randomizing when the selection of mirrors is done.
 
 #### `--no-update`
-Don't generate mirrorlist.
+This argument is tied to the `NoUpdate = ` setting in the config file.  
+When this configuration is set to True it prevents the regeneration of 
+the mirrorlist if pacman-mirrors is invoked with the `--no-update` argument.
+Useful if you don't want the mirrorlist regenerated after a pacman-mirrors package upgrade.
 
 ### SYNC:
 #### `-y`, `--sync`,`-u`, `update`
@@ -98,50 +101,54 @@ Select ***all*** or ***http***, ***https***, ***ftp*** and ***ftps***
 ##### `-n`, `--no-mirrorlist` 
 Exit when api task is done 
 
-## Content of pacman-mirrors.conf
+### pacman-mirrors.conf
 
-```
-##
-## /etc/pacman-mirrors.conf
-##
+#### Manjaro branch to use for your system
+```# Branch = stable```  
+The setting defaults to ***stable*** branch.  
+Select ***stable***, ***testing*** or ***unstable***.
+The setting can be change by invoking pacman-mirrors using the `--api --set-branch <branch>` argument. 
 
-## Branch Pacman should use (stable, testing, unstable)
-# Branch = stable
+#### Generation method
+```# Method = rank```  
+The setting defaults to ***rank***.  
+Select ***rank*** or ***random***.
+The setting can be changed by invoking pacman-mirrors using the `--method <method>` argument.
 
-## Generation method
-## 1) rank   - rank mirrors depending on their access time
-## 2) random - randomly generate the output mirrorlist
-# Method = rank
+#### Protocols and priority
+```# Protocols = ```  
+The setting defines which protocols offered by mirrors will be considered in a mirrorlist.   
+At the moment mirrors offers: http, https, ftp, ftps. 
+Separate the protocols with ***comma*** **or** ***space***.  
+Not specifying a protocol will ban the protocol from being used.   
+The default is empty which means all protocols in reversed order.  
+When the mirrorlist is created and a mirror has more than one protocol defined   
+only the first protocol is written to the mirrorlist.
 
-## Define protocols and priority
-##   separated by comma 'https,http' or 'http,https'
-## ATM available protocols are: http, https, ftp, ftps
-## Not specifying a protocol will ban the protocol from being used
-## Empty means all in reversed alphabetic order
-## If a mirror has more than one protocol defined 
-##  only the first is written to the mirrorlist
-# Protocols = 
+#### Specify to use only mirrors from a specific country.
+```# Country = ```  
+The setting defines which countries will be considered in a mirrorlist. 
+To get a list of available countries run `pacman-mirrors -l` and collect names of the countries you will use.   
+The default setting is empty which means all countries.
+You can add countries by hand or you can use the interactive mode to select mirrors and protocols to use.
+Separate your countries with ***comma*** **or** ***space***
 
-## Specify to use only mirrors from a specific country.
-## Can add multiple countries
-##   separated by comma 'Germany,France,Belgium'
-## Get a list of all available counties with 'pacman-mirrors -l'
-## Empty means all
-# OnlyCountry = 
+#### Mirrors directory
+```# MirrorlistsDir = /var/lib/pacman-mirrors```
+A temporary location from which to read the mirrors file.
 
-## Mirrors directory
-# MirrorlistsDir = /var/lib/pacman-mirrors
+#### Output file
+```# OutputMirrorlist = /etc/pacman.d/mirrorlist```
+A temporary location for the generated mirrorlist.
 
-## Output file
-# OutputMirrorlist = /etc/pacman.d/mirrorlist
+#### NoUpdate
+```# NoUpdate = False```
+When this setting is `True` it prevents the regeneration of 
+the mirrorlist if pacman-mirrors is invoked with the `--no-update` argument.
+Useful if you don't want the mirrorlist regenerated after a pacman-mirrors package upgrade.
 
-## When set to True prevents the regeneration of the mirrorlist if
-## pacman-mirrors is invoked with the --no-update argument.
-## Useful if you don't want the mirrorlist regenerated after a
-## pacman-mirrors package upgrade.
-# NoUpdate = False
+#### SSL Verification
+```# SSLVerify = True```
+When setting is `False` - **all certificates** are accepted.  
+Use only if you **fully trust** all ssl-enabled mirrors.
 
-## When set to False - all certificates are accepted.
-## Use only if you fully trust all ssl-enabled mirrors.
-# SSLVerify = True
-```
