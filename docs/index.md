@@ -16,7 +16,6 @@ To remove a custom mirror file
 #### `--geoip` 
 Find current country by using geolocation.
 ### METHODS:
-All methods can be combined with `-y/--sync` to fully complete the process.
 #### `-g`, `--generate`
 Generate a new default mirrorlist.
 #### `-f {DIGIT}`, `--fasttrack {DIGIT}`
@@ -43,7 +42,7 @@ Make pacman-mirrors silent.
 #### `-t {DIGIT}`, `--timeout {DIGIT}`
 Change the server maximum waiting time. In case of SSL enabled mirrors the value is doubled to compensate for the time spent on exchanging encryption keys.
 #### `--default`
-This argument **only** have effect in conjunction with `-i/--interactive`. It forces pacman-mirrors to load the default mirror file and ignore any preset custom-mirrors file, thus allowing for reselecting mirrors for a new custom mirror file. The argument executes the ranking/randomizing when the selection of mirrors is done. Can be combined with `-y/--sync` to fully complete the process.
+This argument **only** have effect in conjunction with `-i/--interactive`. It forces pacman-mirrors to load the default mirror file and ignore any preset custom-mirrors file, thus allowing for reselecting mirrors for a new custom mirror file. The argument executes the ranking/randomizing when the selection of mirrors is done.
 #### `--no-update`
 This argument is tied to the `NoUpdate = True` setting in the config file. Pacman-mirrors will exit after parsing `pacman-mirrors.conf` and is only useful if you don't want the mirrorlist regenerated after a pacman-mirrors package upgrade.
 ### SYNC:

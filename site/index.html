@@ -110,7 +110,6 @@ To remove a custom mirror file
 <h4 id="-geoip"><code>--geoip</code></h4>
 <p>Find current country by using geolocation.</p>
 <h3 id="methods">METHODS:</h3>
-<p>All methods can be combined with <code>-y/--sync</code> to fully complete the process.</p>
 <h4 id="-g-generate"><code>-g</code>, <code>--generate</code></h4>
 <p>Generate a new default mirrorlist.</p>
 <h4 id="-f-digit-fasttrack-digit"><code>-f {DIGIT}</code>, <code>--fasttrack {DIGIT}</code></h4>
@@ -137,7 +136,7 @@ The branch is reset on next run of pacman-mirrors.</p>
 <h4 id="-t-digit-timeout-digit"><code>-t {DIGIT}</code>, <code>--timeout {DIGIT}</code></h4>
 <p>Change the server maximum waiting time. In case of SSL enabled mirrors the value is doubled to compensate for the time spent on exchanging encryption keys.</p>
 <h4 id="-default"><code>--default</code></h4>
-<p>This argument <strong>only</strong> have effect in conjunction with <code>-i/--interactive</code>. It forces pacman-mirrors to load the default mirror file and ignore any preset custom-mirrors file, thus allowing for reselecting mirrors for a new custom mirror file. The argument executes the ranking/randomizing when the selection of mirrors is done. Can be combined with <code>-y/--sync</code> to fully complete the process.</p>
+<p>This argument <strong>only</strong> have effect in conjunction with <code>-i/--interactive</code>. It forces pacman-mirrors to load the default mirror file and ignore any preset custom-mirrors file, thus allowing for reselecting mirrors for a new custom mirror file. The argument executes the ranking/randomizing when the selection of mirrors is done.</p>
 <h4 id="-no-update"><code>--no-update</code></h4>
 <p>This argument is tied to the <code>NoUpdate = True</code> setting in the config file. Pacman-mirrors will exit after parsing <code>pacman-mirrors.conf</code> and is only useful if you don't want the mirrorlist regenerated after a pacman-mirrors package upgrade.</p>
 <h3 id="sync">SYNC:</h3>
@@ -244,5 +243,5 @@ The branch is reset on next run of pacman-mirrors.</p>
 
 <!--
 MkDocs version : 0.16.3
-Build Date UTC : 2017-05-14 10:52:03
+Build Date UTC : 2017-05-14 10:53:47
 -->
