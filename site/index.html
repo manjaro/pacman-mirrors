@@ -102,15 +102,11 @@
 <p>Show the version of pacman-mirrors.</p>
 <h3 id="country">COUNTRY:</h3>
 <h4 id="-c-country-country-country-country-country"><code>-c COUNTRY [COUNTRY ...]</code>, <code>--country COUNTRY [COUNTRY ...]</code></h4>
-<p>Specifiy country or list of countries separated by comma or space:</p>
-<ul>
-<li>--country France</li>
-<li>--country France, Germany, Austria</li>
-</ul>
-<p>To remove a custom mirror file</p>
-<ul>
-<li>--country all</li>
-</ul>
+<p>Specifiy country or list of countries separated by comma or space:
+<em> --country France
+</em> --country France Germany Austria
+To remove a custom mirror file
+* --country all</p>
 <h4 id="-geoip"><code>--geoip</code></h4>
 <p>Find current country by using geolocation.</p>
 <h3 id="methods">METHODS:</h3>
@@ -138,67 +134,64 @@ The branch is reset on next run of pacman-mirrors.</p>
 <h4 id="-q-quiet"><code>-q</code>, <code>--quiet</code></h4>
 <p>Make pacman-mirrors silent.</p>
 <h4 id="-t-digit-timeout-digit"><code>-t {DIGIT}</code>, <code>--timeout {DIGIT}</code></h4>
-<p>Change the server maximum waiting time. 
-This setting is doubled when talking to SSL enabled mirrors.</p>
+<p>Change the server maximum waiting time. In case of SSL enabled mirrors the value is doubled to compensate for the time spent on exchanging encryption keys.</p>
 <h4 id="-default"><code>--default</code></h4>
-<p>The argument only have effect in conjunction with <code>-i/--interactive</code>. 
-This forces pacman-mirrors to load the default mirror file 
-and ignore any present custom-mirrors file, thus allowing for reselecting 
-mirrors for a new custom mirror file. The argument executes the 
-ranking/randomizing when the selection of mirrors is done.</p>
+<p>This argument <strong>only</strong> have effect in conjunction with <code>-i/--interactive</code>. It forces pacman-mirrors to load the default mirror file and ignore any preset custom-mirrors file, thus allowing for reselecting mirrors for a new custom mirror file. The argument executes the ranking/randomizing when the selection of mirrors is done. Can be combined with <code>-y/--sync</code> to fully complete the process.</p>
 <h4 id="-no-update"><code>--no-update</code></h4>
-<p>This argument is tied to the <code>NoUpdate =</code> setting in the config file.<br />
-When this configuration is set to True it prevents the regeneration of 
-the mirrorlist if pacman-mirrors is invoked with the <code>--no-update</code> argument.
-Useful if you don't want the mirrorlist regenerated after a pacman-mirrors package upgrade.</p>
+<p>This argument is tied to the <code>NoUpdate = True</code> setting in the config file. Pacman-mirrors will exit after parsing <code>pacman-mirrors.conf</code> and is only useful if you don't want the mirrorlist regenerated after a pacman-mirrors package upgrade.</p>
 <h3 id="sync">SYNC:</h3>
 <h4 id="-y-sync-u-update"><code>-y</code>, <code>--sync</code>,<code>-u</code>, <code>update</code></h4>
-<p>Instruct pacman-mirrors to syncronise the pacman databases after mirrorlist generation. 
-This is done by calling <code>pacman -Syy</code>.</p>
+<p>Instruct pacman-mirrors to syncronise the pacman databases after mirrorlist generation. This is done by calling <code>pacman -Syy</code>.</p>
 <h3 id="api">API:</h3>
-<p>Permanently make changes to pacman-mirrors configuration through an api. 
-The tasks is done before generating the mirrorlist. 
-The mirrorlist is written to <code>[prefix]/etc/pacman.d/mirrorlist</code>.</p>
+<p>Make permanent changes to pacman-mirrors configuration through an api. The tasks are executed before generating the mirrorlist.</p>
 <h4 id="-a-api-prefix-get-branch-set-branch-branch-proto-proto-proto-no-mirrorlist"><code>-a</code>, <code>--api</code> [--prefix] [--get-branch | --set-branch {branch}] [--proto PROTO [PROTO ...]] [--no-mirrorlist]</h4>
+<p>The key to the following arguments is <strong><code>-a</code></strong> or <strong><code>--api</code></strong>. If it is missing none of the arguments will have any effect.</p>
 <h5 id="-prefix"><code>--prefix</code></h5>
-<p>Change pacman-mirrors file-handling eg. <code>/mnt/install</code> or <code>$mnt</code>.</p>
+<ul>
+<li>Add a path prefix to pacman-mirrors file-handling eg. <code>/mnt/install</code> or <code>$mnt</code>.</li>
+</ul>
 <h5 id="-get-branch"><code>--get-branch</code></h5>
-<p>Returns branch from to <code>/etc/pacman-mirrors.conf</code>.   </p>
+<ul>
+<li>Returns branch from <code>/etc/pacman-mirrors.conf</code> optionally with a prefix.</li>
+</ul>
 <h5 id="-set-branch-branch"><code>--set-branch {branch}</code></h5>
-<p>Writes the branch to <code>/etc/pacman-mirrors.conf</code>.<br />
-Select <strong><em>stable</em></strong>, <strong><em>testing</em></strong> or <strong><em>unstable</em></strong>.</p>
+<ul>
+<li>Writes the branch to <code>/etc/pacman-mirrors.conf</code> optionally with a prefix.</li>
+<li>Select <strong><em>stable</em></strong>, <strong><em>testing</em></strong> or <strong><em>unstable</em></strong>.</li>
+</ul>
 <h5 id="-proto-proto-proto"><code>--proto PROTO [PROTO ...]</code></h5>
-<p>Write the specified protocols to <code>/etc/pacman-mirrors.conf</code>.<br />
-Select <strong><em>all</em></strong> or <strong><em>http</em></strong>, <strong><em>https</em></strong>, <strong><em>ftp</em></strong> and <strong><em>ftps</em></strong></p>
+<ul>
+<li>Write the specified protocols to <code>/etc/pacman-mirrors.conf</code> optionally with a prefix.</li>
+<li>Select <strong><em>all</em></strong> or <strong><em>http</em></strong>, <strong><em>https</em></strong>, <strong><em>ftp</em></strong> and <strong><em>ftps</em></strong>.</li>
+</ul>
 <h5 id="-n-no-mirrorlist"><code>-n</code>, <code>--no-mirrorlist</code></h5>
-<p>Exit when api task is done </p>
+<ul>
+<li>Skip mirrorlist and exit when tasks has been done.</li>
+</ul>
 <h2 id="pacman-mirrorsconf">pacman-mirrors.conf</h2>
 <h3 id="manjaro-branch-to-use-for-your-system">Manjaro branch to use for your system</h3>
 <h4 id="branch-stable"><code># Branch = stable</code></h4>
-<p>The setting defaults to <strong><em>stable</em></strong> branch.<br />
-Select <strong><em>stable</em></strong>, <strong><em>testing</em></strong> or <strong><em>unstable</em></strong>.
-The setting can be change by invoking pacman-mirrors using the <code>--api --set-branch &lt;branch&gt;</code> argument. </p>
+<ul>
+<li>The setting defaults to <strong><em>stable</em></strong> branch.  </li>
+<li>Select <strong><em>stable</em></strong>, <strong><em>testing</em></strong> or <strong><em>unstable</em></strong>.</li>
+<li>The setting can be changed by invoking <code>pacman-mirrors --api --set-branch &lt;branch&gt;</code>.</li>
+</ul>
 <h3 id="generation-method">Generation method</h3>
 <h4 id="method-rank"><code># Method = rank</code></h4>
-<p>The setting defaults to <strong><em>rank</em></strong>.<br />
-Select <strong><em>rank</em></strong> or <strong><em>random</em></strong>.
-The setting can be changed by invoking pacman-mirrors using the <code>--method &lt;method&gt;</code> argument.</p>
+<p>Invoking <code>pacman-mirrors --method &lt;method&gt;</code> will temporariy change the setting.
+<em> The setting defaults to <strong><em>rank</em></strong>.
+</em> Select <strong><em>rank</em></strong> or <strong><em>random</em></strong>.  </p>
 <h3 id="protocols-and-priority">Protocols and priority</h3>
 <h4 id="protocols"><code># Protocols =</code></h4>
-<p>The setting defines which protocols offered by mirrors will be considered in a mirrorlist. <br />
-At the moment mirrors offers: http, https, ftp, ftps. 
-Separate the protocols with <strong><em>comma</em></strong> <strong>or</strong> <strong><em>space</em></strong>.<br />
-Not specifying a protocol will ban the protocol from being used. <br />
-The default is empty which means all protocols in reversed order.<br />
-When the mirrorlist is created and a mirror has more than one protocol defined <br />
-only the first protocol is written to the mirrorlist.</p>
+<p>The setting defines which protocols offered by mirrors will be considered in a mirrorlist. At the moment mirrors offers: http, https, ftp. When the mirrorlist is created and a mirror has more than one protocol defined only the first protocol is written to the mirrorlist.
+<em> The default is empty which means <strong>all</strong> protocols.
+</em> Separate the protocols with <strong><em>comma</em></strong> <strong>or</strong> <strong><em>space</em></strong>.
+* The setting can be changed by invoking <code>pacman-mirrors --api --proto &lt;proto&gt; &lt;proto&gt;</code>.</p>
 <h3 id="specify-to-use-only-mirrors-from-a-specific-country">Specify to use only mirrors from a specific country.</h3>
 <h4 id="country_1"><code># Country =</code></h4>
-<p>The setting defines which countries will be considered in a mirrorlist. 
-To get a list of available countries run <code>pacman-mirrors -l</code> and collect names of the countries you will use. <br />
-The default setting is empty which means all countries.
-You can add countries by hand or you can use the interactive mode to select mirrors and protocols to use.
-Separate your countries with <strong><em>comma</em></strong> <strong>or</strong> <strong><em>space</em></strong></p>
+<p>The setting defines which countries will be considered in a mirrorlist. To get a list of available countries run <code>pacman-mirrors -l</code> and collect names of the countries you will use. You can add countries by hand or you can use the interactive mode to select mirrors and protocols to use. <br />
+<em> The default setting is empty which means all countries.
+</em> Separate your countries with <strong><em>comma</em></strong> <strong>or</strong> <strong><em>space</em></strong></p>
 <h3 id="mirrors-directory">Mirrors directory</h3>
 <h4 id="mirrorlistsdir-varlibpacman-mirrors"><code># MirrorlistsDir = /var/lib/pacman-mirrors</code></h4>
 <p>A temporary location from which to read the mirrors file.</p>
@@ -207,13 +200,11 @@ Separate your countries with <strong><em>comma</em></strong> <strong>or</strong>
 <p>A temporary location for the generated mirrorlist.</p>
 <h3 id="noupdate">NoUpdate</h3>
 <h4 id="noupdate-false"><code># NoUpdate = False</code></h4>
-<p>When this setting is <code>True</code> it prevents the regeneration of 
-the mirrorlist if pacman-mirrors is invoked with the <code>--no-update</code> argument.
-Useful if you don't want the mirrorlist regenerated after a pacman-mirrors package upgrade.</p>
+<p>When this setting is <code>True</code> it prevents the regeneration of the mirrorlist if pacman-mirrors is invoked with the <code>--no-update</code> argument. Useful if you don't want the mirrorlist regenerated after a pacman-mirrors package upgrade.</p>
 <h3 id="ssl-verification">SSL Verification</h3>
 <h4 id="sslverify-true"><code># SSLVerify = True</code></h4>
-<p>When setting is <code>False</code> - <strong>all certificates</strong> are accepted.<br />
-Use only if you <strong>fully trust</strong> all ssl-enabled mirrors.</p></div>
+<p>The setting controls whether to accept all certificates or not. Only change it if you <strong>fully trust</strong> all ssl-enabled mirrors.
+* <strong>all certificates</strong> are accepted when set to <code>False</code>  </p></div>
         </div>
 
         <footer class="col-md-12">
@@ -252,5 +243,5 @@ Use only if you <strong>fully trust</strong> all ssl-enabled mirrors.</p></div>
 
 <!--
 MkDocs version : 0.16.3
-Build Date UTC : 2017-05-14 10:18:56
+Build Date UTC : 2017-05-14 10:48:22
 -->

@@ -10,7 +10,7 @@ Show the version of pacman-mirrors.
 #### `-c COUNTRY [COUNTRY ...]`, `--country COUNTRY [COUNTRY ...]`
 Specifiy country or list of countries separated by comma or space:
 * --country France
-* --country France, Germany, Austria
+* --country France Germany Austria
 To remove a custom mirror file
 * --country all
 #### `--geoip` 
@@ -40,39 +40,30 @@ Choose a temporary file for your mirrorlist.
 #### `-q`, `--quiet`
 Make pacman-mirrors silent.
 #### `-t {DIGIT}`, `--timeout {DIGIT}`
-Change the server maximum waiting time. 
-This setting is doubled when talking to SSL enabled mirrors.
+Change the server maximum waiting time. In case of SSL enabled mirrors the value is doubled to compensate for the time spent on exchanging encryption keys.
 #### `--default`
-The argument only have effect in conjunction with `-i/--interactive`. 
-This forces pacman-mirrors to load the default mirror file 
-and ignore any present custom-mirrors file, thus allowing for reselecting 
-mirrors for a new custom mirror file. The argument executes the 
-ranking/randomizing when the selection of mirrors is done.
+This argument **only** have effect in conjunction with `-i/--interactive`. It forces pacman-mirrors to load the default mirror file and ignore any preset custom-mirrors file, thus allowing for reselecting mirrors for a new custom mirror file. The argument executes the ranking/randomizing when the selection of mirrors is done. Can be combined with `-y/--sync` to fully complete the process.
 #### `--no-update`
-This argument is tied to the `NoUpdate = ` setting in the config file.  
-When this configuration is set to True it prevents the regeneration of 
-the mirrorlist if pacman-mirrors is invoked with the `--no-update` argument.
-Useful if you don't want the mirrorlist regenerated after a pacman-mirrors package upgrade.
+This argument is tied to the `NoUpdate = True` setting in the config file. Pacman-mirrors will exit after parsing `pacman-mirrors.conf` and is only useful if you don't want the mirrorlist regenerated after a pacman-mirrors package upgrade.
 ### SYNC:
 #### `-y`, `--sync`,`-u`, `update`
-Instruct pacman-mirrors to syncronise the pacman databases after mirrorlist generation. 
-This is done by calling `pacman -Syy`.
+Instruct pacman-mirrors to syncronise the pacman databases after mirrorlist generation. This is done by calling `pacman -Syy`.
 ### API:
-Permanently make changes to pacman-mirrors configuration through an api. The tasks is done before generating the mirrorlist. 
-The mirrorlist is written to `[prefix]/etc/pacman.d/mirrorlist`.
+Make permanent changes to pacman-mirrors configuration through an api. The tasks are executed before generating the mirrorlist.
 #### `-a`, `--api` [--prefix] [--get-branch | --set-branch {branch}] [--proto PROTO [PROTO ...]] [--no-mirrorlist]
+The key to the following arguments is **`-a`** or **`--api`**. If it is missing none of the arguments will have any effect.
 ##### `--prefix` 
-* Change pacman-mirrors file-handling eg. `/mnt/install` or `$mnt`.
+* Add a path prefix to pacman-mirrors file-handling eg. `/mnt/install` or `$mnt`.
 ##### `--get-branch` 
-* Returns branch from to `/etc/pacman-mirrors.conf`.   
+* Returns branch from `/etc/pacman-mirrors.conf` optionally with a prefix.
 ##### `--set-branch {branch}` 
-* Writes the branch to `/etc/pacman-mirrors.conf`.  
+* Writes the branch to `/etc/pacman-mirrors.conf` optionally with a prefix.
 * Select ***stable***, ***testing*** or ***unstable***.
-##### `--proto PROTO [PROTO ...]` 
-* Write the specified protocols to `/etc/pacman-mirrors.conf`.  
-* Select ***all*** or ***http***, ***https***, ***ftp*** and ***ftps***
+##### `--proto PROTO [PROTO ...]`
+* Write the specified protocols to `/etc/pacman-mirrors.conf` optionally with a prefix.
+* Select ***all*** or ***http***, ***https***, ***ftp*** and ***ftps***.
 ##### `-n`, `--no-mirrorlist` 
-* Exit when api task is done 
+* Skip mirrorlist and exit when tasks has been done.
 ## pacman-mirrors.conf
 ### Manjaro branch to use for your system
 #### ```# Branch = stable```  
@@ -81,7 +72,7 @@ The mirrorlist is written to `[prefix]/etc/pacman.d/mirrorlist`.
 * The setting can be changed by invoking `pacman-mirrors --api --set-branch <branch>`.
 ### Generation method
 #### ```# Method = rank```
-Invoking `pacman-mirrors --method <method>` wil temporariy change the setting.
+Invoking `pacman-mirrors --method <method>` will temporariy change the setting.
 * The setting defaults to ***rank***.
 * Select ***rank*** or ***random***.  
 ### Protocols and priority
