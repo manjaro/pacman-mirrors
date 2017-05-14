@@ -16,6 +16,7 @@ To remove a custom mirror file
 #### `--geoip` 
 Find current country by using geolocation.
 ### METHODS:
+All methods can be combined with `-y/--sync` to fully complete the process.
 #### `-g`, `--generate`
 Generate a new default mirrorlist.
 #### `-f {DIGIT}`, `--fasttrack {DIGIT}`
