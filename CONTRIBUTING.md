@@ -97,3 +97,21 @@ Before you submit a pull request, check that it meets these guidelines:
 To run a subset of tests:
 
     $ `python -m unittest tests.test_pacman_mirrors`
+
+Developing environment
+
+1. An editor of choice e.g.
+   * Visual Studio Code `yaourt -S visual-studio-code`
+   * PyCharm Community `pacman -S pycharm-community`
+2. Python environment  
+    ```
+    pacman -S python-pip
+    pip install virtualenvwrapper
+    mkvirtualenv pacman-mirrors
+    pip install mkdocs
+    pip install tox
+    pip install coverage
+    pip install babel
+    pip install flake8
+    
+    ```
