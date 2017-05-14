@@ -101,22 +101,22 @@ Select ***all*** or ***http***, ***https***, ***ftp*** and ***ftps***
 ##### `-n`, `--no-mirrorlist` 
 Exit when api task is done 
 
-### pacman-mirrors.conf
+## pacman-mirrors.conf
 
-#### Manjaro branch to use for your system
-```# Branch = stable```  
+### Manjaro branch to use for your system
+#### ```# Branch = stable```  
 The setting defaults to ***stable*** branch.  
 Select ***stable***, ***testing*** or ***unstable***.
 The setting can be change by invoking pacman-mirrors using the `--api --set-branch <branch>` argument. 
 
-#### Generation method
-```# Method = rank```  
+### Generation method
+#### ```# Method = rank```  
 The setting defaults to ***rank***.  
 Select ***rank*** or ***random***.
 The setting can be changed by invoking pacman-mirrors using the `--method <method>` argument.
 
-#### Protocols and priority
-```# Protocols = ```  
+### Protocols and priority
+#### ```# Protocols = ```  
 The setting defines which protocols offered by mirrors will be considered in a mirrorlist.   
 At the moment mirrors offers: http, https, ftp, ftps. 
 Separate the protocols with ***comma*** **or** ***space***.  
@@ -125,30 +125,30 @@ The default is empty which means all protocols in reversed order.
 When the mirrorlist is created and a mirror has more than one protocol defined   
 only the first protocol is written to the mirrorlist.
 
-#### Specify to use only mirrors from a specific country.
-```# Country = ```  
+### Specify to use only mirrors from a specific country.
+#### ```# Country = ```  
 The setting defines which countries will be considered in a mirrorlist. 
 To get a list of available countries run `pacman-mirrors -l` and collect names of the countries you will use.   
 The default setting is empty which means all countries.
 You can add countries by hand or you can use the interactive mode to select mirrors and protocols to use.
 Separate your countries with ***comma*** **or** ***space***
 
-#### Mirrors directory
-```# MirrorlistsDir = /var/lib/pacman-mirrors```
+### Mirrors directory
+#### ```# MirrorlistsDir = /var/lib/pacman-mirrors```
 A temporary location from which to read the mirrors file.
 
-#### Output file
-```# OutputMirrorlist = /etc/pacman.d/mirrorlist```
+### Output file
+#### ```# OutputMirrorlist = /etc/pacman.d/mirrorlist```
 A temporary location for the generated mirrorlist.
 
-#### NoUpdate
-```# NoUpdate = False```
+### NoUpdate
+#### ```# NoUpdate = False```
 When this setting is `True` it prevents the regeneration of 
 the mirrorlist if pacman-mirrors is invoked with the `--no-update` argument.
 Useful if you don't want the mirrorlist regenerated after a pacman-mirrors package upgrade.
 
-#### SSL Verification
-```# SSLVerify = True```
+### SSL Verification
+#### ```# SSLVerify = True```
 When setting is `False` - **all certificates** are accepted.  
 Use only if you **fully trust** all ssl-enabled mirrors.
 
