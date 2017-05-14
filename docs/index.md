@@ -106,24 +106,22 @@ Exit when api task is done
 ### Manjaro branch to use for your system
 #### ```# Branch = stable```  
 The setting defaults to ***stable*** branch.  
-Select ***stable***, ***testing*** or ***unstable***.
-The setting can be change by invoking pacman-mirrors using the `--api --set-branch <branch>` argument. 
+Select ***stable***, ***testing*** or ***unstable***.  
+The setting can be changed by invoking `pacman-mirrors --api --set-branch <branch>`. 
 
 ### Generation method
 #### ```# Method = rank```  
 The setting defaults to ***rank***.  
 Select ***rank*** or ***random***.
-The setting can be changed by invoking pacman-mirrors using the `--method <method>` argument.
+The setting can be changed by invoking `pacman-mirrors --method <method>`.
 
 ### Protocols and priority
 #### ```# Protocols = ```  
 The setting defines which protocols offered by mirrors will be considered in a mirrorlist.   
-At the moment mirrors offers: http, https, ftp, ftps. 
+At the moment mirrors offers: http, https, ftp.      
+The default is empty which means all protocols in reversed order. When the mirrorlist is created and a mirror has more than one protocol defined only the first protocol is written to the mirrorlist.    
 Separate the protocols with ***comma*** **or** ***space***.  
-Not specifying a protocol will ban the protocol from being used.   
-The default is empty which means all protocols in reversed order.  
-When the mirrorlist is created and a mirror has more than one protocol defined   
-only the first protocol is written to the mirrorlist.
+The setting can be changed by invoking `pacman-mirrors --api --proto <proto> <proto>`.
 
 ### Specify to use only mirrors from a specific country.
 #### ```# Country = ```  
