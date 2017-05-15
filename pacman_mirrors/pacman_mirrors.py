@@ -397,37 +397,42 @@ class PacmanMirrors:
                              self.config["method"] == "random",
                              self.default)
         if interactive.is_done:
+            mirror_list = []  # written to mirrorlist
+            mirror_file = []  # written to custom-mirror.json
             custom_list = interactive.custom_list
-            if self.default and custom_list:
-                if self.config["method"] == "rank":
-                    custom_list = self.test_mirrors(custom_list)
-                    custom_list = sorted(custom_list,
-                                         key=itemgetter("resp_time"))
-                else:
-                    shuffle(custom_list)
-            selected = []  # written to mirrorlist
-            mirrorfile = []  # written to custom-mirror.json
             for item in custom_list:
+                ipos = item["url"].find(":")
+                iurl = item["url"][ipos:]
                 for server in self.mirrors.mirrorlist:
-                    if item["url"] == server["url"]:
-                        selected.append(server)
-                        mirrorfile.append({
+                    spos = server["url"].find(":")
+                    surl = server["url"][spos:]
+                    if iurl == surl:
+                        mirror_file.append({
                             "country": server["country"],
                             "protocols": server["protocols"],
                             "url": server["url"]
                         })
-            if mirrorfile:
+                        server["protocols"] = self.config["protocols"]
+                        mirror_list.append(server)
+            if self.default and mirror_list:
+                if self.config["method"] == "rank":
+                    mirror_list = self.test_mirrors(mirror_list)
+                    mirror_list = sorted(mirror_list,
+                                         key=itemgetter("resp_time"))
+                else:
+                    shuffle(mirror_list)
+            if mirror_file:
                 print("\n.: {} {}".format(txt.INF_CLR,
                                           txt.CUSTOM_MIRROR_LIST))
                 print("--------------------------")
                 # output mirror file
-                jsonfn.write_json_file(mirrorfile, self.config["custom_file"])
+                jsonfn.write_json_file(mirror_file, self.config["custom_file"])
                 print(".: {} {}: {}".format(txt.INF_CLR,
                                             txt.CUSTOM_MIRROR_FILE_SAVED,
                                             self.config["custom_file"]))
                 # output pacman mirrorlist
                 filefn.output_mirror_list(self.config,
-                                          selected,
+                                          mirror_list,
                                           custom=True,
                                           quiet=self.quiet,
                                           interactive=True)
@@ -518,31 +523,31 @@ class PacmanMirrors:
         ssl_verify = self.config["ssl_verify"]
         for mirror in worklist:
             pos = mirror["url"].find(":")
-            proto = mirror["url"][:pos]
-            # for idx, proto in enumerate(mirror["protocols"]):
-            #     mirror["url"] = "{}{}".format(proto, url)
-            if not self.quiet:
-                message = "   ..... {:<15}: {}".format(mirror["country"],
-                                                       mirror["url"])
-                print("{:.{}}".format(message, cols), end="")
-                sys.stdout.flush()
-            # https sometimes takes a short while for handshake
-            if proto == "https" or proto == "ftps":
-                self.max_wait_time = ssl_wait
-            else:
-                self.max_wait_time = http_wait
-            # let's see how responsive you are
-            resp_time = httpfn.get_mirror_response(mirror["url"],
-                                                   maxwait=self.max_wait_time,
-                                                   quiet=self.quiet,
-                                                   ssl_verify=ssl_verify)
-            mirror["resp_time"] = resp_time
-            if float(resp_time) >= self.max_wait_time:
+            url = mirror["url"][pos:]
+            for idx, proto in enumerate(mirror["protocols"]):
+                mirror["url"] = "{}{}".format(proto, url)
                 if not self.quiet:
-                    print("\r")
-            else:
-                if not self.quiet:
-                    print("\r   {:<5}{}{} ".format(txt.GS, resp_time, txt.CE))
+                    message = "   ..... {:<15}: {}".format(mirror["country"],
+                                                           mirror["url"])
+                    print("{:.{}}".format(message, cols), end="")
+                    sys.stdout.flush()
+                # https sometimes takes a short while for handshake
+                if proto == "https" or proto == "ftps":
+                    self.max_wait_time = ssl_wait
+                else:
+                    self.max_wait_time = http_wait
+                # let's see how responsive you are
+                resp_time = httpfn.get_mirror_response(mirror["url"],
+                                                       maxwait=self.max_wait_time,
+                                                       quiet=self.quiet,
+                                                       ssl_verify=ssl_verify)
+                mirror["resp_time"] = resp_time
+                if float(resp_time) >= self.max_wait_time:
+                    if not self.quiet:
+                        print("\r")
+                else:
+                    if not self.quiet:
+                        print("\r   {:<5}{}{} ".format(txt.GS, resp_time, txt.CE))
         return worklist
 
     def run(self):
