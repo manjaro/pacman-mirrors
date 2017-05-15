@@ -19,6 +19,9 @@ Other improvements and fixes:
 - Fix: Issue where values from configuration was not parsed correct.
 - Fix: Issue where location in config was not determined correctly
 
+## [4.1.2] 2017-05-15
+- Fix: ranking breaks when --interactive is used with --default [#98](https://github.com/manjaro/pacman-mirrors/issues/98)
+
 ## [4.1.1] 2017-05-01
 - Added `-u` / `--update` option
   * Run `pacman -Syy` after mirrorlist generation
