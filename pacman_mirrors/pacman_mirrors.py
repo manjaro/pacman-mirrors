@@ -202,7 +202,7 @@ class PacmanMirrors:
         if args.quiet:
             self.quiet = True
 
-        if args.sync:
+        if args.update:
             self.sync = True
 
         if args.mirror_dir:
