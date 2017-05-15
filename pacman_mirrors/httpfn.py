@@ -20,6 +20,7 @@
 """Manjaro-Mirrors HTTP Functions"""
 
 import collections
+import filecmp
 import json
 import ssl
 import time
