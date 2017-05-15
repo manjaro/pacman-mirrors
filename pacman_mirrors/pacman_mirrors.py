@@ -504,8 +504,8 @@ class PacmanMirrors:
         ssl_wait = self.max_wait_time * 2
         ssl_verify = self.config["ssl_verify"]
         for mirror in worklist:
-            # pos = mirror["url"].find(":")
-            # url = mirror["url"][pos:]
+            pos = mirror["url"].find(":")
+            proto = mirror["url"][:pos]
             # for idx, proto in enumerate(mirror["protocols"]):
             #     mirror["url"] = "{}{}".format(proto, url)
             if not self.quiet:
