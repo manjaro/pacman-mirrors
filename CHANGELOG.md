@@ -11,7 +11,7 @@ Other improvements and fixes:
 - Improvement: created argument groups for logic division of arguments usage
 - Improvement: making `--get-branch` and `--set-branch` mutually exclusive
 - Improvement: helper argument for pacman `-u`, `--update`
-- Improvement: making `--no-mirrorlist` and `-y --sync` mutually exclusive
+- Improvement: making `--no-mirrorlist` and `-u --update` mutually exclusive
 - Improvement: added protocol choices to `--proto` [all, http, https, ftp, ftps]
 - Improvement: sorting mirrorlist by country during load of data file
 - Fix: Bug where ssl-certificate errors would break execution
