@@ -5,13 +5,12 @@ All notable changes to this project will be documented in this file.
 Breaking change to `--set-branch` argument
 
 - `--set-branch <branch>` now requires the explicit branch as argument
-
 Other improvements and fixes:
 
 - Improvement: Do not write bad servers to the end of the mirrorlist
 - Improvement: created argument groups for logic division of arguments usage
 - Improvement: making `--get-branch` and `--set-branch` mutually exclusive
-- Improvement: in the spirit of pacman `-y` `--sync` is added in addition to `-u` `--update` 
+- Improvement: helper argument for pacman `-u`, `--update`
 - Improvement: making `--no-mirrorlist` and `-y --sync` mutually exclusive
 - Improvement: added protocol choices to `--proto` [all, http, https, ftp, ftps]
 - Improvement: sorting mirrorlist by country during load of data file

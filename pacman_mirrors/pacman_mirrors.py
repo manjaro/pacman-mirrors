@@ -144,9 +144,9 @@ class PacmanMirrors:
         sync.add_argument("-n", "--no-mirrorlist",
                           action="store_true",
                           help="API: Exit - no mirrorlist")
-        sync.add_argument("-y", "--sync", "-u", "--update",
+        sync.add_argument("-u", "--update",
                           action="store_true",
-                          help="Sync pacman databases")
+                          help="Update pacman databases")
         # Api arguments
         api = parser.add_argument_group("API")
         api.add_argument("-a", "--api",
