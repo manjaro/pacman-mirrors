@@ -37,20 +37,6 @@ def check_file(filename):
     return os.path.isfile(filename)
 
 
-def compare_files(filea, fileb):
-    """Compare files with md5"""
-    md5 = hashlib.md5()
-    with open(filea, "rb") as file1:
-        bufa = file1.read()
-        md5.update(bufa)
-        hasha = md5.hexdigest()
-    with open(fileb, "rb") as file2:
-        bufb = file2.read()
-        md5.update(bufb)
-        hashb = md5.hexdigest()
-    return hashb == hasha
-
-
 def dir_must_exist(dir_name):
     """Check necessary directory
     :param dir_name:

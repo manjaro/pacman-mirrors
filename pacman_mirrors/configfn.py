@@ -101,7 +101,6 @@ def build_config():
         "config_file": conf.CONFIG_FILE,
         "custom_file": conf.CUSTOM_FILE,
         "method": "rank",
-        "work_dir": conf.WORK_DIR,
         "mirror_file": conf.MIRROR_FILE,
         "mirror_list": conf.MIRROR_LIST,
         "no_update": False,
@@ -111,7 +110,8 @@ def build_config():
         "ssl_verify": True,
         "status_file": conf.STATUS_FILE,
         "url_mirrors_json": conf.URL_MIRROR_JSON,
-        "url_status_json": conf.URL_STATUS_JSON
+        "url_status_json": conf.URL_STATUS_JSON,
+        "work_dir": conf.WORK_DIR
     }
     # try to replace default entries by reading conf file
     try:
