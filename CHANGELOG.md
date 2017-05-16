@@ -1,11 +1,15 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [4.1.4] 2013-05-16
+- Improvement: Removed `--no-mirrorlist` dependency on API
+- Fix: Behavior of `--no-mirrorlist`. Download updated mirror files before exit. 
+
 ## [4.1.3] 2013-05-15
-- Fix: comparison of mirrorfiles fixed
+- Fix: Comparison of mirrorfiles fixed
 
 ## [4.1.2] 2017-05-15
-- Fix: ranking breaks when --interactive is used with --default [#98](https://github.com/manjaro/pacman-mirrors/issues/98)
+- Fix: Ranking breaks when --interactive is used with --default [#98](https://github.com/manjaro/pacman-mirrors/issues/98)
 
 ## [4.1.1] 2017-05-01
 - Added `-u` / `--update` option
