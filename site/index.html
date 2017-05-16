@@ -135,7 +135,8 @@ Lists available mirror countries</p>
 Change path of the output file.</p>
 <p><code>-t</code>, <code>--timeout</code>
 Change the server maximum waiting time.</p>
-<p><code>--no-update</code> DEPRECATED
+<p><code>--no-update</code> DEPRECATED<br />
+Will be removed<br />
 Don't generate mirrorlist.</p>
 <p><code>-n</code>, <code>--no-mirrorlist</code>
 Download new mirror files and exit.</p>
@@ -149,8 +150,9 @@ and executes the ranking/randomizing process after the selection of mirrors.</p>
 Show the version of pacman-mirrors.</p>
 <p><code>--quiet</code>
 Make pacman-mirrors silent.</p>
-<p><code>-u</code>, <code>update</code> DEPRECATED
-<code>-y</code>, <code>Run</code>pacman -Syy` after mirrorlist generation</p>
+<p><code>-u</code>, <code>update</code> DEPRECATED<br />
+will change to <code>-y</code>, <code>--sync</code><br />
+Run <code>pacman -Syy</code> after mirrorlist generation</p>
 <p><code>-a</code>, <code>--api</code> [--prefix] [{--get-branch | --set-branch}] [--protocols PROTO [PROTO ...]] 
 - <code>--prefix</code> for pacman-mirrors file-handling eg. /mnt/install or $mnt.
 - <code>--get-branch</code> returns branch from config in prefix<code>config_file</code>. 
@@ -243,5 +245,5 @@ Make pacman-mirrors silent.</p>
 
 <!--
 MkDocs version : 0.16.3
-Build Date UTC : 2017-05-16 13:05:03
+Build Date UTC : 2017-05-16 18:44:35
 -->
