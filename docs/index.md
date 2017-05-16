@@ -52,7 +52,8 @@ Change path of the output file.
 `-t`, `--timeout`
 Change the server maximum waiting time.
 
-`--no-update` DEPRECATED
+`--no-update` DEPRECATED  
+Will be removed  
 Don't generate mirrorlist.
 
 `-n`, `--no-mirrorlist`
@@ -72,8 +73,8 @@ Show the version of pacman-mirrors.
 `--quiet`
 Make pacman-mirrors silent.
 
-`-u`, `update` DEPRECATED
-`-y`, `
+`-u`, `update` DEPRECATED  
+will change to `-y`, `--sync`  
 Run `pacman -Syy` after mirrorlist generation
 
 `-a`, `--api` [--prefix] [{--get-branch | --set-branch}] [--protocols PROTO [PROTO ...]] 
