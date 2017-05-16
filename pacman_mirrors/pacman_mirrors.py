@@ -140,7 +140,7 @@ class PacmanMirrors:
         parser.add_argument("-u", "--update",
                             action="store_true",
                             help="pacman -Syy")
-        parser.add_argument("--no-mirrorlist",
+        parser.add_argument("-n", "--no-mirrorlist",
                             action="store_true",
                             help="no mirrorlist")
         # api arguments
