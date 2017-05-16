@@ -2,13 +2,13 @@
 All notable changes to this project will be documented in this file.
 
 ## [4.2.0dev]
-Breaking change to `--set-branch` argument
+**Breaking changes**
 - `--set-branch <branch>` now requires the explicit branch as argument
 - `-u`/`--update` renamed to `-y`/`--sync`
 - `NoUpdate` configuration removed from pacman-mirrors.conf. `--no-update` removed
 - `NoUpdate` config has been replaced by `--no-mirrorlist` argument
  
-Other improvements and fixes:
+**Other improvements and fixes:**
 
 - Improvement: Do not write bad servers to the end of the mirrorlist
 - Improvement: created argument groups for logic division of arguments usage
