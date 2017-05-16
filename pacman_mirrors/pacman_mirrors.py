@@ -157,10 +157,10 @@ class PacmanMirrors:
                          nargs="+",
                          help="API: Set accepted protocols")
         branch = api.add_mutually_exclusive_group()
-        branch.add_argument("--get-branch",
+        branch.add_argument("-G", "--get-branch",
                             action="store_true",
                             help="API: Get current branch")
-        branch.add_argument("--set-branch",
+        branch.add_argument("-S", "--set-branch",
                             choices=["stable", "testing", "unstable"],
                             help="API: Set new branch")
 
