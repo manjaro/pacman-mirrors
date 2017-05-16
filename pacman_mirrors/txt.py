@@ -50,8 +50,6 @@ HLP_ARG_GEOIP_P1 = _("Get current country using geolocation. Ignored if")
 HLP_ARG_GEOIP_P2 = _("is supplied")
 HLP_ARG_INTERACTIVE = _("Generate custom mirrorlist")
 HLP_ARG_METHOD = _("Generation method")
-HLP_ARG_NOUPDATE_P1 = _("Don't generate mirrorlist if")
-HLP_ARG_NOUPDATE_P2 = _("in the configuration file")
 HLP_ARG_PATH = _("Mirrors list path")
 HLP_ARG_QUIET = _("Quiet mode - less verbose output")
 HLP_ARG_TIMEOUT = _("Maximum waiting time for server response")
@@ -123,7 +121,6 @@ SERVER_BAD = "9999:99"  # default last syncronization status
 SERVER_RES = "99.99"  # default response status
 # options
 OPT_COUNTRY = " '-c/--country' "
-OPT_NOUPDATE = " 'NoUpdate = True' "
 OPT_RANDOM = " '-m/--method random "
 # colors
 DBG_CLR = "\033[1;46m.: {} >>> \033[1;m".format("DEBUG")
