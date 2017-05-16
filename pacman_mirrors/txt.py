@@ -56,7 +56,7 @@ HLP_ARG_PATH = _("Mirrors list path")
 HLP_ARG_QUIET = _("Quiet mode - less verbose output")
 HLP_ARG_TIMEOUT = _("Maximum waiting time for server response")
 HLP_ARG_VERSION = _("Print the pacman-mirrors version")
-HLP_ARG_FASTTRACK = _("A quick mirrorlist. Overrides")
+HLP_ARG_FASTTRACK = _("Generate mirrorlist with a number of up-to-date mirrors. Overrides")
 HLP_ARG_LIST = _("List all available countries")
 HLP_ARG_SYNC = _("Syncronize pacman databases")
 HLP_ARG_API_PREFIX = _("Set prefix to")
@@ -112,7 +112,7 @@ I_USE_THESE_MIRRORS = _("I want to use these mirrors")
 
 # NON TRANSLATABLE STRINGS
 HOUSTON = "Houston?! We have a problem."
-OVERRIDE_OPT = "-c -i -m --geoip"
+OVERRIDE_OPT = "--country --interactive --method --geoip"
 REPO_SERVER = "repo.manjaro.org"
 RESET_TIP = "pacman-mirrors -c all"
 PREFIX_TIP = " `$mnt` | `/dir/dir`"

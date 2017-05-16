@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pacman-mirrors 4.2.0.dev0\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2017-05-16 16:24+0200\n"
+"POT-Creation-Date: 2017-05-16 16:28+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -115,7 +115,7 @@ msgid "Print the pacman-mirrors version"
 msgstr ""
 
 #: pacman_mirrors/txt.py:59
-msgid "A quick mirrorlist. Overrides"
+msgid "Generate mirrorlist with a number of up-to-date mirrors. Overrides"
 msgstr ""
 
 #: pacman_mirrors/txt.py:60
