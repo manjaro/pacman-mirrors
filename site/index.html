@@ -129,14 +129,16 @@ Detect country by using geolocation.</p>
 Change directory of mirrors to use.</p>
 <p><code>-f [n]</code>, <code>--fasttrack [n]</code>
 Generates an updated and responsive mirrorlist of [n] mirrors.</p>
-<p><code>-l</code>, <code>--list</code>
+<p><code>-l</code>, <code>--country-list</code>
 Lists available mirror countries</p>
 <p><code>-o</code>, <code>--output</code>
 Change path of the output file.</p>
 <p><code>-t</code>, <code>--timeout</code>
 Change the server maximum waiting time.</p>
-<p><code>--no-update</code>
+<p><code>--no-update</code> DEPRECATED
 Don't generate mirrorlist.</p>
+<p><code>-n</code>, <code>--no-mirrorlist</code>
+Download new mirror files and exit.</p>
 <p><code>-i</code>, <code>--interactive</code>
 Launch a graphical tool to select mirrors to generate a custom mirrorlist.</p>
 <p><code>--default</code>
@@ -147,8 +149,8 @@ and executes the ranking/randomizing process after the selection of mirrors.</p>
 Show the version of pacman-mirrors.</p>
 <p><code>--quiet</code>
 Make pacman-mirrors silent.</p>
-<p><code>-u</code>, <code>update</code>
-Run <code>pacman -Syy</code> after mirrorlist generation</p>
+<p><code>-u</code>, <code>update</code> DEPRECATED
+<code>-y</code>, <code>Run</code>pacman -Syy` after mirrorlist generation</p>
 <p><code>-a</code>, <code>--api</code> [--prefix] [{--get-branch | --set-branch}] [--protocols PROTO [PROTO ...]] 
 - <code>--prefix</code> for pacman-mirrors file-handling eg. /mnt/install or $mnt.
 - <code>--get-branch</code> returns branch from config in prefix<code>config_file</code>. 
@@ -240,6 +242,6 @@ Run <code>pacman -Syy</code> after mirrorlist generation</p>
 </html>
 
 <!--
-MkDocs version : 0.16.1
-Build Date UTC : 2017-05-01 14:09:22
+MkDocs version : 0.16.3
+Build Date UTC : 2017-05-16 13:05:03
 -->

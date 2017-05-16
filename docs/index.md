@@ -43,7 +43,7 @@ Change directory of mirrors to use.
 `-f [n]`, `--fasttrack [n]`
 Generates an updated and responsive mirrorlist of [n] mirrors.
 
-`-l`, `--list`
+`-l`, `--country-list`
 Lists available mirror countries
 
 `-o`, `--output`
@@ -52,8 +52,11 @@ Change path of the output file.
 `-t`, `--timeout`
 Change the server maximum waiting time.
 
-`--no-update`
+`--no-update` DEPRECATED
 Don't generate mirrorlist.
+
+`-n`, `--no-mirrorlist`
+Download new mirror files and exit.
 
 `-i`, `--interactive`
 Launch a graphical tool to select mirrors to generate a custom mirrorlist.
@@ -69,7 +72,8 @@ Show the version of pacman-mirrors.
 `--quiet`
 Make pacman-mirrors silent.
 
-`-u`, `update`
+`-u`, `update` DEPRECATED
+`-y`, `
 Run `pacman -Syy` after mirrorlist generation
 
 `-a`, `--api` [--prefix] [{--get-branch | --set-branch}] [--protocols PROTO [PROTO ...]] 
