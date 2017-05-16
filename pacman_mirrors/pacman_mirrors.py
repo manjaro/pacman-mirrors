@@ -71,6 +71,7 @@ class PacmanMirrors:
         self.mirrors = Mirror()
         self.network = True
         self.no_display = False
+        self.no_mirrorlist = False
         self.quiet = False
         self.selected_countries = []  # users selected countries
         self.update = False
@@ -130,7 +131,7 @@ class PacmanMirrors:
                             metavar=txt.DIGIT,
                             help="{} {}".format(txt.HLP_ARG_FASTTRACK,
                                                 txt.OVERRIDE_OPT))
-        parser.add_argument("-l", "--list",
+        parser.add_argument("-l", "--country-list",
                             action="store_true",
                             help=txt.HLP_ARG_LIST)
         parser.add_argument("--default",
@@ -176,7 +177,7 @@ class PacmanMirrors:
             if self.config["no_update"] == "True":
                 sys.exit(0)
 
-        if args.list:
+        if args.country_list:
             self.list_all_countries()
             sys.exit(0)
 
@@ -232,10 +233,10 @@ class PacmanMirrors:
             self.custom = False
             self.config["only_country"] = []
 
+        if args.no_mirrorlist:
+            self.no_mirrorlist = True
+
         if args.api:
-            nolist = False
-            if args.no_mirrorlist:
-                nolist = True
             proto = False
             if args.proto:
                 proto = True
@@ -248,20 +249,19 @@ class PacmanMirrors:
                         self.config["protocols"] = args.proto
             if args.set_branch:
                 if args.branch:
-                    self.api_config(prefix=args.prefix, set_branch=True, protocols=proto, nolist=nolist)
+                    self.api_config(prefix=args.prefix, set_branch=True, protocols=proto)
             elif args.get_branch:
                 if not args.branch:
                     self.api_config(prefix=args.prefix, get_branch=True)
             else:
-                self.api_config(prefix=args.prefix, protocols=proto, nolist=nolist)
+                self.api_config(prefix=args.prefix, protocols=proto)
 
-    def api_config(self, prefix=None, set_branch=False, get_branch=False, protocols=False, nolist=False):
+    def api_config(self, prefix=None, set_branch=False, get_branch=False, protocols=False):
         """Api functions
         :param prefix: prefix to the config paths
         :param set_branch: writes branch to pacman-mirrors.conf
         :param get_branch: exit with branch
         :param protocols: writes list of protocols to pacman-mirrors.con
-        :param nolist: skip mirrorlist generation
         """
         if prefix:
             if "$" in prefix:
@@ -540,6 +540,8 @@ class PacmanMirrors:
         self.network = httpfn.inet_conn_check()
         if self.network:
             httpfn.update_mirrors(self.config)
+            if self.no_mirrorlist:
+                exit(0)
         else:
             # negative on network
             miscfn.internet_message()
