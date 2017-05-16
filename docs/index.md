@@ -63,7 +63,10 @@ This argument **only** have effect in conjunction with `-i/--interactive`. It fo
 This argument is tied to the `NoUpdate = True` setting in the config file. Pacman-mirrors will exit after parsing `pacman-mirrors.conf` and is only useful if you don't want the mirrorlist regenerated after a pacman-mirrors package upgrade.
 
 ### SYNC:
-#### `-u`, `update`
+##### `-n`, `--no-mirrorlist` 
+* Skip mirrorlist and exit when tasks has been done.
+
+#### `-y`, `--sync`
 Instruct pacman-mirrors to update/syncronize the pacman databases after mirrorlist generation. This is done by calling `pacman -Syy`.
 
 ### API:
@@ -85,9 +88,6 @@ The key to the following arguments is **`-a`** or **`--api`**. If it is missing 
 ##### `--proto PROTO [PROTO ...]`
 * Write the specified protocols to `/etc/pacman-mirrors.conf` optionally with a prefix.
 * Select ***all*** or ***http***, ***https***, ***ftp*** and ***ftps***.
-
-##### `-n`, `--no-mirrorlist` 
-* Skip mirrorlist and exit when tasks has been done.
 
 ## pacman-mirrors.conf
 ### Manjaro branch to use for your system
@@ -122,10 +122,6 @@ A temporary location from which to read the mirrors file.
 ### Output file
 #### ```# OutputMirrorlist = /etc/pacman.d/mirrorlist```
 A temporary location for the generated mirrorlist.
-
-### NoUpdate
-#### ```# NoUpdate = False```
-When this setting is `True` it prevents the regeneration of the mirrorlist if pacman-mirrors is invoked with the `--no-update` argument. Useful if you don't want the mirrorlist regenerated after a pacman-mirrors package upgrade.
 
 ### SSL Verification
 #### ```# SSLVerify = True```
