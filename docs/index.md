@@ -82,7 +82,7 @@ The key to the following arguments is **`-a`** or **`--api`**. If it is missing 
 * Writes the branch to `/etc/pacman-mirrors.conf` optionally with a prefix.
 * Select ***stable***, ***testing*** or ***unstable***.
 
-##### `--proto PROTO [PROTO ...]`
+##### `-p`, `--proto`, `--protocols PROTO [PROTO ...]`
 * Write the specified protocols to `/etc/pacman-mirrors.conf` optionally with a prefix.
 * Select ***all*** or ***http***, ***https***, ***ftp*** and ***ftps***.
 
