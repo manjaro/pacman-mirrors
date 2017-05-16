@@ -72,17 +72,17 @@ Make permanent changes to pacman-mirrors configuration through an api. The tasks
 #### `-a`, `--api` [--prefix] [--get-branch | --set-branch {branch}] [--proto PROTO [PROTO ...]] [--no-mirrorlist]
 The key to the following arguments is **`-a`** or **`--api`**. If it is missing none of the arguments will have any effect.
 
-##### `--prefix` 
+##### `-p`, `--prefix` 
 * Add a path prefix to pacman-mirrors file-handling eg. `/mnt/install` or `$mnt`.
 
-##### `--get-branch` 
+##### `-G`, `--get-branch` 
 * Returns branch from `/etc/pacman-mirrors.conf` optionally with a prefix.
 
-##### `--set-branch {branch}` 
+##### `-S`, `--set-branch {branch}` 
 * Writes the branch to `/etc/pacman-mirrors.conf` optionally with a prefix.
 * Select ***stable***, ***testing*** or ***unstable***.
 
-##### `-p`, `--proto`, `--protocols PROTO [PROTO ...]`
+##### `-P`, `--proto`, `--protocols PROTO [PROTO ...]`
 * Write the specified protocols to `/etc/pacman-mirrors.conf` optionally with a prefix.
 * Select ***all*** or ***http***, ***https***, ***ftp*** and ***ftps***.
 
