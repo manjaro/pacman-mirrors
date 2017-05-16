@@ -131,7 +131,7 @@ class PacmanMirrors:
                             metavar=txt.DIGIT,
                             help="{} {}".format(txt.HLP_ARG_FASTTRACK,
                                                 txt.OVERRIDE_OPT))
-        parser.add_argument("-l", "--country-list",
+        parser.add_argument("-l", "--list",
                             action="store_true",
                             help=txt.HLP_ARG_LIST)
         parser.add_argument("--default",
