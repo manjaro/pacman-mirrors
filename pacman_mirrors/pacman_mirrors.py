@@ -117,7 +117,7 @@ class PacmanMirrors:
                           type=str,
                           metavar=txt.PATH,
                           help=txt.HLP_ARG_PATH)
-        misc.add_argument("-l", "--list",
+        misc.add_argument("-l", "--country-list",
                           action="store_true",
                           help=txt.HLP_ARG_LIST)
         misc.add_argument("-o", "--output",
@@ -134,11 +134,6 @@ class PacmanMirrors:
         misc.add_argument("--default",
                           action="store_true",
                           help="Interactive: " + txt.HLP_ARG_DEFAULT)
-        misc.add_argument("--no-update",
-                          action="store_true",
-                          help="{} {} {}".format(txt.HLP_ARG_NOUPDATE_P1,
-                                                 txt.OPT_NOUPDATE,
-                                                 txt.HLP_ARG_NOUPDATE_P2))
         # Update arguments
         update = parser.add_argument_group("SYNC")
         sync = update.add_mutually_exclusive_group()
@@ -153,10 +148,10 @@ class PacmanMirrors:
         api.add_argument("-a", "--api",
                          action="store_true",
                          help="[--prefix] [--set-branch|--get-branch] [--proto] [--no-mirrorlist]")
-        api.add_argument("--prefix",
+        api.add_argument("-p", "--prefix",
                          type=str,
                          help="API: Set prefix to `$mnt` or `/some/path`")
-        api.add_argument("--proto",
+        api.add_argument("-P", "--proto", "--protocols",
                          choices=["all", "http", "https", "ftp", "ftps"],
                          type=str,
                          nargs="+",
@@ -179,7 +174,7 @@ class PacmanMirrors:
             print("{}pacman-mirrors {}{}".format(txt.GS, __version__, txt.CE))
             sys.exit(0)
 
-        if args.list:
+        if args.country_list:
             self.list_all_countries()
             sys.exit(0)
 
@@ -199,7 +194,7 @@ class PacmanMirrors:
         if args.quiet:
             self.quiet = True
 
-        if args.update:
+        if args.sync:
             self.sync = True
 
         if args.mirror_dir:
