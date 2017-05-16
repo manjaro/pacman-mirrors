@@ -9,7 +9,6 @@ All notable changes to this project will be documented in this file.
 - `NoUpdate` config has been replaced by `--no-mirrorlist` argument
  
 **Other improvements and fixes:**
-
 - Improvement: Do not write bad servers to the end of the mirrorlist
 - Improvement: created argument groups for logic division of arguments usage
 - Improvement: making `--get-branch` and `--set-branch` mutually exclusive
