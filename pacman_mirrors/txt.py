@@ -113,7 +113,7 @@ HOUSTON = "Houston?! We have a problem."
 OVERRIDE_OPT = "--country --interactive --method --geoip"
 REPO_SERVER = "repo.manjaro.org"
 RESET_TIP = "pacman-mirrors -c all"
-PREFIX_TIP = " $mnt | /dir"
+PREFIX_TIP = ": $mnt | /dir"
 # mirror status constants
 LASTSYNC_OK = "24:00"  # last syncronize in the past 24 hours
 LASTSYNC_NA = "9800:00"  # last syncronization not available
