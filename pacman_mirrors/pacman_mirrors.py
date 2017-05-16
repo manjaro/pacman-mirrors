@@ -140,6 +140,9 @@ class PacmanMirrors:
         parser.add_argument("-u", "--update",
                             action="store_true",
                             help="pacman -Syy")
+        parser.add_argument("--no-mirrorlist",
+                            action="store_true",
+                            help="no mirrorlist")
         # api arguments
         api = parser.add_argument_group("API")
         api.add_argument("-a", "--api",
@@ -159,9 +162,6 @@ class PacmanMirrors:
                          type=str,
                          nargs="+",
                          help="[--proto {all|http https ftp ftps}]")
-        api.add_argument("-n", "--no-mirrorlist",
-                         action="store_true",
-                         help="no mirrorlist")
 
         args = parser.parse_args()
         if len(sys.argv) == 1:
