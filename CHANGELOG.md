@@ -3,22 +3,25 @@ All notable changes to this project will be documented in this file.
 
 ## [4.2.0dev]
 **Breaking changes**
-- `--set-branch <branch>` now requires the explicit branch as argument
-- `-u`/`--update` renamed to `-y`/`--sync`
-- `NoUpdate` configuration removed from pacman-mirrors.conf. `--no-update` removed
-- `NoUpdate` config has been replaced by `--no-mirrorlist` argument
+- `--set-branch <branch>` now requires the explicit branch as argument.
+- `-u`/`--update` renamed to `-y`/`--sync`.
+- `NoUpdate` configuration removed from pacman-mirrors.conf. `--no-update` removed.
+- `NoUpdate` config has been replaced by `--no-mirrorlist` argument.
  
 **Other improvements and fixes:**
-- Improvement: Do not write bad servers to the end of the mirrorlist
-- Improvement: created argument groups for logic division of arguments usage
-- Improvement: making `--get-branch` and `--set-branch` mutually exclusive
-- Improvement: helper argument for pacman `-u`, `--update`
-- Improvement: making `--no-mirrorlist` and `-u --update` mutually exclusive
-- Improvement: added protocol choices to `--proto` [all, http, https, ftp, ftps]
-- Improvement: sorting mirrorlist by country during load of data file
-- Fix: Bug where ssl-certificate errors would break execution
+- Improvement: Do not write bad servers to the end of the mirrorlist.
+- Improvement: created argument groups for logic division of arguments usage.
+- Improvement: making `--get-branch` and `--set-branch` mutually exclusive.
+- Improvement: making `--no-mirrorlist` and `-y --sync` mutually exclusive.
+- Improvement: added protocol choices to `--proto` [all, http, https, ftp, ftps].
+- Improvement: sorting mirrorlist by country during load of data file.
+- Fix: Bug where ssl-certificate errors would break execution.
 - Fix: Issue where values from configuration was not parsed correct.
-- Fix: Issue where location in config was not determined correctly
+- Fix: Issue where location in config was not determined correctly.
+
+## [4.1.4] 2013-05-16
+- Improvement: Removed `--no-mirrorlist` dependency on API.
+- Fix: Behavior of `--no-mirrorlist`. Download updated mirror files before exit.
 
 ## [4.1.3] 2013-05-15
 - Fix: comparison of mirrorfiles fixed
