@@ -148,20 +148,20 @@ The branch is reset on next run of pacman-mirrors.</p>
 <p>Make permanent changes to pacman-mirrors configuration through an api. The tasks are executed before generating the mirrorlist.</p>
 <h4 id="-a-api-prefix-get-branch-set-branch-branch-proto-proto-proto-no-mirrorlist"><code>-a</code>, <code>--api</code> [--prefix] [--get-branch | --set-branch {branch}] [--proto PROTO [PROTO ...]] [--no-mirrorlist]</h4>
 <p>The key to the following arguments is <strong><code>-a</code></strong> or <strong><code>--api</code></strong>. If it is missing none of the arguments will have any effect.</p>
-<h5 id="-prefix"><code>--prefix</code></h5>
+<h5 id="-p-prefix"><code>-p</code>, <code>--prefix</code></h5>
 <ul>
 <li>Add a path prefix to pacman-mirrors file-handling eg. <code>/mnt/install</code> or <code>$mnt</code>.</li>
 </ul>
-<h5 id="-get-branch"><code>--get-branch</code></h5>
+<h5 id="-g-get-branch"><code>-G</code>, <code>--get-branch</code></h5>
 <ul>
 <li>Returns branch from <code>/etc/pacman-mirrors.conf</code> optionally with a prefix.</li>
 </ul>
-<h5 id="-set-branch-branch"><code>--set-branch {branch}</code></h5>
+<h5 id="-s-set-branch-branch"><code>-S</code>, <code>--set-branch {branch}</code></h5>
 <ul>
 <li>Writes the branch to <code>/etc/pacman-mirrors.conf</code> optionally with a prefix.</li>
 <li>Select <strong><em>stable</em></strong>, <strong><em>testing</em></strong> or <strong><em>unstable</em></strong>.</li>
 </ul>
-<h5 id="-p-proto-protocols-proto-proto"><code>-p</code>, <code>--proto</code>, <code>--protocols PROTO [PROTO ...]</code></h5>
+<h5 id="-p-proto-protocols-proto-proto"><code>-P</code>, <code>--proto</code>, <code>--protocols PROTO [PROTO ...]</code></h5>
 <ul>
 <li>Write the specified protocols to <code>/etc/pacman-mirrors.conf</code> optionally with a prefix.</li>
 <li>Select <strong><em>all</em></strong> or <strong><em>http</em></strong>, <strong><em>https</em></strong>, <strong><em>ftp</em></strong> and <strong><em>ftps</em></strong>.</li>
@@ -238,5 +238,5 @@ The branch is reset on next run of pacman-mirrors.</p>
 
 <!--
 MkDocs version : 0.16.3
-Build Date UTC : 2017-05-16 13:34:37
+Build Date UTC : 2017-05-16 14:01:09
 -->
