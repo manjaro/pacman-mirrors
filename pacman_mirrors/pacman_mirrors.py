@@ -74,7 +74,7 @@ class PacmanMirrors:
         self.no_mirrorlist = False
         self.quiet = False
         self.selected_countries = []  # users selected countries
-        self.update = False
+        self.sync = False
 
     def command_line_parse(self):
         """Read the arguments of the command line"""
@@ -198,7 +198,7 @@ class PacmanMirrors:
             self.quiet = True
 
         if args.update:
-            self.update = True
+            self.sync = True
 
         if args.mirror_dir:
             self.config["work_dir"] = args.mirror_dir
@@ -288,8 +288,6 @@ class PacmanMirrors:
                                          self.config["config_file"])
         if get_branch:
             sys.exit(self.config["branch"])
-        if nolist:
-            sys.exit(0)
 
     def build_common_mirror_list(self):
         """Generate common mirrorlist"""
@@ -554,7 +552,7 @@ class PacmanMirrors:
             self.build_interactive_mirror_list()
         else:
             self.build_common_mirror_list()
-        if self.network and self.update:
+        if self.network and self.sync:
             subprocess.call(["pacman", "-Syy"])
 
 if __name__ == "__main__":
