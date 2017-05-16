@@ -93,21 +93,21 @@ class PacmanMirrors:
                                                     txt.OPT_COUNTRY,
                                                     txt.HLP_ARG_GEOIP_P2))
         methods = parser.add_argument_group("METHODS")
+        methods.add_argument("-f", "--fasttrack",
+                             type=int,
+                             metavar=txt.NUMBER,
+                             help="{} {}".format(txt.HLP_ARG_FASTTRACK,
+                                                 txt.OVERRIDE_OPT))
         methods.add_argument("-g", "--generate",
                              action="store_true",
                              help=txt.HLP_ARG_GENERATE)
-        methods.add_argument("-f", "--fasttrack",
-                             type=int,
-                             metavar=txt.DIGIT,
-                             help="{} {}".format(txt.HLP_ARG_FASTTRACK,
-                                                 txt.OVERRIDE_OPT))
+        methods.add_argument("-i", "--interactive",
+                             action="store_true",
+                             help=txt.HLP_ARG_INTERACTIVE)
         methods.add_argument("-m", "--method",
                              type=str,
                              choices=["rank", "random"],
                              help=txt.HLP_ARG_METHOD)
-        methods.add_argument("-i", "--interactive",
-                             action="store_true",
-                             help=txt.HLP_ARG_INTERACTIVE)
         misc = parser.add_argument_group("MISC")
         misc.add_argument("-b", "--branch",
                           type=str,
@@ -142,7 +142,7 @@ class PacmanMirrors:
                           help="Skip mirrorlist")
         sync.add_argument("-y", "--sync",
                           action="store_true",
-                          help="Update pacman databases")
+                          help=txt.HLP_ARG_SYNC)
         # Api arguments
         api = parser.add_argument_group("API")
         api.add_argument("-a", "--api",
@@ -150,24 +150,23 @@ class PacmanMirrors:
                          help="[--prefix] [--set-branch|--get-branch] [--proto] [--no-mirrorlist]")
         api.add_argument("-p", "--prefix",
                          type=str,
-                         help="API: Set prefix to `$mnt` or `/some/path`")
+                         help="API: " + txt.HLP_ARG_API_PREFIX + txt.PREFIX_TIP)
         api.add_argument("-P", "--proto", "--protocols",
                          choices=["all", "http", "https", "ftp", "ftps"],
                          type=str,
                          nargs="+",
-                         help="API: Set accepted protocols")
+                         help="API: " + txt.HLP_ARG_API_PROTOCOLS)
         branch = api.add_mutually_exclusive_group()
         branch.add_argument("-G", "--get-branch",
                             action="store_true",
-                            help="API: Get current branch")
+                            help="API: " + txt.HLP_ARG_API_GET_BRANCH)
         branch.add_argument("-S", "--set-branch",
                             choices=["stable", "testing", "unstable"],
-                            help="API: Set new branch")
+                            help="API: " + txt.HLP_ARG_API_SET_BRANCH)
 
         args = parser.parse_args()
         if len(sys.argv) == 1:
             parser.print_help()
-            print("{}pacman-mirrors {}{}".format(txt.GS, __version__, txt.CE))
             sys.exit(0)
 
         if args.version:
@@ -262,21 +261,14 @@ class PacmanMirrors:
         if prefix:
             if "$" in prefix:
                 prefix = os.environ.get(prefix)
-            self.config["config_file"] = \
-                prefix + self.config["config_file"]
-            self.config["custom_file"] = \
-                prefix + self.config["custom_file"]
-            self.config["work_dir"] = \
-                prefix + self.config["work_dir"]
-            self.config["mirror_file"] = \
-                prefix + self.config["to_be_removed"]
-            self.config["mirror_list"] = \
-                prefix + self.config["mirror_list"]
-            self.config["status_file"] = \
-                prefix + self.config["status_file"]
+            self.config["config_file"] = prefix + self.config["config_file"]
+            self.config["custom_file"] = prefix + self.config["custom_file"]
+            self.config["work_dir"] = prefix + self.config["work_dir"]
+            self.config["mirror_file"] = prefix + self.config["mirror_file"]
+            self.config["mirror_list"] = prefix + self.config["mirror_list"]
+            self.config["status_file"] = prefix + self.config["status_file"]
             # to be removed long time after 2017-04-18
-            self.config["to_be_removed"] = \
-                prefix + self.config["to_be_removed"]
+            self.config["to_be_removed"] = prefix + self.config["to_be_removed"]
             # end removal
         if set_branch:
             configfn.api_write_branch(self.config["branch"],
