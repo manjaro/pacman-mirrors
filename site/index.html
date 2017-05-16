@@ -127,7 +127,7 @@ Select <strong><em>stable</em></strong>, <strong><em>testing</em></strong> or <s
 The branch is reset on next run of pacman-mirrors.</p>
 <h4 id="-d-new_dir-mirror_dir-new_dir"><code>-d {new_dir}</code>, <code>--mirror_dir {new_dir}</code></h4>
 <p>Choose a temporary directory where mirrors file is located.</p>
-<h4 id="-l-list"><code>-l</code>, <code>--list</code></h4>
+<h4 id="-l-country-list"><code>-l</code>, <code>--country-list</code></h4>
 <p>Lists available mirror countries</p>
 <h4 id="-o-new_file-output-new_file"><code>-o {new_file}</code>, <code>--output {new_file}</code></h4>
 <p>Choose a temporary file for your mirrorlist.</p>
@@ -137,10 +137,12 @@ The branch is reset on next run of pacman-mirrors.</p>
 <p>Change the server maximum waiting time. In case of SSL enabled mirrors the value is doubled to compensate for the time spent on exchanging encryption keys.</p>
 <h4 id="-default"><code>--default</code></h4>
 <p>This argument <strong>only</strong> have effect in conjunction with <code>-i/--interactive</code>. It forces pacman-mirrors to load the default mirror file and ignore any preset custom-mirrors file, thus allowing for reselecting mirrors for a new custom mirror file. The argument executes the ranking/randomizing when the selection of mirrors is done.</p>
-<h4 id="-no-update"><code>--no-update</code></h4>
-<p>This argument is tied to the <code>NoUpdate = True</code> setting in the config file. Pacman-mirrors will exit after parsing <code>pacman-mirrors.conf</code> and is only useful if you don't want the mirrorlist regenerated after a pacman-mirrors package upgrade.</p>
 <h3 id="sync">SYNC:</h3>
-<h4 id="-u-update"><code>-u</code>, <code>update</code></h4>
+<h5 id="-n-no-mirrorlist"><code>-n</code>, <code>--no-mirrorlist</code></h5>
+<ul>
+<li>Skip mirrorlist and exit when tasks has been done.</li>
+</ul>
+<h4 id="-y-sync"><code>-y</code>, <code>--sync</code></h4>
 <p>Instruct pacman-mirrors to update/syncronize the pacman databases after mirrorlist generation. This is done by calling <code>pacman -Syy</code>.</p>
 <h3 id="api">API:</h3>
 <p>Make permanent changes to pacman-mirrors configuration through an api. The tasks are executed before generating the mirrorlist.</p>
@@ -163,10 +165,6 @@ The branch is reset on next run of pacman-mirrors.</p>
 <ul>
 <li>Write the specified protocols to <code>/etc/pacman-mirrors.conf</code> optionally with a prefix.</li>
 <li>Select <strong><em>all</em></strong> or <strong><em>http</em></strong>, <strong><em>https</em></strong>, <strong><em>ftp</em></strong> and <strong><em>ftps</em></strong>.</li>
-</ul>
-<h5 id="-n-no-mirrorlist"><code>-n</code>, <code>--no-mirrorlist</code></h5>
-<ul>
-<li>Skip mirrorlist and exit when tasks has been done.</li>
 </ul>
 <h2 id="pacman-mirrorsconf">pacman-mirrors.conf</h2>
 <h3 id="manjaro-branch-to-use-for-your-system">Manjaro branch to use for your system</h3>
@@ -198,9 +196,6 @@ The branch is reset on next run of pacman-mirrors.</p>
 <h3 id="output-file">Output file</h3>
 <h4 id="outputmirrorlist-etcpacmandmirrorlist"><code># OutputMirrorlist = /etc/pacman.d/mirrorlist</code></h4>
 <p>A temporary location for the generated mirrorlist.</p>
-<h3 id="noupdate">NoUpdate</h3>
-<h4 id="noupdate-false"><code># NoUpdate = False</code></h4>
-<p>When this setting is <code>True</code> it prevents the regeneration of the mirrorlist if pacman-mirrors is invoked with the <code>--no-update</code> argument. Useful if you don't want the mirrorlist regenerated after a pacman-mirrors package upgrade.</p>
 <h3 id="ssl-verification">SSL Verification</h3>
 <h4 id="sslverify-true"><code># SSLVerify = True</code></h4>
 <p>The setting controls whether to accept all certificates or not. Only change it if you <strong>fully trust</strong> all ssl-enabled mirrors.
@@ -243,5 +238,5 @@ The branch is reset on next run of pacman-mirrors.</p>
 
 <!--
 MkDocs version : 0.16.3
-Build Date UTC : 2017-05-15 17:56:15
+Build Date UTC : 2017-05-16 13:31:53
 -->

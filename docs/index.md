@@ -44,7 +44,7 @@ The branch is reset on next run of pacman-mirrors.
 #### `-d {new_dir}`, `--mirror_dir {new_dir}`
 Choose a temporary directory where mirrors file is located.
 
-#### `-l`, `--list`
+#### `-l`, `--country-list`
 Lists available mirror countries
 
 #### `-o {new_file}`, `--output {new_file}`
@@ -58,9 +58,6 @@ Change the server maximum waiting time. In case of SSL enabled mirrors the value
 
 #### `--default`
 This argument **only** have effect in conjunction with `-i/--interactive`. It forces pacman-mirrors to load the default mirror file and ignore any preset custom-mirrors file, thus allowing for reselecting mirrors for a new custom mirror file. The argument executes the ranking/randomizing when the selection of mirrors is done.
-
-#### `--no-update`
-This argument is tied to the `NoUpdate = True` setting in the config file. Pacman-mirrors will exit after parsing `pacman-mirrors.conf` and is only useful if you don't want the mirrorlist regenerated after a pacman-mirrors package upgrade.
 
 ### SYNC:
 ##### `-n`, `--no-mirrorlist` 
