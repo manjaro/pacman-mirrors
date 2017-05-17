@@ -536,13 +536,13 @@ class PacmanMirrors:
         self.network = httpfn.inet_conn_check()
         if self.network:
             httpfn.update_mirrors(self.config)
-            if self.no_mirrorlist:
-                exit(0)
         else:
             # negative on network
             miscfn.internet_message()
             self.config["method"] = "random"  # use random instead of rank
             self.fasttrack = False  # using fasttrack is not possible
+        if self.no_mirrorlist:
+            exit(0)
         self.load_all_mirrors()
         if self.country_list:
             self.list_all_countries()
