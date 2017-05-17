@@ -117,7 +117,7 @@ class PacmanMirrors:
                           type=str,
                           metavar=txt.PATH,
                           help=txt.HLP_ARG_PATH)
-        misc.add_argument("-l", "--list", "--country-list",
+        misc.add_argument("-l", "--country-list", "--list",
                           action="store_true",
                           help=txt.HLP_ARG_LIST)
         misc.add_argument("-o", "--output",
