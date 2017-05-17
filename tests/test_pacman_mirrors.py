@@ -57,20 +57,9 @@ class TestPacmanMirrors(unittest.TestCase):
             app.config = configfn.build_config()
             filefn.dir_must_exist(app.config["work_dir"])
             app.command_line_parse()
+            httpfn.update_mirrors(app.config)
             app.load_all_mirrors()
-            # network check
-            app.network = httpfn.inet_conn_check()
-            # all methods is available
-            if app.network:
-                httpfn.update_mirrors(app.config)
-                # actual generation
-                if app.fasttrack:
-                    app.build_fasttrack_mirror_list(app.fasttrack)
-                else:
-                    if app.interactive:
-                        app.build_interactive_mirror_list()
-                    else:
-                        app.build_common_mirror_list()
+            app.build_common_mirror_list()
 
     @patch("os.getuid")
     @patch.object(configfn, "build_config")
@@ -85,26 +74,14 @@ class TestPacmanMirrors(unittest.TestCase):
             app.config = configfn.build_config()
             filefn.dir_must_exist(app.config["work_dir"])
             app.command_line_parse()
+            httpfn.update_mirrors(app.config)
             app.load_all_mirrors()
-            # network check
-            app.network = httpfn.inet_conn_check()
-            # all methods is available
-            if app.network:
-                httpfn.update_mirrors(app.config)
-                app.load_all_mirrors()
-                # actual generation
-                if app.fasttrack:
-                    app.build_fasttrack_mirror_list(app.fasttrack)
-                else:
-                    if app.interactive:
-                        app.build_interactive_mirror_list()
-                    else:
-                        app.build_common_mirror_list()
+            app.build_fasttrack_mirror_list(app.fasttrack)
 
     @patch("os.getuid")
     @patch.object(configfn, "build_config")
     def test_full_run_rank(self, mock_build_config, mock_os_getuid):
-        """TEST: pacman-mirrors -c all -m random"""
+        """TEST: pacman-mirrors -c all"""
         mock_os_getuid.return_value = 0
         mock_build_config.return_value = test_conf
         with unittest.mock.patch("sys.argv",
@@ -114,20 +91,9 @@ class TestPacmanMirrors(unittest.TestCase):
             app.config = configfn.build_config()
             filefn.dir_must_exist(app.config["work_dir"])
             app.command_line_parse()
-            # network check
-            app.network = httpfn.inet_conn_check()
-            # all methods is available
-            if app.network:
-                httpfn.update_mirrors(app.config)
-                # actual generation
-                app.load_all_mirrors()
-                if app.fasttrack:
-                    app.build_fasttrack_mirror_list(app.fasttrack)
-                else:
-                    if app.interactive:
-                        app.build_interactive_mirror_list()
-                    else:
-                        app.build_common_mirror_list()
+            httpfn.update_mirrors(app.config)
+            app.load_all_mirrors()
+            app.build_common_mirror_list()
 
     @patch("os.getuid")
     @patch.object(configfn, "build_config")
@@ -142,22 +108,9 @@ class TestPacmanMirrors(unittest.TestCase):
             app.config = configfn.build_config()
             filefn.dir_must_exist(app.config["work_dir"])
             app.command_line_parse()
-            if app.country_list:
-                app.list_all_countries()
-            # network check
-            app.network = httpfn.inet_conn_check()
-            # all methods is available
-            if app.network:
-                httpfn.update_mirrors(app.config)
-                # actual generation
-                app.load_all_mirrors()
-                if app.fasttrack:
-                    app.build_fasttrack_mirror_list(app.fasttrack)
-                else:
-                    if app.interactive:
-                        app.build_interactive_mirror_list()
-                    else:
-                        app.build_common_mirror_list()
+            httpfn.update_mirrors(app.config)
+            app.load_all_mirrors()
+            app.output_country_list()
 
     def tearDown(self):
         """Tear down"""
