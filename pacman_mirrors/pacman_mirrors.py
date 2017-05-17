@@ -543,7 +543,7 @@ class PacmanMirrors:
             miscfn.internet_message()
             self.config["method"] = "random"  # use random instead of rank
             self.fasttrack = False  # using fasttrack is not possible
-        if self.county_list:
+        if self.country_list:
             self.load_all_mirrors()
             exit(0)
         if self.fasttrack:
