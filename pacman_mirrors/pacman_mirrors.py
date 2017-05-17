@@ -62,6 +62,7 @@ class PacmanMirrors:
         self.config = {
             "config_file": conf.CONFIG_FILE  # purpose - testability
         }
+        self.country_list = False
         self.custom = False
         self.default = False
         self.fasttrack = None
@@ -174,8 +175,7 @@ class PacmanMirrors:
             sys.exit(0)
 
         if args.country_list:
-            self.list_all_countries()
-            sys.exit(0)
+            self.country_list = True
 
         if os.getuid() != 0:
             print(".: {} {}".format(txt.ERR_CLR, txt.MUST_BE_ROOT))
@@ -255,7 +255,7 @@ class PacmanMirrors:
         """Api functions
         :param prefix: prefix to the config paths
         :param set_branch: writes branch to pacman-mirrors.conf
-        :param get_branch: exit with branch
+        :param get_branch: sys.exit with branch
         :param protocols: writes list of protocols to pacman-mirrors.con
         """
         if prefix:
@@ -432,11 +432,9 @@ class PacmanMirrors:
         self.config["only_country"] = []
         self.custom = False
 
-    def list_all_countries(self):
+    def output_country_list(self):
         """List all available countries"""
-        self.load_default_mirrors()
         print("{}".format("\n".join(self.mirrors.countrylist)))
-        sys.exit(0)
 
     def load_all_mirrors(self):
         """Load mirrors"""
@@ -540,13 +538,16 @@ class PacmanMirrors:
         if self.network:
             httpfn.update_mirrors(self.config)
             if self.no_mirrorlist:
-                exit(0)
+                sys.exit(0)
         else:
             # negative on network
             miscfn.internet_message()
             self.config["method"] = "random"  # use random instead of rank
             self.fasttrack = False  # using fasttrack is not possible
         self.load_all_mirrors()
+        if self.country_list:
+            self.output_country_list()
+            exit(0)
         if self.fasttrack:
             self.build_fasttrack_mirror_list(self.fasttrack)
         elif self.interactive:
