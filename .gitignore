@@ -1,9 +1,11 @@
 *.py[cod]
 
 # changes on package build
-share/
+share/mirrors.json
 # changes on test runs
-tests/mock/
+tests/mock/etc/pacman-mirrors.conf
+tests/mock/usr/mirrors.json
+tests/mock/var/status.json
 
 # C extensions
 *.so
