@@ -142,6 +142,8 @@ class TestPacmanMirrors(unittest.TestCase):
             app.config = configfn.build_config()
             filefn.dir_must_exist(app.config["work_dir"])
             app.command_line_parse()
+            if app.country_list:
+                app.list_all_countries()
             # network check
             app.network = httpfn.inet_conn_check()
             # all methods is available
