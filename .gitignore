@@ -3,7 +3,7 @@
 # changes on package build
 share/
 # changes on test runs
-mock/
+tests/mock/
 
 # C extensions
 *.so
