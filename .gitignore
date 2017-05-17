@@ -2,6 +2,10 @@
 
 # changes when build
 share/mirrors.json
+tests/mock/etc/mirrorlist
+tests/mock/etc/pacman-mirrors.conf
+tests/mock/var/status.json
+tests/mock/usr/mirrors.json
 
 # C extensions
 *.so
