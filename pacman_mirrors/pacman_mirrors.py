@@ -62,6 +62,7 @@ class PacmanMirrors:
         self.config = {
             "config_file": conf.CONFIG_FILE  # purpose - testability
         }
+        self.country_list = False
         self.custom = False
         self.default = False
         self.fasttrack = None
@@ -177,13 +178,12 @@ class PacmanMirrors:
             if self.config["no_update"] == "True":
                 sys.exit(0)
 
-        if args.country_list:
-            self.list_all_countries()
-            sys.exit(0)
-
         if os.getuid() != 0:
             print(".: {} {}".format(txt.ERR_CLR, txt.MUST_BE_ROOT))
             sys.exit(1)
+
+        if args.country_list:
+            self.country_list = True
 
         if args.method:
             self.config["method"] = args.method
@@ -439,9 +439,7 @@ class PacmanMirrors:
 
     def list_all_countries(self):
         """List all available countries"""
-        self.load_default_mirrors()
         print("{}".format("\n".join(self.mirrors.countrylist)))
-        sys.exit(0)
 
     def load_all_mirrors(self):
         """Load mirrors"""
@@ -545,7 +543,9 @@ class PacmanMirrors:
             miscfn.internet_message()
             self.config["method"] = "random"  # use random instead of rank
             self.fasttrack = False  # using fasttrack is not possible
-        self.load_all_mirrors()
+        if self.county_list:
+            self.load_all_mirrors()
+            exit(0)
         if self.fasttrack:
             self.build_fasttrack_mirror_list(self.fasttrack)
         elif self.interactive:
