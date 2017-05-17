@@ -1,7 +1,9 @@
 *.py[cod]
 
-# changes when build
-share/mirrors.json
+# changes on package build
+share/
+# changes on test runs
+mock/
 
 # C extensions
 *.so
@@ -14,7 +16,6 @@ build
 eggs
 parts
 bin
-var
 sdist
 develop-eggs
 .installed.cfg
