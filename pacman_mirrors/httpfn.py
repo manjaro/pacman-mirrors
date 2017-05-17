@@ -100,8 +100,7 @@ def get_geoip_country():
 
 def get_mirror_response(url, maxwait=2, count=1, quiet=False, ssl_verify=True):
     """Query mirrors availability
-    :param ssl_verify: 
-    :param ssl_verify: 
+    :param ssl_verify:
     :param url:
     :param maxwait:
     :param count:
