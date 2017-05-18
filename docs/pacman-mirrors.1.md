@@ -115,11 +115,11 @@ Which countries has mirrors?
 
 _sudo pacman-mirrors -l_
 
-Temporary change branch to unstable, give me geoip (if available) and syncronize pacman
+Temporary change branch to unstable, use geolocation and syncronize pacman
 
 _sudo pacman-mirrors -yb unstable --geoip_
     
-Permanently change branch to unstable, mirrors in Germany, France only use https and syncronize pacman
+Permanently change branch to unstable, mirrors in Germany and France, use https and syncronize pacman
 
 _sudo pacman-mirrors -yac Germany,France -S unstable -P https_
     
