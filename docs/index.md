@@ -180,7 +180,7 @@ datafiles using either a path or an environment variable
 # SEE ALSO
 
 The pacman-mirrors source code and all documentation 
-may be downloaded from <https://github.com/manjaro/pacman-mirrors/issues>
+may be downloaded from <https://github.com/manjaro/pacman-mirrors/archive/master.zip>
 
 # AUTHORS
 
