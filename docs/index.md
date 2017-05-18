@@ -1,10 +1,6 @@
-% pacman-mirrors(8) Pacman-Mirrors User Manual
-% Esclapion <esclapion@manjaro.org>  
-% philm <philm@manjaro.org> 
-% Ramon Buldó <rbuldo@gmail.com>  
-% Hugo Posnic <huluti@manjaro.org>  
-% Frede Hundewadt <frede@hundewadt.dk>
-% May 18, 2017
+% pacman-mirrors(8) Pacman-Mirrors User Manual  
+%   
+% May 18, 2017  
 
 # NAME
 
@@ -185,3 +181,11 @@ datafiles using either a path or an environment variable
 
 The pacman-mirrors source code and all documentation 
 may be downloaded from <https://github.com/manjaro/pacman-mirrors/issues>
+
+# AUTHORS
+
+Esclapion <esclapion@manjaro.org>  
+philm <philm@manjaro.org>  
+Ramon Buldó <rbuldo@gmail.com>  
+Hugo Posnic <huluti@manjaro.org>  
+Frede Hundewadt <frede@hundewadt.dk>  
