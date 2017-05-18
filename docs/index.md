@@ -1,5 +1,10 @@
 % pacman-mirrors(8) Pacman-Mirrors User Manual
-% Frede Hundewadt
+% Esclapion <esclapion@manjaro.org>  
+% philm <philm@manjaro.org>  
+% Ramon Buldó <rbuldo@gmail.com>  
+% Hugo Posnic <huluti@manjaro.org>  
+% Frede Hundewadt <frede@hundewadt.dk>
+
 % May 18, 2017
 
 # NAME
@@ -173,14 +178,6 @@ A packager can write the directly to a mounted systems
 datafiles using either a path or an environment variable
 
     sudo pacman-mirrors -ap $mnt -S unstable -P https
-
-# AUTHORS
-
-Esclapion <esclapion@manjaro.org>  
-philm <philm@manjaro.org>  
-Ramon Buldó <rbuldo@gmail.com>  
-Hugo Posnic <huluti@manjaro.org>  
-Frede Hundewadt <frede@hundewadt.dk>  
 
 # REPORTING BUGS
    <https://github.com/manjaro/pacman-mirrors/issues>
