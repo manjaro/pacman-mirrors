@@ -1,126 +1,175 @@
-#  Documentation of pacman-mirrors
-Enhanced pacman-mirrors for Manjaro Linux
+# NAME
+pacman-mirrors - generate pacman mirrorlist for Manjaro Linux
 
-## USAGE
-### GENERIC:
-#### `-h`, `--help` 
-Show the help message.
+# SYNOPSIS
+pacman-mirrors [OPTION] ...
 
-#### `-v`, `--version`
-Show the version of pacman-mirrors.
+# DESCRIPTION
+Generate mirrorlist for Manjaro Linux. Default is to rank all mirrors by reponse time. Mandatory arguments to long options are mandatory for short options too.
 
-### COUNTRY:
-#### `-c COUNTRY [COUNTRY ...]`, `--country COUNTRY [COUNTRY ...]`
-Specifiy country or list of countries separated by comma or space:
-* --country France
-* --country France Germany Austria
-To remove a custom mirror file
-* --country all
+# OPTIONS
+## METHODS
 
-#### `--geoip` 
-Find current country by using geolocation.
+_-f_,_--fasttrack NUMBER_
+    
+generates a mirrorlist with a number mirrors ranked by responsiveness, the mirrors are selected from <http://repo.manjaro.org/status.json>
 
-### METHODS:
-#### `-g`, `--generate`
-Generate a new default mirrorlist.
+_-g_,_--generate_
 
-#### `-f {DIGIT}`, `--fasttrack {DIGIT}`
-Generates a mirrorlist of **DIGIT** mirrors ranked by responsiveness.
-The mirrors are randomly selected from a selection of mirrors known to be up-to-date on all branches.
+generate a new default mirrorlist using defaults
 
-#### `-m {method}`, `--method {method}`
-Choose the generation method:  
-Select ***rank*** or ***random***
+_-m_,_--method METHOD_
 
-#### `-i`, `--interactive`
-Launch a tool for selectively picking mirrors and protocols for a custom mirrorlist.
+default is **rank** but **random** can be selected 
 
-### MISC:
-#### `-b {branch}`, `--branch {branch}`
-Choose a temporary branch:  
-Select ***stable***, ***testing*** or ***unstable***.
-The branch is reset on next run of pacman-mirrors.
+_-i_,_--interactive [--default]_
 
-#### `-d {new_dir}`, `--mirror_dir {new_dir}`
-Choose a temporary directory where mirrors file is located.
+launches a tool for selectively picking mirrors and protocols, _--default_ forces pacman-mirrors to load the default mirror file and ignore any preset custom-mirrors file, thus allowing for reselecting mirrors for a new custom mirror file
 
-#### `-l`, `--country-list`
-Lists available mirror countries
+## MISC
 
-#### `-o {new_file}`, `--output {new_file}`
-Choose a temporary file for your mirrorlist.
+_-b_,_--branch BRANCH_
 
-#### `-q`, `--quiet`
-Make pacman-mirrors silent.
+temporarily use another branch, use **stable**, **testing** or **unstable**, the branch is reset with next run of pacman-mirrors
 
-#### `-t {DIGIT}`, `--timeout {DIGIT}`
-Change the server maximum waiting time. In case of SSL enabled mirrors the value is doubled to compensate for the time spent on exchanging encryption keys.
+_-c_,_--country COUNTRY [COUNTRY ...]_, cannot be used with _--geoip_
 
-#### `--default`
-This argument **only** have effect in conjunction with `-i/--interactive`. It forces pacman-mirrors to load the default mirror file and ignore any preset custom-mirrors file, thus allowing for reselecting mirrors for a new custom mirror file. The argument executes the ranking/randomizing when the selection of mirrors is done.
+specifiy a country or a list of countries  for example **-c Germany** will produce a mirrorlist including only German mirrors
 
-### SYNC:
-##### `-n`, `--no-mirrorlist` 
-* Skip mirrorlist and exit when tasks has been done.
+_--geoip_, cannot be used with _-c_,_--country_
+    
+use geolocation if possible else use all
 
-#### `-y`, `--sync`
-Instruct pacman-mirrors to update/syncronize the pacman databases after mirrorlist generation. This is done by calling `pacman -Syy`.
+_-l_,_--country-list_
 
-### API:
-Make permanent changes to pacman-mirrors configuration through an api. The tasks are executed before generating the mirrorlist.
+lists available mirror countries
 
-#### `-a`, `--api` [--prefix] [--get-branch | --set-branch {branch}] [--proto PROTO [PROTO ...]] [--no-mirrorlist]
-The key to the following arguments is **`-a`** or **`--api`**. If it is missing none of the arguments will have any effect.
+_-d_,_--mirror_dir NEW_DIR_ **(DEPRECATED)**
+    
+choose a temporary directory where mirrors file is located
 
-##### `-p`, `--prefix` 
-* Add a path prefix to pacman-mirrors file-handling eg. `/mnt/install` or `$mnt`.
+_-o,_--output NEW_FILE_ **(DEPRECATED)**
 
-##### `-G`, `--get-branch` 
-* Returns branch from `/etc/pacman-mirrors.conf` optionally with a prefix.
+choose a temporary file for your mirrorlist
 
-##### `-S`, `--set-branch {branch}` 
-* Writes the branch to `/etc/pacman-mirrors.conf` optionally with a prefix.
-* Select ***stable***, ***testing*** or ***unstable***.
+_-q_,_--quiet_
 
-##### `-P`, `--proto`, `--protocols PROTO [PROTO ...]`
-* Write the specified protocols to `/etc/pacman-mirrors.conf` optionally with a prefix.
-* Select ***all*** or ***http***, ***https***, ***ftp*** and ***ftps***.
+make pacman-mirrors silent
 
-## pacman-mirrors.conf
-### Manjaro branch to use for your system
-#### ```# Branch = stable```  
-* The setting defaults to ***stable*** branch.  
-* Select ***stable***, ***testing*** or ***unstable***.
-* The setting can be changed by invoking `pacman-mirrors --api --set-branch <branch>`.
+_-t_,_--timeout SECONDS_
 
-### Generation method
-#### ```# Method = rank```
-Invoking `pacman-mirrors --method <method>` will temporariy change the setting.
-* The setting defaults to ***rank***.
-* Select ***rank*** or ***random***.  
+change the number of seconds waiting for a server response, SSL enabled mirrors has this value doubled to compensate, for the time spent on exchanging encryption keys
 
-### Protocols and priority
-#### ```# Protocols = ```
-The setting defines which protocols offered by mirrors will be considered in a mirrorlist. At the moment mirrors offers: http, https, ftp. When the mirrorlist is created and a mirror has more than one protocol defined only the first protocol is written to the mirrorlist.
-* The default is empty which means **all** protocols.
-* Separate the protocols with ***comma*** **or** ***space***.
-* The setting can be changed by invoking `pacman-mirrors --api --proto <proto> <proto>`.
+## SYNC and MIRRORLIST
+_-n_,_--no-mirrorlist_, cannot be used with _-y_,_--sync_
 
-### Specify to use only mirrors from a specific country.
-#### ```# Country = ```  
-The setting defines which countries will be considered in a mirrorlist. To get a list of available countries run `pacman-mirrors -l` and collect names of the countries you will use. You can add countries by hand or you can use the interactive mode to select mirrors and protocols to use.   
-* The default setting is empty which means all countries.
-* Separate your countries with ***comma*** **or** ***space***
+skip mirrorlist generation
 
-### Mirrors directory
-#### ```# MirrorlistsDir = /var/lib/pacman-mirrors```
-A temporary location from which to read the mirrors file.
+_-y_,_--sync_, cannot be used with _-n_,_--no-mirrorlist_
 
-### Output file
-#### ```# OutputMirrorlist = /etc/pacman.d/mirrorlist```
-A temporary location for the generated mirrorlist.
+instruct pacman-mirrors to syncronize the pacman database
 
-### SSL Verification
-#### ```# SSLVerify = True```
-The setting controls whether to accept all certificates or not. Only change it if you **fully trust** all ssl-enabled mirrors.
-* **all certificates** are accepted when set to `False`  
+## API
+
+_-a_,_--api_
+
+instructs pacman-mirrors to activate these optional arguments
+
+_-a_ [_-p, --prefix PREFIX_]
+
+add a path prefix to pacman-mirrors file-handling eg. /mnt/install or $mnt
+
+_-a_ [_-G, --get-branch_]
+
+returns branch from configuration optionally with a prefix.
+
+_-a_ [_-S, --set-branch BRANCH_]
+
+writes the branch to configuration optionally with a prefix use **stable**, **testing** or **unstable**
+
+_-a_ [_-P, --proto, --protocols PROTO [PROTO ...]_]
+
+write the protocols to configuration optionally with a prefix use **all** or **http**, **https**, **ftp** and **ftps**.
+
+## GENERIC
+
+_-h_,_--help_
+
+show the help message
+
+_-v_,_--version_
+
+show the version of pacman-mirrors
+
+## Exit status:  
+
+0 if OK  
+1 if problem with argument  
+BRANCH from config  
+
+# EXAMPLES
+
+Most optional arguments are self explaining others require explanation. The API functions is mainly designed to help packagers and iso-builders. However it can be of use for everyone because it takes the hazzle out of editing your pacman-mirrors configuration.
+
+Which countries has mirrors?
+
+_sudo pacman-mirrors -l_
+
+Temporary change branch to unstable, use geolocation and syncronize pacman
+
+_sudo pacman-mirrors -yb unstable --geoip_
+    
+Permanently change branch to unstable, mirrors in Germany and France, use https and syncronize pacman
+
+_sudo pacman-mirrors -yac Germany,France -S unstable -P https_
+    
+Create a mirrorlist with German mirrors and syncronize pacman
+
+_sudo pacman-mirrors -yc Germany_
+
+If you want more countries in your mirrorlist add them
+
+_sudo pacman-mirrors -yc Germany France Denmark_
+
+Create a mirrorlist with 5 mirrors with current packages and syncronize pacman
+ 
+_sudo pacman-mirrors -yf 5_
+
+I want to choose my mirrors
+
+_sudo pacman-mirrors -i_
+
+I have a custom mirror list and I want to create a new custom mirror list?
+
+_sudo pacman-mirrors -i --default_
+
+I have a custom mirror list - can I reset it?
+ 
+_sudo pacman-mirrors -c all_
+
+What branch am I on
+
+_sudo pacman-mirrors -a -G_
+
+Change system branch and dont change the mirrorlist
+
+_sudo pacman-mirrors -naS unstable_
+
+Change protocols you will accept but dont touch the mirrorlist
+
+_sudo pacman-mirrors -naP https http_
+
+A packager can write the directly to a mounted systems datafiles using either a path or an environment variable
+
+_sudo pacman-mirrors -ap $mnt -S unstable -P https_
+
+# AUTHOR
+
+Esclapion <esclapion@manjaro.org>  
+philm <philm@manjaro.org>  
+Ramon Buldó <rbuldo@gmail.com>  
+Hugo Posnic <huluti@manjaro.org>  
+Frede Hundewadt <frede@hundewadt.dk>  
+
+# REPORTING BUGS
+   <https://github.com/manjaro/pacman-mirrors/issues>
