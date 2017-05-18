@@ -139,11 +139,11 @@ I want to choose my mirrors
 
 _sudo pacman-mirrors -i_
 
-I have a custom mirror list and I want to create a new custom mirror list
+I have a custom mirror list and I want to create a new custom mirror list?
 
 _sudo pacman-mirrors -i --default_
 
-I want a custom mirror list no more
+I have a custom mirror list - can I reset it?
  
 _sudo pacman-mirrors -c all_
 
