@@ -135,7 +135,7 @@ Create a mirrorlist with 5 mirrors with current packages and syncronize pacman
  
 _sudo pacman-mirrors -yf 5_
 
-The API functions is mainly designed to help packagers and as an installation helper. However it can be of use for the ordinary user because it takes the hazzle out of editing your pacman-mirrors configuration.
+The API functions is mainly designed to help packagers and iso-builders. However it can be of use for the ordinary user because it takes the hazzle out of editing your pacman-mirrors configuration.
 
 * Get your current branch
 
