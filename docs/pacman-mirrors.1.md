@@ -135,6 +135,18 @@ Create a mirrorlist with 5 mirrors with current packages and syncronize pacman
  
 _sudo pacman-mirrors -yf 5_
 
+I want to choose my mirrors
+
+_sudo pacman-mirrors -i_
+
+I have a custom mirror list and I want to create a new custom mirror list
+
+_sudo pacman-mirrors -i --default_
+
+I want a custom mirror list no more
+ 
+_sudo pacman-mirrors -c all_
+
 The API functions is mainly designed to help packagers and iso-builders. However it can be of use for the ordinary user because it takes the hazzle out of editing your pacman-mirrors configuration.
 
 * Get your current branch
