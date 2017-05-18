@@ -16,20 +16,20 @@ Mandatory arguments to long options are mandatory for short options too.
 .SH OPTIONS
 .SS METHODS
 .PP
-\f[I]\-f, \-\-fasttrack NUMBER\f[]
+\f[I]\-f\f[],\f[I]\-\-fasttrack NUMBER\f[]
 .PP
 generates a mirrorlist with a number mirrors ranked by responsiveness,
 the mirrors are selected from <http://repo.manjaro.org/status.json>
 .PP
-\f[I]\-g, \-\-generate\f[]
+\f[I]\-g\f[],\f[I]\-\-generate\f[]
 .PP
 generate a new default mirrorlist using defaults
 .PP
-\f[I]\-m, \-\-method METHOD\f[]
+\f[I]\-m\f[],\f[I]\-\-method METHOD\f[]
 .PP
 default is \f[B]rank\f[] but \f[B]random\f[] can be selected
 .PP
-\f[I]\-i, \-\-interactive [\-\-default]\f[]
+\f[I]\-i\f[],\f[I]\-\-interactive [\-\-default]\f[]
 .PP
 launches a tool for selectively picking mirrors and protocols,
 \f[I]\-\-default\f[] forces pacman\-mirrors to load the default mirror
@@ -37,85 +37,86 @@ file and ignore any preset custom\-mirrors file, thus allowing for
 reselecting mirrors for a new custom mirror file
 .SS MISC
 .PP
-\f[I]\-b, \-\-branch BRANCH\f[]
+\f[I]\-b\f[],\f[I]\-\-branch BRANCH\f[]
 .PP
 temporarily use another branch, use \f[B]stable\f[], \f[B]testing\f[] or
 \f[B]unstable\f[], the branch is reset with next run of pacman\-mirrors
 .PP
-\f[I]\-c, \-\-country COUNTRY [COUNTRY ...]\f[], cannot be used with
-\f[I]\-\-geoip\f[]
+\f[I]\-c\f[],\f[I]\-\-country COUNTRY [COUNTRY ...]\f[], cannot be used
+with \f[I]\-\-geoip\f[]
 .PP
 specifiy a country or a list of countries for example \f[B]\-c
 Germany\f[] will produce a mirrorlist including only German mirrors
 .PP
-\f[I]\-\-geoip\f[], cannot be used with \f[I]\-c/\-\-country\f[]
+\f[I]\-\-geoip\f[], cannot be used with
+\f[I]\-c\f[],\f[I]\-\-country\f[]
 .PP
 use geolocation if possible else use all
 .PP
-\f[I]\-l, \-\-country\-list\f[]
+\f[I]\-l\f[],\f[I]\-\-country\-list\f[]
 .PP
 lists available mirror countries
 .PP
-\f[I]\-d, \-\-mirror_dir NEW_DIR\f[] \f[B](DEPRECATED)\f[]
+\f[I]\-d\f[],\f[I]\-\-mirror_dir NEW_DIR\f[] \f[B](DEPRECATED)\f[]
 .PP
 choose a temporary directory where mirrors file is located
 .PP
-\f[I]\-o, \-\-output NEW_FILE\f[] \f[B](DEPRECATED)\f[]
+\f[I]\-o,\f[]\-\-output NEW_FILE_ \f[B](DEPRECATED)\f[]
 .PP
 choose a temporary file for your mirrorlist
 .PP
-\f[I]\-q, \-\-quiet\f[]
+\f[I]\-q\f[],\f[I]\-\-quiet\f[]
 .PP
 make pacman\-mirrors silent
 .PP
-\f[I]\-t, \-\-timeout SECONDS\f[]
+\f[I]\-t\f[],\f[I]\-\-timeout SECONDS\f[]
 .PP
 change the number of seconds waiting for a server response, SSL enabled
 mirrors has this value doubled to compensate, for the time spent on
 exchanging encryption keys
 .SS SYNC and MIRRORLIST
 .PP
-\f[I]\-n, \-\-no\-mirrorlist\f[], cannot be used with
-\f[I]\-y/\-\-sync\f[]
+\f[I]\-n\f[],\f[I]\-\-no\-mirrorlist\f[], cannot be used with
+\f[I]\-y\f[],\f[I]\-\-sync\f[]
 .PP
 skip mirrorlist generation
 .PP
-\f[I]\-y, \-\-sync\f[], cannot be used with
-\f[I]\-n/\-\-no\-mirrorlist\f[]
+\f[I]\-y\f[],\f[I]\-\-sync\f[], cannot be used with
+\f[I]\-n\f[],\f[I]\-\-no\-mirrorlist\f[]
 .PP
 instruct pacman\-mirrors to syncronize the pacman database
 .SS API
 .PP
-\f[I]\-a, \-\-api\f[]
+\f[I]\-a\f[],\f[I]\-\-api\f[]
 .PP
-instructs pacman\-mirrors to activate the following arguments
+instructs pacman\-mirrors to activate these optional arguments
 .PP
-\-a [\f[I]\-p, \-\-prefix PREFIX\f[]]
+\f[I]\-a\f[] [\f[I]\-p, \-\-prefix PREFIX\f[]]
 .PP
 add a path prefix to pacman\-mirrors file\-handling eg.
 /mnt/install or $mnt
 .PP
-\-a [\f[I]\-G, \-\-get\-branch\f[]]
+\f[I]\-a\f[] [\f[I]\-G, \-\-get\-branch\f[]]
 .PP
 returns branch from configuration optionally with a prefix.
 .PP
-\-a [\f[I]\-S, \-\-set\-branch BRANCH\f[]]
+\f[I]\-a\f[] [\f[I]\-S, \-\-set\-branch BRANCH\f[]]
 .PP
 writes the branch to configuration optionally with a prefix use
 \f[B]stable\f[], \f[B]testing\f[] or \f[B]unstable\f[]
 .PP
-\-a [\f[I]\-P, \-\-proto, \-\-protocols PROTO [PROTO ...]\f[]]
+\f[I]\-a\f[] [\f[I]\-P, \-\-proto, \-\-protocols PROTO [PROTO ...]\f[]]
 .PP
 write the protocols to configuration optionally with a prefix use
 \f[B]all\f[] or \f[B]http\f[], \f[B]https\f[], \f[B]ftp\f[] and
 \f[B]ftps\f[].
 .SS GENERIC
 .PP
-\f[I]\-h, \-\-help\f[]
+\f[I]\-h\f[],\f[I]\-\-help\f[]
 .PP
 show the help message
 .PP
-\f[I]\-v, \-\-version\f[]
+\f[I]\-v\f[],\f[I]\-\-version\f[]
 .PP
 show the version of pacman\-mirrors
 .SS Exit status:
@@ -132,6 +133,10 @@ BRANCH from config
 .SH EXAMPLES
 .PP
 Most optional arguments are self explaining others require explanation.
+The API functions is mainly designed to help packagers and
+iso\-builders.
+However it can be of use for everyone because it takes the hazzle out of
+editing your pacman\-mirrors configuration.
 .PP
 Which countries has mirrors?
 .PP
@@ -174,23 +179,18 @@ I have a custom mirror list \- can I reset it?
 .PP
 \f[I]sudo pacman\-mirrors \-c all\f[]
 .PP
-The API functions is mainly designed to help packagers and
-iso\-builders.
-However it can be of use for the ordinary user because it takes the
-hazzle out of editing your pacman\-mirrors configuration.
-.IP \[bu] 2
-Get your current branch
+What branch am I on
 .PP
 \f[I]sudo pacman\-mirrors \-a \-G\f[]
-.IP \[bu] 2
-Change your the branch your system uses and dont change the mirrorlist
+.PP
+Change system branch and dont change the mirrorlist
 .PP
 \f[I]sudo pacman\-mirrors \-naS unstable\f[]
-.IP \[bu] 2
-Change which protocols you will accept and dont change the mirrorlist
+.PP
+Change protocols you will accept but dont touch the mirrorlist
 .PP
 \f[I]sudo pacman\-mirrors \-naP https http\f[]
-.IP \[bu] 2
+.PP
 A packager can write the directly to a mounted systems datafiles using
 either a path or an environment variable
 .PP
