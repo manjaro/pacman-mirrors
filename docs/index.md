@@ -174,7 +174,7 @@ datafiles using either a path or an environment variable
 
     sudo pacman-mirrors -ap $mnt -S unstable -P https
 
-# AUTHOR
+# AUTHORS
 
 Esclapion <esclapion@manjaro.org>  
 philm <philm@manjaro.org>  
