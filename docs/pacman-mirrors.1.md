@@ -119,9 +119,9 @@ Temporary change branch to unstable, give me geoip (if available) and syncronize
 
 _sudo pacman-mirrors -yb unstable --geoip_
     
-Permanently change branch to unstable, mirrors in Germany, France and Austria, only use https and syncronize pacman
+Permanently change branch to unstable, mirrors in Germany, France only use https and syncronize pacman
 
-_sudo pacman-mirrors -yac Germany,France,Austria -S unstable -P https_
+_sudo pacman-mirrors -yac Germany,France -S unstable -P https_
     
 Create a mirrorlist with German mirrors and syncronize pacman
 
@@ -129,7 +129,7 @@ _sudo pacman-mirrors -yc Germany_
 
 If you want more countries in your mirrorlist add them
 
-_sudo pacman-mirrors -yc Germany France Austria Denmark_
+_sudo pacman-mirrors -yc Germany France Denmark_
 
 Create a mirrorlist with 5 mirrors with current packages and syncronize pacman
  
