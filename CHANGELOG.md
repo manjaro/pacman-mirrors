@@ -19,11 +19,11 @@ All notable changes to this project will be documented in this file.
 - Fix: Issue where values from configuration was not parsed correct.
 - Fix: Issue where location in config was not determined correctly.
 
-## [4.1.4] 2013-05-16
+## [4.1.4] 2017-05-16
 - Improvement: Removed `--no-mirrorlist` dependency on API.
 - Fix: Behavior of `--no-mirrorlist`. Download updated mirror files before exit.
 
-## [4.1.3] 2013-05-15
+## [4.1.3] 2017-05-15
 - Fix: comparison of mirrorfiles fixed
 
 ## [4.1.2] 2017-05-15
