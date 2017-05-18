@@ -1,4 +1,4 @@
-% pacman-mirrors(1) Pacman-Mirrors User Manual
+% pacman-mirrors(8) Pacman-Mirrors User Manual
 % Frede Hundewadt
 % May 18, 2017
 

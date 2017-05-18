@@ -55,9 +55,9 @@ coverage:
 
 docs:
 	mkdocs build
-	pandoc -s -t man docs/index.md -o man/pacman-mirrors.1
-	gzip man/pacman-mirrors.1
-	mv man/pacman-mirrors.1.gz man/pacman-mirrors.1
+	pandoc -s -t man docs/index.md -o man/pacman-mirrors.8
+	gzip man/pacman-mirrors.8
+	# mv man/pacman-mirrors.8.gz man/pacman-mirrors.8
 
 release: clean
 	python setup.py sdist upload
