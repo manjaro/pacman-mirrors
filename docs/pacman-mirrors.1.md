@@ -5,8 +5,9 @@ pacman-mirrors - generate pacman mirrorlist for Manjaro Linux
 pacman-mirrors [OPTION] ...
 
 # DESCRIPTION
-Generate mirrorlist for Manjaro Linux. Default is to rank all mirrors by reponse time. Mandatory arguments to long options are mandatory for short options too
+Generate mirrorlist for Manjaro Linux. Default is to rank all mirrors by reponse time. Mandatory arguments to long options are mandatory for short options too.
 
+# OPTIONS
 ## METHODS
 
 _-f, --fasttrack NUMBER_
@@ -105,6 +106,52 @@ show the version of pacman-mirrors
 0 if OK  
 1 if problem with argument  
 BRANCH from config  
+
+# EXAMPLES
+
+Most optional arguments are self explaining others require explanation.
+
+Which countries has mirrors?
+
+    sudo pacman-mirrors -l
+
+Temporary change branch to unstable, give me geoip (if available) and syncronize pacman
+
+    sudo pacman-mirrors -yb unstable --geoip
+    
+Permanently change branch to unstable, mirrors in Germany, France and Austria, only use https and syncronize pacman
+
+    sudo pacman-mirrors -yac Germany,France,Austria -S unstable -P https
+    
+Create a mirrorlist with German mirrors and syncronize pacman
+
+    sudo pacman-mirrors -yc Germany
+
+If you want more countries in your mirrorlist add them
+
+    sudo pacman-mirrors -yc Germany France Austria Denmark
+
+Create a mirrorlist with 5 mirrors with current packages and syncronize pacman
+ 
+    sudo pacman-mirrors -yf 5
+
+The API functions is mainly designed to help packagers and as an installation helper. However it can be of use for the ordinary user because it takes the hazzle out of editing your pacman-mirrors configuration.
+
+* Get your current branch
+
+    sudo pacman-mirrors -a -G
+
+* Change your the branch your system uses and dont change the mirrorlist
+
+    sudo pacman-mirrors -naS unstable
+
+* Change which protocols you will accept and dont change the mirrorlist
+
+    sudo pacman-mirrors -naP https http
+
+* A packager can write the directly to a mounted systems datafiles using either a path or an environment variable
+
+    sudo pacman-mirrors -ap $mnt -S unstable -P https
 
 # AUTHOR
 
