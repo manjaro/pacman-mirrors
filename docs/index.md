@@ -1,10 +1,9 @@
 % pacman-mirrors(8) Pacman-Mirrors User Manual
 % Esclapion <esclapion@manjaro.org>  
-% philm <philm@manjaro.org>  
+% philm <philm@manjaro.org> 
 % Ramon Buldó <rbuldo@gmail.com>  
 % Hugo Posnic <huluti@manjaro.org>  
 % Frede Hundewadt <frede@hundewadt.dk>
-
 % May 18, 2017
 
 # NAME
