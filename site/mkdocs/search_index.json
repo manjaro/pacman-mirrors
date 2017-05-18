@@ -2,233 +2,63 @@
     "docs": [
         {
             "location": "/",
-            "text": "Documentation of pacman-mirrors\n\n\nEnhanced pacman-mirrors for Manjaro Linux\n\n\nUSAGE\n\n\nGENERIC:\n\n\n-h\n, \n--help\n\n\nShow the help message.\n\n\n-v\n, \n--version\n\n\nShow the version of pacman-mirrors.\n\n\nCOUNTRY:\n\n\n-c COUNTRY [COUNTRY ...]\n, \n--country COUNTRY [COUNTRY ...]\n\n\nSpecifiy country or list of countries separated by comma or space:\n\n --country France\n\n --country France Germany Austria\nTo remove a custom mirror file\n* --country all\n\n\n--geoip\n\n\nFind current country by using geolocation.\n\n\nMETHODS:\n\n\n-g\n, \n--generate\n\n\nGenerate a new default mirrorlist.\n\n\n-f {DIGIT}\n, \n--fasttrack {DIGIT}\n\n\nGenerates a mirrorlist of \nDIGIT\n mirrors ranked by responsiveness.\nThe mirrors are randomly selected from a selection of mirrors known to be up-to-date on all branches.\n\n\n-m {method}\n, \n--method {method}\n\n\nChoose the generation method:\n\nSelect \nrank\n or \nrandom\n\n\n-i\n, \n--interactive\n\n\nLaunch a tool for selectively picking mirrors and protocols for a custom mirrorlist.\n\n\nMISC:\n\n\n-b {branch}\n, \n--branch {branch}\n\n\nChoose a temporary branch:\n\nSelect \nstable\n, \ntesting\n or \nunstable\n.\nThe branch is reset on next run of pacman-mirrors.\n\n\n-d {new_dir}\n, \n--mirror_dir {new_dir}\n\n\nChoose a temporary directory where mirrors file is located.\n\n\n-l\n, \n--country-list\n\n\nLists available mirror countries\n\n\n-o {new_file}\n, \n--output {new_file}\n\n\nChoose a temporary file for your mirrorlist.\n\n\n-q\n, \n--quiet\n\n\nMake pacman-mirrors silent.\n\n\n-t {DIGIT}\n, \n--timeout {DIGIT}\n\n\nChange the server maximum waiting time. In case of SSL enabled mirrors the value is doubled to compensate for the time spent on exchanging encryption keys.\n\n\n--default\n\n\nThis argument \nonly\n have effect in conjunction with \n-i/--interactive\n. It forces pacman-mirrors to load the default mirror file and ignore any preset custom-mirrors file, thus allowing for reselecting mirrors for a new custom mirror file. The argument executes the ranking/randomizing when the selection of mirrors is done.\n\n\nSYNC:\n\n\n-n\n, \n--no-mirrorlist\n\n\n\n\nSkip mirrorlist and exit when tasks has been done.\n\n\n\n\n-y\n, \n--sync\n\n\nInstruct pacman-mirrors to update/syncronize the pacman databases after mirrorlist generation. This is done by calling \npacman -Syy\n.\n\n\nAPI:\n\n\nMake permanent changes to pacman-mirrors configuration through an api. The tasks are executed before generating the mirrorlist.\n\n\n-a\n, \n--api\n [--prefix] [--get-branch | --set-branch {branch}] [--proto PROTO [PROTO ...]] [--no-mirrorlist]\n\n\nThe key to the following arguments is \n-a\n or \n--api\n. If it is missing none of the arguments will have any effect.\n\n\n-p\n, \n--prefix\n\n\n\n\nAdd a path prefix to pacman-mirrors file-handling eg. \n/mnt/install\n or \n$mnt\n.\n\n\n\n\n-G\n, \n--get-branch\n\n\n\n\nReturns branch from \n/etc/pacman-mirrors.conf\n optionally with a prefix.\n\n\n\n\n-S\n, \n--set-branch {branch}\n\n\n\n\nWrites the branch to \n/etc/pacman-mirrors.conf\n optionally with a prefix.\n\n\nSelect \nstable\n, \ntesting\n or \nunstable\n.\n\n\n\n\n-P\n, \n--proto\n, \n--protocols PROTO [PROTO ...]\n\n\n\n\nWrite the specified protocols to \n/etc/pacman-mirrors.conf\n optionally with a prefix.\n\n\nSelect \nall\n or \nhttp\n, \nhttps\n, \nftp\n and \nftps\n.\n\n\n\n\npacman-mirrors.conf\n\n\nManjaro branch to use for your system\n\n\n# Branch = stable\n\n\n\n\nThe setting defaults to \nstable\n branch.  \n\n\nSelect \nstable\n, \ntesting\n or \nunstable\n.\n\n\nThe setting can be changed by invoking \npacman-mirrors --api --set-branch <branch>\n.\n\n\n\n\nGeneration method\n\n\n# Method = rank\n\n\nInvoking \npacman-mirrors --method <method>\n will temporariy change the setting.\n\n The setting defaults to \nrank\n.\n\n Select \nrank\n or \nrandom\n.  \n\n\nProtocols and priority\n\n\n# Protocols =\n\n\nThe setting defines which protocols offered by mirrors will be considered in a mirrorlist. At the moment mirrors offers: http, https, ftp. When the mirrorlist is created and a mirror has more than one protocol defined only the first protocol is written to the mirrorlist.\n\n The default is empty which means \nall\n protocols.\n\n Separate the protocols with \ncomma\n \nor\n \nspace\n.\n* The setting can be changed by invoking \npacman-mirrors --api --proto <proto> <proto>\n.\n\n\nSpecify to use only mirrors from a specific country.\n\n\n# Country =\n\n\nThe setting defines which countries will be considered in a mirrorlist. To get a list of available countries run \npacman-mirrors -l\n and collect names of the countries you will use. You can add countries by hand or you can use the interactive mode to select mirrors and protocols to use. \n\n\n The default setting is empty which means all countries.\n\n Separate your countries with \ncomma\n \nor\n \nspace\n\n\nMirrors directory\n\n\n# MirrorlistsDir = /var/lib/pacman-mirrors\n\n\nA temporary location from which to read the mirrors file.\n\n\nOutput file\n\n\n# OutputMirrorlist = /etc/pacman.d/mirrorlist\n\n\nA temporary location for the generated mirrorlist.\n\n\nSSL Verification\n\n\n# SSLVerify = True\n\n\nThe setting controls whether to accept all certificates or not. Only change it if you \nfully trust\n all ssl-enabled mirrors.\n* \nall certificates\n are accepted when set to \nFalse",
+            "text": "% pacman-mirrors(1) Pacman-Mirrors User Manual\n% Frede Hundewadt\n% May 18, 2017\n\n\nNAME\n\n\npacman-mirrors - generate pacman mirrorlist for Manjaro Linux\n\n\nSYNOPSIS\n\n\npacman-mirrors [OPTION] ...\n\n\nDESCRIPTION\n\n\nGenerate mirrorlist for Manjaro Linux.\nDefault is to rank all mirrors by reponse time.\nIf no arguments are given pacman-mirrors lists available options.\nTo create a mirrorlist using all default use,\n\n\nsudo pacman-mirrors -g\n\n\n\nThe mirrorlist generation process can be refined through options \nand arguments which takes input, for example,\n\n\nsudo pacman-mirrors --country Denmark --timeout 5\n\n\n\nOPTIONS\n\n\n-g, --generate\n:   Generate a new default mirrorlist using defaults\n\n\n-f, --fasttrack NUMBER\n:   Generates a mirrorlist with a number mirrors ranked by responsiveness,\n    the mirrors are selected from \nhttp://repo.manjaro.org/status.json\n\n\n-m, --method \nMETHOD\n\n:   Default method is \nrank\n but \nrandom\n can be selected \n\n\n-i, --interactive [--default]\n:   Launches a tool for selectively picking mirrors and protocols,\n    \n--default\n forces pacman-mirrors to load the default mirror\n    file and ignore any preset custom-mirrors file, thus allowing for \n    reselecting mirrors for a new custom mirror file\n\n\n-b, --branch \nBRANCH\n\n:   Temporarily use another branch, use \nstable\n, \ntesting\n or \nunstable\n, \n    the branch is reset with next run of pacman-mirrors\n\n\n-c, --country \nCOUNTRY\n [\nCOUNTRY\n ...]\n:   Specifiy a country or a list of countries, excludes \n--geoip\n\n\n--geoip\n:   Use geolocation if possible, if not uses all mirrors, \n    excludes \n-c\n, \n--country\n\n\n-l, --country-list\n:   Lists available mirror countries\n\n\n-d, --mirror_dir \nNEW_DIR\n\n:   \n(DEPRECATED)\n Choose a temporary directory where mirrors file is located\n\n\n-o, --output \nNEW_FILE\n\n:   \n(DEPRECATED)\n Choose a temporary file for your mirrorlist\n\n\n-q, --quiet\n:   Make pacman-mirrors silent\n\n\n-t, --timeout \nSECONDS\n\n:   Change the number of seconds waiting for a server response, \n    SSL enabled mirrors has this value doubled to compensate, \n    for the time spent on exchanging encryption keys\n\n\n-n, --no-mirrorlist\n:   Skip mirrorlist generation, excludes \n-y\n, \n--sync\n\n\n-y, --sync\n:   Instruct pacman-mirrors to syncronize the pacman database, \n    excludes \n-n\n, \n--no-mirrorlist\n\n\nAPI\n\n\n-a, --api\n:   Instructs pacman-mirrors to activate these optional arguments\n\n\n-a -p, --prefix \nPREFIX\n\n:   Add a path prefix to pacman-mirrors file-handling\n\n    eg. \n/mnt/install\n or \n$mnt\n\n\n-a -G, --get-branch\n:   Returns branch from configuration optionally with a prefix.\n\n\n-a -S, --set-branch \nBRANCH\n\n:   Writes the branch to configuration optionally with a prefix,   \n\n    use \nstable\n, \ntesting\n or \nunstable\n\n\n-a -P, --proto, --protocols \nPROTO\n [\nPROTO\n ...]\n:   Write the protocols to configuration optionally with a prefix,\n\n    use \nall\n or \nhttp\n, \nhttps\n, \nftp\n and \nftps\n.\n\n\nGENERIC\n\n\n-h, --help\n:    Show the help message\n\n\n-v, --version\n:   Show the version of pacman-mirrors\n\n\nExit status:\n\n\n0 if OK\n\n1 if problem with argument\n\nBRANCH from config  \n\n\nEXAMPLES\n\n\nMost optional arguments are self explaining others require explanation. \nThe API functions is mainly designed to help packagers and iso-builders. \nHowever it can be of use for everyone because it takes the hazzle out \nof editing your pacman-mirrors configuration.\n\n\nWhich countries has mirrors?\n\n\nsudo pacman-mirrors -l\n\n\n\nI want to temporary change branch to unstable, \nuse geolocation and syncronize pacman,\n\n\nsudo pacman-mirrors -yb unstable --geoip\n\n\n\nI want to permanently change branch to unstable, \nuse mirrors from Germany and France, \nuse only https and http protocol in that order and syncronize pacman\n\n\nsudo pacman-mirrors -yac Germany,France -S unstable -P https http\n\n\n\nCreate a mirrorlist with German mirrors and syncronize pacman\n\n\nsudo pacman-mirrors -yc Germany\n\n\n\nIf you want more countries in your mirrorlist add them\n\n\nsudo pacman-mirrors -yc Germany France Denmark\n\n\n\nCreate a mirrorlist with 5 mirrors with current packages and syncronize pacman\n\n\nsudo pacman-mirrors -yf 5\n\n\n\nI want to choose my mirrors\n\n\nsudo pacman-mirrors -i\n\n\n\nI have a custom mirror list and I want to create a new custom mirror list?\n\n\nsudo pacman-mirrors -i --default\n\n\n\nI have a custom mirror list - can I reset it?\n\n\nsudo pacman-mirrors -c all\n\n\n\nWhat branch am I on\n\n\nsudo pacman-mirrors -a -G*\n\n\n\nChange system branch and dont change the mirrorlist\n\n\nsudo pacman-mirrors -naS unstable\n\n\n\nChange protocols you will accept but dont touch the mirrorlist\n\n\nsudo pacman-mirrors -naP https http\n\n\n\nA packager can write the directly to a mounted systems \ndatafiles using either a path or an environment variable\n\n\nsudo pacman-mirrors -ap $mnt -S unstable -P https\n\n\n\nAUTHOR\n\n\nEsclapion \nesclapion@manjaro.org\n\nphilm \nphilm@manjaro.org\n\nRamon Buld\u00f3 \nrbuldo@gmail.com\n\nHugo Posnic \nhuluti@manjaro.org\n\nFrede Hundewadt \nfrede@hundewadt.dk\n  \n\n\nREPORTING BUGS\n\n\nhttps://github.com/manjaro/pacman-mirrors/issues\n\n\nSEE ALSO\n\n\nThe pacman-mirrors source code and all documentation \nmay be downloaded from \nhttps://github.com/manjaro/pacman-mirrors/issues",
             "title": "Home"
         },
         {
-            "location": "/#documentation-of-pacman-mirrors",
-            "text": "Enhanced pacman-mirrors for Manjaro Linux",
-            "title": "Documentation of pacman-mirrors"
+            "location": "/#name",
+            "text": "pacman-mirrors - generate pacman mirrorlist for Manjaro Linux",
+            "title": "NAME"
         },
         {
-            "location": "/#usage",
-            "text": "",
-            "title": "USAGE"
+            "location": "/#synopsis",
+            "text": "pacman-mirrors [OPTION] ...",
+            "title": "SYNOPSIS"
         },
         {
-            "location": "/#generic",
-            "text": "",
-            "title": "GENERIC:"
+            "location": "/#description",
+            "text": "Generate mirrorlist for Manjaro Linux.\nDefault is to rank all mirrors by reponse time.\nIf no arguments are given pacman-mirrors lists available options.\nTo create a mirrorlist using all default use,  sudo pacman-mirrors -g  The mirrorlist generation process can be refined through options \nand arguments which takes input, for example,  sudo pacman-mirrors --country Denmark --timeout 5",
+            "title": "DESCRIPTION"
         },
         {
-            "location": "/#-h-help",
-            "text": "Show the help message.",
-            "title": "-h, --help"
-        },
-        {
-            "location": "/#-v-version",
-            "text": "Show the version of pacman-mirrors.",
-            "title": "-v, --version"
-        },
-        {
-            "location": "/#country",
-            "text": "",
-            "title": "COUNTRY:"
-        },
-        {
-            "location": "/#-c-country-country-country-country-country",
-            "text": "Specifiy country or list of countries separated by comma or space:  --country France  --country France Germany Austria\nTo remove a custom mirror file\n* --country all",
-            "title": "-c COUNTRY [COUNTRY ...], --country COUNTRY [COUNTRY ...]"
-        },
-        {
-            "location": "/#-geoip",
-            "text": "Find current country by using geolocation.",
-            "title": "--geoip"
-        },
-        {
-            "location": "/#methods",
-            "text": "",
-            "title": "METHODS:"
-        },
-        {
-            "location": "/#-g-generate",
-            "text": "Generate a new default mirrorlist.",
-            "title": "-g, --generate"
-        },
-        {
-            "location": "/#-f-digit-fasttrack-digit",
-            "text": "Generates a mirrorlist of  DIGIT  mirrors ranked by responsiveness.\nThe mirrors are randomly selected from a selection of mirrors known to be up-to-date on all branches.",
-            "title": "-f {DIGIT}, --fasttrack {DIGIT}"
-        },
-        {
-            "location": "/#-m-method-method-method",
-            "text": "Choose the generation method: \nSelect  rank  or  random",
-            "title": "-m {method}, --method {method}"
-        },
-        {
-            "location": "/#-i-interactive",
-            "text": "Launch a tool for selectively picking mirrors and protocols for a custom mirrorlist.",
-            "title": "-i, --interactive"
-        },
-        {
-            "location": "/#misc",
-            "text": "",
-            "title": "MISC:"
-        },
-        {
-            "location": "/#-b-branch-branch-branch",
-            "text": "Choose a temporary branch: \nSelect  stable ,  testing  or  unstable .\nThe branch is reset on next run of pacman-mirrors.",
-            "title": "-b {branch}, --branch {branch}"
-        },
-        {
-            "location": "/#-d-new_dir-mirror_dir-new_dir",
-            "text": "Choose a temporary directory where mirrors file is located.",
-            "title": "-d {new_dir}, --mirror_dir {new_dir}"
-        },
-        {
-            "location": "/#-l-country-list",
-            "text": "Lists available mirror countries",
-            "title": "-l, --country-list"
-        },
-        {
-            "location": "/#-o-new_file-output-new_file",
-            "text": "Choose a temporary file for your mirrorlist.",
-            "title": "-o {new_file}, --output {new_file}"
-        },
-        {
-            "location": "/#-q-quiet",
-            "text": "Make pacman-mirrors silent.",
-            "title": "-q, --quiet"
-        },
-        {
-            "location": "/#-t-digit-timeout-digit",
-            "text": "Change the server maximum waiting time. In case of SSL enabled mirrors the value is doubled to compensate for the time spent on exchanging encryption keys.",
-            "title": "-t {DIGIT}, --timeout {DIGIT}"
-        },
-        {
-            "location": "/#-default",
-            "text": "This argument  only  have effect in conjunction with  -i/--interactive . It forces pacman-mirrors to load the default mirror file and ignore any preset custom-mirrors file, thus allowing for reselecting mirrors for a new custom mirror file. The argument executes the ranking/randomizing when the selection of mirrors is done.",
-            "title": "--default"
-        },
-        {
-            "location": "/#sync",
-            "text": "",
-            "title": "SYNC:"
-        },
-        {
-            "location": "/#-n-no-mirrorlist",
-            "text": "Skip mirrorlist and exit when tasks has been done.",
-            "title": "-n, --no-mirrorlist"
-        },
-        {
-            "location": "/#-y-sync",
-            "text": "Instruct pacman-mirrors to update/syncronize the pacman databases after mirrorlist generation. This is done by calling  pacman -Syy .",
-            "title": "-y, --sync"
+            "location": "/#options",
+            "text": "-g, --generate\n:   Generate a new default mirrorlist using defaults  -f, --fasttrack NUMBER\n:   Generates a mirrorlist with a number mirrors ranked by responsiveness,\n    the mirrors are selected from  http://repo.manjaro.org/status.json  -m, --method  METHOD \n:   Default method is  rank  but  random  can be selected   -i, --interactive [--default]\n:   Launches a tool for selectively picking mirrors and protocols,\n     --default  forces pacman-mirrors to load the default mirror\n    file and ignore any preset custom-mirrors file, thus allowing for \n    reselecting mirrors for a new custom mirror file  -b, --branch  BRANCH \n:   Temporarily use another branch, use  stable ,  testing  or  unstable , \n    the branch is reset with next run of pacman-mirrors  -c, --country  COUNTRY  [ COUNTRY  ...]\n:   Specifiy a country or a list of countries, excludes  --geoip  --geoip\n:   Use geolocation if possible, if not uses all mirrors, \n    excludes  -c ,  --country  -l, --country-list\n:   Lists available mirror countries  -d, --mirror_dir  NEW_DIR \n:    (DEPRECATED)  Choose a temporary directory where mirrors file is located  -o, --output  NEW_FILE \n:    (DEPRECATED)  Choose a temporary file for your mirrorlist  -q, --quiet\n:   Make pacman-mirrors silent  -t, --timeout  SECONDS \n:   Change the number of seconds waiting for a server response, \n    SSL enabled mirrors has this value doubled to compensate, \n    for the time spent on exchanging encryption keys  -n, --no-mirrorlist\n:   Skip mirrorlist generation, excludes  -y ,  --sync  -y, --sync\n:   Instruct pacman-mirrors to syncronize the pacman database, \n    excludes  -n ,  --no-mirrorlist",
+            "title": "OPTIONS"
         },
         {
             "location": "/#api",
-            "text": "Make permanent changes to pacman-mirrors configuration through an api. The tasks are executed before generating the mirrorlist.",
-            "title": "API:"
+            "text": "-a, --api\n:   Instructs pacman-mirrors to activate these optional arguments  -a -p, --prefix  PREFIX \n:   Add a path prefix to pacman-mirrors file-handling \n    eg.  /mnt/install  or  $mnt  -a -G, --get-branch\n:   Returns branch from configuration optionally with a prefix.  -a -S, --set-branch  BRANCH \n:   Writes the branch to configuration optionally with a prefix,    \n    use  stable ,  testing  or  unstable  -a -P, --proto, --protocols  PROTO  [ PROTO  ...]\n:   Write the protocols to configuration optionally with a prefix, \n    use  all  or  http ,  https ,  ftp  and  ftps .",
+            "title": "API"
         },
         {
-            "location": "/#-a-api-prefix-get-branch-set-branch-branch-proto-proto-proto-no-mirrorlist",
-            "text": "The key to the following arguments is  -a  or  --api . If it is missing none of the arguments will have any effect.",
-            "title": "-a, --api [--prefix] [--get-branch | --set-branch {branch}] [--proto PROTO [PROTO ...]] [--no-mirrorlist]"
+            "location": "/#generic",
+            "text": "-h, --help\n:    Show the help message  -v, --version\n:   Show the version of pacman-mirrors",
+            "title": "GENERIC"
         },
         {
-            "location": "/#-p-prefix",
-            "text": "Add a path prefix to pacman-mirrors file-handling eg.  /mnt/install  or  $mnt .",
-            "title": "-p, --prefix"
+            "location": "/#exit-status",
+            "text": "0 if OK \n1 if problem with argument \nBRANCH from config",
+            "title": "Exit status:"
         },
         {
-            "location": "/#-g-get-branch",
-            "text": "Returns branch from  /etc/pacman-mirrors.conf  optionally with a prefix.",
-            "title": "-G, --get-branch"
+            "location": "/#examples",
+            "text": "Most optional arguments are self explaining others require explanation. \nThe API functions is mainly designed to help packagers and iso-builders. \nHowever it can be of use for everyone because it takes the hazzle out \nof editing your pacman-mirrors configuration.  Which countries has mirrors?  sudo pacman-mirrors -l  I want to temporary change branch to unstable, \nuse geolocation and syncronize pacman,  sudo pacman-mirrors -yb unstable --geoip  I want to permanently change branch to unstable, \nuse mirrors from Germany and France, \nuse only https and http protocol in that order and syncronize pacman  sudo pacman-mirrors -yac Germany,France -S unstable -P https http  Create a mirrorlist with German mirrors and syncronize pacman  sudo pacman-mirrors -yc Germany  If you want more countries in your mirrorlist add them  sudo pacman-mirrors -yc Germany France Denmark  Create a mirrorlist with 5 mirrors with current packages and syncronize pacman  sudo pacman-mirrors -yf 5  I want to choose my mirrors  sudo pacman-mirrors -i  I have a custom mirror list and I want to create a new custom mirror list?  sudo pacman-mirrors -i --default  I have a custom mirror list - can I reset it?  sudo pacman-mirrors -c all  What branch am I on  sudo pacman-mirrors -a -G*  Change system branch and dont change the mirrorlist  sudo pacman-mirrors -naS unstable  Change protocols you will accept but dont touch the mirrorlist  sudo pacman-mirrors -naP https http  A packager can write the directly to a mounted systems \ndatafiles using either a path or an environment variable  sudo pacman-mirrors -ap $mnt -S unstable -P https",
+            "title": "EXAMPLES"
         },
         {
-            "location": "/#-s-set-branch-branch",
-            "text": "Writes the branch to  /etc/pacman-mirrors.conf  optionally with a prefix.  Select  stable ,  testing  or  unstable .",
-            "title": "-S, --set-branch {branch}"
+            "location": "/#author",
+            "text": "Esclapion  esclapion@manjaro.org \nphilm  philm@manjaro.org \nRamon Buld\u00f3  rbuldo@gmail.com \nHugo Posnic  huluti@manjaro.org \nFrede Hundewadt  frede@hundewadt.dk",
+            "title": "AUTHOR"
         },
         {
-            "location": "/#-p-proto-protocols-proto-proto",
-            "text": "Write the specified protocols to  /etc/pacman-mirrors.conf  optionally with a prefix.  Select  all  or  http ,  https ,  ftp  and  ftps .",
-            "title": "-P, --proto, --protocols PROTO [PROTO ...]"
+            "location": "/#reporting-bugs",
+            "text": "https://github.com/manjaro/pacman-mirrors/issues",
+            "title": "REPORTING BUGS"
         },
         {
-            "location": "/#pacman-mirrorsconf",
-            "text": "",
-            "title": "pacman-mirrors.conf"
-        },
-        {
-            "location": "/#manjaro-branch-to-use-for-your-system",
-            "text": "",
-            "title": "Manjaro branch to use for your system"
-        },
-        {
-            "location": "/#branch-stable",
-            "text": "The setting defaults to  stable  branch.    Select  stable ,  testing  or  unstable .  The setting can be changed by invoking  pacman-mirrors --api --set-branch <branch> .",
-            "title": "# Branch = stable"
-        },
-        {
-            "location": "/#generation-method",
-            "text": "",
-            "title": "Generation method"
-        },
-        {
-            "location": "/#method-rank",
-            "text": "Invoking  pacman-mirrors --method <method>  will temporariy change the setting.  The setting defaults to  rank .  Select  rank  or  random .",
-            "title": "# Method = rank"
-        },
-        {
-            "location": "/#protocols-and-priority",
-            "text": "",
-            "title": "Protocols and priority"
-        },
-        {
-            "location": "/#protocols",
-            "text": "The setting defines which protocols offered by mirrors will be considered in a mirrorlist. At the moment mirrors offers: http, https, ftp. When the mirrorlist is created and a mirror has more than one protocol defined only the first protocol is written to the mirrorlist.  The default is empty which means  all  protocols.  Separate the protocols with  comma   or   space .\n* The setting can be changed by invoking  pacman-mirrors --api --proto <proto> <proto> .",
-            "title": "# Protocols ="
-        },
-        {
-            "location": "/#specify-to-use-only-mirrors-from-a-specific-country",
-            "text": "",
-            "title": "Specify to use only mirrors from a specific country."
-        },
-        {
-            "location": "/#country_1",
-            "text": "The setting defines which countries will be considered in a mirrorlist. To get a list of available countries run  pacman-mirrors -l  and collect names of the countries you will use. You can add countries by hand or you can use the interactive mode to select mirrors and protocols to use.    The default setting is empty which means all countries.  Separate your countries with  comma   or   space",
-            "title": "# Country ="
-        },
-        {
-            "location": "/#mirrors-directory",
-            "text": "",
-            "title": "Mirrors directory"
-        },
-        {
-            "location": "/#mirrorlistsdir-varlibpacman-mirrors",
-            "text": "A temporary location from which to read the mirrors file.",
-            "title": "# MirrorlistsDir = /var/lib/pacman-mirrors"
-        },
-        {
-            "location": "/#output-file",
-            "text": "",
-            "title": "Output file"
-        },
-        {
-            "location": "/#outputmirrorlist-etcpacmandmirrorlist",
-            "text": "A temporary location for the generated mirrorlist.",
-            "title": "# OutputMirrorlist = /etc/pacman.d/mirrorlist"
-        },
-        {
-            "location": "/#ssl-verification",
-            "text": "",
-            "title": "SSL Verification"
-        },
-        {
-            "location": "/#sslverify-true",
-            "text": "The setting controls whether to accept all certificates or not. Only change it if you  fully trust  all ssl-enabled mirrors.\n*  all certificates  are accepted when set to  False",
-            "title": "# SSLVerify = True"
+            "location": "/#see-also",
+            "text": "The pacman-mirrors source code and all documentation \nmay be downloaded from  https://github.com/manjaro/pacman-mirrors/issues",
+            "title": "SEE ALSO"
         },
         {
             "location": "/installation/",
