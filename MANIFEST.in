@@ -3,6 +3,7 @@ include CONTRIBUTING.md
 include CHANGELOG.md
 include LICENSE
 include README.md
+include man/pacman-mirrors.1
 include share/mirrors.json
 include scripts/pacman-mirrors
 

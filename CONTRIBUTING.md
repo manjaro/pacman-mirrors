@@ -103,7 +103,8 @@ Developing environment
 1. An editor of choice e.g.
    * Visual Studio Code `yaourt -S visual-studio-code`
    * PyCharm Community `pacman -S pycharm-community`
-2. Python environment  
+2. * Pandoc converter `pacman -S pandoc`
+3. Python environment  
     ```
     pacman -S python-pip
     pip install virtualenvwrapper
