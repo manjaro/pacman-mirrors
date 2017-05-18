@@ -113,45 +113,45 @@ Most optional arguments are self explaining others require explanation.
 
 Which countries has mirrors?
 
-    sudo pacman-mirrors -l
+_sudo pacman-mirrors -l_
 
 Temporary change branch to unstable, give me geoip (if available) and syncronize pacman
 
-    sudo pacman-mirrors -yb unstable --geoip
+_sudo pacman-mirrors -yb unstable --geoip_
     
 Permanently change branch to unstable, mirrors in Germany, France and Austria, only use https and syncronize pacman
 
-    sudo pacman-mirrors -yac Germany,France,Austria -S unstable -P https
+_sudo pacman-mirrors -yac Germany,France,Austria -S unstable -P https_
     
 Create a mirrorlist with German mirrors and syncronize pacman
 
-    sudo pacman-mirrors -yc Germany
+_sudo pacman-mirrors -yc Germany_
 
 If you want more countries in your mirrorlist add them
 
-    sudo pacman-mirrors -yc Germany France Austria Denmark
+_sudo pacman-mirrors -yc Germany France Austria Denmark_
 
 Create a mirrorlist with 5 mirrors with current packages and syncronize pacman
  
-    sudo pacman-mirrors -yf 5
+_sudo pacman-mirrors -yf 5_
 
 The API functions is mainly designed to help packagers and as an installation helper. However it can be of use for the ordinary user because it takes the hazzle out of editing your pacman-mirrors configuration.
 
 * Get your current branch
 
-    sudo pacman-mirrors -a -G
+_sudo pacman-mirrors -a -G_
 
 * Change your the branch your system uses and dont change the mirrorlist
 
-    sudo pacman-mirrors -naS unstable
+_sudo pacman-mirrors -naS unstable_
 
 * Change which protocols you will accept and dont change the mirrorlist
 
-    sudo pacman-mirrors -naP https http
+_sudo pacman-mirrors -naP https http_
 
 * A packager can write the directly to a mounted systems datafiles using either a path or an environment variable
 
-    sudo pacman-mirrors -ap $mnt -S unstable -P https
+_sudo pacman-mirrors -ap $mnt -S unstable -P https_
 
 # AUTHOR
 

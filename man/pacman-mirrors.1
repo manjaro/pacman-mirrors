@@ -134,55 +134,32 @@ BRANCH from config
 Most optional arguments are self explaining others require explanation.
 .PP
 Which countries has mirrors?
-.IP
-.nf
-\f[C]
-sudo\ pacman\-mirrors\ \-l
-\f[]
-.fi
+.PP
+\f[I]sudo pacman\-mirrors \-l\f[]
 .PP
 Temporary change branch to unstable, give me geoip (if available) and
 syncronize pacman
-.IP
-.nf
-\f[C]
-sudo\ pacman\-mirrors\ \-yb\ unstable\ \-\-geoip
-\f[]
-.fi
+.PP
+\f[I]sudo pacman\-mirrors \-yb unstable \-\-geoip\f[]
 .PP
 Permanently change branch to unstable, mirrors in Germany, France and
 Austria, only use https and syncronize pacman
-.IP
-.nf
-\f[C]
-sudo\ pacman\-mirrors\ \-yac\ Germany,France,Austria\ \-S\ unstable\ \-P\ https
-\f[]
-.fi
+.PP
+\f[I]sudo pacman\-mirrors \-yac Germany,France,Austria \-S unstable \-P
+https\f[]
 .PP
 Create a mirrorlist with German mirrors and syncronize pacman
-.IP
-.nf
-\f[C]
-sudo\ pacman\-mirrors\ \-yc\ Germany
-\f[]
-.fi
+.PP
+\f[I]sudo pacman\-mirrors \-yc Germany\f[]
 .PP
 If you want more countries in your mirrorlist add them
-.IP
-.nf
-\f[C]
-sudo\ pacman\-mirrors\ \-yc\ Germany\ France\ Austria\ Denmark
-\f[]
-.fi
+.PP
+\f[I]sudo pacman\-mirrors \-yc Germany France Austria Denmark\f[]
 .PP
 Create a mirrorlist with 5 mirrors with current packages and syncronize
 pacman
-.IP
-.nf
-\f[C]
-sudo\ pacman\-mirrors\ \-yf\ 5
-\f[]
-.fi
+.PP
+\f[I]sudo pacman\-mirrors \-yf 5\f[]
 .PP
 The API functions is mainly designed to help packagers and as an
 installation helper.
@@ -190,29 +167,21 @@ However it can be of use for the ordinary user because it takes the
 hazzle out of editing your pacman\-mirrors configuration.
 .IP \[bu] 2
 Get your current branch
-.RS 2
 .PP
-sudo pacman\-mirrors \-a \-G
-.RE
+\f[I]sudo pacman\-mirrors \-a \-G\f[]
 .IP \[bu] 2
 Change your the branch your system uses and dont change the mirrorlist
-.RS 2
 .PP
-sudo pacman\-mirrors \-naS unstable
-.RE
+\f[I]sudo pacman\-mirrors \-naS unstable\f[]
 .IP \[bu] 2
 Change which protocols you will accept and dont change the mirrorlist
-.RS 2
 .PP
-sudo pacman\-mirrors \-naP https http
-.RE
+\f[I]sudo pacman\-mirrors \-naP https http\f[]
 .IP \[bu] 2
 A packager can write the directly to a mounted systems datafiles using
 either a path or an environment variable
-.RS 2
 .PP
-sudo pacman\-mirrors \-ap $mnt \-S unstable \-P https
-.RE
+\f[I]sudo pacman\-mirrors \-ap $mnt \-S unstable \-P https\f[]
 .SH AUTHOR
 .PP
 Esclapion <esclapion@manjaro.org>
