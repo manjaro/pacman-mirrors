@@ -12,7 +12,8 @@ pacman\-mirrors [OPTION] ...
 .PP
 Generate mirrorlist for Manjaro Linux.
 Default is to rank all mirrors by reponse time.
-Mandatory arguments to long options are mandatory for short options too
+Mandatory arguments to long options are mandatory for short options too.
+.SH OPTIONS
 .SS METHODS
 .PP
 \f[I]\-f, \-\-fasttrack NUMBER\f[]
@@ -128,6 +129,90 @@ show the version of pacman\-mirrors
 .P
 .PD
 BRANCH from config
+.SH EXAMPLES
+.PP
+Most optional arguments are self explaining others require explanation.
+.PP
+Which countries has mirrors?
+.IP
+.nf
+\f[C]
+sudo\ pacman\-mirrors\ \-l
+\f[]
+.fi
+.PP
+Temporary change branch to unstable, give me geoip (if available) and
+syncronize pacman
+.IP
+.nf
+\f[C]
+sudo\ pacman\-mirrors\ \-yb\ unstable\ \-\-geoip
+\f[]
+.fi
+.PP
+Permanently change branch to unstable, mirrors in Germany, France and
+Austria, only use https and syncronize pacman
+.IP
+.nf
+\f[C]
+sudo\ pacman\-mirrors\ \-yac\ Germany,France,Austria\ \-S\ unstable\ \-P\ https
+\f[]
+.fi
+.PP
+Create a mirrorlist with German mirrors and syncronize pacman
+.IP
+.nf
+\f[C]
+sudo\ pacman\-mirrors\ \-yc\ Germany
+\f[]
+.fi
+.PP
+If you want more countries in your mirrorlist add them
+.IP
+.nf
+\f[C]
+sudo\ pacman\-mirrors\ \-yc\ Germany\ France\ Austria\ Denmark
+\f[]
+.fi
+.PP
+Create a mirrorlist with 5 mirrors with current packages and syncronize
+pacman
+.IP
+.nf
+\f[C]
+sudo\ pacman\-mirrors\ \-yf\ 5
+\f[]
+.fi
+.PP
+The API functions is mainly designed to help packagers and as an
+installation helper.
+However it can be of use for the ordinary user because it takes the
+hazzle out of editing your pacman\-mirrors configuration.
+.IP \[bu] 2
+Get your current branch
+.RS 2
+.PP
+sudo pacman\-mirrors \-a \-G
+.RE
+.IP \[bu] 2
+Change your the branch your system uses and dont change the mirrorlist
+.RS 2
+.PP
+sudo pacman\-mirrors \-naS unstable
+.RE
+.IP \[bu] 2
+Change which protocols you will accept and dont change the mirrorlist
+.RS 2
+.PP
+sudo pacman\-mirrors \-naP https http
+.RE
+.IP \[bu] 2
+A packager can write the directly to a mounted systems datafiles using
+either a path or an environment variable
+.RS 2
+.PP
+sudo pacman\-mirrors \-ap $mnt \-S unstable \-P https
+.RE
 .SH AUTHOR
 .PP
 Esclapion <esclapion@manjaro.org>
