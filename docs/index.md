@@ -117,10 +117,10 @@ immediately after the argument, for example
 ## MISC
 
 -h, \--help
-:    Show the help message
+:   Show the help message
 
 -n, \--no-mirrorlist
-:   Skip mirrorlist generation
+:   Use to skip generation of mirrorlist
 
 -q, \--quiet
 :   Make pacman-mirrors silent
