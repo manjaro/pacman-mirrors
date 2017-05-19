@@ -109,6 +109,26 @@ class TestInitialValues(unittest.TestCase):
             app = PacmanMirrors()
             assert app.selected_countries == []
 
+    @patch("os.getuid")
+    def test_initial_selected_countries(self, mock_os_getuid):
+        """TEST: self.no_mirrorlist = False"""
+        mock_os_getuid.return_value = 0
+        with unittest.mock.patch("sys.argv",
+                                 ["pacman-mirrors",
+                                  "-g"]):
+            app = PacmanMirrors()
+            assert app.no_mirrorlist is False
+
+    @patch("os.getuid")
+    def test_initial_selected_countries(self, mock_os_getuid):
+        """TEST: self.sync = False"""
+        mock_os_getuid.return_value = 0
+        with unittest.mock.patch("sys.argv",
+                                 ["pacman-mirrors",
+                                  "-g"]):
+            app = PacmanMirrors()
+            assert app.sync is False
+
     def tearDown(self):
         """Tear down"""
         pass

@@ -27,6 +27,7 @@ import sys
 from . import jsonfn
 from . import miscfn
 from . import txt
+from . import colors as color
 
 
 def check_file(filename):
@@ -57,10 +58,10 @@ def return_mirror_filename(config):
     elif check_file(config["mirror_file"]):
         filename = config["mirror_file"]
     if not filename:
-        print("\n{}.:! {}{}\n".format(txt.RS,
+        print("\n{}.:! {}{}\n".format(color.RED,
                                       txt.HOUSTON,
-                                      txt.CE))
-        sys.exit(1)
+                                      color.ENDCOLOR))
+        sys.exit(3)
     return filename, status
 
 
@@ -70,7 +71,7 @@ def output_mirror_list(config, servers, custom=False, quiet=False, interactive=F
     :param servers: list of servers to write
     :param custom:
     :param quiet:
-    :param interactive: 
+    :param interactive:
     """
     try:
         with open(config["mirror_list"], "w") as outfile:
@@ -119,7 +120,7 @@ def output_mirror_list(config, servers, custom=False, quiet=False, interactive=F
                                         txt.CANNOT_WRITE_FILE,
                                         err.filename,
                                         err.strerror))
-        sys.exit(1)
+        sys.exit(2)
 
 
 def read_mirror_file(filename):

@@ -25,33 +25,32 @@ from . import txt
 
 def debug(where, what, value):
     """Helper for printing debug messages"""
-    print("{} In function {} -> '{} = {}'".format(txt.DBG_CLR, where, what, value))
+    print("{} {} >>>> '{} = {}'".format(DBG_CLR, where, what, value))
 
 
-def blue(where, what, value):
+def blue(message):
     """Helper for printing blue messages"""
-    print("{}In function{} >>{} \n\n{} = {}".format(txt.BS, where, txt.CE, what, value))
+    print("{}{}{}".format(BLUE, message, ENDCOLOR))
 
 
-def green(where, what, value):
+def green(message):
     """Helper for printing green messages"""
-    print("{}In function {} >>{} \n\n{} = {}".format(txt.GS, where, txt.CE, what, value))
+    print("{}{}{}".format(GREEN, message, ENDCOLOR))
 
 
-def red(where, what, value):
+def red(message):
     """Helper for printing yellow messages"""
-    print("{}In function {} >>{} \n\n{} = {}".format(txt.RS, where, txt.CE, what, value))
+    print("{}{}{}".format(RED, message, ENDCOLOR))
 
 
-def yellow(where, what, value):
+def yellow(message):
     """Helper for printing yellow messages"""
-    print("{}In function {} >>{} \n\n{} = {}".format(txt.YS, where, txt.CE, what, value))
+    print("{}{}{}".format(YELLOW, message, ENDCOLOR))
 
 
 def internet_message():
     """Message when internet connection is down"""
     print(".: {} {}".format(txt.WRN_CLR, txt.INTERNET_DOWN))
-    print(".: {} {}".format(txt.INF_CLR, txt.INTERNET_REQUIRED))
     print(".: {} {}".format(txt.INF_CLR, txt.MIRROR_RANKING_NA))
     print(".: {} {}".format(txt.INF_CLR, txt.INTERNET_ALTERNATIVE))
 

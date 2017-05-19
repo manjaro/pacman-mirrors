@@ -54,7 +54,7 @@ def api_write_branch(branch, filename):
                                         txt.CANNOT_READ_FILE,
                                         err.filename,
                                         err.strerror))
-        sys.exit(1)
+        sys.exit(2)
 
 
 def api_write_only_country(filename, selection, custom=False):
@@ -91,7 +91,7 @@ def api_write_only_country(filename, selection, custom=False):
     except OSError as err:
         print(".: {} {}: {}: {}".format(txt.ERR_CLR, txt.CANNOT_READ_FILE,
                                         err.filename, err.strerror))
-        sys.exit(1)
+        sys.exit(2)
 
 
 def api_write_protocols(protocols, filename):
@@ -121,7 +121,7 @@ def api_write_protocols(protocols, filename):
                                         txt.CANNOT_READ_FILE,
                                         err.filename,
                                         err.strerror))
-        sys.exit(1)
+        sys.exit(2)
 
 
 def build_config():
@@ -173,25 +173,20 @@ def build_config():
                             config["only_country"] = value.split(",")
                         else:
                             config["only_country"] = value.split(" ")
-                    elif key == "MirrorlistsDir":
-                        config["work_dir"] = value
-                    elif key == "OutputMirrorlist":
-                        config["mirror_list"] = value
-                    elif key == "NoUpdate":
-                        config["no_update"] = value
-                    elif key == "SSLVerify":
-                        if value == "False":
-                            config["ssl_verify"] = False
                     elif key == "Protocols":
                         if "," in value:
                             config["protocols"] = value.split(",")
                         else:
                             config["protocols"] = value.split(" ")
+                    elif key == "SSLVerify":
+                        if value == "False":
+                            config["ssl_verify"] = False
     except (PermissionError, OSError) as err:
         print(".: {} {}: {}: {}".format(txt.ERR_CLR,
                                         txt.CANNOT_READ_FILE,
                                         err.filename,
                                         err.strerror))
+        sys.exit(2)
     return config, custom
 
 

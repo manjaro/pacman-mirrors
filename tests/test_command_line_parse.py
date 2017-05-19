@@ -88,36 +88,6 @@ class TestCommandLineParse(unittest.TestCase):
 
     @patch("os.getuid")
     @patch.object(configfn, "build_config")
-    def test_arg_mirrordir(self, mock_build_config, mock_os_getuid):
-        """TEST: CLI config[mirror_dir] from ARG '-d /another/dir'"""
-        mock_os_getuid.return_value = 0
-        mock_build_config.return_value = test_conf
-        with unittest.mock.patch("sys.argv",
-                                 ["pacman-mirrors",
-                                  "-d", "/another/dir/"]):
-            app = PacmanMirrors()
-            app.config["config_file"] = conf.CONFIG_FILE
-            app.config = configfn.build_config()
-            app.command_line_parse()
-            assert app.config["work_dir"] == "/another/dir/"
-
-    @patch("os.getuid")
-    @patch.object(configfn, "build_config")
-    def test_arg_mirrorlist(self, mock_build_config, mock_os_getuid):
-        """TEST: CLI config[mirror_list] from ARG '-o /another/list'"""
-        mock_os_getuid.return_value = 0
-        mock_build_config.return_value = test_conf
-        with unittest.mock.patch("sys.argv",
-                                 ["pacman-mirrors",
-                                  "-o", "/another/list"]):
-            app = PacmanMirrors()
-            app.config["config_file"] = conf.CONFIG_FILE
-            app.config = configfn.build_config()
-            app.command_line_parse()
-            assert app.config["mirror_list"] == "/another/list"
-
-    @patch("os.getuid")
-    @patch.object(configfn, "build_config")
     def test_arg_onlycountry(self, mock_build_config, mock_os_getuid):
         """TEST: CLI config[only_country] from ARG '-c France,Germany'"""
         mock_os_getuid.return_value = 0

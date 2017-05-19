@@ -40,27 +40,25 @@ FILE = _("FILE")
 SECONDS = _("SECONDS")
 NUMBER = _("NUMBER")
 # help messages
+HLP_ARG_API_GET_BRANCH = _("Return branch from configuration")
+HLP_ARG_API_PREFIX = _("Set prefix to")
+HLP_ARG_API_PROTOCOLS = _("Write protocols to configuration")
+HLP_ARG_API_SET_BRANCH = _("Write branch to configuration")
 HLP_ARG_BRANCH = _("Branch name")
 HLP_ARG_COUNTRY = _(
     "Comma separated list of countries, from which mirrors will be used")
 HLP_ARG_DEFAULT = _("Load default mirror file")
-HLP_ARG_FILE = _("Output file")
+HLP_ARG_FASTTRACK = _("Generate mirrorlist with a number of up-to-date mirrors")
 HLP_ARG_GENERATE = _("Generate mirrorlist with defaults")
-HLP_ARG_GEOIP_P1 = _("Get current country using geolocation. Ignored if")
-HLP_ARG_GEOIP_P2 = _("is supplied")
+HLP_ARG_GEOIP = _("Get current country using geolocation")
+HLP_ARG_LIST = _("List all available countries")
 HLP_ARG_INTERACTIVE = _("Generate custom mirrorlist")
 HLP_ARG_METHOD = _("Generation method")
-HLP_ARG_PATH = _("Mirrors list path")
+HLP_ARG_NO_MIRRORLIST = _("Use to skip generation of mirrorlist")
 HLP_ARG_QUIET = _("Quiet mode - less verbose output")
+HLP_ARG_SYNC = _("Syncronize pacman databases")
 HLP_ARG_TIMEOUT = _("Maximum waiting time for server response")
 HLP_ARG_VERSION = _("Print the pacman-mirrors version")
-HLP_ARG_FASTTRACK = _("Generate mirrorlist with a number of up-to-date mirrors. Overrides")
-HLP_ARG_LIST = _("List all available countries")
-HLP_ARG_SYNC = _("Syncronize pacman databases")
-HLP_ARG_API_PREFIX = _("Set prefix to")
-HLP_ARG_API_PROTOCOLS = _("Set accepted protocols")
-HLP_ARG_API_GET_BRANCH = _("Return branch from configuration")
-HLP_ARG_API_SET_BRANCH = _("Write new branch to configuration")
 # messages
 AVAILABLE_COUNTRIES = _("Available countries are")
 CANNOT_DOWNLOAD_FILE = _("Could not download from")
@@ -79,9 +77,7 @@ MIRROR_LIST_SAVED = _("Mirrorlist generated and saved to")
 MIRROR_RANKING_NA = _("Mirror ranking is not available")
 MUST_BE_ROOT = _("Must have root privileges")
 INTERNET_DOWN = _("Internet connection appears to be down")
-INTERNET_REQUIRED = _("Internet access is required to proceed")
-INTERNET_ALTERNATIVE = _(
-    "Pacman needs a mirrorlist. Use -m random to create one without network")
+INTERNET_ALTERNATIVE = _("Mirrorlist is generated using random method")
 NO_CHANGE = _("The mirror list is not changed")
 NO_SELECTION = _("No mirrors in selection")
 OPTION = _("Option")
@@ -107,29 +103,20 @@ I_CANCEL = _("Cancel")
 I_CONFIRM = _("OK")
 I_CONFIRM_SELECTION = _("Confirm selections")
 I_USE_THESE_MIRRORS = _("I want to use these mirrors")
-
 # NON TRANSLATABLE STRINGS
 HOUSTON = "Houston?! We have a problem."
 OVERRIDE_OPT = "--country --interactive --method --geoip"
 REPO_SERVER = "repo.manjaro.org"
 RESET_TIP = "pacman-mirrors -c all"
-PREFIX_TIP = ": $mnt | /dir"
+PREFIX_TIP = ": $mnt | /mnt/install"
+# options
+OPT_RANDOM = " '-m/--method random "
 # mirror status constants
 LASTSYNC_OK = "24:00"  # last syncronize in the past 24 hours
 LASTSYNC_NA = "9800:00"  # last syncronization not available
 SERVER_BAD = "9999:99"  # default last syncronization status
 SERVER_RES = "99.99"  # default response status
-# options
-OPT_COUNTRY = " '-c/--country' "
-OPT_RANDOM = " '-m/--method random "
 # colors
-DBG_CLR = "\033[1;46m.: {} >>> \033[1;m".format("DEBUG")
 ERR_CLR = "\033[1;31m{}\033[1;m".format(ERROR)
 INF_CLR = "\033[1;37m{}\033[1;m".format(INFO)
 WRN_CLR = "\033[1;33m{}\033[1;m".format(WARN)
-CE = "\033[1;m"
-GS = "\033[1;32m"
-RS = "\033[1;31m::"
-YS = "\033[1;33m"
-BS = "\033[1;34m"
-WS = "\033[1;37m"

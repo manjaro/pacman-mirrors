@@ -35,6 +35,7 @@ from pacman_mirrors import __version__
 from .custom_help_formatter import CustomHelpFormatter
 from .mirror import Mirror
 from . import mirrorfn
+from . import colors as color
 from . import configuration as conf
 from . import configfn
 from . import filefn
@@ -80,9 +81,26 @@ class PacmanMirrors:
     def command_line_parse(self):
         """Read the arguments of the command line"""
         parser = argparse.ArgumentParser(formatter_class=CustomHelpFormatter)
-        parser.add_argument("-v", "--version",
-                            action="store_true",
-                            help=txt.HLP_ARG_VERSION)
+        # Method arguments
+        methods = parser.add_argument_group("METHODS")
+        methods.add_argument("-g", "--generate",
+                             action="store_true",
+                             help=txt.HLP_ARG_GENERATE)
+        methods.add_argument("-f", "--fasttrack",
+                             type=int,
+                             metavar=txt.NUMBER,
+                             help="{} {}".format(txt.HLP_ARG_FASTTRACK,
+                                                 txt.OVERRIDE_OPT))
+        methods.add_argument("-i", "--interactive",
+                             action="store_true",
+                             help=txt.HLP_ARG_INTERACTIVE)
+        methods.add_argument("-d", "--default",
+                             action="store_true",
+                             help="Interactive: " + txt.HLP_ARG_DEFAULT)
+        methods.add_argument("-m", "--method",
+                             type=str,
+                             choices=["rank", "random"],
+                             help=txt.HLP_ARG_METHOD)
         country = parser.add_argument_group("COUNTRY")
         country.add_argument("-c", "--country",
                              type=str,
@@ -90,41 +108,36 @@ class PacmanMirrors:
                              help=txt.HLP_ARG_COUNTRY)
         country.add_argument("--geoip",
                              action="store_true",
-                             help="{} {} {}".format(txt.HLP_ARG_GEOIP_P1,
-                                                    txt.OPT_COUNTRY,
-                                                    txt.HLP_ARG_GEOIP_P2))
-        methods = parser.add_argument_group("METHODS")
-        methods.add_argument("-f", "--fasttrack",
-                             type=int,
-                             metavar=txt.NUMBER,
-                             help="{} {}".format(txt.HLP_ARG_FASTTRACK,
-                                                 txt.OVERRIDE_OPT))
-        methods.add_argument("-g", "--generate",
+                             help=txt.HLP_ARG_GEOIP)
+        country.add_argument("-l", "--country-list", "--list",
                              action="store_true",
-                             help=txt.HLP_ARG_GENERATE)
-        methods.add_argument("-i", "--interactive",
-                             action="store_true",
-                             help=txt.HLP_ARG_INTERACTIVE)
-        methods.add_argument("-m", "--method",
-                             type=str,
-                             choices=["rank", "random"],
-                             help=txt.HLP_ARG_METHOD)
+                             help=txt.HLP_ARG_LIST)
+        # Api arguments
+        api = parser.add_argument_group("API")
+        api.add_argument("-a", "--api",
+                         action="store_true",
+                         help="[-p PREFIX][-S|-G BRANCH][-P PROTO [PROTO ...]]")
+        api.add_argument("-p", "--prefix",
+                         type=str,
+                         help=txt.HLP_ARG_API_PREFIX + txt.PREFIX_TIP)
+        api.add_argument("-P", "--proto", "--protocols",
+                         choices=["all", "http", "https", "ftp", "ftps"],
+                         type=str,
+                         nargs="+",
+                         help=txt.HLP_ARG_API_PROTOCOLS)
+        branch = api.add_mutually_exclusive_group()
+        branch.add_argument("-b", "--branch",
+                            type=str,
+                            choices=["stable", "testing", "unstable"],
+                            help=txt.HLP_ARG_BRANCH)
+        branch.add_argument("-G", "--get-branch",
+                            action="store_true",
+                            help=txt.HLP_ARG_API_GET_BRANCH)
+        branch.add_argument("-S", "--set-branch",
+                            choices=["stable", "testing", "unstable"],
+                            help=txt.HLP_ARG_API_SET_BRANCH)
+        # Misc arguments
         misc = parser.add_argument_group("MISC")
-        misc.add_argument("-b", "--branch",
-                          type=str,
-                          choices=["stable", "testing", "unstable"],
-                          help=txt.HLP_ARG_BRANCH)
-        misc.add_argument("-d", "--mirror_dir",
-                          type=str,
-                          metavar=txt.PATH,
-                          help=txt.HLP_ARG_PATH)
-        misc.add_argument("-l", "--country-list", "--list",
-                          action="store_true",
-                          help=txt.HLP_ARG_LIST)
-        misc.add_argument("-o", "--output",
-                          type=str,
-                          metavar=txt.FILE,
-                          help=txt.HLP_ARG_FILE)
         misc.add_argument("-q", "--quiet",
                           action="store_true",
                           help=txt.HLP_ARG_QUIET)
@@ -132,46 +145,25 @@ class PacmanMirrors:
                           type=int,
                           metavar=txt.SECONDS,
                           help=txt.HLP_ARG_TIMEOUT)
-        misc.add_argument("--default",
+        misc.add_argument("-v", "--version",
                           action="store_true",
-                          help="Interactive: " + txt.HLP_ARG_DEFAULT)
-        # Update arguments
-        update = parser.add_argument_group("SYNC")
-        sync = update.add_mutually_exclusive_group()
+                          help=txt.HLP_ARG_VERSION)
+        sync = misc.add_mutually_exclusive_group()
         sync.add_argument("-n", "--no-mirrorlist",
                           action="store_true",
-                          help="Skip mirrorlist")
+                          help=txt.HLP_ARG_NO_MIRRORLIST)
         sync.add_argument("-y", "--sync",
                           action="store_true",
                           help=txt.HLP_ARG_SYNC)
-        # Api arguments
-        api = parser.add_argument_group("API")
-        api.add_argument("-a", "--api",
-                         action="store_true",
-                         help="[--prefix] [--set-branch|--get-branch] [--proto] [--no-mirrorlist]")
-        api.add_argument("-p", "--prefix",
-                         type=str,
-                         help="API: " + txt.HLP_ARG_API_PREFIX + txt.PREFIX_TIP)
-        api.add_argument("-P", "--proto", "--protocols",
-                         choices=["all", "http", "https", "ftp", "ftps"],
-                         type=str,
-                         nargs="+",
-                         help="API: " + txt.HLP_ARG_API_PROTOCOLS)
-        branch = api.add_mutually_exclusive_group()
-        branch.add_argument("-G", "--get-branch",
-                            action="store_true",
-                            help="API: " + txt.HLP_ARG_API_GET_BRANCH)
-        branch.add_argument("-S", "--set-branch",
-                            choices=["stable", "testing", "unstable"],
-                            help="API: " + txt.HLP_ARG_API_SET_BRANCH)
 
         args = parser.parse_args()
         if len(sys.argv) == 1:
+            print("pacman-mirrors version " + __version__)
             parser.print_help()
             sys.exit(0)
 
         if args.version:
-            print("{}pacman-mirrors {}{}".format(txt.GS, __version__, txt.CE))
+            print("{}pacman-mirrors {}{}".format(color.GREEN, __version__, color.ENDCOLOR))
             sys.exit(0)
 
         if args.country_list:
@@ -195,15 +187,6 @@ class PacmanMirrors:
 
         if args.sync:
             self.sync = True
-
-        if args.mirror_dir:
-            self.config["work_dir"] = args.mirror_dir
-
-        if args.output:
-            if args.output[0] == "/":
-                self.config["mirror_list"] = args.output
-            else:
-                self.config["mirror_list"] = os.getcwd() + "/" + args.output
 
         if args.interactive:
             self.interactive = True
@@ -331,7 +314,7 @@ class PacmanMirrors:
                     print("\r")
             else:
                 if not self.quiet:
-                    print("\r   {:<5}{}{} ".format(txt.GS, resp_time, txt.CE))
+                    print("\r   {:<5}{}{} ".format(color.GREEN, resp_time, color.ENDCOLOR))
                 worklist.append(mirror)
                 counter += 1
             if counter == number:
@@ -526,7 +509,7 @@ class PacmanMirrors:
                         print("\r")
                 else:
                     if not self.quiet:
-                        print("\r   {:<5}{}{} ".format(txt.GS, resp_time, txt.CE))
+                        print("\r   {:<5}{}{} ".format(color.GREEN, resp_time, color.ENDCOLOR))
         return worklist
 
     def run(self):
@@ -543,6 +526,7 @@ class PacmanMirrors:
             self.config["method"] = "random"  # use random instead of rank
             self.fasttrack = False  # using fasttrack is not possible
         if self.no_mirrorlist:
+            print(".: {} {}".format(txt.INF_CLR, txt.NO_CHANGE))
             sys.exit(0)
         self.load_all_mirrors()
         if self.country_list:

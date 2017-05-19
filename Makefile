@@ -58,6 +58,10 @@ docs:
 	pandoc -s -t man docs/index.md -o man/pacman-mirrors.8
 	gzip man/pacman-mirrors.8 -fq
 
+man-page:
+	pandoc -s -t man docs/index.md -o man/pacman-mirrors.8
+	man man/pacman-mirrors.8
+
 release: clean
 	python setup.py sdist upload
 	python setup.py bdist_wheel upload

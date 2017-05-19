@@ -8,24 +8,59 @@ pacman-mirrors - generate pacman mirrorlist for Manjaro Linux
 
 # SYNOPSIS
 
-pacman-mirrors [OPTION] ...
+pacman-mirrors [-f*NUMBER*|[[-i[-d]][-c*COUNTRY*,[*...*]|--geoip]][-m*METHOD*]] 
+[-a[-p*PREFIX*][-G|-S*BRANCH*]-P*PROTO*,[*...*]] [-b*BRANCH*] [-t*SECONDS*]
+[-q] [-v] [-n|-y]  
+
 
 # DESCRIPTION
 
 Generate mirrorlist for Manjaro Linux.
 Default is to rank all mirrors by reponse time.
 If no arguments are given pacman-mirrors lists available options.
+Pacman-mirrors requires access to files which are read-only 
+so it must be run with su or sudo.
 To create a mirrorlist using all default use,
 
-    sudo pacman-mirrors -g
+    pacman-mirrors --generate
     
-The mirrorlist generation process can be refined through options 
-and arguments which takes input, for example,
+The mirrorlist generation process can be refined through arguments 
+and arguments with options, for example,
 
-    sudo pacman-mirrors --country Denmark --timeout 5
+    pacman-mirrors --country Denmark --timeout 5
 
 # OPTIONS
 
+Some options are mutual exclusive and they will throw an arguments error,  
+  
+* **\--no-mirrorlist** and **\--sync**
+* **--branch**, **--get-branch** and **--set-branch**
+* **--sync** and **--no-mirrorlist**
+* **--country** and **--geoip**
+  
+Others can be used together but they have precedence.
+If the fasttrack arg is used with interactive, country or geoip
+the fasttrack arg will have precendence and the other is ignored.
+Also, if the branch arg is used with set-branch the set-branch arg has precedence. 
+Some arguments requires other argument to have effect for example,
+
+    pacman-mirrors -b unstable --default
+    
+the --default argument has no effect,
+it should have been in conjunction with --interactive.
+
+The same goes for the API specific arguments. 
+For those to have effect the --api argument must be present also.
+
+    pacman-mirrors --api -Sunstable
+
+The arguments can appear in any order except for arguments which takes 
+additional options in which case the options must follow 
+immediately after the argument, for example
+ 
+    pacman-mirrors -ayidS unstable
+
+## METHODS
 -g, \--generate
 :   Generate a new default mirrorlist using defaults
 
@@ -33,34 +68,58 @@ and arguments which takes input, for example,
 :   Generates a mirrorlist with a number mirrors ranked by responsiveness,
     the mirrors are selected from <http://repo.manjaro.org/status.json>
 
--m, \--method *METHOD*
-:   Default method is *rank* but *random* can be selected 
-
 -i, \--interactive [--default]
 :   Launches a tool for selectively picking mirrors and protocols,
     **--default** forces pacman-mirrors to load the default mirror
     file and ignore any preset custom-mirrors file, thus allowing for 
     reselecting mirrors for a new custom mirror file
 
+-m, \--method *METHOD*
+:   Default method is *rank* but *random* can be selected 
+
+## BRANCH
+
 -b, \--branch *BRANCH*
 :   Temporarily use another branch, use *stable*, *testing* or *unstable*, 
     the branch is reset with next run of pacman-mirrors
 
--c, \--country *COUNTRY* [*COUNTRY* ...]
-:   Specifiy a country or a list of countries, excludes **\--geoip**
+## COUNTRY
+-c, \--country *COUNTRY* [*COUNTRY*] ...
+:   Specifiy a country or a list of countries
 
 \--geoip
-:   Use geolocation if possible, if not uses all mirrors, 
-    excludes **-c**, **\--country**
+:   Use geolocation if possible, if not uses all mirrors
 
--l, \--country-list
+-l, \--list, \--country-list
 :   Lists available mirror countries
 
--d, \--mirror_dir *NEW_DIR*
-:   *(DEPRECATED)* Choose a temporary directory where mirrors file is located
+## API
 
--o, \--output *NEW_FILE*
-:   *(DEPRECATED)* Choose a temporary file for your mirrorlist
+-a, \--api [-p *PREFIX*] [-G|-S *BRANCH*] [-P *PROTO* [*PROTO*] ...]
+:   Instructs pacman-mirrors to activate processing of API arguments
+
+-p, \--prefix *PREFIX*
+:   Add a path prefix to pacman-mirrors file-handling
+    eg. */mnt/install* or *$mnt*
+
+-G, \--get-branch
+:   Returns branch from configuration optionally with a prefix.
+
+-S, \--set-branch *BRANCH*
+:   Writes the branch to configuration optionally with a prefix,
+    use *stable*, *testing* or *unstable*
+
+-P, \--proto, \--protocols *PROTO* [*...*]
+:   Write the protocols to configuration optionally with a prefix,
+    use *all* or *http*, *https*, *ftp* and *ftps*.
+
+## MISC
+
+-h, \--help
+:    Show the help message
+
+-n, \--no-mirrorlist
+:   Skip mirrorlist generation
 
 -q, \--quiet
 :   Make pacman-mirrors silent
@@ -70,45 +129,18 @@ and arguments which takes input, for example,
     SSL enabled mirrors has this value doubled to compensate, 
     for the time spent on exchanging encryption keys
 
--n, \--no-mirrorlist
-:   Skip mirrorlist generation, excludes **-y**, **\--sync**
-
--y, \--sync
-:   Instruct pacman-mirrors to syncronize the pacman database, 
-    excludes **-n**, **\--no-mirrorlist**
-
-## API
-
--a, \--api
-:   Instructs pacman-mirrors to activate these optional arguments
-
--a -p, \--prefix *PREFIX*
-:   Add a path prefix to pacman-mirrors file-handling  
-    eg. */mnt/install* or *$mnt*
-
--a -G, \--get-branch
-:   Returns branch from configuration optionally with a prefix.
-
--a -S, \--set-branch *BRANCH*
-:   Writes the branch to configuration optionally with a prefix,     
-    use *stable*, *testing* or *unstable*
-
--a -P, \--proto, \--protocols *PROTO* [*PROTO* ...]
-:   Write the protocols to configuration optionally with a prefix,  
-    use *all* or *http*, *https*, *ftp* and *ftps*.
-
-## GENERIC
-
--h, \--help
-:    Show the help message
-
 -v, \--version
 :   Show the version of pacman-mirrors
 
+-y, \--sync
+:   Instruct pacman-mirrors to syncronize the pacman database
+
 ## Exit status:  
 
-0 if OK  
-1 if problem with argument  
+0: OK  
+1: Problem with argument
+2: Problem accessing systemfiles
+3: Missing mirror file
 BRANCH from config  
 
 # EXAMPLES
@@ -118,61 +150,61 @@ The API functions is mainly designed to help packagers and iso-builders.
 However it can be of use for everyone because it takes the hazzle out 
 of editing your pacman-mirrors configuration.
 
-Which countries has mirrors?
+* Which countries has mirrors?
 
-    sudo pacman-mirrors -l
+    ```sudo pacman-mirrors -l```
 
-I want to temporary change branch to unstable, 
+* I want to temporary change branch to unstable, 
 use geolocation and syncronize pacman,
 
-    sudo pacman-mirrors -yb unstable --geoip
+    ```sudo pacman-mirrors -yb unstable --geoip```
     
-I want to permanently change branch to unstable, 
+* I want to permanently change branch to unstable, 
 use mirrors from Germany and France, 
 use only https and http protocol in that order and syncronize pacman
    
-    sudo pacman-mirrors -yac Germany,France -S unstable -P https http
+    ```sudo pacman-mirrors -yac Germany,France -S unstable -P https http```
     
-Create a mirrorlist with German mirrors and syncronize pacman
+* Create a mirrorlist with German mirrors and syncronize pacman
 
-    sudo pacman-mirrors -yc Germany
+    ```sudo pacman-mirrors -yc Germany```
 
-If you want more countries in your mirrorlist add them
+* If you want more countries in your mirrorlist add them
 
-    sudo pacman-mirrors -yc Germany France Denmark
+    ```sudo pacman-mirrors -yc Germany France Denmark```
 
-Create a mirrorlist with 5 mirrors with current packages and syncronize pacman
+* Create a mirrorlist with 5 mirrors with current packages and syncronize pacman
    
-    sudo pacman-mirrors -yf 5
+    ```sudo pacman-mirrors -yf 5```
 
-I want to choose my mirrors
+* I want to choose my mirrors
 
-    sudo pacman-mirrors -i
+    ```sudo pacman-mirrors -i```
 
-I have a custom mirror list and I want to create a new custom mirror list?
+* I have a custom mirror list and I want to create a new custom mirror list?
 
-    sudo pacman-mirrors -i --default
+    ```sudo pacman-mirrors -i --default```
 
-I have a custom mirror list - can I reset it?
+* I have a custom mirror list - can I reset it?
 
-    sudo pacman-mirrors -c all
+    ```sudo pacman-mirrors -c all```
 
-What branch am I on
+* What branch am I on
 
-    sudo pacman-mirrors -a -G*
+    ```sudo pacman-mirrors -a -G```
 
-Change system branch and dont change the mirrorlist
+* Change system branch and dont change the mirrorlist
 
-    sudo pacman-mirrors -naS unstable
+    ```sudo pacman-mirrors -naS unstable```
 
-Change protocols you will accept but dont touch the mirrorlist
+* Change protocols you will accept but dont touch the mirrorlist
 
-    sudo pacman-mirrors -naP https http
+    ```sudo pacman-mirrors -naP https http```
 
-A packager can write the directly to a mounted systems 
+* A packager can write the directly to a mounted systems 
 datafiles using either a path or an environment variable
 
-    sudo pacman-mirrors -ap $mnt -S unstable -P https
+    ```sudo pacman-mirrors -ap $mnt -S unstable -P https```
 
 # REPORTING BUGS
    <https://github.com/manjaro/pacman-mirrors/issues>
