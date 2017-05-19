@@ -126,7 +126,7 @@ and arguments with options, for example,</p>
 <pre><code>pacman-mirrors --country Denmark --timeout 5
 </code></pre>
 <h1 id="options">OPTIONS</h1>
-<p>Some options are mutual exclusive and they will throw an arguments error,  </p>
+<p>Some options are mutual exclusive and will throw an arguments error:  </p>
 <ul>
 <li><strong>--no-mirrorlist</strong> and <strong>--sync</strong></li>
 <li><strong>--branch</strong>, <strong>--get-branch</strong> and <strong>--set-branch</strong></li>
@@ -135,21 +135,22 @@ and arguments with options, for example,</p>
 </ul>
 <p>Others can be used together but they have precedence.
 If the fasttrack arg is used with interactive, country or geoip
-the fasttrack arg will have precendence and the other is ignored.
-Also, if the branch arg is used with set-branch the set-branch arg has precedence. 
-Some arguments requires other argument to have effect for example,</p>
+the fasttrack arg will have precendence and the others are ignored.
+Some arguments requires other argument to have effect for example,
+this command will ignore --default argument</p>
 <pre><code>pacman-mirrors -b unstable --default
 </code></pre>
-<p>the --default argument has no effect,
-it should have been in conjunction with --interactive.</p>
+<p>as it should have been in conjunction with --interactive, like</p>
+<pre><code>pacman-mirrors -id
+</code></pre>
 <p>The same goes for the API specific arguments. 
 For those to have effect the --api argument must be present also.</p>
-<pre><code>pacman-mirrors --api -Sunstable
+<pre><code>pacman-mirrors -aSunstable
 </code></pre>
 <p>The arguments can appear in any order except for arguments which takes 
 additional options in which case the options must follow 
 immediately after the argument, for example</p>
-<pre><code>pacman-mirrors -ayidS unstable
+<pre><code>pacman-mirrors -ayidSunstable
 </code></pre>
 <h2 id="methods">METHODS</h2>
 <p>-g, --generate
@@ -209,7 +210,7 @@ immediately after the argument, for example</p>
 1: Problem with argument
 2: Problem accessing systemfiles
 3: Missing mirror file
-BRANCH from config  </p>
+BRANCH: Value from config  </p>
 <h1 id="examples">EXAMPLES</h1>
 <p>Most optional arguments are self explaining others require explanation. 
 The API functions is mainly designed to help packagers and iso-builders. 
@@ -322,5 +323,5 @@ Frede Hundewadt <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#102;&#114;&#1
 
 <!--
 MkDocs version : 0.16.3
-Build Date UTC : 2017-05-19 09:01:46
+Build Date UTC : 2017-05-19 09:14:32
 -->

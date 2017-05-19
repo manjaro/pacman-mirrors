@@ -31,7 +31,7 @@ and arguments with options, for example,
 
 # OPTIONS
 
-Some options are mutual exclusive and they will throw an arguments error,  
+Some options are mutual exclusive and will throw an arguments error:  
   
 * **\--no-mirrorlist** and **\--sync**
 * **--branch**, **--get-branch** and **--set-branch**
@@ -40,25 +40,26 @@ Some options are mutual exclusive and they will throw an arguments error,
   
 Others can be used together but they have precedence.
 If the fasttrack arg is used with interactive, country or geoip
-the fasttrack arg will have precendence and the other is ignored.
-Also, if the branch arg is used with set-branch the set-branch arg has precedence. 
+the fasttrack arg will have precendence and the others are ignored.
 Some arguments requires other argument to have effect for example,
+this command will ignore --default argument
 
     pacman-mirrors -b unstable --default
     
-the --default argument has no effect,
-it should have been in conjunction with --interactive.
+as it should have been in conjunction with --interactive, like
+
+    pacman-mirrors -id
 
 The same goes for the API specific arguments. 
 For those to have effect the --api argument must be present also.
 
-    pacman-mirrors --api -Sunstable
+    pacman-mirrors -aSunstable
 
 The arguments can appear in any order except for arguments which takes 
 additional options in which case the options must follow 
 immediately after the argument, for example
  
-    pacman-mirrors -ayidS unstable
+    pacman-mirrors -ayidSunstable
 
 ## METHODS
 -g, \--generate
@@ -141,7 +142,7 @@ immediately after the argument, for example
 1: Problem with argument
 2: Problem accessing systemfiles
 3: Missing mirror file
-BRANCH from config  
+BRANCH: Value from config  
 
 # EXAMPLES
 
