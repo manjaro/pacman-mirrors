@@ -56,6 +56,7 @@ coverage:
 docs:
 	mkdocs build
 	pandoc -s -t man docs/index.md -o man/pacman-mirrors.8
+	pandoc docs/index.md -f markdown -t html -s -o man/pacman-mirrors.8.html
 	gzip man/pacman-mirrors.8 -fq
 
 man-page:
