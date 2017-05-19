@@ -108,7 +108,7 @@ immediately after the argument, for example
 :   Writes the branch to configuration,
     use *stable*, *testing* or *unstable*
 
--P, \--proto, \--protocols *PROTO* [*...*]
+-P, \--proto, \--protocols *PROTO* [*PROTO*] ...
 :   Write the protocols to configuration,
     use *all* or *http*, *https*, *ftp* and *ftps*.
 
