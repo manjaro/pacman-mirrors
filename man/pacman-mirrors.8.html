@@ -18,7 +18,7 @@
 <h1 id="name">NAME</h1>
 <p>pacman-mirrors - generate pacman mirrorlist for Manjaro Linux</p>
 <h1 id="synopsis">SYNOPSIS</h1>
-<p>pacman-mirrors [-f<em>NUMBER</em>|[[-i[-d]][-c<em>COUNTRY</em>,[<em>...</em>]|--geoip]][-m<em>METHOD</em>]] [-a[-p<em>PREFIX</em>][-G|-S<em>BRANCH</em>]-P<em>PROTO</em>,[<em>...</em>]] [-b<em>BRANCH</em>] [-t<em>SECONDS</em>] [-q] [-v] [-n|-y]</p>
+<p>pacman-mirrors [-f <em>NUMBER</em> | [[-i [-d]] [-c<em>COUNTRY</em>, [<em>COUNTRY</em>] ... | --geoip]]] [-m <em>METHOD</em>] [-a [-p <em>PREFIX</em>] [-G | -S<em>BRANCH</em>] [-P <em>PROTO</em> [<em>PROTO</em>] ...]] [-b <em>BRANCH</em>] [-t <em>SECONDS</em>] [-q] [-v] [-n | -y]</p>
 <h1 id="description">DESCRIPTION</h1>
 <p>Generate mirrorlist for Manjaro Linux. Default is to rank all mirrors by reponse time. If no arguments are given pacman-mirrors lists available options. Pacman-mirrors requires access to files which are read-only so it must be run with su or sudo. To create a mirrorlist using all default use,</p>
 <pre><code>pacman-mirrors --generate</code></pre>
@@ -35,11 +35,11 @@
 <p>Others can be used together but they have precedence. If the fasttrack arg is used with interactive, country or geoip the fasttrack arg will have precendence and the others are ignored. Some arguments requires other argument to have effect for example, this command will ignore --default argument</p>
 <pre><code>pacman-mirrors -b unstable --default</code></pre>
 <p>as it should have been in conjunction with --interactive, like</p>
-<pre><code>pacman-mirrors -id</code></pre>
+<pre><code>pacman-mirrors -b unstable --default --interactive</code></pre>
 <p>The same goes for the API specific arguments. For those to have effect the --api argument must be present also.</p>
-<pre><code>pacman-mirrors -aSunstable</code></pre>
+<pre><code>pacman-mirrors -aS unstable</code></pre>
 <p>The arguments can appear in any order except for arguments which takes additional options in which case the options must follow immediately after the argument, for example</p>
-<pre><code>pacman-mirrors -ayidSunstable</code></pre>
+<pre><code>pacman-mirrors -ayidS unstable</code></pre>
 <h2 id="methods">METHODS</h2>
 <dl>
 <dt>-g, --generate</dt>
@@ -82,13 +82,13 @@
 <dd>Add a path prefix to pacman-mirrors file-handling eg. <em>/mnt/install</em> or <em>$mnt</em>
 </dd>
 <dt>-G, --get-branch</dt>
-<dd>Returns branch from configuration optionally with a prefix.
+<dd>Returns branch from configuration.
 </dd>
 <dt>-S, --set-branch <em>BRANCH</em></dt>
-<dd>Writes the branch to configuration optionally with a prefix, use <em>stable</em>, <em>testing</em> or <em>unstable</em>
+<dd>Writes the branch to configuration, use <em>stable</em>, <em>testing</em> or <em>unstable</em>
 </dd>
 <dt>-P, --proto, --protocols <em>PROTO</em> [<em>...</em>]</dt>
-<dd>Write the protocols to configuration optionally with a prefix, use <em>all</em> or <em>http</em>, <em>https</em>, <em>ftp</em> and <em>ftps</em>.
+<dd>Write the protocols to configuration, use <em>all</em> or <em>http</em>, <em>https</em>, <em>ftp</em> and <em>ftps</em>.
 </dd>
 </dl>
 <h2 id="misc">MISC</h2>
@@ -103,7 +103,7 @@
 <dd>Make pacman-mirrors silent
 </dd>
 <dt>-t, --timeout <em>SECONDS</em></dt>
-<dd>Change the number of seconds waiting for a server response, SSL enabled mirrors has this value doubled to compensate, for the time spent on exchanging encryption keys
+<dd>Change the number of seconds waiting for a server response, SSL enabled mirrors has this value doubled to compensate for the time spent on exchanging encryption keys
 </dd>
 <dt>-v, --version</dt>
 <dd>Show the version of pacman-mirrors
@@ -113,8 +113,11 @@
 </dd>
 </dl>
 <h2 id="exit-status">Exit status:</h2>
-<p>0: OK<br />
-1: Problem with argument 2: Problem accessing systemfiles 3: Missing mirror file BRANCH: Value from config</p>
+<p>0 : OK<br />
+1 : Problem with argument<br />
+2 : Problem accessing systemfiles<br />
+3 : Missing mirror file<br />
+BRANCH: Value from config</p>
 <h1 id="examples">EXAMPLES</h1>
 <p>Most optional arguments are self explaining others require explanation. The API functions is mainly designed to help packagers and iso-builders. However it can be of use for everyone because it takes the hazzle out of editing your pacman-mirrors configuration.</p>
 <ul>

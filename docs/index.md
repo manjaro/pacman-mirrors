@@ -8,9 +8,7 @@ pacman-mirrors - generate pacman mirrorlist for Manjaro Linux
 
 # SYNOPSIS
 
-pacman-mirrors [-f*NUMBER*|[[-i[-d]][-c*COUNTRY*,[*...*]|--geoip]][-m*METHOD*]] 
-[-a[-p*PREFIX*][-G|-S*BRANCH*]-P*PROTO*,[*...*]] [-b*BRANCH*] [-t*SECONDS*]
-[-q] [-v] [-n|-y]  
+pacman-mirrors [-f *NUMBER* | [[-i [-d]] [-c*COUNTRY*, [*COUNTRY*] ... | --geoip]]] [-m *METHOD*] [-a [-p *PREFIX*] [-G | -S*BRANCH*] [-P *PROTO* [*PROTO*] ...]] [-b *BRANCH*] [-t *SECONDS*] [-q] [-v] [-n | -y]  
 
 
 # DESCRIPTION
@@ -48,18 +46,18 @@ this command will ignore --default argument
     
 as it should have been in conjunction with --interactive, like
 
-    pacman-mirrors -id
+    pacman-mirrors -b unstable --default --interactive
 
 The same goes for the API specific arguments. 
 For those to have effect the --api argument must be present also.
 
-    pacman-mirrors -aSunstable
+    pacman-mirrors -aS unstable
 
 The arguments can appear in any order except for arguments which takes 
 additional options in which case the options must follow 
 immediately after the argument, for example
  
-    pacman-mirrors -ayidSunstable
+    pacman-mirrors -ayidS unstable
 
 ## METHODS
 -g, \--generate
@@ -104,14 +102,14 @@ immediately after the argument, for example
     eg. */mnt/install* or *$mnt*
 
 -G, \--get-branch
-:   Returns branch from configuration optionally with a prefix.
+:   Returns branch from configuration.
 
 -S, \--set-branch *BRANCH*
-:   Writes the branch to configuration optionally with a prefix,
+:   Writes the branch to configuration,
     use *stable*, *testing* or *unstable*
 
 -P, \--proto, \--protocols *PROTO* [*...*]
-:   Write the protocols to configuration optionally with a prefix,
+:   Write the protocols to configuration,
     use *all* or *http*, *https*, *ftp* and *ftps*.
 
 ## MISC
@@ -127,7 +125,7 @@ immediately after the argument, for example
 
 -t, \--timeout *SECONDS*
 :   Change the number of seconds waiting for a server response, 
-    SSL enabled mirrors has this value doubled to compensate, 
+    SSL enabled mirrors has this value doubled to compensate 
     for the time spent on exchanging encryption keys
 
 -v, \--version
@@ -138,11 +136,11 @@ immediately after the argument, for example
 
 ## Exit status:  
 
-0: OK  
-1: Problem with argument
-2: Problem accessing systemfiles
-3: Missing mirror file
-BRANCH: Value from config  
+0     : OK  
+1     : Problem with argument  
+2     : Problem accessing systemfiles  
+3     : Missing mirror file  
+BRANCH: Value from config    
 
 # EXAMPLES
 
