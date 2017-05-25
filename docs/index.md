@@ -1,6 +1,6 @@
 % pacman-mirrors(8) Pacman-Mirrors User Manual  
 %   
-% May 18, 2017  
+% May 25, 2017  
 
 # NAME
 
@@ -8,7 +8,7 @@ pacman-mirrors - generate pacman mirrorlist for Manjaro Linux
 
 # SYNOPSIS
 
-pacman-mirrors [-f *NUMBER* | [[-i [-d]] [-c*COUNTRY*, [*COUNTRY*] ... | --geoip]]] [-m *METHOD*] [-a [-p *PREFIX*] [-G | -S*BRANCH*] [-P *PROTO* [*PROTO*] ...]] [-b *BRANCH*] [-t *SECONDS*] [-q] [-v] [-n | -y]  
+pacman-mirrors [-f *NUMBER* | [[-i [-d]] [-c *COUNTRY*, [*COUNTRY*] ... | --geoip]]] [-m *METHOD*] [-a [-p *PREFIX*] [-G | -S *BRANCH*] [-P *PROTO* [*PROTO*] ...]] [-b *BRANCH*] [-t *SECONDS*] [-q] [-v] [-n | -y]  
 
 
 # DESCRIPTION
@@ -151,59 +151,59 @@ of editing your pacman-mirrors configuration.
 
 * Which countries has mirrors?
 
-    ```sudo pacman-mirrors -l```
+    **```sudo pacman-mirrors -l```**
 
 * I want to temporary change branch to unstable, 
 use geolocation and syncronize pacman,
 
-    ```sudo pacman-mirrors -yb unstable --geoip```
+    **```sudo pacman-mirrors -yb unstable --geoip```**
     
 * I want to permanently change branch to unstable, 
 use mirrors from Germany and France, 
 use only https and http protocol in that order and syncronize pacman
    
-    ```sudo pacman-mirrors -yac Germany,France -S unstable -P https http```
+    **```sudo pacman-mirrors -yac Germany,France -S unstable -P https http```**
     
 * Create a mirrorlist with German mirrors and syncronize pacman
 
-    ```sudo pacman-mirrors -yc Germany```
+    **```sudo pacman-mirrors -yc Germany```**
 
 * If you want more countries in your mirrorlist add them
 
-    ```sudo pacman-mirrors -yc Germany France Denmark```
+    **```sudo pacman-mirrors -yc Germany France Denmark```**
 
 * Create a mirrorlist with 5 mirrors with current packages and syncronize pacman
    
-    ```sudo pacman-mirrors -yf 5```
+    **```sudo pacman-mirrors -yf 5```**
 
 * I want to choose my mirrors
 
-    ```sudo pacman-mirrors -i```
+    **```sudo pacman-mirrors -i```**
 
 * I have a custom mirror list and I want to create a new custom mirror list?
 
-    ```sudo pacman-mirrors -i --default```
+    **```sudo pacman-mirrors -i --default```**
 
 * I have a custom mirror list - can I reset it?
 
-    ```sudo pacman-mirrors -c all```
+    **```sudo pacman-mirrors -c all```**
 
 * What branch am I on
 
-    ```sudo pacman-mirrors -a -G```
+    **```sudo pacman-mirrors -a -G```**
 
 * Change system branch and dont change the mirrorlist
 
-    ```sudo pacman-mirrors -naS unstable```
+    **```sudo pacman-mirrors -naS unstable```**
 
 * Change protocols you will accept but dont touch the mirrorlist
 
-    ```sudo pacman-mirrors -naP https http```
+    **```sudo pacman-mirrors -naP https http```**
 
 * A packager can write the directly to a mounted systems 
 datafiles using either a path or an environment variable
 
-    ```sudo pacman-mirrors -ap $mnt -S unstable -P https```
+    **```sudo pacman-mirrors -ap $mnt -S unstable -P https```**
 
 # REPORTING BUGS
    <https://github.com/manjaro/pacman-mirrors/issues>

@@ -5,7 +5,7 @@
   <meta http-equiv="Content-Style-Type" content="text/css" />
   <meta name="generator" content="pandoc" />
   <meta name="author" content="" />
-  <meta name="date" content="2017-05-18" />
+  <meta name="date" content="2017-05-25" />
   <title>pacman-mirrors(8) Pacman-Mirrors User Manual</title>
   <style type="text/css">code{white-space: pre;}</style>
 </head>
@@ -13,12 +13,12 @@
 <div id="header">
 <h1 class="title">pacman-mirrors(8) Pacman-Mirrors User Manual</h1>
 <h2 class="author"></h2>
-<h3 class="date">May 18, 2017</h3>
+<h3 class="date">May 25, 2017</h3>
 </div>
 <h1 id="name">NAME</h1>
 <p>pacman-mirrors - generate pacman mirrorlist for Manjaro Linux</p>
 <h1 id="synopsis">SYNOPSIS</h1>
-<p>pacman-mirrors [-f <em>NUMBER</em> | [[-i [-d]] [-c<em>COUNTRY</em>, [<em>COUNTRY</em>] ... | --geoip]]] [-m <em>METHOD</em>] [-a [-p <em>PREFIX</em>] [-G | -S<em>BRANCH</em>] [-P <em>PROTO</em> [<em>PROTO</em>] ...]] [-b <em>BRANCH</em>] [-t <em>SECONDS</em>] [-q] [-v] [-n | -y]</p>
+<p>pacman-mirrors [-f <em>NUMBER</em> | [[-i [-d]] [-c <em>COUNTRY</em>, [<em>COUNTRY</em>] ... | --geoip]]] [-m <em>METHOD</em>] [-a [-p <em>PREFIX</em>] [-G | -S <em>BRANCH</em>] [-P <em>PROTO</em> [<em>PROTO</em>] ...]] [-b <em>BRANCH</em>] [-t <em>SECONDS</em>] [-q] [-v] [-n | -y]</p>
 <h1 id="description">DESCRIPTION</h1>
 <p>Generate mirrorlist for Manjaro Linux. Default is to rank all mirrors by reponse time. If no arguments are given pacman-mirrors lists available options. Pacman-mirrors requires access to files which are read-only so it must be run with su or sudo. To create a mirrorlist using all default use,</p>
 <pre><code>pacman-mirrors --generate</code></pre>
@@ -122,31 +122,31 @@ BRANCH: Value from config</p>
 <p>Most optional arguments are self explaining others require explanation. The API functions is mainly designed to help packagers and iso-builders. However it can be of use for everyone because it takes the hazzle out of editing your pacman-mirrors configuration.</p>
 <ul>
 <li><p>Which countries has mirrors?</p>
-<p><code>sudo pacman-mirrors -l</code></p></li>
+<p><strong><code>sudo pacman-mirrors -l</code></strong></p></li>
 <li><p>I want to temporary change branch to unstable, use geolocation and syncronize pacman,</p>
-<p><code>sudo pacman-mirrors -yb unstable --geoip</code></p></li>
+<p><strong><code>sudo pacman-mirrors -yb unstable --geoip</code></strong></p></li>
 <li><p>I want to permanently change branch to unstable, use mirrors from Germany and France, use only https and http protocol in that order and syncronize pacman</p>
-<p><code>sudo pacman-mirrors -yac Germany,France -S unstable -P https http</code></p></li>
+<p><strong><code>sudo pacman-mirrors -yac Germany,France -S unstable -P https http</code></strong></p></li>
 <li><p>Create a mirrorlist with German mirrors and syncronize pacman</p>
-<p><code>sudo pacman-mirrors -yc Germany</code></p></li>
+<p><strong><code>sudo pacman-mirrors -yc Germany</code></strong></p></li>
 <li><p>If you want more countries in your mirrorlist add them</p>
-<p><code>sudo pacman-mirrors -yc Germany France Denmark</code></p></li>
+<p><strong><code>sudo pacman-mirrors -yc Germany France Denmark</code></strong></p></li>
 <li><p>Create a mirrorlist with 5 mirrors with current packages and syncronize pacman</p>
-<p><code>sudo pacman-mirrors -yf 5</code></p></li>
+<p><strong><code>sudo pacman-mirrors -yf 5</code></strong></p></li>
 <li><p>I want to choose my mirrors</p>
-<p><code>sudo pacman-mirrors -i</code></p></li>
+<p><strong><code>sudo pacman-mirrors -i</code></strong></p></li>
 <li><p>I have a custom mirror list and I want to create a new custom mirror list?</p>
-<p><code>sudo pacman-mirrors -i --default</code></p></li>
+<p><strong><code>sudo pacman-mirrors -i --default</code></strong></p></li>
 <li><p>I have a custom mirror list - can I reset it?</p>
-<p><code>sudo pacman-mirrors -c all</code></p></li>
+<p><strong><code>sudo pacman-mirrors -c all</code></strong></p></li>
 <li><p>What branch am I on</p>
-<p><code>sudo pacman-mirrors -a -G</code></p></li>
+<p><strong><code>sudo pacman-mirrors -a -G</code></strong></p></li>
 <li><p>Change system branch and dont change the mirrorlist</p>
-<p><code>sudo pacman-mirrors -naS unstable</code></p></li>
+<p><strong><code>sudo pacman-mirrors -naS unstable</code></strong></p></li>
 <li><p>Change protocols you will accept but dont touch the mirrorlist</p>
-<p><code>sudo pacman-mirrors -naP https http</code></p></li>
+<p><strong><code>sudo pacman-mirrors -naP https http</code></strong></p></li>
 <li><p>A packager can write the directly to a mounted systems datafiles using either a path or an environment variable</p>
-<p><code>sudo pacman-mirrors -ap $mnt -S unstable -P https</code></p></li>
+<p><strong><code>sudo pacman-mirrors -ap $mnt -S unstable -P https</code></strong></p></li>
 </ul>
 <h1 id="reporting-bugs">REPORTING BUGS</h1>
 <p><a href="https://github.com/manjaro/pacman-mirrors/issues" class="uri">https://github.com/manjaro/pacman-mirrors/issues</a></p>
