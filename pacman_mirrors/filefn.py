@@ -89,8 +89,7 @@ def output_mirror_list(config, servers, custom=False, quiet=False, interactive=F
                                                     config["repo_arch"])
                     if not quiet:
                         message = "   {:<15} : {}{}".format(server["country"],
-                                                            server["url"],
-                                                            config["branch"])
+                                                            server["url"])
                         print("{:.{}}".format(message, cols))
                 else:
                     url = server["url"]
