@@ -2,14 +2,14 @@
 All notable changes to this project will be documented in this file.
 
 ## [4.2.0dev]
-- **Improvement**: Added `-R`/`--rebranch` to api [#105](https://github.com/manjaro/pacman-mirrors/issues/105).
+- **Improvement**: Added `-R`/`--re-branch` to api [#105](https://github.com/manjaro/pacman-mirrors/issues/105).
 - **Improvement**: Added man page.
 
 **Breaking changes**
-- `--set-branch <branch>` now requires the explicit branch as argument.
+- `-S`/`--set-branch $BRANCH` requires branch as argument.
 - `-u`/`--update` renamed to `-y`/`--sync`.
-- `NoUpdate` configuration removed from pacman-mirrors.conf. `--no-update` removed.
-- `NoUpdate` config has been replaced by `--no-mirrorlist` argument.
+- `NoUpdate` configuration removed from pacman-mirrors.conf. 
+- `--no-update` argument removed.
 - `MirrorlistsDir = /etc/pacman.d/mirrors` removed from pacman-mirrors.conf.
 - `-o`/`--output` argument removed.
 - `OutputMirrorlist = /etc/pacman.d/mirrorlist` removed from pacman-mirrors.conf
@@ -18,9 +18,9 @@ All notable changes to this project will be documented in this file.
 **Other improvements and fixes:**
 - **Improvement**: Do not write bad servers to the end of the mirrorlist.
 - **Improvement**: created argument groups for logic division of arguments usage.
-- **Improvement**: making `--get-branch` and `--set-branch` mutually exclusive.
-- **Improvement**: making `--no-mirrorlist` and `-y --sync` mutually exclusive.
-- **Improvement**: added protocol choices to `--proto` [all, http, https, ftp, ftps].
+- **Improvement**: `-G`/`--get-branch` and `-S`/`--set-branch` mutually exclusive.
+- **Improvement**: `-n`/`--no-mirrorlist` and `-y --sync` mutually exclusive.
+- **Improvement**: added choices to `-P`/`--proto` [all, http, https, ftp, ftps].
 - **Improvement**: sorting mirrorlist by country during load of data file.
 - **Fix**: Bug where ssl-certificate errors would break execution.
 - **Fix**: Issue where values from configuration was not parsed correct.
@@ -34,7 +34,7 @@ All notable changes to this project will be documented in this file.
 - Fix: comparison of mirrorfiles fixed
 
 ## [4.1.2] 2017-05-15
-- Fix: ranking breaks when --interactive is used with --default [#98](https://github.com/manjaro/pacman-mirrors/issues/98)
+- Fix: ranking breaks when `--interactive` is used with `--default` [#98](https://github.com/manjaro/pacman-mirrors/issues/98)
 
 ## [4.1.1] 2017-05-01
 - Added `-u` / `--update` option
