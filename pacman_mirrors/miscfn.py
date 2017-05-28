@@ -21,31 +21,32 @@
 import shutil
 
 from . import txt
+from . import colors as color
 
 
 def debug(where, what, value):
     """Helper for printing debug messages"""
-    print("{} {} >>>> '{} = {}'".format(DBG_CLR, where, what, value))
+    print("{} {} >>>> '{} = {}'".format(color.DBG_CLR, where, what, value))
 
 
 def blue(message):
     """Helper for printing blue messages"""
-    print("{}{}{}".format(BLUE, message, ENDCOLOR))
+    print("{}{}{}".format(color.BLUE, message, color.ENDCOLOR))
 
 
 def green(message):
     """Helper for printing green messages"""
-    print("{}{}{}".format(GREEN, message, ENDCOLOR))
+    print("{}{}{}".format(color.GREEN, message, color.ENDCOLOR))
 
 
 def red(message):
     """Helper for printing yellow messages"""
-    print("{}{}{}".format(RED, message, ENDCOLOR))
+    print("{}{}{}".format(color.RED, message, color.ENDCOLOR))
 
 
 def yellow(message):
     """Helper for printing yellow messages"""
-    print("{}{}{}".format(YELLOW, message, ENDCOLOR))
+    print("{}{}{}".format(color.YELLOW, message, color.ENDCOLOR))
 
 
 def internet_message():

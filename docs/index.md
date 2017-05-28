@@ -102,10 +102,13 @@ immediately after the argument, for example
     eg. */mnt/install* or *$mnt*
 
 -G, \--get-branch
-:   Returns branch from configuration.
+:   Return branch from configuration.
+
+-R, \--re-branch
+:   Replace the branch in mirrorlist
 
 -S, \--set-branch *BRANCH*
-:   Writes the branch to configuration,
+:   Replace the branch in configuration,
     use *stable*, *testing* or *unstable*
 
 -P, \--proto, \--protocols *PROTO* [*PROTO*] ...

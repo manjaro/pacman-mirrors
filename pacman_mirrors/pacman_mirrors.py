@@ -34,6 +34,7 @@ import subprocess
 from pacman_mirrors import __version__
 from .custom_help_formatter import CustomHelpFormatter
 from .mirror import Mirror
+from . import apifn
 from . import mirrorfn
 from . import colors as color
 from . import configuration as conf
@@ -125,6 +126,9 @@ class PacmanMirrors:
                          type=str,
                          nargs="+",
                          help=txt.HLP_ARG_API_PROTOCOLS)
+        api.add_argument("-R", "--re-branch",
+                            action="store_true",
+                            help=txt.HLP_ARG_API_RE_BRANCH)
         branch = api.add_mutually_exclusive_group()
         branch.add_argument("-b", "--branch",
                             type=str,
@@ -219,6 +223,7 @@ class PacmanMirrors:
             proto = False
             setbranch = bool(args.set_branch)
             getbranch = args.get_branch
+            rebranch = args.re_branch
             if args.proto:
                 proto = True
                 if "all" in args.proto:
@@ -231,13 +236,14 @@ class PacmanMirrors:
             if args.set_branch:
                 self.config["branch"] = args.set_branch
 
-            self.api_config(prefix=args.prefix, set_branch=setbranch, get_branch=getbranch,
-                            protocols=proto)
+            self.api_config(prefix=args.prefix, set_branch=setbranch, re_branch=rebranch,
+                            get_branch=getbranch, protocols=proto)
 
-    def api_config(self, prefix=None, set_branch=False, get_branch=False, protocols=False):
+    def api_config(self, prefix=None, set_branch=False, re_branch=False, get_branch=False, protocols=False):
         """Api functions
         :param prefix: prefix to the config paths
         :param set_branch: writes branch to pacman-mirrors.conf
+        :param re_branch: writes branch to current mirrorlist
         :param get_branch: sys.exit with branch
         :param protocols: writes list of protocols to pacman-mirrors.con
         """
@@ -254,13 +260,16 @@ class PacmanMirrors:
             self.config["to_be_removed"] = prefix + self.config["to_be_removed"]
             # end removal
         if set_branch:
-            configfn.api_write_branch(self.config["branch"],
-                                      self.config["config_file"])
+            apifn.write_config_branch(self.config["branch"],
+                                    self.config["config_file"])
         if protocols:
-            configfn.api_write_protocols(self.config["protocols"],
-                                         self.config["config_file"])
+            apifn.api_write_protocols(self.config["protocols"],
+                                      self.config["config_file"])
         if get_branch:
             sys.exit(self.config["branch"])
+
+        if re_branch:
+            apifn.write_mirrorlist_branch(self.config["branch"], self.config["mirror_list"])
 
     def build_common_mirror_list(self):
         """Generate common mirrorlist"""
@@ -540,6 +549,7 @@ class PacmanMirrors:
             self.build_common_mirror_list()
         if self.network and self.sync:
             subprocess.call(["pacman", "-Syy"])
+
 
 if __name__ == "__main__":
     app = PacmanMirrors()
