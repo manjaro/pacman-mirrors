@@ -199,6 +199,10 @@ use only https and http protocol in that order and syncronize pacman
 
     **```sudo pacman-mirrors -naS unstable```**
 
+* Change system branch and replace branch in mirrorlist and quit
+
+    **```sudo pacman-mirrors -naRS unstable```**
+
 * Change protocols you will accept but dont touch the mirrorlist
 
     **```sudo pacman-mirrors -naP https http```**
