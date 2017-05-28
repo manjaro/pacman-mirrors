@@ -2,14 +2,18 @@
 All notable changes to this project will be documented in this file.
 
 ## [4.2.0dev]
-- **Improvement**: Added `-R`/`--rebranch` to api. [#105](https://github.com/manjaro/pacman-mirrors/issues/105)
-- **Improvement**: Added man page
+- **Improvement**: Added `-R`/`--rebranch` to api [#105](https://github.com/manjaro/pacman-mirrors/issues/105).
+- **Improvement**: Added man page.
 
 **Breaking changes**
 - `--set-branch <branch>` now requires the explicit branch as argument.
 - `-u`/`--update` renamed to `-y`/`--sync`.
 - `NoUpdate` configuration removed from pacman-mirrors.conf. `--no-update` removed.
 - `NoUpdate` config has been replaced by `--no-mirrorlist` argument.
+- `MirrorlistsDir = /etc/pacman.d/mirrors` removed from pacman-mirrors.conf.
+- `-o`/`--output` argument removed.
+- `OutputMirrorlist = /etc/pacman.d/mirrorlist` removed from pacman-mirrors.conf
+- `-d`/`--mirror_dir` argument removed.
  
 **Other improvements and fixes:**
 - **Improvement**: Do not write bad servers to the end of the mirrorlist.
