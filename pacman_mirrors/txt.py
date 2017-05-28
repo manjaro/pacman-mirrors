@@ -61,6 +61,7 @@ HLP_ARG_VERSION = _("Print the pacman-mirrors version")
 # messages
 API_CONF_RE_BRANCH = _("Branch in config is changed")
 API_CONF_PROTOCOLS = _("Protocols in config is changed")
+API_ERROR_BRANCH = _("Re-branch requires a branch to work with")
 API_MIRRORLIST_RE_BRANCH = _("Branch in mirror list is changed")
 AVAILABLE_COUNTRIES = _("Available countries are")
 CANNOT_DOWNLOAD_FILE = _("Could not download from")

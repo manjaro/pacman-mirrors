@@ -221,9 +221,13 @@ class PacmanMirrors:
 
         if args.api:
             proto = False
+            getbranch = False
+            rebranch = False
             setbranch = bool(args.set_branch)
-            getbranch = args.get_branch
-            rebranch = args.re_branch
+            if args.get_branch:
+                getbranch = True
+            if args.re_branch:
+                rebranch = True
             if args.proto:
                 proto = True
                 if "all" in args.proto:
@@ -248,14 +252,12 @@ class PacmanMirrors:
         :param protocols: writes list of protocols to pacman-mirrors.con
         """
         if prefix:
-            if "$" in prefix:
-                prefix = os.environ.get(prefix)
             self.config["config_file"] = prefix + self.config["config_file"]
             self.config["custom_file"] = prefix + self.config["custom_file"]
-            self.config["work_dir"] = prefix + self.config["work_dir"]
             self.config["mirror_file"] = prefix + self.config["mirror_file"]
             self.config["mirror_list"] = prefix + self.config["mirror_list"]
             self.config["status_file"] = prefix + self.config["status_file"]
+            self.config["work_dir"] = prefix + self.config["work_dir"]
             # to be removed long time after 2017-04-18
             self.config["to_be_removed"] = prefix + self.config["to_be_removed"]
             # end removal
@@ -263,7 +265,9 @@ class PacmanMirrors:
             apifn.write_config_branch(self.config["branch"],
                                       self.config["config_file"])
         if re_branch:
-            apifn.write_mirrorlist_branch(self.config["branch"], self.config["mirror_list"])
+            if not set_branch:
+                print(".: {} {}".format(txt.ERR_CLR, txt.API_ERROR_BRANCH))
+                exit(5)
         if protocols:
             apifn.api_write_protocols(self.config["protocols"],
                                       self.config["config_file"])
