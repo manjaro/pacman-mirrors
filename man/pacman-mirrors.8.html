@@ -18,7 +18,7 @@
 <h1 id="name">NAME</h1>
 <p>pacman-mirrors - generate pacman mirrorlist for Manjaro Linux</p>
 <h1 id="synopsis">SYNOPSIS</h1>
-<p>pacman-mirrors [-f <em>NUMBER</em> | [[-i [-d]] [-c <em>COUNTRY</em>, [<em>COUNTRY</em>] ... | --geoip]]] [-m <em>METHOD</em>] [-a [-p <em>PREFIX</em>] [-G | -S <em>BRANCH</em>] [-P <em>PROTO</em> [<em>PROTO</em>] ...]] [-b <em>BRANCH</em>] [-t <em>SECONDS</em>] [-q] [-v] [-n | -y]</p>
+<p>pacman-mirrors [-f <em>NUMBER</em> | [[-i [-d]] [-c <em>COUNTRY</em>, [<em>COUNTRY</em>] ... | --geoip]]] [-m <em>METHOD</em>] [-a [-p <em>PREFIX</em>] [-R] [-G | -S <em>BRANCH</em>] [-P <em>PROTO</em> [<em>PROTO</em>] ...]] [-b <em>BRANCH</em>] [-t <em>SECONDS</em>] [-q] [-v] [-n | -y]</p>
 <h1 id="description">DESCRIPTION</h1>
 <p>Generate mirrorlist for Manjaro Linux. Default is to rank all mirrors by reponse time. If no arguments are given pacman-mirrors lists available options. Pacman-mirrors requires access to files which are read-only so it must be run with su or sudo. To create a mirrorlist using all default use,</p>
 <pre><code>pacman-mirrors --generate</code></pre>
@@ -75,7 +75,7 @@
 </dl>
 <h2 id="api">API</h2>
 <dl>
-<dt>-a, --api [-p <em>PREFIX</em>] [-G|-S <em>BRANCH</em>] [-P <em>PROTO</em> [<em>PROTO</em>] ...]</dt>
+<dt>-a, --api [-p <em>PREFIX</em>] [-R] [-G|-S <em>BRANCH</em>] [-P <em>PROTO</em> [<em>PROTO</em>] ...]</dt>
 <dd>Instructs pacman-mirrors to activate processing of API arguments
 </dd>
 <dt>-p, --prefix <em>PREFIX</em></dt>

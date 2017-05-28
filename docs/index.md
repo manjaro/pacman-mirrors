@@ -8,7 +8,7 @@ pacman-mirrors - generate pacman mirrorlist for Manjaro Linux
 
 # SYNOPSIS
 
-pacman-mirrors [-f *NUMBER* | [[-i [-d]] [-c *COUNTRY*, [*COUNTRY*] ... | --geoip]]] [-m *METHOD*] [-a [-p *PREFIX*] [-G | -S *BRANCH*] [-P *PROTO* [*PROTO*] ...]] [-b *BRANCH*] [-t *SECONDS*] [-q] [-v] [-n | -y]  
+pacman-mirrors [-f *NUMBER* | [[-i [-d]] [-c *COUNTRY*, [*COUNTRY*] ... | --geoip]]] [-m *METHOD*] [-a [-p *PREFIX*] [-R] [-G | -S *BRANCH*] [-P *PROTO* [*PROTO*] ...]] [-b *BRANCH*] [-t *SECONDS*] [-q] [-v] [-n | -y]  
 
 
 # DESCRIPTION
@@ -94,7 +94,7 @@ immediately after the argument, for example
 
 ## API
 
--a, \--api [-p *PREFIX*] [-G|-S *BRANCH*] [-P *PROTO* [*PROTO*] ...]
+-a, \--api [-p *PREFIX*] [-R] [-G|-S *BRANCH*] [-P *PROTO* [*PROTO*] ...]
 :   Instructs pacman-mirrors to activate processing of API arguments
 
 -p, \--prefix *PREFIX*
