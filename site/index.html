@@ -136,10 +136,10 @@ If the fasttrack arg is used with interactive, country or geoip
 the fasttrack arg will have precendence and the others are ignored.
 Some arguments requires other argument to have effect for example,
 this command will ignore --default argument</p>
-<pre><code>pacman-mirrors -b unstable --default
+<pre><code>WRONG pacman-mirrors -b unstable --default
 </code></pre>
 <p>as it should have been in conjunction with --interactive, like</p>
-<pre><code>pacman-mirrors -b unstable --default --interactive
+<pre><code>CORRECT pacman-mirrors -b unstable --interactive --default
 </code></pre>
 <p>The same goes for the API specific arguments. 
 For those to have effect the --api argument must be present also.</p>
@@ -321,5 +321,5 @@ Frede Hundewadt <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#102;&#114;&#1
 
 <!--
 MkDocs version : 0.16.3
-Build Date UTC : 2017-05-25 17:56:19
+Build Date UTC : 2017-05-28 07:22:34
 -->

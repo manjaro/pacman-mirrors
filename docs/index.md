@@ -42,11 +42,11 @@ the fasttrack arg will have precendence and the others are ignored.
 Some arguments requires other argument to have effect for example,
 this command will ignore --default argument
 
-    pacman-mirrors -b unstable --default
+    WRONG pacman-mirrors -b unstable --default
     
 as it should have been in conjunction with --interactive, like
 
-    pacman-mirrors -b unstable --default --interactive
+    CORRECT pacman-mirrors -b unstable --interactive --default
 
 The same goes for the API specific arguments. 
 For those to have effect the --api argument must be present also.
