@@ -127,8 +127,8 @@ class PacmanMirrors:
                          nargs="+",
                          help=txt.HLP_ARG_API_PROTOCOLS)
         api.add_argument("-R", "--re-branch",
-                            action="store_true",
-                            help=txt.HLP_ARG_API_RE_BRANCH)
+                         action="store_true",
+                         help=txt.HLP_ARG_API_RE_BRANCH)
         branch = api.add_mutually_exclusive_group()
         branch.add_argument("-b", "--branch",
                             type=str,
@@ -261,15 +261,14 @@ class PacmanMirrors:
             # end removal
         if set_branch:
             apifn.write_config_branch(self.config["branch"],
-                                    self.config["config_file"])
+                                      self.config["config_file"])
+        if re_branch:
+            apifn.write_mirrorlist_branch(self.config["branch"], self.config["mirror_list"])
         if protocols:
             apifn.api_write_protocols(self.config["protocols"],
                                       self.config["config_file"])
         if get_branch:
             sys.exit(self.config["branch"])
-
-        if re_branch:
-            apifn.write_mirrorlist_branch(self.config["branch"], self.config["mirror_list"])
 
     def build_common_mirror_list(self):
         """Generate common mirrorlist"""
