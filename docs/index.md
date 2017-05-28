@@ -205,9 +205,10 @@ use only https and http protocol in that order and syncronize pacman
 
 * A packager can write directly to a mounted systems 
 datafiles using either a path or an environment variable
-replacing the branch in both configuration and mirrorlist
+replacing the branch in both configuration and mirrorlist 
+leaving the mirrors as is
 
-    **```sudo pacman-mirrors -aR -p $mnt -S $branch -P https```**
+    **```sudo pacman-mirrors -anR -p $mnt -S $branch -P https```**
 
 # REPORTING BUGS
    <https://github.com/manjaro/pacman-mirrors/issues>
