@@ -115,5 +115,6 @@ Developing environment
     pip install coverage
     pip install babel
     pip install flake8
+    pip install npyscreen
     
     ```
