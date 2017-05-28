@@ -203,10 +203,11 @@ use only https and http protocol in that order and syncronize pacman
 
     **```sudo pacman-mirrors -naP https http```**
 
-* A packager can write the directly to a mounted systems 
+* A packager can write directly to a mounted systems 
 datafiles using either a path or an environment variable
+replacing the branch in both configuration and mirrorlist
 
-    **```sudo pacman-mirrors -ap $mnt -S unstable -P https```**
+    **```sudo pacman-mirrors -aR -p $mnt -S $branch -P https```**
 
 # REPORTING BUGS
    <https://github.com/manjaro/pacman-mirrors/issues>

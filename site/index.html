@@ -269,9 +269,10 @@ use only https and http protocol in that order and syncronize pacman</p>
 <p><strong><code>sudo pacman-mirrors -naP https http</code></strong></p>
 </li>
 <li>
-<p>A packager can write the directly to a mounted systems 
-datafiles using either a path or an environment variable</p>
-<p><strong><code>sudo pacman-mirrors -ap $mnt -S unstable -P https</code></strong></p>
+<p>A packager can write directly to a mounted systems 
+datafiles using either a path or an environment variable
+replacing the branch in both configuration and mirrorlist</p>
+<p><strong><code>sudo pacman-mirrors -aR -p $mnt -S $branch -P https</code></strong></p>
 </li>
 </ul>
 <h1 id="reporting-bugs">REPORTING BUGS</h1>
@@ -323,5 +324,5 @@ Frede Hundewadt <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#102;&#114;&#1
 
 <!--
 MkDocs version : 0.16.3
-Build Date UTC : 2017-05-28 12:52:15
+Build Date UTC : 2017-05-28 13:05:56
 -->
