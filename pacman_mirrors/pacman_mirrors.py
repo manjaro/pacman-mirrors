@@ -267,7 +267,7 @@ class PacmanMirrors:
         if re_branch:
             if not set_branch:
                 print(".: {} {}".format(txt.ERR_CLR, txt.API_ERROR_BRANCH))
-                exit(5)
+                exit(1)
         if protocols:
             apifn.api_write_protocols(self.config["protocols"],
                                       self.config["config_file"])
