@@ -117,7 +117,7 @@ class PacmanMirrors:
         api = parser.add_argument_group("API")
         api.add_argument("-a", "--api",
                          action="store_true",
-                         help="[-p PREFIX][-S|-G BRANCH][-P PROTO [PROTO ...]]")
+                         help="[-p PREFIX][-R][-S|-G BRANCH][-P PROTO [PROTO ...]]")
         api.add_argument("-p", "--prefix",
                          type=str,
                          help=txt.HLP_ARG_API_PREFIX + txt.PREFIX_TIP)
