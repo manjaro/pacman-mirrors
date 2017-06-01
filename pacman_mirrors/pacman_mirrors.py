@@ -562,7 +562,6 @@ class PacmanMirrors:
             self.config["method"] = "random"  # use random instead of rank
             self.fasttrack = False  # using fasttrack is not possible
         if self.no_mirrorlist:
-            print(".: {} {}".format(txt.INF_CLR, txt.NO_CHANGE))
             sys.exit(0)
         self.load_all_mirrors()
         if self.country_list:
