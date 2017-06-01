@@ -566,7 +566,7 @@ class PacmanMirrors:
         self.load_all_mirrors()
         if self.country_list:
             self.output_country_list()
-            exit(0)
+            sys.exit(0)
         if self.fasttrack:
             self.build_fasttrack_mirror_list(self.fasttrack)
         elif self.interactive:
