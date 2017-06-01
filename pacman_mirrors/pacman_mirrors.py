@@ -284,7 +284,7 @@ class PacmanMirrors:
         # Number 4
         if url:
             mirror = [
-                {"url": url, "country": "pkgbuild", "protocols": [url[url.find(":"):]], "resp_time": "00.00"}
+                {"url": url, "country": "pkgbuild", "protocols": [url[:url.find(":")]], "resp_time": "00.00"}
             ]
             filefn.output_mirror_list(self.config, mirror, quiet=True)
         # Number 5
