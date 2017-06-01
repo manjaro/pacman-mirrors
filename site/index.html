@@ -95,6 +95,8 @@
             <li><a href="#api">API</a></li>
             <li><a href="#misc">MISC</a></li>
             <li><a href="#exit-status">Exit status:</a></li>
+            <li><a href="#configuration-flow-of-pacman-mirrors">Configuration flow of pacman-mirrors</a></li>
+            <li><a href="#api-arguments">API arguments</a></li>
         <li class="main "><a href="#examples">EXAMPLES</a></li>
         <li class="main "><a href="#reporting-bugs">REPORTING BUGS</a></li>
         <li class="main "><a href="#see-also">SEE ALSO</a></li>
@@ -109,7 +111,7 @@
 <h1 id="name">NAME</h1>
 <p>pacman-mirrors - generate pacman mirrorlist for Manjaro Linux</p>
 <h1 id="synopsis">SYNOPSIS</h1>
-<p>pacman-mirrors [-f <em>NUMBER</em> | [[-i [-d]] [-c <em>COUNTRY</em>, [<em>COUNTRY</em>] ... | --geoip]]] [-m <em>METHOD</em>] [-a [-p <em>PREFIX</em>] [-R] [-G | -S <em>BRANCH</em>] [-P <em>PROTO</em> [<em>PROTO</em>] ...]] [-b <em>BRANCH</em>] [-t <em>SECONDS</em>] [-q] [-v] [-n | -y]  </p>
+<p>pacman-mirrors [-f <em>NUMBER</em> | [[-i [-d]] [-c <em>COUNTRY</em>, [<em>COUNTRY</em>] ... | --geoip]]] [-m <em>METHOD</em>] [-a [-p <em>PREFIX</em>] [-R] [-G | -S <em>BRANCH</em>] [-P <em>PROTO</em> [<em>PROTO</em>] ...][-U <em>URL</em>]] [-b <em>BRANCH</em>] [-t <em>SECONDS</em>] [-q] [-v] [-n | -y]  </p>
 <h1 id="description">DESCRIPTION</h1>
 <p>Generate mirrorlist for Manjaro Linux.
 Default is to rank all mirrors by reponse time.
@@ -175,7 +177,7 @@ immediately after the argument, for example</p>
 <p>-l, --list, --country-list
 :   Lists available mirror countries</p>
 <h2 id="api">API</h2>
-<p>-a, --api [-p <em>PREFIX</em>] [-R] [-G|-S <em>BRANCH</em>] [-P <em>PROTO</em> [<em>PROTO</em>] ...]
+<p>-a, --api [-p <em>PREFIX</em>] [-R] [-G|-S <em>BRANCH</em>] [-P <em>PROTO</em> [<em>PROTO</em>] ...][-U <em>URL</em>]
 :   Instructs pacman-mirrors to activate processing of API arguments</p>
 <p>-p, --prefix <em>PREFIX</em>
 :   Add a path prefix to pacman-mirrors file-handling
@@ -189,7 +191,9 @@ immediately after the argument, for example</p>
     use <em>stable</em>, <em>testing</em> or <em>unstable</em></p>
 <p>-P, --proto, --protocols <em>PROTO</em> [<em>PROTO</em>] ...
 :   Write the protocols to configuration,
-    use <em>all</em> or <em>http</em>, <em>https</em>, <em>ftp</em> and <em>ftps</em>.</p>
+    use <em>all</em> or <em>http</em>, <em>https</em>, <em>ftp</em> and <em>ftps</em></p>
+<p>-U, --url <em>URL</em>
+:   Replace mirrorlist with supplied url</p>
 <h2 id="misc">MISC</h2>
 <p>-h, --help
 :   Show the help message</p>
@@ -211,6 +215,38 @@ immediately after the argument, for example</p>
 2     : Problem accessing systemfiles<br />
 3     : Missing mirror file<br />
 BRANCH: Value from config    </p>
+<h2 id="configuration-flow-of-pacman-mirrors">Configuration flow of pacman-mirrors</h2>
+<p>At launch an internal default configuration is setup, 
+file configuration is applied and the commandline is parsed and applied.</p>
+<h2 id="api-arguments">API arguments</h2>
+<p>These arguments modifies key elements of pacman-mirrors configuration 
+according to the packagers needs.</p>
+<p>The actions performed by the API are in strict order and 
+performed <strong>before any</strong> other actions.</p>
+<ol>
+<li>If --prefix</li>
+<li>prefix internal file configuration with $PREFIX</li>
+<li>continue</li>
+<li>If --set-branch</li>
+<li>apply internal branch configuration with $BRANCH</li>
+<li>continue</li>
+<li>If --url</li>
+<li>apply internal configuration to a mirrorlist with $URL</li>
+<li>continue</li>
+<li>If --re-branch</li>
+<li>replace branch in mirrorlist with $BRANCH</li>
+<li>
+<p>continue</p>
+</li>
+<li>
+<p>If --get-branch</p>
+</li>
+<li>sys.exit(config.branch)</li>
+</ol>
+<p>When done pacman-mirrors checks the internet connection and if possible 
+download the latest datafiles for creating the mirrorlist. 
+At this point it is possible to interupt further processing.</p>
+<p>If the <strong>-n</strong> / <strong>no-mirrorlist</strong> argument is present pacman-mirrors will now exit.</p>
 <h1 id="examples">EXAMPLES</h1>
 <p>Most optional arguments are self explaining others require explanation. 
 The API functions is mainly designed to help packagers and iso-builders. 
@@ -329,5 +365,5 @@ Frede Hundewadt <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#102;&#114;&#1
 
 <!--
 MkDocs version : 0.16.3
-Build Date UTC : 2017-05-28 14:13:11
+Build Date UTC : 2017-06-01 08:52:31
 -->

@@ -8,7 +8,7 @@ pacman-mirrors - generate pacman mirrorlist for Manjaro Linux
 
 # SYNOPSIS
 
-pacman-mirrors [-f *NUMBER* | [[-i [-d]] [-c *COUNTRY*, [*COUNTRY*] ... | --geoip]]] [-m *METHOD*] [-a [-p *PREFIX*] [-R] [-G | -S *BRANCH*] [-P *PROTO* [*PROTO*] ...]] [-b *BRANCH*] [-t *SECONDS*] [-q] [-v] [-n | -y]  
+pacman-mirrors [-f *NUMBER* | [[-i [-d]] [-c *COUNTRY*, [*COUNTRY*] ... | --geoip]]] [-m *METHOD*] [-a [-p *PREFIX*] [-R] [-G | -S *BRANCH*] [-P *PROTO* [*PROTO*] ...][-U *URL*]] [-b *BRANCH*] [-t *SECONDS*] [-q] [-v] [-n | -y]  
 
 
 # DESCRIPTION
@@ -94,7 +94,7 @@ immediately after the argument, for example
 
 ## API
 
--a, \--api [-p *PREFIX*] [-R] [-G|-S *BRANCH*] [-P *PROTO* [*PROTO*] ...]
+-a, \--api [-p *PREFIX*] [-R] [-G|-S *BRANCH*] [-P *PROTO* [*PROTO*] ...][-U *URL*]
 :   Instructs pacman-mirrors to activate processing of API arguments
 
 -p, \--prefix *PREFIX*
@@ -113,7 +113,10 @@ immediately after the argument, for example
 
 -P, \--proto, \--protocols *PROTO* [*PROTO*] ...
 :   Write the protocols to configuration,
-    use *all* or *http*, *https*, *ftp* and *ftps*.
+    use *all* or *http*, *https*, *ftp* and *ftps*
+
+-U, \--url *URL*
+:   Replace mirrorlist with supplied url
 
 ## MISC
 
@@ -144,6 +147,41 @@ immediately after the argument, for example
 2     : Problem accessing systemfiles  
 3     : Missing mirror file  
 BRANCH: Value from config    
+
+## Configuration flow of pacman-mirrors
+
+At launch an internal default configuration is setup, 
+file configuration is applied and the commandline is parsed and applied.
+
+## API arguments
+
+These arguments modifies key elements of pacman-mirrors configuration 
+according to the packagers needs.
+
+The actions performed by the API are in strict order and 
+performed **before any** other actions.
+
+1. If --prefix
+   * prefix internal file configuration with $PREFIX
+   * continue
+2. If --set-branch
+   * apply internal branch configuration with $BRANCH
+   * continue
+3. If --url
+   * apply internal configuration to a mirrorlist with $URL
+   * continue
+4. If --re-branch
+   * replace branch in mirrorlist with $BRANCH
+   * continue
+	
+5. If --get-branch
+   * sys.exit(config.branch)
+	
+When done pacman-mirrors checks the internet connection and if possible 
+download the latest datafiles for creating the mirrorlist. 
+At this point it is possible to interupt further processing.
+
+If the **-n** / **no-mirrorlist** argument is present pacman-mirrors will now exit.
 
 # EXAMPLES
 

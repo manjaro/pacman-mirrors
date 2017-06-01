@@ -143,7 +143,7 @@ class PacmanMirrors:
                          action="store_true",
                          help=txt.HLP_ARG_API_RE_BRANCH)
         api.add_argument("-U", "--url",
-                         type="string",
+                         type=str,
                          help=txt.HLP_ARG_API_URL)
         # Misc arguments
         misc = parser.add_argument_group("MISC")

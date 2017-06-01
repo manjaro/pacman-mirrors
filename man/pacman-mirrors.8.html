@@ -18,7 +18,7 @@
 <h1 id="name">NAME</h1>
 <p>pacman-mirrors - generate pacman mirrorlist for Manjaro Linux</p>
 <h1 id="synopsis">SYNOPSIS</h1>
-<p>pacman-mirrors [-f <em>NUMBER</em> | [[-i [-d]] [-c <em>COUNTRY</em>, [<em>COUNTRY</em>] ... | --geoip]]] [-m <em>METHOD</em>] [-a [-p <em>PREFIX</em>] [-R] [-G | -S <em>BRANCH</em>] [-P <em>PROTO</em> [<em>PROTO</em>] ...]] [-b <em>BRANCH</em>] [-t <em>SECONDS</em>] [-q] [-v] [-n | -y]</p>
+<p>pacman-mirrors [-f <em>NUMBER</em> | [[-i [-d]] [-c <em>COUNTRY</em>, [<em>COUNTRY</em>] ... | --geoip]]] [-m <em>METHOD</em>] [-a [-p <em>PREFIX</em>] [-R] [-G | -S <em>BRANCH</em>] [-P <em>PROTO</em> [<em>PROTO</em>] ...][-U <em>URL</em>]] [-b <em>BRANCH</em>] [-t <em>SECONDS</em>] [-q] [-v] [-n | -y]</p>
 <h1 id="description">DESCRIPTION</h1>
 <p>Generate mirrorlist for Manjaro Linux. Default is to rank all mirrors by reponse time. If no arguments are given pacman-mirrors lists available options. Pacman-mirrors requires access to files which are read-only so it must be run with su or sudo. To create a mirrorlist using all default use,</p>
 <pre><code>pacman-mirrors --generate</code></pre>
@@ -75,7 +75,7 @@
 </dl>
 <h2 id="api">API</h2>
 <dl>
-<dt>-a, --api [-p <em>PREFIX</em>] [-R] [-G|-S <em>BRANCH</em>] [-P <em>PROTO</em> [<em>PROTO</em>] ...]</dt>
+<dt>-a, --api [-p <em>PREFIX</em>] [-R] [-G|-S <em>BRANCH</em>] [-P <em>PROTO</em> [<em>PROTO</em>] ...][-U <em>URL</em>]</dt>
 <dd>Instructs pacman-mirrors to activate processing of API arguments
 </dd>
 <dt>-p, --prefix <em>PREFIX</em></dt>
@@ -91,7 +91,10 @@
 <dd>Replace the branch in configuration, use <em>stable</em>, <em>testing</em> or <em>unstable</em>
 </dd>
 <dt>-P, --proto, --protocols <em>PROTO</em> [<em>PROTO</em>] ...</dt>
-<dd>Write the protocols to configuration, use <em>all</em> or <em>http</em>, <em>https</em>, <em>ftp</em> and <em>ftps</em>.
+<dd>Write the protocols to configuration, use <em>all</em> or <em>http</em>, <em>https</em>, <em>ftp</em> and <em>ftps</em>
+</dd>
+<dt>-U, --url <em>URL</em></dt>
+<dd>Replace mirrorlist with supplied url
 </dd>
 </dl>
 <h2 id="misc">MISC</h2>
@@ -121,6 +124,47 @@
 2 : Problem accessing systemfiles<br />
 3 : Missing mirror file<br />
 BRANCH: Value from config</p>
+<h2 id="configuration-flow-of-pacman-mirrors">Configuration flow of pacman-mirrors</h2>
+<p>At launch an internal default configuration is setup, file configuration is applied and the commandline is parsed and applied.</p>
+<h2 id="api-arguments">API arguments</h2>
+<p>These arguments modifies key elements of pacman-mirrors configuration according to the packagers needs.</p>
+<p>The actions performed by the API are in strict order and performed <strong>before any</strong> other actions.</p>
+<ol style="list-style-type: decimal">
+<li>If --prefix</li>
+</ol>
+<ul>
+<li>prefix internal file configuration with $PREFIX</li>
+<li>continue</li>
+</ul>
+<ol start="2" style="list-style-type: decimal">
+<li>If --set-branch</li>
+</ol>
+<ul>
+<li>apply internal branch configuration with $BRANCH</li>
+<li>continue</li>
+</ul>
+<ol start="3" style="list-style-type: decimal">
+<li>If --url</li>
+</ol>
+<ul>
+<li>apply internal configuration to a mirrorlist with $URL</li>
+<li>continue</li>
+</ul>
+<ol start="4" style="list-style-type: decimal">
+<li>If --re-branch</li>
+</ol>
+<ul>
+<li>replace branch in mirrorlist with $BRANCH</li>
+<li>continue</li>
+</ul>
+<ol start="5" style="list-style-type: decimal">
+<li>If --get-branch</li>
+</ol>
+<ul>
+<li>sys.exit(config.branch)</li>
+</ul>
+<p>When done pacman-mirrors checks the internet connection and if possible download the latest datafiles for creating the mirrorlist. At this point it is possible to interupt further processing.</p>
+<p>If the <strong>-n</strong> / <strong>no-mirrorlist</strong> argument is present pacman-mirrors will now exit.</p>
 <h1 id="examples">EXAMPLES</h1>
 <p>Most optional arguments are self explaining others require explanation. The API functions is mainly designed to help packagers and iso-builders. However it can be of use for everyone because it takes the hazzle out of editing your pacman-mirrors configuration.</p>
 <ul>
