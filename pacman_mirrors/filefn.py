@@ -75,7 +75,8 @@ def output_mirror_list(config, servers, custom=False, quiet=False, interactive=F
     """
     try:
         with open(config["mirror_list"], "w") as outfile:
-            print(".: {} {}".format(txt.INF_CLR, txt.WRITING_MIRROR_LIST))
+            if not quiet:
+                print(".: {} {}".format(txt.INF_CLR, txt.WRITING_MIRROR_LIST))
             # write list header
             write_mirrorlist_header(outfile, custom=custom)
             cols, lines = miscfn.terminal_size()
@@ -109,10 +110,10 @@ def output_mirror_list(config, servers, custom=False, quiet=False, interactive=F
 
                 # write list entry
                 write_mirrorlist_entry(outfile, server)
-
-            print(".: {} {}: {}".format(txt.INF_CLR,
-                                        txt.MIRROR_LIST_SAVED,
-                                        config["mirror_list"]))
+            if not quiet:
+                print(".: {} {}: {}".format(txt.INF_CLR,
+                                            txt.MIRROR_LIST_SAVED,
+                                            config["mirror_list"]))
     except OSError as err:
         print(".: {} {}: {}: {}".format(txt.ERR_CLR,
                                         txt.CANNOT_WRITE_FILE,
