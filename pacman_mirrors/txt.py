@@ -40,9 +40,10 @@ NUMBER = _("NUMBER")
 # help messages
 HLP_ARG_API_GET_BRANCH = _("Return branch from configuration")
 HLP_ARG_API_PREFIX = _("Set prefix to")
-HLP_ARG_API_PROTOCOLS = _("Write protocols to configuration")
+HLP_ARG_API_PROTOCOLS = _("Replace protocols in configuration")
 HLP_ARG_API_RE_BRANCH = _("Replace branch in mirrorlist")
 HLP_ARG_API_SET_BRANCH = _("Replace branch in configuration")
+HLP_ARG_API_URL = _("Replace mirror url in mirrorlist")
 HLP_ARG_BRANCH = _("Branch name")
 HLP_ARG_COUNTRY = _(
     "Comma separated list of countries, from which mirrors will be used")

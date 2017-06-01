@@ -113,6 +113,19 @@ class PacmanMirrors:
         country.add_argument("-l", "--country-list", "--list",
                              action="store_true",
                              help=txt.HLP_ARG_LIST)
+        # Branch arguments
+        branch = parser.add_argument_group("BRANCH")
+        only_one = branch.add_mutually_exclusive_group()
+        only_one.add_argument("-b", "--branch",
+                              type=str,
+                              choices=["stable", "testing", "unstable"],
+                              help=txt.HLP_ARG_BRANCH)
+        only_one.add_argument("-G", "--get-branch",
+                              action="store_true",
+                              help=txt.HLP_ARG_API_GET_BRANCH)
+        only_one.add_argument("-S", "--set-branch",
+                              choices=["stable", "testing", "unstable"],
+                              help=txt.HLP_ARG_API_SET_BRANCH)
         # Api arguments
         api = parser.add_argument_group("API")
         api.add_argument("-a", "--api",
@@ -129,17 +142,9 @@ class PacmanMirrors:
         api.add_argument("-R", "--re-branch",
                          action="store_true",
                          help=txt.HLP_ARG_API_RE_BRANCH)
-        branch = api.add_mutually_exclusive_group()
-        branch.add_argument("-b", "--branch",
-                            type=str,
-                            choices=["stable", "testing", "unstable"],
-                            help=txt.HLP_ARG_BRANCH)
-        branch.add_argument("-G", "--get-branch",
-                            action="store_true",
-                            help=txt.HLP_ARG_API_GET_BRANCH)
-        branch.add_argument("-S", "--set-branch",
-                            choices=["stable", "testing", "unstable"],
-                            help=txt.HLP_ARG_API_SET_BRANCH)
+        api.add_argument("-U", "--url",
+                         type="string",
+                         help=txt.HLP_ARG_API_URL)
         # Misc arguments
         misc = parser.add_argument_group("MISC")
         misc.add_argument("-q", "--quiet",
@@ -223,6 +228,7 @@ class PacmanMirrors:
             proto = False
             getbranch = False
             rebranch = False
+            url = args.url | None
             setbranch = bool(args.set_branch)
             if args.get_branch:
                 getbranch = True
@@ -241,16 +247,22 @@ class PacmanMirrors:
                 self.config["branch"] = args.set_branch
 
             self.api_config(prefix=args.prefix, set_branch=setbranch, re_branch=rebranch,
-                            get_branch=getbranch, protocols=proto)
+                            get_branch=getbranch, protocols=proto, url=url)
 
-    def api_config(self, prefix=None, set_branch=False, re_branch=False, get_branch=False, protocols=False):
+    def api_config(self, prefix=None, set_branch=False, re_branch=False,
+                   get_branch=False, protocols=False, url=None):
         """Api functions
         :param prefix: prefix to the config paths
-        :param set_branch: writes branch to pacman-mirrors.conf
-        :param re_branch: writes branch to current mirrorlist
+        :param set_branch: replace branch in pacman-mirrors.conf
+        :param re_branch: replace branch in mirrorlist
         :param get_branch: sys.exit with branch
-        :param protocols: writes list of protocols to pacman-mirrors.con
+        :param protocols: replace protocols in pacman-mirrors.conf
+        :param url: replace mirror url in mirrorlist
         """
+        # Do not change the following sequence
+        # Doing so will most certainly cause serious problems
+        # for any packager relying on this sequence
+        # Number 1
         if prefix:
             self.config["config_file"] = prefix + self.config["config_file"]
             self.config["custom_file"] = prefix + self.config["custom_file"]
@@ -261,18 +273,28 @@ class PacmanMirrors:
             # to be removed long time after 2017-04-18
             self.config["to_be_removed"] = prefix + self.config["to_be_removed"]
             # end removal
+        # Number 2
+        if protocols:
+            apifn.api_write_protocols(self.config["protocols"],
+                                      self.config["config_file"])
+        # Number 3
         if set_branch:
             apifn.write_config_branch(self.config["branch"],
                                       self.config["config_file"])
+        # Number 4
+        if url:
+            mirror = [
+                {"url": url, "country": "pkgbuild", "protocols": [url[url.find(":"):]]}
+            ]
+            filefn.output_mirror_list(self.config, mirror, quiet=True)
+        # Number 5
         if re_branch:
             if not set_branch:
                 print(".: {} {}".format(txt.ERR_CLR, txt.API_ERROR_BRANCH))
                 exit(1)
             apifn.write_mirrorlist_branch(self.config["branch"],
                                           self.config["config_file"])
-        if protocols:
-            apifn.api_write_protocols(self.config["protocols"],
-                                      self.config["config_file"])
+        # Number 6
         if get_branch:
             sys.exit(self.config["branch"])
 
