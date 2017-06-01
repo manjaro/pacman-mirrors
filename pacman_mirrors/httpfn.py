@@ -178,9 +178,10 @@ def ping_host(host, count=1):
     return system_call("ping -c{} {} > /dev/null".format(count, host)) == 0
 
 
-def update_mirrors(config):
+def update_mirrors(config, quiet=False):
     """Download updates from repo.manjaro.org
     :param config:
+    :param quiet:
     :returns: tuple with result for mirrors.json and status.json
     :rtype: tuple
     """
@@ -192,21 +193,24 @@ def update_mirrors(config):
     result = None
     connected = inet_conn_check()
     if connected:
-        print(".: {} {} {}".format(txt.INF_CLR,
-                                   txt.DOWNLOADING_MIRROR_FILE,
-                                   txt.REPO_SERVER))
+        if not quiet:
+            print(".: {} {} {}".format(txt.INF_CLR,
+                                       txt.DOWNLOADING_MIRROR_FILE,
+                                       txt.REPO_SERVER))
         result = download_mirrors(config)
     else:
         if not filefn.check_file(config["status_file"]):
-            print(".: {} {} {} {}".format(txt.WRN_CLR,
-                                          txt.MIRROR_FILE,
-                                          config["status_file"],
-                                          txt.IS_MISSING))
-            print(".: {} {} {}".format(txt.WRN_CLR,
-                                       txt.FALLING_BACK,
-                                       conf.MIRROR_FILE))
+            if not quiet:
+                print(".: {} {} {} {}".format(txt.WRN_CLR,
+                                              txt.MIRROR_FILE,
+                                              config["status_file"],
+                                              txt.IS_MISSING))
+                print(".: {} {} {}".format(txt.WRN_CLR,
+                                           txt.FALLING_BACK,
+                                           conf.MIRROR_FILE))
             result = (True, False)
         if not filefn.check_file(config["mirror_file"]):
-            print(".: {} {}".format(txt.ERR_CLR, txt.HOUSTON))
+            if not quiet:
+                print(".: {} {}".format(txt.ERR_CLR, txt.HOUSTON))
             result = (False, False)
     return result
