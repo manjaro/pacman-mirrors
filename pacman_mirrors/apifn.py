@@ -28,7 +28,7 @@ def find_mirrorlist_branch(filename):
         sys.exit(2)
 
 
-def write_mirrorlist_branch(newbranch, filename):
+def write_mirrorlist_branch(newbranch, filename, quiet=False):
     """"""
     branch = find_mirrorlist_branch(filename)
     try:
@@ -43,7 +43,8 @@ def write_mirrorlist_branch(newbranch, filename):
                     tmp.write("{}".format(line))
         os.replace(tmp.name, filename)
         os.chmod(filename, 0o644)
-        print(".: {} {}".format(txt.INF_CLR, txt.API_MIRRORLIST_RE_BRANCH))
+        if not quiet:
+            print(".: {} {}".format(txt.INF_CLR, txt.API_MIRRORLIST_RE_BRANCH))
     except OSError as err:
         print(".: {} {}: {}: {}".format(txt.ERR_CLR,
                                         txt.CANNOT_READ_FILE,
@@ -52,7 +53,7 @@ def write_mirrorlist_branch(newbranch, filename):
         sys.exit(2)
 
 
-def write_config_branch(branch, filename):
+def write_config_branch(branch, filename, quiet=False):
     """Write branch"""
     if branch == "stable":
         branch = "# Branch = stable\n"
@@ -74,7 +75,8 @@ def write_config_branch(branch, filename):
                 tmp.write(branch)
         os.replace(tmp.name, filename)
         os.chmod(filename, 0o644)
-        print(".: {} {}".format(txt.INF_CLR, txt.API_CONF_RE_BRANCH))
+        if not quiet:
+            print(".: {} {}".format(txt.INF_CLR, txt.API_CONF_RE_BRANCH))
     except OSError as err:
         print(".: {} {}: {}: {}".format(txt.ERR_CLR,
                                         txt.CANNOT_READ_FILE,
@@ -83,7 +85,7 @@ def write_config_branch(branch, filename):
         sys.exit(2)
 
 
-def api_write_protocols(protocols, filename):
+def api_write_protocols(protocols, filename, quiet=False):
     """Write branch"""
     if protocols:
         protocols = "Protocols = {}\n".format(",".join(protocols))
@@ -105,7 +107,8 @@ def api_write_protocols(protocols, filename):
                 tmp.write(protocols)
         os.replace(tmp.name, filename)
         os.chmod(filename, 0o644)
-        print(".: {} {}".format(txt.INF_CLR, txt.API_CONF_PROTOCOLS))
+        if not quiet:
+            print(".: {} {}".format(txt.INF_CLR, txt.API_CONF_PROTOCOLS))
     except OSError as err:
         print(".: {} {}: {}: {}".format(txt.ERR_CLR,
                                         txt.CANNOT_READ_FILE,
