@@ -285,6 +285,7 @@ class PacmanMirrors:
                                       quiet=self.quiet)
         # Number 4
         if url:
+            filefn.dir_must_exist(prefix + "/etc/pacman.d")
             mirror = [
                 {
                     "url": apifn.check_url(url),
