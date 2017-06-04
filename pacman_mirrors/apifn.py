@@ -9,6 +9,16 @@ from . import miscfn
 from . import txt
 
 
+def check_url(url):
+    """Sanitize url
+    :param url:
+    :returns sanitized url
+    """
+    if not url.endswith("/"):
+        url = url + "/"
+    return url
+
+
 def find_mirrorlist_branch(filename):
     """find and return the branch found in mirrorlist"""
     try:

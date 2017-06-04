@@ -251,6 +251,11 @@ replacing the branch in both configuration and mirrorlist
 leaving the mirrors as is
 
     **```sudo pacman-mirrors -anR -p $mnt -S $branch -P https```**
+    
+* It is also possible to specify a mirror in which case the mirrorlist
+is created and pacman-mirrors exit when done
+
+    **```sudo pacman-mirrors -an -p $mnt -S $branch -P https -U http://server.tld/mirror```**
 
 # REPORTING BUGS
    <https://github.com/manjaro/pacman-mirrors/issues>

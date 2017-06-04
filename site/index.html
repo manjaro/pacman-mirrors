@@ -315,6 +315,11 @@ replacing the branch in both configuration and mirrorlist
 leaving the mirrors as is</p>
 <p><strong><code>sudo pacman-mirrors -anR -p $mnt -S $branch -P https</code></strong></p>
 </li>
+<li>
+<p>It is also possible to specify a mirror in which case the mirrorlist
+is created and pacman-mirrors exit when done</p>
+<p><strong><code>sudo pacman-mirrors -an -p $mnt -S $branch -P https -U http://server.tld/mirror</code></strong></p>
+</li>
 </ul>
 <h1 id="reporting-bugs">REPORTING BUGS</h1>
 <p><a href="https://github.com/manjaro/pacman-mirrors/issues">https://github.com/manjaro/pacman-mirrors/issues</a></p>
@@ -365,5 +370,5 @@ Frede Hundewadt <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#102;&#114;&#1
 
 <!--
 MkDocs version : 0.16.3
-Build Date UTC : 2017-06-01 08:52:31
+Build Date UTC : 2017-06-04 08:18:54
 -->

@@ -286,14 +286,20 @@ class PacmanMirrors:
         # Number 4
         if url:
             mirror = [
-                {"url": url, "country": "pkgbuild", "protocols": [url[:url.find(":")]], "resp_time": "00.00"}
+                {
+                    "url": apifn.check_url(url),
+                    "country": "pkgbuild",
+                    "protocols": [url[:url.find(":")]],
+                    "resp_time": "00.00"
+                 }
             ]
             filefn.output_mirror_list(self.config, mirror, quiet=self.quiet)
+            sys.exit(0)
         # Number 5
         if re_branch:
             if not set_branch:
                 print(".: {} {}".format(txt.ERR_CLR, txt.API_ERROR_BRANCH))
-                exit(1)
+                sys.exit(1)
             apifn.write_mirrorlist_branch(self.config["branch"],
                                           self.config["config_file"],
                                           quiet=self.quiet)
