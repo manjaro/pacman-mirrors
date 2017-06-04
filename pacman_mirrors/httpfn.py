@@ -55,6 +55,8 @@ def download_mirrors(config):
         tempfile = config["work_dir"] + "/temp.file"
         jsonfn.json_dump_file(mirrorlist, tempfile)
         filecmp.clear_cache()
+        if not filefn.check_file(config["mirror_file"]):
+            jsonfn.json_dump_file(mirrorlist, config["mirror_file"])
         if not filecmp.cmp(tempfile, config["mirror_file"]):
             jsonfn.json_dump_file(mirrorlist, config["mirror_file"])
         os.remove(tempfile)
