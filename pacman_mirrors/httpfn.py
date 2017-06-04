@@ -43,11 +43,12 @@ from . import txt
 def download_mirrors(config):
     """Retrieve mirrors from manjaro.org
     :param config:
-    :returns: tuple with success for mirrors.json and status.json
+    :returns: tuple with bool for mirrors.json and status.json
     :rtype: tuple
     """
     fetchmirrors = False
     fetchstatus = False
+    # mirrors.json
     try:
         with urlopen(config["url_mirrors_json"]) as response:
             mirrorlist = json.loads(response.read().decode("utf8"), object_pairs_hook=collections.OrderedDict)
@@ -55,13 +56,13 @@ def download_mirrors(config):
         tempfile = config["work_dir"] + "/temp.file"
         jsonfn.json_dump_file(mirrorlist, tempfile)
         filecmp.clear_cache()
-        if not filefn.check_file(config["mirror_file"]):
-            jsonfn.json_dump_file(mirrorlist, config["mirror_file"])
-        if not filecmp.cmp(tempfile, config["mirror_file"]):
-            jsonfn.json_dump_file(mirrorlist, config["mirror_file"])
+        if filefn.check_file(conf.USR_DIR, dir=True):
+            if not filecmp.cmp(tempfile, config["mirror_file"]):
+                jsonfn.json_dump_file(mirrorlist, config["mirror_file"])
         os.remove(tempfile)
     except (HTTPException, json.JSONDecodeError, URLError):
         pass
+    # status.json
     try:
         with urlopen(config["url_status_json"]) as response:
             statuslist = json.loads(
@@ -71,6 +72,7 @@ def download_mirrors(config):
         jsonfn.write_json_file(statuslist, config["status_file"])
     except (HTTPException, json.JSONDecodeError, URLError):
         pass
+    # result
     return fetchmirrors, fetchstatus
 
 

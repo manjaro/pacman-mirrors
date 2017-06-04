@@ -30,11 +30,15 @@ from . import txt
 from . import colors as color
 
 
-def check_file(filename):
+def check_file(file, dir=False):
     """Check if file exist
-    :param filename:
+    :param file:
+    :param dir:
+    :returns bool if existing
     """
-    return os.path.isfile(filename)
+    if dir:
+        return os.path.isdir(file)
+    return os.path.isfile(file)
 
 
 def dir_must_exist(dir_name):

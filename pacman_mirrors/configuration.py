@@ -28,6 +28,7 @@ CONFIG_FILE = "/etc/pacman-mirrors.conf"
 MIRROR_LIST = "/etc/pacman.d/mirrorlist"
 # pacman-mirrors dir/files
 WORK_DIR = "/var/lib/pacman-mirrors/"
+USR_DIR = "/usr/share/pacman-mirrors"
 CUSTOM_FILE = "/var/lib/pacman-mirrors/custom-mirrors.json"
 MIRROR_FILE = "/usr/share/pacman-mirrors/mirrors.json"
 STATUS_FILE = "/var/lib/pacman-mirrors/status.json"
