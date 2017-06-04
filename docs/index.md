@@ -169,11 +169,10 @@ performed **before any** other actions.
    * continue
 3. If --url
    * apply internal configuration to a mirrorlist with $URL
-   * continue
+   * sys.exit(0)
 4. If --re-branch
    * replace branch in mirrorlist with $BRANCH
    * continue
-	
 5. If --get-branch
    * sys.exit(config.branch)
 	
