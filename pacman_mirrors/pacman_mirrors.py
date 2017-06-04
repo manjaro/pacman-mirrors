@@ -261,7 +261,7 @@ class PacmanMirrors:
         """
         # Do not change the following sequence
         # Doing so will most certainly cause serious problems
-        # for any packager relying on this sequence
+        #   for any one relying on the api
         # Number 1
         if prefix:
             self.config["config_file"] = prefix + self.config["config_file"]
@@ -279,7 +279,7 @@ class PacmanMirrors:
                                       self.config["config_file"],
                                       quiet=self.quiet)
         # Number 3
-        if set_branch:
+        if set_branch and not url:
             apifn.write_config_branch(self.config["branch"],
                                       self.config["config_file"],
                                       quiet=self.quiet)

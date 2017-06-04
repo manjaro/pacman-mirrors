@@ -165,7 +165,7 @@ performed **before any** other actions.
    * prefix internal file configuration with $PREFIX
    * continue
 2. If --set-branch
-   * apply internal branch configuration with $BRANCH
+   * apply $BRANCH to internal configuration
    * continue
 3. If --url
    * apply internal configuration to a mirrorlist with $URL
