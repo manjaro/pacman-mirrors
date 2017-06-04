@@ -63,7 +63,7 @@ immediately after the argument, for example
 -g, \--generate
 :   Generate a new default mirrorlist using defaults
 
--f, \--fasttrack NUMBER
+-f, \--fasttrack *NUMBER*
 :   Generates a mirrorlist with a number mirrors ranked by responsiveness,
     the mirrors are selected from <http://repo.manjaro.org/status.json>
 
@@ -79,7 +79,7 @@ immediately after the argument, for example
 ## BRANCH
 
 -b, \--branch *BRANCH*
-:   Temporarily use another branch, use *stable*, *testing* or *unstable*, 
+:   Temporarily use another branch, *stable*, *testing* or *unstable*, 
     the branch is reset with next run of pacman-mirrors
 
 ## COUNTRY
@@ -94,7 +94,7 @@ immediately after the argument, for example
 
 ## API
 
--a, \--api [-p *PREFIX*] [-R] [-G|-S *BRANCH*] [-P *PROTO* [*PROTO*] ...][-U *URL*]
+-a, \--api [-p *PREFIX*] [-R] [-G|-S *BRANCH*] [-P *PROTO* [*PROTO*] ...] [-U *URL*]
 :   Instructs pacman-mirrors to activate processing of API arguments
 
 -p, \--prefix *PREFIX*
@@ -105,14 +105,14 @@ immediately after the argument, for example
 :   Return branch from configuration.
 
 -R, \--re-branch
-:   Replace the branch in mirrorlist
+:   Replace branch in mirrorlist
 
 -S, \--set-branch *BRANCH*
-:   Replace the branch in configuration,
+:   Replace branch in configuration,
     use *stable*, *testing* or *unstable*
 
 -P, \--proto, \--protocols *PROTO* [*PROTO*] ...
-:   Write the protocols to configuration,
+:   Write protocols to configuration,
     use *all* or *http*, *https*, *ftp* and *ftps*
 
 -U, \--url *URL*
@@ -159,29 +159,29 @@ These arguments modifies key elements of pacman-mirrors configuration
 according to the packagers needs.
 
 The actions performed by the API are in strict order and 
-performed **before any** other actions.
+performed *before any* other actions.
 
-1. If **-S** / **--set-branch** *BRANCH*
+1. If *-S* *BRANCH*
    * apply *BRANCH* to internal configuration
-2. If **p** / **--prefix** *PREFIX*
+2. If *p*  *PREFIX*
    * prefix internal file configuration with *PREFIX*
-3. If **-U** / **--url** *URL*
+3. If *-U* *URL*
    * apply internal configuration to a mirrorlist with *URL*
    * *sys.exit(0)*
-4. If **-G** / **--get-branch**
+4. If *-G*
    * *sys.exit(config.branch)*
-5. If **-P** / **--proto** *PROTO* [*PROTO*] ...
+5. If *-P* *PROTO* [*PROTO*] ...
    * replace protocols in pacman-mirrors.conf with *PROTO*
-6. If **-S** / **--set-branch** *BRANCH*
+6. If *-S* *BRANCH*
    * replace branch in pacman-mirrors.conf with *BRANCH*
-7. If **-R** / **--re-branch**
-   * replace branch in mirrorlist with **-S** *BRANCH*
+7. If *-R*
+   * replace branch in mirrorlist with *-S* *BRANCH*
 	
 When done pacman-mirrors checks the internet connection and if possible 
 download the latest datafiles for creating the mirrorlist. 
 At this point it is possible to interupt further processing.
 
-If the **-n** / **no-mirrorlist** argument is present pacman-mirrors will now exit.
+If the *-n* argument is present pacman-mirrors will now exit.
 
 # EXAMPLES
 
@@ -192,70 +192,70 @@ of editing your pacman-mirrors configuration.
 
 * Which countries has mirrors?
 
-    **```sudo pacman-mirrors -l```**
+    *sudo pacman-mirrors -l*
 
 * I want to temporary change branch to unstable, 
 use geolocation and syncronize pacman,
 
-    **```sudo pacman-mirrors -yb unstable --geoip```**
+    *sudo pacman-mirrors -yb unstable --geoip*
     
 * I want to permanently change branch to unstable, 
 use mirrors from Germany and France, 
 use only https and http protocol in that order and syncronize pacman
    
-    **```sudo pacman-mirrors -yac Germany,France -S unstable -P https http```**
+    *sudo pacman-mirrors -yac Germany,France -S unstable -P https http*
     
 * Create a mirrorlist with German mirrors and syncronize pacman
 
-    **```sudo pacman-mirrors -yc Germany```**
+    *sudo pacman-mirrors -yc Germany*
 
 * If you want more countries in your mirrorlist add them
 
-    **```sudo pacman-mirrors -yc Germany France Denmark```**
+    *sudo pacman-mirrors -yc Germany France Denmark*
 
 * Create a mirrorlist with 5 mirrors with current packages and syncronize pacman
    
-    **```sudo pacman-mirrors -yf 5```**
+    *sudo pacman-mirrors -yf 5*
 
 * I want to choose my mirrors
 
-    **```sudo pacman-mirrors -i```**
+    *sudo pacman-mirrors -i*
 
 * I have a custom mirror list and I want to create a new custom mirror list?
 
-    **```sudo pacman-mirrors -i --default```**
+    *sudo pacman-mirrors -i --default*
 
 * I have a custom mirror list - can I reset it?
 
-    **```sudo pacman-mirrors -c all```**
+    *sudo pacman-mirrors -c all*
 
 * What branch am I on
 
-    **```sudo pacman-mirrors -a -G```**
+    *sudo pacman-mirrors -aG*
 
 * Change system branch and dont change the mirrorlist
 
-    **```sudo pacman-mirrors -naS unstable```**
+    *sudo pacman-mirrors -naS unstable*
 
 * Change system branch and replace branch in mirrorlist and quit
 
-    **```sudo pacman-mirrors -naRS unstable```**
+    *sudo pacman-mirrors -naRS unstable*
 
 * Change protocols you will accept but dont touch the mirrorlist
 
-    **```sudo pacman-mirrors -naP https http```**
+    *sudo pacman-mirrors -naP https http*
 
 * A packager can write directly to a mounted systems 
 datafiles using either a path or an environment variable
 replacing the branch in both configuration and mirrorlist 
 leaving the mirrors as is
 
-    **```sudo pacman-mirrors -anR -p $mnt -S $branch -P https```**
+    *sudo pacman-mirrors -anR -p $mnt -S $branch -P https*
     
 * It is also possible to specify a mirror in which case the mirrorlist
-is created and pacman-mirrors exit when done
+is created and pacman-mirrors exits
 
-    **```sudo pacman-mirrors -an -p $mnt -S $branch -P https -U http://server.tld/mirror```**
+    *sudo pacman-mirrors -ap $mnt -S $branch -U http://server.tld/mirror*
 
 # REPORTING BUGS
    <https://github.com/manjaro/pacman-mirrors/issues>

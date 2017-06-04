@@ -155,7 +155,7 @@ immediately after the argument, for example</p>
 <h2 id="methods">METHODS</h2>
 <p>-g, --generate
 :   Generate a new default mirrorlist using defaults</p>
-<p>-f, --fasttrack NUMBER
+<p>-f, --fasttrack <em>NUMBER</em>
 :   Generates a mirrorlist with a number mirrors ranked by responsiveness,
     the mirrors are selected from <a href="http://repo.manjaro.org/status.json">http://repo.manjaro.org/status.json</a></p>
 <p>-i, --interactive [--default]
@@ -167,7 +167,7 @@ immediately after the argument, for example</p>
 :   Default method is <em>rank</em> but <em>random</em> can be selected </p>
 <h2 id="branch">BRANCH</h2>
 <p>-b, --branch <em>BRANCH</em>
-:   Temporarily use another branch, use <em>stable</em>, <em>testing</em> or <em>unstable</em>, 
+:   Temporarily use another branch, <em>stable</em>, <em>testing</em> or <em>unstable</em>, 
     the branch is reset with next run of pacman-mirrors</p>
 <h2 id="country">COUNTRY</h2>
 <p>-c, --country <em>COUNTRY</em> [<em>COUNTRY</em>] ...
@@ -177,7 +177,7 @@ immediately after the argument, for example</p>
 <p>-l, --list, --country-list
 :   Lists available mirror countries</p>
 <h2 id="api">API</h2>
-<p>-a, --api [-p <em>PREFIX</em>] [-R] [-G|-S <em>BRANCH</em>] [-P <em>PROTO</em> [<em>PROTO</em>] ...][-U <em>URL</em>]
+<p>-a, --api [-p <em>PREFIX</em>] [-R] [-G|-S <em>BRANCH</em>] [-P <em>PROTO</em> [<em>PROTO</em>] ...] [-U <em>URL</em>]
 :   Instructs pacman-mirrors to activate processing of API arguments</p>
 <p>-p, --prefix <em>PREFIX</em>
 :   Add a path prefix to pacman-mirrors file-handling
@@ -185,12 +185,12 @@ immediately after the argument, for example</p>
 <p>-G, --get-branch
 :   Return branch from configuration.</p>
 <p>-R, --re-branch
-:   Replace the branch in mirrorlist</p>
+:   Replace branch in mirrorlist</p>
 <p>-S, --set-branch <em>BRANCH</em>
-:   Replace the branch in configuration,
+:   Replace branch in configuration,
     use <em>stable</em>, <em>testing</em> or <em>unstable</em></p>
 <p>-P, --proto, --protocols <em>PROTO</em> [<em>PROTO</em>] ...
-:   Write the protocols to configuration,
+:   Write protocols to configuration,
     use <em>all</em> or <em>http</em>, <em>https</em>, <em>ftp</em> and <em>ftps</em></p>
 <p>-U, --url <em>URL</em>
 :   Replace mirrorlist with supplied url</p>
@@ -222,28 +222,28 @@ file configuration is applied and the commandline is parsed and applied.</p>
 <p>These arguments modifies key elements of pacman-mirrors configuration 
 according to the packagers needs.</p>
 <p>The actions performed by the API are in strict order and 
-performed <strong>before any</strong> other actions.</p>
+performed <em>before any</em> other actions.</p>
 <ol>
-<li>If <strong>-S</strong> / <strong>--set-branch</strong> <em>BRANCH</em></li>
+<li>If <em>-S</em> <em>BRANCH</em></li>
 <li>apply <em>BRANCH</em> to internal configuration</li>
-<li>If <strong>p</strong> / <strong>--prefix</strong> <em>PREFIX</em></li>
+<li>If <em>p</em>  <em>PREFIX</em></li>
 <li>prefix internal file configuration with <em>PREFIX</em></li>
-<li>If <strong>-U</strong> / <strong>--url</strong> <em>URL</em></li>
+<li>If <em>-U</em> <em>URL</em></li>
 <li>apply internal configuration to a mirrorlist with <em>URL</em></li>
 <li><em>sys.exit(0)</em></li>
-<li>If <strong>-G</strong> / <strong>--get-branch</strong></li>
+<li>If <em>-G</em></li>
 <li><em>sys.exit(config.branch)</em></li>
-<li>If <strong>-P</strong> / <strong>--proto</strong> <em>PROTO</em> [<em>PROTO</em>] ...</li>
+<li>If <em>-P</em> <em>PROTO</em> [<em>PROTO</em>] ...</li>
 <li>replace protocols in pacman-mirrors.conf with <em>PROTO</em></li>
-<li>If <strong>-S</strong> / <strong>--set-branch</strong> <em>BRANCH</em></li>
+<li>If <em>-S</em> <em>BRANCH</em></li>
 <li>replace branch in pacman-mirrors.conf with <em>BRANCH</em></li>
-<li>If <strong>-R</strong> / <strong>--re-branch</strong></li>
-<li>replace branch in mirrorlist with <strong>-S</strong> <em>BRANCH</em></li>
+<li>If <em>-R</em></li>
+<li>replace branch in mirrorlist with <em>-S</em> <em>BRANCH</em></li>
 </ol>
 <p>When done pacman-mirrors checks the internet connection and if possible 
 download the latest datafiles for creating the mirrorlist. 
 At this point it is possible to interupt further processing.</p>
-<p>If the <strong>-n</strong> / <strong>no-mirrorlist</strong> argument is present pacman-mirrors will now exit.</p>
+<p>If the <em>-n</em> argument is present pacman-mirrors will now exit.</p>
 <h1 id="examples">EXAMPLES</h1>
 <p>Most optional arguments are self explaining others require explanation. 
 The API functions is mainly designed to help packagers and iso-builders. 
@@ -252,70 +252,70 @@ of editing your pacman-mirrors configuration.</p>
 <ul>
 <li>
 <p>Which countries has mirrors?</p>
-<p><strong><code>sudo pacman-mirrors -l</code></strong></p>
+<p><em>sudo pacman-mirrors -l</em></p>
 </li>
 <li>
 <p>I want to temporary change branch to unstable, 
 use geolocation and syncronize pacman,</p>
-<p><strong><code>sudo pacman-mirrors -yb unstable --geoip</code></strong></p>
+<p><em>sudo pacman-mirrors -yb unstable --geoip</em></p>
 </li>
 <li>
 <p>I want to permanently change branch to unstable, 
 use mirrors from Germany and France, 
 use only https and http protocol in that order and syncronize pacman</p>
-<p><strong><code>sudo pacman-mirrors -yac Germany,France -S unstable -P https http</code></strong></p>
+<p><em>sudo pacman-mirrors -yac Germany,France -S unstable -P https http</em></p>
 </li>
 <li>
 <p>Create a mirrorlist with German mirrors and syncronize pacman</p>
-<p><strong><code>sudo pacman-mirrors -yc Germany</code></strong></p>
+<p><em>sudo pacman-mirrors -yc Germany</em></p>
 </li>
 <li>
 <p>If you want more countries in your mirrorlist add them</p>
-<p><strong><code>sudo pacman-mirrors -yc Germany France Denmark</code></strong></p>
+<p><em>sudo pacman-mirrors -yc Germany France Denmark</em></p>
 </li>
 <li>
 <p>Create a mirrorlist with 5 mirrors with current packages and syncronize pacman</p>
-<p><strong><code>sudo pacman-mirrors -yf 5</code></strong></p>
+<p><em>sudo pacman-mirrors -yf 5</em></p>
 </li>
 <li>
 <p>I want to choose my mirrors</p>
-<p><strong><code>sudo pacman-mirrors -i</code></strong></p>
+<p><em>sudo pacman-mirrors -i</em></p>
 </li>
 <li>
 <p>I have a custom mirror list and I want to create a new custom mirror list?</p>
-<p><strong><code>sudo pacman-mirrors -i --default</code></strong></p>
+<p><em>sudo pacman-mirrors -i --default</em></p>
 </li>
 <li>
 <p>I have a custom mirror list - can I reset it?</p>
-<p><strong><code>sudo pacman-mirrors -c all</code></strong></p>
+<p><em>sudo pacman-mirrors -c all</em></p>
 </li>
 <li>
 <p>What branch am I on</p>
-<p><strong><code>sudo pacman-mirrors -a -G</code></strong></p>
+<p><em>sudo pacman-mirrors -aG</em></p>
 </li>
 <li>
 <p>Change system branch and dont change the mirrorlist</p>
-<p><strong><code>sudo pacman-mirrors -naS unstable</code></strong></p>
+<p><em>sudo pacman-mirrors -naS unstable</em></p>
 </li>
 <li>
 <p>Change system branch and replace branch in mirrorlist and quit</p>
-<p><strong><code>sudo pacman-mirrors -naRS unstable</code></strong></p>
+<p><em>sudo pacman-mirrors -naRS unstable</em></p>
 </li>
 <li>
 <p>Change protocols you will accept but dont touch the mirrorlist</p>
-<p><strong><code>sudo pacman-mirrors -naP https http</code></strong></p>
+<p><em>sudo pacman-mirrors -naP https http</em></p>
 </li>
 <li>
 <p>A packager can write directly to a mounted systems 
 datafiles using either a path or an environment variable
 replacing the branch in both configuration and mirrorlist 
 leaving the mirrors as is</p>
-<p><strong><code>sudo pacman-mirrors -anR -p $mnt -S $branch -P https</code></strong></p>
+<p><em>sudo pacman-mirrors -anR -p $mnt -S $branch -P https</em></p>
 </li>
 <li>
 <p>It is also possible to specify a mirror in which case the mirrorlist
-is created and pacman-mirrors exit when done</p>
-<p><strong><code>sudo pacman-mirrors -an -p $mnt -S $branch -P https -U http://server.tld/mirror</code></strong></p>
+is created and pacman-mirrors exits</p>
+<p><em>sudo pacman-mirrors -ap $mnt -S $branch -U http://server.tld/mirror</em></p>
 </li>
 </ul>
 <h1 id="reporting-bugs">REPORTING BUGS</h1>
@@ -367,5 +367,5 @@ Frede Hundewadt <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#102;&#114;&#1
 
 <!--
 MkDocs version : 0.16.3
-Build Date UTC : 2017-06-04 13:27:01
+Build Date UTC : 2017-06-04 17:48:05
 -->
