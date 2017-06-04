@@ -9,7 +9,15 @@ from . import miscfn
 from . import txt
 
 
-def check_url(url):
+def sanitize_prefix(prefix):
+    """Sanitize prefix
+    :param prefix:
+    :returns sanitized prefix
+    """
+    return sanitize_url(prefix)
+
+
+def sanitize_url(url):
     """Sanitize url
     :param url:
     :returns sanitized url

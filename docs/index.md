@@ -161,20 +161,21 @@ according to the packagers needs.
 The actions performed by the API are in strict order and 
 performed **before any** other actions.
 
-1. If --prefix
-   * prefix internal file configuration with $PREFIX
-   * continue
-2. If --set-branch
-   * apply $BRANCH to internal configuration
-   * continue
-3. If --url
-   * apply internal configuration to a mirrorlist with $URL
-   * sys.exit(0)
-4. If --re-branch
-   * replace branch in mirrorlist with $BRANCH
-   * continue
-5. If --get-branch
-   * sys.exit(config.branch)
+1. If **-S** / **--set-branch** *BRANCH*
+   * apply *BRANCH* to internal configuration
+2. If **p** / **--prefix** *PREFIX*
+   * prefix internal file configuration with *PREFIX*
+3. If **-U** / **--url** *URL*
+   * apply internal configuration to a mirrorlist with *URL*
+   * *sys.exit(0)*
+4. If **-G** / **--get-branch**
+   * *sys.exit(config.branch)*
+5. If **-P** / **--proto** *PROTO* [*PROTO*] ...
+   * replace protocols in pacman-mirrors.conf with *PROTO*
+6. If **-S** / **--set-branch** *BRANCH*
+   * replace branch in pacman-mirrors.conf with *BRANCH*
+7. If **-R** / **--re-branch**
+   * replace branch in mirrorlist with **-S** *BRANCH*
 	
 When done pacman-mirrors checks the internet connection and if possible 
 download the latest datafiles for creating the mirrorlist. 

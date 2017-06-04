@@ -224,20 +224,21 @@ according to the packagers needs.</p>
 <p>The actions performed by the API are in strict order and 
 performed <strong>before any</strong> other actions.</p>
 <ol>
-<li>If --prefix</li>
-<li>prefix internal file configuration with $PREFIX</li>
-<li>continue</li>
-<li>If --set-branch</li>
-<li>apply $BRANCH to internal configuration</li>
-<li>continue</li>
-<li>If --url</li>
-<li>apply internal configuration to a mirrorlist with $URL</li>
-<li>sys.exit(0)</li>
-<li>If --re-branch</li>
-<li>replace branch in mirrorlist with $BRANCH</li>
-<li>continue</li>
-<li>If --get-branch</li>
-<li>sys.exit(config.branch)</li>
+<li>If <strong>-S</strong> / <strong>--set-branch</strong> <em>BRANCH</em></li>
+<li>apply <em>BRANCH</em> to internal configuration</li>
+<li>If <strong>p</strong> / <strong>--prefix</strong> <em>PREFIX</em></li>
+<li>prefix internal file configuration with <em>PREFIX</em></li>
+<li>If <strong>-U</strong> / <strong>--url</strong> <em>URL</em></li>
+<li>apply internal configuration to a mirrorlist with <em>URL</em></li>
+<li><em>sys.exit(0)</em></li>
+<li>If <strong>-G</strong> / <strong>--get-branch</strong></li>
+<li><em>sys.exit(config.branch)</em></li>
+<li>If <strong>-P</strong> / <strong>--proto</strong> <em>PROTO</em> [<em>PROTO</em>] ...</li>
+<li>replace protocols in pacman-mirrors.conf with <em>PROTO</em></li>
+<li>If <strong>-S</strong> / <strong>--set-branch</strong> <em>BRANCH</em></li>
+<li>replace branch in pacman-mirrors.conf with <em>BRANCH</em></li>
+<li>If <strong>-R</strong> / <strong>--re-branch</strong></li>
+<li>replace branch in mirrorlist with <strong>-S</strong> <em>BRANCH</em></li>
 </ol>
 <p>When done pacman-mirrors checks the internet connection and if possible 
 download the latest datafiles for creating the mirrorlist. 
@@ -366,5 +367,5 @@ Frede Hundewadt <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#102;&#114;&#1
 
 <!--
 MkDocs version : 0.16.3
-Build Date UTC : 2017-06-04 12:42:22
+Build Date UTC : 2017-06-04 13:27:01
 -->

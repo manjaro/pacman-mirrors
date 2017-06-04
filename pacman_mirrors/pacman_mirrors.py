@@ -229,7 +229,7 @@ class PacmanMirrors:
             getbranch = False
             rebranch = False
             url = args.url
-            setbranch = bool(args.set_branch)
+            setbranch = args.set_branch
             if args.get_branch:
                 getbranch = True
             if args.re_branch:
@@ -243,17 +243,15 @@ class PacmanMirrors:
                         self.config["protocols"] = args.proto[0].split(",")
                     else:
                         self.config["protocols"] = args.proto
-            if args.set_branch:
-                self.config["branch"] = args.set_branch
 
-            self.api_config(prefix=args.prefix, set_branch=setbranch, re_branch=rebranch,
+            self.api_config(prefix=args.prefix, new_branch=setbranch, re_branch=rebranch,
                             get_branch=getbranch, protocols=proto, url=url)
 
-    def api_config(self, prefix=None, set_branch=False, re_branch=False,
+    def api_config(self, prefix=None, new_branch=None, re_branch=False,
                    get_branch=False, protocols=False, url=None):
         """Api functions
         :param prefix: prefix to the config paths
-        :param set_branch: replace branch in pacman-mirrors.conf
+        :param new_branch: replace branch in pacman-mirrors.conf
         :param re_branch: replace branch in mirrorlist
         :param get_branch: sys.exit with branch
         :param protocols: replace protocols in pacman-mirrors.conf
@@ -263,7 +261,12 @@ class PacmanMirrors:
         # Doing so will most certainly cause serious problems
         #   for any one relying on the api
         # Number 1
+        if new_branch:
+            self.config["branch"] = new_branch
+
+        # Number 2
         if prefix:
+            prefix = apifn.sanitize_prefix(prefix)
             self.config["config_file"] = prefix + self.config["config_file"]
             self.config["custom_file"] = prefix + self.config["custom_file"]
             self.config["mirror_file"] = prefix + self.config["mirror_file"]
@@ -273,30 +276,36 @@ class PacmanMirrors:
             # to be removed long time after 2017-04-18
             self.config["to_be_removed"] = prefix + self.config["to_be_removed"]
             # end removal
-        # Number 2
-        if protocols:
-            apifn.api_write_protocols(self.config["protocols"],
-                                      self.config["config_file"],
-                                      quiet=self.quiet)
+
         # Number 3
-        if set_branch and not url:
-            apifn.write_config_branch(self.config["branch"],
-                                      self.config["config_file"],
-                                      quiet=self.quiet)
-        # Number 4
         if url:
             filefn.dir_must_exist(prefix + "/etc/pacman.d")
             mirror = [
                 {
-                    "url": apifn.check_url(url),
+                    "url": apifn.sanitize_url(url),
                     "country": "pkgbuild",
                     "protocols": [url[:url.find(":")]],
                     "resp_time": "00.00"
-                 }
+                }
             ]
             filefn.output_mirror_list(self.config, mirror, quiet=self.quiet)
             sys.exit(0)
+
+        # Number 4
+        if get_branch:
+            sys.exit(self.config["branch"])
+
         # Number 5
+        if protocols:
+            apifn.api_write_protocols(self.config["protocols"],
+                                      self.config["config_file"],
+                                      quiet=self.quiet)
+        # Number 6
+        if new_branch:
+            apifn.write_config_branch(self.config["branch"],
+                                      self.config["config_file"],
+                                      quiet=self.quiet)
+        # Number 7
         if re_branch:
             if not set_branch:
                 print(".: {} {}".format(txt.ERR_CLR, txt.API_ERROR_BRANCH))
@@ -304,9 +313,6 @@ class PacmanMirrors:
             apifn.write_mirrorlist_branch(self.config["branch"],
                                           self.config["config_file"],
                                           quiet=self.quiet)
-        # Number 6
-        if get_branch:
-            sys.exit(self.config["branch"])
 
     def build_common_mirror_list(self):
         """Generate common mirrorlist"""

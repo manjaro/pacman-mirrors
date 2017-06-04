@@ -130,38 +130,47 @@ BRANCH: Value from config</p>
 <p>These arguments modifies key elements of pacman-mirrors configuration according to the packagers needs.</p>
 <p>The actions performed by the API are in strict order and performed <strong>before any</strong> other actions.</p>
 <ol style="list-style-type: decimal">
-<li>If --prefix</li>
+<li>If <strong>-S</strong> / <strong>--set-branch</strong> <em>BRANCH</em></li>
 </ol>
 <ul>
-<li>prefix internal file configuration with $PREFIX</li>
-<li>continue</li>
+<li>apply <em>BRANCH</em> to internal configuration</li>
 </ul>
 <ol start="2" style="list-style-type: decimal">
-<li>If --set-branch</li>
+<li>If <strong>p</strong> / <strong>--prefix</strong> <em>PREFIX</em></li>
 </ol>
 <ul>
-<li>apply $BRANCH to internal configuration</li>
-<li>continue</li>
+<li>prefix internal file configuration with <em>PREFIX</em></li>
 </ul>
 <ol start="3" style="list-style-type: decimal">
-<li>If --url</li>
+<li>If <strong>-U</strong> / <strong>--url</strong> <em>URL</em></li>
 </ol>
 <ul>
-<li>apply internal configuration to a mirrorlist with $URL</li>
-<li>sys.exit(0)</li>
+<li>apply internal configuration to a mirrorlist with <em>URL</em></li>
+<li><em>sys.exit(0)</em></li>
 </ul>
 <ol start="4" style="list-style-type: decimal">
-<li>If --re-branch</li>
+<li>If <strong>-G</strong> / <strong>--get-branch</strong></li>
 </ol>
 <ul>
-<li>replace branch in mirrorlist with $BRANCH</li>
-<li>continue</li>
+<li><em>sys.exit(config.branch)</em></li>
 </ul>
 <ol start="5" style="list-style-type: decimal">
-<li>If --get-branch</li>
+<li>If <strong>-P</strong> / <strong>--proto</strong> <em>PROTO</em> [<em>PROTO</em>] ...</li>
 </ol>
 <ul>
-<li>sys.exit(config.branch)</li>
+<li>replace protocols in pacman-mirrors.conf with <em>PROTO</em></li>
+</ul>
+<ol start="6" style="list-style-type: decimal">
+<li>If <strong>-S</strong> / <strong>--set-branch</strong> <em>BRANCH</em></li>
+</ol>
+<ul>
+<li>replace branch in pacman-mirrors.conf with <em>BRANCH</em></li>
+</ul>
+<ol start="7" style="list-style-type: decimal">
+<li>If <strong>-R</strong> / <strong>--re-branch</strong></li>
+</ol>
+<ul>
+<li>replace branch in mirrorlist with <strong>-S</strong> <em>BRANCH</em></li>
 </ul>
 <p>When done pacman-mirrors checks the internet connection and if possible download the latest datafiles for creating the mirrorlist. At this point it is possible to interupt further processing.</p>
 <p>If the <strong>-n</strong> / <strong>no-mirrorlist</strong> argument is present pacman-mirrors will now exit.</p>
