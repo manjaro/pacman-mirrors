@@ -22,8 +22,8 @@ def sanitize_url(url):
     :param url:
     :returns sanitized url
     """
-    if not url.endswith("/"):
-        url = url + "/"
+    if url.endswith("/"):
+        url = url[:-1]
     return url
 
 
