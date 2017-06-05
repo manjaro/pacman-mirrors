@@ -14,7 +14,9 @@ def sanitize_prefix(prefix):
     :param prefix:
     :returns sanitized prefix
     """
-    return sanitize_url(prefix)
+    if prefix.endswith("/"):
+        prefix = prefix[:-1]
+    return prefix
 
 
 def sanitize_url(url):
@@ -22,8 +24,8 @@ def sanitize_url(url):
     :param url:
     :returns sanitized url
     """
-    if url.endswith("/"):
-        url = url[:-1]
+    if not url.endswith("/"):
+        url = url + "/"
     return url
 
 
