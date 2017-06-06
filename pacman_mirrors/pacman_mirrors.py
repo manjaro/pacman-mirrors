@@ -236,18 +236,18 @@ class PacmanMirrors:
             if args.re_branch:
                 rebranch = True
 
-            self.api_config(prefix=args.prefix, set_branch=setbranch, re_branch=rebranch,
-                            get_branch=getbranch, protocols=protocols, url=url)
+            self.api_config(set_prefix=args.prefix, set_branch=setbranch, re_branch=rebranch,
+                            get_branch=getbranch, set_protocols=protocols, set_url=url)
 
-    def api_config(self, prefix=None, set_branch=None, re_branch=False,
-                   get_branch=False, protocols=None, url=None):
+    def api_config(self, set_prefix=None, set_branch=None, re_branch=False,
+                   get_branch=False, set_protocols=None, set_url=None):
         """Api functions
-        :param prefix: prefix to the config paths
+        :param set_prefix: prefix to the config paths
         :param set_branch: replace branch in pacman-mirrors.conf
         :param re_branch: replace branch in mirrorlist
         :param get_branch: sys.exit with branch
-        :param protocols: replace protocols in pacman-mirrors.conf
-        :param url: replace mirror url in mirrorlist
+        :param set_protocols: replace protocols in pacman-mirrors.conf
+        :param set_url: replace mirror url in mirrorlist
         """
         # First API task
         if get_branch:
@@ -255,8 +255,8 @@ class PacmanMirrors:
 
         # apply api configuration to internal configuration object
         # Apply protocols if present
-        if protocols is None:
-            protocols = []
+        if set_protocols is None:
+            set_protocols = []
         if "all" in args.proto:
             self.config["protocols"] = []
         else:
@@ -265,26 +265,26 @@ class PacmanMirrors:
             else:
                 self.config["protocols"] = args.proto
         # Apply prefix if present
-        if prefix:
-            prefix = apifn.sanitize_prefix(prefix)
-            self.config["config_file"] = prefix + self.config["config_file"]
-            self.config["custom_file"] = prefix + self.config["custom_file"]
-            self.config["mirror_file"] = prefix + self.config["mirror_file"]
-            self.config["mirror_list"] = prefix + self.config["mirror_list"]
-            self.config["status_file"] = prefix + self.config["status_file"]
-            self.config["work_dir"] = prefix + self.config["work_dir"]
+        if set_prefix:
+            set_prefix = apifn.sanitize_prefix(set_prefix)
+            self.config["config_file"] = set_prefix + self.config["config_file"]
+            self.config["custom_file"] = set_prefix + self.config["custom_file"]
+            self.config["mirror_file"] = set_prefix + self.config["mirror_file"]
+            self.config["mirror_list"] = set_prefix + self.config["mirror_list"]
+            self.config["status_file"] = set_prefix + self.config["status_file"]
+            self.config["work_dir"] = set_prefix + self.config["work_dir"]
             # to be removed long time after 2017-04-18
-            self.config["to_be_removed"] = prefix + self.config["to_be_removed"]
+            self.config["to_be_removed"] = set_prefix + self.config["to_be_removed"]
             # end removal
         # api tasks
-        # First task: Set branch
+        # Second API task: Set branch
         if set_branch:
             # Apply branch to internal config
             self.config["branch"] = set_branch
             # pacman-mirrors conf could absent so check for it
-            if not filefn.check_file(prefix + self.config["config_file"]):
+            if not filefn.check_file(set_prefix + self.config["config_file"]):
                 # Copy from host system
-                filefn.create_dir(prefix + "/etc")
+                filefn.create_dir(set_prefix + "/etc")
                 shutil.copyfile("/etc/pacman-mirrors.conf", self.config["config_file"])
                 # Normalize config
                 apifn.normalize_config(self.config["config_file"])
@@ -292,28 +292,28 @@ class PacmanMirrors:
             apifn.write_config_branch(self.config["branch"],
                                       self.config["config_file"],
                                       quiet=self.quiet)
-        # Second task is to create a mirror list
-        if url:
+        # Third API task: Create a mirror list
+        if set_url:
             # mirror list dir could absent so check for it
             if not filefn.check_file("/etc/pacman.d", dir=True):
                 # create mirror dir
-                filefn.create_dir(prefix + "/etc/pacman.d")
+                filefn.create_dir(set_prefix + "/etc/pacman.d")
                 mirror = [
                     {
-                        "url": apifn.sanitize_url(url),
+                        "url": apifn.sanitize_url(set_url),
                         "country": ".:! PKGBUILD !:.",
-                        "protocols": [url[:url.find(":")]],
+                        "protocols": [set_url[:set_url.find(":")]],
                         "resp_time": "00.00"
                     }
                 ]
                 filefn.output_mirror_list(self.config, mirror, quiet=self.quiet)
                 sys.exit(0)
-        # Fourth task: Write protocols to config
-        if protocols:
+        # Fourth API task: Write protocols to config
+        if set_protocols:
             apifn.write_protocols(self.config["protocols"],
                                   self.config["config_file"],
                                   quiet=self.quiet)
-        # Rebranch the mirrorlist
+        # Fifth API taks: Rebranch the mirrorlist
         if re_branch:
             if not set_branch:
                 print(".: {} {}".format(txt.ERR_CLR, txt.API_ERROR_BRANCH))
