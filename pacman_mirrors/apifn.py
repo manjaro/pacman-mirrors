@@ -29,65 +29,103 @@ def find_mirrorlist_branch(filename):
 
 
 def normalize_config(filename):
-    """Normalize configuration"""
+    """Normalize configuration
+    :param filename:
+    """
     normalize_country(filename)
+    normalize_method(filename)
     normalize_protocols(filename)
     normalize_ssl(filename)
 
 
 def normalize_country(filename):
-    """Write default OnlyCountry = """
+    """Write default OnlyCountry =
+    :param filename:
+    """
+    lookfor = "OnlyCountry ="
+    default = "# OnlyCountry =\n"
     with open(
         filename) as cnf, tempfile.NamedTemporaryFile(
         "w+t", dir=os.path.dirname(
             filename), delete=False) as tmp:
         replaced = False
         for line in cnf:
-            if "OnlyCountry =" in line:
-                tmp.write("# OnlyCountry =\n")
+            if lookfor in line:
+                tmp.write(default)
                 replaced = True
             else:
                 tmp.write("{}".format(line))
         if not replaced:
-            tmp.write("# OnlyCountry =\n")
+            tmp.write(default)
+    os.replace(tmp.name, filename)
+    os.chmod(filename, 0o644)
+
+
+def normalize_method(filename):
+    """Write default Method = rank
+    :param filename:
+    """
+    lookfor = "Method ="
+    default = "# Method = rank\n"
+    with open(
+        filename) as cnf, tempfile.NamedTemporaryFile(
+        "w+t", dir=os.path.dirname(
+            filename), delete=False) as tmp:
+        replaced = False
+        for line in cnf:
+            if lookfor in line:
+                tmp.write(default)
+                replaced = True
+            else:
+                tmp.write("{}".format(line))
+        if not replaced:
+            tmp.write(default)
     os.replace(tmp.name, filename)
     os.chmod(filename, 0o644)
 
 
 def normalize_protocols(filename):
-    """Write default Protocols = """
+    """Write default Protocols =
+    :param filename:
+    """
+    lookfor = "Protocols ="
+    default = "# Protocols =\n"
     with open(
         filename) as cnf, tempfile.NamedTemporaryFile(
         "w+t", dir=os.path.dirname(
             filename), delete=False) as tmp:
         replaced = False
         for line in cnf:
-            if "Protocols =" in line:
-                tmp.write("# Protocols =\n")
+            if lookfor in line:
+                tmp.write(default)
                 replaced = True
             else:
                 tmp.write("{}".format(line))
         if not replaced:
-            tmp.write("# Protocols =\n")
+            tmp.write(default)
     os.replace(tmp.name, filename)
     os.chmod(filename, 0o644)
 
 
 def normalize_ssl(filename):
-    """Write default SSLVerify = False """
+    """Write default SSLVerify = False
+    :param filename:
+    """
+    lookfor = "SSLVerify ="
+    default = "# SSLVerify = False\n"
     with open(
         filename) as cnf, tempfile.NamedTemporaryFile(
         "w+t", dir=os.path.dirname(
             filename), delete=False) as tmp:
         replaced = False
         for line in cnf:
-            if "SSLVerify =" in line:
-                tmp.write("# SSLVerify = False\n")
+            if lookfor in line:
+                tmp.write(default)
                 replaced = True
             else:
                 tmp.write("{}".format(line))
         if not replaced:
-            tmp.write("# SSLVerify = False\n")
+            tmp.write(default)
     os.replace(tmp.name, filename)
     os.chmod(filename, 0o644)
 
@@ -107,15 +145,17 @@ def sanitize_url(url):
     :param url:
     :returns sanitized url
     """
-    if not url.endswith("/"):
-        url = url + "/"
-    return url
+    if url.endswith("/"):
+        return url
+    return url + "/"
 
 
 def write_config_branch(branch, filename, quiet=False):
     """Write branch"""
+    lookfor = "Branch ="
+    default = "# Branch = stable\n"
     if branch == "stable":
-        branch = "# Branch = stable\n"
+        branch = default
     else:
         branch = "Branch = {}\n".format(branch)
     try:
@@ -125,7 +165,7 @@ def write_config_branch(branch, filename, quiet=False):
                 filename), delete=False) as tmp:
             replaced = False
             for line in cnf:
-                if "Branch =" in line:
+                if lookfor in line:
                     tmp.write(branch)
                     replaced = True
                 else:
@@ -146,13 +186,14 @@ def write_config_branch(branch, filename, quiet=False):
 
 def write_mirrorlist_branch(newbranch, filename, quiet=False):
     """"""
+    lookfor = "Server ="
     branch = find_mirrorlist_branch(filename)
     try:
         with open(filename) as mirrorlist, tempfile.NamedTemporaryFile(
             "w+t", dir=os.path.dirname(
                 filename), delete=False) as tmp:
             for line in mirrorlist:
-                if "Server =" in line:
+                if lookfor in line:
                     line = line.replace(branch, newbranch)
                     tmp.write("{}".format(line))
                 else:
@@ -171,10 +212,12 @@ def write_mirrorlist_branch(newbranch, filename, quiet=False):
 
 def write_protocols(protocols, filename, quiet=False):
     """Write branch"""
+    lookfor = "Protocols ="
+    default = "# Protocols = \n"
     if protocols:
         protocols = "Protocols = {}\n".format(",".join(protocols))
     else:
-        protocols = "# Protocols = \n"
+        protocols = default
     try:
         with open(
             filename) as cnf, tempfile.NamedTemporaryFile(
@@ -182,7 +225,7 @@ def write_protocols(protocols, filename, quiet=False):
                 filename), delete=False) as tmp:
             replaced = False
             for line in cnf:
-                if "Protocols =" in line:
+                if lookfor in line:
                     tmp.write(protocols)
                     replaced = True
                 else:
