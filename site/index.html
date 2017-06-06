@@ -224,19 +224,18 @@ according to the packagers needs.</p>
 <p>The actions performed by the API are in strict order and 
 performed <em>before any</em> other actions.</p>
 <ol>
-<li>If <em>-S</em> <em>BRANCH</em></li>
-<li>apply <em>BRANCH</em> to internal configuration</li>
+<li>If <em>-G</em></li>
+<li><em>sys.exit(config.branch)</em></li>
 <li>If <em>p</em>  <em>PREFIX</em></li>
 <li>prefix internal file configuration with <em>PREFIX</em></li>
+<li>If <em>-S</em> <em>BRANCH</em></li>
+<li>apply <em>BRANCH</em> to internal configuration</li>
+<li>replace branch in pacman-mirrors.conf with <em>BRANCH</em></li>
 <li>If <em>-U</em> <em>URL</em></li>
 <li>apply internal configuration to a mirrorlist with <em>URL</em></li>
 <li><em>sys.exit(0)</em></li>
-<li>If <em>-G</em></li>
-<li><em>sys.exit(config.branch)</em></li>
 <li>If <em>-P</em> <em>PROTO</em> [<em>PROTO</em>] ...</li>
 <li>replace protocols in pacman-mirrors.conf with <em>PROTO</em></li>
-<li>If <em>-S</em> <em>BRANCH</em></li>
-<li>replace branch in pacman-mirrors.conf with <em>BRANCH</em></li>
 <li>If <em>-R</em></li>
 <li>replace branch in mirrorlist with <em>-S</em> <em>BRANCH</em></li>
 </ol>
@@ -367,5 +366,5 @@ Frede Hundewadt <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#102;&#114;&#1
 
 <!--
 MkDocs version : 0.16.3
-Build Date UTC : 2017-06-04 17:48:05
+Build Date UTC : 2017-06-06 06:41:43
 -->

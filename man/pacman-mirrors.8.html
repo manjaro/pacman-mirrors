@@ -130,10 +130,10 @@ BRANCH: Value from config</p>
 <p>These arguments modifies key elements of pacman-mirrors configuration according to the packagers needs.</p>
 <p>The actions performed by the API are in strict order and performed <em>before any</em> other actions.</p>
 <ol style="list-style-type: decimal">
-<li>If <em>-S</em> <em>BRANCH</em></li>
+<li>If <em>-G</em></li>
 </ol>
 <ul>
-<li>apply <em>BRANCH</em> to internal configuration</li>
+<li><em>sys.exit(config.branch)</em></li>
 </ul>
 <ol start="2" style="list-style-type: decimal">
 <li>If <em>p</em> <em>PREFIX</em></li>
@@ -142,17 +142,18 @@ BRANCH: Value from config</p>
 <li>prefix internal file configuration with <em>PREFIX</em></li>
 </ul>
 <ol start="3" style="list-style-type: decimal">
+<li>If <em>-S</em> <em>BRANCH</em></li>
+</ol>
+<ul>
+<li>apply <em>BRANCH</em> to internal configuration</li>
+<li>replace branch in pacman-mirrors.conf with <em>BRANCH</em></li>
+</ul>
+<ol start="4" style="list-style-type: decimal">
 <li>If <em>-U</em> <em>URL</em></li>
 </ol>
 <ul>
 <li>apply internal configuration to a mirrorlist with <em>URL</em></li>
 <li><em>sys.exit(0)</em></li>
-</ul>
-<ol start="4" style="list-style-type: decimal">
-<li>If <em>-G</em></li>
-</ol>
-<ul>
-<li><em>sys.exit(config.branch)</em></li>
 </ul>
 <ol start="5" style="list-style-type: decimal">
 <li>If <em>-P</em> <em>PROTO</em> [<em>PROTO</em>] ...</li>
@@ -161,12 +162,6 @@ BRANCH: Value from config</p>
 <li>replace protocols in pacman-mirrors.conf with <em>PROTO</em></li>
 </ul>
 <ol start="6" style="list-style-type: decimal">
-<li>If <em>-S</em> <em>BRANCH</em></li>
-</ol>
-<ul>
-<li>replace branch in pacman-mirrors.conf with <em>BRANCH</em></li>
-</ul>
-<ol start="7" style="list-style-type: decimal">
 <li>If <em>-R</em></li>
 </ol>
 <ul>

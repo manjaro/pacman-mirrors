@@ -25,6 +25,7 @@
 
 import argparse
 import importlib.util
+import shutil
 import sys
 import os
 from operator import itemgetter
@@ -122,10 +123,10 @@ class PacmanMirrors:
                               help=txt.HLP_ARG_BRANCH)
         only_one.add_argument("-G", "--get-branch",
                               action="store_true",
-                              help=txt.HLP_ARG_API_GET_BRANCH)
+                              help="API: " + txt.HLP_ARG_API_GET_BRANCH)
         only_one.add_argument("-S", "--set-branch",
                               choices=["stable", "testing", "unstable"],
-                              help=txt.HLP_ARG_API_SET_BRANCH)
+                              help="API: " + txt.HLP_ARG_API_SET_BRANCH)
         # Api arguments
         api = parser.add_argument_group("API")
         api.add_argument("-a", "--api",
@@ -133,18 +134,18 @@ class PacmanMirrors:
                          help="[-p PREFIX][-R][-S|-G BRANCH][-P PROTO [PROTO ...]]")
         api.add_argument("-p", "--prefix",
                          type=str,
-                         help=txt.HLP_ARG_API_PREFIX + txt.PREFIX_TIP)
+                         help="API: " + txt.HLP_ARG_API_PREFIX + txt.PREFIX_TIP)
         api.add_argument("-P", "--proto", "--protocols",
                          choices=["all", "http", "https", "ftp", "ftps"],
                          type=str,
                          nargs="+",
-                         help=txt.HLP_ARG_API_PROTOCOLS)
+                         help="API: " + txt.HLP_ARG_API_PROTOCOLS)
         api.add_argument("-R", "--re-branch",
                          action="store_true",
-                         help=txt.HLP_ARG_API_RE_BRANCH)
+                         help="API: " + txt.HLP_ARG_API_RE_BRANCH)
         api.add_argument("-U", "--url",
                          type=str,
-                         help=txt.HLP_ARG_API_URL)
+                         help="API: " + txt.HLP_ARG_API_URL)
         # Misc arguments
         misc = parser.add_argument_group("MISC")
         misc.add_argument("-q", "--quiet",
@@ -225,46 +226,45 @@ class PacmanMirrors:
             self.no_mirrorlist = True
 
         if args.api:
-            proto = False
             getbranch = False
             rebranch = False
             url = args.url
             setbranch = args.set_branch
+            protocols = args.proto
             if args.get_branch:
                 getbranch = True
             if args.re_branch:
                 rebranch = True
-            if args.proto:
-                proto = True
-                if "all" in args.proto:
-                    self.config["protocols"] = []
-                else:
-                    if "," in args.proto[0]:
-                        self.config["protocols"] = args.proto[0].split(",")
-                    else:
-                        self.config["protocols"] = args.proto
 
-            self.api_config(prefix=args.prefix, new_branch=setbranch, re_branch=rebranch,
-                            get_branch=getbranch, protocols=proto, url=url)
+            self.api_config(prefix=args.prefix, set_branch=setbranch, re_branch=rebranch,
+                            get_branch=getbranch, protocols=protocols, url=url)
 
-    def api_config(self, prefix=None, new_branch=None, re_branch=False,
-                   get_branch=False, protocols=False, url=None):
+    def api_config(self, prefix=None, set_branch=None, re_branch=False,
+                   get_branch=False, protocols=None, url=None):
         """Api functions
         :param prefix: prefix to the config paths
-        :param new_branch: replace branch in pacman-mirrors.conf
+        :param set_branch: replace branch in pacman-mirrors.conf
         :param re_branch: replace branch in mirrorlist
         :param get_branch: sys.exit with branch
         :param protocols: replace protocols in pacman-mirrors.conf
         :param url: replace mirror url in mirrorlist
         """
-        # Do not change the following sequence
-        # Doing so will most certainly cause serious problems
-        #   for any one relying on the api
-        # Number 1
-        if new_branch:
-            self.config["branch"] = new_branch
+        # First API task
+        if get_branch:
+            sys.exit(self.config["branch"])
 
-        # Number 2
+        # apply api configuration to internal configuration object
+        # Apply protocols if present
+        if protocols is None:
+            protocols = []
+        if "all" in args.proto:
+            self.config["protocols"] = []
+        else:
+            if "," in args.proto[0]:
+                self.config["protocols"] = args.proto[0].split(",")
+            else:
+                self.config["protocols"] = args.proto
+        # Apply prefix if present
         if prefix:
             prefix = apifn.sanitize_prefix(prefix)
             self.config["config_file"] = prefix + self.config["config_file"]
@@ -276,36 +276,45 @@ class PacmanMirrors:
             # to be removed long time after 2017-04-18
             self.config["to_be_removed"] = prefix + self.config["to_be_removed"]
             # end removal
-
-        # Number 3
+        # api tasks
+        # First task: Set branch
+        if set_branch:
+            # Apply branch to internal config
+            self.config["branch"] = set_branch
+            # pacman-mirrors conf is most likely absent so check for it
+            if not filefn.check_file(prefix + self.config["config_file"]):
+                # Copy from host system
+                filefn.create_dir(prefix + "/etc")
+                shutil.copyfile("/etc/pacman-mirrors.conf", self.config["config_file"])
+                # Ensure defaults for protocols and country
+                apifn.write_protocols([], self.config["config_file"], quiet=True)
+                apifn.write_default_country(self.config["config_file"])
+            # Write branch to config
+            apifn.write_config_branch(self.config["branch"],
+                                      self.config["config_file"],
+                                      quiet=self.quiet)
+        # Second task is to create a mirror list
         if url:
-            filefn.dir_must_exist(prefix + "/etc/pacman.d")
+            # mirror list dir is most likely absent so check for it
+            if not filefn.check_file("/etc/pacman.d", dir=True):
+                # create mirror dir
+                filefn.create_dir(prefix + "/etc/pacman.d")
             mirror = [
                 {
                     "url": apifn.sanitize_url(url),
-                    "country": "pkgbuild",
+                    "country": ".:! PKGBUILD !:.",
                     "protocols": [url[:url.find(":")]],
                     "resp_time": "00.00"
                 }
             ]
             filefn.output_mirror_list(self.config, mirror, quiet=self.quiet)
             sys.exit(0)
-
-        # Number 4
-        if get_branch:
-            sys.exit(self.config["branch"])
-
-        # Number 5
+        # Fourth task: Write protocols to config
         if protocols:
-            apifn.api_write_protocols(self.config["protocols"],
-                                      self.config["config_file"],
-                                      quiet=self.quiet)
-        # Number 6
-        if new_branch:
-            apifn.write_config_branch(self.config["branch"],
-                                      self.config["config_file"],
-                                      quiet=self.quiet)
-        # Number 7
+            apifn.write_protocols(self.config["protocols"],
+                                  self.config["config_file"],
+                                  quiet=self.quiet)
+        # Rebranch the mirrorlist
         if re_branch:
             if not set_branch:
                 print(".: {} {}".format(txt.ERR_CLR, txt.API_ERROR_BRANCH))
@@ -566,32 +575,32 @@ class PacmanMirrors:
 
     def run(self):
         """Run"""
-        (self.config, self.custom) = configfn.build_config()
-        filefn.dir_must_exist(self.config["work_dir"])
-        self.command_line_parse()
-        self.network = httpfn.inet_conn_check()
-        if self.network:
+        (self.config, self.custom) = configfn.build_config()  # build config by parsing p-m.conf
+        filefn.create_dir(self.config["work_dir"])  # ensure /var/lib/pacman-mirrors exist
+        self.command_line_parse()  # parse command line
+        self.network = httpfn.inet_conn_check()  # net check
+        if self.network:  # update data files
             httpfn.update_mirrors(self.config, quiet=self.quiet)
         else:
             # negative on network
             if not self.quiet:
-                miscfn.internet_message()
+                miscfn.internet_message()  # console message
             self.config["method"] = "random"  # use random instead of rank
             self.fasttrack = False  # using fasttrack is not possible
         if self.no_mirrorlist:
-            sys.exit(0)
+            sys.exit(0)  # exit
         self.load_all_mirrors()
         if self.country_list:
-            self.output_country_list()
+            self.output_country_list()  # print country list
             sys.exit(0)
         if self.fasttrack:
-            self.build_fasttrack_mirror_list(self.fasttrack)
+            self.build_fasttrack_mirror_list(self.fasttrack)  # fasttrack argument
         elif self.interactive:
-            self.build_interactive_mirror_list()
+            self.build_interactive_mirror_list()  # interactive argument
         else:
-            self.build_common_mirror_list()
+            self.build_common_mirror_list()  # default
         if self.network and self.sync:
-            subprocess.call(["pacman", "-Syy"])
+            subprocess.call(["pacman", "-Syy"])  # sync pacman db
 
 
 if __name__ == "__main__":

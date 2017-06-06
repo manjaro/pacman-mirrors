@@ -41,11 +41,11 @@ def check_file(file, dir=False):
     return os.path.isfile(file)
 
 
-def dir_must_exist(dir_name):
-    """Check necessary directory
-    :param dir_name:
+def create_dir(file):
+    """Create directory if not exist
+    :param file:
     """
-    os.makedirs(dir_name, mode=0o755, exist_ok=True)
+    os.makedirs(file, mode=0o755, exist_ok=True)
 
 
 def return_mirror_filename(config):

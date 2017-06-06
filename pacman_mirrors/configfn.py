@@ -20,11 +20,13 @@
 """Pacman-Mirrors Configuration Functions"""
 
 import os
+import shutil
 import sys
 import tempfile
 
-from . import txt
+from . import filefn
 from . import configuration as conf
+from . import txt
 
 
 def build_config():
