@@ -230,17 +230,24 @@ class PacmanMirrors:
             rebranch = False
             url = args.url
             setbranch = args.set_branch
-            protocols = args.proto
+            setprotocols = bool(args.proto)
             if args.get_branch:
                 getbranch = True
             if args.re_branch:
                 rebranch = True
+            if "all" in args.proto:
+                self.config["protocols"] = []
+            else:
+                if "," in args.proto[0]:
+                    self.config["protocols"] = args.proto.split(",")
+                else:
+                    self.config["protocols"] = args.proto
 
             self.api_config(set_prefix=args.prefix, set_branch=setbranch, re_branch=rebranch,
-                            get_branch=getbranch, set_protocols=protocols, set_url=url)
+                            get_branch=getbranch, set_protocols=setprotocols, set_url=url)
 
     def api_config(self, set_prefix=None, set_branch=None, re_branch=False,
-                   get_branch=False, set_protocols=None, set_url=None):
+                   get_branch=False, set_protocols=False, set_url=None):
         """Api functions
         :param set_prefix: prefix to the config paths
         :param set_branch: replace branch in pacman-mirrors.conf
@@ -254,16 +261,6 @@ class PacmanMirrors:
             sys.exit(self.config["branch"])
 
         # apply api configuration to internal configuration object
-        # Apply protocols if present
-        if set_protocols is None:
-            set_protocols = []
-        if "all" in args.proto:
-            self.config["protocols"] = []
-        else:
-            if "," in args.proto[0]:
-                self.config["protocols"] = args.proto[0].split(",")
-            else:
-                self.config["protocols"] = args.proto
         # Apply prefix if present
         if set_prefix:
             set_prefix = apifn.sanitize_prefix(set_prefix)
