@@ -297,7 +297,7 @@ class PacmanMirrors:
             mirror = [
                 {
                     "url": apifn.sanitize_url(set_url),
-                    "country": ".:! PKGBUILD !:.",
+                    "country": "BUILDMIRROR",
                     "protocols": [set_url[:set_url.find(":")]],
                     "resp_time": "00.00"
                 }
@@ -576,14 +576,13 @@ class PacmanMirrors:
         self.network = httpfn.inet_conn_check()  # net check
         if self.network:  # update data files
             httpfn.update_mirrors(self.config, quiet=self.quiet)
-        else:
-            # negative on network
+        if self.no_mirrorlist:
+            sys.exit(0)  # exit
+        if not self.network:
             if not self.quiet:
                 miscfn.internet_message()  # console message
             self.config["method"] = "random"  # use random instead of rank
             self.fasttrack = False  # using fasttrack is not possible
-        if self.no_mirrorlist:
-            sys.exit(0)  # exit
         self.load_all_mirrors()
         if self.country_list:
             self.output_country_list()  # print country list
