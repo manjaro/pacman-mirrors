@@ -293,19 +293,17 @@ class PacmanMirrors:
         # Third API task: Create a mirror list
         if set_url:
             # mirror list dir could absent so check for it
-            if not filefn.check_file("/etc/pacman.d", dir=True):
-                # create mirror dir
-                filefn.create_dir(set_prefix + "/etc/pacman.d")
-                mirror = [
-                    {
-                        "url": apifn.sanitize_url(set_url),
-                        "country": ".:! PKGBUILD !:.",
-                        "protocols": [set_url[:set_url.find(":")]],
-                        "resp_time": "00.00"
-                    }
-                ]
-                filefn.output_mirror_list(self.config, mirror, quiet=self.quiet)
-                sys.exit(0)
+            filefn.create_dir(set_prefix + "/etc/pacman.d")
+            mirror = [
+                {
+                    "url": apifn.sanitize_url(set_url),
+                    "country": ".:! PKGBUILD !:.",
+                    "protocols": [set_url[:set_url.find(":")]],
+                    "resp_time": "00.00"
+                }
+            ]
+            filefn.output_mirror_list(self.config, mirror, quiet=self.quiet)
+            sys.exit(0)
         # Fourth API task: Write protocols to config
         if set_protocols:
             apifn.write_protocols(self.config["protocols"],

@@ -44,12 +44,12 @@ def normalize_country(filename):
         replaced = False
         for line in cnf:
             if "OnlyCountry =" in line:
-                tmp.write("# OnlyCountry =")
+                tmp.write("# OnlyCountry =\n")
                 replaced = True
             else:
                 tmp.write("{}".format(line))
         if not replaced:
-            tmp.write("# OnlyCountry =")
+            tmp.write("# OnlyCountry =\n")
     os.replace(tmp.name, filename)
     os.chmod(filename, 0o644)
 
@@ -63,12 +63,12 @@ def normalize_protocols(filename):
         replaced = False
         for line in cnf:
             if "Protocols =" in line:
-                tmp.write("# Protocols =")
+                tmp.write("# Protocols =\n")
                 replaced = True
             else:
                 tmp.write("{}".format(line))
         if not replaced:
-            tmp.write("# Protocols = ")
+            tmp.write("# Protocols =\n")
     os.replace(tmp.name, filename)
     os.chmod(filename, 0o644)
 
@@ -82,12 +82,12 @@ def normalize_ssl(filename):
         replaced = False
         for line in cnf:
             if "SSLVerify =" in line:
-                tmp.write("# SSLVerify = False")
+                tmp.write("# SSLVerify = False\n")
                 replaced = True
             else:
                 tmp.write("{}".format(line))
         if not replaced:
-            tmp.write("# SSLVerify = False")
+            tmp.write("# SSLVerify = False\n")
     os.replace(tmp.name, filename)
     os.chmod(filename, 0o644)
 
