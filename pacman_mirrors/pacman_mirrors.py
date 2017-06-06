@@ -257,6 +257,12 @@ class PacmanMirrors:
         :param set_protocols: replace protocols in pacman-mirrors.conf
         :param set_url: replace mirror url in mirrorlist
         """
+        if set_url is None:
+            set_url = ""
+
+        if set_prefix is None:
+            set_prefix = ""
+
         # First API task
         if get_branch:
             sys.exit(self.config["branch"])
@@ -280,7 +286,7 @@ class PacmanMirrors:
             # Apply branch to internal config
             self.config["branch"] = set_branch
             # pacman-mirrors conf could absent so check for it
-            if not filefn.check_file(set_prefix + self.config["config_file"]):
+            if not filefn.check_file(self.config["config_file"]):
                 # Copy from host system
                 filefn.create_dir(set_prefix + "/etc")
                 shutil.copyfile("/etc/pacman-mirrors.conf", self.config["config_file"])
