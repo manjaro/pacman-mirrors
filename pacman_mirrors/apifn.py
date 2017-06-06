@@ -28,6 +28,70 @@ def find_mirrorlist_branch(filename):
         sys.exit(2)
 
 
+def normalize_config(filename):
+    """Normalize configuration"""
+    normalize_country(filename)
+    normalize_protocols(filename)
+    normalize_ssl(filename)
+
+
+def normalize_country(filename):
+    """Write default OnlyCountry = """
+    with open(
+        filename) as cnf, tempfile.NamedTemporaryFile(
+        "w+t", dir=os.path.dirname(
+            filename), delete=False) as tmp:
+        replaced = False
+        for line in cnf:
+            if "OnlyCountry =" in line:
+                tmp.write("# OnlyCountry =")
+                replaced = True
+            else:
+                tmp.write("{}".format(line))
+        if not replaced:
+            tmp.write("# OnlyCountry =")
+    os.replace(tmp.name, filename)
+    os.chmod(filename, 0o644)
+
+
+def normalize_protocols(filename):
+    """Write default Protocols = """
+    with open(
+        filename) as cnf, tempfile.NamedTemporaryFile(
+        "w+t", dir=os.path.dirname(
+            filename), delete=False) as tmp:
+        replaced = False
+        for line in cnf:
+            if "Protocols =" in line:
+                tmp.write("# Protocols =")
+                replaced = True
+            else:
+                tmp.write("{}".format(line))
+        if not replaced:
+            tmp.write("# Protocols = ")
+    os.replace(tmp.name, filename)
+    os.chmod(filename, 0o644)
+
+
+def normalize_ssl(filename):
+    """Write default SSLVerify = False """
+    with open(
+        filename) as cnf, tempfile.NamedTemporaryFile(
+        "w+t", dir=os.path.dirname(
+            filename), delete=False) as tmp:
+        replaced = False
+        for line in cnf:
+            if "SSLVerify =" in line:
+                tmp.write("# SSLVerify = False")
+                replaced = True
+            else:
+                tmp.write("{}".format(line))
+        if not replaced:
+            tmp.write("# SSLVerify = False")
+    os.replace(tmp.name, filename)
+    os.chmod(filename, 0o644)
+
+
 def sanitize_prefix(prefix):
     """Sanitize prefix
     :param prefix:
@@ -78,25 +142,6 @@ def write_config_branch(branch, filename, quiet=False):
                                         err.filename,
                                         err.strerror))
         sys.exit(2)
-
-
-def write_default_country(filename):
-    """Write default OnlyCountry = """
-    with open(
-        filename) as cnf, tempfile.NamedTemporaryFile(
-        "w+t", dir=os.path.dirname(
-            filename), delete=False) as tmp:
-        replaced = False
-        for line in cnf:
-            if "OnlyCountry =" in line:
-                tmp.write("# OnlyCountry =")
-                replaced = True
-            else:
-                tmp.write("{}".format(line))
-        if not replaced:
-            tmp.write("# OnlyCountry =")
-    os.replace(tmp.name, filename)
-    os.chmod(filename, 0o644)
 
 
 def write_mirrorlist_branch(newbranch, filename, quiet=False):

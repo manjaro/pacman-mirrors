@@ -281,34 +281,33 @@ class PacmanMirrors:
         if set_branch:
             # Apply branch to internal config
             self.config["branch"] = set_branch
-            # pacman-mirrors conf is most likely absent so check for it
+            # pacman-mirrors conf could absent so check for it
             if not filefn.check_file(prefix + self.config["config_file"]):
                 # Copy from host system
                 filefn.create_dir(prefix + "/etc")
                 shutil.copyfile("/etc/pacman-mirrors.conf", self.config["config_file"])
-                # Ensure defaults for protocols and country
-                apifn.write_protocols([], self.config["config_file"], quiet=True)
-                apifn.write_default_country(self.config["config_file"])
+                # Normalize config
+                apifn.normalize_config(self.config["config_file"])
             # Write branch to config
             apifn.write_config_branch(self.config["branch"],
                                       self.config["config_file"],
                                       quiet=self.quiet)
         # Second task is to create a mirror list
         if url:
-            # mirror list dir is most likely absent so check for it
+            # mirror list dir could absent so check for it
             if not filefn.check_file("/etc/pacman.d", dir=True):
                 # create mirror dir
                 filefn.create_dir(prefix + "/etc/pacman.d")
-            mirror = [
-                {
-                    "url": apifn.sanitize_url(url),
-                    "country": ".:! PKGBUILD !:.",
-                    "protocols": [url[:url.find(":")]],
-                    "resp_time": "00.00"
-                }
-            ]
-            filefn.output_mirror_list(self.config, mirror, quiet=self.quiet)
-            sys.exit(0)
+                mirror = [
+                    {
+                        "url": apifn.sanitize_url(url),
+                        "country": ".:! PKGBUILD !:.",
+                        "protocols": [url[:url.find(":")]],
+                        "resp_time": "00.00"
+                    }
+                ]
+                filefn.output_mirror_list(self.config, mirror, quiet=self.quiet)
+                sys.exit(0)
         # Fourth task: Write protocols to config
         if protocols:
             apifn.write_protocols(self.config["protocols"],
