@@ -238,7 +238,7 @@ class PacmanMirrors:
             if "all" in args.proto:
                 self.config["protocols"] = []
             else:
-                if "," in args.proto[0]:
+                if "," in args.proto:
                     self.config["protocols"] = args.proto.split(",")
                 else:
                     self.config["protocols"] = args.proto
