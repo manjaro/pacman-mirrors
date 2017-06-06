@@ -235,13 +235,14 @@ class PacmanMirrors:
                 getbranch = True
             if args.re_branch:
                 rebranch = True
-            if "all" in args.proto:
-                self.config["protocols"] = []
-            else:
-                if "," in args.proto:
-                    self.config["protocols"] = args.proto.split(",")
+            if args.proto:
+                if "all" in args.proto:
+                    self.config["protocols"] = []
                 else:
-                    self.config["protocols"] = args.proto
+                    if "," in args.proto:
+                        self.config["protocols"] = args.proto.split(",")
+                    else:
+                        self.config["protocols"] = args.proto
 
             self.api_config(set_prefix=args.prefix, set_branch=setbranch, re_branch=rebranch,
                             get_branch=getbranch, set_protocols=setprotocols, set_url=url)
