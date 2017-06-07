@@ -25,7 +25,7 @@ All notable changes to this project will be documented in this file.
 - **Improvement**: sorting mirrorlist by country during load of data file.
 - **Fix**: Bug where ssl-certificate errors would break execution.
 - **Fix**: Issue where values from configuration was not parsed correct.
-- **Fix**: Issue where location in config was not determined correctly.
+- **Fix**: Issue where location in config was not determined correct.
 
 ## [4.1.4] 2017-05-16
 - Improvement: Removed `--no-mirrorlist` dependency on API.
