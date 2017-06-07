@@ -1,6 +1,6 @@
-% pacman-mirrors(8) Pacman-Mirrors User Manual  
+% pacman-mirrors(8) Pacman-Mirrors 4.2 User Manual  
 %   
-% May 25, 2017  
+% June, 2017  
 
 # NAME
 
@@ -104,16 +104,16 @@ immediately after the argument, for example
 -G, \--get-branch
 :   Return branch from configuration.
 
+-P, \--proto, \--protocols *PROTO* [*PROTO*] ...
+:   Write protocols to configuration,
+    use *all* or *http*, *https*, *ftp* and *ftps*
+
 -R, \--re-branch
 :   Replace branch in mirrorlist
 
 -S, \--set-branch *BRANCH*
 :   Replace branch in configuration,
     use *stable*, *testing* or *unstable*
-
--P, \--proto, \--protocols *PROTO* [*PROTO*] ...
-:   Write protocols to configuration,
-    use *all* or *http*, *https*, *ftp* and *ftps*
 
 -U, \--url *URL*
 :   Replace mirrorlist with supplied url
@@ -159,7 +159,9 @@ These arguments modifies key elements of pacman-mirrors configuration
 according to the packagers needs.
 
 The actions performed by the API are in strict order and 
-performed *before any* other actions.
+performed *before any* other actions. This also means that ordinary arguments 
+supplied in conjunction with app might be ignored. Eg. **-U** argument terminates
+pacman-mirrors when branch and mirrorlist has been written.
 
 1. If *-G*
    * *sys.exit(config.branch)*
@@ -178,7 +180,7 @@ performed *before any* other actions.
 	
 When done pacman-mirrors checks the internet connection and if possible 
 download the latest datafiles for creating the mirrorlist. 
-At this point it is possible to interupt further processing.
+At this point it is possible to interrupt further processing.
 
 If the *-n* argument is present pacman-mirrors will now exit.
 
@@ -249,12 +251,12 @@ datafiles using either a path or an environment variable
 replacing the branch in both configuration and mirrorlist 
 leaving the mirrors as is
 
-    *sudo pacman-mirrors -anR -p $mnt -S $branch -P https*
+    *sudo pacman-mirrors -anR -p $prefix -S $branch -P https*
     
 * It is also possible to specify a mirror in which case the mirrorlist
-is created and pacman-mirrors exits
+is created and pacman-mirrors terminate
 
-    *sudo pacman-mirrors -ap $mnt -S $branch -U http://server.tld/mirror*
+    *sudo pacman-mirrors -ap $prefix -S $branch -U $url*
 
 # REPORTING BUGS
    <https://github.com/manjaro/pacman-mirrors/issues>

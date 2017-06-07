@@ -5,15 +5,14 @@
   <meta http-equiv="Content-Style-Type" content="text/css" />
   <meta name="generator" content="pandoc" />
   <meta name="author" content="" />
-  <meta name="date" content="2017-05-25" />
-  <title>pacman-mirrors(8) Pacman-Mirrors User Manual</title>
+  <title>pacman-mirrors(8) Pacman-Mirrors 4.2 User Manual</title>
   <style type="text/css">code{white-space: pre;}</style>
 </head>
 <body>
 <div id="header">
-<h1 class="title">pacman-mirrors(8) Pacman-Mirrors User Manual</h1>
+<h1 class="title">pacman-mirrors(8) Pacman-Mirrors 4.2 User Manual</h1>
 <h2 class="author"></h2>
-<h3 class="date">May 25, 2017</h3>
+<h3 class="date">June, 2017</h3>
 </div>
 <h1 id="name">NAME</h1>
 <p>pacman-mirrors - generate pacman mirrorlist for Manjaro Linux</p>
@@ -84,14 +83,14 @@
 <dt>-G, --get-branch</dt>
 <dd>Return branch from configuration.
 </dd>
+<dt>-P, --proto, --protocols <em>PROTO</em> [<em>PROTO</em>] ...</dt>
+<dd>Write protocols to configuration, use <em>all</em> or <em>http</em>, <em>https</em>, <em>ftp</em> and <em>ftps</em>
+</dd>
 <dt>-R, --re-branch</dt>
 <dd>Replace branch in mirrorlist
 </dd>
 <dt>-S, --set-branch <em>BRANCH</em></dt>
 <dd>Replace branch in configuration, use <em>stable</em>, <em>testing</em> or <em>unstable</em>
-</dd>
-<dt>-P, --proto, --protocols <em>PROTO</em> [<em>PROTO</em>] ...</dt>
-<dd>Write protocols to configuration, use <em>all</em> or <em>http</em>, <em>https</em>, <em>ftp</em> and <em>ftps</em>
 </dd>
 <dt>-U, --url <em>URL</em></dt>
 <dd>Replace mirrorlist with supplied url
@@ -128,7 +127,7 @@ BRANCH: Value from config</p>
 <p>At launch an internal default configuration is setup, file configuration is applied and the commandline is parsed and applied.</p>
 <h2 id="api-arguments">API arguments</h2>
 <p>These arguments modifies key elements of pacman-mirrors configuration according to the packagers needs.</p>
-<p>The actions performed by the API are in strict order and performed <em>before any</em> other actions.</p>
+<p>The actions performed by the API are in strict order and performed <em>before any</em> other actions. This also means that ordinary arguments supplied in conjunction with app might be ignored. Eg. <strong>-U</strong> argument terminates pacman-mirrors when branch and mirrorlist has been written.</p>
 <ol style="list-style-type: decimal">
 <li>If <em>-G</em></li>
 </ol>
@@ -167,7 +166,7 @@ BRANCH: Value from config</p>
 <ul>
 <li>replace branch in mirrorlist with <em>-S</em> <em>BRANCH</em></li>
 </ul>
-<p>When done pacman-mirrors checks the internet connection and if possible download the latest datafiles for creating the mirrorlist. At this point it is possible to interupt further processing.</p>
+<p>When done pacman-mirrors checks the internet connection and if possible download the latest datafiles for creating the mirrorlist. At this point it is possible to interrupt further processing.</p>
 <p>If the <em>-n</em> argument is present pacman-mirrors will now exit.</p>
 <h1 id="examples">EXAMPLES</h1>
 <p>Most optional arguments are self explaining others require explanation. The API functions is mainly designed to help packagers and iso-builders. However it can be of use for everyone because it takes the hazzle out of editing your pacman-mirrors configuration.</p>
@@ -199,9 +198,9 @@ BRANCH: Value from config</p>
 <li><p>Change protocols you will accept but dont touch the mirrorlist</p>
 <p><em>sudo pacman-mirrors -naP https http</em></p></li>
 <li><p>A packager can write directly to a mounted systems datafiles using either a path or an environment variable replacing the branch in both configuration and mirrorlist leaving the mirrors as is</p>
-<p><em>sudo pacman-mirrors -anR -p $mnt -S $branch -P https</em></p></li>
-<li><p>It is also possible to specify a mirror in which case the mirrorlist is created and pacman-mirrors exits</p>
-<p><em>sudo pacman-mirrors -ap $mnt -S $branch -U http://server.tld/mirror</em></p></li>
+<p><em>sudo pacman-mirrors -anR -p $prefix -S $branch -P https</em></p></li>
+<li><p>It is also possible to specify a mirror in which case the mirrorlist is created and pacman-mirrors terminate</p>
+<p><em>sudo pacman-mirrors -ap $prefix -S $branch -U $url</em></p></li>
 </ul>
 <h1 id="reporting-bugs">REPORTING BUGS</h1>
 <p><a href="https://github.com/manjaro/pacman-mirrors/issues" class="uri">https://github.com/manjaro/pacman-mirrors/issues</a></p>
