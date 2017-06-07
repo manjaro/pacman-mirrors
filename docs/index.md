@@ -166,7 +166,7 @@ pacman-mirrors when branch and mirrorlist has been written.
 1. If *-G*
    * *sys.exit(config.branch)*
 2. If *p*  *PREFIX*
-   * prefix internal file configuration with *PREFIX*
+   *  add *PREFIX* to internal file configuration 
 3. If *-S* *BRANCH*
    * apply *BRANCH* to internal configuration
    * replace branch in pacman-mirrors.conf with *BRANCH*
