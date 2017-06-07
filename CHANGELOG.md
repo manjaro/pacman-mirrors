@@ -2,7 +2,8 @@
 All notable changes to this project will be documented in this file.
 
 ## [4.2.0dev]
-- **Improvement**: Added `-R`/`--re-branch` to api [#105](https://github.com/manjaro/pacman-mirrors/issues/105).
+- **Improvement**: Added `-U` / `--url` [#105](https://github.com/manjaro/pacman-mirrors/issues/105).
+- **Improvement**: Added `-R`/`--re-branch` [#105](https://github.com/manjaro/pacman-mirrors/issues/105).
 - **Improvement**: Added man page.
 
 **Breaking changes**
