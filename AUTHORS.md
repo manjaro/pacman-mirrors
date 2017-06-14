@@ -2,9 +2,9 @@
 
 - Roland Singer <roland@manjaro.org>
 - Esclapion
-- philm
-- Ramon Buldó <rbuldo@gmail.com>
+- Philip Müller <philm@manjaro.org>
+- Ramon Buldó <ramon@manjaro.org>
 - Hugo Posnic <huluti@manjaro.org>
-- Frede Hundewadt
+- Frede Hundewadt <fh@manjaro.org>
 
 Thank you all! ;)
