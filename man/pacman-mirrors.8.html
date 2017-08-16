@@ -12,7 +12,7 @@
 <div id="header">
 <h1 class="title">pacman-mirrors(8) Pacman-Mirrors 4.2 User Manual</h1>
 <h2 class="author"></h2>
-<h3 class="date">June, 2017</h3>
+<h3 class="date">August, 2017</h3>
 </div>
 <h1 id="name">NAME</h1>
 <p>pacman-mirrors - generate pacman mirrorlist for Manjaro Linux</p>
@@ -118,11 +118,11 @@
 </dd>
 </dl>
 <h2 id="exit-status">Exit status:</h2>
-<p>0 : OK<br />
-1 : Problem with argument<br />
-2 : Problem accessing systemfiles<br />
-3 : Missing mirror file<br />
-BRANCH: Value from config</p>
+<pre><code>0     : OK  
+1     : Problem with argument  
+2     : Problem accessing systemfiles  
+3     : Missing mirror file  
+BRANCH: Value from config  </code></pre>
 <h2 id="configuration-flow-of-pacman-mirrors">Configuration flow of pacman-mirrors</h2>
 <p>At launch an internal default configuration is setup, file configuration is applied and the commandline is parsed and applied.</p>
 <h2 id="api-arguments">API arguments</h2>
@@ -132,7 +132,8 @@ BRANCH: Value from config</p>
 <li>If <em>-G</em></li>
 </ol>
 <ul>
-<li><em>sys.exit(config.branch)</em></li>
+<li>print <em>config.branch</em></li>
+<li><em>sys.exit(0)</em></li>
 </ul>
 <ol start="2" style="list-style-type: decimal">
 <li>If <em>p</em> <em>PREFIX</em></li>
@@ -207,10 +208,6 @@ BRANCH: Value from config</p>
 <h1 id="see-also">SEE ALSO</h1>
 <p>The pacman-mirrors source code and all documentation may be downloaded from <a href="https://github.com/manjaro/pacman-mirrors/archive/master.zip" class="uri">https://github.com/manjaro/pacman-mirrors/archive/master.zip</a></p>
 <h1 id="authors">AUTHORS</h1>
-<p>Esclapion <a href="mailto:esclapion@manjaro.org">esclapion@manjaro.org</a><br />
-philm <a href="mailto:philm@manjaro.org">philm@manjaro.org</a><br />
-Ramon Buldó <a href="mailto:rbuldo@gmail.com">rbuldo@gmail.com</a><br />
-Hugo Posnic <a href="mailto:huluti@manjaro.org">huluti@manjaro.org</a><br />
-Frede Hundewadt <a href="mailto:frede@hundewadt.dk">frede@hundewadt.dk</a></p>
+<p>Esclapion <a href="mailto:esclapion@manjaro.org">esclapion@manjaro.org</a> philm <a href="mailto:philm@manjaro.org">philm@manjaro.org</a> Ramon Buldó <a href="mailto:rbuldo@gmail.com">rbuldo@gmail.com</a> Hugo Posnic <a href="mailto:huluti@manjaro.org">huluti@manjaro.org</a> Frede Hundewadt <a href="mailto:frede@hundewadt.dk">frede@hundewadt.dk</a></p>
 </body>
 </html>

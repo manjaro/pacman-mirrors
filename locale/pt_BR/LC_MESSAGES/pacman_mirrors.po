@@ -4,7 +4,7 @@
 # project.
 # 
 # Translators:
-# Gabriel Henrique <gabrielmmoderno@gmail.com>, 2017
+# Gabriel Henrique <inactive+DarkSkull@transifex.com>, 2017
 # Matheus Campagnol <mate175@gmail.com>, 2017
 msgid ""
 msgstr ""
