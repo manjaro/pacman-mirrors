@@ -4,53 +4,52 @@
 # project.
 # 
 # Translators:
-# Hsiu-Ming Chang <cges30901@gmail.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: manjaro-pacman-mirrors\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2017-02-20 15:44+0100\n"
-"PO-Revision-Date: 2017-07-07 07:12+0000\n"
-"Last-Translator: Hsiu-Ming Chang <cges30901@gmail.com>\n"
-"Language-Team: Chinese (Taiwan) (http://www.transifex.com/manjarolinux/manjaro-pacman-mirrors/language/zh_TW/)\n"
+"PO-Revision-Date: 2015-12-22 01:50+0000\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Indonesian (Indonesia) (http://www.transifex.com/manjarolinux/manjaro-pacman-mirrors/language/id_ID/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.3.4\n"
-"Language: zh_TW\n"
+"Language: id_ID\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #: pacman_mirrors/txt.py:31
 msgid "Error"
-msgstr "錯誤"
+msgstr ""
 
 #: pacman_mirrors/txt.py:32
 msgid "Info"
-msgstr "資訊"
+msgstr ""
 
 #: pacman_mirrors/txt.py:33
 msgid "Warning"
-msgstr "警告"
+msgstr ""
 
 #: pacman_mirrors/txt.py:35
 msgid "Timeout"
-msgstr "逾時"
+msgstr ""
 
 #: pacman_mirrors/txt.py:36
 msgid "HTTPException"
-msgstr "HTTPException"
+msgstr ""
 
 #: pacman_mirrors/txt.py:38
 msgid "PATH"
-msgstr "路徑"
+msgstr ""
 
 #: pacman_mirrors/txt.py:39
 msgid "FILE"
-msgstr "檔案"
+msgstr ""
 
 #: pacman_mirrors/txt.py:40
 msgid "SECONDS"
-msgstr "秒"
+msgstr ""
 
 #: pacman_mirrors/txt.py:41
 msgid "DIGIT"
@@ -66,7 +65,7 @@ msgstr ""
 
 #: pacman_mirrors/txt.py:46
 msgid "Output file"
-msgstr "輸出檔案"
+msgstr ""
 
 #: pacman_mirrors/txt.py:47
 msgid "Generate mirrorlist"
@@ -86,7 +85,7 @@ msgstr ""
 
 #: pacman_mirrors/txt.py:51
 msgid "Generation method"
-msgstr "產生方式"
+msgstr ""
 
 #: pacman_mirrors/txt.py:52
 msgid "Don't generate mirrorlist if"
@@ -118,7 +117,7 @@ msgstr ""
 
 #: pacman_mirrors/txt.py:60
 msgid "Available countries are"
-msgstr "可用的國家有"
+msgstr ""
 
 #: pacman_mirrors/txt.py:61
 msgid "Could not download from"
@@ -126,11 +125,11 @@ msgstr ""
 
 #: pacman_mirrors/txt.py:62
 msgid "Cannot read file"
-msgstr "無法讀取檔案"
+msgstr ""
 
 #: pacman_mirrors/txt.py:63
 msgid "Cannot write file"
-msgstr "無法寫入檔案"
+msgstr ""
 
 #: pacman_mirrors/txt.py:64
 msgid "Converting custom mirror file to new format"
@@ -150,7 +149,7 @@ msgstr ""
 
 #: pacman_mirrors/txt.py:68
 msgid "doesn't exist."
-msgstr "不存在。"
+msgstr ""
 
 #: pacman_mirrors/txt.py:69
 msgid "Downloading mirrors from repo.manjaro.org"
@@ -174,7 +173,7 @@ msgstr ""
 
 #: pacman_mirrors/txt.py:74
 msgid "Must have root privileges"
-msgstr "需要有 root 權限"
+msgstr ""
 
 #: pacman_mirrors/txt.py:75
 msgid "The mirror list is not changed"
@@ -186,7 +185,7 @@ msgstr ""
 
 #: pacman_mirrors/txt.py:77
 msgid "Option"
-msgstr "選項"
+msgstr ""
 
 #: pacman_mirrors/txt.py:78
 msgid "Writing mirror list"
@@ -210,7 +209,7 @@ msgstr ""
 
 #: pacman_mirrors/txt.py:83
 msgid "unknown country"
-msgstr "未知的國家"
+msgstr ""
 
 #: pacman_mirrors/txt.py:84
 msgid "Using all mirrors"
@@ -238,11 +237,11 @@ msgstr ""
 
 #: pacman_mirrors/txt.py:91
 msgid "Use"
-msgstr "使用"
+msgstr ""
 
 #: pacman_mirrors/txt.py:92
 msgid "Country"
-msgstr "國家"
+msgstr ""
 
 #: pacman_mirrors/txt.py:93
 msgid "Resp"
@@ -254,11 +253,11 @@ msgstr ""
 
 #: pacman_mirrors/txt.py:95
 msgid "URL"
-msgstr "URL"
+msgstr ""
 
 #: pacman_mirrors/txt.py:96
 msgid "Cancel"
-msgstr "取消"
+msgstr ""
 
 #: pacman_mirrors/txt.py:97
 msgid "OK"
@@ -266,7 +265,7 @@ msgstr ""
 
 #: pacman_mirrors/txt.py:98
 msgid "Confirm selections"
-msgstr "確認選擇"
+msgstr ""
 
 #: pacman_mirrors/txt.py:99
 msgid "I want to use these mirrors"
