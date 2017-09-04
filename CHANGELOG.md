@@ -1,6 +1,9 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [4.2.2]
+- **Fix**: Fixed missing txt 'OPT_COUNTRY'
+
 ## [4.2.1] 2017-08-16
 - Ensure correct exit code (0) on `api --get-branch` 
 
