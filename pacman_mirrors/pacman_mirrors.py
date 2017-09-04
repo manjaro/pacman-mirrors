@@ -168,7 +168,7 @@ class PacmanMirrors:
 
         args = parser.parse_args()
         if len(sys.argv) == 1:
-            print("pacman-mirrors version " + __version__)
+            print("{}pacman-mirrors {}{}".format(color.GREEN, __version__, color.ENDCOLOR))
             parser.print_help()
             sys.exit(0)
 
@@ -263,9 +263,12 @@ class PacmanMirrors:
         if set_prefix is None:
             set_prefix = ""
 
+        # Order of API tasks does matter
         # First API task
         if get_branch:
-            sys.exit(self.config["branch"])
+            print(self.config["branch"])
+            sys.exit(0)
+            # sys.exit(self.config["branch"])
 
         # apply api configuration to internal configuration object
         # Apply prefix if present
@@ -285,7 +288,7 @@ class PacmanMirrors:
         if set_branch:
             # Apply branch to internal config
             self.config["branch"] = set_branch
-            # pacman-mirrors conf could absent so check for it
+            # pacman-mirrors.conf could absent so check for it
             if not filefn.check_file(self.config["config_file"]):
                 # Copy from host system
                 filefn.create_dir(set_prefix + "/etc")

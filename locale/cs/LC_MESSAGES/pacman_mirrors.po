@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: manjaro-pacman-mirrors\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2017-02-20 15:44+0100\n"
-"PO-Revision-Date: 2017-03-19 18:15+0000\n"
+"PO-Revision-Date: 2017-08-19 11:13+0000\n"
 "Last-Translator: pavelrz\n"
 "Language-Team: Czech (http://www.transifex.com/manjarolinux/manjaro-pacman-mirrors/language/cs/)\n"
 "MIME-Version: 1.0\n"
@@ -27,19 +27,19 @@ msgstr "Chyba"
 
 #: pacman_mirrors/txt.py:32
 msgid "Info"
-msgstr ""
+msgstr "Informace"
 
 #: pacman_mirrors/txt.py:33
 msgid "Warning"
-msgstr ""
+msgstr "Varování"
 
 #: pacman_mirrors/txt.py:35
 msgid "Timeout"
-msgstr ""
+msgstr "Časový limit"
 
 #: pacman_mirrors/txt.py:36
 msgid "HTTPException"
-msgstr ""
+msgstr "HTTPException"
 
 #: pacman_mirrors/txt.py:38
 msgid "PATH"
@@ -47,7 +47,7 @@ msgstr "CESTA"
 
 #: pacman_mirrors/txt.py:39
 msgid "FILE"
-msgstr ""
+msgstr "SOUBOR"
 
 #: pacman_mirrors/txt.py:40
 msgid "SECONDS"
@@ -55,7 +55,7 @@ msgstr "SEKUND"
 
 #: pacman_mirrors/txt.py:41
 msgid "DIGIT"
-msgstr ""
+msgstr "ČÍSLICE"
 
 #: pacman_mirrors/txt.py:43
 msgid "Branch name"
@@ -63,7 +63,7 @@ msgstr "Větev"
 
 #: pacman_mirrors/txt.py:44
 msgid "Comma separated list of countries, from which mirrors will be used"
-msgstr ""
+msgstr "čárkou oddělený seznam zemí, ze kterých budou použita zrcadla"
 
 #: pacman_mirrors/txt.py:46
 msgid "Output file"
@@ -75,11 +75,11 @@ msgstr "Vytvořit seznam zrcadel"
 
 #: pacman_mirrors/txt.py:48
 msgid "Get current country using geolocation. Ignored if"
-msgstr ""
+msgstr "Zjistit zemi pomocí geolokace. Ignorováno pokud"
 
 #: pacman_mirrors/txt.py:49
 msgid "is supplied"
-msgstr ""
+msgstr "je poskytnuto."
 
 #: pacman_mirrors/txt.py:50
 msgid "Generate custom mirrorlist"
@@ -91,31 +91,31 @@ msgstr "Způsob vytvoření"
 
 #: pacman_mirrors/txt.py:52
 msgid "Don't generate mirrorlist if"
-msgstr ""
+msgstr "Nevytvářet seznam zrcadel pokud"
 
 #: pacman_mirrors/txt.py:53
 msgid "in the configuration file"
-msgstr ""
+msgstr "v konfiguračním souboru"
 
 #: pacman_mirrors/txt.py:54
 msgid "Mirrors list path"
-msgstr ""
+msgstr "Cesta k seznamu zrcadel"
 
 #: pacman_mirrors/txt.py:55
 msgid "Quiet mode - less verbose output"
-msgstr ""
+msgstr "Tichý režim - méně podrobný výstup"
 
 #: pacman_mirrors/txt.py:56
 msgid "Maximum waiting time for server response"
-msgstr ""
+msgstr "Nejvyšší čas čekání na odpověď serveru"
 
 #: pacman_mirrors/txt.py:57
 msgid "Print the pacman-mirrors version"
-msgstr ""
+msgstr "Zobrazit verzi pacman-mirrors"
 
 #: pacman_mirrors/txt.py:58
 msgid "A quick mirrorlist. Overrides -cim --geoip"
-msgstr ""
+msgstr "Rychlý seznam zrcadel. Přepíše -cim --geoip"
 
 #: pacman_mirrors/txt.py:60
 msgid "Available countries are"
@@ -123,7 +123,7 @@ msgstr "Jsou dostupné následující země"
 
 #: pacman_mirrors/txt.py:61
 msgid "Could not download from"
-msgstr ""
+msgstr "Nelze stáhnout z"
 
 #: pacman_mirrors/txt.py:62
 msgid "Cannot read file"
@@ -135,7 +135,7 @@ msgstr "Soubor nelze zapsat"
 
 #: pacman_mirrors/txt.py:64
 msgid "Converting custom mirror file to new format"
-msgstr ""
+msgstr "Uživatelský seznam zrcadel se převádí na nový formát"
 
 #: pacman_mirrors/txt.py:65
 msgid "Custom mirror file"
@@ -155,23 +155,23 @@ msgstr "neexistuje."
 
 #: pacman_mirrors/txt.py:69
 msgid "Downloading mirrors from repo.manjaro.org"
-msgstr ""
+msgstr "Z repo.manjaro.org se stahuje seznam zrcadel"
 
 #: pacman_mirrors/txt.py:70
 msgid "Falling back to"
-msgstr ""
+msgstr "Návrat k"
 
 #: pacman_mirrors/txt.py:71
 msgid "is missing"
-msgstr ""
+msgstr "chybí"
 
 #: pacman_mirrors/txt.py:72
 msgid "The mirror file"
-msgstr ""
+msgstr "Soubor se seznamem zrcadel"
 
 #: pacman_mirrors/txt.py:73
 msgid "Mirrorlist generated and saved to"
-msgstr ""
+msgstr "Seznam zrcadel vytvořen a uložen do"
 
 #: pacman_mirrors/txt.py:74
 msgid "Must have root privileges"
@@ -183,31 +183,31 @@ msgstr "Seznam zrcadel nezměněn"
 
 #: pacman_mirrors/txt.py:76
 msgid "No mirrors in selection"
-msgstr ""
+msgstr "Ve výběru nejsou žádná zrcadla"
 
 #: pacman_mirrors/txt.py:77
 msgid "Option"
-msgstr ""
+msgstr "Možnost"
 
 #: pacman_mirrors/txt.py:78
 msgid "Writing mirror list"
-msgstr ""
+msgstr "Zapisuje se seznam zrcadel"
 
 #: pacman_mirrors/txt.py:79
 msgid "Querying mirrors"
-msgstr ""
+msgstr "Dotazování zrcadel"
 
 #: pacman_mirrors/txt.py:80
 msgid "Randomizing mirror list"
-msgstr ""
+msgstr "Seznam zrcadel je náhodně řazen"
 
 #: pacman_mirrors/txt.py:81
 msgid "To reset custom config run `pacman-mirrors -c all`"
-msgstr ""
+msgstr "Uživatelské nastavení resetujte příkazem `pacman-mirrors -c all`"
 
 #: pacman_mirrors/txt.py:82
 msgid "This may take some time"
-msgstr ""
+msgstr "To může zabrat nějaký čas"
 
 #: pacman_mirrors/txt.py:83
 msgid "unknown country"
@@ -215,31 +215,31 @@ msgstr "neznámá země"
 
 #: pacman_mirrors/txt.py:84
 msgid "Using all mirrors"
-msgstr ""
+msgstr "Použita všechna zrcadla"
 
 #: pacman_mirrors/txt.py:85
 msgid "Using custom mirror file"
-msgstr ""
+msgstr "Použit vlastní soubor se seznamem zrcadel"
 
 #: pacman_mirrors/txt.py:86
 msgid "Using default mirror file"
-msgstr ""
+msgstr "Použit výchozí soubor se seznamem zrcadel"
 
 #: pacman_mirrors/txt.py:88
 msgid "Manjaro mirrors by response time"
-msgstr ""
+msgstr "Zrcadla seřazená podle času odezvy"
 
 #: pacman_mirrors/txt.py:89
 msgid "Manjaro mirrors in random order"
-msgstr ""
+msgstr "Zrcadla seřazená náhodně"
 
 #: pacman_mirrors/txt.py:90
 msgid "Check mirrors for your personal list"
-msgstr ""
+msgstr "Vyberte zrcadla pro váš vlastní seznam"
 
 #: pacman_mirrors/txt.py:91
 msgid "Use"
-msgstr ""
+msgstr "Použít"
 
 #: pacman_mirrors/txt.py:92
 msgid "Country"
@@ -247,15 +247,15 @@ msgstr "Země"
 
 #: pacman_mirrors/txt.py:93
 msgid "Resp"
-msgstr ""
+msgstr "Odpověď"
 
 #: pacman_mirrors/txt.py:94
 msgid "Sync"
-msgstr ""
+msgstr "Synchronizace"
 
 #: pacman_mirrors/txt.py:95
 msgid "URL"
-msgstr ""
+msgstr "Adresa"
 
 #: pacman_mirrors/txt.py:96
 msgid "Cancel"
@@ -263,7 +263,7 @@ msgstr "Zrušit"
 
 #: pacman_mirrors/txt.py:97
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #: pacman_mirrors/txt.py:98
 msgid "Confirm selections"

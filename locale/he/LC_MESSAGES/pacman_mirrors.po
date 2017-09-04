@@ -4,254 +4,253 @@
 # project.
 # 
 # Translators:
-# dsafsadf <heneral@gmail.com>, 2017
-# zubr139, 2016-2017
+# Eli Shleifer <eligator@gmail.com>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: manjaro-pacman-mirrors\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2017-02-20 15:44+0100\n"
-"PO-Revision-Date: 2017-06-30 11:20+0000\n"
-"Last-Translator: dsafsadf <heneral@gmail.com>\n"
-"Language-Team: Ukrainian (http://www.transifex.com/manjarolinux/manjaro-pacman-mirrors/language/uk/)\n"
+"PO-Revision-Date: 2017-08-29 22:13+0000\n"
+"Last-Translator: Eli Shleifer <eligator@gmail.com>\n"
+"Language-Team: Hebrew (http://www.transifex.com/manjarolinux/manjaro-pacman-mirrors/language/he/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.3.4\n"
-"Language: uk\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Language: he\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: pacman_mirrors/txt.py:31
 msgid "Error"
-msgstr "Помилка"
+msgstr "שגיאה"
 
 #: pacman_mirrors/txt.py:32
 msgid "Info"
-msgstr "Інформація"
+msgstr "מידע"
 
 #: pacman_mirrors/txt.py:33
 msgid "Warning"
-msgstr "УВАГА"
+msgstr "אזהרה"
 
 #: pacman_mirrors/txt.py:35
 msgid "Timeout"
-msgstr "Час вийшов"
+msgstr "זמן קצוב לחיבור"
 
 #: pacman_mirrors/txt.py:36
 msgid "HTTPException"
-msgstr "HTTP Виняток"
+msgstr "חריגת HTTP"
 
 #: pacman_mirrors/txt.py:38
 msgid "PATH"
-msgstr "ШЛЯХ"
+msgstr "נתיב"
 
 #: pacman_mirrors/txt.py:39
 msgid "FILE"
-msgstr "ФАЙЛ"
+msgstr "קובץ"
 
 #: pacman_mirrors/txt.py:40
 msgid "SECONDS"
-msgstr "СЕКУНД"
+msgstr "שניות"
 
 #: pacman_mirrors/txt.py:41
 msgid "DIGIT"
-msgstr "ЦИФРА"
+msgstr "ספרה"
 
 #: pacman_mirrors/txt.py:43
 msgid "Branch name"
-msgstr "Назва гілки"
+msgstr "שם הענף"
 
 #: pacman_mirrors/txt.py:44
 msgid "Comma separated list of countries, from which mirrors will be used"
-msgstr "Розділений комами список країн, з яких будуть використовуватися дзеркала"
+msgstr "רשימת ארצות מופרדת באמצעות פסיקים, אשר המראות מהללו יהיו בשימוש"
 
 #: pacman_mirrors/txt.py:46
 msgid "Output file"
-msgstr "Вихідний файл"
+msgstr "קובץ הפלט"
 
 #: pacman_mirrors/txt.py:47
 msgid "Generate mirrorlist"
-msgstr "Сформувати список дзеркал"
+msgstr "חולל רשימת מראות"
 
 #: pacman_mirrors/txt.py:48
 msgid "Get current country using geolocation. Ignored if"
-msgstr "Отримати поточну країну за допомогою геолокації. ігнорується, якщо"
+msgstr "שלוף את הארץ הנוכחית באמצעות איכון. התעלם במידה ו"
 
 #: pacman_mirrors/txt.py:49
 msgid "is supplied"
-msgstr "постачається"
+msgstr "מסופק"
 
 #: pacman_mirrors/txt.py:50
 msgid "Generate custom mirrorlist"
-msgstr "Створити окремий список дзеркал"
+msgstr "חולל רשימת מראות מֻתְאֶמֶת"
 
 #: pacman_mirrors/txt.py:51
 msgid "Generation method"
-msgstr "Спосіб генерації"
+msgstr "שיטת יצירה"
 
 #: pacman_mirrors/txt.py:52
 msgid "Don't generate mirrorlist if"
-msgstr "Не створювати список дзеркал, якщо"
+msgstr "אל תחולל רשימת מראות במידה ו"
 
 #: pacman_mirrors/txt.py:53
 msgid "in the configuration file"
-msgstr "в конфігураційному файлі"
+msgstr "בקובץ התצורה"
 
 #: pacman_mirrors/txt.py:54
 msgid "Mirrors list path"
-msgstr "Дзеркала список шляхів"
+msgstr "נתיב רשימת מראות"
 
 #: pacman_mirrors/txt.py:55
 msgid "Quiet mode - less verbose output"
-msgstr "Тихий режим - менш детальний вивід"
+msgstr "אופן פעולה שקט - פלט מתומצת יותר"
 
 #: pacman_mirrors/txt.py:56
 msgid "Maximum waiting time for server response"
-msgstr "Максимальний час очікування відповіді сервера"
+msgstr "זמן ההמתנה המירבי לקבלת תגובה מהשרת"
 
 #: pacman_mirrors/txt.py:57
 msgid "Print the pacman-mirrors version"
-msgstr "Вивести версію pacman-mirrors"
+msgstr "הדפס את גרסת התוכנה pacman-mirrors"
 
 #: pacman_mirrors/txt.py:58
 msgid "A quick mirrorlist. Overrides -cim --geoip"
-msgstr "Швидкий список дзеркал. Перевизначення -cim --geoip"
+msgstr "רשימת מראות מהירה. רומס את -cim --geoip"
 
 #: pacman_mirrors/txt.py:60
 msgid "Available countries are"
-msgstr "Доступні країни"
+msgstr "הארצות הזמינות הן"
 
 #: pacman_mirrors/txt.py:61
 msgid "Could not download from"
-msgstr "Не вдалося завантажити з"
+msgstr "לא ניתן להוריד מ"
 
 #: pacman_mirrors/txt.py:62
 msgid "Cannot read file"
-msgstr "Неможливо прочитати файл"
+msgstr "הקובץ לא ניתן לקריאה"
 
 #: pacman_mirrors/txt.py:63
 msgid "Cannot write file"
-msgstr "Неможливо записати файл"
+msgstr "הקובץ לא ניתן לכתיבה"
 
 #: pacman_mirrors/txt.py:64
 msgid "Converting custom mirror file to new format"
-msgstr "Перетворення призначеного для користувача файлу дзеркала в новий формат"
+msgstr "ממיר קובץ מראות מֻתְאָם לפורמט חדש"
 
 #: pacman_mirrors/txt.py:65
 msgid "Custom mirror file"
-msgstr "Файл користувальницького дзеркала"
+msgstr "קובץ מראות מֻתְאָם"
 
 #: pacman_mirrors/txt.py:66
 msgid "Custom mirror file saved"
-msgstr "Користувацький файл дзеркала збережений"
+msgstr "קובץ מראות מֻתְאָם נשמר"
 
 #: pacman_mirrors/txt.py:67
 msgid "User generated mirror list"
-msgstr "Користувач створив список дзеркал"
+msgstr "רשימת מראות שנוצרה על ידי המשתמש"
 
 #: pacman_mirrors/txt.py:68
 msgid "doesn't exist."
-msgstr "не існує"
+msgstr "לא קיים."
 
 #: pacman_mirrors/txt.py:69
 msgid "Downloading mirrors from repo.manjaro.org"
-msgstr "Завантаження дзеркал з repo.manjaro.org"
+msgstr "מוריד מראות מ repo.manjaro.org"
 
 #: pacman_mirrors/txt.py:70
 msgid "Falling back to"
-msgstr "Відкотити назад до"
+msgstr "נסוג לאחור ל"
 
 #: pacman_mirrors/txt.py:71
 msgid "is missing"
-msgstr "відсутнє"
+msgstr "חסר"
 
 #: pacman_mirrors/txt.py:72
 msgid "The mirror file"
-msgstr "Файл дзеркала"
+msgstr "קובץ המראות"
 
 #: pacman_mirrors/txt.py:73
 msgid "Mirrorlist generated and saved to"
-msgstr "Створенй і збережений дзеркальний список до"
+msgstr "רשימת המראות נוצרה ונשמרה ב"
 
 #: pacman_mirrors/txt.py:74
 msgid "Must have root privileges"
-msgstr "Мають бути привілеї root"
+msgstr "על התוכנה לקבל הרשאות מנהלן"
 
 #: pacman_mirrors/txt.py:75
 msgid "The mirror list is not changed"
-msgstr "Список дзеркал не змінюється"
+msgstr "רשימת המראות לא שונתה"
 
 #: pacman_mirrors/txt.py:76
 msgid "No mirrors in selection"
-msgstr "Немає дзеркал для вибору"
+msgstr "לא נמצאו מראות על פי הבחירה"
 
 #: pacman_mirrors/txt.py:77
 msgid "Option"
-msgstr "Опіції"
+msgstr "בְּרֵרָה"
 
 #: pacman_mirrors/txt.py:78
 msgid "Writing mirror list"
-msgstr "Зчитування списку дзеркал"
+msgstr "רושם את רשימת המראות"
 
 #: pacman_mirrors/txt.py:79
 msgid "Querying mirrors"
-msgstr "Запит дзеркал"
+msgstr "מתשאל את המראות"
 
 #: pacman_mirrors/txt.py:80
 msgid "Randomizing mirror list"
-msgstr "Рандомізація списку дзеркал"
+msgstr "מסדר את המראות באופן אקראי"
 
 #: pacman_mirrors/txt.py:81
 msgid "To reset custom config run `pacman-mirrors -c all`"
-msgstr "Для скидання налаштувань конфігурації виконайте `pacman-mirrors -c all`"
+msgstr "בכדי לאפס את התצורה המֻתְאֶמֶת, הרץ את הפקודה `pacman-mirrors -c all`"
 
 #: pacman_mirrors/txt.py:82
 msgid "This may take some time"
-msgstr "Це може зайняти деякий час"
+msgstr "הפעולה עלולה לקחת זמן מה"
 
 #: pacman_mirrors/txt.py:83
 msgid "unknown country"
-msgstr "невідома країна"
+msgstr "ארץ לא מזוהה"
 
 #: pacman_mirrors/txt.py:84
 msgid "Using all mirrors"
-msgstr "Використання усіх дзеркал"
+msgstr "משתמש בכלל המראות"
 
 #: pacman_mirrors/txt.py:85
 msgid "Using custom mirror file"
-msgstr "Використання спеціального файла дзеркала"
+msgstr "משתמש בקובץ מראות מֻתְאָם"
 
 #: pacman_mirrors/txt.py:86
 msgid "Using default mirror file"
-msgstr "Використання типового файла дзеркала"
+msgstr "משתמש בקובץ מראות על פי ברירת המחדל"
 
 #: pacman_mirrors/txt.py:88
 msgid "Manjaro mirrors by response time"
-msgstr "Manjaro дзеркал за часом відгуку"
+msgstr "מראות Manjaro לפי זמן התגובה"
 
 #: pacman_mirrors/txt.py:89
 msgid "Manjaro mirrors in random order"
-msgstr "Manjaro дзеркал у випадковому порядку"
+msgstr "מראות Manjaro בסדר אקראי"
 
 #: pacman_mirrors/txt.py:90
 msgid "Check mirrors for your personal list"
-msgstr "Перевірте дзеркала особистого списку"
+msgstr "בדוק מראות עבור רשימת המראות האישית שלך"
 
 #: pacman_mirrors/txt.py:91
 msgid "Use"
-msgstr "Використання"
+msgstr " שימוש"
 
 #: pacman_mirrors/txt.py:92
 msgid "Country"
-msgstr "Країна"
+msgstr "ארץ"
 
 #: pacman_mirrors/txt.py:93
 msgid "Resp"
-msgstr "Resp"
+msgstr "תגובה"
 
 #: pacman_mirrors/txt.py:94
 msgid "Sync"
-msgstr "Синхронізація"
+msgstr "סנכרון"
 
 #: pacman_mirrors/txt.py:95
 msgid "URL"
@@ -259,16 +258,16 @@ msgstr "URL"
 
 #: pacman_mirrors/txt.py:96
 msgid "Cancel"
-msgstr "Скасувати"
+msgstr "ביטול"
 
 #: pacman_mirrors/txt.py:97
 msgid "OK"
-msgstr "Гаразд"
+msgstr "אישור"
 
 #: pacman_mirrors/txt.py:98
 msgid "Confirm selections"
-msgstr "Підтвердіть вибір"
+msgstr "אשר בחירות"
 
 #: pacman_mirrors/txt.py:99
 msgid "I want to use these mirrors"
-msgstr "Я бажаю використовувати ці дзеркала"
+msgstr "ברצוני להשתמש במראות הללו"

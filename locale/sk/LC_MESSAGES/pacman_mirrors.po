@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: manjaro-pacman-mirrors\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2017-02-20 15:44+0100\n"
-"PO-Revision-Date: 2017-03-04 08:29+0000\n"
+"PO-Revision-Date: 2017-06-18 08:11+0000\n"
 "Last-Translator: Dušan Kazik <prescott66@gmail.com>\n"
 "Language-Team: Slovak (http://www.transifex.com/manjarolinux/manjaro-pacman-mirrors/language/sk/)\n"
 "MIME-Version: 1.0\n"
@@ -38,7 +38,7 @@ msgstr "Vypršanie času"
 
 #: pacman_mirrors/txt.py:36
 msgid "HTTPException"
-msgstr ""
+msgstr "Výnimka protokolu HTTP"
 
 #: pacman_mirrors/txt.py:38
 msgid "PATH"
@@ -62,7 +62,7 @@ msgstr "Názov vetvy"
 
 #: pacman_mirrors/txt.py:44
 msgid "Comma separated list of countries, from which mirrors will be used"
-msgstr ""
+msgstr "Čiarkami oddelený zoznam krajín, z ktorých sa použijú zrkadlá"
 
 #: pacman_mirrors/txt.py:46
 msgid "Output file"
@@ -70,35 +70,35 @@ msgstr "Výstupný súbor"
 
 #: pacman_mirrors/txt.py:47
 msgid "Generate mirrorlist"
-msgstr ""
+msgstr "Vygeneruje zoznam zrkadiel"
 
 #: pacman_mirrors/txt.py:48
 msgid "Get current country using geolocation. Ignored if"
-msgstr ""
+msgstr "Získa aktuálnu krajinu pomocou geolokácie. Ignorované, ak je voľba"
 
 #: pacman_mirrors/txt.py:49
 msgid "is supplied"
-msgstr ""
+msgstr "zadaná."
 
 #: pacman_mirrors/txt.py:50
 msgid "Generate custom mirrorlist"
-msgstr ""
+msgstr "Vygeneruje vlastný zoznam zrkadiel"
 
 #: pacman_mirrors/txt.py:51
 msgid "Generation method"
-msgstr ""
+msgstr "Spôsob generácie"
 
 #: pacman_mirrors/txt.py:52
 msgid "Don't generate mirrorlist if"
-msgstr ""
+msgstr "Nevygeneruje zoznam zrkadiel, ak je voľba"
 
 #: pacman_mirrors/txt.py:53
 msgid "in the configuration file"
-msgstr ""
+msgstr "v konfiguračnom súbore"
 
 #: pacman_mirrors/txt.py:54
 msgid "Mirrors list path"
-msgstr ""
+msgstr "Cesta k zoznamu zrkadiel"
 
 #: pacman_mirrors/txt.py:55
 msgid "Quiet mode - less verbose output"
@@ -106,15 +106,15 @@ msgstr ""
 
 #: pacman_mirrors/txt.py:56
 msgid "Maximum waiting time for server response"
-msgstr ""
+msgstr "Maximálna doba čakania na odpoveď zo servera"
 
 #: pacman_mirrors/txt.py:57
 msgid "Print the pacman-mirrors version"
-msgstr ""
+msgstr "Vypíše verziu programu pacman-mirrors"
 
 #: pacman_mirrors/txt.py:58
 msgid "A quick mirrorlist. Overrides -cim --geoip"
-msgstr ""
+msgstr "Rýchly zoznam zrkadiel. Preváži voľby -cim --geoip"
 
 #: pacman_mirrors/txt.py:60
 msgid "Available countries are"
@@ -122,7 +122,7 @@ msgstr "Dostupné krajiny sú"
 
 #: pacman_mirrors/txt.py:61
 msgid "Could not download from"
-msgstr ""
+msgstr "Nepodarilo sa prevziať z lokality"
 
 #: pacman_mirrors/txt.py:62
 msgid "Cannot read file"
@@ -134,7 +134,7 @@ msgstr "Nedá sa zapísať súbor"
 
 #: pacman_mirrors/txt.py:64
 msgid "Converting custom mirror file to new format"
-msgstr ""
+msgstr "Konvertuje sa vlastný súbor zrkadiel do nového formátu"
 
 #: pacman_mirrors/txt.py:65
 msgid "Custom mirror file"
@@ -146,15 +146,15 @@ msgstr "Vlastný súbor zrkadiel uložený"
 
 #: pacman_mirrors/txt.py:67
 msgid "User generated mirror list"
-msgstr ""
+msgstr "Používateľom generovaný zoznam zrkadiel"
 
 #: pacman_mirrors/txt.py:68
 msgid "doesn't exist."
-msgstr ""
+msgstr "neexistuje."
 
 #: pacman_mirrors/txt.py:69
 msgid "Downloading mirrors from repo.manjaro.org"
-msgstr ""
+msgstr "Preberajú sa zrkadlá z lokality repo.manjaro.org"
 
 #: pacman_mirrors/txt.py:70
 msgid "Falling back to"
@@ -170,11 +170,11 @@ msgstr "Súbor zrkadiel"
 
 #: pacman_mirrors/txt.py:73
 msgid "Mirrorlist generated and saved to"
-msgstr ""
+msgstr "Zoznam zrkadiel bol vygenerovaný a uložený do"
 
 #: pacman_mirrors/txt.py:74
 msgid "Must have root privileges"
-msgstr ""
+msgstr "Musíte mať práva správcu"
 
 #: pacman_mirrors/txt.py:75
 msgid "The mirror list is not changed"
@@ -194,19 +194,19 @@ msgstr "Zapisuje sa zoznam zrkadiel"
 
 #: pacman_mirrors/txt.py:79
 msgid "Querying mirrors"
-msgstr ""
+msgstr "Dopytujú sa zrkadlá"
 
 #: pacman_mirrors/txt.py:80
 msgid "Randomizing mirror list"
-msgstr ""
+msgstr "Zamiešava sa zoznam zrkadiel"
 
 #: pacman_mirrors/txt.py:81
 msgid "To reset custom config run `pacman-mirrors -c all`"
-msgstr ""
+msgstr "Na obnovenie vlastnej konfigurácie spustite príkaz „pacman-mirrors -c all“"
 
 #: pacman_mirrors/txt.py:82
 msgid "This may take some time"
-msgstr ""
+msgstr "Môže to nejakú dobu trvať"
 
 #: pacman_mirrors/txt.py:83
 msgid "unknown country"
@@ -214,23 +214,23 @@ msgstr "neznáma krajina"
 
 #: pacman_mirrors/txt.py:84
 msgid "Using all mirrors"
-msgstr ""
+msgstr "Používajú sa všetky zrkadlá"
 
 #: pacman_mirrors/txt.py:85
 msgid "Using custom mirror file"
-msgstr ""
+msgstr "Používa sa vlastný súbor zrkadiel"
 
 #: pacman_mirrors/txt.py:86
 msgid "Using default mirror file"
-msgstr ""
+msgstr "Používa sa predvolený súbor zrkadiel"
 
 #: pacman_mirrors/txt.py:88
 msgid "Manjaro mirrors by response time"
-msgstr ""
+msgstr "Zrkadlá distribúcie Manjaro podľa trvania odozvy"
 
 #: pacman_mirrors/txt.py:89
 msgid "Manjaro mirrors in random order"
-msgstr ""
+msgstr "Zrkadlá distribúcie Manjaro v náhodnom poradí"
 
 #: pacman_mirrors/txt.py:90
 msgid "Check mirrors for your personal list"
