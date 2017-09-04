@@ -115,6 +115,7 @@ RESET_TIP = "pacman-mirrors -c all"
 PREFIX_TIP = ": $mnt | /mnt/install"
 # options
 OPT_RANDOM = " '-m/--method random "
+OPT_COUNTRY = " -c/--country "
 # mirror status constants
 LASTSYNC_OK = "24:00"  # last syncronize in the past 24 hours
 LASTSYNC_NA = "9800:00"  # last syncronization not available
