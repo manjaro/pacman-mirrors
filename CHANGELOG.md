@@ -1,8 +1,11 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [4.2.2]
+- **Fix**: Missing txt 'OPT_COUNTRY'
+
 ## [4.2.1] 2017-08-16
-- Ensure correct exit code (0) on `api --get-branch` 
+- Ensure correct exit code (0) on `api --get-branch`
 
 ## [4.2.0] 2017-06-14
 - **Improvement**: Added `-U` / `--url` [#105](https://github.com/manjaro/pacman-mirrors/issues/105).
@@ -12,13 +15,13 @@ All notable changes to this project will be documented in this file.
 **Breaking changes**
 - `-S`/`--set-branch $BRANCH` requires branch as argument.
 - `-u`/`--update` renamed to `-y`/`--sync`.
-- `NoUpdate` configuration removed from pacman-mirrors.conf. 
+- `NoUpdate` configuration removed from pacman-mirrors.conf.
 - `--no-update` argument removed.
 - `MirrorlistsDir = /etc/pacman.d/mirrors` removed from pacman-mirrors.conf.
 - `-o`/`--output` argument removed.
 - `OutputMirrorlist = /etc/pacman.d/mirrorlist` removed from pacman-mirrors.conf
 - `-d`/`--mirror_dir` argument removed.
- 
+
 **Other improvements and fixes:**
 - **Improvement**: Do not write bad servers to the end of the mirrorlist.
 - **Improvement**: created argument groups for logic division of arguments usage.
@@ -48,7 +51,7 @@ All notable changes to this project will be documented in this file.
 ## [4.1.0] 2017-05-01
 - Added protocol option to api.
   * Possible to control protocols from CLI
-- `/var/lib/pacman-mirrors/mirrors.json` is causing confusion so it has been removed. 
+- `/var/lib/pacman-mirrors/mirrors.json` is causing confusion so it has been removed.
   * Only one fallback is needed `/usr/share/pacman-mirrors/mirrors.json`.
   * If a new `mirrors.json` is available - existing will be updated by pacman-mirrors.
 - Improvement on default mirrorlist.
