@@ -21,23 +21,23 @@ class TestTextConstants(unittest.TestCase):
 
     def test_txt_houston(self):
         """TEST: txt HOUSTON"""
-        assert txt.HOUSTON is not None  # == "Houston?! We have a problem."
+        assert txt.HOUSTON is not None
 
     def test_txt_override_opt(self):
         """TEST: txt OVERRIDE_OPT"""
-        assert txt.OVERRIDE_OPT is not None  # == "--country --interactive --method --geoip"
+        assert txt.OVERRIDE_OPT is not None
 
     def test_txt_repo_server(self):
         """TEST: txt REPO_SERVER"""
-        assert txt.REPO_SERVER is not None  # == "repo.manjaro.org"
+        assert txt.REPO_SERVER is not None
 
     def test_txt_reset_tip(self):
         """TEST: txt RESET_TIP"""
-        assert txt.RESET_TIP is not None  # == "pacman-mirrors -c all"
+        assert txt.RESET_TIP is not None
 
     def test_txt_prefix_tip(self):
         """TEST: txt PREFIX_TIP"""
-        assert txt.PREFIX_TIP is not None  # == ": $mnt | /mnt/install"
+        assert txt.PREFIX_TIP is not None
 
     def tearDown(self):
         """Tear down"""

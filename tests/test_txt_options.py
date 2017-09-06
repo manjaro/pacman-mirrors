@@ -22,11 +22,11 @@ class TestTextOptions(unittest.TestCase):
     # options
     def test_txt_opt_random(self):
         """TEST: txt OPT_RANDOM"""
-        assert txt.OPT_RANDOM is not None  # == " '-m/--method random' "
+        assert txt.OPT_RANDOM is not None
 
     def test_txt_opt_country(self):
         """TEST: txt OPT_COUNTRY"""
-        assert txt.OPT_COUNTRY is not None  # == " 'c/--country' "
+        assert txt.OPT_COUNTRY is not None
 
     def tearDown(self):
         """Tear down"""
