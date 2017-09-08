@@ -105,28 +105,28 @@
 </div></div>
                 <div class="col-md-9" role="main">
 
-<p>% pacman-mirrors(8) Pacman-Mirrors 4.2 User Manual<br />
-% <br />
-% June, 2017  </p>
+<p>% pacman-mirrors(8) Pacman-Mirrors 4.2 User Manual
+%
+% August, 2017</p>
 <h1 id="name">NAME</h1>
 <p>pacman-mirrors - generate pacman mirrorlist for Manjaro Linux</p>
 <h1 id="synopsis">SYNOPSIS</h1>
-<p>pacman-mirrors [-f <em>NUMBER</em> | [[-i [-d]] [-c <em>COUNTRY</em>, [<em>COUNTRY</em>] ... | --geoip]]] [-m <em>METHOD</em>] [-a [-p <em>PREFIX</em>] [-R] [-G | -S <em>BRANCH</em>] [-P <em>PROTO</em> [<em>PROTO</em>] ...][-U <em>URL</em>]] [-b <em>BRANCH</em>] [-t <em>SECONDS</em>] [-q] [-v] [-n | -y]  </p>
+<p>pacman-mirrors [-f <em>NUMBER</em> | [[-i [-d]] [-c <em>COUNTRY</em>, [<em>COUNTRY</em>] ... | --geoip]]] [-m <em>METHOD</em>] [-a [-p <em>PREFIX</em>] [-R] [-G | -S <em>BRANCH</em>] [-P <em>PROTO</em> [<em>PROTO</em>] ...][-U <em>URL</em>]] [-b <em>BRANCH</em>] [-t <em>SECONDS</em>] [-q] [-v] [-n | -y]</p>
 <h1 id="description">DESCRIPTION</h1>
 <p>Generate mirrorlist for Manjaro Linux.
 Default is to rank all mirrors by reponse time.
 If no arguments are given pacman-mirrors lists available options.
-Pacman-mirrors requires access to files which are read-only 
+Pacman-mirrors requires access to files which are read-only
 so it must be run with su or sudo.
 To create a mirrorlist using all default use,</p>
 <pre><code>pacman-mirrors --generate
 </code></pre>
-<p>The mirrorlist generation process can be refined through arguments 
+<p>The mirrorlist generation process can be refined through arguments
 and arguments with options, for example,</p>
 <pre><code>pacman-mirrors --country Denmark --timeout 5
 </code></pre>
 <h1 id="options">OPTIONS</h1>
-<p>Some options are mutual exclusive and will throw an arguments error:  </p>
+<p>Some options are mutual exclusive and will throw an arguments error:</p>
 <ul>
 <li><strong>--no-mirrorlist</strong> and <strong>--sync</strong></li>
 <li><strong>--branch</strong>, <strong>--get-branch</strong> and <strong>--set-branch</strong></li>
@@ -143,12 +143,12 @@ this command will ignore --default argument</p>
 <p>as it should have been in conjunction with --interactive, like</p>
 <pre><code>CORRECT pacman-mirrors -b unstable --interactive --default
 </code></pre>
-<p>The same goes for the API specific arguments. 
+<p>The same goes for the API specific arguments.
 For those to have effect the --api argument must be present also.</p>
 <pre><code>pacman-mirrors -aS unstable
 </code></pre>
-<p>The arguments can appear in any order except for arguments which takes 
-additional options in which case the options must follow 
+<p>The arguments can appear in any order except for arguments which takes
+additional options in which case the options must follow
 immediately after the argument, for example</p>
 <pre><code>pacman-mirrors -ayidS unstable
 </code></pre>
@@ -161,13 +161,13 @@ immediately after the argument, for example</p>
 <p>-i, --interactive [--default]
 :   Launches a tool for selectively picking mirrors and protocols,
     <strong>--default</strong> forces pacman-mirrors to load the default mirror
-    file and ignore any preset custom-mirrors file, thus allowing for 
+    file and ignore any preset custom-mirrors file, thus allowing for
     reselecting mirrors for a new custom mirror file</p>
 <p>-m, --method <em>METHOD</em>
-:   Default method is <em>rank</em> but <em>random</em> can be selected </p>
+:   Default method is <em>rank</em> but <em>random</em> can be selected</p>
 <h2 id="branch">BRANCH</h2>
 <p>-b, --branch <em>BRANCH</em>
-:   Temporarily use another branch, <em>stable</em>, <em>testing</em> or <em>unstable</em>, 
+:   Temporarily use another branch, <em>stable</em>, <em>testing</em> or <em>unstable</em>,
     the branch is reset with next run of pacman-mirrors</p>
 <h2 id="country">COUNTRY</h2>
 <p>-c, --country <em>COUNTRY</em> [<em>COUNTRY</em>] ...
@@ -202,34 +202,36 @@ immediately after the argument, for example</p>
 <p>-q, --quiet
 :   Make pacman-mirrors silent</p>
 <p>-t, --timeout <em>SECONDS</em>
-:   Change the number of seconds waiting for a server response, 
-    SSL enabled mirrors has this value doubled to compensate 
+:   Change the number of seconds waiting for a server response,
+    SSL enabled mirrors has this value doubled to compensate
     for the time spent on exchanging encryption keys</p>
 <p>-v, --version
 :   Show the version of pacman-mirrors</p>
 <p>-y, --sync
 :   Instruct pacman-mirrors to syncronize the pacman database</p>
 <h2 id="exit-status">Exit status:</h2>
-<p>0     : OK<br />
-1     : Problem with argument<br />
-2     : Problem accessing systemfiles<br />
-3     : Missing mirror file<br />
-BRANCH: Value from config    </p>
+<pre><code>0     : OK  
+1     : Problem with argument  
+2     : Problem accessing systemfiles  
+3     : Missing mirror file  
+BRANCH: Value from config
+</code></pre>
 <h2 id="configuration-flow-of-pacman-mirrors">Configuration flow of pacman-mirrors</h2>
-<p>At launch an internal default configuration is setup, 
+<p>At launch an internal default configuration is setup,
 file configuration is applied and the commandline is parsed and applied.</p>
 <h2 id="api-arguments">API arguments</h2>
-<p>These arguments modifies key elements of pacman-mirrors configuration 
+<p>These arguments modifies key elements of pacman-mirrors configuration
 according to the packagers needs.</p>
-<p>The actions performed by the API are in strict order and 
-performed <em>before any</em> other actions. This also means that ordinary arguments 
+<p>The actions performed by the API are in strict order and
+performed <em>before any</em> other actions. This also means that ordinary arguments
 supplied in conjunction with app might be ignored. Eg. <strong>-U</strong> argument terminates
 pacman-mirrors when branch and mirrorlist has been written.</p>
 <ol>
 <li>If <em>-G</em></li>
-<li><em>sys.exit(config.branch)</em></li>
+<li>print <em>config.branch</em></li>
+<li><em>sys.exit(0)</em></li>
 <li>If <em>p</em>  <em>PREFIX</em></li>
-<li>add <em>PREFIX</em> to internal file configuration </li>
+<li>add <em>PREFIX</em> to internal file configuration</li>
 <li>If <em>-S</em> <em>BRANCH</em></li>
 <li>apply <em>BRANCH</em> to internal configuration</li>
 <li>replace branch in pacman-mirrors.conf with <em>BRANCH</em></li>
@@ -241,14 +243,14 @@ pacman-mirrors when branch and mirrorlist has been written.</p>
 <li>If <em>-R</em></li>
 <li>replace branch in mirrorlist with <em>-S</em> <em>BRANCH</em></li>
 </ol>
-<p>When done pacman-mirrors checks the internet connection and if possible 
-download the latest datafiles for creating the mirrorlist. 
+<p>When done pacman-mirrors checks the internet connection and if possible
+download the latest datafiles for creating the mirrorlist.
 At this point it is possible to interrupt further processing.</p>
 <p>If the <em>-n</em> argument is present pacman-mirrors will now exit.</p>
 <h1 id="examples">EXAMPLES</h1>
-<p>Most optional arguments are self explaining others require explanation. 
-The API functions is mainly designed to help packagers and iso-builders. 
-However it can be of use for everyone because it takes the hazzle out 
+<p>Most optional arguments are self explaining others require explanation.
+The API functions is mainly designed to help packagers and iso-builders.
+However it can be of use for everyone because it takes the hazzle out
 of editing your pacman-mirrors configuration.</p>
 <ul>
 <li>
@@ -256,13 +258,13 @@ of editing your pacman-mirrors configuration.</p>
 <p><em>sudo pacman-mirrors -l</em></p>
 </li>
 <li>
-<p>I want to temporary change branch to unstable, 
+<p>I want to temporary change branch to unstable,
 use geolocation and syncronize pacman,</p>
 <p><em>sudo pacman-mirrors -yb unstable --geoip</em></p>
 </li>
 <li>
-<p>I want to permanently change branch to unstable, 
-use mirrors from Germany and France, 
+<p>I want to permanently change branch to unstable,
+use mirrors from Germany and France,
 use only https and http protocol in that order and syncronize pacman</p>
 <p><em>sudo pacman-mirrors -yac Germany,France -S unstable -P https http</em></p>
 </li>
@@ -307,9 +309,9 @@ use only https and http protocol in that order and syncronize pacman</p>
 <p><em>sudo pacman-mirrors -naP https http</em></p>
 </li>
 <li>
-<p>A packager can write directly to a mounted systems 
+<p>A packager can write directly to a mounted systems
 datafiles using either a path or an environment variable
-replacing the branch in both configuration and mirrorlist 
+replacing the branch in both configuration and mirrorlist
 leaving the mirrors as is</p>
 <p><em>sudo pacman-mirrors -anR -p $prefix -S $branch -P https</em></p>
 </li>
@@ -322,14 +324,14 @@ is created and pacman-mirrors terminate</p>
 <h1 id="reporting-bugs">REPORTING BUGS</h1>
 <p><a href="https://github.com/manjaro/pacman-mirrors/issues">https://github.com/manjaro/pacman-mirrors/issues</a></p>
 <h1 id="see-also">SEE ALSO</h1>
-<p>The pacman-mirrors source code and all documentation 
+<p>The pacman-mirrors source code and all documentation
 may be downloaded from <a href="https://github.com/manjaro/pacman-mirrors/archive/master.zip">https://github.com/manjaro/pacman-mirrors/archive/master.zip</a></p>
 <h1 id="authors">AUTHORS</h1>
-<p>Esclapion <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#115;&#99;&#108;&#97;&#112;&#105;&#111;&#110;&#64;&#109;&#97;&#110;&#106;&#97;&#114;&#111;&#46;&#111;&#114;&#103;">&#101;&#115;&#99;&#108;&#97;&#112;&#105;&#111;&#110;&#64;&#109;&#97;&#110;&#106;&#97;&#114;&#111;&#46;&#111;&#114;&#103;</a><br />
-philm <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#104;&#105;&#108;&#109;&#64;&#109;&#97;&#110;&#106;&#97;&#114;&#111;&#46;&#111;&#114;&#103;">&#112;&#104;&#105;&#108;&#109;&#64;&#109;&#97;&#110;&#106;&#97;&#114;&#111;&#46;&#111;&#114;&#103;</a><br />
-Ramon Buldó <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#98;&#117;&#108;&#100;&#111;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">&#114;&#98;&#117;&#108;&#100;&#111;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;</a><br />
-Hugo Posnic <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#104;&#117;&#108;&#117;&#116;&#105;&#64;&#109;&#97;&#110;&#106;&#97;&#114;&#111;&#46;&#111;&#114;&#103;">&#104;&#117;&#108;&#117;&#116;&#105;&#64;&#109;&#97;&#110;&#106;&#97;&#114;&#111;&#46;&#111;&#114;&#103;</a><br />
-Frede Hundewadt <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#102;&#114;&#101;&#100;&#101;&#64;&#104;&#117;&#110;&#100;&#101;&#119;&#97;&#100;&#116;&#46;&#100;&#107;">&#102;&#114;&#101;&#100;&#101;&#64;&#104;&#117;&#110;&#100;&#101;&#119;&#97;&#100;&#116;&#46;&#100;&#107;</a>  </p></div>
+<p>Esclapion <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#101;&#115;&#99;&#108;&#97;&#112;&#105;&#111;&#110;&#64;&#109;&#97;&#110;&#106;&#97;&#114;&#111;&#46;&#111;&#114;&#103;">&#101;&#115;&#99;&#108;&#97;&#112;&#105;&#111;&#110;&#64;&#109;&#97;&#110;&#106;&#97;&#114;&#111;&#46;&#111;&#114;&#103;</a>
+philm <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#112;&#104;&#105;&#108;&#109;&#64;&#109;&#97;&#110;&#106;&#97;&#114;&#111;&#46;&#111;&#114;&#103;">&#112;&#104;&#105;&#108;&#109;&#64;&#109;&#97;&#110;&#106;&#97;&#114;&#111;&#46;&#111;&#114;&#103;</a>
+Ramon Buldó <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#98;&#117;&#108;&#100;&#111;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;">&#114;&#98;&#117;&#108;&#100;&#111;&#64;&#103;&#109;&#97;&#105;&#108;&#46;&#99;&#111;&#109;</a>
+Hugo Posnic <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#104;&#117;&#108;&#117;&#116;&#105;&#64;&#109;&#97;&#110;&#106;&#97;&#114;&#111;&#46;&#111;&#114;&#103;">&#104;&#117;&#108;&#117;&#116;&#105;&#64;&#109;&#97;&#110;&#106;&#97;&#114;&#111;&#46;&#111;&#114;&#103;</a>
+Frede Hundewadt <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#102;&#114;&#101;&#100;&#101;&#64;&#104;&#117;&#110;&#100;&#101;&#119;&#97;&#100;&#116;&#46;&#100;&#107;">&#102;&#114;&#101;&#100;&#101;&#64;&#104;&#117;&#110;&#100;&#101;&#119;&#97;&#100;&#116;&#46;&#100;&#107;</a></p></div>
         </div>
 
         <footer class="col-md-12">
@@ -368,5 +370,5 @@ Frede Hundewadt <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#102;&#114;&#1
 
 <!--
 MkDocs version : 0.16.3
-Build Date UTC : 2017-06-07 07:43:16
+Build Date UTC : 2017-09-08 11:45:23
 -->
