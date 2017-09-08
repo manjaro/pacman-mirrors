@@ -23,10 +23,10 @@ import datetime
 import os
 import sys
 
-from pacman_mirrors.functions import miscfn
-from pacman_mirrors.constants import txt
 from pacman_mirrors.constants import colors as color
+from pacman_mirrors.constants import txt
 from pacman_mirrors.functions import jsonfn
+from pacman_mirrors.functions import miscfn
 
 
 def check_file(file, dir=False):

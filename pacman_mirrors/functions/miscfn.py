@@ -20,8 +20,8 @@
 """Pacman-Mirrors Niscellaneous Functions"""
 import shutil
 
-from pacman_mirrors.constants import txt
 from pacman_mirrors.constants import colors as color
+from pacman_mirrors.constants import txt
 
 
 def debug(where, what, value):

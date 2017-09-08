@@ -34,8 +34,8 @@ from urllib.request import urlopen
 
 from pacman_mirrors import __version__
 from pacman_mirrors.config import configuration as conf
-from pacman_mirrors.functions import filefn
 from pacman_mirrors.constants import txt
+from pacman_mirrors.functions import filefn
 from pacman_mirrors.functions import jsonfn
 
 
