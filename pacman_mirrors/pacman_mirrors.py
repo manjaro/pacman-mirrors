@@ -351,7 +351,7 @@ class PacmanMirrors:
             print(".: {} {}".format(txt.INF_CLR, txt.NO_CHANGE))
 
     def build_fasttrack_mirror_list(self, number):
-        """Fast-track the mirrorlist by filtering only up2date mirrors"""
+        """Fast-track the mirrorlist by filtering only up2date mirrors on the selected branch"""
         # randomize the load on up2date mirrors
         worklist = self.mirrors.mirrorlist
         shuffle(worklist)
@@ -395,9 +395,9 @@ class PacmanMirrors:
 
     def build_interactive_mirror_list(self):
         """Prompt the user to select the mirrors with a gui.
-        * Outputs a pacman mirrorlist,
         * Outputs a "custom" mirror file
         * Modify the configuration file to use the "custom" file.
+        * Outputs a pacman mirrorlist,
         """
         worklist = mirrorfn.filter_mirror_country(self.mirrors.mirrorlist,
                                                   self.selected_countries)

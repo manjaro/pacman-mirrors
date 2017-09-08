@@ -67,8 +67,8 @@ immediately after the argument, for example
 :   Generates an up-to-date mirrorlist for the users current branch,
     mirrors are randomly selected from <http://repo.manjaro.org/status.json>,
     the randomly selected mirrors are ranked by their current access time.
+    The higher number the higher possibility of a fast mirror.
     
-
 -i, \--interactive [--default]
 :   Launches a tool for selectively picking mirrors and protocols,
     **--default** forces pacman-mirrors to load the default mirror
