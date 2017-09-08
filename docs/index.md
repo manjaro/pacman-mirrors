@@ -66,7 +66,7 @@ immediately after the argument, for example
 -f, \--fasttrack *NUMBER*
 :   Generates an up-to-date mirrorlist for the users current branch,
     mirrors are randomly selected from <http://repo.manjaro.org/status.json>,
-    the mirrors are ranked by their current access time.
+    the randomly selected mirrors are ranked by their current access time.
     
 
 -i, \--interactive [--default]
