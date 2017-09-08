@@ -5,8 +5,7 @@ import os
 import sys
 import tempfile
 
-from . import miscfn
-from . import txt
+from pacman_mirrors.constants import txt
 
 
 def find_mirrorlist_branch(filename):

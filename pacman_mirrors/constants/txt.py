@@ -19,7 +19,7 @@
 
 """Pacman-Mirrors Text Module"""
 
-from . import i18n
+from pacman_mirrors.translation import i18n
 
 _ = i18n.language.gettext
 

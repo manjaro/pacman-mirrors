@@ -22,22 +22,21 @@
 import collections
 import filecmp
 import json
+import os
 import ssl
 import time
-from pacman_mirrors import __version__
+import urllib.request
 from http.client import HTTPException
-import os
 from os import system as system_call
 from socket import timeout
 from urllib.error import URLError
 from urllib.request import urlopen
-import urllib.request
 
-from . import configuration as conf
-from . import filefn
-from . import jsonfn
-from . import miscfn
-from . import txt
+from pacman_mirrors import __version__
+from pacman_mirrors.config import configuration as conf
+from pacman_mirrors.functions import filefn
+from pacman_mirrors.constants import txt
+from pacman_mirrors.functions import jsonfn
 
 
 def download_mirrors(config):

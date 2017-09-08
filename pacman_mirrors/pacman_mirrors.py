@@ -25,28 +25,28 @@
 
 import argparse
 import importlib.util
-import shutil
-import sys
 import os
+import shutil
+import subprocess
+import sys
 from operator import itemgetter
 from random import shuffle
-import subprocess
 
 from pacman_mirrors import __version__
-from .custom_help_formatter import CustomHelpFormatter
-from .mirror import Mirror
-from . import apifn
-from . import mirrorfn
-from . import colors as color
-from . import configuration as conf
-from . import configfn
-from . import filefn
-from . import httpfn
-from . import i18n
-from . import jsonfn
-from . import miscfn
-from . import txt
-from . import validfn
+from pacman_mirrors.classes.mirror import Mirror
+from pacman_mirrors.config import configuration as conf
+from pacman_mirrors.config import configfn
+from pacman_mirrors.constants import colors as color
+from pacman_mirrors.functions import jsonfn
+from pacman_mirrors.functions import apifn
+from pacman_mirrors.functions import filefn
+from pacman_mirrors.functions import httpfn
+from pacman_mirrors.functions import mirrorfn
+from pacman_mirrors.functions import miscfn
+from pacman_mirrors.constants import txt
+from pacman_mirrors.functions import validfn
+from pacman_mirrors.translation import i18n
+from pacman_mirrors.translation.custom_help_formatter import CustomHelpFormatter
 
 try:
     importlib.util.find_spec("gi.repository.Gtk")

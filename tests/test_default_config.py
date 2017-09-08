@@ -10,8 +10,8 @@ Tests for `pacman-mirrors` module.
 import unittest
 from unittest.mock import patch
 
+from pacman_mirrors.config import configfn
 from pacman_mirrors.pacman_mirrors import PacmanMirrors
-from pacman_mirrors import configfn
 from . import mock_configuration as conf
 
 test_conf = {

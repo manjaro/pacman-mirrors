@@ -26,8 +26,8 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk
 from operator import itemgetter
 from random import shuffle
-from . import i18n
-from . import txt
+from pacman_mirrors.translation import i18n
+from pacman_mirrors.constants import txt
 
 _ = i18n.language.gettext
 

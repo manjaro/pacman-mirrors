@@ -8,9 +8,8 @@ Tests for `pacman-mirrors` module.
 """
 
 import unittest
-from unittest.mock import patch
 
-from pacman_mirrors import txt
+from pacman_mirrors.constants import txt
 
 
 class TestTextMessages(unittest.TestCase):

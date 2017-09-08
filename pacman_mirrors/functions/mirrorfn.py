@@ -19,8 +19,8 @@
 
 """Pacman-Mirror Mirror Functions"""
 
-from . import httpfn
-from . import validfn
+from pacman_mirrors.functions import validfn
+from pacman_mirrors.functions import httpfn
 
 
 def build_country_list(selectedcountries, countrylist, geoip=False):

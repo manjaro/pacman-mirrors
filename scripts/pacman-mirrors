@@ -19,10 +19,11 @@
 
 import os
 import shutil
+
 from pacman_mirrors import pacman_mirrors
-from pacman_mirrors import i18n
-from pacman_mirrors.configuration import O_CUST_FILE
-from pacman_mirrors import customfn
+from pacman_mirrors.config.configuration import O_CUST_FILE
+from pacman_mirrors.functions import customfn
+from pacman_mirrors.translation import i18n
 
 _ = i18n.language.gettext
 

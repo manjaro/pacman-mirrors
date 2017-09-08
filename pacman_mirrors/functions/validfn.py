@@ -22,8 +22,8 @@
 import os
 import sys
 
-from . import configuration as conf
-from . import txt
+from pacman_mirrors.config import configuration as conf
+from pacman_mirrors.constants import txt
 
 
 def custom_config_is_valid():

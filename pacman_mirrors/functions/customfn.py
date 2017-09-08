@@ -21,9 +21,9 @@
 
 import os
 
-from . import jsonfn
-from . import txt
-from . import configuration as conf
+from pacman_mirrors.config import configuration as conf
+from pacman_mirrors.constants import txt
+from pacman_mirrors.functions import jsonfn
 
 
 def convert_to_json():

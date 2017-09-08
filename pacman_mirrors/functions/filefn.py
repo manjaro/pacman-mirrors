@@ -20,14 +20,13 @@
 """Manjaro-Mirrors File Functions"""
 
 import datetime
-import hashlib
 import os
 import sys
 
-from . import jsonfn
-from . import miscfn
-from . import txt
-from . import colors as color
+from pacman_mirrors.functions import miscfn
+from pacman_mirrors.constants import txt
+from pacman_mirrors.constants import colors as color
+from pacman_mirrors.functions import jsonfn
 
 
 def check_file(file, dir=False):

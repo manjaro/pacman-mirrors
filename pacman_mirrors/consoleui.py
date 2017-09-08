@@ -23,9 +23,9 @@ from collections import namedtuple
 
 import npyscreen
 
-from . import consolefn
-from . import i18n
-from . import txt
+from pacman_mirrors.constants import txt
+from pacman_mirrors.functions import consolefn
+from pacman_mirrors.translation import i18n
 
 _ = i18n.language.gettext
 

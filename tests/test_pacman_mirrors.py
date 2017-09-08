@@ -6,13 +6,12 @@ test_pacman-mirrors
 
 Tests for `pacman-mirrors` module.
 """
-import os
 import unittest
 from unittest.mock import patch
 
-from pacman_mirrors import configfn
-from pacman_mirrors import filefn
-from pacman_mirrors import httpfn
+from pacman_mirrors.config import configfn
+from pacman_mirrors.functions import filefn
+from pacman_mirrors.functions import httpfn
 from pacman_mirrors.pacman_mirrors import PacmanMirrors
 from . import mock_configuration as conf
 
