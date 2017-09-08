@@ -334,7 +334,7 @@ class PacmanMirrors:
         if self.config["protocols"]:
             worklist = mirrorfn.filter_mirror_protocols(
                 worklist, self.config["protocols"])
-        worklist = self.filter_user_branch(worklist)
+        # worklist = self.filter_user_branch(worklist)
         if self.config["method"] == "rank":
             worklist = self.test_mirrors(worklist)
             worklist = sorted(worklist, key=itemgetter("resp_time"))
@@ -358,8 +358,7 @@ class PacmanMirrors:
         if self.config["protocols"]:
             worklist = mirrorfn.filter_mirror_protocols(
                 worklist, self.config["protocols"])
-        # up2date = [item for item in worklist if item["branches"] == [1, 1, 1]]
-        # filter not up-to-date mirrors for selected branch
+        # filter not up-to-date mirrors for users selected branch not all branches
         up2date = self.filter_user_branch(worklist)
         worklist = []
         print(".: {}: {} - {}".format(txt.INF_CLR,
@@ -407,7 +406,7 @@ class PacmanMirrors:
                 worklist, self.config["protocols"])
         if not self.default:
             # filter not up-to-date mirrors for selected branch
-            worklist = self.filter_user_branch(worklist)
+            # worklist = self.filter_user_branch(worklist)
             if self.config["method"] == "rank":
                 worklist = self.test_mirrors(worklist)
                 worklist = sorted(worklist, key=itemgetter("resp_time"))

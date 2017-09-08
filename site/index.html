@@ -118,8 +118,8 @@ Default is to rank all mirrors by reponse time.
 If no arguments are given pacman-mirrors lists available options.
 Pacman-mirrors requires access to files which are read-only
 so it must be run with su or sudo.
-To create a mirrorlist using all default use,</p>
-<pre><code>pacman-mirrors --generate
+To create a up-to-date mirrorlist using all default use,</p>
+<pre><code>pacman-mirrors --fasttrack 10 --sync
 </code></pre>
 <p>The mirrorlist generation process can be refined through arguments
 and arguments with options, for example,</p>
@@ -156,8 +156,9 @@ immediately after the argument, for example</p>
 <p>-g, --generate
 :   Generate a new default mirrorlist using defaults</p>
 <p>-f, --fasttrack <em>NUMBER</em>
-:   Generates a mirrorlist with a number mirrors ranked by responsiveness,
-    the mirrors are selected from <a href="http://repo.manjaro.org/status.json">http://repo.manjaro.org/status.json</a></p>
+:   Generates an up-to-date mirrorlist for the users current branch,
+    mirrors are randomly selected from <a href="http://repo.manjaro.org/status.json">http://repo.manjaro.org/status.json</a>,
+    the mirrors are ranked by their current access time.</p>
 <p>-i, --interactive [--default]
 :   Launches a tool for selectively picking mirrors and protocols,
     <strong>--default</strong> forces pacman-mirrors to load the default mirror
@@ -370,5 +371,5 @@ Frede Hundewadt <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#102;&#114;&#1
 
 <!--
 MkDocs version : 0.16.3
-Build Date UTC : 2017-09-08 11:47:09
+Build Date UTC : 2017-09-08 15:59:38
 -->
