@@ -334,6 +334,7 @@ class PacmanMirrors:
         if self.config["protocols"]:
             worklist = mirrorfn.filter_mirror_protocols(
                 worklist, self.config["protocols"])
+        worklist = self.filter_user_branch(worklist)
         if self.config["method"] == "rank":
             worklist = self.test_mirrors(worklist)
             worklist = sorted(worklist, key=itemgetter("resp_time"))
@@ -357,7 +358,9 @@ class PacmanMirrors:
         if self.config["protocols"]:
             worklist = mirrorfn.filter_mirror_protocols(
                 worklist, self.config["protocols"])
-        up2date = [item for item in worklist if item["branches"] == [1, 1, 1]]
+        # up2date = [item for item in worklist if item["branches"] == [1, 1, 1]]
+        # filter not up-to-date mirrors for selected branch
+        up2date = self.filter_user_branch(worklist)
         worklist = []
         print(".: {}: {} - {}".format(txt.INF_CLR,
                                       txt.QUERY_MIRRORS,
@@ -403,6 +406,8 @@ class PacmanMirrors:
             worklist = mirrorfn.filter_mirror_protocols(
                 worklist, self.config["protocols"])
         if not self.default:
+            # filter not up-to-date mirrors for selected branch
+            worklist = self.filter_user_branch(worklist)
             if self.config["method"] == "rank":
                 worklist = self.test_mirrors(worklist)
                 worklist = sorted(worklist, key=itemgetter("resp_time"))
@@ -480,17 +485,35 @@ class PacmanMirrors:
         self.config["only_country"] = []
         self.custom = False
 
+    def filter_user_branch(self, mirrorlist):
+        """Filter mirrorlist on users branch and branch sync state"""
+        if self.config["branch"] == "stable":
+            selected_branch = 0
+        elif self.config["branch"] == "testing":
+            selected_branch = 1
+        else:
+            selected_branch = 2
+        filtered = []
+        for mirror in mirrorlist:
+            if mirror["branches"][selected_branch] == 1:
+                filtered.append(mirror)
+        if len(filtered) > 0:
+            return filtered
+        return mirrorlist
+
     def output_country_list(self):
         """List all available countries"""
         print("{}".format("\n".join(self.mirrors.countrylist)))
 
     def load_all_mirrors(self):
         """Load mirrors"""
+        # decision on disable custom config
         if self.config["only_country"] == ["all"]:
             self.disable_custom_config()
 
         # decision on custom or default
         if self.config["only_country"] == ["Custom"]:
+            # check if custom config is valid
             if validfn.custom_config_is_valid():
                 self.custom = True
             else:
@@ -505,8 +528,9 @@ class PacmanMirrors:
         else:
             self.load_default_mirrors()
         # validate selection and build country list
-        self.selected_countries = mirrorfn.build_country_list(
-            self.selected_countries, self.mirrors.countrylist, self.geoip)
+        self.selected_countries = mirrorfn.build_country_list(self.selected_countries,
+                                                              self.mirrors.countrylist,
+                                                              self.geoip)
 
     def load_custom_mirrors(self):
         """Load available custom mirrors"""
@@ -521,7 +545,8 @@ class PacmanMirrors:
         self.seed_mirrors(file, status)
 
     def sort_mirror_countries(self):
-        self.mirrors.mirrorlist = sorted(self.mirrors.mirrorlist, key=itemgetter("country"))
+        self.mirrors.mirrorlist = sorted(self.mirrors.mirrorlist,
+                                         key=itemgetter("country"))
         self.mirrors.countrylist = sorted(self.mirrors.countrylist)
 
     def seed_mirrors(self, file, status=False):

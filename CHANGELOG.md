@@ -1,6 +1,9 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [4.3.0dev]
+- **Improvement**: Filter generated mirrorlist based on branch and sync status
+
 ## [4.2.2]
 - **Fix**: Missing txt 'OPT_COUNTRY'
 
