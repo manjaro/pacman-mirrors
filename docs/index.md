@@ -1,6 +1,6 @@
-% pacman-mirrors(8) Pacman-Mirrors 4.2 User Manual
+% pacman-mirrors(8) Pacman-Mirrors 4.3 User Manual
 %
-% August, 2017
+% September, 2017
 
 # NAME
 
@@ -142,11 +142,11 @@ immediately after the argument, for example
 
 ## Exit status:
 
-    0     : OK  
-    1     : Problem with argument  
-    2     : Problem accessing systemfiles  
-    3     : Missing mirror file  
-    BRANCH: Value from config  
+    0     : OK
+    1     : Problem with argument
+    2     : Problem accessing systemfiles
+    3     : Missing mirror file
+    BRANCH: Value from config
 
 ## Configuration flow of pacman-mirrors
 
