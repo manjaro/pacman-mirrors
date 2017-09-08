@@ -78,7 +78,7 @@ class PacmanMirrors:
         self.no_display = False
         self.quiet = False
         self.selected_countries = []  # users selected countries
-        self.sync = True
+        self.sync = False
 
     def command_line_parse(self):
         """Read the arguments of the command line"""
