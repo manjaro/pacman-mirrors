@@ -65,7 +65,6 @@ class PacmanMirrors:
         self.config = {
             "config_file": conf.CONFIG_FILE  # purpose - testability
         }
-        self.country_list = False
         self.custom = False
         self.default = False
         self.fasttrack = None
@@ -177,11 +176,16 @@ class PacmanMirrors:
             sys.exit(0)
 
         if args.country_list:
-            self.country_list = True
+            self.output_country_list()
+            sys.exit(0)
 
         if os.getuid() != 0:
             print(".: {} {}".format(txt.ERR_CLR, txt.MUST_BE_ROOT))
             sys.exit(1)
+
+        if args.generate:
+            print(".:{} Argument '-g/--generate' is deprecated.{}\n"
+                  ".: Please use '-f/--fasttrack' use 0 for all mirrors".format(color.YELLOW, color.ENDCOLOR))
 
         if args.method:
             self.config["method"] = args.method
@@ -502,6 +506,8 @@ class PacmanMirrors:
 
     def output_country_list(self):
         """List all available countries"""
+        self.config["only_country"] = ["all"]
+        self.load_all_mirrors()
         print("{}".format("\n".join(self.mirrors.countrylist)))
 
     def load_all_mirrors(self):
@@ -617,9 +623,6 @@ class PacmanMirrors:
             self.config["method"] = "random"  # use random instead of rank
             self.fasttrack = False  # using fasttrack is not possible
         self.load_all_mirrors()
-        if self.country_list:
-            self.output_country_list()  # print country list
-            sys.exit(0)
         if self.fasttrack:
             self.build_fasttrack_mirror_list(self.fasttrack)  # fasttrack argument
         elif self.interactive:
