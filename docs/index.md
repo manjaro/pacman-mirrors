@@ -20,12 +20,17 @@ Pacman-mirrors requires access to files which are read-only
 so it must be run with su or sudo.
 To create a up-to-date mirrorlist using all default use,
 
-    pacman-mirrors --fasttrack 10 --sync
+    pacman-mirrors --fasttrack 10 && sudo pacman -Syy
 
 The mirrorlist generation process can be refined through arguments
 and arguments with options, for example,
 
     pacman-mirrors --country Denmark --timeout 5
+
+## IMPORTANT
+After all operations **ALWAYS** syncronize your pacman database with
+
+    sudo pacman -Syy
 
 # OPTIONS
 
@@ -57,12 +62,9 @@ The arguments can appear in any order except for arguments which takes
 additional options in which case the options must follow
 immediately after the argument, for example
 
-    pacman-mirrors -ayidS unstable
+    pacman-mirrors -aidS unstable
 
 ## METHODS
--g, \--generate
-:   Generate a new default mirrorlist using defaults
-
 -f, \--fasttrack *NUMBER*
 :   Generates an up-to-date mirrorlist for the users current branch,
     mirrors are randomly selected from <http://repo.manjaro.org/status.json>,
@@ -139,9 +141,6 @@ immediately after the argument, for example
 -v, \--version
 :   Show the version of pacman-mirrors
 
--y, \--sync
-:   Instruct pacman-mirrors to syncronize the pacman database
-
 ## Exit status:
 
     0     : OK
@@ -199,27 +198,27 @@ of editing your pacman-mirrors configuration.
     *sudo pacman-mirrors -l*
 
 * I want to temporary change branch to unstable,
-use geolocation and syncronize pacman,
+use geolocation,
 
-    *sudo pacman-mirrors -yb unstable --geoip*
+    *sudo pacman-mirrors -b unstable --geoip*
 
 * I want to permanently change branch to unstable,
 use mirrors from Germany and France,
-use only https and http protocol in that order and syncronize pacman
+use only https and http protocol in that order
 
-    *sudo pacman-mirrors -yac Germany,France -S unstable -P https http*
+    *sudo pacman-mirrors -ac Germany,France -S unstable -P https http*
 
-* Create a mirrorlist with German mirrors and syncronize pacman
+* Create a mirrorlist with German mirrors
 
-    *sudo pacman-mirrors -yc Germany*
+    *sudo pacman-mirrors -c Germany*
 
 * If you want more countries in your mirrorlist add them
 
-    *sudo pacman-mirrors -yc Germany France Denmark*
+    *sudo pacman-mirrors -c Germany France Denmark*
 
-* Create a mirrorlist with 5 mirrors with current packages and syncronize pacman
+* Create a mirrorlist with 5 mirrors up-to-date on your branch
 
-    *sudo pacman-mirrors -yf 5*
+    *sudo pacman-mirrors -f 5*
 
 * I want to choose my mirrors
 
