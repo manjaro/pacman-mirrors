@@ -65,7 +65,6 @@ class PacmanMirrors:
         self.config = {
             "config_file": conf.CONFIG_FILE  # purpose - testability
         }
-        self.country_list = False
         self.custom = False
         self.default = False
         self.fasttrack = None
@@ -177,7 +176,8 @@ class PacmanMirrors:
             sys.exit(0)
 
         if args.country_list:
-            self.country_list = True
+            self.output_country_list()
+            sys.exit(0)
 
         if os.getuid() != 0:
             print(".: {} {}".format(txt.ERR_CLR, txt.MUST_BE_ROOT))
@@ -486,6 +486,8 @@ class PacmanMirrors:
 
     def output_country_list(self):
         """List all available countries"""
+        self.config["only_country"] = ["all"]
+        self.load_all_mirrors()
         print("{}".format("\n".join(self.mirrors.countrylist)))
 
     def load_all_mirrors(self):
