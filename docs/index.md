@@ -68,7 +68,7 @@ immediately after the argument, for example
     mirrors are randomly selected from <http://repo.manjaro.org/status.json>,
     the randomly selected mirrors are ranked by their current access time.
     The higher number the higher possibility of a fast mirror.
-    
+
 -i, \--interactive [--default]
 :   Launches a tool for selectively picking mirrors and protocols,
     **--default** forces pacman-mirrors to load the default mirror
@@ -275,4 +275,4 @@ Esclapion <esclapion@manjaro.org>
 philm <philm@manjaro.org>
 Ramon Buldó <rbuldo@gmail.com>
 Hugo Posnic <huluti@manjaro.org>
-Frede Hundewadt <frede@hundewadt.dk>
+Frede Hundewadt <fh@manjaro.org>

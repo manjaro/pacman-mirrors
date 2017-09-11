@@ -19,7 +19,7 @@
 #          philm <philm@manjaro.org>
 #          Ramon Buldó <rbuldo@gmail.com>
 #          Hugo Posnic <huluti@manjaro.org>
-#          Frede Hundewadt <frede@hundewadt.dk>
+#          Frede Hundewadt <fh@manjaro.org>
 
 """Pacman-Mirrors Main Module"""
 
