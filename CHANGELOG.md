@@ -1,6 +1,9 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [4.2.3] 2017-09-11
+- **Fix**: Faulty custom-mirrors.json [#111](https://github.com/manjaro/pacman-mirrors/issues/111)
+
 ## [4.2.2]
 - **Fix**: Fixed missing txt 'OPT_COUNTRY'
 
