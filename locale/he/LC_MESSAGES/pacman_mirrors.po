@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: manjaro-pacman-mirrors\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2017-02-20 15:44+0100\n"
-"PO-Revision-Date: 2017-08-29 22:13+0000\n"
+"PO-Revision-Date: 2017-08-30 11:02+0000\n"
 "Last-Translator: Eli Shleifer <eligator@gmail.com>\n"
 "Language-Team: Hebrew (http://www.transifex.com/manjarolinux/manjaro-pacman-mirrors/language/he/)\n"
 "MIME-Version: 1.0\n"
@@ -226,11 +226,11 @@ msgstr "משתמש בקובץ מראות על פי ברירת המחדל"
 
 #: pacman_mirrors/txt.py:88
 msgid "Manjaro mirrors by response time"
-msgstr "מראות Manjaro לפי זמן התגובה"
+msgstr "מראות מנג'רו לפי זמן התגובה"
 
 #: pacman_mirrors/txt.py:89
 msgid "Manjaro mirrors in random order"
-msgstr "מראות Manjaro בסדר אקראי"
+msgstr "מראות מנג'רו בסדר אקראי"
 
 #: pacman_mirrors/txt.py:90
 msgid "Check mirrors for your personal list"
@@ -238,7 +238,7 @@ msgstr "בדוק מראות עבור רשימת המראות האישית שלך
 
 #: pacman_mirrors/txt.py:91
 msgid "Use"
-msgstr " שימוש"
+msgstr "שימוש"
 
 #: pacman_mirrors/txt.py:92
 msgid "Country"
