@@ -183,6 +183,13 @@ class PacmanMirrors:
             print(".: {} {}".format(txt.ERR_CLR, txt.MUST_BE_ROOT))
             sys.exit(1)
 
+        if args.generate:
+            print(".: {} {} {} {}".format(color.YELLOW,
+                                          "Argument '-g/--generate' is deprecated.",
+                                          color.ENDCOLOR,
+                                          "Use '-f/--fasttrack'."
+                                          ))
+
         if args.method:
             self.config["method"] = args.method
 
@@ -196,6 +203,11 @@ class PacmanMirrors:
             self.quiet = True
 
         if args.sync:
+            print(".: {} {} {} {}".format(color.YELLOW,
+                                          "Argument '-y/--generate' is deprecated.",
+                                          color.ENDCOLOR,
+                                          "Use 'pacman -Syy.",
+                                          ))
             self.sync = True
 
         if args.interactive:
