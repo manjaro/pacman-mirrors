@@ -177,7 +177,7 @@ class PacmanMirrors:
 
         if args.country_list:
             self.output_country_list()
-            sys.exit(0)
+            # sys.exit(0)
 
         if os.getuid() != 0:
             print(".: {} {}".format(txt.ERR_CLR, txt.MUST_BE_ROOT))
@@ -525,6 +525,7 @@ class PacmanMirrors:
         self.config["only_country"] = ["all"]
         self.load_all_mirrors()
         print("{}".format("\n".join(self.mirrors.countrylist)))
+        sys.exit(0)
 
     def load_all_mirrors(self):
         """Load mirrors"""
