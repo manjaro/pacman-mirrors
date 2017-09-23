@@ -206,7 +206,7 @@ class PacmanMirrors:
             print(".: {} {} {} {}".format(color.YELLOW,
                                           "Argument '-y/--generate' is deprecated.",
                                           color.ENDCOLOR,
-                                          "Use 'pacman -Syy.",
+                                          "Use 'pacman -Syy'."
                                           ))
             self.sync = True
 
