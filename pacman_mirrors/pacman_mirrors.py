@@ -200,11 +200,8 @@ class PacmanMirrors:
             self.quiet = True
 
         if args.sync:
-            print(".: {} {} {} {}".format(color.YELLOW,
-                                          "Argument '-y/--generate' is deprecated.",
-                                          color.ENDCOLOR,
-                                          "Use 'pacman -Syy'."
-                                          ))
+            print(".:{} Argument '-y/--sync' is deprecated.{}\n"
+                  ".: Please use 'pacman -Syy'".format(color.YELLOW, color.ENDCOLOR))
             self.sync = True
 
         if args.interactive:
