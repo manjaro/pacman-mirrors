@@ -69,7 +69,6 @@ class TestHttpFn(unittest.TestCase):
         mock_build_config.return_value = test_conf
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
-                                  "-g",
                                   "--geoip"]):
             app = PacmanMirrors()
             app.config = configfn.build_config()
