@@ -106,8 +106,8 @@ Developing environment
 2. Pandoc converter `pacman -S pandoc`
 3. Python environment  
     ```
-    pacman -S python-pip
-    pip install virtualenvwrapper
+    sudo pacman -S python-pip
+    sudo pip install virtualenvwrapper
     mkvirtualenv pacman-mirrors
     python setup.py develop
     pip install mkdocs
