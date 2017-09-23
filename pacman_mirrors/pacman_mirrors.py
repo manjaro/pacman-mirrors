@@ -33,18 +33,18 @@ from operator import itemgetter
 from random import shuffle
 
 from pacman_mirrors import __version__
+from pacman_mirrors.api import apifn
 from pacman_mirrors.config import configfn
 from pacman_mirrors.config import configuration as conf
 from pacman_mirrors.constants import colors as color
 from pacman_mirrors.constants import txt
-from pacman_mirrors.functions import apifn
 from pacman_mirrors.functions import filefn
 from pacman_mirrors.functions import httpfn
 from pacman_mirrors.functions import jsonfn
 from pacman_mirrors.functions import miscfn
 from pacman_mirrors.functions import validfn
-from pacman_mirrors.mirrors.mirror import Mirror
 from pacman_mirrors.mirrors import mirrorfn
+from pacman_mirrors.mirrors.mirror import Mirror
 from pacman_mirrors.translation import i18n
 from pacman_mirrors.translation.custom_help_formatter import CustomHelpFormatter
 
