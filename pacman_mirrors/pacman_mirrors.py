@@ -177,7 +177,7 @@ class PacmanMirrors:
 
         if args.country_list:
             self.output_country_list()
-            # sys.exit(0)
+            sys.exit(0)
 
         if os.getuid() != 0:
             print(".: {} {}".format(txt.ERR_CLR, txt.MUST_BE_ROOT))
@@ -520,13 +520,6 @@ class PacmanMirrors:
                     return filtered
         return mirrorlist
 
-    def output_country_list(self):
-        """List all available countries"""
-        self.config["only_country"] = ["all"]
-        self.load_all_mirrors()
-        print("{}".format("\n".join(self.mirrors.countrylist)))
-        sys.exit(0)
-
     def load_all_mirrors(self):
         """Load mirrors"""
         # decision on disable custom config
@@ -565,6 +558,12 @@ class PacmanMirrors:
         """Load all available mirrors"""
         (file, status) = filefn.return_mirror_filename(self.config)
         self.seed_mirrors(file, status)
+
+    def output_country_list(self):
+        """List all available countries"""
+        self.config["only_country"] = ["all"]
+        self.load_all_mirrors()
+        print("{}".format("\n".join(self.mirrors.countrylist)))
 
     def sort_mirror_countries(self):
         self.mirrors.mirrorlist = sorted(self.mirrors.mirrorlist,

@@ -107,9 +107,9 @@ class TestPacmanMirrors(unittest.TestCase):
             app.config = configfn.build_config()
             filefn.create_dir(app.config["work_dir"])
             app.command_line_parse()
-            httpfn.update_mirrors(app.config)
-            app.load_all_mirrors()
-            app.output_country_list()
+            # httpfn.update_mirrors(app.config)
+            # app.load_all_mirrors()
+            # app.output_country_list()
 
     def tearDown(self):
         """Tear down"""
