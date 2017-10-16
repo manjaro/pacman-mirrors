@@ -23,10 +23,10 @@ import datetime
 import os
 import sys
 
+import pacman_mirrors.functions.util
 from pacman_mirrors.constants import colors as color
 from pacman_mirrors.constants import txt
 from pacman_mirrors.functions import jsonfn
-from pacman_mirrors.functions import miscfn
 
 
 def check_file(file, dir=False):
@@ -82,7 +82,7 @@ def output_mirror_list(config, servers, custom=False, quiet=False, interactive=F
                 print(".: {} {}".format(txt.INF_CLR, txt.WRITING_MIRROR_LIST))
             # write list header
             write_mirrorlist_header(outfile, custom=custom)
-            cols, lines = miscfn.terminal_size()
+            cols, lines = pacman_mirrors.functions.util.terminal_size()
             for server in servers:
                 if server["resp_time"] == "99.99":
                     # do not write bad servers to mirrorlist
