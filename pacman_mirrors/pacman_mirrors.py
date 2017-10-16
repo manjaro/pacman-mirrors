@@ -47,7 +47,8 @@ from pacman_mirrors.functions import util
 from pacman_mirrors.mirrors import mirrorfn
 from pacman_mirrors.mirrors.mirror import Mirror
 from pacman_mirrors.translation import i18n
-from pacman_mirrors.translation.custom_help_formatter import CustomHelpFormatter
+from pacman_mirrors.translation.custom_help_formatter \
+    import CustomHelpFormatter
 
 try:
     importlib.util.find_spec("gi.repository.Gtk")
@@ -132,10 +133,12 @@ class PacmanMirrors:
         api = parser.add_argument_group("API")
         api.add_argument("-a", "--api",
                          action="store_true",
-                         help="[-p PREFIX][-R][-S|-G BRANCH][-P PROTO [PROTO ...]]")
+                         help="[-p PREFIX][-R][-S|-G BRANCH][-P PROTO "
+                              "[PROTO ...]]")
         api.add_argument("-p", "--prefix",
                          type=str,
-                         help="API: " + txt.HLP_ARG_API_PREFIX + txt.PREFIX_TIP)
+                         help="API: {} {}".format(txt.HLP_ARG_API_PREFIX,
+                                                  txt.PREFIX_TIP))
         api.add_argument("-P", "--proto", "--protocols",
                          choices=["all", "http", "https", "ftp", "ftps"],
                          type=str,
@@ -169,12 +172,16 @@ class PacmanMirrors:
 
         args = parser.parse_args()
         if len(sys.argv) == 1:
-            print("{}pacman-mirrors {}{}".format(color.GREEN, __version__, color.ENDCOLOR))
+            print("{}pacman-mirrors {}{}".format(color.GREEN,
+                                                 __version__,
+                                                 color.ENDCOLOR))
             parser.print_help()
             sys.exit(0)
 
         if args.version:
-            print("{}pacman-mirrors {}{}".format(color.GREEN, __version__, color.ENDCOLOR))
+            print("{}pacman-mirrors {}{}".format(color.GREEN,
+                                                 __version__,
+                                                 color.ENDCOLOR))
             sys.exit(0)
 
         if args.country_list:
@@ -250,13 +257,17 @@ class PacmanMirrors:
                     else:
                         self.config["protocols"] = args.proto
 
-            self.api_config(set_prefix=args.prefix, set_branch=setbranch, re_branch=rebranch,
-                            get_branch=getbranch, set_protocols=setprotocols, set_url=url)
+            self.api_config(set_pfx=args.prefix,
+                            set_branch=setbranch,
+                            re_branch=rebranch,
+                            get_branch=getbranch,
+                            set_protocols=setprotocols,
+                            set_url=url)
 
-    def api_config(self, set_prefix=None, set_branch=None, re_branch=False,
+    def api_config(self, set_pfx=None, set_branch=None, re_branch=False,
                    get_branch=False, set_protocols=False, set_url=None):
         """Api functions
-        :param set_prefix: prefix to the config paths
+        :param set_pfx: prefix to the config paths
         :param set_branch: replace branch in pacman-mirrors.conf
         :param re_branch: replace branch in mirrorlist
         :param get_branch: sys.exit with branch
@@ -266,8 +277,8 @@ class PacmanMirrors:
         if set_url is None:
             set_url = ""
 
-        if set_prefix is None:
-            set_prefix = ""
+        if set_pfx is None:
+            set_pfx = ""
 
         # Order of API tasks does matter
         # First API task
@@ -278,16 +289,17 @@ class PacmanMirrors:
 
         # apply api configuration to internal configuration object
         # Apply prefix if present
-        if set_prefix:
-            set_prefix = apifn.sanitize_prefix(set_prefix)
-            self.config["config_file"] = set_prefix + self.config["config_file"]
-            self.config["custom_file"] = set_prefix + self.config["custom_file"]
-            self.config["mirror_file"] = set_prefix + self.config["mirror_file"]
-            self.config["mirror_list"] = set_prefix + self.config["mirror_list"]
-            self.config["status_file"] = set_prefix + self.config["status_file"]
-            self.config["work_dir"] = set_prefix + self.config["work_dir"]
+        if set_pfx:
+            set_pfx = apifn.sanitize_prefix(set_pfx)
+            self.config["config_file"] = set_pfx + self.config["config_file"]
+            self.config["custom_file"] = set_pfx + self.config["custom_file"]
+            self.config["mirror_file"] = set_pfx + self.config["mirror_file"]
+            self.config["mirror_list"] = set_pfx + self.config["mirror_list"]
+            self.config["status_file"] = set_pfx + self.config["status_file"]
+            self.config["work_dir"] = set_pfx + self.config["work_dir"]
             # to be removed long time after 2017-04-18
-            self.config["to_be_removed"] = set_prefix + self.config["to_be_removed"]
+            self.config["to_be_removed"] = set_pfx + \
+                self.config["to_be_removed"]
             # end removal
         # api tasks
         # Second API task: Set branch
@@ -297,8 +309,9 @@ class PacmanMirrors:
             # pacman-mirrors.conf could absent so check for it
             if not filefn.check_file(self.config["config_file"]):
                 # Copy from host system
-                filefn.create_dir(set_prefix + "/etc")
-                shutil.copyfile("/etc/pacman-mirrors.conf", self.config["config_file"])
+                filefn.create_dir(set_pfx + "/etc")
+                shutil.copyfile("/etc/pacman-mirrors.conf",
+                                self.config["config_file"])
                 # Normalize config
                 apifn.normalize_config(self.config["config_file"])
             # Write branch to config
@@ -308,7 +321,7 @@ class PacmanMirrors:
         # Third API task: Create a mirror list
         if set_url:
             # mirror list dir could absent so check for it
-            filefn.create_dir(set_prefix + "/etc/pacman.d")
+            filefn.create_dir(set_pfx + "/etc/pacman.d")
             mirror = [
                 {
                     "url": apifn.sanitize_url(set_url),
@@ -376,8 +389,8 @@ class PacmanMirrors:
         worklist = self.mirrors.mirrorlist
         shuffle(worklist)
         if self.config["protocols"]:
-            worklist = mirrorfn.filter_mirror_protocols(worklist,
-                                                        self.config["protocols"])
+            worklist = mirrorfn.filter_mirror_protocols(
+                worklist, self.config["protocols"])
         # only list mirrors which ar up-to-date for users selected branch
         # by removin not up-to-date mirrors from the list
         up_to_date_mirrors = self.filter_user_branch(worklist)
@@ -402,7 +415,9 @@ class PacmanMirrors:
                     print("\r")
             else:
                 if not self.quiet:
-                    print("\r   {:<5}{}{} ".format(color.GREEN, resp_time, color.ENDCOLOR))
+                    print("\r   {:<5}{}{} ".format(color.GREEN,
+                                                   resp_time,
+                                                   color.ENDCOLOR))
                 worklist.append(mirror)
                 counter += 1
             # equality check will break execution
@@ -440,9 +455,9 @@ class PacmanMirrors:
         """
 
         """
-        If config.protols has content that is a user decision and as such is has
-        nothing to do with the above reasoning regarding mirrors which might or
-        might not be up-to-date
+        If config.protols has content that is a user decision and as such
+        it has nothing to do with the above reasoning regarding mirrors
+        which might or might not be up-to-date
         """
         # leave only the user selected protocols
         if self.config["protocols"]:
@@ -471,7 +486,8 @@ class PacmanMirrors:
                     "country": mirror["country"],
                     "resp_time": mirror["resp_time"],
                     "last_sync": mirror["last_sync"],
-                    "url": "{}{}".format(protocol[1], util.strip_protocol(mirror["url"]))
+                    "url": "{}{}".format(protocol[1],
+                                         util.strip_protocol(mirror["url"]))
                 })
         #
         # import the right ui
@@ -514,7 +530,8 @@ class PacmanMirrors:
                         except IndexError:
                             pass
                         mirror_list.append(mirror)
-            # since ranking/shuffling is not done pre loading the ui now is the time
+            # since ranking/shuffling is not done pre loading the ui
+            # so now is the time
             if self.default and mirror_list:
                 if self.config["method"] == "rank":
                     mirror_list = self.test_mirrors(mirror_list)
@@ -588,9 +605,8 @@ class PacmanMirrors:
         else:
             self.load_default_mirrors()
         # validate selection and build country list
-        self.selected_countries = mirrorfn.build_country_list(self.selected_countries,
-                                                              self.mirrors.countrylist,
-                                                              self.geoip)
+        self.selected_countries = mirrorfn.build_country_list(
+            self.selected_countries, self.mirrors.countrylist, self.geoip)
 
     def load_custom_mirrors(self):
         """Load available custom mirrors"""
@@ -658,17 +674,18 @@ class PacmanMirrors:
                 else:
                     self.max_wait_time = http_wait
                 # let's see how responsive you are
-                resp_time = httpfn.get_mirror_response(mirror["url"],
-                                                       maxwait=self.max_wait_time,
-                                                       quiet=self.quiet,
-                                                       ssl_verify=ssl_verify)
+                resp_time = httpfn.get_mirror_response(
+                    mirror["url"], maxwait=self.max_wait_time,
+                    quiet=self.quiet, ssl_verify=ssl_verify)
                 mirror["resp_time"] = resp_time
                 if float(resp_time) >= self.max_wait_time:
                     if not self.quiet:
                         print("\r")
                 else:
                     if not self.quiet:
-                        print("\r   {:<5}{}{} ".format(color.GREEN, resp_time, color.ENDCOLOR))
+                        print("\r   {:<5}{}{} ".format(color.GREEN,
+                                                       resp_time,
+                                                       color.ENDCOLOR))
         return worklist
 
     def run(self):
@@ -711,10 +728,13 @@ class PacmanMirrors:
         # print deprecation messages
         if self.generate:
             print(".:{} Argument '-g/--generate' is deprecated.\n"
-                  ".: Please use '-f/--fasttrack <number>' use 0 for all mirrors{}".format(color.YELLOW, color.ENDCOLOR))
+                  ".: Please use '-f/--fasttrack <number>' "
+                  "use 0 for all mirrors{}".format(color.YELLOW,
+                                                   color.ENDCOLOR))
         if self.sync:
             print(".:{} Argument '-y/--sync' is deprecated.\n"
-                  ".: Please use 'pacman -Syy'{}".format(color.YELLOW, color.ENDCOLOR))
+                  ".: Please use 'pacman -Syy'{}".format(color.YELLOW,
+                                                         color.ENDCOLOR))
 
 
 if __name__ == "__main__":

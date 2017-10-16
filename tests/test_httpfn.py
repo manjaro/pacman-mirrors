@@ -45,7 +45,10 @@ class TestHttpFn(unittest.TestCase):
     @patch("os.getuid")
     @patch.object(httpfn, "get_geoip_country")
     @patch.object(configfn, "build_config")
-    def test_geoip_available(self, mock_build_config, mock_get_geoip_country, mock_os_getuid):
+    def test_geoip_available(self,
+                             mock_build_config,
+                             mock_get_geoip_country,
+                             mock_os_getuid):
         """TEST: Geoip country IS avaiable"""
         mock_os_getuid.return_value = 0
         mock_get_geoip_country.return_value = "France"
@@ -62,7 +65,10 @@ class TestHttpFn(unittest.TestCase):
     @patch("os.getuid")
     @patch.object(httpfn, "get_geoip_country")
     @patch.object(configfn, "build_config")
-    def test_geoip_not_available(self, mock_build_config, mock_get_geoip_country, mock_os_getuid):
+    def test_geoip_not_available(self,
+                                 mock_build_config,
+                                 mock_get_geoip_country,
+                                 mock_os_getuid):
         """TEST: Geoip country IS NOT available"""
         mock_os_getuid.return_value = 0
         mock_get_geoip_country.return_value = "Antarctica"

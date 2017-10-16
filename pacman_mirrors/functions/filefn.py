@@ -68,7 +68,8 @@ def return_mirror_filename(config):
     return filename, status
 
 
-def output_mirror_list(config, servers, custom=False, quiet=False, interactive=False):
+def output_mirror_list(config, servers, custom=False,
+                       quiet=False, interactive=False):
     """Write servers to /etc/pacman.d/mirrorlist
     :param config:
     :param servers: list of servers to write
@@ -92,7 +93,8 @@ def output_mirror_list(config, servers, custom=False, quiet=False, interactive=F
                                                     config["branch"],
                                                     config["repo_arch"])
                     if not quiet:
-                        message = "   {:<15} : {}".format(server["country"], server["url"])
+                        message = "   {:<15} : {}".format(server["country"],
+                                                          server["url"])
                         print("{:.{}}".format(message, cols))
                 else:
                     url = server["url"]

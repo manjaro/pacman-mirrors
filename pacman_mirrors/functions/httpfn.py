@@ -50,7 +50,8 @@ def download_mirrors(config):
     # mirrors.json
     try:
         with urlopen(config["url_mirrors_json"]) as response:
-            mirrorlist = json.loads(response.read().decode("utf8"), object_pairs_hook=collections.OrderedDict)
+            mirrorlist = json.loads(response.read().decode("utf8"),
+                                    object_pairs_hook=collections.OrderedDict)
         fetchmirrors = True
         tempfile = config["work_dir"] + "/temp.file"
         jsonfn.json_dump_file(mirrorlist, tempfile)

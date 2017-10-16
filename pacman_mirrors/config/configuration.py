@@ -20,9 +20,12 @@
 """Pacman-Mirrors Configuration"""
 
 # http constants
-URL_MIRROR_JSON = "https://github.com/manjaro/manjaro-web-repo/raw/master/mirrors.json"
+URL_MIRROR_JSON = \
+    "https://github.com/manjaro/manjaro-web-repo/raw/master/mirrors.json"
 URL_STATUS_JSON = "http://repo.manjaro.org/status.json"
-INET_CONN_CHECK_URLS = ["https://bitbucket.org", "https://github.com", "https://wikipedia.org"]
+INET_CONN_CHECK_URLS = ["https://bitbucket.org",
+                        "https://github.com",
+                        "https://wikipedia.org"]
 # etc files
 CONFIG_FILE = "/etc/pacman-mirrors.conf"
 MIRROR_LIST = "/etc/pacman.d/mirrorlist"

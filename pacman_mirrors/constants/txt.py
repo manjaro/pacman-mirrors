@@ -48,7 +48,8 @@ HLP_ARG_BRANCH = _("Branch name")
 HLP_ARG_COUNTRY = _(
     "Comma separated list of countries, from which mirrors will be used")
 HLP_ARG_DEFAULT = _("Load default mirror file")
-HLP_ARG_FASTTRACK = _("Generate mirrorlist with a number of up-to-date mirrors. Ignores:")
+HLP_ARG_FASTTRACK = _(
+    "Generate mirrorlist with a number of up-to-date mirrors. Ignores:")
 HLP_ARG_GENERATE = _("Generate mirrorlist with defaults")
 HLP_ARG_GEOIP = _("Get current country using geolocation")
 HLP_ARG_LIST = _("List all available countries")
