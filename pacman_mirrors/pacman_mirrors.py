@@ -19,7 +19,7 @@
 #          philm <philm@manjaro.org>
 #          Ramon Buldó <rbuldo@gmail.com>
 #          Hugo Posnic <huluti@manjaro.org>
-#          Frede Hundewadt <fh@manjaro.org>
+#          Frede Hundewadt <echo ZmhAbWFuamFyby5vcmcK | base64 -d>
 
 """Pacman-Mirrors Main Module"""
 
@@ -68,6 +68,7 @@ class PacmanMirrors:
         self.custom = False
         self.default = False
         self.fasttrack = None
+        self.generate = None
         self.geoip = False
         self.interactive = False
         self.max_wait_time = 2
@@ -184,8 +185,7 @@ class PacmanMirrors:
             sys.exit(1)
 
         if args.generate:
-            print(".:{} Argument '-g/--generate' is deprecated.{}\n"
-                  ".: Please use '-f/--fasttrack' use 0 for all mirrors".format(color.YELLOW, color.ENDCOLOR))
+            self.generate = True
 
         if args.method:
             self.config["method"] = args.method
@@ -200,8 +200,6 @@ class PacmanMirrors:
             self.quiet = True
 
         if args.sync:
-            print(".:{} Argument '-y/--sync' is deprecated.{}\n"
-                  ".: Please use 'pacman -Syy'".format(color.YELLOW, color.ENDCOLOR))
             self.sync = True
 
         if args.interactive:
@@ -433,7 +431,7 @@ class PacmanMirrors:
                 })
         # import the right ui
         if self.no_display:
-            from . import consoleui as ui
+            from pacman_mirrors.dialogs import consoleui as ui
         else:
             from pacman_mirrors.dialogs import graphicalui as ui
         interactive = ui.run(interactive_list,
@@ -483,7 +481,8 @@ class PacmanMirrors:
                                           txt.CUSTOM_MIRROR_LIST))
                 print("--------------------------")
                 # output mirror file
-                jsonfn.write_json_file(mirror_file, self.config["custom_file"])
+                jsonfn.write_json_file(mirror_file,
+                                       self.config["custom_file"])
                 print(".: {} {}: {}".format(txt.INF_CLR,
                                             txt.CUSTOM_MIRROR_FILE_SAVED,
                                             self.config["custom_file"]))
@@ -495,7 +494,8 @@ class PacmanMirrors:
                                           interactive=True)
                 # always use "Custom" from interactive
                 self.config["only_country"] = ["Custom"]
-                configfn.modify_config(self.config, custom=True)
+                configfn.modify_config(self.config,
+                                       custom=True)
                 print(".: {} {} {}".format(txt.INF_CLR,
                                            txt.RESET_CUSTOM_CONFIG,
                                            txt.RESET_TIP))
@@ -584,19 +584,22 @@ class PacmanMirrors:
     def test_mirrors(self, worklist):
         """Query server for response time"""
         if self.custom:
-            print(".: {} {}".format(txt.INF_CLR, txt.USING_CUSTOM_FILE))
+            print(".: {} {}".format(txt.INF_CLR,
+                                    txt.USING_CUSTOM_FILE))
         else:
-            print(".: {} {}".format(txt.INF_CLR, txt.USING_DEFAULT_FILE))
+            print(".: {} {}".format(txt.INF_CLR,
+                                    txt.USING_DEFAULT_FILE))
         print(".: {} {} - {}".format(txt.INF_CLR,
                                      txt.QUERY_MIRRORS,
                                      txt.TAKES_TIME))
         cols, lines = miscfn.terminal_size()
+        # set connection timemouts
         http_wait = self.max_wait_time
         ssl_wait = self.max_wait_time * 2
         ssl_verify = self.config["ssl_verify"]
         for mirror in worklist:
-            pos = mirror["url"].find(":")
-            url = mirror["url"][pos:]
+            colon = mirror["url"].find(":")
+            url = mirror["url"][colon:]
             for idx, proto in enumerate(mirror["protocols"]):
                 mirror["url"] = "{}{}".format(proto, url)
                 if not self.quiet:
@@ -604,7 +607,7 @@ class PacmanMirrors:
                                                            mirror["url"])
                     print("{:.{}}".format(message, cols), end="")
                     sys.stdout.flush()
-                # https sometimes takes a short while for handshake
+                # https sometimes takes longer for handshake
                 if proto == "https" or proto == "ftps":
                     self.max_wait_time = ssl_wait
                 else:
@@ -625,28 +628,48 @@ class PacmanMirrors:
 
     def run(self):
         """Run"""
-        (self.config, self.custom) = configfn.build_config()  # build config by parsing p-m.conf
-        filefn.create_dir(self.config["work_dir"])  # ensure /var/lib/pacman-mirrors exist
-        self.command_line_parse()  # parse command line
-        self.network = httpfn.inet_conn_check()  # net check
-        if self.network:  # update data files
+        # build config by parsing pacman-mirrors.conf
+        (self.config, self.custom) = configfn.build_config()
+        # ensure /var/lib/pacman-mirrors exist
+        filefn.create_dir(self.config["work_dir"])
+        # parse command line
+        self.command_line_parse()
+        # net check
+        self.network = httpfn.inet_conn_check()
+        if self.network:
+            # update data files
             httpfn.update_mirrors(self.config, quiet=self.quiet)
         if self.no_mirrorlist:
-            sys.exit(0)  # exit
+            # exit
+            sys.exit(0)
         if not self.network:
             if not self.quiet:
-                miscfn.internet_message()  # console message
-            self.config["method"] = "random"  # use random instead of rank
-            self.fasttrack = False  # using fasttrack is not possible
+                # console message
+                miscfn.internet_message()
+            # use random instead of rank
+            self.config["method"] = "random"
+            # using fasttrack is not possible
+            self.fasttrack = False
         self.load_all_mirrors()
         if self.fasttrack:
-            self.build_fasttrack_mirror_list(self.fasttrack)  # fasttrack argument
+            # fasttrack argument
+            self.build_fasttrack_mirror_list(self.fasttrack)
         elif self.interactive:
-            self.build_interactive_mirror_list()  # interactive argument
+            # interactive argument
+            self.build_interactive_mirror_list()
         else:
-            self.build_common_mirror_list()  # default
+            # default
+            self.build_common_mirror_list()
         if self.network and self.sync:
-            subprocess.call(["pacman", "-Syy"])  # sync pacman db
+            # sync pacman db
+            subprocess.call(["pacman", "-Syy"])
+        # print deprecation messages
+        if self.generate:
+            print(".:{} Argument '-g/--generate' is deprecated.\n"
+                  ".: Please use '-f/--fasttrack <number>' use 0 for all mirrors{}".format(color.YELLOW, color.ENDCOLOR))
+        if self.sync:
+            print(".:{} Argument '-y/--sync' is deprecated.\n"
+                  ".: Please use 'pacman -Syy'{}".format(color.YELLOW, color.ENDCOLOR))
 
 
 if __name__ == "__main__":

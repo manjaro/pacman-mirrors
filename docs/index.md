@@ -274,4 +274,4 @@ Esclapion <esclapion@manjaro.org>
 philm <philm@manjaro.org>
 Ramon Buldó <rbuldo@gmail.com>
 Hugo Posnic <huluti@manjaro.org>
-Frede Hundewadt <fh@manjaro.org>
+Frede Hundewadt <echo ZmhAbWFuamFyby5vcmcK | base64 -d>

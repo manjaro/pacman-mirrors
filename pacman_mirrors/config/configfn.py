@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with pacman-mirrors.  If not, see <http://www.gnu.org/licenses/>.
 #
-# Authors: Frede Hundewadt <fh@manjaro.org>
+# Authors: Frede Hundewadt <echo ZmhAbWFuamFyby5vcmcK | base64 -d>
 
 """Pacman-Mirrors Configuration Functions"""
 

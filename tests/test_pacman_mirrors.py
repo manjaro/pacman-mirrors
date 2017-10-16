@@ -68,7 +68,7 @@ class TestPacmanMirrors(unittest.TestCase):
                                   "-m", "random"]):
             app = PacmanMirrors()
             app.config = configfn.build_config()
-            filefn.create_dir(app.config["work_dir"])
+            filefn.create_dir(test_conf["work_dir"])
             app.command_line_parse()
             httpfn.update_mirrors(app.config)
             app.load_all_mirrors()
@@ -85,7 +85,7 @@ class TestPacmanMirrors(unittest.TestCase):
                                   "-f", "5"]):
             app = PacmanMirrors()
             app.config = configfn.build_config()
-            filefn.create_dir(app.config["work_dir"])
+            filefn.create_dir(test_conf["work_dir"])
             app.command_line_parse()
             httpfn.update_mirrors(app.config)
             app.load_all_mirrors()
@@ -102,7 +102,7 @@ class TestPacmanMirrors(unittest.TestCase):
                                   "-c", "all"]):
             app = PacmanMirrors()
             app.config = configfn.build_config()
-            filefn.create_dir(app.config["work_dir"])
+            filefn.create_dir(test_conf["work_dir"])
             app.command_line_parse()
             httpfn.update_mirrors(app.config)
             app.load_all_mirrors()
@@ -119,7 +119,7 @@ class TestPacmanMirrors(unittest.TestCase):
     #                               "--country-list"]):
     #         app = PacmanMirrors()
     #         app.config = configfn.build_config()
-    #         filefn.create_dir(app.config["work_dir"])
+    #         filefn.create_dir(test_conf["work_dir"])
     #         app.command_line_parse()
     #         # httpfn.update_mirrors(app.config)
     #         # app.load_all_mirrors()
