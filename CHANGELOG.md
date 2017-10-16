@@ -2,7 +2,9 @@
 All notable changes to this project will be documented in this file.
 
 ## [4.3.0dev]
-- **deprecation**: Warning print for -y and -g
+- **Deprecation**: Warning print for `-y` and `-g`
+- **Improvement**: General mirrorlist uses only up-to-date mirrors on users branch
+- **Improvement**: Fasttrack mirrorlist uses only up-to-date mirrors on users branch
 - **Improvement**: Filter generated mirrorlist based on branch and sync status
 - Update translations.
 

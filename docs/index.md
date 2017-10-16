@@ -1,6 +1,6 @@
 % pacman-mirrors(8) Pacman-Mirrors 4.3 User Manual
 %
-% September, 2017
+% October, 2017
 
 # NAME
 
@@ -13,17 +13,11 @@ pacman-mirrors [-f *NUMBER* | [[-i [-d]] [-c *COUNTRY*, [*COUNTRY*] ... | --geoi
 
 # DESCRIPTION
 
-Generate mirrorlist for Manjaro Linux.
-Default is to rank all mirrors by reponse time.
-If no arguments are given pacman-mirrors lists available options.
-Pacman-mirrors requires access to files which are read-only
-so it must be run with su or sudo.
-To create a up-to-date mirrorlist using all default use,
+Generate mirrorlist for Manjaro Linux. Default is to rank all mirrors by reponse time. If no arguments are given pacman-mirrors lists available options. Pacman-mirrors requires access to files which are read-only so it must be run with su or sudo. To create a up-to-date mirrorlist using all default use,
 
     pacman-mirrors --fasttrack 10 && sudo pacman -Syy
 
-The mirrorlist generation process can be refined through arguments
-and arguments with options, for example,
+The mirrorlist generation process can be refined through arguments and arguments with options, for example,
 
     pacman-mirrors --country Denmark --timeout 5
 
@@ -41,11 +35,7 @@ Some options are mutual exclusive and will throw an arguments error:
 * **--sync** and **--no-mirrorlist**
 * **--country** and **--geoip**
 
-Others can be used together but they have precedence.
-If the fasttrack arg is used with interactive, country or geoip
-the fasttrack arg will have precendence and the others are ignored.
-Some arguments requires other argument to have effect for example,
-this command will ignore --default argument
+Others can be used together but they have precedence. If the fasttrack arg is used with interactive, country or geoip the fasttrack arg will have precendence and the others are ignored. Some arguments requires other argument to have effect for example,this command will ignore --default argument
 
     WRONG pacman-mirrors -b unstable --default
 
@@ -53,48 +43,59 @@ as it should have been in conjunction with --interactive, like
 
     CORRECT pacman-mirrors -b unstable --interactive --default
 
-The same goes for the API specific arguments.
-For those to have effect the --api argument must be present also.
+The same goes for the API specific arguments. For those to have effect the --api argument must be present also.
 
     pacman-mirrors -aS unstable
 
-The arguments can appear in any order except for arguments which takes
-additional options in which case the options must follow
-immediately after the argument, for example
+The arguments can appear in any order except for arguments which takes additional options in which case the options must follow immediately after the argument, for example
 
     pacman-mirrors -aidS unstable
 
+Pacman-mirrors downloads the lastest available status from [http://repo.manjaro.org](http://repo.manjaro.org). These data is always used during mirrorlist generation to ensure that you connected to a mirror which is up-to-date for your selected branch. Should you decide to temporarily switch branches you will still connect to an up-to-date mirror.
+
+## IMPORTANT TO REMEMBER
+It cannot be stressed enough that for every mirrorlist generation you commence, you **MUST** run *pacman-mirrors -Syy*.  
+
+## YEE BE WARNED: Deprecated arguments
+-g, \--generate 
+:   The argument is deprecated in favor of **-f/--fasttrack**
+
+-y, \--sync
+:   An argument which never should have been here. The better option is to educate yourself to always use **pacman -Syy** after any change to your mirrorlist
+
 ## METHODS
 -f, \--fasttrack *NUMBER*
-:   Generates an up-to-date mirrorlist for the users current branch,
-    mirrors are randomly selected from <http://repo.manjaro.org/status.json>,
+:   Generates an up-to-date mirrorlist for the users current selected branch,
+    mirrors are randomly selected from [http://repo.manjaro.org/status.json](http://repo.manjaro.org/status.json),
     the randomly selected mirrors are ranked by their current access time.
     The higher number the higher possibility of a fast mirror.
+    If the number 0 is used - it is understood that all mirrors mirrors should be used.
 
 -i, \--interactive [--default]
-:   Launches a tool for selectively picking mirrors and protocols,
-    **--default** forces pacman-mirrors to load the default mirror
-    file and ignore any preset custom-mirrors file, thus allowing for
-    reselecting mirrors for a new custom mirror file
+:   This is a function designed to leave full control for mirrors and protocols.
+    This function **DOES NOT** take into consideration up-to-date mirrors. 
+    The addition argument **--default** forces pacman-mirrors to load the default mirror
+    file and ignore any preset custom-mirrors file, thus allowing for reselecting mirrors 
+    for a new custom mirror file. 
 
 -m, \--method *METHOD*
-:   Default method is *rank* but *random* can be selected
+:   Default method is *rank* but *random* can be selected.
 
 ## BRANCH
 
 -b, \--branch *BRANCH*
-:   Temporarily use another branch, *stable*, *testing* or *unstable*,
-    the branch is reset with next run of pacman-mirrors
+:   Temporarily use another branch, *stable*, *testing* or *unstable*.
+    The branch is reset with next run of pacman-mirrors.
 
 ## COUNTRY
 -c, \--country *COUNTRY* [*COUNTRY*] ...
-:   Specifiy a country or a list of countries
+:   Specifiy a country or a list of countries.
 
 \--geoip
-:   Use geolocation if possible, if not uses all mirrors
+:   Use geolocation if possible, if geoip is not available all mirrors.
 
 -l, \--list, \--country-list
-:   Lists available mirror countries
+:   Lists available mirror countries.
 
 ## API
 
@@ -149,6 +150,10 @@ immediately after the argument, for example
     3     : Missing mirror file
     BRANCH: Value from config
 
+## IMPORTANT TO REMEMBER
+It cannot be stressed enough that for every mirrorlist generation you commence,
+you **MUST** run *pacman-mirrors -Syy*.  
+
 ## Configuration flow of pacman-mirrors
 
 At launch an internal default configuration is setup,
@@ -193,18 +198,19 @@ The API functions is mainly designed to help packagers and iso-builders.
 However it can be of use for everyone because it takes the hazzle out
 of editing your pacman-mirrors configuration.
 
+## IMPORTANT TO REMEMBER
+It cannot be stressed enough that for every mirrorlist generation you commence,
+you **MUST** run *pacman-mirrors -Syy*.
+
 * Which countries has mirrors?
 
     *sudo pacman-mirrors -l*
 
-* I want to temporary change branch to unstable,
-use geolocation,
+* I want to temporary change branch to unstable, use geolocation,
 
     *sudo pacman-mirrors -b unstable --geoip*
 
-* I want to permanently change branch to unstable,
-use mirrors from Germany and France,
-use only https and http protocol in that order
+* I want to permanently change branch to unstable, use mirrors from Germany and France, use only https and http protocol in that order
 
     *sudo pacman-mirrors -ac Germany,France -S unstable -P https http*
 
@@ -248,15 +254,11 @@ use only https and http protocol in that order
 
     *sudo pacman-mirrors -naP https http*
 
-* A packager can write directly to a mounted systems
-datafiles using either a path or an environment variable
-replacing the branch in both configuration and mirrorlist
-leaving the mirrors as is
+* A packager can write directly to a mounted systems datafiles using either a path or an environment variable replacing the branch in both configuration and mirrorlist leaving the mirrors as is
 
     *sudo pacman-mirrors -anR -p $prefix -S $branch -P https*
 
-* It is also possible to specify a mirror in which case the mirrorlist
-is created and pacman-mirrors terminate
+* It is also possible to specify a mirror in which case the mirrorlist is created and pacman-mirrors terminate
 
     *sudo pacman-mirrors -ap $prefix -S $branch -U $url*
 
@@ -270,8 +272,8 @@ may be downloaded from <https://github.com/manjaro/pacman-mirrors/archive/master
 
 # AUTHORS
 
-Esclapion <esclapion@manjaro.org>
-philm <philm@manjaro.org>
-Ramon Buldó <rbuldo@gmail.com>
-Hugo Posnic <huluti@manjaro.org>
-Frede Hundewadt <echo ZmhAbWFuamFyby5vcmcK | base64 -d>
+    Esclapion <esclapion@manjaro.org>  
+    philm <philm@manjaro.org>  
+    Ramon Buldó <rbuldo@gmail.com>  
+    Hugo Posnic <huluti@manjaro.org>  
+    Frede Hundewadt <echo ZmhAbWFuamFyby5vcmcK | base64 -d>  

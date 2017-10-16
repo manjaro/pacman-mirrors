@@ -5,6 +5,6 @@
 - Philip Müller <philm@manjaro.org>
 - Ramon Buldó <ramon@manjaro.org>
 - Hugo Posnic <huluti@manjaro.org>
-- Frede Hundewadt <fh@manjaro.org>
+- Frede Hundewadt <echo ZmhAbWFuamFyby5vcmcK | base64 -d>
 
 Thank you all! ;)
