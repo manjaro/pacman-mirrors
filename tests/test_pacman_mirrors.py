@@ -44,8 +44,8 @@ class TestPacmanMirrors(unittest.TestCase):
 
     @patch("os.getuid")
     @patch.object(configfn, "build_config")
-    def test_deprecation_messages(self, mock_build_config, mock_os_getuid):
-        """TEST: pacman-mirrors -g all -y"""
+    def test_print_deprecation_messages(self, mock_build_config, mock_os_getuid):
+        """TEST: pacman-mirrors -g -y"""
         mock_os_getuid.return_value = 0
         mock_build_config.return_value = test_conf
         with unittest.mock.patch("sys.argv",
@@ -54,11 +54,7 @@ class TestPacmanMirrors(unittest.TestCase):
                                   "-y"]):
             app = PacmanMirrors()
             app.config = configfn.build_config()
-            filefn.create_dir(app.config["work_dir"])
             app.command_line_parse()
-            # httpfn.update_mirrors(app.config)
-            # app.load_all_mirrors()
-            # app.build_common_mirror_list()
 
     @patch("os.getuid")
     @patch.object(configfn, "build_config")
