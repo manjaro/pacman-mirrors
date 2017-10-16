@@ -32,6 +32,7 @@ import sys
 from operator import itemgetter
 from random import shuffle
 
+import pacman_mirrors.functions.util
 from pacman_mirrors import __version__
 from pacman_mirrors.api import apifn
 from pacman_mirrors.config import configfn
@@ -41,8 +42,8 @@ from pacman_mirrors.constants import txt
 from pacman_mirrors.functions import filefn
 from pacman_mirrors.functions import httpfn
 from pacman_mirrors.functions import jsonfn
-from pacman_mirrors.functions import miscfn
 from pacman_mirrors.functions import validfn
+from pacman_mirrors.functions import util
 from pacman_mirrors.mirrors import mirrorfn
 from pacman_mirrors.mirrors.mirror import Mirror
 from pacman_mirrors.translation import i18n
@@ -222,13 +223,14 @@ class PacmanMirrors:
 
         if args.fasttrack:
             self.fasttrack = args.fasttrack
-            self.geoip = False
-            self.custom = False
-            self.config["only_country"] = []
+            if self.fasttrack > 0:
+                self.geoip = False
+                self.custom = False
+                self.config["only_country"] = []
 
         if args.no_mirrorlist:
             self.no_mirrorlist = True
-
+        # api handling
         if args.api:
             getbranch = False
             rebranch = False
@@ -338,39 +340,54 @@ class PacmanMirrors:
         if self.config["protocols"]:
             worklist = mirrorfn.filter_mirror_protocols(
                 worklist, self.config["protocols"])
-        # worklist = self.filter_user_branch(worklist)
+        # only list mirrors which ar up-to-date for users selected branch
+        # by removin not up-to-date mirrors from the list
+        worklist = self.filter_user_branch(worklist)
         if self.config["method"] == "rank":
             worklist = self.test_mirrors(worklist)
-            worklist = sorted(worklist, key=itemgetter("resp_time"))
+            worklist = sorted(worklist,
+                              key=itemgetter("resp_time"))
         else:
             shuffle(worklist)
         if worklist:
-            filefn.output_mirror_list(self.config, worklist, quiet=self.quiet)
+            filefn.output_mirror_list(self.config,
+                                      worklist,
+                                      quiet=self.quiet)
             if self.custom:
-                configfn.modify_config(self.config, custom=self.custom)
+                configfn.modify_config(self.config,
+                                       custom=self.custom)
             else:
-                configfn.modify_config(self.config, custom=self.custom)
+                configfn.modify_config(self.config,
+                                       custom=self.custom)
         else:
             print(".: {} {}".format(txt.WRN_CLR, txt.NO_SELECTION))
             print(".: {} {}".format(txt.INF_CLR, txt.NO_CHANGE))
 
     def build_fasttrack_mirror_list(self, number):
-        """Fast-track the mirrorlist by filtering only up2date mirrors on the selected branch"""
-        # randomize the load on up2date mirrors
+        """
+        Fast-track the mirrorlist by filtering only up-to-date mirrors
+        The function takes into account the branch selected by the user
+        either on commandline or in pacman-mirrors.conf
+        The function returns  a filtered list consisting of a number of mirrors
+        For the sake of deprecating the -g/--generate argument the function
+        increments the counter before checking for equality
+        """
+        # randomize the load on up-to-date mirrors
         worklist = self.mirrors.mirrorlist
         shuffle(worklist)
         if self.config["protocols"]:
-            worklist = mirrorfn.filter_mirror_protocols(
-                worklist, self.config["protocols"])
-        # filter not up-to-date mirrors for users selected branch not all branches
-        up2date = self.filter_user_branch(worklist)
+            worklist = mirrorfn.filter_mirror_protocols(worklist,
+                                                        self.config["protocols"])
+        # only list mirrors which ar up-to-date for users selected branch
+        # by removin not up-to-date mirrors from the list
+        up_to_date_mirrors = self.filter_user_branch(worklist)
         worklist = []
         print(".: {}: {} - {}".format(txt.INF_CLR,
                                       txt.QUERY_MIRRORS,
                                       txt.TAKES_TIME))
         counter = 0
-        cols, lines = miscfn.terminal_size()
-        for mirror in up2date:
+        cols, lines = pacman_mirrors.functions.util.terminal_size()
+        for mirror in up_to_date_mirrors:
             if not self.quiet:
                 message = "   ..... {:<15}: {}: {}".format(
                     mirror["country"], mirror["last_sync"], mirror["url"])
@@ -388,11 +405,19 @@ class PacmanMirrors:
                     print("\r   {:<5}{}{} ".format(color.GREEN, resp_time, color.ENDCOLOR))
                 worklist.append(mirror)
                 counter += 1
-            if counter == number:
+            # equality check will break execution
+            # when the desired number is reached
+            # in the possible event the first mirrors
+            # responsetime exceeds the predefined responsetime
+            # the loop would break if a check for zero is not present
+            if counter is not 0 and counter == number:
                 break
-        worklist = sorted(worklist, key=itemgetter("resp_time"))
+        worklist = sorted(worklist,
+                          key=itemgetter("resp_time"))
         if worklist:
-            filefn.output_mirror_list(self.config, worklist, quiet=self.quiet)
+            filefn.output_mirror_list(self.config,
+                                      worklist,
+                                      quiet=self.quiet)
         else:
             print(".: {} {}".format(txt.WRN_CLR, txt.NO_SELECTION))
             print(".: {} {}".format(txt.INF_CLR, txt.NO_CHANGE))
@@ -403,9 +428,22 @@ class PacmanMirrors:
         * Modify the configuration file to use the "custom" file.
         * Outputs a pacman mirrorlist,
         """
-        # TODO: build_interactive_mirror_list needs refactoring
         worklist = mirrorfn.filter_mirror_country(self.mirrors.mirrorlist,
                                                   self.selected_countries)
+        """
+        It seems reasonable to implement a filter
+        based on the users branch and update status
+        On the other hand, the interactive mode is for the user
+        to have total control over the mirror file.
+        So though it might seem prudent to only include updated mirrors,
+        we will not do it when user has selected interactive mode.
+        """
+
+        """
+        If config.protols has content that is a user decision and as such is has
+        nothing to do with the above reasoning regarding mirrors which might or
+        might not be up-to-date
+        """
         # leave only the user selected protocols
         if self.config["protocols"]:
             worklist = mirrorfn.filter_mirror_protocols(
@@ -418,56 +456,65 @@ class PacmanMirrors:
             else:
                 shuffle(worklist)
         interactive_list = []
+        #
         # create a list for display in ui
+        # neither the gui nor the console ui does expect the supplied list
+        # to be in the old countryfile format
+        # which is why we go through the trouble of creating a special list
+        # for display in the ui and we subseqently is in the need of special
+        # handling of the returned result.
+        #
         for mirror in worklist:
             # create an entry for all protocols related to a mirror
             for protocol in enumerate(mirror["protocols"]):
-                pos = mirror["url"].find(":")
                 interactive_list.append({
                     "country": mirror["country"],
                     "resp_time": mirror["resp_time"],
                     "last_sync": mirror["last_sync"],
-                    "url": "{}{}".format(protocol[1], mirror["url"][pos:])
+                    "url": "{}{}".format(protocol[1], util.strip_protocol(mirror["url"]))
                 })
+        #
         # import the right ui
         if self.no_display:
+            # in console mode
             from pacman_mirrors.dialogs import consoleui as ui
         else:
+            # gobject introspection is present and accounted for
             from pacman_mirrors.dialogs import graphicalui as ui
         interactive = ui.run(interactive_list,
                              self.config["method"] == "random",
                              self.default)
         # process user choices
         if interactive.is_done:
-            mirror_list = []  # written to mirrorlist
-            mirror_file = []  # written to custom-mirror.json
-            custom_list = interactive.custom_list
-            # TODO: refactor needed
+            mirror_list = []  # to be written to mirrorlist
+            mirror_file = []  # to be written to custom-mirror.json
+            custom_list = interactive.custom_list  # grabbing a copy
             # loop custom list
             for custom in custom_list:
                 # get url without protocol
-                c_pos = custom["url"].find(":")
-                c_url = custom["url"][c_pos:]
+                custom_string = util.strip_protocol(custom["url"])
                 # locate mirror in the full mirrorlist
                 for mirror in self.mirrors.mirrorlist:
-                    m_pos = mirror["url"].find(":")
-                    m_url = mirror["url"][m_pos:]
+                    mirror_string = util.strip_protocol(custom["url"])
                     # compare urls
-                    if c_url == m_url:
-                        # mirror file
+                    if custom_string == mirror_string:
+                        #
+                        # create list for mirror file
                         mirror_file.append({
                             "country": mirror["country"],
                             "protocols": mirror["protocols"],
                             "url": mirror["url"]
                         })
-                        # mirror list
+                        #
+                        # create list for mirror list
                         try:
+                            # assign user defined protocol if exist
                             _ = self.config["protocols"][0]
                             mirror["protocols"] = self.config["protocols"]
                         except IndexError:
                             pass
                         mirror_list.append(mirror)
-            # since no ranking/shuffling is done pre loading the ui do post unload
+            # since ranking/shuffling is not done pre loading the ui now is the time
             if self.default and mirror_list:
                 if self.config["method"] == "rank":
                     mirror_list = self.test_mirrors(mirror_list)
@@ -475,7 +522,7 @@ class PacmanMirrors:
                                          key=itemgetter("resp_time"))
                 else:
                     shuffle(mirror_list)
-            # mirror file list is not empty
+            # when mirror file list is not empty
             if mirror_file:
                 print("\n.: {} {}".format(txt.INF_CLR,
                                           txt.CUSTOM_MIRROR_LIST))
@@ -492,7 +539,7 @@ class PacmanMirrors:
                                           custom=True,
                                           quiet=self.quiet,
                                           interactive=True)
-                # always use "Custom" from interactive
+                # from interactive always use "Custom" as country
                 self.config["only_country"] = ["Custom"]
                 configfn.modify_config(self.config,
                                        custom=True)
@@ -525,7 +572,6 @@ class PacmanMirrors:
         # decision on disable custom config
         if self.config["only_country"] == ["all"]:
             self.disable_custom_config()
-
         # decision on custom or default
         if self.config["only_country"] == ["Custom"]:
             # check if custom config is valid
@@ -535,7 +581,6 @@ class PacmanMirrors:
                 self.disable_custom_config()
         else:
             self.selected_countries = self.config["only_country"]
-
         # decision on custom vs countries from conf or argument
         if self.custom and not self.selected_countries:
             self.load_custom_mirrors()
@@ -592,7 +637,7 @@ class PacmanMirrors:
         print(".: {} {} - {}".format(txt.INF_CLR,
                                      txt.QUERY_MIRRORS,
                                      txt.TAKES_TIME))
-        cols, lines = miscfn.terminal_size()
+        cols, lines = pacman_mirrors.functions.util.terminal_size()
         # set connection timemouts
         http_wait = self.max_wait_time
         ssl_wait = self.max_wait_time * 2
@@ -645,7 +690,7 @@ class PacmanMirrors:
         if not self.network:
             if not self.quiet:
                 # console message
-                miscfn.internet_message()
+                pacman_mirrors.functions.util.internet_message()
             # use random instead of rank
             self.config["method"] = "random"
             # using fasttrack is not possible
