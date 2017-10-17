@@ -736,12 +736,12 @@ class PacmanMirrors:
             self.build_common_mirror_list()
         # print deprecation messages
         if self.generate:
-            print(".:{} Argument '-g/--generate' is deprecated.\n"
+            print("{}.: Argument '-g/--generate' is deprecated.\n"
                   ".: Please use '-f/--fasttrack <number>' "
                   "use 0 for all mirrors{}".format(color.YELLOW,
                                                    color.ENDCOLOR))
         if self.network and self.sync:
-            print(".:{} Argument '-y/--sync' is deprecated.\n"
+            print("{}.: Argument '-y/--sync' is deprecated.\n"
                   ".: Please use 'pacman -Syy'{}".format(color.YELLOW,
                                                          color.ENDCOLOR))
             # sync pacman db
