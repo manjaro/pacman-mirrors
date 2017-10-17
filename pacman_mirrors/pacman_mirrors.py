@@ -422,11 +422,13 @@ class PacmanMirrors:
                                                    color.ENDCOLOR))
                 worklist.append(mirror)
                 counter += 1
-            # equality check will break execution
-            # when the desired number is reached
-            # in the possible event the first mirrors
-            # responsetime exceeds the predefined responsetime
-            # the loop would break if a check for zero is not present
+            """
+            Equality check will stop execution
+            when the desired number is reached.
+            In the possible event the first mirror's
+            responsetime exceeds the predefined responsetime,
+            the loop would stop execution if the check for zero is not present            
+            """
             if counter is not 0 and counter == number:
                 break
         worklist = sorted(worklist,
@@ -440,28 +442,28 @@ class PacmanMirrors:
             print(".: {} {}".format(txt.INF_CLR, txt.NO_CHANGE))
 
     def build_interactive_mirror_list(self):
-        """Prompt the user to select the mirrors with a gui.
-        * Outputs a "custom" mirror file
-        * Modify the configuration file to use the "custom" file.
-        * Outputs a pacman mirrorlist,
         """
-        worklist = mirrorfn.filter_mirror_country(self.mirrors.mirrorlist,
-                                                  self.selected_countries)
+        Prompt the user to select the mirrors with a gui.
+        Outputs a "custom" mirror file
+        Modify the configuration file to use the "custom" file.
+        Outputs a pacman mirrorlist,
         """
-        It seems reasonable to implement a filter
-        based on the users branch and update status
+
+        """
+        It would seem reasonable to implement a filter
+        based on the users branch and the mirrors update status
         On the other hand, the interactive mode is for the user
         to have total control over the mirror file.
         So though it might seem prudent to only include updated mirrors,
         we will not do it when user has selected interactive mode.
         """
-
+        worklist = mirrorfn.filter_mirror_country(self.mirrors.mirrorlist,
+                                                  self.selected_countries)
         """
-        If config.protols has content that is a user decision and as such
-        it has nothing to do with the above reasoning regarding mirrors
+        If config.protols has content, that is a user decision and as such
+        it has nothing to do with the reasoning regarding mirrors
         which might or might not be up-to-date
         """
-        # leave only the user selected protocols
         if self.config["protocols"]:
             worklist = mirrorfn.filter_mirror_protocols(
                 worklist, self.config["protocols"])
@@ -473,14 +475,22 @@ class PacmanMirrors:
             else:
                 shuffle(worklist)
         interactive_list = []
-        #
-        # create a list for display in ui
-        # neither the gui nor the console ui does expect the supplied list
-        # to be in the old countryfile format
-        # which is why we go through the trouble of creating a special list
-        # for display in the ui and we subseqently is in the need of special
-        # handling of the returned result.
-        #
+        """
+        Create a list for display in ui.
+        The gui and the console ui expect the supplied list
+        to be in the old country dictionary format.
+        {
+            "country": "country_name",
+            "resp_time": "m.sss",
+            "last_sync": "HH:MM",
+            "url": "http://server/repo/"
+        }        
+        Therefor we have to create a list in the old format,
+        thus avoiding rewrite of the ui and related functions.
+        We subseqently need to translate the result into:
+        a. a mirrorfile in the new json format,
+        b. a mirrorlist in pacman format.        
+        """
         for mirror in worklist:
             # create an entry for all protocols related to a mirror
             for protocol in enumerate(mirror["protocols"]):
@@ -513,7 +523,7 @@ class PacmanMirrors:
                 custom_string = util.strip_protocol(custom["url"])
                 # locate mirror in the full mirrorlist
                 for mirror in self.mirrors.mirrorlist:
-                    mirror_string = util.strip_protocol(custom["url"])
+                    mirror_string = util.strip_protocol(mirror["url"])
                     # compare urls
                     if custom_string == mirror_string:
                         #
