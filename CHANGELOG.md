@@ -1,7 +1,8 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## [4.3.0]
+## [4.3.0] 2017-10-17
+- **Improvement**: Api `--get-branch` removed root requirement
 - **Deprecation**: Warning print for `-y` and `-g`
 - **Improvement**: General mirrorlist uses only up-to-date mirrors on users branch
 - **Improvement**: Fasttrack mirrorlist uses only up-to-date mirrors on users branch
