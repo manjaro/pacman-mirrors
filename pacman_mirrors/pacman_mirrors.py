@@ -188,6 +188,10 @@ class PacmanMirrors:
             self.output_country_list()
             sys.exit(0)
 
+        if args.api and args.get_branch:
+            self.api_config(get_branch=True)
+            sys.exit(0)
+
         if os.getuid() != 0:
             print(".: {} {}".format(txt.ERR_CLR, txt.MUST_BE_ROOT))
             sys.exit(1)
@@ -284,8 +288,6 @@ class PacmanMirrors:
         # First API task
         if get_branch:
             print(self.config["branch"])
-            sys.exit(0)
-            # sys.exit(self.config["branch"])
 
         # apply api configuration to internal configuration object
         # Apply prefix if present
