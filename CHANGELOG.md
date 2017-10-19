@@ -2,6 +2,7 @@
 All notable changes to this project will be documented in this file.
 
 ## [4.3.0] 2017-10-17
+- **Fix**: `-h/--help` added deprecation messages
 - **Improvement**: Api `--get-branch` removed root requirement
 - **Deprecation**: `-y` and `-g` is deprecated and use is discouraged
 - **Improvement**: General mirrorlist uses only up-to-date mirrors on users branch
