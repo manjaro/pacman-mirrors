@@ -176,6 +176,8 @@ class PacmanMirrors:
                                                  __version__,
                                                  color.ENDCOLOR))
             parser.print_help()
+            self.print_generate_deprecated()
+            self.print_sync_deprecated()
             sys.exit(0)
 
         if args.version:
@@ -736,16 +738,24 @@ class PacmanMirrors:
             self.build_common_mirror_list()
         # print deprecation messages
         if self.generate:
-            print("{}.: Argument '-g/--generate' is deprecated.\n"
-                  ".: Please use '-f/--fasttrack <number>' "
-                  "use 0 for all mirrors{}".format(color.YELLOW,
-                                                   color.ENDCOLOR))
+            self.print_generate_deprecated()
         if self.network and self.sync:
-            print("{}.: Argument '-y/--sync' is deprecated.\n"
-                  ".: Please use 'pacman -Syy'{}".format(color.YELLOW,
-                                                         color.ENDCOLOR))
+            self.print_sync_deprecated()
             # sync pacman db
             subprocess.call(["pacman", "-Syy"])
+
+    @staticmethod
+    def print_generate_deprecated():
+        print("{}.: Argument '-g/--generate' is deprecated.\n"
+              ".: Please use '-f/--fasttrack <number>' "
+              "use 0 for all mirrors{}".format(color.YELLOW,
+                                               color.ENDCOLOR))
+
+    @staticmethod
+    def print_sync_deprecated():
+        print("{}.: Argument '-y/--sync' is deprecated.\n"
+              ".: Please use 'pacman -Syy'{}".format(color.YELLOW,
+                                                     color.ENDCOLOR))
 
 
 if __name__ == "__main__":
