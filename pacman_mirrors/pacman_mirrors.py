@@ -84,7 +84,8 @@ class PacmanMirrors:
 
     def command_line_parse(self):
         """Read the arguments of the command line"""
-        parser = argparse.ArgumentParser(formatter_class=CustomHelpFormatter)
+        parser = argparse.ArgumentParser(formatter_class=CustomHelpFormatter,
+                                         add_help=False)
         # Method arguments
         methods = parser.add_argument_group("METHODS")
         methods.add_argument("-g", "--generate",
@@ -152,6 +153,8 @@ class PacmanMirrors:
                          help="API: " + txt.HLP_ARG_API_URL)
         # Misc arguments
         misc = parser.add_argument_group("MISC")
+        misc.add_argument("-h", "--help",
+                          action="store_true")
         misc.add_argument("-q", "--quiet",
                           action="store_true",
                           help=txt.HLP_ARG_QUIET)
@@ -171,13 +174,11 @@ class PacmanMirrors:
                           help=txt.HLP_ARG_SYNC)
 
         args = parser.parse_args()
-        if len(sys.argv) == 1:
+        if len(sys.argv) == 1 or args.help:
             print("{}pacman-mirrors {}{}".format(color.GREEN,
                                                  __version__,
                                                  color.ENDCOLOR))
-            parser.print_help()
-            self.print_generate_deprecated()
-            self.print_sync_deprecated()
+            self.print_help(parser)
             sys.exit(0)
 
         if args.version:
@@ -640,6 +641,26 @@ class PacmanMirrors:
         self.load_all_mirrors()
         print("{}".format("\n".join(self.mirrors.countrylist)))
 
+    def print_help(self, parser):
+        parser.print_help()
+        print("")
+        self.print_generate_deprecated()
+        self.print_sync_deprecated()
+        print("")
+
+    @staticmethod
+    def print_generate_deprecated():
+        print("{}!! Deprecated argument: '-g/--generate'.\n"
+              "{}   Please use '-f/--fasttrack <number>' "
+              "use 0 for all mirrors{}".format(color.RED, color.BLUE,
+                                               color.ENDCOLOR))
+
+    @staticmethod
+    def print_sync_deprecated():
+        print("{}!! Deprecated argument: '-y/--sync'.\n"
+              "{}   Please use 'pacman -Syy'{}".format(color.RED, color.BLUE,
+                                                       color.ENDCOLOR))
+
     def sort_mirror_countries(self):
         self.mirrors.mirrorlist = sorted(self.mirrors.mirrorlist,
                                          key=itemgetter("country"))
@@ -743,19 +764,6 @@ class PacmanMirrors:
             self.print_sync_deprecated()
             # sync pacman db
             subprocess.call(["pacman", "-Syy"])
-
-    @staticmethod
-    def print_generate_deprecated():
-        print("{}.: Argument '-g/--generate' is deprecated.\n"
-              ".: Please use '-f/--fasttrack <number>' "
-              "use 0 for all mirrors{}".format(color.YELLOW,
-                                               color.ENDCOLOR))
-
-    @staticmethod
-    def print_sync_deprecated():
-        print("{}.: Argument '-y/--sync' is deprecated.\n"
-              ".: Please use 'pacman -Syy'{}".format(color.YELLOW,
-                                                     color.ENDCOLOR))
 
 
 if __name__ == "__main__":
