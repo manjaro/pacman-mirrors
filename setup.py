@@ -23,7 +23,7 @@ def update_mirror_file():
         pass
     if countries:
         with open("share/mirrors.json", "w") as outfile:
-            json.dump(countries, outfile)
+            json.dump(countries, outfile, sort_keys=True, indent=4)
 
 
 def read(*names, **kwargs):
