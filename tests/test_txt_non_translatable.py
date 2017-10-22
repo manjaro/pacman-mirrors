@@ -32,7 +32,7 @@ class TestTextConstants(unittest.TestCase):
 
     def test_txt_reset_tip(self):
         """TEST: txt RESET_TIP"""
-        assert txt.RESET_TIP is not None
+        assert txt.MODIFY_CUSTOM is not None
 
     def test_txt_prefix_tip(self):
         """TEST: txt PREFIX_TIP"""

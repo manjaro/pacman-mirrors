@@ -62,6 +62,10 @@ class TestTextMessages(unittest.TestCase):
         """TEST: txt CUSTOM MIRROR LIST"""
         assert txt.CUSTOM_MIRROR_LIST is not None
 
+    def test_txt_msg_deprecated_argument(self):
+        """TEST: txt DEPRECATED ARGUMENT"""
+        assert txt.DEPRECATED_ARGUMENT is not None
+
     def test_txt_msg_does_not_exist(self):
         """TEST: txt DOES NOT EXIST"""
         assert txt.DOES_NOT_EXIST is not None
@@ -74,6 +78,14 @@ class TestTextMessages(unittest.TestCase):
         """TEST: txt FALLING BACK"""
         assert txt.FALLING_BACK is not None
 
+    def test_txt_msg_internet_down(self):
+        """TEST: txt INTERNET DOWN"""
+        assert txt.INTERNET_DOWN is not None
+
+    def test_txt_msg_internet_alternative(self):
+        """TEST: txt INTERNET ALTERNATIVE"""
+        assert txt.INTERNET_ALTERNATIVE is not None
+
     def test_txt_msg_is_missing(self):
         """TEST: txt IS MISSING"""
         assert txt.IS_MISSING is not None
@@ -81,6 +93,26 @@ class TestTextMessages(unittest.TestCase):
     def test_txt_msg_mirror_file(self):
         """TEST: txt MIRROR FILE"""
         assert txt.MIRROR_FILE is not None
+
+    def test_txt_msg_mirror_list_generated_on(self):
+        """TEST: txt MIRROR_LIST_GENERATED_ON"""
+        assert txt.MIRROR_LIST_GENERATED_ON is not None
+
+    def test_txt_msg_mirror_list_custom_header(self):
+        """TEST: txt MIRROR_LIST_CUSTOM_HEADER"""
+        assert txt.MIRROR_LIST_CUSTOM_HEADER is not None
+
+    def test_txt_msg_mirror_list_custom_reset(self):
+        """TEST: txt MIRROR_LIST_CUSTOM_RESET"""
+        assert txt.MIRROR_LIST_CUSTOM_RESET is not None
+
+    def test_txt_msg_mirror_list_default_header(self):
+        """TEST: txt MIRROR_LIST_DEFAULT_HEADER"""
+        assert txt.MIRROR_LIST_DEFAULT_HEADER is not None
+
+    def test_txt_msg_mirror_list_default_modify(self):
+        """TEST: txt MIRROR_LIST_DEFAULT_MODIFY"""
+        assert txt.MIRROR_LIST_DEFAULT_MODIFY is not None
 
     def test_txt_msg_mirror_list_saved(self):
         """TEST: txt MIRROR LIST SAVED"""
@@ -90,17 +122,13 @@ class TestTextMessages(unittest.TestCase):
         """TEST: txt MIRROR RANKING NA"""
         assert txt.MIRROR_RANKING_NA is not None
 
+    def test_txt_msg_modify_default(self):
+        """TEST: txt MODIFY_DEFAULT"""
+        assert txt.MODIFY_DEFAULT is not None
+
     def test_txt_msg_must_be_root(self):
         """TEST: txt MUST BE ROOT"""
         assert txt.MUST_BE_ROOT is not None
-
-    def test_txt_msg_internet_down(self):
-        """TEST: txt INTERNET DOWN"""
-        assert txt.INTERNET_DOWN is not None
-
-    def test_txt_msg_internet_alternative(self):
-        """TEST: txt INTERNET ALTERNATIVE"""
-        assert txt.INTERNET_ALTERNATIVE is not None
 
     def test_txt_msg_no_change(self):
         """TEST: txt NO CHANGE"""
@@ -114,9 +142,9 @@ class TestTextMessages(unittest.TestCase):
         """TEST: txt OPTION"""
         assert txt.OPTION is not None
 
-    def test_txt_msg_writing_mirror_list(self):
-        """TEST: txt WRITING MIRROR LIST"""
-        assert txt.WRITING_MIRROR_LIST is not None
+    def test_txt_msg_please_use(self):
+        """TEST: txt PLEASE USE"""
+        assert txt.PLEASE_USE is not None
 
     def test_txt_msg_query_mirrors(self):
         """TEST: txt QUERY MIRRORS"""
@@ -126,9 +154,13 @@ class TestTextMessages(unittest.TestCase):
         """TEST: txt RANDOMIZING SERVERS"""
         assert txt.RANDOMIZING_SERVERS is not None
 
-    def test_txt_msg_reset_custom_config(self):
-        """TEST: txt RESET CUSTOM CONFIG"""
-        assert txt.RESET_CUSTOM_CONFIG is not None
+    def test_txt_msg_remove_custom_config(self):
+        """TEST: txt REMOVE CUSTOM CONFIG"""
+        assert txt.REMOVE_CUSTOM_CONFIG is not None
+
+    def test_txt_msg_modify_custom(self):
+        """TEST: txt MODIFY_CUSTOM"""
+        assert txt.MODIFY_CUSTOM is not None
 
     def test_txt_msg_takes_time(self):
         """TEST: txt TAKES TIME"""
@@ -137,6 +169,10 @@ class TestTextMessages(unittest.TestCase):
     def test_txt_msg_unknown_country(self):
         """TEST: txt UNKNOWN COUNTRY"""
         assert txt.UNKNOWN_COUNTRY is not None
+
+    def test_txt_msg_use_zero_for_all(self):
+        """TEST: txt USE_ZERO_FOR_ALL"""
+        assert txt.USE_ZERO_FOR_ALL is not None
 
     def test_txt_msg_using_all_mirrors(self):
         """TEST: txt USING ALL MIRRORS"""
@@ -149,6 +185,10 @@ class TestTextMessages(unittest.TestCase):
     def test_txt_msg_using_default_file(self):
         """TEST: txt USING DEFAULT FILE"""
         assert txt.USING_DEFAULT_FILE is not None
+
+    def test_txt_msg_writing_mirror_list(self):
+        """TEST: txt WRITING MIRROR LIST"""
+        assert txt.WRITING_MIRROR_LIST is not None
 
     def tearDown(self):
         """Tear down"""

@@ -358,9 +358,12 @@ class PacmanMirrors:
         if self.config["protocols"]:
             worklist = mirrorfn.filter_mirror_protocols(
                 worklist, self.config["protocols"])
-        # only list mirrors which ar up-to-date for users selected branch
-        # by removin not up-to-date mirrors from the list
+        """
+        only list mirrors which ar up-to-date for users selected branch
+        by removing not up-to-date mirrors from the list
+        """
         worklist = self.filter_user_branch(worklist)
+
         if self.config["method"] == "rank":
             worklist = self.test_mirrors(worklist)
             worklist = sorted(worklist,
@@ -576,8 +579,8 @@ class PacmanMirrors:
                 configfn.modify_config(self.config,
                                        custom=True)
                 print(".: {} {} {}".format(txt.INF_CLR,
-                                           txt.RESET_CUSTOM_CONFIG,
-                                           txt.RESET_TIP))
+                                           txt.REMOVE_CUSTOM_CONFIG,
+                                           txt.MODIFY_CUSTOM))
             else:
                 print(".: {} {}".format(txt.WRN_CLR, txt.NO_SELECTION))
                 print(".: {} {}".format(txt.INF_CLR, txt.NO_CHANGE))
@@ -650,16 +653,24 @@ class PacmanMirrors:
 
     @staticmethod
     def print_generate_deprecated():
-        print("{}!! Deprecated argument: '-g/--generate'.\n"
-              "{}   Please use '-f/--fasttrack <number>' "
-              "use 0 for all mirrors{}".format(color.RED, color.BLUE,
-                                               color.ENDCOLOR))
+        print("{}!! {}: '-g/--generate'.\n"
+              "{}   {}Please use '-f/--fasttrack {}'"
+              ",{}{}".format(color.RED,
+                             txt.DEPRECATED_ARGUMENT,
+                             color.BLUE,
+                             txt.PLEASE_USE,
+                             txt.NUMBER,
+                             txt.USE_ZERO_FOR_ALL,
+                             color.ENDCOLOR))
 
     @staticmethod
     def print_sync_deprecated():
-        print("{}!! Deprecated argument: '-y/--sync'.\n"
-              "{}   Please use 'pacman -Syy'{}".format(color.RED, color.BLUE,
-                                                       color.ENDCOLOR))
+        print("{}!! {}: '-y/--sync'.\n"
+              "{}   {} 'pacman -Syy'{}".format(color.RED,
+                                               txt.DEPRECATED_ARGUMENT,
+                                               color.BLUE,
+                                               txt.PLEASE_USE,
+                                               color.ENDCOLOR))
 
     def sort_mirror_countries(self):
         self.mirrors.mirrorlist = sorted(self.mirrors.mirrorlist,
