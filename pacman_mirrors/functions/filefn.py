@@ -29,13 +29,13 @@ from pacman_mirrors.constants import txt
 from pacman_mirrors.functions import jsonfn
 
 
-def check_file(file, dir=False):
+def check_file(file, folder=False):
     """Check if file exist
     :param file:
-    :param dir:
+    :param folder:
     :returns bool if existing
     """
-    if dir:
+    if folder:
         return os.path.isdir(file)
     return os.path.isfile(file)
 
