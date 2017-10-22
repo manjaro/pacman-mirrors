@@ -654,7 +654,7 @@ class PacmanMirrors:
     @staticmethod
     def print_generate_deprecated():
         print("{}!! {}: '-g/--generate'.\n"
-              "{}   {}Please use '-f/--fasttrack {}'"
+              "{}   {} '-f/--fasttrack {}'"
               ",{}{}".format(color.RED,
                              txt.DEPRECATED_ARGUMENT,
                              color.BLUE,
