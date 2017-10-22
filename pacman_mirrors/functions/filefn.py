@@ -146,25 +146,23 @@ def write_mirrorlist_header(handle, custom=False):
     generated_timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
     handle.write("##\n")
     if custom:
-        handle.write("## Manjaro Linux {}\n".format(txt.MIRROR_LIST_CUSTOM_HEADER))
-        handle.write("## {} {}\n".format(txt.MIRROR_LIST_GENERATED_ON,
-                                         generated_timestamp))
+        handle.write("## Manjaro Linux {}\n".format(
+            txt.MIRROR_LIST_CUSTOM_HEADER))
+        handle.write("## {} {}\n".format(
+            txt.MIRROR_LIST_GENERATED_ON, generated_timestamp))
         handle.write("##\n")
-        handle.write("## {} '{}' {}\n## {} '{}'\n".format(txt.PLEASE_USE,
-                                                          txt.MODIFY_CUSTOM,
-                                                          txt.MIRROR_LIST_CUSTOM_RESET,
-                                                          txt.REMOVE_CUSTOM_CONFIG,
-                                                          txt.RESET_ALL))
+        handle.write("## {} '{}' {}\n## {} '{}'\n".format(
+            txt.PLEASE_USE, txt.MODIFY_CUSTOM, txt.MIRROR_LIST_CUSTOM_RESET,
+            txt.REMOVE_CUSTOM_CONFIG, txt.RESET_ALL))
     else:
-        handle.write("## Manjaro Linux {}\n".format(txt.MIRROR_LIST_DEFAULT_HEADER))
-        handle.write("## {} {}\n".format(txt.MIRROR_LIST_GENERATED_ON,
-                                         generated_timestamp))
+        handle.write("## Manjaro Linux {}\n".format(
+            txt.MIRROR_LIST_DEFAULT_HEADER))
+        handle.write("## {} {}\n".format(
+            txt.MIRROR_LIST_GENERATED_ON, generated_timestamp))
         handle.write("##\n")
-        handle.write("## {} '{} {}' {}\n## ({})\n".format(txt.PLEASE_USE,
-                                                          txt.MODIFY_DEFAULT,
-                                                          txt.NUMBER,
-                                                          txt.MIRROR_LIST_DEFAULT_MODIFY,
-                                                          txt.USE_ZERO_FOR_ALL))
+        handle.write("## {} '{} {}' {}\n## ({})\n".format(
+            txt.PLEASE_USE, txt.MODIFY_DEFAULT, txt.NUMBER,
+            txt.MIRROR_LIST_DEFAULT_MODIFY, txt.USE_ZERO_FOR_ALL))
     handle.write("##\n\n")
 
 
