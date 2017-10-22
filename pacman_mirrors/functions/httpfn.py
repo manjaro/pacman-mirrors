@@ -56,7 +56,7 @@ def download_mirrors(config):
         tempfile = config["work_dir"] + "/temp.file"
         jsonfn.json_dump_file(mirrorlist, tempfile)
         filecmp.clear_cache()
-        if filefn.check_file(conf.USR_DIR, dir=True):
+        if filefn.check_file(conf.USR_DIR, folder=True):
             if not filefn.check_file(config["mirror_file"]):
                 jsonfn.json_dump_file(mirrorlist, config["mirror_file"])
             elif not filecmp.cmp(tempfile, config["mirror_file"]):
@@ -148,7 +148,7 @@ def get_mirror_response(url, maxwait=2, count=1, quiet=False, ssl_verify=True):
         message = "\n.: {} {} '{}'".format(txt.ERR_CLR,
                                            txt.HTTP_EXCEPTION,
                                            url)
-    except:
+    except ssl.CertificateError:
         message = "\n.: {} {} '{}'".format(txt.ERR_CLR,
                                            ssl.CertificateError,
                                            url)
