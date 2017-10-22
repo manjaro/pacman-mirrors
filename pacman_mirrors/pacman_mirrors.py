@@ -433,7 +433,7 @@ class PacmanMirrors:
             when the desired number is reached.
             In the possible event the first mirror's
             responsetime exceeds the predefined responsetime,
-            the loop would stop execution if the check for zero is not present            
+            the loop would stop execution if the check for zero is not present
             """
             if counter is not 0 and counter == number:
                 break
@@ -490,12 +490,12 @@ class PacmanMirrors:
             "resp_time": "m.sss",
             "last_sync": "HH:MM",
             "url": "http://server/repo/"
-        }        
+        }
         Therefor we have to create a list in the old format,
         thus avoiding rewrite of the ui and related functions.
         We subseqently need to translate the result into:
         a. a mirrorfile in the new json format,
-        b. a mirrorlist in pacman format.        
+        b. a mirrorlist in pacman format.
         """
         for mirror in worklist:
             # create an entry for all protocols related to a mirror
