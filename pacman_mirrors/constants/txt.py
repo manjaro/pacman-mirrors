@@ -26,17 +26,27 @@ _ = i18n.language.gettext
 # TRANSLATABLE STRINGS
 
 # message type
-ERROR = _("Error")
-INFO = _("Info")
-WARN = _("Warning")
+ERROR = _("ERROR")
+INFO = _("INFO")
+WARN = _("WARNING")
 # error types
-TIMEOUT = _("Timeout")
 HTTP_EXCEPTION = _("HTTPException")
+TIMEOUT = _("TIMEOUT")
 # special words
-PATH = _("PATH")
+API = _("API")
+BRANCH = _("BRANCH")
+COUNTRY = _("COUNTRY")
 FILE = _("FILE")
-SECONDS = _("SECONDS")
+METHOD = _("METHOD")
+METHODS = _("METHODS")
+MISC = _("MISC")
 NUMBER = _("NUMBER")
+PATH = _("PATH")
+PREFIX = _("PREFIX")
+PROTO = _("PROTO")
+SECONDS = _("SECONDS")
+URL = _("URL")
+USAGE = _("USAGE")
 # help messages
 HLP_ARG_API_GET_BRANCH = _("Return branch from configuration")
 HLP_ARG_API_PREFIX = _("Set prefix to")

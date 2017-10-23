@@ -84,10 +84,21 @@ class PacmanMirrors:
 
     def command_line_parse(self):
         """Read the arguments of the command line"""
+        args_summary = "[-f {} | [[-i [-d]]\n" \
+                       "\t\t[-c {}, [{}] ... | --geoip]]]\n" \
+                       "\t\t[-m {}] [-a [-p {}] [-R] [-G | -S {}]\n" \
+                       "\t\t[-P {} [{}] ...] [-U {}]] [-b {}]\n" \
+                       "\t\t[-t {}] [-q] [-v] [-n]".format(
+                            txt.NUMBER, txt.COUNTRY, txt.COUNTRY, txt.METHOD,
+                            txt.PREFIX, txt.BRANCH, txt.PROTO, txt.PROTO, txt.URL,
+                            txt.BRANCH, txt.SECONDS)
+
+        nusage = "\rVersion {}\n{}:\n pacman-mirrors".format(__version__, txt.USAGE)
+        usage = "{} {}".format(nusage, args_summary)
         parser = argparse.ArgumentParser(formatter_class=CustomHelpFormatter,
-                                         add_help=False)
+                                         add_help=False, usage=usage)
         # Method arguments
-        methods = parser.add_argument_group("METHODS")
+        methods = parser.add_argument_group(txt.METHODS)
         methods.add_argument("-g", "--generate",
                              action="store_true",
                              help=txt.HLP_ARG_GENERATE)
@@ -106,7 +117,7 @@ class PacmanMirrors:
                              type=str,
                              choices=["rank", "random"],
                              help=txt.HLP_ARG_METHOD)
-        country = parser.add_argument_group("COUNTRY")
+        country = parser.add_argument_group(txt.COUNTRY)
         country.add_argument("-c", "--country",
                              type=str,
                              nargs="+",
@@ -118,7 +129,7 @@ class PacmanMirrors:
                              action="store_true",
                              help=txt.HLP_ARG_LIST)
         # Branch arguments
-        branch = parser.add_argument_group("BRANCH")
+        branch = parser.add_argument_group(txt.BRANCH)
         only_one = branch.add_mutually_exclusive_group()
         only_one.add_argument("-b", "--branch",
                               type=str,
@@ -126,33 +137,38 @@ class PacmanMirrors:
                               help=txt.HLP_ARG_BRANCH)
         only_one.add_argument("-G", "--get-branch",
                               action="store_true",
-                              help="API: " + txt.HLP_ARG_API_GET_BRANCH)
+                              help="{}: {}".format(
+                                  txt.API, txt.HLP_ARG_API_GET_BRANCH))
         only_one.add_argument("-S", "--set-branch",
                               choices=["stable", "testing", "unstable"],
-                              help="API: " + txt.HLP_ARG_API_SET_BRANCH)
+                              help="{}: {}".format(
+                                  txt.API, txt.HLP_ARG_API_SET_BRANCH))
         # Api arguments
-        api = parser.add_argument_group("API")
+        api = parser.add_argument_group(txt.API)
         api.add_argument("-a", "--api",
                          action="store_true",
-                         help="[-p PREFIX][-R][-S|-G BRANCH][-P PROTO "
-                              "[PROTO ...]]")
+                         help="[-p {}][-R][-S|-G {}][-P {} [{} ...]]".format(
+                             txt.PREFIX, txt.BRANCH, txt.PROTO, txt.PROTO))
         api.add_argument("-p", "--prefix",
                          type=str,
-                         help="API: {} {}".format(txt.HLP_ARG_API_PREFIX,
-                                                  txt.PREFIX_TIP))
+                         help="{}: {} {}".format(
+                             txt.API, txt.HLP_ARG_API_PREFIX, txt.PREFIX_TIP))
         api.add_argument("-P", "--proto", "--protocols",
                          choices=["all", "http", "https", "ftp", "ftps"],
                          type=str,
                          nargs="+",
-                         help="API: " + txt.HLP_ARG_API_PROTOCOLS)
+                         help="{}: {}".format(
+                             txt.API, txt.HLP_ARG_API_PROTOCOLS))
         api.add_argument("-R", "--re-branch",
                          action="store_true",
-                         help="API: " + txt.HLP_ARG_API_RE_BRANCH)
+                         help="{}: {}".format(
+                             txt.API, txt.HLP_ARG_API_RE_BRANCH))
         api.add_argument("-U", "--url",
                          type=str,
-                         help="API: " + txt.HLP_ARG_API_URL)
+                         help="{}: {}".format(
+                             txt.API, txt.HLP_ARG_API_URL))
         # Misc arguments
-        misc = parser.add_argument_group("MISC")
+        misc = parser.add_argument_group(txt.MISC)
         misc.add_argument("-h", "--help",
                           action="store_true")
         misc.add_argument("-q", "--quiet",
@@ -175,16 +191,11 @@ class PacmanMirrors:
 
         args = parser.parse_args()
         if len(sys.argv) == 1 or args.help:
-            print("{}pacman-mirrors {}{}".format(color.GREEN,
-                                                 __version__,
-                                                 color.ENDCOLOR))
             self.print_help(parser)
             sys.exit(0)
 
         if args.version:
-            print("{}pacman-mirrors {}{}".format(color.GREEN,
-                                                 __version__,
-                                                 color.ENDCOLOR))
+            print("Version {}".format(__version__))
             sys.exit(0)
 
         if args.country_list:
@@ -196,7 +207,8 @@ class PacmanMirrors:
             sys.exit(0)
 
         if os.getuid() != 0:
-            print(".: {} {}".format(txt.ERR_CLR, txt.MUST_BE_ROOT))
+            print(".: {} {}".format(
+                txt.ERR_CLR, txt.MUST_BE_ROOT))
             sys.exit(1)
 
         if args.generate:
