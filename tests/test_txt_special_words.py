@@ -75,7 +75,6 @@ class TestTextSpecialWords(unittest.TestCase):
         """TEST: txt SPECIAL WORD URL"""
         assert txt.URL is not None
 
-
     def tearDown(self):
         """Tear down"""
         pass
