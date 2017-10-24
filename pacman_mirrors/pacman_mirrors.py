@@ -84,19 +84,29 @@ class PacmanMirrors:
 
     def command_line_parse(self):
         """Read the arguments of the command line"""
-        args_summary = "[-f {} | [[-i [-d]]\n" \
-                       "\t\t[-c {}, [{}] ... | --geoip]]]\n" \
-                       "\t\t[-m {}] [-a [-p {}] [-R] [-G | -S {}]\n" \
-                       "\t\t[-P {} [{}] ...] [-U {}]] [-b {}]\n" \
-                       "\t\t[-t {}] [-q] [-v] [-n]".format(
-                            txt.NUMBER, txt.COUNTRY, txt.COUNTRY, txt.METHOD,
-                            txt.PREFIX, txt.BRANCH, txt.PROTO, txt.PROTO, txt.URL,
-                            txt.BRANCH, txt.SECONDS)
+
+        args_summary = "[-h] [-f {}] [-i [-d]] [-m {}]\n" \
+                       "\t\t[-c {} [{}...]] [--geoip] [-l]\n" \
+                       "\t\t[-b {} | -G | -S {}] [-a] [-p {}]\n" \
+                       "\t\t[-P {} [{}...]] [-R] [-U {}]\n" \
+                       "\t\t[-q] [-t {}] [-v] [-n]".format(txt.NUMBER,
+                                                           txt.METHOD,
+                                                           txt.COUNTRY,
+                                                           txt.COUNTRY,
+                                                           txt.BRANCH,
+                                                           txt.BRANCH,
+                                                           txt.PREFIX,
+                                                           txt.PROTO,
+                                                           txt.PROTO,
+                                                           txt.URL,
+                                                           txt.SECONDS)
 
         nusage = "\rVersion {}\n{}:\n pacman-mirrors".format(__version__, txt.USAGE)
         usage = "{} {}".format(nusage, args_summary)
+
         parser = argparse.ArgumentParser(formatter_class=CustomHelpFormatter,
                                          add_help=False, usage=usage)
+
         # Method arguments
         methods = parser.add_argument_group(txt.METHODS)
         methods.add_argument("-g", "--generate",
@@ -190,6 +200,7 @@ class PacmanMirrors:
                           help=txt.HLP_ARG_SYNC)
 
         args = parser.parse_args()
+        # if len(sys.argv) == 1 or args.help:
         if len(sys.argv) == 1 or args.help:
             self.print_help(parser)
             sys.exit(0)
