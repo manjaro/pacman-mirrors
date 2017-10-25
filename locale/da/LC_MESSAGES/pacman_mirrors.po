@@ -6,269 +6,386 @@
 # Translators:
 # Frede H. <echo ZmhAbWFuamFyby5vcmcK | base64 -d>, 2017
 # scootergrisen, 2017
+# scootergrisen, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: manjaro-pacman-mirrors\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2017-02-20 15:44+0100\n"
-"PO-Revision-Date: 2017-03-27 14:54+0000\n"
-"Last-Translator: Frede H. <echo ZmhAbWFuamFyby5vcmcK | base64 -d>\n"
+"POT-Creation-Date: 2017-10-23 20:55+0200\n"
+"PO-Revision-Date: 2017-10-25 07:54+0000\n"
+"Last-Translator: philm <philm@manjaro.org>\n"
 "Language-Team: Danish (http://www.transifex.com/manjarolinux/manjaro-pacman-mirrors/language/da/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.3.4\n"
+"Generated-By: Babel 2.5.1\n"
 "Language: da\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: pacman_mirrors/txt.py:31
-msgid "Error"
-msgstr "Fejl"
+#: pacman_mirrors/constants/txt.py:29
+msgid "ERROR"
+msgstr "FEJL"
 
-#: pacman_mirrors/txt.py:32
-msgid "Info"
-msgstr "Info"
+#: pacman_mirrors/constants/txt.py:30
+msgid "INFO"
+msgstr "INFO"
 
-#: pacman_mirrors/txt.py:33
-msgid "Warning"
-msgstr "Advarsel"
+#: pacman_mirrors/constants/txt.py:31
+msgid "WARNING"
+msgstr "ADVARSEL"
 
-#: pacman_mirrors/txt.py:35
-msgid "Timeout"
-msgstr "Tidsgrænse"
-
-#: pacman_mirrors/txt.py:36
+#: pacman_mirrors/constants/txt.py:33
 msgid "HTTPException"
-msgstr "HTTP undtagelse"
+msgstr "HTTP fejl"
 
-#: pacman_mirrors/txt.py:38
-msgid "PATH"
-msgstr "STI"
+#: pacman_mirrors/constants/txt.py:34
+msgid "TIMEOUT"
+msgstr "TIDSUDLØB"
 
-#: pacman_mirrors/txt.py:39
+#: pacman_mirrors/constants/txt.py:36
+msgid "API"
+msgstr "API"
+
+#: pacman_mirrors/constants/txt.py:37
+msgid "BRANCH"
+msgstr "PakkeGruppe"
+
+#: pacman_mirrors/constants/txt.py:38
+msgid "COUNTRY"
+msgstr "LAND"
+
+#: pacman_mirrors/constants/txt.py:39
 msgid "FILE"
 msgstr "FIL"
 
-#: pacman_mirrors/txt.py:40
+#: pacman_mirrors/constants/txt.py:40
+msgid "METHOD"
+msgstr "METODE"
+
+#: pacman_mirrors/constants/txt.py:41
+msgid "METHODS"
+msgstr "METODER"
+
+#: pacman_mirrors/constants/txt.py:42
+msgid "MISC"
+msgstr "DIVERSE"
+
+#: pacman_mirrors/constants/txt.py:43
+msgid "NUMBER"
+msgstr "TAL"
+
+#: pacman_mirrors/constants/txt.py:44
+msgid "PATH"
+msgstr "STI"
+
+#: pacman_mirrors/constants/txt.py:45
+msgid "PREFIX"
+msgstr "PRÆFIKS"
+
+#: pacman_mirrors/constants/txt.py:46
+msgid "PROTO"
+msgstr "PROTO"
+
+#: pacman_mirrors/constants/txt.py:47
 msgid "SECONDS"
 msgstr "SEKUNDER"
 
-#: pacman_mirrors/txt.py:41
-msgid "DIGIT"
-msgstr "TAL"
-
-#: pacman_mirrors/txt.py:43
-msgid "Branch name"
-msgstr "Variant"
-
-#: pacman_mirrors/txt.py:44
-msgid "Comma separated list of countries, from which mirrors will be used"
-msgstr "En liste over lande, adskilt med komma, hvorfra servere vil blive brugt"
-
-#: pacman_mirrors/txt.py:46
-msgid "Output file"
-msgstr "Fil der skrives til"
-
-#: pacman_mirrors/txt.py:47
-msgid "Generate mirrorlist"
-msgstr "Opret serverliste"
-
-#: pacman_mirrors/txt.py:48
-msgid "Get current country using geolocation. Ignored if"
-msgstr "Brug geografisk placering for at finde servere. Ignoreres hvis"
-
-#: pacman_mirrors/txt.py:49
-msgid "is supplied"
-msgstr "er angivet"
-
-#: pacman_mirrors/txt.py:50
-msgid "Generate custom mirrorlist"
-msgstr "Opret brugerdefineret serverliste"
-
-#: pacman_mirrors/txt.py:51
-msgid "Generation method"
-msgstr "Oprettelsesmetode"
-
-#: pacman_mirrors/txt.py:52
-msgid "Don't generate mirrorlist if"
-msgstr "Generér ikke serverliste hvis"
-
-#: pacman_mirrors/txt.py:53
-msgid "in the configuration file"
-msgstr "findes i konfigurationsfilen"
-
-#: pacman_mirrors/txt.py:54
-msgid "Mirrors list path"
-msgstr "Sted hvor serverlisten oprettes"
-
-#: pacman_mirrors/txt.py:55
-msgid "Quiet mode - less verbose output"
-msgstr "Stilletilstand - færre informationer"
-
-#: pacman_mirrors/txt.py:56
-msgid "Maximum waiting time for server response"
-msgstr "Maksimal ventetid for serversvar"
-
-#: pacman_mirrors/txt.py:57
-msgid "Print the pacman-mirrors version"
-msgstr "Udskriv version"
-
-#: pacman_mirrors/txt.py:58
-msgid "A quick mirrorlist. Overrides -cim --geoip"
-msgstr "En hurtig serverliste. Tilsidesætter -cim --geoip"
-
-#: pacman_mirrors/txt.py:60
-msgid "Available countries are"
-msgstr "Følgende lande er til rådighed"
-
-#: pacman_mirrors/txt.py:61
-msgid "Could not download from"
-msgstr "Kunne ikke dowloade fra"
-
-#: pacman_mirrors/txt.py:62
-msgid "Cannot read file"
-msgstr "Kan ikke læse filen"
-
-#: pacman_mirrors/txt.py:63
-msgid "Cannot write file"
-msgstr "Kan ikke skrive filen"
-
-#: pacman_mirrors/txt.py:64
-msgid "Converting custom mirror file to new format"
-msgstr "Konverterer din personlige serverliste til nyt format"
-
-#: pacman_mirrors/txt.py:65
-msgid "Custom mirror file"
-msgstr "Personlig serverliste"
-
-#: pacman_mirrors/txt.py:66
-msgid "Custom mirror file saved"
-msgstr "Personlig serverliste gemt"
-
-#: pacman_mirrors/txt.py:67
-msgid "User generated mirror list"
-msgstr "Personlig serverliste"
-
-#: pacman_mirrors/txt.py:68
-msgid "doesn't exist."
-msgstr "findes ikke."
-
-#: pacman_mirrors/txt.py:69
-msgid "Downloading mirrors from repo.manjaro.org"
-msgstr "Henter nyeste serverliste fra repo.manjaro.org"
-
-#: pacman_mirrors/txt.py:70
-msgid "Falling back to"
-msgstr "Bruger reserveliste"
-
-#: pacman_mirrors/txt.py:71
-msgid "is missing"
-msgstr "mangler"
-
-#: pacman_mirrors/txt.py:72
-msgid "The mirror file"
-msgstr "Serverlisten"
-
-#: pacman_mirrors/txt.py:73
-msgid "Mirrorlist generated and saved to"
-msgstr "Serverliste oprettet og gemt som"
-
-#: pacman_mirrors/txt.py:74
-msgid "Must have root privileges"
-msgstr "Mangler administrator adgang"
-
-#: pacman_mirrors/txt.py:75
-msgid "The mirror list is not changed"
-msgstr "Serverlisten er uændret"
-
-#: pacman_mirrors/txt.py:76
-msgid "No mirrors in selection"
-msgstr "Der er ikke valgt nogen servere"
-
-#: pacman_mirrors/txt.py:77
-msgid "Option"
-msgstr "Tilvalg"
-
-#: pacman_mirrors/txt.py:78
-msgid "Writing mirror list"
-msgstr "Skriver serverliste"
-
-#: pacman_mirrors/txt.py:79
-msgid "Querying mirrors"
-msgstr "Forespørger servere"
-
-#: pacman_mirrors/txt.py:80
-msgid "Randomizing mirror list"
-msgstr "Blander serverliste"
-
-#: pacman_mirrors/txt.py:81
-msgid "To reset custom config run `pacman-mirrors -c all`"
-msgstr "For nulstille personlig serverliste bruges `pacman-mirrors -c all`"
-
-#: pacman_mirrors/txt.py:82
-msgid "This may take some time"
-msgstr "Dette kan tage lidt tid"
-
-#: pacman_mirrors/txt.py:83
-msgid "unknown country"
-msgstr "ukendt land"
-
-#: pacman_mirrors/txt.py:84
-msgid "Using all mirrors"
-msgstr "Anvender alle servere"
-
-#: pacman_mirrors/txt.py:85
-msgid "Using custom mirror file"
-msgstr "Anvender personlig serverliste"
-
-#: pacman_mirrors/txt.py:86
-msgid "Using default mirror file"
-msgstr "Anvender standard serverliste"
-
-#: pacman_mirrors/txt.py:88
-msgid "Manjaro mirrors by response time"
-msgstr "Manjaro-servere efter svartider"
-
-#: pacman_mirrors/txt.py:89
-msgid "Manjaro mirrors in random order"
-msgstr "Manjaro-servere i tilfældig rækkefølge"
-
-#: pacman_mirrors/txt.py:90
-msgid "Check mirrors for your personal list"
-msgstr "Markér servere til din personlige liste"
-
-#: pacman_mirrors/txt.py:91
-msgid "Use"
-msgstr "Anvend"
-
-#: pacman_mirrors/txt.py:92
-msgid "Country"
-msgstr "Land"
-
-#: pacman_mirrors/txt.py:93
-msgid "Resp"
-msgstr "Svar"
-
-#: pacman_mirrors/txt.py:94
-msgid "Sync"
-msgstr "Opdateret"
-
-#: pacman_mirrors/txt.py:95
+#: pacman_mirrors/constants/txt.py:48 pacman_mirrors/constants/txt.py:125
 msgid "URL"
 msgstr "URL"
 
-#: pacman_mirrors/txt.py:96
+#: pacman_mirrors/constants/txt.py:49
+msgid "USAGE"
+msgstr "ANVENDELSE"
+
+#: pacman_mirrors/constants/txt.py:51
+msgid "Return branch from configuration"
+msgstr "Udskriv PakkeGruppe fra konfigurationsfilen"
+
+#: pacman_mirrors/constants/txt.py:52
+msgid "Set prefix to"
+msgstr "Sæt prefix til"
+
+#: pacman_mirrors/constants/txt.py:53
+msgid "Replace protocols in configuration"
+msgstr "Erstat protokoller i konfigurationsfilen"
+
+#: pacman_mirrors/constants/txt.py:54
+msgid "Replace branch in mirrorlist"
+msgstr "Erstat PakkeGruppe i server listen"
+
+#: pacman_mirrors/constants/txt.py:55
+msgid "Replace branch in configuration"
+msgstr "Erstat PakkeGruppe i konfigurationsfilen"
+
+#: pacman_mirrors/constants/txt.py:56
+msgid "Replace mirror url in mirrorlist"
+msgstr "Erstat server url i serverlisten"
+
+#: pacman_mirrors/constants/txt.py:57
+msgid "Branch name"
+msgstr "PakkeGruppe"
+
+#: pacman_mirrors/constants/txt.py:58
+msgid "Comma separated list of countries, from which mirrors will be used"
+msgstr "En liste over lande, adskilt med komma, hvorfra servere vil blive brugt"
+
+#: pacman_mirrors/constants/txt.py:60
+msgid "Load default mirror file"
+msgstr "Indlæs standard server information"
+
+#: pacman_mirrors/constants/txt.py:61
+msgid "Generate mirrorlist with a number of up-to-date mirrors. Ignores:"
+msgstr "Opretter serverliste med opdaterede servere for din PakkeGruppe. Ignorerer:"
+
+#: pacman_mirrors/constants/txt.py:63
+msgid "Generate mirrorlist with defaults"
+msgstr "Opretter standard serverliste"
+
+#: pacman_mirrors/constants/txt.py:64
+msgid "Get current country using geolocation"
+msgstr "Brug geolokation for at bruge server i dit land (om muligt)"
+
+#: pacman_mirrors/constants/txt.py:65
+msgid "List all available countries"
+msgstr "Udskriv alle lande med servere"
+
+#: pacman_mirrors/constants/txt.py:66
+msgid "Generate custom mirrorlist"
+msgstr "Opret personlig serverliste"
+
+#: pacman_mirrors/constants/txt.py:67
+msgid "Generation method"
+msgstr "Oprettelsesmetode"
+
+#: pacman_mirrors/constants/txt.py:68
+msgid "Use to skip generation of mirrorlist"
+msgstr "Bruges for at holde serverlisten uændret"
+
+#: pacman_mirrors/constants/txt.py:69
+msgid "Quiet mode - less verbose output"
+msgstr "Stilletilstand - færre informationer"
+
+#: pacman_mirrors/constants/txt.py:70
+msgid "Syncronize pacman databases"
+msgstr "Synkroniser pacman databaser (pacman -Syy)"
+
+#: pacman_mirrors/constants/txt.py:71
+msgid "Maximum waiting time for server response"
+msgstr "Maksimal ventetid for serversvar"
+
+#: pacman_mirrors/constants/txt.py:72
+msgid "Print the pacman-mirrors version"
+msgstr "Udskriv versionsnummer"
+
+#: pacman_mirrors/constants/txt.py:74
+msgid "Branch in config is changed"
+msgstr "PakkeGruppe er ændret i konfigurationsfilen"
+
+#: pacman_mirrors/constants/txt.py:75
+msgid "Protocols in config is changed"
+msgstr "Protokoller er ændret i konfigurationsfilen"
+
+#: pacman_mirrors/constants/txt.py:76
+msgid "Re-branch requires a branch to work with"
+msgstr "For ændring af PakkeGruppe kræves et et gruppenavn"
+
+#: pacman_mirrors/constants/txt.py:77
+msgid "Branch in mirror list is changed"
+msgstr "PakkeGruppe er ændret i serverlisten"
+
+#: pacman_mirrors/constants/txt.py:78
+msgid "Available countries are"
+msgstr "Følgende lande er til rådighed"
+
+#: pacman_mirrors/constants/txt.py:79
+msgid "Could not download from"
+msgstr "Kan ikke downloade fra"
+
+#: pacman_mirrors/constants/txt.py:80
+msgid "Cannot read file"
+msgstr "Kan ikke læse filen"
+
+#: pacman_mirrors/constants/txt.py:81
+msgid "Cannot write file"
+msgstr "Kan ikke skrive filen"
+
+#: pacman_mirrors/constants/txt.py:82
+msgid "Converting custom mirror file to new format"
+msgstr "Konverterer personlig konfiguration til nyt format"
+
+#: pacman_mirrors/constants/txt.py:83
+msgid "Custom mirror file"
+msgstr "Personlig serverinformation"
+
+#: pacman_mirrors/constants/txt.py:84
+msgid "Custom mirror file saved"
+msgstr "Personlige serverinformation er gemt"
+
+#: pacman_mirrors/constants/txt.py:85
+msgid "User generated mirror list"
+msgstr "Brugertilpasset serverliste"
+
+#: pacman_mirrors/constants/txt.py:86
+msgid "Deprecated argument"
+msgstr "Forældet tilvalg"
+
+#: pacman_mirrors/constants/txt.py:87
+msgid "doesn't exist."
+msgstr "findes ikke."
+
+#: pacman_mirrors/constants/txt.py:88
+msgid "Downloading mirrors from"
+msgstr "Downloader server informationer fra"
+
+#: pacman_mirrors/constants/txt.py:89
+msgid "Falling back to"
+msgstr "Bruger original server informationsfil"
+
+#: pacman_mirrors/constants/txt.py:90
+msgid "Internet connection appears to be down"
+msgstr "Det synes som din internetforbindelse er nede"
+
+#: pacman_mirrors/constants/txt.py:91
+msgid "Mirror list is generated using random method"
+msgstr "Serverlisten skrives i tilfældig orden"
+
+#: pacman_mirrors/constants/txt.py:92
+msgid "is missing"
+msgstr "mangler"
+
+#: pacman_mirrors/constants/txt.py:93
+msgid "The mirror file"
+msgstr "Server informationsfil"
+
+#: pacman_mirrors/constants/txt.py:94
+msgid "Mirror list generated and saved to"
+msgstr "Serverlisten er dannet og gemt som"
+
+#: pacman_mirrors/constants/txt.py:95
+msgid "Generated on"
+msgstr "Oprettet den"
+
+#: pacman_mirrors/constants/txt.py:96
+msgid "custom mirrorlist"
+msgstr "personlig serverliste"
+
+#: pacman_mirrors/constants/txt.py:97
+msgid "to reset custom mirrorlist"
+msgstr "for at nulstille personlig server opsætning"
+
+#: pacman_mirrors/constants/txt.py:98
+msgid "default mirrorlist"
+msgstr "standard serverliste"
+
+#: pacman_mirrors/constants/txt.py:99
+msgid "to modify mirrorlist"
+msgstr "for at tilpasse serverliste"
+
+#: pacman_mirrors/constants/txt.py:100
+msgid "Mirror ranking is not available"
+msgstr "Servertest er ikke til rådighed"
+
+#: pacman_mirrors/constants/txt.py:101
+msgid "Must have root privileges"
+msgstr "Mangler administrator adgang"
+
+#: pacman_mirrors/constants/txt.py:102
+msgid "The mirrors has not changed"
+msgstr "Serverne er IKKE ændret"
+
+#: pacman_mirrors/constants/txt.py:103
+msgid "No mirrors in selection"
+msgstr "Der er ikke valgt nogen servere"
+
+#: pacman_mirrors/constants/txt.py:104
+msgid "Option"
+msgstr "Valgmulighed"
+
+#: pacman_mirrors/constants/txt.py:105
+msgid "Please use"
+msgstr "Brug venligst"
+
+#: pacman_mirrors/constants/txt.py:106
+msgid "Querying mirrors"
+msgstr "Tester servere"
+
+#: pacman_mirrors/constants/txt.py:107
+msgid "Randomizing mirror list"
+msgstr "Ryster posen og skriver i tilfældig orden"
+
+#: pacman_mirrors/constants/txt.py:108
+msgid "To remove custom config run "
+msgstr "For at fjerne personlig opsætning, brug "
+
+#: pacman_mirrors/constants/txt.py:109
+msgid "This may take some time"
+msgstr "Dette kan tage lidt tid"
+
+#: pacman_mirrors/constants/txt.py:110
+msgid "unknown country"
+msgstr "ukendt land"
+
+#: pacman_mirrors/constants/txt.py:111
+msgid "Use 0 for all mirrors"
+msgstr "Brug 0 (nul) for alle servere"
+
+#: pacman_mirrors/constants/txt.py:112
+msgid "Using all mirrors"
+msgstr "Anvender alle servere"
+
+#: pacman_mirrors/constants/txt.py:113
+msgid "Using custom mirror file"
+msgstr "Anvender personlig server information"
+
+#: pacman_mirrors/constants/txt.py:114
+msgid "Using default mirror file"
+msgstr "Anvender standard server information"
+
+#: pacman_mirrors/constants/txt.py:115
+msgid "Writing mirror list"
+msgstr "Skriver serverliste"
+
+#: pacman_mirrors/constants/txt.py:118
+msgid "Manjaro mirrors by response time"
+msgstr "Manjaro-servere efter svartider"
+
+#: pacman_mirrors/constants/txt.py:119
+msgid "Manjaro mirrors in random order"
+msgstr "Manjaro-servere i tilfældig orden"
+
+#: pacman_mirrors/constants/txt.py:120
+msgid "Check mirrors for your personal list"
+msgstr "Markér servere til din personlige server information"
+
+#: pacman_mirrors/constants/txt.py:121
+msgid "Use"
+msgstr "Anvend"
+
+#: pacman_mirrors/constants/txt.py:122
+msgid "Country"
+msgstr "Land"
+
+#: pacman_mirrors/constants/txt.py:123
+msgid "Resp"
+msgstr "Svar"
+
+#: pacman_mirrors/constants/txt.py:124
+msgid "Sync"
+msgstr "Opdateret"
+
+#: pacman_mirrors/constants/txt.py:126
 msgid "Cancel"
 msgstr "Annuller"
 
-#: pacman_mirrors/txt.py:97
+#: pacman_mirrors/constants/txt.py:127
 msgid "OK"
 msgstr "OK"
 
-#: pacman_mirrors/txt.py:98
+#: pacman_mirrors/constants/txt.py:128
 msgid "Confirm selections"
 msgstr "Bekræft valgene"
 
-#: pacman_mirrors/txt.py:99
+#: pacman_mirrors/constants/txt.py:129
 msgid "I want to use these mirrors"
 msgstr "Jeg vil bruge disse servere"
