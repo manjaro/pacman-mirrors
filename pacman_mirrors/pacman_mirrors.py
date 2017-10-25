@@ -159,7 +159,7 @@ class PacmanMirrors:
         api = parser.add_argument_group(txt.API)
         api.add_argument("-a", "--api",
                          action="store_true",
-                         metavar=txt.API,
+                         # metavar=txt.API,
                          help="[-p {}][-R][-S|-G {}][-P {} [{} ...]]".format(
                              txt.PREFIX, txt.BRANCH, txt.PROTO, txt.PROTO))
         api.add_argument("-p", "--prefix",
