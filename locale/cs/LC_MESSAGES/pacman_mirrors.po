@@ -10,265 +10,381 @@ msgid ""
 msgstr ""
 "Project-Id-Version: manjaro-pacman-mirrors\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2017-02-20 15:44+0100\n"
-"PO-Revision-Date: 2017-08-19 11:13+0000\n"
-"Last-Translator: pavelrz\n"
+"POT-Creation-Date: 2017-10-23 20:55+0200\n"
+"PO-Revision-Date: 2017-10-25 07:54+0000\n"
+"Last-Translator: philm <philm@manjaro.org>\n"
 "Language-Team: Czech (http://www.transifex.com/manjarolinux/manjaro-pacman-mirrors/language/cs/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.3.4\n"
+"Generated-By: Babel 2.5.1\n"
 "Language: cs\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
-#: pacman_mirrors/txt.py:31
-msgid "Error"
-msgstr "Chyba"
+#: pacman_mirrors/constants/txt.py:29
+msgid "ERROR"
+msgstr ""
 
-#: pacman_mirrors/txt.py:32
-msgid "Info"
-msgstr "Informace"
+#: pacman_mirrors/constants/txt.py:30
+msgid "INFO"
+msgstr ""
 
-#: pacman_mirrors/txt.py:33
-msgid "Warning"
-msgstr "Varování"
+#: pacman_mirrors/constants/txt.py:31
+msgid "WARNING"
+msgstr ""
 
-#: pacman_mirrors/txt.py:35
-msgid "Timeout"
-msgstr "Časový limit"
-
-#: pacman_mirrors/txt.py:36
+#: pacman_mirrors/constants/txt.py:33
 msgid "HTTPException"
 msgstr "HTTPException"
 
-#: pacman_mirrors/txt.py:38
-msgid "PATH"
-msgstr "CESTA"
+#: pacman_mirrors/constants/txt.py:34
+msgid "TIMEOUT"
+msgstr ""
 
-#: pacman_mirrors/txt.py:39
+#: pacman_mirrors/constants/txt.py:36
+msgid "API"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:37
+msgid "BRANCH"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:38
+msgid "COUNTRY"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:39
 msgid "FILE"
 msgstr "SOUBOR"
 
-#: pacman_mirrors/txt.py:40
+#: pacman_mirrors/constants/txt.py:40
+msgid "METHOD"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:41
+msgid "METHODS"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:42
+msgid "MISC"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:43
+msgid "NUMBER"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:44
+msgid "PATH"
+msgstr "CESTA"
+
+#: pacman_mirrors/constants/txt.py:45
+msgid "PREFIX"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:46
+msgid "PROTO"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:47
 msgid "SECONDS"
 msgstr "SEKUND"
 
-#: pacman_mirrors/txt.py:41
-msgid "DIGIT"
-msgstr "ČÍSLICE"
-
-#: pacman_mirrors/txt.py:43
-msgid "Branch name"
-msgstr "Větev"
-
-#: pacman_mirrors/txt.py:44
-msgid "Comma separated list of countries, from which mirrors will be used"
-msgstr "čárkou oddělený seznam zemí, ze kterých budou použita zrcadla"
-
-#: pacman_mirrors/txt.py:46
-msgid "Output file"
-msgstr "Výstupní soubor"
-
-#: pacman_mirrors/txt.py:47
-msgid "Generate mirrorlist"
-msgstr "Vytvořit seznam zrcadel"
-
-#: pacman_mirrors/txt.py:48
-msgid "Get current country using geolocation. Ignored if"
-msgstr "Zjistit zemi pomocí geolokace. Ignorováno pokud"
-
-#: pacman_mirrors/txt.py:49
-msgid "is supplied"
-msgstr "je poskytnuto."
-
-#: pacman_mirrors/txt.py:50
-msgid "Generate custom mirrorlist"
-msgstr "Vytvořit vlastní seznam zrcadel"
-
-#: pacman_mirrors/txt.py:51
-msgid "Generation method"
-msgstr "Způsob vytvoření"
-
-#: pacman_mirrors/txt.py:52
-msgid "Don't generate mirrorlist if"
-msgstr "Nevytvářet seznam zrcadel pokud"
-
-#: pacman_mirrors/txt.py:53
-msgid "in the configuration file"
-msgstr "v konfiguračním souboru"
-
-#: pacman_mirrors/txt.py:54
-msgid "Mirrors list path"
-msgstr "Cesta k seznamu zrcadel"
-
-#: pacman_mirrors/txt.py:55
-msgid "Quiet mode - less verbose output"
-msgstr "Tichý režim - méně podrobný výstup"
-
-#: pacman_mirrors/txt.py:56
-msgid "Maximum waiting time for server response"
-msgstr "Nejvyšší čas čekání na odpověď serveru"
-
-#: pacman_mirrors/txt.py:57
-msgid "Print the pacman-mirrors version"
-msgstr "Zobrazit verzi pacman-mirrors"
-
-#: pacman_mirrors/txt.py:58
-msgid "A quick mirrorlist. Overrides -cim --geoip"
-msgstr "Rychlý seznam zrcadel. Přepíše -cim --geoip"
-
-#: pacman_mirrors/txt.py:60
-msgid "Available countries are"
-msgstr "Jsou dostupné následující země"
-
-#: pacman_mirrors/txt.py:61
-msgid "Could not download from"
-msgstr "Nelze stáhnout z"
-
-#: pacman_mirrors/txt.py:62
-msgid "Cannot read file"
-msgstr "Soubor nelze přečíst"
-
-#: pacman_mirrors/txt.py:63
-msgid "Cannot write file"
-msgstr "Soubor nelze zapsat"
-
-#: pacman_mirrors/txt.py:64
-msgid "Converting custom mirror file to new format"
-msgstr "Uživatelský seznam zrcadel se převádí na nový formát"
-
-#: pacman_mirrors/txt.py:65
-msgid "Custom mirror file"
-msgstr "Soubor s vlastním seznamem zrcadel"
-
-#: pacman_mirrors/txt.py:66
-msgid "Custom mirror file saved"
-msgstr "Soubor s vlastním seznamem zrcadel uložen"
-
-#: pacman_mirrors/txt.py:67
-msgid "User generated mirror list"
-msgstr "Uživatelsky vytvořený seznam zrcadel"
-
-#: pacman_mirrors/txt.py:68
-msgid "doesn't exist."
-msgstr "neexistuje."
-
-#: pacman_mirrors/txt.py:69
-msgid "Downloading mirrors from repo.manjaro.org"
-msgstr "Z repo.manjaro.org se stahuje seznam zrcadel"
-
-#: pacman_mirrors/txt.py:70
-msgid "Falling back to"
-msgstr "Návrat k"
-
-#: pacman_mirrors/txt.py:71
-msgid "is missing"
-msgstr "chybí"
-
-#: pacman_mirrors/txt.py:72
-msgid "The mirror file"
-msgstr "Soubor se seznamem zrcadel"
-
-#: pacman_mirrors/txt.py:73
-msgid "Mirrorlist generated and saved to"
-msgstr "Seznam zrcadel vytvořen a uložen do"
-
-#: pacman_mirrors/txt.py:74
-msgid "Must have root privileges"
-msgstr "Musíte mít root oprávnění."
-
-#: pacman_mirrors/txt.py:75
-msgid "The mirror list is not changed"
-msgstr "Seznam zrcadel nezměněn"
-
-#: pacman_mirrors/txt.py:76
-msgid "No mirrors in selection"
-msgstr "Ve výběru nejsou žádná zrcadla"
-
-#: pacman_mirrors/txt.py:77
-msgid "Option"
-msgstr "Možnost"
-
-#: pacman_mirrors/txt.py:78
-msgid "Writing mirror list"
-msgstr "Zapisuje se seznam zrcadel"
-
-#: pacman_mirrors/txt.py:79
-msgid "Querying mirrors"
-msgstr "Dotazování zrcadel"
-
-#: pacman_mirrors/txt.py:80
-msgid "Randomizing mirror list"
-msgstr "Seznam zrcadel je náhodně řazen"
-
-#: pacman_mirrors/txt.py:81
-msgid "To reset custom config run `pacman-mirrors -c all`"
-msgstr "Uživatelské nastavení resetujte příkazem `pacman-mirrors -c all`"
-
-#: pacman_mirrors/txt.py:82
-msgid "This may take some time"
-msgstr "To může zabrat nějaký čas"
-
-#: pacman_mirrors/txt.py:83
-msgid "unknown country"
-msgstr "neznámá země"
-
-#: pacman_mirrors/txt.py:84
-msgid "Using all mirrors"
-msgstr "Použita všechna zrcadla"
-
-#: pacman_mirrors/txt.py:85
-msgid "Using custom mirror file"
-msgstr "Použit vlastní soubor se seznamem zrcadel"
-
-#: pacman_mirrors/txt.py:86
-msgid "Using default mirror file"
-msgstr "Použit výchozí soubor se seznamem zrcadel"
-
-#: pacman_mirrors/txt.py:88
-msgid "Manjaro mirrors by response time"
-msgstr "Zrcadla seřazená podle času odezvy"
-
-#: pacman_mirrors/txt.py:89
-msgid "Manjaro mirrors in random order"
-msgstr "Zrcadla seřazená náhodně"
-
-#: pacman_mirrors/txt.py:90
-msgid "Check mirrors for your personal list"
-msgstr "Vyberte zrcadla pro váš vlastní seznam"
-
-#: pacman_mirrors/txt.py:91
-msgid "Use"
-msgstr "Použít"
-
-#: pacman_mirrors/txt.py:92
-msgid "Country"
-msgstr "Země"
-
-#: pacman_mirrors/txt.py:93
-msgid "Resp"
-msgstr "Odpověď"
-
-#: pacman_mirrors/txt.py:94
-msgid "Sync"
-msgstr "Synchronizace"
-
-#: pacman_mirrors/txt.py:95
+#: pacman_mirrors/constants/txt.py:48 pacman_mirrors/constants/txt.py:125
 msgid "URL"
 msgstr "Adresa"
 
-#: pacman_mirrors/txt.py:96
+#: pacman_mirrors/constants/txt.py:49
+msgid "USAGE"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:51
+msgid "Return branch from configuration"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:52
+msgid "Set prefix to"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:53
+msgid "Replace protocols in configuration"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:54
+msgid "Replace branch in mirrorlist"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:55
+msgid "Replace branch in configuration"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:56
+msgid "Replace mirror url in mirrorlist"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:57
+msgid "Branch name"
+msgstr "Větev"
+
+#: pacman_mirrors/constants/txt.py:58
+msgid "Comma separated list of countries, from which mirrors will be used"
+msgstr "čárkou oddělený seznam zemí, ze kterých budou použita zrcadla"
+
+#: pacman_mirrors/constants/txt.py:60
+msgid "Load default mirror file"
+msgstr "Načíst výchozí soubor se seznamem zrcadel"
+
+#: pacman_mirrors/constants/txt.py:61
+msgid "Generate mirrorlist with a number of up-to-date mirrors. Ignores:"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:63
+msgid "Generate mirrorlist with defaults"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:64
+msgid "Get current country using geolocation"
+msgstr "Zjistit zemi pomocí geolokace"
+
+#: pacman_mirrors/constants/txt.py:65
+msgid "List all available countries"
+msgstr "Vypsat všechny dostupné země"
+
+#: pacman_mirrors/constants/txt.py:66
+msgid "Generate custom mirrorlist"
+msgstr "Vytvořit vlastní seznam zrcadel"
+
+#: pacman_mirrors/constants/txt.py:67
+msgid "Generation method"
+msgstr "Způsob vytvoření"
+
+#: pacman_mirrors/constants/txt.py:68
+msgid "Use to skip generation of mirrorlist"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:69
+msgid "Quiet mode - less verbose output"
+msgstr "Tichý režim - méně podrobný výstup"
+
+#: pacman_mirrors/constants/txt.py:70
+msgid "Syncronize pacman databases"
+msgstr "Synchronizace databází pacman"
+
+#: pacman_mirrors/constants/txt.py:71
+msgid "Maximum waiting time for server response"
+msgstr "Nejvyšší čas čekání na odpověď serveru"
+
+#: pacman_mirrors/constants/txt.py:72
+msgid "Print the pacman-mirrors version"
+msgstr "Zobrazit verzi pacman-mirrors"
+
+#: pacman_mirrors/constants/txt.py:74
+msgid "Branch in config is changed"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:75
+msgid "Protocols in config is changed"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:76
+msgid "Re-branch requires a branch to work with"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:77
+msgid "Branch in mirror list is changed"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:78
+msgid "Available countries are"
+msgstr "Jsou dostupné následující země"
+
+#: pacman_mirrors/constants/txt.py:79
+msgid "Could not download from"
+msgstr "Nelze stáhnout z"
+
+#: pacman_mirrors/constants/txt.py:80
+msgid "Cannot read file"
+msgstr "Soubor nelze přečíst"
+
+#: pacman_mirrors/constants/txt.py:81
+msgid "Cannot write file"
+msgstr "Soubor nelze zapsat"
+
+#: pacman_mirrors/constants/txt.py:82
+msgid "Converting custom mirror file to new format"
+msgstr "Uživatelský seznam zrcadel se převádí na nový formát"
+
+#: pacman_mirrors/constants/txt.py:83
+msgid "Custom mirror file"
+msgstr "Soubor s vlastním seznamem zrcadel"
+
+#: pacman_mirrors/constants/txt.py:84
+msgid "Custom mirror file saved"
+msgstr "Soubor s vlastním seznamem zrcadel uložen"
+
+#: pacman_mirrors/constants/txt.py:85
+msgid "User generated mirror list"
+msgstr "Uživatelsky vytvořený seznam zrcadel"
+
+#: pacman_mirrors/constants/txt.py:86
+msgid "Deprecated argument"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:87
+msgid "doesn't exist."
+msgstr "neexistuje."
+
+#: pacman_mirrors/constants/txt.py:88
+msgid "Downloading mirrors from"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:89
+msgid "Falling back to"
+msgstr "Návrat k"
+
+#: pacman_mirrors/constants/txt.py:90
+msgid "Internet connection appears to be down"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:91
+msgid "Mirror list is generated using random method"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:92
+msgid "is missing"
+msgstr "chybí"
+
+#: pacman_mirrors/constants/txt.py:93
+msgid "The mirror file"
+msgstr "Soubor se seznamem zrcadel"
+
+#: pacman_mirrors/constants/txt.py:94
+msgid "Mirror list generated and saved to"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:95
+msgid "Generated on"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:96
+msgid "custom mirrorlist"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:97
+msgid "to reset custom mirrorlist"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:98
+msgid "default mirrorlist"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:99
+msgid "to modify mirrorlist"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:100
+msgid "Mirror ranking is not available"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:101
+msgid "Must have root privileges"
+msgstr "Musíte mít root oprávnění."
+
+#: pacman_mirrors/constants/txt.py:102
+msgid "The mirrors has not changed"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:103
+msgid "No mirrors in selection"
+msgstr "Ve výběru nejsou žádná zrcadla"
+
+#: pacman_mirrors/constants/txt.py:104
+msgid "Option"
+msgstr "Možnost"
+
+#: pacman_mirrors/constants/txt.py:105
+msgid "Please use"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:106
+msgid "Querying mirrors"
+msgstr "Dotazování zrcadel"
+
+#: pacman_mirrors/constants/txt.py:107
+msgid "Randomizing mirror list"
+msgstr "Seznam zrcadel je náhodně řazen"
+
+#: pacman_mirrors/constants/txt.py:108
+msgid "To remove custom config run "
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:109
+msgid "This may take some time"
+msgstr "To může zabrat nějaký čas"
+
+#: pacman_mirrors/constants/txt.py:110
+msgid "unknown country"
+msgstr "neznámá země"
+
+#: pacman_mirrors/constants/txt.py:111
+msgid "Use 0 for all mirrors"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:112
+msgid "Using all mirrors"
+msgstr "Použita všechna zrcadla"
+
+#: pacman_mirrors/constants/txt.py:113
+msgid "Using custom mirror file"
+msgstr "Použit vlastní soubor se seznamem zrcadel"
+
+#: pacman_mirrors/constants/txt.py:114
+msgid "Using default mirror file"
+msgstr "Použit výchozí soubor se seznamem zrcadel"
+
+#: pacman_mirrors/constants/txt.py:115
+msgid "Writing mirror list"
+msgstr "Zapisuje se seznam zrcadel"
+
+#: pacman_mirrors/constants/txt.py:118
+msgid "Manjaro mirrors by response time"
+msgstr "Zrcadla seřazená podle času odezvy"
+
+#: pacman_mirrors/constants/txt.py:119
+msgid "Manjaro mirrors in random order"
+msgstr "Zrcadla seřazená náhodně"
+
+#: pacman_mirrors/constants/txt.py:120
+msgid "Check mirrors for your personal list"
+msgstr "Vyberte zrcadla pro váš vlastní seznam"
+
+#: pacman_mirrors/constants/txt.py:121
+msgid "Use"
+msgstr "Použít"
+
+#: pacman_mirrors/constants/txt.py:122
+msgid "Country"
+msgstr "Země"
+
+#: pacman_mirrors/constants/txt.py:123
+msgid "Resp"
+msgstr "Odpověď"
+
+#: pacman_mirrors/constants/txt.py:124
+msgid "Sync"
+msgstr "Synchronizace"
+
+#: pacman_mirrors/constants/txt.py:126
 msgid "Cancel"
 msgstr "Zrušit"
 
-#: pacman_mirrors/txt.py:97
+#: pacman_mirrors/constants/txt.py:127
 msgid "OK"
 msgstr "OK"
 
-#: pacman_mirrors/txt.py:98
+#: pacman_mirrors/constants/txt.py:128
 msgid "Confirm selections"
 msgstr "Potvrdit výběr"
 
-#: pacman_mirrors/txt.py:99
+#: pacman_mirrors/constants/txt.py:129
 msgid "I want to use these mirrors"
 msgstr "Chci použít tyto zrcadla"

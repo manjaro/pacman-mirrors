@@ -12,265 +12,381 @@ msgid ""
 msgstr ""
 "Project-Id-Version: manjaro-pacman-mirrors\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2017-02-20 15:44+0100\n"
-"PO-Revision-Date: 2017-03-30 19:10+0000\n"
-"Last-Translator: Demiray Muhterem <mdemiray@msn.com>\n"
+"POT-Creation-Date: 2017-10-23 20:55+0200\n"
+"PO-Revision-Date: 2017-10-25 07:54+0000\n"
+"Last-Translator: philm <philm@manjaro.org>\n"
 "Language-Team: Turkish (http://www.transifex.com/manjarolinux/manjaro-pacman-mirrors/language/tr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.3.4\n"
+"Generated-By: Babel 2.5.1\n"
 "Language: tr\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: pacman_mirrors/txt.py:31
-msgid "Error"
-msgstr "Hata"
+#: pacman_mirrors/constants/txt.py:29
+msgid "ERROR"
+msgstr ""
 
-#: pacman_mirrors/txt.py:32
-msgid "Info"
-msgstr "Bilgi"
+#: pacman_mirrors/constants/txt.py:30
+msgid "INFO"
+msgstr ""
 
-#: pacman_mirrors/txt.py:33
-msgid "Warning"
-msgstr "Uyarı"
+#: pacman_mirrors/constants/txt.py:31
+msgid "WARNING"
+msgstr ""
 
-#: pacman_mirrors/txt.py:35
-msgid "Timeout"
-msgstr "Zaman aşımı"
-
-#: pacman_mirrors/txt.py:36
+#: pacman_mirrors/constants/txt.py:33
 msgid "HTTPException"
 msgstr "HTTPHariç"
 
-#: pacman_mirrors/txt.py:38
-msgid "PATH"
-msgstr "YOL"
+#: pacman_mirrors/constants/txt.py:34
+msgid "TIMEOUT"
+msgstr ""
 
-#: pacman_mirrors/txt.py:39
+#: pacman_mirrors/constants/txt.py:36
+msgid "API"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:37
+msgid "BRANCH"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:38
+msgid "COUNTRY"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:39
 msgid "FILE"
 msgstr "DOSYA"
 
-#: pacman_mirrors/txt.py:40
+#: pacman_mirrors/constants/txt.py:40
+msgid "METHOD"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:41
+msgid "METHODS"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:42
+msgid "MISC"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:43
+msgid "NUMBER"
+msgstr "NUMARA"
+
+#: pacman_mirrors/constants/txt.py:44
+msgid "PATH"
+msgstr "YOL"
+
+#: pacman_mirrors/constants/txt.py:45
+msgid "PREFIX"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:46
+msgid "PROTO"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:47
 msgid "SECONDS"
 msgstr "SANİYE"
 
-#: pacman_mirrors/txt.py:41
-msgid "DIGIT"
-msgstr "RAKAM"
-
-#: pacman_mirrors/txt.py:43
-msgid "Branch name"
-msgstr "Kol adı"
-
-#: pacman_mirrors/txt.py:44
-msgid "Comma separated list of countries, from which mirrors will be used"
-msgstr "Yansıların kullanılacağı, virgülle ayrılmış ülkelerin listesi"
-
-#: pacman_mirrors/txt.py:46
-msgid "Output file"
-msgstr "Çıktı dosyası"
-
-#: pacman_mirrors/txt.py:47
-msgid "Generate mirrorlist"
-msgstr "Yansı listesi oluştur"
-
-#: pacman_mirrors/txt.py:48
-msgid "Get current country using geolocation. Ignored if"
-msgstr "Coğrafi konum kullanarak ülkenizi öğrenin. Yok sayarsan"
-
-#: pacman_mirrors/txt.py:49
-msgid "is supplied"
-msgstr "tedarik edildi"
-
-#: pacman_mirrors/txt.py:50
-msgid "Generate custom mirrorlist"
-msgstr "Özel yansı listesi oluştur"
-
-#: pacman_mirrors/txt.py:51
-msgid "Generation method"
-msgstr "Oluşturma yöntemi"
-
-#: pacman_mirrors/txt.py:52
-msgid "Don't generate mirrorlist if"
-msgstr "Eğer var ise yansı listesi oluşturmayın"
-
-#: pacman_mirrors/txt.py:53
-msgid "in the configuration file"
-msgstr "yapılandırma dosyasında"
-
-#: pacman_mirrors/txt.py:54
-msgid "Mirrors list path"
-msgstr "yansı listesi yolu"
-
-#: pacman_mirrors/txt.py:55
-msgid "Quiet mode - less verbose output"
-msgstr "Sessiz mod - daha detaysız çıktı"
-
-#: pacman_mirrors/txt.py:56
-msgid "Maximum waiting time for server response"
-msgstr "Sunucu yanıtı için azami bekleme süresi"
-
-#: pacman_mirrors/txt.py:57
-msgid "Print the pacman-mirrors version"
-msgstr "pacman-mirrors sürümünü yazdır"
-
-#: pacman_mirrors/txt.py:58
-msgid "A quick mirrorlist. Overrides -cim --geoip"
-msgstr "Hızlı bir yansı listesi. -cim --geoip'i geçersiz kılar"
-
-#: pacman_mirrors/txt.py:60
-msgid "Available countries are"
-msgstr "Mevcut ülkeler"
-
-#: pacman_mirrors/txt.py:61
-msgid "Could not download from"
-msgstr "Adresinden indirilemedi"
-
-#: pacman_mirrors/txt.py:62
-msgid "Cannot read file"
-msgstr "Dosya okunamadı"
-
-#: pacman_mirrors/txt.py:63
-msgid "Cannot write file"
-msgstr "Dosyaya yazılamadı"
-
-#: pacman_mirrors/txt.py:64
-msgid "Converting custom mirror file to new format"
-msgstr "Özel yansı listesini yeni biçime dönüştür"
-
-#: pacman_mirrors/txt.py:65
-msgid "Custom mirror file"
-msgstr "Özel yansı dosyası"
-
-#: pacman_mirrors/txt.py:66
-msgid "Custom mirror file saved"
-msgstr "Özel yansı dpsyası kaydedildi"
-
-#: pacman_mirrors/txt.py:67
-msgid "User generated mirror list"
-msgstr "Kullanıcı tarafından oluşturulan yansı listesi"
-
-#: pacman_mirrors/txt.py:68
-msgid "doesn't exist."
-msgstr "varolmayan."
-
-#: pacman_mirrors/txt.py:69
-msgid "Downloading mirrors from repo.manjaro.org"
-msgstr "Yansı listesi repo.manjaro.org adresinden indiriliyor"
-
-#: pacman_mirrors/txt.py:70
-msgid "Falling back to"
-msgstr "Geri düşüm"
-
-#: pacman_mirrors/txt.py:71
-msgid "is missing"
-msgstr "kayıp"
-
-#: pacman_mirrors/txt.py:72
-msgid "The mirror file"
-msgstr "Yansı dosyası"
-
-#: pacman_mirrors/txt.py:73
-msgid "Mirrorlist generated and saved to"
-msgstr "Yansı oluşturuldu ve kaydedildi"
-
-#: pacman_mirrors/txt.py:74
-msgid "Must have root privileges"
-msgstr "Root yetkisine sahip olmalısınız"
-
-#: pacman_mirrors/txt.py:75
-msgid "The mirror list is not changed"
-msgstr "Yansı listesi değiştirilmedi"
-
-#: pacman_mirrors/txt.py:76
-msgid "No mirrors in selection"
-msgstr "Yansı seçilmedi"
-
-#: pacman_mirrors/txt.py:77
-msgid "Option"
-msgstr "Seçenek"
-
-#: pacman_mirrors/txt.py:78
-msgid "Writing mirror list"
-msgstr "Yansı listesi yazılıyor"
-
-#: pacman_mirrors/txt.py:79
-msgid "Querying mirrors"
-msgstr "Yansı sorgulama"
-
-#: pacman_mirrors/txt.py:80
-msgid "Randomizing mirror list"
-msgstr "Rastgele yansı listesi seç"
-
-#: pacman_mirrors/txt.py:81
-msgid "To reset custom config run `pacman-mirrors -c all`"
-msgstr "Özel yansıları sıfırlamak için `pacman-mirrors -c all` kullanın"
-
-#: pacman_mirrors/txt.py:82
-msgid "This may take some time"
-msgstr "Bu işlem biraz zaman alabilir"
-
-#: pacman_mirrors/txt.py:83
-msgid "unknown country"
-msgstr "bilinmeyen ülke"
-
-#: pacman_mirrors/txt.py:84
-msgid "Using all mirrors"
-msgstr "Tüm yansılar kullanılsın"
-
-#: pacman_mirrors/txt.py:85
-msgid "Using custom mirror file"
-msgstr "Özel yansı dosyası kullanılsın"
-
-#: pacman_mirrors/txt.py:86
-msgid "Using default mirror file"
-msgstr "Varsayılan yansı dosyası kullanılsın"
-
-#: pacman_mirrors/txt.py:88
-msgid "Manjaro mirrors by response time"
-msgstr "Hızına göre yansılar kullanılsın"
-
-#: pacman_mirrors/txt.py:89
-msgid "Manjaro mirrors in random order"
-msgstr "Rastgele sıralanmış yansılar kullanılsın"
-
-#: pacman_mirrors/txt.py:90
-msgid "Check mirrors for your personal list"
-msgstr "Özel listeniz için yansıları kontrol edin"
-
-#: pacman_mirrors/txt.py:91
-msgid "Use"
-msgstr "Kullan"
-
-#: pacman_mirrors/txt.py:92
-msgid "Country"
-msgstr "Ülke"
-
-#: pacman_mirrors/txt.py:93
-msgid "Resp"
-msgstr "Kısa"
-
-#: pacman_mirrors/txt.py:94
-msgid "Sync"
-msgstr "Senk"
-
-#: pacman_mirrors/txt.py:95
+#: pacman_mirrors/constants/txt.py:48 pacman_mirrors/constants/txt.py:125
 msgid "URL"
 msgstr "URL"
 
-#: pacman_mirrors/txt.py:96
-msgid "Cancel"
-msgstr "İptal"
+#: pacman_mirrors/constants/txt.py:49
+msgid "USAGE"
+msgstr ""
 
-#: pacman_mirrors/txt.py:97
+#: pacman_mirrors/constants/txt.py:51
+msgid "Return branch from configuration"
+msgstr "Yapılandırmadan dönüş dalı"
+
+#: pacman_mirrors/constants/txt.py:52
+msgid "Set prefix to"
+msgstr "Ön ek ayarla"
+
+#: pacman_mirrors/constants/txt.py:53
+msgid "Replace protocols in configuration"
+msgstr "Yapılandırmalardaki protokolleri değiştirin"
+
+#: pacman_mirrors/constants/txt.py:54
+msgid "Replace branch in mirrorlist"
+msgstr "Yansı listesindeki dalı değiştir"
+
+#: pacman_mirrors/constants/txt.py:55
+msgid "Replace branch in configuration"
+msgstr "Yapılandırma dalını değiştirin"
+
+#: pacman_mirrors/constants/txt.py:56
+msgid "Replace mirror url in mirrorlist"
+msgstr "Yansı bağlantısını mirrorlist üzerinde değiştirin"
+
+#: pacman_mirrors/constants/txt.py:57
+msgid "Branch name"
+msgstr "Kol adı"
+
+#: pacman_mirrors/constants/txt.py:58
+msgid "Comma separated list of countries, from which mirrors will be used"
+msgstr "Yansıların kullanılacağı, virgülle ayrılmış ülkelerin listesi"
+
+#: pacman_mirrors/constants/txt.py:60
+msgid "Load default mirror file"
+msgstr "Varsayılan yansı dosyasını yükle"
+
+#: pacman_mirrors/constants/txt.py:61
+msgid "Generate mirrorlist with a number of up-to-date mirrors. Ignores:"
+msgstr "Güncel yansılar için birkaç yansı listesi oluşturun. Gözardı edilenler:"
+
+#: pacman_mirrors/constants/txt.py:63
+msgid "Generate mirrorlist with defaults"
+msgstr "Varsayılanlarla yansı listesi oluştur"
+
+#: pacman_mirrors/constants/txt.py:64
+msgid "Get current country using geolocation"
+msgstr "Coğrafi konumu kullanarak ülkenizi kullanın"
+
+#: pacman_mirrors/constants/txt.py:65
+msgid "List all available countries"
+msgstr "Mevcut tüm ülkeleri listele"
+
+#: pacman_mirrors/constants/txt.py:66
+msgid "Generate custom mirrorlist"
+msgstr "Özel yansı listesi oluştur"
+
+#: pacman_mirrors/constants/txt.py:67
+msgid "Generation method"
+msgstr "Oluşturma yöntemi"
+
+#: pacman_mirrors/constants/txt.py:68
+msgid "Use to skip generation of mirrorlist"
+msgstr "Yansı listesi oluşturmayı atlayın"
+
+#: pacman_mirrors/constants/txt.py:69
+msgid "Quiet mode - less verbose output"
+msgstr "Sessiz mod - daha detaysız çıktı"
+
+#: pacman_mirrors/constants/txt.py:70
+msgid "Syncronize pacman databases"
+msgstr "Pacman veritabanlarını eşitle"
+
+#: pacman_mirrors/constants/txt.py:71
+msgid "Maximum waiting time for server response"
+msgstr "Sunucu yanıtı için azami bekleme süresi"
+
+#: pacman_mirrors/constants/txt.py:72
+msgid "Print the pacman-mirrors version"
+msgstr "pacman-mirrors sürümünü yazdır"
+
+#: pacman_mirrors/constants/txt.py:74
+msgid "Branch in config is changed"
+msgstr "Yapılandırma dalı değişti"
+
+#: pacman_mirrors/constants/txt.py:75
+msgid "Protocols in config is changed"
+msgstr "Yapılandırma protokolleri değiştirildi"
+
+#: pacman_mirrors/constants/txt.py:76
+msgid "Re-branch requires a branch to work with"
+msgstr "Tekrar dallandırıp çalışmak için bir dal gerekir"
+
+#: pacman_mirrors/constants/txt.py:77
+msgid "Branch in mirror list is changed"
+msgstr "Yansı listesindeki dal değiştirildi"
+
+#: pacman_mirrors/constants/txt.py:78
+msgid "Available countries are"
+msgstr "Mevcut ülkeler"
+
+#: pacman_mirrors/constants/txt.py:79
+msgid "Could not download from"
+msgstr "Adresinden indirilemedi"
+
+#: pacman_mirrors/constants/txt.py:80
+msgid "Cannot read file"
+msgstr "Dosya okunamadı"
+
+#: pacman_mirrors/constants/txt.py:81
+msgid "Cannot write file"
+msgstr "Dosyaya yazılamadı"
+
+#: pacman_mirrors/constants/txt.py:82
+msgid "Converting custom mirror file to new format"
+msgstr "Özel yansı listesini yeni biçime dönüştür"
+
+#: pacman_mirrors/constants/txt.py:83
+msgid "Custom mirror file"
+msgstr "Özel yansı dosyası"
+
+#: pacman_mirrors/constants/txt.py:84
+msgid "Custom mirror file saved"
+msgstr "Özel yansı dpsyası kaydedildi"
+
+#: pacman_mirrors/constants/txt.py:85
+msgid "User generated mirror list"
+msgstr "Kullanıcı tarafından oluşturulan yansı listesi"
+
+#: pacman_mirrors/constants/txt.py:86
+msgid "Deprecated argument"
+msgstr "Reddedilen argüman"
+
+#: pacman_mirrors/constants/txt.py:87
+msgid "doesn't exist."
+msgstr "varolmayan."
+
+#: pacman_mirrors/constants/txt.py:88
+msgid "Downloading mirrors from"
+msgstr "Şu sayfalardan yansılar indiriliyor"
+
+#: pacman_mirrors/constants/txt.py:89
+msgid "Falling back to"
+msgstr "Geri düşüm"
+
+#: pacman_mirrors/constants/txt.py:90
+msgid "Internet connection appears to be down"
+msgstr "İnternet bağlantısı kapalı gibi görünüyor"
+
+#: pacman_mirrors/constants/txt.py:91
+msgid "Mirror list is generated using random method"
+msgstr "Yansı listesi rasgele yöntem kullanılarak üretilir"
+
+#: pacman_mirrors/constants/txt.py:92
+msgid "is missing"
+msgstr "kayıp"
+
+#: pacman_mirrors/constants/txt.py:93
+msgid "The mirror file"
+msgstr "Yansı dosyası"
+
+#: pacman_mirrors/constants/txt.py:94
+msgid "Mirror list generated and saved to"
+msgstr "Yansı listesi oluşturuldu ve kaydedildi"
+
+#: pacman_mirrors/constants/txt.py:95
+msgid "Generated on"
+msgstr "Üzerinde üretildi"
+
+#: pacman_mirrors/constants/txt.py:96
+msgid "custom mirrorlist"
+msgstr "özel yansı listesi"
+
+#: pacman_mirrors/constants/txt.py:97
+msgid "to reset custom mirrorlist"
+msgstr "özel yansı listesini sıfırla"
+
+#: pacman_mirrors/constants/txt.py:98
+msgid "default mirrorlist"
+msgstr "varsayılan yansı listesi"
+
+#: pacman_mirrors/constants/txt.py:99
+msgid "to modify mirrorlist"
+msgstr "yansı listesini değiştirmek için"
+
+#: pacman_mirrors/constants/txt.py:100
+msgid "Mirror ranking is not available"
+msgstr "Yansı sıralaması mevcut değil"
+
+#: pacman_mirrors/constants/txt.py:101
+msgid "Must have root privileges"
+msgstr "Root yetkisine sahip olmalısınız"
+
+#: pacman_mirrors/constants/txt.py:102
+msgid "The mirrors has not changed"
+msgstr "Yansılar değişmedi"
+
+#: pacman_mirrors/constants/txt.py:103
+msgid "No mirrors in selection"
+msgstr "Yansı seçilmedi"
+
+#: pacman_mirrors/constants/txt.py:104
+msgid "Option"
+msgstr "Seçenek"
+
+#: pacman_mirrors/constants/txt.py:105
+msgid "Please use"
+msgstr "Lütfen kullan"
+
+#: pacman_mirrors/constants/txt.py:106
+msgid "Querying mirrors"
+msgstr "Yansı sorgulama"
+
+#: pacman_mirrors/constants/txt.py:107
+msgid "Randomizing mirror list"
+msgstr "Rastgele yansı listesi seç"
+
+#: pacman_mirrors/constants/txt.py:108
+msgid "To remove custom config run "
+msgstr "Özel yapılandırmayı kaldırmak için"
+
+#: pacman_mirrors/constants/txt.py:109
+msgid "This may take some time"
+msgstr "Bu işlem biraz zaman alabilir"
+
+#: pacman_mirrors/constants/txt.py:110
+msgid "unknown country"
+msgstr "bilinmeyen ülke"
+
+#: pacman_mirrors/constants/txt.py:111
+msgid "Use 0 for all mirrors"
+msgstr "Tüm yansılar için 0 kullanın"
+
+#: pacman_mirrors/constants/txt.py:112
+msgid "Using all mirrors"
+msgstr "Tüm yansılar kullanılsın"
+
+#: pacman_mirrors/constants/txt.py:113
+msgid "Using custom mirror file"
+msgstr "Özel yansı dosyası kullanılsın"
+
+#: pacman_mirrors/constants/txt.py:114
+msgid "Using default mirror file"
+msgstr "Varsayılan yansı dosyası kullanılsın"
+
+#: pacman_mirrors/constants/txt.py:115
+msgid "Writing mirror list"
+msgstr "Yansı listesi yazılıyor"
+
+#: pacman_mirrors/constants/txt.py:118
+msgid "Manjaro mirrors by response time"
+msgstr "Hızına göre yansılar kullanılsın"
+
+#: pacman_mirrors/constants/txt.py:119
+msgid "Manjaro mirrors in random order"
+msgstr "Rastgele sıralanmış yansılar kullanılsın"
+
+#: pacman_mirrors/constants/txt.py:120
+msgid "Check mirrors for your personal list"
+msgstr "Özel listeniz için yansıları kontrol edin"
+
+#: pacman_mirrors/constants/txt.py:121
+msgid "Use"
+msgstr "Kullan"
+
+#: pacman_mirrors/constants/txt.py:122
+msgid "Country"
+msgstr "Ülke"
+
+#: pacman_mirrors/constants/txt.py:123
+msgid "Resp"
+msgstr "Kısa"
+
+#: pacman_mirrors/constants/txt.py:124
+msgid "Sync"
+msgstr "Senk"
+
+#: pacman_mirrors/constants/txt.py:126
+msgid "Cancel"
+msgstr "Vazgeç"
+
+#: pacman_mirrors/constants/txt.py:127
 msgid "OK"
 msgstr "TAMAM"
 
-#: pacman_mirrors/txt.py:98
+#: pacman_mirrors/constants/txt.py:128
 msgid "Confirm selections"
 msgstr "Seçimleri onayla"
 
-#: pacman_mirrors/txt.py:99
+#: pacman_mirrors/constants/txt.py:129
 msgid "I want to use these mirrors"
 msgstr "Bu yansıları kullanmak istiyorum"
