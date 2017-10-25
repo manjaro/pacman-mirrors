@@ -126,11 +126,13 @@ class PacmanMirrors:
         methods.add_argument("-m", "--method",
                              type=str,
                              choices=["rank", "random"],
+                             metavar=txt.METHOD,
                              help=txt.HLP_ARG_METHOD)
         country = parser.add_argument_group(txt.COUNTRY)
         country.add_argument("-c", "--country",
                              type=str,
                              nargs="+",
+                             metavar=txt.COUNTRY,
                              help=txt.HLP_ARG_COUNTRY)
         country.add_argument("--geoip",
                              action="store_true",
@@ -157,15 +159,18 @@ class PacmanMirrors:
         api = parser.add_argument_group(txt.API)
         api.add_argument("-a", "--api",
                          action="store_true",
+                         metavar=txt.API,
                          help="[-p {}][-R][-S|-G {}][-P {} [{} ...]]".format(
                              txt.PREFIX, txt.BRANCH, txt.PROTO, txt.PROTO))
         api.add_argument("-p", "--prefix",
                          type=str,
+                         metavar=txt.PREFIX,
                          help="{}: {} {}".format(
                              txt.API, txt.HLP_ARG_API_PREFIX, txt.PREFIX_TIP))
         api.add_argument("-P", "--proto", "--protocols",
                          choices=["all", "http", "https", "ftp", "ftps"],
                          type=str,
+                         metavar=txt.PROTO,
                          nargs="+",
                          help="{}: {}".format(
                              txt.API, txt.HLP_ARG_API_PROTOCOLS))
@@ -175,6 +180,7 @@ class PacmanMirrors:
                              txt.API, txt.HLP_ARG_API_RE_BRANCH))
         api.add_argument("-U", "--url",
                          type=str,
+                         metavar=txt.URL,
                          help="{}: {}".format(
                              txt.API, txt.HLP_ARG_API_URL))
         # Misc arguments
