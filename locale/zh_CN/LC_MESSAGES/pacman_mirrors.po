@@ -9,265 +9,381 @@ msgid ""
 msgstr ""
 "Project-Id-Version: manjaro-pacman-mirrors\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2017-02-20 15:44+0100\n"
-"PO-Revision-Date: 2017-04-16 05:10+0000\n"
-"Last-Translator: dull2wall <jamesjoyce0225@hotmail.com>\n"
+"POT-Creation-Date: 2017-10-23 20:55+0200\n"
+"PO-Revision-Date: 2017-10-25 07:54+0000\n"
+"Last-Translator: philm <philm@manjaro.org>\n"
 "Language-Team: Chinese (China) (http://www.transifex.com/manjarolinux/manjaro-pacman-mirrors/language/zh_CN/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.3.4\n"
+"Generated-By: Babel 2.5.1\n"
 "Language: zh_CN\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: pacman_mirrors/txt.py:31
-msgid "Error"
-msgstr "错误"
+#: pacman_mirrors/constants/txt.py:29
+msgid "ERROR"
+msgstr ""
 
-#: pacman_mirrors/txt.py:32
-msgid "Info"
-msgstr "信息"
+#: pacman_mirrors/constants/txt.py:30
+msgid "INFO"
+msgstr ""
 
-#: pacman_mirrors/txt.py:33
-msgid "Warning"
-msgstr "警告"
+#: pacman_mirrors/constants/txt.py:31
+msgid "WARNING"
+msgstr ""
 
-#: pacman_mirrors/txt.py:35
-msgid "Timeout"
-msgstr "超时"
-
-#: pacman_mirrors/txt.py:36
+#: pacman_mirrors/constants/txt.py:33
 msgid "HTTPException"
 msgstr "HTTP异常"
 
-#: pacman_mirrors/txt.py:38
-msgid "PATH"
-msgstr "路径"
+#: pacman_mirrors/constants/txt.py:34
+msgid "TIMEOUT"
+msgstr ""
 
-#: pacman_mirrors/txt.py:39
+#: pacman_mirrors/constants/txt.py:36
+msgid "API"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:37
+msgid "BRANCH"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:38
+msgid "COUNTRY"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:39
 msgid "FILE"
 msgstr "文件"
 
-#: pacman_mirrors/txt.py:40
+#: pacman_mirrors/constants/txt.py:40
+msgid "METHOD"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:41
+msgid "METHODS"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:42
+msgid "MISC"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:43
+msgid "NUMBER"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:44
+msgid "PATH"
+msgstr "路径"
+
+#: pacman_mirrors/constants/txt.py:45
+msgid "PREFIX"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:46
+msgid "PROTO"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:47
 msgid "SECONDS"
 msgstr "秒"
 
-#: pacman_mirrors/txt.py:41
-msgid "DIGIT"
-msgstr "数字"
-
-#: pacman_mirrors/txt.py:43
-msgid "Branch name"
-msgstr "分支名称"
-
-#: pacman_mirrors/txt.py:44
-msgid "Comma separated list of countries, from which mirrors will be used"
-msgstr "用逗号隔开国家名，镜像将会使用此列表"
-
-#: pacman_mirrors/txt.py:46
-msgid "Output file"
-msgstr "输出文件"
-
-#: pacman_mirrors/txt.py:47
-msgid "Generate mirrorlist"
-msgstr "生成镜像列表"
-
-#: pacman_mirrors/txt.py:48
-msgid "Get current country using geolocation. Ignored if"
-msgstr "通过地理定位获取当前国家。忽略如果"
-
-#: pacman_mirrors/txt.py:49
-msgid "is supplied"
-msgstr "被提供"
-
-#: pacman_mirrors/txt.py:50
-msgid "Generate custom mirrorlist"
-msgstr "生成自定义的镜像列表"
-
-#: pacman_mirrors/txt.py:51
-msgid "Generation method"
-msgstr "生成方法"
-
-#: pacman_mirrors/txt.py:52
-msgid "Don't generate mirrorlist if"
-msgstr "勿生成镜像列表如果"
-
-#: pacman_mirrors/txt.py:53
-msgid "in the configuration file"
-msgstr "在配置文件内"
-
-#: pacman_mirrors/txt.py:54
-msgid "Mirrors list path"
-msgstr "镜像列表路径"
-
-#: pacman_mirrors/txt.py:55
-msgid "Quiet mode - less verbose output"
-msgstr "安静模式 - 更少的冗余输出"
-
-#: pacman_mirrors/txt.py:56
-msgid "Maximum waiting time for server response"
-msgstr "服务器响应的最长等待时间"
-
-#: pacman_mirrors/txt.py:57
-msgid "Print the pacman-mirrors version"
-msgstr "打印pacman-mirrors的版本信息"
-
-#: pacman_mirrors/txt.py:58
-msgid "A quick mirrorlist. Overrides -cim --geoip"
-msgstr "一个快速的镜像列表。覆盖 -cim --geoip"
-
-#: pacman_mirrors/txt.py:60
-msgid "Available countries are"
-msgstr "可用的国家是"
-
-#: pacman_mirrors/txt.py:61
-msgid "Could not download from"
-msgstr "无法下载从"
-
-#: pacman_mirrors/txt.py:62
-msgid "Cannot read file"
-msgstr "无法读取文件"
-
-#: pacman_mirrors/txt.py:63
-msgid "Cannot write file"
-msgstr "无法写入文件"
-
-#: pacman_mirrors/txt.py:64
-msgid "Converting custom mirror file to new format"
-msgstr "转换自定义镜像文件成新格式"
-
-#: pacman_mirrors/txt.py:65
-msgid "Custom mirror file"
-msgstr "自定义的镜像文件"
-
-#: pacman_mirrors/txt.py:66
-msgid "Custom mirror file saved"
-msgstr "已保存的自定义镜像文件"
-
-#: pacman_mirrors/txt.py:67
-msgid "User generated mirror list"
-msgstr "用户生成的镜像列表"
-
-#: pacman_mirrors/txt.py:68
-msgid "doesn't exist."
-msgstr "不存在"
-
-#: pacman_mirrors/txt.py:69
-msgid "Downloading mirrors from repo.manjaro.org"
-msgstr "从repo.manjaro.org下载镜像"
-
-#: pacman_mirrors/txt.py:70
-msgid "Falling back to"
-msgstr "回到"
-
-#: pacman_mirrors/txt.py:71
-msgid "is missing"
-msgstr "缺失"
-
-#: pacman_mirrors/txt.py:72
-msgid "The mirror file"
-msgstr "此镜像文件"
-
-#: pacman_mirrors/txt.py:73
-msgid "Mirrorlist generated and saved to"
-msgstr "镜像列表已生成并保存至"
-
-#: pacman_mirrors/txt.py:74
-msgid "Must have root privileges"
-msgstr "必须要有根用户权限"
-
-#: pacman_mirrors/txt.py:75
-msgid "The mirror list is not changed"
-msgstr "此镜像列表没有被修改"
-
-#: pacman_mirrors/txt.py:76
-msgid "No mirrors in selection"
-msgstr "没有选中的镜像"
-
-#: pacman_mirrors/txt.py:77
-msgid "Option"
-msgstr "选项"
-
-#: pacman_mirrors/txt.py:78
-msgid "Writing mirror list"
-msgstr "写入镜像列表"
-
-#: pacman_mirrors/txt.py:79
-msgid "Querying mirrors"
-msgstr "查询镜像"
-
-#: pacman_mirrors/txt.py:80
-msgid "Randomizing mirror list"
-msgstr "随机排列镜像列表"
-
-#: pacman_mirrors/txt.py:81
-msgid "To reset custom config run `pacman-mirrors -c all`"
-msgstr "重置自定义配置运行 'pacman-mirrors -c all'"
-
-#: pacman_mirrors/txt.py:82
-msgid "This may take some time"
-msgstr "这可能需要一些时间"
-
-#: pacman_mirrors/txt.py:83
-msgid "unknown country"
-msgstr "未知国家"
-
-#: pacman_mirrors/txt.py:84
-msgid "Using all mirrors"
-msgstr "使用所有镜像"
-
-#: pacman_mirrors/txt.py:85
-msgid "Using custom mirror file"
-msgstr "使用自定义镜像文件"
-
-#: pacman_mirrors/txt.py:86
-msgid "Using default mirror file"
-msgstr "使用默认镜像文件"
-
-#: pacman_mirrors/txt.py:88
-msgid "Manjaro mirrors by response time"
-msgstr "根据响应时间排序的Manjaro镜像"
-
-#: pacman_mirrors/txt.py:89
-msgid "Manjaro mirrors in random order"
-msgstr "随机排序的Manjaro镜像"
-
-#: pacman_mirrors/txt.py:90
-msgid "Check mirrors for your personal list"
-msgstr "为你个人的列表核对镜像"
-
-#: pacman_mirrors/txt.py:91
-msgid "Use"
-msgstr "使用"
-
-#: pacman_mirrors/txt.py:92
-msgid "Country"
-msgstr "国家"
-
-#: pacman_mirrors/txt.py:93
-msgid "Resp"
-msgstr "响应时间"
-
-#: pacman_mirrors/txt.py:94
-msgid "Sync"
-msgstr "同步"
-
-#: pacman_mirrors/txt.py:95
+#: pacman_mirrors/constants/txt.py:48 pacman_mirrors/constants/txt.py:125
 msgid "URL"
 msgstr "链接"
 
-#: pacman_mirrors/txt.py:96
+#: pacman_mirrors/constants/txt.py:49
+msgid "USAGE"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:51
+msgid "Return branch from configuration"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:52
+msgid "Set prefix to"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:53
+msgid "Replace protocols in configuration"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:54
+msgid "Replace branch in mirrorlist"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:55
+msgid "Replace branch in configuration"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:56
+msgid "Replace mirror url in mirrorlist"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:57
+msgid "Branch name"
+msgstr "分支名称"
+
+#: pacman_mirrors/constants/txt.py:58
+msgid "Comma separated list of countries, from which mirrors will be used"
+msgstr "用逗号隔开国家名，镜像将会使用此列表"
+
+#: pacman_mirrors/constants/txt.py:60
+msgid "Load default mirror file"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:61
+msgid "Generate mirrorlist with a number of up-to-date mirrors. Ignores:"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:63
+msgid "Generate mirrorlist with defaults"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:64
+msgid "Get current country using geolocation"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:65
+msgid "List all available countries"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:66
+msgid "Generate custom mirrorlist"
+msgstr "生成自定义的镜像列表"
+
+#: pacman_mirrors/constants/txt.py:67
+msgid "Generation method"
+msgstr "生成方法"
+
+#: pacman_mirrors/constants/txt.py:68
+msgid "Use to skip generation of mirrorlist"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:69
+msgid "Quiet mode - less verbose output"
+msgstr "安静模式 - 更少的冗余输出"
+
+#: pacman_mirrors/constants/txt.py:70
+msgid "Syncronize pacman databases"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:71
+msgid "Maximum waiting time for server response"
+msgstr "服务器响应的最长等待时间"
+
+#: pacman_mirrors/constants/txt.py:72
+msgid "Print the pacman-mirrors version"
+msgstr "打印pacman-mirrors的版本信息"
+
+#: pacman_mirrors/constants/txt.py:74
+msgid "Branch in config is changed"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:75
+msgid "Protocols in config is changed"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:76
+msgid "Re-branch requires a branch to work with"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:77
+msgid "Branch in mirror list is changed"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:78
+msgid "Available countries are"
+msgstr "可用的国家是"
+
+#: pacman_mirrors/constants/txt.py:79
+msgid "Could not download from"
+msgstr "无法下载从"
+
+#: pacman_mirrors/constants/txt.py:80
+msgid "Cannot read file"
+msgstr "无法读取文件"
+
+#: pacman_mirrors/constants/txt.py:81
+msgid "Cannot write file"
+msgstr "无法写入文件"
+
+#: pacman_mirrors/constants/txt.py:82
+msgid "Converting custom mirror file to new format"
+msgstr "转换自定义镜像文件成新格式"
+
+#: pacman_mirrors/constants/txt.py:83
+msgid "Custom mirror file"
+msgstr "自定义的镜像文件"
+
+#: pacman_mirrors/constants/txt.py:84
+msgid "Custom mirror file saved"
+msgstr "已保存的自定义镜像文件"
+
+#: pacman_mirrors/constants/txt.py:85
+msgid "User generated mirror list"
+msgstr "用户生成的镜像列表"
+
+#: pacman_mirrors/constants/txt.py:86
+msgid "Deprecated argument"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:87
+msgid "doesn't exist."
+msgstr "不存在"
+
+#: pacman_mirrors/constants/txt.py:88
+msgid "Downloading mirrors from"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:89
+msgid "Falling back to"
+msgstr "回到"
+
+#: pacman_mirrors/constants/txt.py:90
+msgid "Internet connection appears to be down"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:91
+msgid "Mirror list is generated using random method"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:92
+msgid "is missing"
+msgstr "缺失"
+
+#: pacman_mirrors/constants/txt.py:93
+msgid "The mirror file"
+msgstr "此镜像文件"
+
+#: pacman_mirrors/constants/txt.py:94
+msgid "Mirror list generated and saved to"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:95
+msgid "Generated on"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:96
+msgid "custom mirrorlist"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:97
+msgid "to reset custom mirrorlist"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:98
+msgid "default mirrorlist"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:99
+msgid "to modify mirrorlist"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:100
+msgid "Mirror ranking is not available"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:101
+msgid "Must have root privileges"
+msgstr "必须要有根用户权限"
+
+#: pacman_mirrors/constants/txt.py:102
+msgid "The mirrors has not changed"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:103
+msgid "No mirrors in selection"
+msgstr "没有选中的镜像"
+
+#: pacman_mirrors/constants/txt.py:104
+msgid "Option"
+msgstr "选项"
+
+#: pacman_mirrors/constants/txt.py:105
+msgid "Please use"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:106
+msgid "Querying mirrors"
+msgstr "查询镜像"
+
+#: pacman_mirrors/constants/txt.py:107
+msgid "Randomizing mirror list"
+msgstr "随机排列镜像列表"
+
+#: pacman_mirrors/constants/txt.py:108
+msgid "To remove custom config run "
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:109
+msgid "This may take some time"
+msgstr "这可能需要一些时间"
+
+#: pacman_mirrors/constants/txt.py:110
+msgid "unknown country"
+msgstr "未知国家"
+
+#: pacman_mirrors/constants/txt.py:111
+msgid "Use 0 for all mirrors"
+msgstr ""
+
+#: pacman_mirrors/constants/txt.py:112
+msgid "Using all mirrors"
+msgstr "使用所有镜像"
+
+#: pacman_mirrors/constants/txt.py:113
+msgid "Using custom mirror file"
+msgstr "使用自定义镜像文件"
+
+#: pacman_mirrors/constants/txt.py:114
+msgid "Using default mirror file"
+msgstr "使用默认镜像文件"
+
+#: pacman_mirrors/constants/txt.py:115
+msgid "Writing mirror list"
+msgstr "写入镜像列表"
+
+#: pacman_mirrors/constants/txt.py:118
+msgid "Manjaro mirrors by response time"
+msgstr "根据响应时间排序的Manjaro镜像"
+
+#: pacman_mirrors/constants/txt.py:119
+msgid "Manjaro mirrors in random order"
+msgstr "随机排序的Manjaro镜像"
+
+#: pacman_mirrors/constants/txt.py:120
+msgid "Check mirrors for your personal list"
+msgstr "为你个人的列表核对镜像"
+
+#: pacman_mirrors/constants/txt.py:121
+msgid "Use"
+msgstr "使用"
+
+#: pacman_mirrors/constants/txt.py:122
+msgid "Country"
+msgstr "国家"
+
+#: pacman_mirrors/constants/txt.py:123
+msgid "Resp"
+msgstr "响应时间"
+
+#: pacman_mirrors/constants/txt.py:124
+msgid "Sync"
+msgstr "同步"
+
+#: pacman_mirrors/constants/txt.py:126
 msgid "Cancel"
 msgstr "取消"
 
-#: pacman_mirrors/txt.py:97
+#: pacman_mirrors/constants/txt.py:127
 msgid "OK"
 msgstr "确认"
 
-#: pacman_mirrors/txt.py:98
+#: pacman_mirrors/constants/txt.py:128
 msgid "Confirm selections"
 msgstr "确认选择"
 
-#: pacman_mirrors/txt.py:99
+#: pacman_mirrors/constants/txt.py:129
 msgid "I want to use these mirrors"
 msgstr "我想使用这些镜像"

@@ -9,265 +9,381 @@ msgid ""
 msgstr ""
 "Project-Id-Version: manjaro-pacman-mirrors\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2017-02-20 15:44+0100\n"
-"PO-Revision-Date: 2017-02-27 16:09+0000\n"
+"POT-Creation-Date: 2017-10-23 20:55+0200\n"
+"PO-Revision-Date: 2017-10-25 11:46+0000\n"
 "Last-Translator: Lovro Kudelić <lovro.kudelic@outlook.com>\n"
 "Language-Team: Croatian (http://www.transifex.com/manjarolinux/manjaro-pacman-mirrors/language/hr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.3.4\n"
+"Generated-By: Babel 2.5.1\n"
 "Language: hr\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 
-#: pacman_mirrors/txt.py:31
-msgid "Error"
-msgstr "Greška"
+#: pacman_mirrors/constants/txt.py:29
+msgid "ERROR"
+msgstr "GREŠKA"
 
-#: pacman_mirrors/txt.py:32
-msgid "Info"
-msgstr "Informacije"
+#: pacman_mirrors/constants/txt.py:30
+msgid "INFO"
+msgstr "INFORMACIJE"
 
-#: pacman_mirrors/txt.py:33
-msgid "Warning"
-msgstr "Upozorenje"
+#: pacman_mirrors/constants/txt.py:31
+msgid "WARNING"
+msgstr "UPOZORENJE"
 
-#: pacman_mirrors/txt.py:35
-msgid "Timeout"
-msgstr "Vremensko ograničenje"
-
-#: pacman_mirrors/txt.py:36
+#: pacman_mirrors/constants/txt.py:33
 msgid "HTTPException"
 msgstr "HTTPException"
 
-#: pacman_mirrors/txt.py:38
-msgid "PATH"
-msgstr "PUTANJA"
+#: pacman_mirrors/constants/txt.py:34
+msgid "TIMEOUT"
+msgstr "VRIJEME JE ISTEKLO"
 
-#: pacman_mirrors/txt.py:39
+#: pacman_mirrors/constants/txt.py:36
+msgid "API"
+msgstr "API"
+
+#: pacman_mirrors/constants/txt.py:37
+msgid "BRANCH"
+msgstr "GRANA"
+
+#: pacman_mirrors/constants/txt.py:38
+msgid "COUNTRY"
+msgstr "ZEMLJA"
+
+#: pacman_mirrors/constants/txt.py:39
 msgid "FILE"
 msgstr "DATOTEKA"
 
-#: pacman_mirrors/txt.py:40
+#: pacman_mirrors/constants/txt.py:40
+msgid "METHOD"
+msgstr "METODA"
+
+#: pacman_mirrors/constants/txt.py:41
+msgid "METHODS"
+msgstr "METODE"
+
+#: pacman_mirrors/constants/txt.py:42
+msgid "MISC"
+msgstr "OSTALO"
+
+#: pacman_mirrors/constants/txt.py:43
+msgid "NUMBER"
+msgstr "BROJ"
+
+#: pacman_mirrors/constants/txt.py:44
+msgid "PATH"
+msgstr "PUTANJA"
+
+#: pacman_mirrors/constants/txt.py:45
+msgid "PREFIX"
+msgstr "PREFIKS"
+
+#: pacman_mirrors/constants/txt.py:46
+msgid "PROTO"
+msgstr "PROTOKOL"
+
+#: pacman_mirrors/constants/txt.py:47
 msgid "SECONDS"
 msgstr "SEKUNDE"
 
-#: pacman_mirrors/txt.py:41
-msgid "DIGIT"
-msgstr "ZNAMENKA"
-
-#: pacman_mirrors/txt.py:43
-msgid "Branch name"
-msgstr "Ime grane"
-
-#: pacman_mirrors/txt.py:44
-msgid "Comma separated list of countries, from which mirrors will be used"
-msgstr "Lista država odvojenih zarezom, iz kojih će se koristiti poslužitelji"
-
-#: pacman_mirrors/txt.py:46
-msgid "Output file"
-msgstr "Izlazna datoteka"
-
-#: pacman_mirrors/txt.py:47
-msgid "Generate mirrorlist"
-msgstr "Generiraj listu poslužitelja"
-
-#: pacman_mirrors/txt.py:48
-msgid "Get current country using geolocation. Ignored if"
-msgstr "Dohvati trenutnu državu koristeći GPS. Zanemari ako"
-
-#: pacman_mirrors/txt.py:49
-msgid "is supplied"
-msgstr "je isporučen"
-
-#: pacman_mirrors/txt.py:50
-msgid "Generate custom mirrorlist"
-msgstr "Generiraj prilagođenu listu poslužitelja"
-
-#: pacman_mirrors/txt.py:51
-msgid "Generation method"
-msgstr "Metoda generiranja"
-
-#: pacman_mirrors/txt.py:52
-msgid "Don't generate mirrorlist if"
-msgstr "Nemoj generirati listu poslužitelja ako"
-
-#: pacman_mirrors/txt.py:53
-msgid "in the configuration file"
-msgstr "u konfiguracijskoj datoteci"
-
-#: pacman_mirrors/txt.py:54
-msgid "Mirrors list path"
-msgstr "Putanja liste poslužitelja"
-
-#: pacman_mirrors/txt.py:55
-msgid "Quiet mode - less verbose output"
-msgstr "Tih način rada - manje izlaznih podataka"
-
-#: pacman_mirrors/txt.py:56
-msgid "Maximum waiting time for server response"
-msgstr "Maksimalno vrijeme čekanja na odgovor poslužitelja"
-
-#: pacman_mirrors/txt.py:57
-msgid "Print the pacman-mirrors version"
-msgstr "Ispiši verziju pacman-mirrors-a"
-
-#: pacman_mirrors/txt.py:58
-msgid "A quick mirrorlist. Overrides -cim --geoip"
-msgstr "Brza lista poslužitelja. Zanemaruje -cim -geoip"
-
-#: pacman_mirrors/txt.py:60
-msgid "Available countries are"
-msgstr "Dostupne države su"
-
-#: pacman_mirrors/txt.py:61
-msgid "Could not download from"
-msgstr "Ne mogu preuzeti od"
-
-#: pacman_mirrors/txt.py:62
-msgid "Cannot read file"
-msgstr "Ne mogu pročitati datoteku"
-
-#: pacman_mirrors/txt.py:63
-msgid "Cannot write file"
-msgstr "Ne mogu zapisati datoteku"
-
-#: pacman_mirrors/txt.py:64
-msgid "Converting custom mirror file to new format"
-msgstr "Pretvaram datoteku poslužitelja u novi format"
-
-#: pacman_mirrors/txt.py:65
-msgid "Custom mirror file"
-msgstr "Datoteka prilagođene liste poslužitelja"
-
-#: pacman_mirrors/txt.py:66
-msgid "Custom mirror file saved"
-msgstr "Prilagođena datoteka poslužitelja je spremljena"
-
-#: pacman_mirrors/txt.py:67
-msgid "User generated mirror list"
-msgstr "Korisnički generirana lista poslužitelja"
-
-#: pacman_mirrors/txt.py:68
-msgid "doesn't exist."
-msgstr "ne postoji."
-
-#: pacman_mirrors/txt.py:69
-msgid "Downloading mirrors from repo.manjaro.org"
-msgstr "Preuzimam poslužitelje od repo.manjaro.org"
-
-#: pacman_mirrors/txt.py:70
-msgid "Falling back to"
-msgstr "Vračam natrag na"
-
-#: pacman_mirrors/txt.py:71
-msgid "is missing"
-msgstr "nedostaje"
-
-#: pacman_mirrors/txt.py:72
-msgid "The mirror file"
-msgstr "Datoteka poslužitelja"
-
-#: pacman_mirrors/txt.py:73
-msgid "Mirrorlist generated and saved to"
-msgstr "Lista poslužitelja je generirana i spremljena u"
-
-#: pacman_mirrors/txt.py:74
-msgid "Must have root privileges"
-msgstr "Trebaju root ovlasti"
-
-#: pacman_mirrors/txt.py:75
-msgid "The mirror list is not changed"
-msgstr "Lista poslužitelja nije promijenjena"
-
-#: pacman_mirrors/txt.py:76
-msgid "No mirrors in selection"
-msgstr "Nema poslužitelja u odabiru"
-
-#: pacman_mirrors/txt.py:77
-msgid "Option"
-msgstr "Opcija"
-
-#: pacman_mirrors/txt.py:78
-msgid "Writing mirror list"
-msgstr "Zapisujem listu poslužitelja"
-
-#: pacman_mirrors/txt.py:79
-msgid "Querying mirrors"
-msgstr "Postavljam upite poslužiteljima"
-
-#: pacman_mirrors/txt.py:80
-msgid "Randomizing mirror list"
-msgstr "Slučajno odabirem listu poslužitelja"
-
-#: pacman_mirrors/txt.py:81
-msgid "To reset custom config run `pacman-mirrors -c all`"
-msgstr "Za resetiranje prilagođene konfiguracije pokrenite `pacman-mirrors -c all`"
-
-#: pacman_mirrors/txt.py:82
-msgid "This may take some time"
-msgstr "To može potrajati"
-
-#: pacman_mirrors/txt.py:83
-msgid "unknown country"
-msgstr "nepoznata država"
-
-#: pacman_mirrors/txt.py:84
-msgid "Using all mirrors"
-msgstr "Koristim sve poslužitelje"
-
-#: pacman_mirrors/txt.py:85
-msgid "Using custom mirror file"
-msgstr "Koristim datoteku prilagođenog poslužitelja"
-
-#: pacman_mirrors/txt.py:86
-msgid "Using default mirror file"
-msgstr "Koristim zadanu datoteku poslužitelja"
-
-#: pacman_mirrors/txt.py:88
-msgid "Manjaro mirrors by response time"
-msgstr "Manjaro poslužitelji prema vremenu odgovora"
-
-#: pacman_mirrors/txt.py:89
-msgid "Manjaro mirrors in random order"
-msgstr "Manjaro poslužitelji prema slučajnom redoslijedu"
-
-#: pacman_mirrors/txt.py:90
-msgid "Check mirrors for your personal list"
-msgstr "Odaberite poslužitelje za vašu listu"
-
-#: pacman_mirrors/txt.py:91
-msgid "Use"
-msgstr "Koristi"
-
-#: pacman_mirrors/txt.py:92
-msgid "Country"
-msgstr "Zemlja"
-
-#: pacman_mirrors/txt.py:93
-msgid "Resp"
-msgstr "Resp"
-
-#: pacman_mirrors/txt.py:94
-msgid "Sync"
-msgstr "Sync"
-
-#: pacman_mirrors/txt.py:95
+#: pacman_mirrors/constants/txt.py:48 pacman_mirrors/constants/txt.py:125
 msgid "URL"
 msgstr "URL"
 
-#: pacman_mirrors/txt.py:96
+#: pacman_mirrors/constants/txt.py:49
+msgid "USAGE"
+msgstr "UPOTREBA"
+
+#: pacman_mirrors/constants/txt.py:51
+msgid "Return branch from configuration"
+msgstr "Vrati granu iz konfiguracije"
+
+#: pacman_mirrors/constants/txt.py:52
+msgid "Set prefix to"
+msgstr "Postavi prefix na"
+
+#: pacman_mirrors/constants/txt.py:53
+msgid "Replace protocols in configuration"
+msgstr "Zamijeni protokole u konfiguraciji"
+
+#: pacman_mirrors/constants/txt.py:54
+msgid "Replace branch in mirrorlist"
+msgstr "Zamijeni granu u listi zrcalnih poslužitelja"
+
+#: pacman_mirrors/constants/txt.py:55
+msgid "Replace branch in configuration"
+msgstr "Zamijeni granu u konfiguraciji"
+
+#: pacman_mirrors/constants/txt.py:56
+msgid "Replace mirror url in mirrorlist"
+msgstr "Zamijeni url zrcalnog poslužitelja u listi zrcalnih poslužitelja"
+
+#: pacman_mirrors/constants/txt.py:57
+msgid "Branch name"
+msgstr "Ime grane"
+
+#: pacman_mirrors/constants/txt.py:58
+msgid "Comma separated list of countries, from which mirrors will be used"
+msgstr "Lista država odvojenih zarezom, iz kojih će se koristiti zrcalni poslužitelji"
+
+#: pacman_mirrors/constants/txt.py:60
+msgid "Load default mirror file"
+msgstr "Učitaj zadanu datoteku zrcalnih poslužitelja"
+
+#: pacman_mirrors/constants/txt.py:61
+msgid "Generate mirrorlist with a number of up-to-date mirrors. Ignores:"
+msgstr "Generiraj listu zrcalnih poslužitelja s brojem ažuriranih zrcalnih poslužitelja. Ignoriram:"
+
+#: pacman_mirrors/constants/txt.py:63
+msgid "Generate mirrorlist with defaults"
+msgstr "Generiraj listu zrcalnih poslužitelja sa zadanim postavkama"
+
+#: pacman_mirrors/constants/txt.py:64
+msgid "Get current country using geolocation"
+msgstr "Dohvati trenutnu državu koristeći GPS"
+
+#: pacman_mirrors/constants/txt.py:65
+msgid "List all available countries"
+msgstr "Ispiši sve dostupne države"
+
+#: pacman_mirrors/constants/txt.py:66
+msgid "Generate custom mirrorlist"
+msgstr "Generiraj prilagođenu listu zrcalnih poslužitelja"
+
+#: pacman_mirrors/constants/txt.py:67
+msgid "Generation method"
+msgstr "Metoda generiranja"
+
+#: pacman_mirrors/constants/txt.py:68
+msgid "Use to skip generation of mirrorlist"
+msgstr "Koristite za preskakanje generiranja liste zrcalnih poslužitelja"
+
+#: pacman_mirrors/constants/txt.py:69
+msgid "Quiet mode - less verbose output"
+msgstr "Tih način rada - manje izlaznih podataka"
+
+#: pacman_mirrors/constants/txt.py:70
+msgid "Syncronize pacman databases"
+msgstr "Sinkroniziram pacman bazu podataka"
+
+#: pacman_mirrors/constants/txt.py:71
+msgid "Maximum waiting time for server response"
+msgstr "Maksimalno vrijeme čekanja na odgovor poslužitelja"
+
+#: pacman_mirrors/constants/txt.py:72
+msgid "Print the pacman-mirrors version"
+msgstr "Ispiši verziju pacman-zrcalnih poslužitelja"
+
+#: pacman_mirrors/constants/txt.py:74
+msgid "Branch in config is changed"
+msgstr "Grana u konfiguraciji je promijenjena"
+
+#: pacman_mirrors/constants/txt.py:75
+msgid "Protocols in config is changed"
+msgstr "Protokoli u konfiguraciji su promijenjeni"
+
+#: pacman_mirrors/constants/txt.py:76
+msgid "Re-branch requires a branch to work with"
+msgstr "Naredba ponovno postavi granu zahtijeva granu s kojom će raditi"
+
+#: pacman_mirrors/constants/txt.py:77
+msgid "Branch in mirror list is changed"
+msgstr "Grana u listi zrcalnih poslužitelja je promijenjena"
+
+#: pacman_mirrors/constants/txt.py:78
+msgid "Available countries are"
+msgstr "Dostupne države su"
+
+#: pacman_mirrors/constants/txt.py:79
+msgid "Could not download from"
+msgstr "Ne mogu preuzeti od"
+
+#: pacman_mirrors/constants/txt.py:80
+msgid "Cannot read file"
+msgstr "Ne mogu pročitati datoteku"
+
+#: pacman_mirrors/constants/txt.py:81
+msgid "Cannot write file"
+msgstr "Ne mogu zapisati datoteku"
+
+#: pacman_mirrors/constants/txt.py:82
+msgid "Converting custom mirror file to new format"
+msgstr "Pretvaram prilagođenu datoteku zrcalnih poslužitelja u novi format"
+
+#: pacman_mirrors/constants/txt.py:83
+msgid "Custom mirror file"
+msgstr "Datoteka prilagođene liste zrcalnih poslužitelja"
+
+#: pacman_mirrors/constants/txt.py:84
+msgid "Custom mirror file saved"
+msgstr "Prilagođena datoteka zrcalnih poslužitelja je spremljena"
+
+#: pacman_mirrors/constants/txt.py:85
+msgid "User generated mirror list"
+msgstr "Korisnički generirana lista zrcalnih poslužitelja"
+
+#: pacman_mirrors/constants/txt.py:86
+msgid "Deprecated argument"
+msgstr "Argument nije podržan"
+
+#: pacman_mirrors/constants/txt.py:87
+msgid "doesn't exist."
+msgstr "ne postoji."
+
+#: pacman_mirrors/constants/txt.py:88
+msgid "Downloading mirrors from"
+msgstr "Preuzimam zrcalne poslužitelje od"
+
+#: pacman_mirrors/constants/txt.py:89
+msgid "Falling back to"
+msgstr "Vračam natrag na"
+
+#: pacman_mirrors/constants/txt.py:90
+msgid "Internet connection appears to be down"
+msgstr "Izgleda da internetska veza nije dostupna"
+
+#: pacman_mirrors/constants/txt.py:91
+msgid "Mirror list is generated using random method"
+msgstr "Lista zrcalnih poslužitelja je generirana koristeći metodu slučajnog odabira"
+
+#: pacman_mirrors/constants/txt.py:92
+msgid "is missing"
+msgstr "nedostaje"
+
+#: pacman_mirrors/constants/txt.py:93
+msgid "The mirror file"
+msgstr "Datoteka zrcalnih poslužitelja"
+
+#: pacman_mirrors/constants/txt.py:94
+msgid "Mirror list generated and saved to"
+msgstr "Lista zrcalnih poslužitelja je generirana i spremljena u"
+
+#: pacman_mirrors/constants/txt.py:95
+msgid "Generated on"
+msgstr "Generirano iz"
+
+#: pacman_mirrors/constants/txt.py:96
+msgid "custom mirrorlist"
+msgstr "prilagođena lista zrcalnih poslužitelja"
+
+#: pacman_mirrors/constants/txt.py:97
+msgid "to reset custom mirrorlist"
+msgstr "ponovno postavi prilagođenu listu zrcalnih poslužitelja"
+
+#: pacman_mirrors/constants/txt.py:98
+msgid "default mirrorlist"
+msgstr "zadana lista zrcalnih poslužitelja"
+
+#: pacman_mirrors/constants/txt.py:99
+msgid "to modify mirrorlist"
+msgstr "izmijeni listu zrcalnih poslužitelja"
+
+#: pacman_mirrors/constants/txt.py:100
+msgid "Mirror ranking is not available"
+msgstr "Rangiranje zrcalnih poslužitelja nije dostupno"
+
+#: pacman_mirrors/constants/txt.py:101
+msgid "Must have root privileges"
+msgstr "Trebaju root ovlasti"
+
+#: pacman_mirrors/constants/txt.py:102
+msgid "The mirrors has not changed"
+msgstr "Zrcalni poslužitelji nisu promijenjeni"
+
+#: pacman_mirrors/constants/txt.py:103
+msgid "No mirrors in selection"
+msgstr "Nema zrcalnih poslužitelja u odabiru"
+
+#: pacman_mirrors/constants/txt.py:104
+msgid "Option"
+msgstr "Opcija"
+
+#: pacman_mirrors/constants/txt.py:105
+msgid "Please use"
+msgstr "Molimo koristite"
+
+#: pacman_mirrors/constants/txt.py:106
+msgid "Querying mirrors"
+msgstr "Postavljam upite zrcalnim poslužiteljima"
+
+#: pacman_mirrors/constants/txt.py:107
+msgid "Randomizing mirror list"
+msgstr "Slučajno odabirem listu zrcalnih poslužitelja"
+
+#: pacman_mirrors/constants/txt.py:108
+msgid "To remove custom config run "
+msgstr "Za uklanjanje prilagođene konfiguracije pokrenite"
+
+#: pacman_mirrors/constants/txt.py:109
+msgid "This may take some time"
+msgstr "To može potrajati"
+
+#: pacman_mirrors/constants/txt.py:110
+msgid "unknown country"
+msgstr "nepoznata država"
+
+#: pacman_mirrors/constants/txt.py:111
+msgid "Use 0 for all mirrors"
+msgstr "Koristi 0 za sve zrcalne poslužitelje"
+
+#: pacman_mirrors/constants/txt.py:112
+msgid "Using all mirrors"
+msgstr "Koristim sve zrcalne poslužitelje"
+
+#: pacman_mirrors/constants/txt.py:113
+msgid "Using custom mirror file"
+msgstr "Koristim prilagođenu datoteku zrcalnog poslužitelja"
+
+#: pacman_mirrors/constants/txt.py:114
+msgid "Using default mirror file"
+msgstr "Koristim zadanu datoteku zrcalnog poslužitelja"
+
+#: pacman_mirrors/constants/txt.py:115
+msgid "Writing mirror list"
+msgstr "Zapisujem listu zrcalnog poslužitelja"
+
+#: pacman_mirrors/constants/txt.py:118
+msgid "Manjaro mirrors by response time"
+msgstr "Manjaro zrcalni poslužitelji prema vremenu odgovora"
+
+#: pacman_mirrors/constants/txt.py:119
+msgid "Manjaro mirrors in random order"
+msgstr "Manjaro zrcalni poslužitelji prema slučajnom redoslijedu"
+
+#: pacman_mirrors/constants/txt.py:120
+msgid "Check mirrors for your personal list"
+msgstr "Odaberite zrcalne poslužitelje za vašu listu"
+
+#: pacman_mirrors/constants/txt.py:121
+msgid "Use"
+msgstr "Koristi"
+
+#: pacman_mirrors/constants/txt.py:122
+msgid "Country"
+msgstr "Zemlja"
+
+#: pacman_mirrors/constants/txt.py:123
+msgid "Resp"
+msgstr "Resp"
+
+#: pacman_mirrors/constants/txt.py:124
+msgid "Sync"
+msgstr "Sync"
+
+#: pacman_mirrors/constants/txt.py:126
 msgid "Cancel"
 msgstr "Odustani"
 
-#: pacman_mirrors/txt.py:97
+#: pacman_mirrors/constants/txt.py:127
 msgid "OK"
 msgstr "OK"
 
-#: pacman_mirrors/txt.py:98
+#: pacman_mirrors/constants/txt.py:128
 msgid "Confirm selections"
 msgstr "Potvrdite odabir"
 
-#: pacman_mirrors/txt.py:99
+#: pacman_mirrors/constants/txt.py:129
 msgid "I want to use these mirrors"
-msgstr "Želim koristiti ove poslužitelje"
+msgstr "Želim koristiti ove zrcalne poslužitelje"

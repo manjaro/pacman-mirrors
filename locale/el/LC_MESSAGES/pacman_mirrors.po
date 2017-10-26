@@ -4,270 +4,387 @@
 # project.
 # 
 # Translators:
-# Πέτρος Σαμαράς <psamaras1@gmail.com>, 2016
+# Μιχάλης <mikem132@protonmail.com>, 2017
+# Πέτρος Σαμαράς <psamaras1@gmail.com>, 2016-2017
 msgid ""
 msgstr ""
 "Project-Id-Version: manjaro-pacman-mirrors\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2017-02-20 15:44+0100\n"
-"PO-Revision-Date: 2017-02-27 07:41+0000\n"
-"Last-Translator: philm <philm@manjaro.org>\n"
+"POT-Creation-Date: 2017-10-23 20:55+0200\n"
+"PO-Revision-Date: 2017-10-25 10:13+0000\n"
+"Last-Translator: Πέτρος Σαμαράς <psamaras1@gmail.com>\n"
 "Language-Team: Greek (http://www.transifex.com/manjarolinux/manjaro-pacman-mirrors/language/el/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Generated-By: Babel 2.3.4\n"
+"Generated-By: Babel 2.5.1\n"
 "Language: el\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: pacman_mirrors/txt.py:31
-msgid "Error"
-msgstr ""
+#: pacman_mirrors/constants/txt.py:29
+msgid "ERROR"
+msgstr "ΣΦΑΛΜΑ"
 
-#: pacman_mirrors/txt.py:32
-msgid "Info"
-msgstr ""
+#: pacman_mirrors/constants/txt.py:30
+msgid "INFO"
+msgstr "ΠΛΗΡΟΦΟΡΙΕΣ"
 
-#: pacman_mirrors/txt.py:33
-msgid "Warning"
-msgstr ""
+#: pacman_mirrors/constants/txt.py:31
+msgid "WARNING"
+msgstr "ΠΡΟΕΙΔΟΠΟΙΗΣΗ"
 
-#: pacman_mirrors/txt.py:35
-msgid "Timeout"
-msgstr ""
-
-#: pacman_mirrors/txt.py:36
+#: pacman_mirrors/constants/txt.py:33
 msgid "HTTPException"
-msgstr ""
+msgstr "HTTPException"
 
-#: pacman_mirrors/txt.py:38
+#: pacman_mirrors/constants/txt.py:34
+msgid "TIMEOUT"
+msgstr "ΑΝΑΜΟΝΗ"
+
+#: pacman_mirrors/constants/txt.py:36
+msgid "API"
+msgstr "API"
+
+#: pacman_mirrors/constants/txt.py:37
+msgid "BRANCH"
+msgstr "ΚΛΑΔΟΣ"
+
+#: pacman_mirrors/constants/txt.py:38
+msgid "COUNTRY"
+msgstr "ΧΩΡΑ"
+
+#: pacman_mirrors/constants/txt.py:39
+msgid "FILE"
+msgstr "ΑΡΧΕΙΟ"
+
+#: pacman_mirrors/constants/txt.py:40
+msgid "METHOD"
+msgstr "ΜΕΘΟΔΟΣ"
+
+#: pacman_mirrors/constants/txt.py:41
+msgid "METHODS"
+msgstr "ΜΕΘΟΔΟΙ"
+
+#: pacman_mirrors/constants/txt.py:42
+msgid "MISC"
+msgstr "ΔΙΑΦΟΡΑ"
+
+#: pacman_mirrors/constants/txt.py:43
+msgid "NUMBER"
+msgstr "ΑΡΙΘΜΟΣ"
+
+#: pacman_mirrors/constants/txt.py:44
 msgid "PATH"
 msgstr "ΔΙΑΔΡΟΜΗ"
 
-#: pacman_mirrors/txt.py:39
-msgid "FILE"
-msgstr ""
+#: pacman_mirrors/constants/txt.py:45
+msgid "PREFIX"
+msgstr "ΠΡΟΘΕΜΑ"
 
-#: pacman_mirrors/txt.py:40
+#: pacman_mirrors/constants/txt.py:46
+msgid "PROTO"
+msgstr "ΠΡΩΤΟΚΟΛΛΟ"
+
+#: pacman_mirrors/constants/txt.py:47
 msgid "SECONDS"
-msgstr ""
+msgstr "ΔΕΥΤΕΡΟΛΕΠΤΑ"
 
-#: pacman_mirrors/txt.py:41
-msgid "DIGIT"
-msgstr ""
-
-#: pacman_mirrors/txt.py:43
-msgid "Branch name"
-msgstr ""
-
-#: pacman_mirrors/txt.py:44
-msgid "Comma separated list of countries, from which mirrors will be used"
-msgstr ""
-
-#: pacman_mirrors/txt.py:46
-msgid "Output file"
-msgstr ""
-
-#: pacman_mirrors/txt.py:47
-msgid "Generate mirrorlist"
-msgstr ""
-
-#: pacman_mirrors/txt.py:48
-msgid "Get current country using geolocation. Ignored if"
-msgstr ""
-
-#: pacman_mirrors/txt.py:49
-msgid "is supplied"
-msgstr ""
-
-#: pacman_mirrors/txt.py:50
-msgid "Generate custom mirrorlist"
-msgstr ""
-
-#: pacman_mirrors/txt.py:51
-msgid "Generation method"
-msgstr ""
-
-#: pacman_mirrors/txt.py:52
-msgid "Don't generate mirrorlist if"
-msgstr ""
-
-#: pacman_mirrors/txt.py:53
-msgid "in the configuration file"
-msgstr ""
-
-#: pacman_mirrors/txt.py:54
-msgid "Mirrors list path"
-msgstr ""
-
-#: pacman_mirrors/txt.py:55
-msgid "Quiet mode - less verbose output"
-msgstr ""
-
-#: pacman_mirrors/txt.py:56
-msgid "Maximum waiting time for server response"
-msgstr ""
-
-#: pacman_mirrors/txt.py:57
-msgid "Print the pacman-mirrors version"
-msgstr ""
-
-#: pacman_mirrors/txt.py:58
-msgid "A quick mirrorlist. Overrides -cim --geoip"
-msgstr ""
-
-#: pacman_mirrors/txt.py:60
-msgid "Available countries are"
-msgstr ""
-
-#: pacman_mirrors/txt.py:61
-msgid "Could not download from"
-msgstr ""
-
-#: pacman_mirrors/txt.py:62
-msgid "Cannot read file"
-msgstr ""
-
-#: pacman_mirrors/txt.py:63
-msgid "Cannot write file"
-msgstr ""
-
-#: pacman_mirrors/txt.py:64
-msgid "Converting custom mirror file to new format"
-msgstr ""
-
-#: pacman_mirrors/txt.py:65
-msgid "Custom mirror file"
-msgstr ""
-
-#: pacman_mirrors/txt.py:66
-msgid "Custom mirror file saved"
-msgstr ""
-
-#: pacman_mirrors/txt.py:67
-msgid "User generated mirror list"
-msgstr ""
-
-#: pacman_mirrors/txt.py:68
-msgid "doesn't exist."
-msgstr ""
-
-#: pacman_mirrors/txt.py:69
-msgid "Downloading mirrors from repo.manjaro.org"
-msgstr ""
-
-#: pacman_mirrors/txt.py:70
-msgid "Falling back to"
-msgstr ""
-
-#: pacman_mirrors/txt.py:71
-msgid "is missing"
-msgstr ""
-
-#: pacman_mirrors/txt.py:72
-msgid "The mirror file"
-msgstr ""
-
-#: pacman_mirrors/txt.py:73
-msgid "Mirrorlist generated and saved to"
-msgstr ""
-
-#: pacman_mirrors/txt.py:74
-msgid "Must have root privileges"
-msgstr ""
-
-#: pacman_mirrors/txt.py:75
-msgid "The mirror list is not changed"
-msgstr ""
-
-#: pacman_mirrors/txt.py:76
-msgid "No mirrors in selection"
-msgstr ""
-
-#: pacman_mirrors/txt.py:77
-msgid "Option"
-msgstr ""
-
-#: pacman_mirrors/txt.py:78
-msgid "Writing mirror list"
-msgstr ""
-
-#: pacman_mirrors/txt.py:79
-msgid "Querying mirrors"
-msgstr ""
-
-#: pacman_mirrors/txt.py:80
-msgid "Randomizing mirror list"
-msgstr ""
-
-#: pacman_mirrors/txt.py:81
-msgid "To reset custom config run `pacman-mirrors -c all`"
-msgstr ""
-
-#: pacman_mirrors/txt.py:82
-msgid "This may take some time"
-msgstr ""
-
-#: pacman_mirrors/txt.py:83
-msgid "unknown country"
-msgstr ""
-
-#: pacman_mirrors/txt.py:84
-msgid "Using all mirrors"
-msgstr ""
-
-#: pacman_mirrors/txt.py:85
-msgid "Using custom mirror file"
-msgstr ""
-
-#: pacman_mirrors/txt.py:86
-msgid "Using default mirror file"
-msgstr ""
-
-#: pacman_mirrors/txt.py:88
-msgid "Manjaro mirrors by response time"
-msgstr ""
-
-#: pacman_mirrors/txt.py:89
-msgid "Manjaro mirrors in random order"
-msgstr ""
-
-#: pacman_mirrors/txt.py:90
-msgid "Check mirrors for your personal list"
-msgstr ""
-
-#: pacman_mirrors/txt.py:91
-msgid "Use"
-msgstr ""
-
-#: pacman_mirrors/txt.py:92
-msgid "Country"
-msgstr ""
-
-#: pacman_mirrors/txt.py:93
-msgid "Resp"
-msgstr ""
-
-#: pacman_mirrors/txt.py:94
-msgid "Sync"
-msgstr ""
-
-#: pacman_mirrors/txt.py:95
+#: pacman_mirrors/constants/txt.py:48 pacman_mirrors/constants/txt.py:125
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
-#: pacman_mirrors/txt.py:96
+#: pacman_mirrors/constants/txt.py:49
+msgid "USAGE"
+msgstr "ΧΡΗΣΗ"
+
+#: pacman_mirrors/constants/txt.py:51
+msgid "Return branch from configuration"
+msgstr "Ανάκτηση κλάδου από τις ρυθμίσεις"
+
+#: pacman_mirrors/constants/txt.py:52
+msgid "Set prefix to"
+msgstr "Ορισμός προθέματος σε"
+
+#: pacman_mirrors/constants/txt.py:53
+msgid "Replace protocols in configuration"
+msgstr "Αντικατάσταση πρωτοκόλλων στις ρυθμίσεις"
+
+#: pacman_mirrors/constants/txt.py:54
+msgid "Replace branch in mirrorlist"
+msgstr "Αντικατάσταση κλάδου στη λίστα αναμεταδοτών"
+
+#: pacman_mirrors/constants/txt.py:55
+msgid "Replace branch in configuration"
+msgstr "Αντικατάσταση κλάδου στις ρυθμίσεις"
+
+#: pacman_mirrors/constants/txt.py:56
+msgid "Replace mirror url in mirrorlist"
+msgstr "Αντικατάσταση URL αναμεταδότη στη λίστα αναμεταδοτών"
+
+#: pacman_mirrors/constants/txt.py:57
+msgid "Branch name"
+msgstr "Όνομα κλάδου"
+
+#: pacman_mirrors/constants/txt.py:58
+msgid "Comma separated list of countries, from which mirrors will be used"
+msgstr "Λίστα χωρών χωρισμένη με κόμματα, από την οποία θα χρησιμοποιηθούν αναμεταδότες"
+
+#: pacman_mirrors/constants/txt.py:60
+msgid "Load default mirror file"
+msgstr "Φόρτωση προκαθορισμένου αρχείου αναμεταδοτών"
+
+#: pacman_mirrors/constants/txt.py:61
+msgid "Generate mirrorlist with a number of up-to-date mirrors. Ignores:"
+msgstr "Δημιουργία λίστας αναμεταδοτών με έναν αριθμό από ενημερωμένους αναμεταδότες. Παραλείπει:"
+
+#: pacman_mirrors/constants/txt.py:63
+msgid "Generate mirrorlist with defaults"
+msgstr "Δημιουργία λίστας αναμεταδοτών με βασικές ρυθμίσεις"
+
+#: pacman_mirrors/constants/txt.py:64
+msgid "Get current country using geolocation"
+msgstr "Βρες την τρέχουσα χώρα αυτόματα"
+
+#: pacman_mirrors/constants/txt.py:65
+msgid "List all available countries"
+msgstr "Λίστα με όλες τις διαθέσιμες χώρες"
+
+#: pacman_mirrors/constants/txt.py:66
+msgid "Generate custom mirrorlist"
+msgstr "Δημιούργησε εξατομικευμένη λίστα αναμεταδοτών (mirrorlist)"
+
+#: pacman_mirrors/constants/txt.py:67
+msgid "Generation method"
+msgstr "Μέθοδος δημιουργίας"
+
+#: pacman_mirrors/constants/txt.py:68
+msgid "Use to skip generation of mirrorlist"
+msgstr "Χρήση για παράληψη δημιουργίας λίστας"
+
+#: pacman_mirrors/constants/txt.py:69
+msgid "Quiet mode - less verbose output"
+msgstr "Αθόρυβη λειτουργία - παρουσίαση μόνο απαραίτητων μηνυμάτων"
+
+#: pacman_mirrors/constants/txt.py:70
+msgid "Syncronize pacman databases"
+msgstr "Συγχρονισμός βάσης δεδομένων pacman"
+
+#: pacman_mirrors/constants/txt.py:71
+msgid "Maximum waiting time for server response"
+msgstr "Μέγιστος χρόνος αναμονής για ανταπόκριση εξυπηρετητή - server"
+
+#: pacman_mirrors/constants/txt.py:72
+msgid "Print the pacman-mirrors version"
+msgstr "Εκτύπωση της έκδοσης του pacman-mirrors"
+
+#: pacman_mirrors/constants/txt.py:74
+msgid "Branch in config is changed"
+msgstr "Άλλαξε ο κλάδος στις ρυθμίσεις"
+
+#: pacman_mirrors/constants/txt.py:75
+msgid "Protocols in config is changed"
+msgstr "Άλλαξαν τα πρωτόκολλα στις ρυθμίσεις"
+
+#: pacman_mirrors/constants/txt.py:76
+msgid "Re-branch requires a branch to work with"
+msgstr "Η αλλαγή κλάδου απαιτεί έναν κλάδο για να λειτουργήσει"
+
+#: pacman_mirrors/constants/txt.py:77
+msgid "Branch in mirror list is changed"
+msgstr "Άλλαξε ο κλάδος στη λίστα αναμεταδοτών"
+
+#: pacman_mirrors/constants/txt.py:78
+msgid "Available countries are"
+msgstr "Οι διαθέσιμες χώρες είναι"
+
+#: pacman_mirrors/constants/txt.py:79
+msgid "Could not download from"
+msgstr "Δεν μπόρεσε να γίνει ανάκτηση από"
+
+#: pacman_mirrors/constants/txt.py:80
+msgid "Cannot read file"
+msgstr "Δεν είναι δυνατή η ανάγνωση του αρχείου"
+
+#: pacman_mirrors/constants/txt.py:81
+msgid "Cannot write file"
+msgstr "Δεν είναι δυνατή η εγγραφή αρχείου"
+
+#: pacman_mirrors/constants/txt.py:82
+msgid "Converting custom mirror file to new format"
+msgstr "Μετατροπή εξατομικευμένου αρχείου αναμεταδοτών σε νέο τύπο"
+
+#: pacman_mirrors/constants/txt.py:83
+msgid "Custom mirror file"
+msgstr "Εξατομικευμένο αρχείο αναμεταδοτών"
+
+#: pacman_mirrors/constants/txt.py:84
+msgid "Custom mirror file saved"
+msgstr "Το εξατομικευμένο αρχείο αναμεταδοτών αποθηκεύτηκε"
+
+#: pacman_mirrors/constants/txt.py:85
+msgid "User generated mirror list"
+msgstr "Λίστα αναμεταδοτών δημιουργημένη από το χρήστη"
+
+#: pacman_mirrors/constants/txt.py:86
+msgid "Deprecated argument"
+msgstr "Εγκατελειμένη παράμετρος"
+
+#: pacman_mirrors/constants/txt.py:87
+msgid "doesn't exist."
+msgstr "δεν υπάρχει."
+
+#: pacman_mirrors/constants/txt.py:88
+msgid "Downloading mirrors from"
+msgstr "Ανάκτηση αναμεταδοτών από"
+
+#: pacman_mirrors/constants/txt.py:89
+msgid "Falling back to"
+msgstr "Υπαναχώρηση πάλι στο"
+
+#: pacman_mirrors/constants/txt.py:90
+msgid "Internet connection appears to be down"
+msgstr "Φαίνεται πως η σύνδεση δικτύου έχει διακοπεί"
+
+#: pacman_mirrors/constants/txt.py:91
+msgid "Mirror list is generated using random method"
+msgstr "Η λίστα δημιουργείται με τυχαίο τρόπο"
+
+#: pacman_mirrors/constants/txt.py:92
+msgid "is missing"
+msgstr "απουσιάζει"
+
+#: pacman_mirrors/constants/txt.py:93
+msgid "The mirror file"
+msgstr "Το αρχείο αναμεταδοτών"
+
+#: pacman_mirrors/constants/txt.py:94
+msgid "Mirror list generated and saved to"
+msgstr "Η λίστα δημιουργείται και αποθηκεύεται στο"
+
+#: pacman_mirrors/constants/txt.py:95
+msgid "Generated on"
+msgstr "Δημιουργία με βάση"
+
+#: pacman_mirrors/constants/txt.py:96
+msgid "custom mirrorlist"
+msgstr "εξατομικευμένη λίστα"
+
+#: pacman_mirrors/constants/txt.py:97
+msgid "to reset custom mirrorlist"
+msgstr "για επαναφορά εξατομικευμένης λίστας"
+
+#: pacman_mirrors/constants/txt.py:98
+msgid "default mirrorlist"
+msgstr "προκαθορισμένη λίστα"
+
+#: pacman_mirrors/constants/txt.py:99
+msgid "to modify mirrorlist"
+msgstr "για τροποποίηση λίστας"
+
+#: pacman_mirrors/constants/txt.py:100
+msgid "Mirror ranking is not available"
+msgstr "Δεν είναι διαθέσιμη η βαθμονόμηση αναμεταδοτών"
+
+#: pacman_mirrors/constants/txt.py:101
+msgid "Must have root privileges"
+msgstr "Απαιτούνται δικαιώματα διαχειριστή"
+
+#: pacman_mirrors/constants/txt.py:102
+msgid "The mirrors has not changed"
+msgstr "Οι αναμεταδότες δεν άλλαξαν"
+
+#: pacman_mirrors/constants/txt.py:103
+msgid "No mirrors in selection"
+msgstr "Δεν επιλέχτηκε αναμεταδότης"
+
+#: pacman_mirrors/constants/txt.py:104
+msgid "Option"
+msgstr "Επιλογή"
+
+#: pacman_mirrors/constants/txt.py:105
+msgid "Please use"
+msgstr "Παρακαλώ χρησιμοποιείστε"
+
+#: pacman_mirrors/constants/txt.py:106
+msgid "Querying mirrors"
+msgstr "Αναζήτηση αναμεταδοτών"
+
+#: pacman_mirrors/constants/txt.py:107
+msgid "Randomizing mirror list"
+msgstr "Τυχαία επιλογή λίστας αναμεταδοτών"
+
+#: pacman_mirrors/constants/txt.py:108
+msgid "To remove custom config run "
+msgstr "Για επαναφορά των εξατομικευμένων ρυθμίσεων εκτελέστε"
+
+#: pacman_mirrors/constants/txt.py:109
+msgid "This may take some time"
+msgstr "Αυτό μπορεί να αργήσει λίγο"
+
+#: pacman_mirrors/constants/txt.py:110
+msgid "unknown country"
+msgstr "άγνωστη χώρα"
+
+#: pacman_mirrors/constants/txt.py:111
+msgid "Use 0 for all mirrors"
+msgstr "Βάλτε 0 για όλους τους αναμεταδότες"
+
+#: pacman_mirrors/constants/txt.py:112
+msgid "Using all mirrors"
+msgstr "Χρήση όλων των αναμεταδοτών"
+
+#: pacman_mirrors/constants/txt.py:113
+msgid "Using custom mirror file"
+msgstr "Χρήση εξατομικευμένου αρχείου αναμεταδοτών"
+
+#: pacman_mirrors/constants/txt.py:114
+msgid "Using default mirror file"
+msgstr "Χρήση βασικού αρχείου αναμεταδοτών"
+
+#: pacman_mirrors/constants/txt.py:115
+msgid "Writing mirror list"
+msgstr "Εγγραφή λίστας αναμεταδοτών (mirror list)"
+
+#: pacman_mirrors/constants/txt.py:118
+msgid "Manjaro mirrors by response time"
+msgstr "Αναμεταδότες Manjaro κατά σειρά χρόνου απάντησης"
+
+#: pacman_mirrors/constants/txt.py:119
+msgid "Manjaro mirrors in random order"
+msgstr "Αναμεταδότες Manjaro σε τυχαία σειρά"
+
+#: pacman_mirrors/constants/txt.py:120
+msgid "Check mirrors for your personal list"
+msgstr "Επιλέξτε αναμεταδότες για την προσωπική σας λίστα"
+
+#: pacman_mirrors/constants/txt.py:121
+msgid "Use"
+msgstr "Χρήση"
+
+#: pacman_mirrors/constants/txt.py:122
+msgid "Country"
+msgstr "Χώρα"
+
+#: pacman_mirrors/constants/txt.py:123
+msgid "Resp"
+msgstr "Απάντ"
+
+#: pacman_mirrors/constants/txt.py:124
+msgid "Sync"
+msgstr "Συγχρ"
+
+#: pacman_mirrors/constants/txt.py:126
 msgid "Cancel"
-msgstr ""
+msgstr "Άκυρο"
 
-#: pacman_mirrors/txt.py:97
+#: pacman_mirrors/constants/txt.py:127
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
-#: pacman_mirrors/txt.py:98
+#: pacman_mirrors/constants/txt.py:128
 msgid "Confirm selections"
-msgstr ""
+msgstr "Έγκριση επιλογών"
 
-#: pacman_mirrors/txt.py:99
+#: pacman_mirrors/constants/txt.py:129
 msgid "I want to use these mirrors"
-msgstr ""
+msgstr "Θέλω να χρησιμοποιήσω αυτούς τους αναμεταδότες"
