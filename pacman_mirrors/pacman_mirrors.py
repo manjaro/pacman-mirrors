@@ -126,7 +126,6 @@ class PacmanMirrors:
         methods.add_argument("-m", "--method",
                              type=str,
                              choices=["rank", "random"],
-                             metavar=txt.METHOD,
                              help=txt.HLP_ARG_METHOD)
         country = parser.add_argument_group(txt.COUNTRY)
         country.add_argument("-c", "--country",
@@ -169,7 +168,6 @@ class PacmanMirrors:
         api.add_argument("-P", "--proto", "--protocols",
                          choices=["all", "http", "https", "ftp", "ftps"],
                          type=str,
-                         metavar=txt.PROTO,
                          nargs="+",
                          help="{}: {}".format(
                              txt.API, txt.HLP_ARG_API_PROTOCOLS))
