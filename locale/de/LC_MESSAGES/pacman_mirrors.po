@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: manjaro-pacman-mirrors\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2017-10-23 20:55+0200\n"
-"PO-Revision-Date: 2017-10-26 07:49+0000\n"
+"PO-Revision-Date: 2017-10-26 08:25+0000\n"
 "Last-Translator: philm <philm@manjaro.org>\n"
 "Language-Team: German (http://www.transifex.com/manjarolinux/manjaro-pacman-mirrors/language/de/)\n"
 "MIME-Version: 1.0\n"
@@ -86,7 +86,7 @@ msgstr "PREFIX"
 
 #: pacman_mirrors/constants/txt.py:46
 msgid "PROTO"
-msgstr "PROTOKOL"
+msgstr "PROTO"
 
 #: pacman_mirrors/constants/txt.py:47
 msgid "SECONDS"
