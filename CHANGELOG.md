@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [4.4] 2017-11-07
+* **Improvement**: `-f/--fasttrack` honor `-c COUNTRY,COUNTRY,COUNTRY` 
+* **Change**: `-c/--country` countries supplied will be written to `custom-mirrors.json`, overwriting exiting file. 
+
 ## [4.3.1] 2017-11-07
 * **Fix**: typo in documentation
 
