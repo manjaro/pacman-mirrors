@@ -30,18 +30,18 @@ After all operations **ALWAYS** syncronize your pacman database with
 
 Some options are mutual exclusive and will throw an arguments error:
 
-* **\--no-mirrorlist** and **\--sync**
 * **--branch**, **--get-branch** and **--set-branch**
-* **--sync** and **--no-mirrorlist**
 * **--country** and **--geoip**
 
 Others can be used together but they have precedence. If the fasttrack arg is used with interactive, country or geoip the fasttrack arg will have precendence and the others are ignored. Some arguments requires other argument to have effect for example,this command will ignore --default argument
 
-    WRONG pacman-mirrors -b unstable --default
+    WRONG
+    pacman-mirrors -b unstable --default
 
 as it should have been in conjunction with --interactive, like
 
-    CORRECT pacman-mirrors -b unstable --interactive --default
+    CORRECT
+    pacman-mirrors -b unstable --interactive --default
 
 The same goes for the API specific arguments. For those to have effect the --api argument must be present also.
 
@@ -55,13 +55,6 @@ Pacman-mirrors downloads the lastest available status from [http://repo.manjaro.
 
 ## IMPORTANT TO REMEMBER
 It cannot be stressed enough that for every mirrorlist generation you commence, you **MUST** run *pacman -Syy*.
-
-## YEE BE WARNED: Deprecated arguments
--g, \--generate
-:   The argument is deprecated in favor of **-f/--fasttrack**
-
--y, \--sync
-:   An argument which never should have been here. The better option is to educate yourself to always use **pacman -Syy** after any change to your mirrorlist
 
 ## METHODS
 -f, \--fasttrack *NUMBER*
@@ -77,9 +70,6 @@ It cannot be stressed enough that for every mirrorlist generation you commence, 
     The addition argument **--default** forces pacman-mirrors to load the default mirror
     file and ignore any preset custom-mirrors file, thus allowing for reselecting mirrors
     for a new custom mirror file.
-
--m, \--method *METHOD*
-:   Default method is *rank* but *random* can be selected.
 
 ## BRANCH
 
@@ -99,7 +89,7 @@ It cannot be stressed enough that for every mirrorlist generation you commence, 
 
 ## API
 
--a, \--api [-p *PREFIX*] [-R] [-G|-S *BRANCH*] [-P *PROTO* [*PROTO*] ...] [-U *URL*]
+-a, \--api [-p *PREFIX*] [-R] [-G|-S/-B *BRANCH*] [-P *PROTO* [*PROTO*] ...] [-U *URL*]
 :   Instructs pacman-mirrors to activate processing of API arguments
 
 -p, \--prefix *PREFIX*
@@ -116,8 +106,8 @@ It cannot be stressed enough that for every mirrorlist generation you commence, 
 -R, \--re-branch
 :   Replace branch in mirrorlist
 
--S, \--set-branch *BRANCH*
-:   Replace branch in configuration,
+-S, B, \--set-branch *BRANCH*
+:   Permanent change to branch config,
     use *stable*, *testing* or *unstable*
 
 -U, \--url *URL*
@@ -127,6 +117,9 @@ It cannot be stressed enough that for every mirrorlist generation you commence, 
 
 -h, \--help
 :   Show the help message
+
+-m, \--method *METHOD*
+:   Default method is *rank* but *random* can be selected.
 
 -n, \--no-mirrorlist
 :   Use to skip generation of mirrorlist
@@ -174,7 +167,7 @@ pacman-mirrors when branch and mirrorlist has been written.
    * *sys.exit(0)*
 2. If *p*  *PREFIX*
    *  add *PREFIX* to internal file configuration
-3. If *-S* *BRANCH*
+3. If *-S/-B* *BRANCH*
    * apply *BRANCH* to internal configuration
    * replace branch in pacman-mirrors.conf with *BRANCH*
 4. If *-U* *URL*
@@ -183,7 +176,7 @@ pacman-mirrors when branch and mirrorlist has been written.
 5. If *-P* *PROTO* [*PROTO*] ...
    * replace protocols in pacman-mirrors.conf with *PROTO*
 6. If *-R*
-   * replace branch in mirrorlist with *-S* *BRANCH*
+   * replace branch in mirrorlist with *-S/-B* *BRANCH*
 
 When done pacman-mirrors checks the internet connection and if possible
 download the latest datafiles for creating the mirrorlist.
