@@ -68,14 +68,15 @@ def return_mirror_filename(config):
     return filename, status
 
 
-def output_mirror_list(config, servers, custom=False,
-                       quiet=False, interactive=False):
-    """Write servers to /etc/pacman.d/mirrorlist
-    :param config:
+def write_mirror_list(config, servers, custom=False,
+                      quiet=False, interactive=False):
+    """
+    Write servers to /etc/pacman.d/mirrorlist
+    :param config: configuration dictionary
     :param servers: list of servers to write
-    :param custom:
-    :param quiet:
-    :param interactive:
+    :param custom: flag
+    :param quiet: flag
+    :param interactive: flag
     """
     try:
         with open(config["mirror_list"], "w") as outfile:
