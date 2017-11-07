@@ -89,7 +89,6 @@
             <li><a href="#important">IMPORTANT</a></li>
         <li class="main "><a href="#options">OPTIONS</a></li>
             <li><a href="#important-to-remember">IMPORTANT TO REMEMBER</a></li>
-            <li><a href="#yee-be-warned-deprecated-arguments">YEE BE WARNED: Deprecated arguments</a></li>
             <li><a href="#methods">METHODS</a></li>
             <li><a href="#branch">BRANCH</a></li>
             <li><a href="#country">COUNTRY</a></li>
@@ -129,16 +128,16 @@
 <h1 id="options">OPTIONS</h1>
 <p>Some options are mutual exclusive and will throw an arguments error:</p>
 <ul>
-<li><strong>--no-mirrorlist</strong> and <strong>--sync</strong></li>
 <li><strong>--branch</strong>, <strong>--get-branch</strong> and <strong>--set-branch</strong></li>
-<li><strong>--sync</strong> and <strong>--no-mirrorlist</strong></li>
 <li><strong>--country</strong> and <strong>--geoip</strong></li>
 </ul>
 <p>Others can be used together but they have precedence. If the fasttrack arg is used with interactive, country or geoip the fasttrack arg will have precendence and the others are ignored. Some arguments requires other argument to have effect for example,this command will ignore --default argument</p>
-<pre><code>WRONG pacman-mirrors -b unstable --default
+<pre><code>WRONG
+pacman-mirrors -b unstable --default
 </code></pre>
 <p>as it should have been in conjunction with --interactive, like</p>
-<pre><code>CORRECT pacman-mirrors -b unstable --interactive --default
+<pre><code>CORRECT
+pacman-mirrors -b unstable --interactive --default
 </code></pre>
 <p>The same goes for the API specific arguments. For those to have effect the --api argument must be present also.</p>
 <pre><code>pacman-mirrors -aS unstable
@@ -149,11 +148,6 @@
 <p>Pacman-mirrors downloads the lastest available status from <a href="http://repo.manjaro.org">http://repo.manjaro.org</a>. These data is always used during mirrorlist generation to ensure that you connected to a mirror which is up-to-date for your selected branch. Should you decide to temporarily switch branches you will still connect to an up-to-date mirror.</p>
 <h2 id="important-to-remember">IMPORTANT TO REMEMBER</h2>
 <p>It cannot be stressed enough that for every mirrorlist generation you commence, you <strong>MUST</strong> run <em>pacman -Syy</em>.</p>
-<h2 id="yee-be-warned-deprecated-arguments">YEE BE WARNED: Deprecated arguments</h2>
-<p>-g, --generate
-:   The argument is deprecated in favor of <strong>-f/--fasttrack</strong></p>
-<p>-y, --sync
-:   An argument which never should have been here. The better option is to educate yourself to always use <strong>pacman -Syy</strong> after any change to your mirrorlist</p>
 <h2 id="methods">METHODS</h2>
 <p>-f, --fasttrack <em>NUMBER</em>
 :   Generates an up-to-date mirrorlist for the users current selected branch,
@@ -167,8 +161,6 @@
     The addition argument <strong>--default</strong> forces pacman-mirrors to load the default mirror
     file and ignore any preset custom-mirrors file, thus allowing for reselecting mirrors
     for a new custom mirror file.</p>
-<p>-m, --method <em>METHOD</em>
-:   Default method is <em>rank</em> but <em>random</em> can be selected.</p>
 <h2 id="branch">BRANCH</h2>
 <p>-b, --branch <em>BRANCH</em>
 :   Temporarily use another branch, <em>stable</em>, <em>testing</em> or <em>unstable</em>.
@@ -181,7 +173,7 @@
 <p>-l, --list, --country-list
 :   Lists available mirror countries.</p>
 <h2 id="api">API</h2>
-<p>-a, --api [-p <em>PREFIX</em>] [-R] [-G|-S <em>BRANCH</em>] [-P <em>PROTO</em> [<em>PROTO</em>] ...] [-U <em>URL</em>]
+<p>-a, --api [-p <em>PREFIX</em>] [-R] [-G|-S/-B <em>BRANCH</em>] [-P <em>PROTO</em> [<em>PROTO</em>] ...] [-U <em>URL</em>]
 :   Instructs pacman-mirrors to activate processing of API arguments</p>
 <p>-p, --prefix <em>PREFIX</em>
 :   Add a path prefix to pacman-mirrors file-handling
@@ -193,14 +185,16 @@
     use <em>all</em> or <em>http</em>, <em>https</em>, <em>ftp</em> and <em>ftps</em></p>
 <p>-R, --re-branch
 :   Replace branch in mirrorlist</p>
-<p>-S, --set-branch <em>BRANCH</em>
-:   Replace branch in configuration,
+<p>-S, B, --set-branch <em>BRANCH</em>
+:   Permanent change to branch config,
     use <em>stable</em>, <em>testing</em> or <em>unstable</em></p>
 <p>-U, --url <em>URL</em>
 :   Replace mirrorlist with supplied url</p>
 <h2 id="misc">MISC</h2>
 <p>-h, --help
 :   Show the help message</p>
+<p>-m, --method <em>METHOD</em>
+:   Default method is <em>rank</em> but <em>random</em> can be selected.</p>
 <p>-n, --no-mirrorlist
 :   Use to skip generation of mirrorlist</p>
 <p>-q, --quiet
@@ -237,7 +231,7 @@ pacman-mirrors when branch and mirrorlist has been written.</p>
 <li><em>sys.exit(0)</em></li>
 <li>If <em>p</em>  <em>PREFIX</em></li>
 <li>add <em>PREFIX</em> to internal file configuration</li>
-<li>If <em>-S</em> <em>BRANCH</em></li>
+<li>If <em>-S/-B</em> <em>BRANCH</em></li>
 <li>apply <em>BRANCH</em> to internal configuration</li>
 <li>replace branch in pacman-mirrors.conf with <em>BRANCH</em></li>
 <li>If <em>-U</em> <em>URL</em></li>
@@ -246,7 +240,7 @@ pacman-mirrors when branch and mirrorlist has been written.</p>
 <li>If <em>-P</em> <em>PROTO</em> [<em>PROTO</em>] ...</li>
 <li>replace protocols in pacman-mirrors.conf with <em>PROTO</em></li>
 <li>If <em>-R</em></li>
-<li>replace branch in mirrorlist with <em>-S</em> <em>BRANCH</em></li>
+<li>replace branch in mirrorlist with <em>-S/-B</em> <em>BRANCH</em></li>
 </ol>
 <p>When done pacman-mirrors checks the internet connection and if possible
 download the latest datafiles for creating the mirrorlist.
@@ -415,5 +409,5 @@ Frede Hundewadt &lt;echo ZmhAbWFuamFyby5vcmcK | base64 -d&gt;
 
 <!--
 MkDocs version : 0.17.1
-Build Date UTC : 2017-11-07 07:33:52
+Build Date UTC : 2017-11-07 16:37:06
 -->
