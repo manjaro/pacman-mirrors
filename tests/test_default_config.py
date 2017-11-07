@@ -49,7 +49,7 @@ class TestDefaultConfig(unittest.TestCase):
         mock_build_config.return_value = test_conf
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
-                                  "-g"]):
+                                  "-f1"]):
             app = PacmanMirrors()
             app.config["config_file"] = conf.CONFIG_FILE
             app.config = configfn.build_config()
@@ -63,7 +63,7 @@ class TestDefaultConfig(unittest.TestCase):
         mock_build_config.return_value = test_conf
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
-                                  "-g"]):
+                                  "-f1"]):
             app = PacmanMirrors()
             app.config["config_file"] = conf.CONFIG_FILE
             app.config = configfn.build_config()
@@ -77,7 +77,7 @@ class TestDefaultConfig(unittest.TestCase):
         mock_build_config.return_value = test_conf
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
-                                  "-g"]):
+                                  "-f1"]):
             app = PacmanMirrors()
             app.config = configfn.build_config()
             assert app.config["work_dir"] == "tests/mock/var/"
@@ -90,7 +90,7 @@ class TestDefaultConfig(unittest.TestCase):
         mock_build_config.return_value = test_conf
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
-                                  "-g"]):
+                                  "-f1"]):
             app = PacmanMirrors()
             app.config = configfn.build_config()
             assert app.config["mirror_file"] == "tests/mock/usr/mirrors.json"
@@ -103,7 +103,7 @@ class TestDefaultConfig(unittest.TestCase):
         mock_build_config.return_value = test_conf
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
-                                  "-g"]):
+                                  "-f1"]):
             app = PacmanMirrors()
             app.config = configfn.build_config()
             assert app.config["mirror_list"] == "tests/mock/etc/mirrorlist"
@@ -116,7 +116,7 @@ class TestDefaultConfig(unittest.TestCase):
         mock_build_config.return_value = test_conf
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
-                                  "-g"]):
+                                  "-f1"]):
             app = PacmanMirrors()
             app.config = configfn.build_config()
             assert app.config["no_update"] is False
@@ -129,7 +129,7 @@ class TestDefaultConfig(unittest.TestCase):
         mock_build_config.return_value = test_conf
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
-                                  "-g"]):
+                                  "-f1"]):
             app = PacmanMirrors()
             app.config["config_file"] = conf.CONFIG_FILE
             app.config = configfn.build_config()

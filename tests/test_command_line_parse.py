@@ -139,7 +139,7 @@ class TestCommandLineParse(unittest.TestCase):
         mock_build_config.return_value = test_conf
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
-                                  "-f 5"]):
+                                  "-f5"]):
             app = PacmanMirrors()
             app.config["config_file"] = conf.CONFIG_FILE
             app.config = configfn.build_config()
@@ -169,7 +169,7 @@ class TestCommandLineParse(unittest.TestCase):
         mock_build_config.return_value = test_conf
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
-                                  "-t 5"]):
+                                  "-t5"]):
             app = PacmanMirrors()
             app.config["config_file"] = conf.CONFIG_FILE
             app.config = configfn.build_config()

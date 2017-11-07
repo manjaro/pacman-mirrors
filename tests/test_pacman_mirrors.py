@@ -44,19 +44,22 @@ class TestPacmanMirrors(unittest.TestCase):
 
     @patch("os.getuid")
     @patch.object(configfn, "build_config")
-    def test_print_deprecation_messages(self,
-                                        mock_build_config,
-                                        mock_os_getuid):
-        """TEST: pacman-mirrors -g -y"""
+    def test_full_run_fasttrack(self,
+                                mock_build_config,
+                                mock_os_getuid):
+        """TEST: pacman-mirrors -f5"""
         mock_os_getuid.return_value = 0
         mock_build_config.return_value = test_conf
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
-                                  "-g",
-                                  "-y"]):
+                                  "-f5"]):
             app = PacmanMirrors()
             app.config = configfn.build_config()
+            filefn.create_dir(test_conf["work_dir"])
             app.command_line_parse()
+            httpfn.update_mirrors(app.config)
+            app.load_all_mirrors()
+            app.build_fasttrack_mirror_list(app.fasttrack)
 
     @patch("os.getuid")
     @patch.object(configfn, "build_config")
@@ -80,25 +83,6 @@ class TestPacmanMirrors(unittest.TestCase):
 
     @patch("os.getuid")
     @patch.object(configfn, "build_config")
-    def test_full_run_fasttrack(self,
-                                mock_build_config,
-                                mock_os_getuid):
-        """TEST: pacman-mirrors -f 5"""
-        mock_os_getuid.return_value = 0
-        mock_build_config.return_value = test_conf
-        with unittest.mock.patch("sys.argv",
-                                 ["pacman-mirrors",
-                                  "-f", "5"]):
-            app = PacmanMirrors()
-            app.config = configfn.build_config()
-            filefn.create_dir(test_conf["work_dir"])
-            app.command_line_parse()
-            httpfn.update_mirrors(app.config)
-            app.load_all_mirrors()
-            app.build_fasttrack_mirror_list(app.fasttrack)
-
-    @patch("os.getuid")
-    @patch.object(configfn, "build_config")
     def test_full_run_rank(self,
                            mock_build_config,
                            mock_os_getuid):
@@ -115,23 +99,6 @@ class TestPacmanMirrors(unittest.TestCase):
             httpfn.update_mirrors(app.config)
             app.load_all_mirrors()
             app.build_common_mirror_list()
-
-    # @patch("os.getuid")
-    # @patch.object(configfn, "build_config")
-    # def test_full_run_rank(self, mock_build_config, mock_os_getuid):
-    #     """TEST: pacman-mirrors --country-list"""
-    #     mock_os_getuid.return_value = 0
-    #     mock_build_config.return_value = test_conf
-    #     with unittest.mock.patch("sys.argv",
-    #                              ["pacman-mirrors",
-    #                               "--country-list"]):
-    #         app = PacmanMirrors()
-    #         app.config = configfn.build_config()
-    #         filefn.create_dir(test_conf["work_dir"])
-    #         app.command_line_parse()
-    #         # httpfn.update_mirrors(app.config)
-    #         # app.load_all_mirrors()
-    #         # app.output_country_list()
 
     def tearDown(self):
         """Tear down"""

@@ -24,8 +24,7 @@ class TestInitialValues(unittest.TestCase):
         """TEST: self.custom is False"""
         mock_os_getuid.return_value = 0
         with unittest.mock.patch("sys.argv",
-                                 ["pacman-mirrors",
-                                  "-g"]):
+                                 ["pacman-mirrors", "f1"]):
             app = PacmanMirrors()
             assert app.custom is False
 
@@ -34,8 +33,7 @@ class TestInitialValues(unittest.TestCase):
         """TEST: self.fasttrack is False"""
         mock_os_getuid.return_value = 0
         with unittest.mock.patch("sys.argv",
-                                 ["pacman-mirrors",
-                                  "-g"]):
+                                 ["pacman-mirrors", "-f1"]):
             app = PacmanMirrors()
             assert app.fasttrack is None
 
@@ -44,8 +42,7 @@ class TestInitialValues(unittest.TestCase):
         """TEST: self.geoip is False"""
         mock_os_getuid.return_value = 0
         with unittest.mock.patch("sys.argv",
-                                 ["pacman-mirrors",
-                                  "-g"]):
+                                 ["pacman-mirrors", "-f1"]):
             app = PacmanMirrors()
             assert app.geoip is False
 
@@ -54,8 +51,7 @@ class TestInitialValues(unittest.TestCase):
         """TEST: self.interactive is False"""
         mock_os_getuid.return_value = 0
         with unittest.mock.patch("sys.argv",
-                                 ["pacman-mirrors",
-                                  "-g"]):
+                                 ["pacman-mirrors", "-f1"]):
             app = PacmanMirrors()
             assert app.interactive is False
 
@@ -64,8 +60,7 @@ class TestInitialValues(unittest.TestCase):
         """TEST: self.max_wait_time = 2"""
         mock_os_getuid.return_value = 0
         with unittest.mock.patch("sys.argv",
-                                 ["pacman-mirrors",
-                                  "-g"]):
+                                 ["pacman-mirrors", "-f1"]):
             app = PacmanMirrors()
             assert app.max_wait_time == 2
 
@@ -74,8 +69,7 @@ class TestInitialValues(unittest.TestCase):
         """TEST: self.network is True"""
         mock_os_getuid.return_value = 0
         with unittest.mock.patch("sys.argv",
-                                 ["pacman-mirrors",
-                                  "-g"]):
+                                 ["pacman-mirrors", "-f1"]):
             app = PacmanMirrors()
             assert app.network is True
 
@@ -84,18 +78,25 @@ class TestInitialValues(unittest.TestCase):
         """TEST: self.no_display is False"""
         mock_os_getuid.return_value = 0
         with unittest.mock.patch("sys.argv",
-                                 ["pacman-mirrors",
-                                  "-g"]):
+                                 ["pacman-mirrors", "-f1"]):
             app = PacmanMirrors()
             assert app.no_display is False
+
+    @patch("os.getuid")
+    def test_initial_no_mirrorlist(self, mock_os_getuid):
+        """TEST: self.no_mirrorlist = False"""
+        mock_os_getuid.return_value = 0
+        with unittest.mock.patch("sys.argv",
+                                 ["pacman-mirrors", "-g"]):
+            app = PacmanMirrors()
+            assert app.no_mirrorlist is False
 
     @patch("os.getuid")
     def test_initial_quiet(self, mock_os_getuid):
         """TEST: self.quiet is False"""
         mock_os_getuid.return_value = 0
         with unittest.mock.patch("sys.argv",
-                                 ["pacman-mirrors",
-                                  "-g"]):
+                                 ["pacman-mirrors", "-f1"]):
             app = PacmanMirrors()
             assert app.quiet is False
 
@@ -104,30 +105,9 @@ class TestInitialValues(unittest.TestCase):
         """TEST: self.selected_countries = []"""
         mock_os_getuid.return_value = 0
         with unittest.mock.patch("sys.argv",
-                                 ["pacman-mirrors",
-                                  "-g"]):
+                                 ["pacman-mirrors", "-f1"]):
             app = PacmanMirrors()
             assert app.selected_countries == []
-
-    @patch("os.getuid")
-    def test_initial_no_mirrorlist(self, mock_os_getuid):
-        """TEST: self.no_mirrorlist = False"""
-        mock_os_getuid.return_value = 0
-        with unittest.mock.patch("sys.argv",
-                                 ["pacman-mirrors",
-                                  "-g"]):
-            app = PacmanMirrors()
-            assert app.no_mirrorlist is False
-
-    @patch("os.getuid")
-    def test_initial_self_sync(self, mock_os_getuid):
-        """TEST: self.sync = False"""
-        mock_os_getuid.return_value = 0
-        with unittest.mock.patch("sys.argv",
-                                 ["pacman-mirrors",
-                                  "-g"]):
-            app = PacmanMirrors()
-            assert app.sync is False
 
     def tearDown(self):
         """Tear down"""

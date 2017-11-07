@@ -30,8 +30,8 @@ class TestTextConstants(unittest.TestCase):
         """TEST: txt REPO_SERVER"""
         assert txt.REPO_SERVER is not None
 
-    def test_txt_reset_tip(self):
-        """TEST: txt RESET_TIP"""
+    def test_txt_reset_custom_file(self):
+        """TEST: txt RESET_CUSTOM_FILE"""
         assert txt.MODIFY_CUSTOM is not None
 
     def test_txt_prefix_tip(self):
