@@ -21,6 +21,7 @@
 
 from pacman_mirrors.functions import validfn
 from pacman_mirrors.functions import httpfn
+from pacman_mirrors.functions import jsonfn
 
 
 def build_country_list(selectedcountries, countrylist, geoip=False):
@@ -95,3 +96,24 @@ def filter_mirror_protocols(mirrorlist, protocols=None):
             mirror["protocols"] = accepted
             result.append(mirror)
     return result
+
+
+def get_custom_mirror_status(config, custom_mirrors):
+    """
+    Apply the current mirror status to the custom mirror file
+    :param config:
+    :param custom_mirrors:
+    :return: custom mirrorfile with current status applied
+    """
+    status_list = tuple(jsonfn.read_json_file(config["status_file"], dictionary=False))
+    custom_list = tuple(custom_mirrors)
+    try:
+        _ = status_list[0]
+        for custom in custom_list:
+            for status in status_list:
+                if custom["url"] in status["url"]:
+                    custom["last_sync"] = status["last_sync"]
+                    custom["branches"] = status["branches"]
+        return custom_list
+    except (IndexError, KeyError):
+        return custom_mirrors
