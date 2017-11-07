@@ -109,8 +109,7 @@ class PacmanMirrors:
         methods.add_argument("-f", "--fasttrack",
                              type=int,
                              metavar=txt.NUMBER,
-                             help="{} {}".format(txt.HLP_ARG_FASTTRACK,
-                                                 txt.OVERRIDE_OPT))
+                             help="{}".format(txt.HLP_ARG_FASTTRACK))
         methods.add_argument("-i", "--interactive",
                              action="store_true",
                              help=txt.HLP_ARG_INTERACTIVE)
@@ -248,10 +247,6 @@ class PacmanMirrors:
 
         if args.fasttrack:
             self.fasttrack = args.fasttrack
-            if self.fasttrack > 0:
-                self.geoip = False
-                self.custom = False
-                self.config["only_country"] = []
 
         if args.no_mirrorlist:
             self.no_mirrorlist = True
@@ -346,7 +341,7 @@ class PacmanMirrors:
                     "resp_time": "00.00"
                 }
             ]
-            filefn.output_mirror_list(self.config, mirror, quiet=self.quiet)
+            filefn.write_mirror_list(self.config, mirror, quiet=self.quiet)
             sys.exit(0)
         # Fourth API task: Write protocols to config
         if set_protocols:
@@ -687,6 +682,9 @@ class PacmanMirrors:
             self.load_default_mirrors()
         else:
             self.seed_mirrors(self.config["custom_file"])
+            # update custom mirror file with data from status.json
+            self.mirrors.mirrorlist = mirrorfn.get_custom_mirror_status(
+                self.config, self.mirrors.mirrorlist)
 
     def load_default_mirrors(self):
         """
@@ -728,17 +726,17 @@ class PacmanMirrors:
         :return:
         """
         if self.custom:
-            filefn.output_mirror_list(self.config,
-                                      selected_servers,
-                                      custom=self.custom,
-                                      quiet=self.quiet,
-                                      interactive=True)
+            filefn.write_mirror_list(self.config,
+                                     selected_servers,
+                                     custom=self.custom,
+                                     quiet=self.quiet,
+                                     interactive=True)
             configfn.modify_config(self.config,
                                    custom=self.custom)
         else:
-            filefn.output_mirror_list(self.config,
-                                      selected_servers,
-                                      quiet=self.quiet)
+            filefn.write_mirror_list(self.config,
+                                     selected_servers,
+                                     quiet=self.quiet)
 
     def print_help(self, parser):
         """
@@ -821,17 +819,17 @@ class PacmanMirrors:
                 else:
                     self.max_wait_time = http_wait
                 # let's see how responsive you are
-                resp_time = httpfn.get_mirror_response(
+                mirror["resp_time"] = httpfn.get_mirror_response(
                     mirror["url"], maxwait=self.max_wait_time,
                     quiet=self.quiet, ssl_verify=ssl_verify)
-                mirror["resp_time"] = resp_time
-                if float(resp_time) >= self.max_wait_time:
+
+                if float(mirror["resp_time"]) >= self.max_wait_time:
                     if not self.quiet:
                         print("\r")
                 else:
                     if not self.quiet:
                         print("\r   {:<5}{}{} ".format(color.GREEN,
-                                                       resp_time,
+                                                       mirror["resp_time"],
                                                        color.ENDCOLOR))
         return worklist
 
