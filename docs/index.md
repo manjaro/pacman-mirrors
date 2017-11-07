@@ -54,10 +54,10 @@ The arguments can appear in any order except for arguments which takes additiona
 Pacman-mirrors downloads the lastest available status from [http://repo.manjaro.org](http://repo.manjaro.org). These data is always used during mirrorlist generation to ensure that you connected to a mirror which is up-to-date for your selected branch. Should you decide to temporarily switch branches you will still connect to an up-to-date mirror.
 
 ## IMPORTANT TO REMEMBER
-It cannot be stressed enough that for every mirrorlist generation you commence, you **MUST** run *pacman-mirrors -Syy*.  
+It cannot be stressed enough that for every mirrorlist generation you commence, you **MUST** run *pacman -Syy*.
 
 ## YEE BE WARNED: Deprecated arguments
--g, \--generate 
+-g, \--generate
 :   The argument is deprecated in favor of **-f/--fasttrack**
 
 -y, \--sync
@@ -73,10 +73,10 @@ It cannot be stressed enough that for every mirrorlist generation you commence, 
 
 -i, \--interactive [--default]
 :   This is a function designed to leave full control for mirrors and protocols.
-    This function **DOES NOT** take into consideration up-to-date mirrors. 
+    This function **DOES NOT** take into consideration up-to-date mirrors.
     The addition argument **--default** forces pacman-mirrors to load the default mirror
-    file and ignore any preset custom-mirrors file, thus allowing for reselecting mirrors 
-    for a new custom mirror file. 
+    file and ignore any preset custom-mirrors file, thus allowing for reselecting mirrors
+    for a new custom mirror file.
 
 -m, \--method *METHOD*
 :   Default method is *rank* but *random* can be selected.
@@ -152,7 +152,7 @@ It cannot be stressed enough that for every mirrorlist generation you commence, 
 
 ## IMPORTANT TO REMEMBER
 It cannot be stressed enough that for every mirrorlist generation you commence,
-you **MUST** run *pacman-mirrors -Syy*.  
+you **MUST** run *pacman -Syy*.
 
 ## Configuration flow of pacman-mirrors
 
@@ -200,7 +200,7 @@ of editing your pacman-mirrors configuration.
 
 ## IMPORTANT TO REMEMBER
 It cannot be stressed enough that for every mirrorlist generation you commence,
-you **MUST** run *pacman-mirrors -Syy*.
+you **MUST** run *pacman -Syy*.
 
 * Which countries has mirrors?
 
@@ -272,8 +272,8 @@ may be downloaded from <https://github.com/manjaro/pacman-mirrors/archive/master
 
 # AUTHORS
 
-    Esclapion <esclapion@manjaro.org>  
-    philm <philm@manjaro.org>  
-    Ramon Buldó <rbuldo@gmail.com>  
-    Hugo Posnic <huluti@manjaro.org>  
-    Frede Hundewadt <echo ZmhAbWFuamFyby5vcmcK | base64 -d>  
+    Esclapion <esclapion@manjaro.org>
+    philm <philm@manjaro.org>
+    Ramon Buldó <rbuldo@gmail.com>
+    Hugo Posnic <huluti@manjaro.org>
+    Frede Hundewadt <echo ZmhAbWFuamFyby5vcmcK | base64 -d>
