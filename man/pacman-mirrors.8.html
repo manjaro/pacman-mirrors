@@ -29,15 +29,15 @@
 <h1 id="options">OPTIONS</h1>
 <p>Some options are mutual exclusive and will throw an arguments error:</p>
 <ul>
-<li><strong>--no-mirrorlist</strong> and <strong>--sync</strong></li>
 <li><strong>--branch</strong>, <strong>--get-branch</strong> and <strong>--set-branch</strong></li>
-<li><strong>--sync</strong> and <strong>--no-mirrorlist</strong></li>
 <li><strong>--country</strong> and <strong>--geoip</strong></li>
 </ul>
 <p>Others can be used together but they have precedence. If the fasttrack arg is used with interactive, country or geoip the fasttrack arg will have precendence and the others are ignored. Some arguments requires other argument to have effect for example,this command will ignore --default argument</p>
-<pre><code>WRONG pacman-mirrors -b unstable --default</code></pre>
+<pre><code>WRONG
+pacman-mirrors -b unstable --default</code></pre>
 <p>as it should have been in conjunction with --interactive, like</p>
-<pre><code>CORRECT pacman-mirrors -b unstable --interactive --default</code></pre>
+<pre><code>CORRECT
+pacman-mirrors -b unstable --interactive --default</code></pre>
 <p>The same goes for the API specific arguments. For those to have effect the --api argument must be present also.</p>
 <pre><code>pacman-mirrors -aS unstable</code></pre>
 <p>The arguments can appear in any order except for arguments which takes additional options in which case the options must follow immediately after the argument, for example</p>
@@ -45,15 +45,6 @@
 <p>Pacman-mirrors downloads the lastest available status from <a href="http://repo.manjaro.org" class="uri">http://repo.manjaro.org</a>. These data is always used during mirrorlist generation to ensure that you connected to a mirror which is up-to-date for your selected branch. Should you decide to temporarily switch branches you will still connect to an up-to-date mirror.</p>
 <h2 id="important-to-remember">IMPORTANT TO REMEMBER</h2>
 <p>It cannot be stressed enough that for every mirrorlist generation you commence, you <strong>MUST</strong> run <em>pacman -Syy</em>.</p>
-<h2 id="yee-be-warned-deprecated-arguments">YEE BE WARNED: Deprecated arguments</h2>
-<dl>
-<dt>-g, --generate</dt>
-<dd>The argument is deprecated in favor of <strong>-f/--fasttrack</strong>
-</dd>
-<dt>-y, --sync</dt>
-<dd>An argument which never should have been here. The better option is to educate yourself to always use <strong>pacman -Syy</strong> after any change to your mirrorlist
-</dd>
-</dl>
 <h2 id="methods">METHODS</h2>
 <dl>
 <dt>-f, --fasttrack <em>NUMBER</em></dt>
@@ -61,9 +52,6 @@
 </dd>
 <dt>-i, --interactive [--default]</dt>
 <dd>This is a function designed to leave full control for mirrors and protocols. This function <strong>DOES NOT</strong> take into consideration up-to-date mirrors. The addition argument <strong>--default</strong> forces pacman-mirrors to load the default mirror file and ignore any preset custom-mirrors file, thus allowing for reselecting mirrors for a new custom mirror file.
-</dd>
-<dt>-m, --method <em>METHOD</em></dt>
-<dd>Default method is <em>rank</em> but <em>random</em> can be selected.
 </dd>
 </dl>
 <h2 id="branch">BRANCH</h2>
@@ -86,7 +74,7 @@
 </dl>
 <h2 id="api">API</h2>
 <dl>
-<dt>-a, --api [-p <em>PREFIX</em>] [-R] [-G|-S <em>BRANCH</em>] [-P <em>PROTO</em> [<em>PROTO</em>] ...] [-U <em>URL</em>]</dt>
+<dt>-a, --api [-p <em>PREFIX</em>] [-R] [-G|-S/-B <em>BRANCH</em>] [-P <em>PROTO</em> [<em>PROTO</em>] ...] [-U <em>URL</em>]</dt>
 <dd>Instructs pacman-mirrors to activate processing of API arguments
 </dd>
 <dt>-p, --prefix <em>PREFIX</em></dt>
@@ -101,8 +89,8 @@
 <dt>-R, --re-branch</dt>
 <dd>Replace branch in mirrorlist
 </dd>
-<dt>-S, --set-branch <em>BRANCH</em></dt>
-<dd>Replace branch in configuration, use <em>stable</em>, <em>testing</em> or <em>unstable</em>
+<dt>-S, B, --set-branch <em>BRANCH</em></dt>
+<dd>Permanent change to branch config, use <em>stable</em>, <em>testing</em> or <em>unstable</em>
 </dd>
 <dt>-U, --url <em>URL</em></dt>
 <dd>Replace mirrorlist with supplied url
@@ -112,6 +100,9 @@
 <dl>
 <dt>-h, --help</dt>
 <dd>Show the help message
+</dd>
+<dt>-m, --method <em>METHOD</em></dt>
+<dd>Default method is <em>rank</em> but <em>random</em> can be selected.
 </dd>
 <dt>-n, --no-mirrorlist</dt>
 <dd>Use to skip generation of mirrorlist
@@ -153,7 +144,7 @@ BRANCH: Value from config</code></pre>
 <li>add <em>PREFIX</em> to internal file configuration</li>
 </ul>
 <ol start="3" style="list-style-type: decimal">
-<li>If <em>-S</em> <em>BRANCH</em></li>
+<li>If <em>-S/-B</em> <em>BRANCH</em></li>
 </ol>
 <ul>
 <li>apply <em>BRANCH</em> to internal configuration</li>
@@ -176,7 +167,7 @@ BRANCH: Value from config</code></pre>
 <li>If <em>-R</em></li>
 </ol>
 <ul>
-<li>replace branch in mirrorlist with <em>-S</em> <em>BRANCH</em></li>
+<li>replace branch in mirrorlist with <em>-S/-B</em> <em>BRANCH</em></li>
 </ul>
 <p>When done pacman-mirrors checks the internet connection and if possible download the latest datafiles for creating the mirrorlist. At this point it is possible to interrupt further processing.</p>
 <p>If the <em>-n</em> argument is present pacman-mirrors will now exit.</p>
