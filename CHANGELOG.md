@@ -1,6 +1,9 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [4.3.1] 2017-11-07
+* **Fix**: typo in documentation
+
 ## [4.3.0] 2017-10-28
 - **Fix**: `-h/--help` added deprecation messages
 - **Improvement**: Api `--get-branch` removed root requirement
