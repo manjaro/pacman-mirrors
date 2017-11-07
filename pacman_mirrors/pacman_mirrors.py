@@ -27,7 +27,6 @@ import argparse
 import importlib.util
 import os
 import shutil
-import subprocess
 import sys
 from operator import itemgetter
 from random import shuffle
@@ -70,7 +69,6 @@ class PacmanMirrors:
         self.custom = False
         self.default = False
         self.fasttrack = None
-        self.generate = None
         self.geoip = False
         self.interactive = False
         self.max_wait_time = 2
@@ -80,14 +78,13 @@ class PacmanMirrors:
         self.no_display = False
         self.quiet = False
         self.selected_countries = []  # users selected countries
-        self.sync = False
 
     def command_line_parse(self):
         """Read the arguments of the command line"""
 
         args_summary = "[-h] [-f {}] [-i [-d]] [-m {}]\n" \
                        "\t\t[-c {} [{}...]] [--geoip] [-l]\n" \
-                       "\t\t[-b {} | -G | -S {}] [-a] [-p {}]\n" \
+                       "\t\t[-b {} | -G | -S/-B {}] [-a] [-p {}]\n" \
                        "\t\t[-P {} [{}...]] [-R] [-U {}]\n" \
                        "\t\t[-q] [-t {}] [-v] [-n]".format(txt.NUMBER,
                                                            txt.METHOD,
@@ -109,9 +106,6 @@ class PacmanMirrors:
 
         # Method arguments
         methods = parser.add_argument_group(txt.METHODS)
-        methods.add_argument("-g", "--generate",
-                             action="store_true",
-                             help=txt.HLP_ARG_GENERATE)
         methods.add_argument("-f", "--fasttrack",
                              type=int,
                              metavar=txt.NUMBER,
@@ -150,7 +144,7 @@ class PacmanMirrors:
                               action="store_true",
                               help="{}: {}".format(
                                   txt.API, txt.HLP_ARG_API_GET_BRANCH))
-        only_one.add_argument("-S", "--set-branch",
+        only_one.add_argument("-S", "-B", "--set-branch",
                               choices=["stable", "testing", "unstable"],
                               help="{}: {}".format(
                                   txt.API, txt.HLP_ARG_API_SET_BRANCH))
@@ -198,12 +192,9 @@ class PacmanMirrors:
         sync.add_argument("-n", "--no-mirrorlist",
                           action="store_true",
                           help=txt.HLP_ARG_NO_MIRRORLIST)
-        sync.add_argument("-y", "--sync",
-                          action="store_true",
-                          help=txt.HLP_ARG_SYNC)
 
         args = parser.parse_args()
-        # if len(sys.argv) == 1 or args.help:
+
         if len(sys.argv) == 1 or args.help:
             self.print_help(parser)
             sys.exit(0)
@@ -225,9 +216,6 @@ class PacmanMirrors:
                 txt.ERR_CLR, txt.MUST_BE_ROOT))
             sys.exit(1)
 
-        if args.generate:
-            self.generate = True
-
         if args.method:
             self.config["method"] = args.method
 
@@ -239,9 +227,6 @@ class PacmanMirrors:
 
         if args.quiet:
             self.quiet = True
-
-        if args.sync:
-            self.sync = True
 
         if args.interactive:
             self.interactive = True
@@ -378,35 +363,57 @@ class PacmanMirrors:
                                           quiet=self.quiet)
 
     def build_common_mirror_list(self):
-        """Generate common mirrorlist"""
-        worklist = mirrorfn.filter_mirror_country(self.mirrors.mirrorlist,
-                                                  self.selected_countries)
-        if self.config["protocols"]:
-            worklist = mirrorfn.filter_mirror_protocols(
-                worklist, self.config["protocols"])
         """
-        only list mirrors which ar up-to-date for users selected branch
+        Generate common mirrorlist
+        """
+        mirror_selection = mirrorfn.filter_mirror_country(self.mirrors.mirrorlist,
+                                                          self.selected_countries)
+        """
+        If we have selected_countries - write a custom-mirror file
+        """
+        try:
+            _ = self.selected_countries[0]
+            self.output_custom_mirror_file(mirror_selection)
+        except IndexError:
+            pass
+
+        try:
+            _ = self.config["protocols"][0]
+            mirror_selection = mirrorfn.filter_mirror_protocols(
+                mirror_selection, self.config["protocols"])
+        except IndexError:
+            pass
+
+        """        
+        only list mirrors which are up-to-date for users selected branch
         by removing not up-to-date mirrors from the list
+        UP-TO-DATE FILTERING NEXT
         """
-        worklist = self.filter_user_branch(worklist)
+        mirror_selection = self.filter_user_branch(mirror_selection)
 
         if self.config["method"] == "rank":
-            worklist = self.test_mirrors(worklist)
-            worklist = sorted(worklist,
-                              key=itemgetter("resp_time"))
+            mirror_selection = self.test_mirrors(mirror_selection)
+            mirror_selection = sorted(mirror_selection,
+                                      key=itemgetter("resp_time"))
         else:
-            shuffle(worklist)
-        if worklist:
-            filefn.output_mirror_list(self.config,
-                                      worklist,
-                                      quiet=self.quiet)
+            shuffle(mirror_selection)
+
+        """
+        Try to write mirrorlist
+        """
+        try:
+            _ = mirror_selection[0]
+            self.output_mirror_list(mirror_selection)
             if self.custom:
                 configfn.modify_config(self.config,
                                        custom=self.custom)
+                print(".: {} {} 'sudo {}'".format(txt.INF_CLR,
+                                                  txt.REMOVE_CUSTOM_CONFIG,
+                                                  txt.RESET_ALL))
             else:
                 configfn.modify_config(self.config,
                                        custom=self.custom)
-        else:
+        except IndexError:
             print(".: {} {}".format(txt.WRN_CLR, txt.NO_SELECTION))
             print(".: {} {}".format(txt.INF_CLR, txt.NO_CHANGE))
 
@@ -414,10 +421,10 @@ class PacmanMirrors:
         """
         Fast-track the mirrorlist by filtering only up-to-date mirrors
         The function takes into account the branch selected by the user
-        either on commandline or in pacman-mirrors.conf
+          either on commandline or in pacman-mirrors.conf.
         The function returns  a filtered list consisting of a number of mirrors
-        For the sake of deprecating the -g/--generate argument the function
-        increments the counter before checking for equality
+        Only mirrors from the active mirror file is used
+          either mirrors.json or custom-mirrors.json
         """
         # randomize the load on up-to-date mirrors
         worklist = self.mirrors.mirrorlist
@@ -425,8 +432,12 @@ class PacmanMirrors:
         if self.config["protocols"]:
             worklist = mirrorfn.filter_mirror_protocols(
                 worklist, self.config["protocols"])
-        # only list mirrors which ar up-to-date for users selected branch
-        # by removin not up-to-date mirrors from the list
+
+        """
+        Only pick mirrors which are up-to-date for users selected branch
+          by removin not up-to-date mirrors from the list
+        UP-TO-DATE FILTERING NEXT
+        """
         up_to_date_mirrors = self.filter_user_branch(worklist)
         worklist = []
         print(".: {}: {} - {}".format(txt.INF_CLR,
@@ -465,11 +476,13 @@ class PacmanMirrors:
                 break
         worklist = sorted(worklist,
                           key=itemgetter("resp_time"))
-        if worklist:
-            filefn.output_mirror_list(self.config,
-                                      worklist,
-                                      quiet=self.quiet)
-        else:
+        """
+        Try to write mirrorlist
+        """
+        try:
+            _ = worklist[0]
+            self.output_mirror_list(worklist)
+        except IndexError:
             print(".: {} {}".format(txt.WRN_CLR, txt.NO_SELECTION))
             print(".: {} {}".format(txt.INF_CLR, txt.NO_CHANGE))
 
@@ -488,6 +501,8 @@ class PacmanMirrors:
         to have total control over the mirror file.
         So though it might seem prudent to only include updated mirrors,
         we will not do it when user has selected interactive mode.
+        The final mirrorfile will include all mirrors selected by the user
+        The final mirrorlist will exclude (if possible) mirrors not up-to-date
         """
         worklist = mirrorfn.filter_mirror_country(self.mirrors.mirrorlist,
                                                   self.selected_countries)
@@ -496,9 +511,13 @@ class PacmanMirrors:
         it has nothing to do with the reasoning regarding mirrors
         which might or might not be up-to-date
         """
-        if self.config["protocols"]:
+        try:
+            _ = self.config["protocols"][0]
             worklist = mirrorfn.filter_mirror_protocols(
                 worklist, self.config["protocols"])
+        except IndexError:
+            pass
+
         # rank or shuffle the mirrorlist before showing the ui
         if not self.default:
             if self.config["method"] == "rank":
@@ -547,7 +566,7 @@ class PacmanMirrors:
         # process user choices
         if interactive.is_done:
             mirror_list = []  # to be written to mirrorlist
-            mirror_file = []  # to be written to custom-mirror.json
+            mirror_selection = []  # to be written to custom-mirror.json
             custom_list = interactive.custom_list  # grabbing a copy
             # loop custom list
             for custom in custom_list:
@@ -560,7 +579,7 @@ class PacmanMirrors:
                     if custom_string == mirror_string:
                         #
                         # create list for mirror file
-                        mirror_file.append({
+                        mirror_selection.append({
                             "country": mirror["country"],
                             "protocols": mirror["protocols"],
                             "url": mirror["url"]
@@ -574,40 +593,46 @@ class PacmanMirrors:
                         except IndexError:
                             pass
                         mirror_list.append(mirror)
-            # since ranking/shuffling is not done pre loading the ui
-            # so now is the time
-            if self.default and mirror_list:
-                if self.config["method"] == "rank":
-                    mirror_list = self.test_mirrors(mirror_list)
-                    mirror_list = sorted(mirror_list,
-                                         key=itemgetter("resp_time"))
-                else:
-                    shuffle(mirror_list)
-            # when mirror file list is not empty
-            if mirror_file:
-                print("\n.: {} {}".format(txt.INF_CLR,
-                                          txt.CUSTOM_MIRROR_LIST))
-                print("--------------------------")
-                # output mirror file
-                jsonfn.write_json_file(mirror_file,
-                                       self.config["custom_file"])
-                print(".: {} {}: {}".format(txt.INF_CLR,
-                                            txt.CUSTOM_MIRROR_FILE_SAVED,
-                                            self.config["custom_file"]))
-                # output pacman mirrorlist
-                filefn.output_mirror_list(self.config,
-                                          mirror_list,
-                                          custom=True,
-                                          quiet=self.quiet,
-                                          interactive=True)
-                # from interactive always use "Custom" as country
+            """
+            Try selected method on the mirrorlist
+            """
+            try:
+                _ = mirror_list[0]
+                if self.default:
+                    if self.config["method"] == "rank":
+                        mirror_list = self.test_mirrors(mirror_list)
+                        mirror_list = sorted(mirror_list,
+                                             key=itemgetter("resp_time"))
+                    else:
+                        shuffle(mirror_list)
+            except IndexError:
+                pass
+
+            """
+            Try to write the mirrorfile and mirrorlist
+            """
+            try:
+                _ = mirror_selection[0]
+                self.custom = True
                 self.config["only_country"] = ["Custom"]
-                configfn.modify_config(self.config,
-                                       custom=True)
-                print(".: {} {} {}".format(txt.INF_CLR,
-                                           txt.REMOVE_CUSTOM_CONFIG,
-                                           txt.MODIFY_CUSTOM))
-            else:
+                self.output_custom_mirror_file(mirror_selection)
+                """
+                Writing the final mirrorlist
+                only write mirrors which are up-to-date for users selected branch
+                UP-TO-DATE FILTERING NEXT
+                """
+                mirror_list = self.filter_user_branch(mirror_list)
+                """
+                Try writing mirrorlist
+                If no up-to-date mirrors exist for users branch
+                
+                """
+                try:
+                    _ = mirror_list[0]
+                    self.output_mirror_list(mirror_list)
+                except IndexError:
+                    raise IndexError
+            except IndexError:
                 print(".: {} {}".format(txt.WRN_CLR, txt.NO_SELECTION))
                 print(".: {} {}".format(txt.INF_CLR, txt.NO_CHANGE))
 
@@ -629,7 +654,9 @@ class PacmanMirrors:
         return mirrorlist
 
     def load_all_mirrors(self):
-        """Load mirrors"""
+        """
+        Load mirrors
+        """
         # decision on disable custom config
         if self.config["only_country"] == ["all"]:
             self.disable_custom_config()
@@ -653,24 +680,72 @@ class PacmanMirrors:
             self.selected_countries, self.mirrors.countrylist, self.geoip)
 
     def load_custom_mirrors(self):
-        """Load available custom mirrors"""
+        """
+        Load available custom mirrors
+        """
         if self.default:
             self.load_default_mirrors()
         else:
             self.seed_mirrors(self.config["custom_file"])
 
     def load_default_mirrors(self):
-        """Load all available mirrors"""
+        """
+        Load all available mirrors
+        """
         (file, status) = filefn.return_mirror_filename(self.config)
         self.seed_mirrors(file, status)
 
     def output_country_list(self):
-        """List all available countries"""
+        """
+        List all available countries
+        """
         self.config["only_country"] = ["all"]
         self.load_all_mirrors()
         print("{}".format("\n".join(self.mirrors.countrylist)))
 
+    def output_custom_mirror_file(self, selected_mirrors):
+        """
+        Output selected mirrors to custom mirror file
+        :param selected_mirrors:
+        :return:
+        """
+        self.custom = True
+        self.config["only_country"] = ["Custom"]
+        print("\n.: {} {}".format(txt.INF_CLR,
+                                  txt.CUSTOM_MIRROR_LIST))
+        print("--------------------------")
+        # output mirror file
+        jsonfn.write_json_file(selected_mirrors,
+                               self.config["custom_file"])
+        print(".: {} {}: {}".format(txt.INF_CLR,
+                                    txt.CUSTOM_MIRROR_FILE_SAVED,
+                                    self.config["custom_file"]))
+
+    def output_mirror_list(self, selected_servers):
+        """
+        Outputs selected servers to mirrorlist
+        :param selected_servers:
+        :return:
+        """
+        if self.custom:
+            filefn.output_mirror_list(self.config,
+                                      selected_servers,
+                                      custom=self.custom,
+                                      quiet=self.quiet,
+                                      interactive=True)
+            configfn.modify_config(self.config,
+                                   custom=self.custom)
+        else:
+            filefn.output_mirror_list(self.config,
+                                      selected_servers,
+                                      quiet=self.quiet)
+
     def print_help(self, parser):
+        """
+        Customized print help
+        :param parser:
+        :return:
+        """
         parser.print_help()
         print("")
         self.print_generate_deprecated()
@@ -679,19 +754,19 @@ class PacmanMirrors:
 
     @staticmethod
     def print_generate_deprecated():
-        print("{}!! {}: '-g/--generate'.\n"
+        print("{}!! {}: '-g/--generate'!\n"
               "{}   {} '-f/--fasttrack {}'"
-              ",{}{}".format(color.RED,
-                             txt.DEPRECATED_ARGUMENT,
-                             color.BLUE,
-                             txt.PLEASE_USE,
-                             txt.NUMBER,
-                             txt.USE_ZERO_FOR_ALL,
-                             color.ENDCOLOR))
+              ", {}{}".format(color.RED,
+                              txt.DEPRECATED_ARGUMENT,
+                              color.BLUE,
+                              txt.PLEASE_USE,
+                              txt.NUMBER,
+                              txt.USE_ZERO_FOR_ALL,
+                              color.ENDCOLOR))
 
     @staticmethod
     def print_sync_deprecated():
-        print("{}!! {}: '-y/--sync'.\n"
+        print("{}!! {}: '-y/--sync'!\n"
               "{}   {} 'pacman -Syy'{}".format(color.RED,
                                                txt.DEPRECATED_ARGUMENT,
                                                color.BLUE,
@@ -794,13 +869,6 @@ class PacmanMirrors:
         else:
             # default
             self.build_common_mirror_list()
-        # print deprecation messages
-        if self.generate:
-            self.print_generate_deprecated()
-        if self.network and self.sync:
-            self.print_sync_deprecated()
-            # sync pacman db
-            subprocess.call(["pacman", "-Syy"])
 
 
 if __name__ == "__main__":
