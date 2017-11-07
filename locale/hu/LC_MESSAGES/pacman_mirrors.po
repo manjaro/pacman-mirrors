@@ -11,8 +11,8 @@ msgstr ""
 "Project-Id-Version: manjaro-pacman-mirrors\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2017-10-23 20:55+0200\n"
-"PO-Revision-Date: 2017-10-25 07:54+0000\n"
-"Last-Translator: philm <philm@manjaro.org>\n"
+"PO-Revision-Date: 2017-10-25 19:43+0000\n"
+"Last-Translator: Zoltán Toldi <ifj.toldi.zoltan@gmail.com>\n"
 "Language-Team: Hungarian (http://www.transifex.com/manjarolinux/manjaro-pacman-mirrors/language/hu/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -23,15 +23,15 @@ msgstr ""
 
 #: pacman_mirrors/constants/txt.py:29
 msgid "ERROR"
-msgstr ""
+msgstr "HIBA"
 
 #: pacman_mirrors/constants/txt.py:30
 msgid "INFO"
-msgstr ""
+msgstr "INFORMÁCIÓ"
 
 #: pacman_mirrors/constants/txt.py:31
 msgid "WARNING"
-msgstr ""
+msgstr "FIGYELMEZTETÉS"
 
 #: pacman_mirrors/constants/txt.py:33
 msgid "HTTPException"
@@ -39,19 +39,19 @@ msgstr "HTTP-Kivétel"
 
 #: pacman_mirrors/constants/txt.py:34
 msgid "TIMEOUT"
-msgstr ""
+msgstr "IDŐTÚLLÉPÉS"
 
 #: pacman_mirrors/constants/txt.py:36
 msgid "API"
-msgstr ""
+msgstr "API"
 
 #: pacman_mirrors/constants/txt.py:37
 msgid "BRANCH"
-msgstr ""
+msgstr "ÁG"
 
 #: pacman_mirrors/constants/txt.py:38
 msgid "COUNTRY"
-msgstr ""
+msgstr "ORSZÁG"
 
 #: pacman_mirrors/constants/txt.py:39
 msgid "FILE"
@@ -59,15 +59,15 @@ msgstr "FÁJL"
 
 #: pacman_mirrors/constants/txt.py:40
 msgid "METHOD"
-msgstr ""
+msgstr "ELJÁRÁS"
 
 #: pacman_mirrors/constants/txt.py:41
 msgid "METHODS"
-msgstr ""
+msgstr "ELJÁRÁS"
 
 #: pacman_mirrors/constants/txt.py:42
 msgid "MISC"
-msgstr ""
+msgstr "EGYEBEK"
 
 #: pacman_mirrors/constants/txt.py:43
 msgid "NUMBER"
@@ -79,11 +79,11 @@ msgstr "ÚTVONAL"
 
 #: pacman_mirrors/constants/txt.py:45
 msgid "PREFIX"
-msgstr ""
+msgstr "ELŐTAG"
 
 #: pacman_mirrors/constants/txt.py:46
 msgid "PROTO"
-msgstr ""
+msgstr "PROTO"
 
 #: pacman_mirrors/constants/txt.py:47
 msgid "SECONDS"
@@ -95,7 +95,7 @@ msgstr "URL"
 
 #: pacman_mirrors/constants/txt.py:49
 msgid "USAGE"
-msgstr ""
+msgstr "HASZNÁLAT"
 
 #: pacman_mirrors/constants/txt.py:51
 msgid "Return branch from configuration"
@@ -115,11 +115,11 @@ msgstr "Ág helyreállítása a tükörlistában"
 
 #: pacman_mirrors/constants/txt.py:55
 msgid "Replace branch in configuration"
-msgstr ""
+msgstr "Ág cserélése a konfigurációban"
 
 #: pacman_mirrors/constants/txt.py:56
 msgid "Replace mirror url in mirrorlist"
-msgstr ""
+msgstr "Tükör URL lecserélése a tükörlistában"
 
 #: pacman_mirrors/constants/txt.py:57
 msgid "Branch name"
@@ -291,7 +291,7 @@ msgstr "Rendszergazdai jogok kellenek"
 
 #: pacman_mirrors/constants/txt.py:102
 msgid "The mirrors has not changed"
-msgstr ""
+msgstr "A tükrök nem változtak"
 
 #: pacman_mirrors/constants/txt.py:103
 msgid "No mirrors in selection"
