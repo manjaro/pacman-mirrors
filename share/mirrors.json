@@ -144,7 +144,7 @@
         "protocols": [
             "https"
         ],
-        "url": "https://www.uex.dk/repos/manjaro/"
+        "url": "https://www.uex.dk/public/manjaro/"
     },
     {
         "country": "Ecuador",
@@ -422,6 +422,13 @@
             "https"
         ],
         "url": "https://mirror.yandex.ru/mirrors/manjaro/"
+    },
+    {
+        "country": "Russia",
+        "protocols": [
+            "http"
+        ],
+        "url": "http://mirror.truenetwork.ru/manjaro/"
     },
     {
         "country": "Singapore",

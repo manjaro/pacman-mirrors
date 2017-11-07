@@ -18,8 +18,8 @@
             <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
             <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
         <![endif]-->
-	
-	<script src="./js/jquery-1.10.2.min.js"></script>
+
+        <script src="./js/jquery-1.10.2.min.js"></script>
         <script src="./js/bootstrap-3.0.3.min.js"></script>
         <script src="./js/highlight.pack.js"></script> 
     </head>
@@ -73,9 +73,7 @@
                         </a>
                     </li>
                     <li>
-                        <a href="https://github.com/manjaro/pacman-mirrors">
-                                <i class="fa fa-github"></i>GitHub
-                        </a>
+                        <a href="https://github.com/manjaro/pacman-mirrors/edit/master/docs/index.md"><i class="fa fa-github"></i> Edit on GitHub</a>
                     </li>
             </ul>
         </div>
@@ -150,9 +148,9 @@
 </code></pre>
 <p>Pacman-mirrors downloads the lastest available status from <a href="http://repo.manjaro.org">http://repo.manjaro.org</a>. These data is always used during mirrorlist generation to ensure that you connected to a mirror which is up-to-date for your selected branch. Should you decide to temporarily switch branches you will still connect to an up-to-date mirror.</p>
 <h2 id="important-to-remember">IMPORTANT TO REMEMBER</h2>
-<p>It cannot be stressed enough that for every mirrorlist generation you commence, you <strong>MUST</strong> run <em>pacman-mirrors -Syy</em>.  </p>
+<p>It cannot be stressed enough that for every mirrorlist generation you commence, you <strong>MUST</strong> run <em>pacman -Syy</em>.</p>
 <h2 id="yee-be-warned-deprecated-arguments">YEE BE WARNED: Deprecated arguments</h2>
-<p>-g, --generate 
+<p>-g, --generate
 :   The argument is deprecated in favor of <strong>-f/--fasttrack</strong></p>
 <p>-y, --sync
 :   An argument which never should have been here. The better option is to educate yourself to always use <strong>pacman -Syy</strong> after any change to your mirrorlist</p>
@@ -165,10 +163,10 @@
     If the number 0 is used - it is understood that all mirrors mirrors should be used.</p>
 <p>-i, --interactive [--default]
 :   This is a function designed to leave full control for mirrors and protocols.
-    This function <strong>DOES NOT</strong> take into consideration up-to-date mirrors. 
+    This function <strong>DOES NOT</strong> take into consideration up-to-date mirrors.
     The addition argument <strong>--default</strong> forces pacman-mirrors to load the default mirror
-    file and ignore any preset custom-mirrors file, thus allowing for reselecting mirrors 
-    for a new custom mirror file. </p>
+    file and ignore any preset custom-mirrors file, thus allowing for reselecting mirrors
+    for a new custom mirror file.</p>
 <p>-m, --method <em>METHOD</em>
 :   Default method is <em>rank</em> but <em>random</em> can be selected.</p>
 <h2 id="branch">BRANCH</h2>
@@ -222,7 +220,7 @@ BRANCH: Value from config
 </code></pre>
 <h2 id="important-to-remember_1">IMPORTANT TO REMEMBER</h2>
 <p>It cannot be stressed enough that for every mirrorlist generation you commence,
-you <strong>MUST</strong> run <em>pacman-mirrors -Syy</em>.  </p>
+you <strong>MUST</strong> run <em>pacman -Syy</em>.</p>
 <h2 id="configuration-flow-of-pacman-mirrors">Configuration flow of pacman-mirrors</h2>
 <p>At launch an internal default configuration is setup,
 file configuration is applied and the commandline is parsed and applied.</p>
@@ -261,7 +259,7 @@ However it can be of use for everyone because it takes the hazzle out
 of editing your pacman-mirrors configuration.</p>
 <h2 id="important-to-remember_2">IMPORTANT TO REMEMBER</h2>
 <p>It cannot be stressed enough that for every mirrorlist generation you commence,
-you <strong>MUST</strong> run <em>pacman-mirrors -Syy</em>.</p>
+you <strong>MUST</strong> run <em>pacman -Syy</em>.</p>
 <ul>
 <li>
 <p>Which countries has mirrors?</p>
@@ -330,10 +328,10 @@ you <strong>MUST</strong> run <em>pacman-mirrors -Syy</em>.</p>
 <p>The pacman-mirrors source code and all documentation
 may be downloaded from <a href="https://github.com/manjaro/pacman-mirrors/archive/master.zip">https://github.com/manjaro/pacman-mirrors/archive/master.zip</a></p>
 <h1 id="authors">AUTHORS</h1>
-<pre><code>Esclapion &lt;esclapion@manjaro.org&gt;  
-philm &lt;philm@manjaro.org&gt;  
-Ramon Buldó &lt;rbuldo@gmail.com&gt;  
-Hugo Posnic &lt;huluti@manjaro.org&gt;  
+<pre><code>Esclapion &lt;esclapion@manjaro.org&gt;
+philm &lt;philm@manjaro.org&gt;
+Ramon Buldó &lt;rbuldo@gmail.com&gt;
+Hugo Posnic &lt;huluti@manjaro.org&gt;
 Frede Hundewadt &lt;echo ZmhAbWFuamFyby5vcmcK | base64 -d&gt;
 </code></pre></div>
         </div>
@@ -343,8 +341,11 @@ Frede Hundewadt &lt;echo ZmhAbWFuamFyby5vcmcK | base64 -d&gt;
             <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p>
         </footer>
         <script>var base_url = '.';</script>
-        <script data-main="./mkdocs/js/search.js" src="./mkdocs/js/require.js"></script>
-        <script src="./js/base.js"></script><div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+        <script src="./js/base.js"></script>
+        <script src="./search/require.js"></script>
+        <script src="./search/search.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -367,12 +368,52 @@ Frede Hundewadt &lt;echo ZmhAbWFuamFyby5vcmcK | base64 -d&gt;
             </div>
         </div>
     </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="Keyboard Shortcuts Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Keyboard Shortcuts</h4>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td><kbd>&larr;</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td><kbd>&rarr;</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
 </div>
+
 
     </body>
 </html>
 
 <!--
-MkDocs version : 0.16.3
-Build Date UTC : 2017-10-22 12:22:57
+MkDocs version : 0.17.1
+Build Date UTC : 2017-11-07 07:33:52
 -->
