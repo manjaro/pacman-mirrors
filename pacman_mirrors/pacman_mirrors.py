@@ -121,14 +121,15 @@ class PacmanMirrors:
                              choices=["rank", "random"],
                              help=txt.HLP_ARG_METHOD)
         country = parser.add_argument_group(txt.COUNTRY)
-        country.add_argument("-c", "--country",
-                             type=str,
-                             nargs="+",
-                             metavar=txt.COUNTRY,
-                             help=txt.HLP_ARG_COUNTRY)
-        country.add_argument("--geoip",
-                             action="store_true",
-                             help=txt.HLP_ARG_GEOIP)
+        either_or = country.add_mutually_exclusive_group()
+        either_or.add_argument("-c", "--country",
+                               type=str,
+                               nargs="+",
+                               metavar=txt.COUNTRY,
+                               help=txt.HLP_ARG_COUNTRY)
+        either_or.add_argument("--geoip",
+                               action="store_true",
+                               help=txt.HLP_ARG_GEOIP)
         country.add_argument("-l", "--country-list", "--list",
                              action="store_true",
                              help=txt.HLP_ARG_LIST)
