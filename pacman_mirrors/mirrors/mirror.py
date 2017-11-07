@@ -19,6 +19,8 @@
 
 """Pacman-Mirrors Mirror"""
 
+from pacman_mirrors.constants import txt
+
 
 class Mirror:
     """Mirror Class"""
@@ -43,8 +45,8 @@ class Mirror:
             self.countrylist.append(country)
         # translate negative integer in status.json
         if last_sync == -1:
-            last_sync = "9999:99"
-            resp_time = "9999.99"
+            last_sync = txt.SERVER_BAD
+            resp_time = txt.SERVER_RES
         # sort protocols in reversed order https,http,ftps,ftp
         protocols = sorted(protocols, reverse=True)
         mirror = {
