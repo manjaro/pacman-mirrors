@@ -151,8 +151,9 @@ def write_mirrorlist_header(handle, custom=False):
         handle.write("## {} {}\n".format(
             txt.MIRROR_LIST_GENERATED_ON, generated_timestamp))
         handle.write("##\n")
-        handle.write("## {} '{}' {}\n## {} '{}'\n".format(
-            txt.PLEASE_USE, txt.MODIFY_CUSTOM, txt.MIRROR_LIST_CUSTOM_RESET,
+        handle.write("## {} '{}' {}\n## {} '{}' {}\n## {} '{}'\n".format(
+            txt.PLEASE_USE, txt.MODIFY_CUSTOM_ID, txt.MIRROR_LIST_CUSTOM_RESET,
+            txt.PLEASE_USE, txt.MODIFY_CUSTOM_C, txt.MIRROR_LIST_CUSTOM_RESET,
             txt.REMOVE_CUSTOM_CONFIG, txt.RESET_ALL))
     else:
         handle.write("## Manjaro Linux {}\n".format(
