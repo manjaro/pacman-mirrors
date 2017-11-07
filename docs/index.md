@@ -1,6 +1,6 @@
-% pacman-mirrors(8) Pacman-Mirrors 4.3 User Manual
+% pacman-mirrors(8) Pacman-Mirrors 4.4 User Manual
 %
-% October, 2017
+% November, 2017
 
 # NAME
 
