@@ -169,7 +169,7 @@ def inet_conn_check(maxwait=2):
         try:
             data = urlopen(host, timeout=maxwait)
             break
-        except:
+        except ():
             pass
     return bool(data)
 
