@@ -1,0 +1,389 @@
+# Translations template for pacman-mirrors.
+# Copyright (C) 2017 ORGANIZATION
+# This file is distributed under the same license as the pacman-mirrors
+# project.
+# 
+# Translators:
+# Petrisor Guta <lpguta89@gmail.com>, 2017
+msgid ""
+msgstr ""
+"Project-Id-Version: manjaro-pacman-mirrors\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2017-10-23 20:55+0200\n"
+"PO-Revision-Date: 2017-10-26 20:03+0000\n"
+"Last-Translator: Petrisor Guta <lpguta89@gmail.com>\n"
+"Language-Team: Romanian (http://www.transifex.com/manjarolinux/manjaro-pacman-mirrors/language/ro/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.5.1\n"
+"Language: ro\n"
+"Plural-Forms: nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1));\n"
+
+#: pacman_mirrors/constants/txt.py:29
+msgid "ERROR"
+msgstr "EROARE"
+
+#: pacman_mirrors/constants/txt.py:30
+msgid "INFO"
+msgstr "INFORMARE"
+
+#: pacman_mirrors/constants/txt.py:31
+msgid "WARNING"
+msgstr "AVERTISMENT"
+
+#: pacman_mirrors/constants/txt.py:33
+msgid "HTTPException"
+msgstr "Excepție HTTP"
+
+#: pacman_mirrors/constants/txt.py:34
+msgid "TIMEOUT"
+msgstr "TIMEOUT"
+
+#: pacman_mirrors/constants/txt.py:36
+msgid "API"
+msgstr "API"
+
+#: pacman_mirrors/constants/txt.py:37
+msgid "BRANCH"
+msgstr "RAMURĂ"
+
+#: pacman_mirrors/constants/txt.py:38
+msgid "COUNTRY"
+msgstr "ȚARĂ"
+
+#: pacman_mirrors/constants/txt.py:39
+msgid "FILE"
+msgstr "FIȘIER"
+
+#: pacman_mirrors/constants/txt.py:40
+msgid "METHOD"
+msgstr "METODĂ"
+
+#: pacman_mirrors/constants/txt.py:41
+msgid "METHODS"
+msgstr "METODE"
+
+#: pacman_mirrors/constants/txt.py:42
+msgid "MISC"
+msgstr "DIVERSE"
+
+#: pacman_mirrors/constants/txt.py:43
+msgid "NUMBER"
+msgstr "NUMĂR"
+
+#: pacman_mirrors/constants/txt.py:44
+msgid "PATH"
+msgstr "CALE"
+
+#: pacman_mirrors/constants/txt.py:45
+msgid "PREFIX"
+msgstr "PREFIX"
+
+#: pacman_mirrors/constants/txt.py:46
+msgid "PROTO"
+msgstr "PROTO"
+
+#: pacman_mirrors/constants/txt.py:47
+msgid "SECONDS"
+msgstr "SECUNDE"
+
+#: pacman_mirrors/constants/txt.py:48 pacman_mirrors/constants/txt.py:125
+msgid "URL"
+msgstr "URL"
+
+#: pacman_mirrors/constants/txt.py:49
+msgid "USAGE"
+msgstr "MOD DE FOLOSIRE"
+
+#: pacman_mirrors/constants/txt.py:51
+msgid "Return branch from configuration"
+msgstr "Calea de ȋntoarcere din configurație"
+
+#: pacman_mirrors/constants/txt.py:52
+msgid "Set prefix to"
+msgstr "Stabilește prefixul la"
+
+#: pacman_mirrors/constants/txt.py:53
+msgid "Replace protocols in configuration"
+msgstr "Ȋnlocuiește protocoalele ȋn configurație"
+
+#: pacman_mirrors/constants/txt.py:54
+msgid "Replace branch in mirrorlist"
+msgstr "Ȋnlocuiește ramura ȋn lista locațiilor mirror"
+
+#: pacman_mirrors/constants/txt.py:55
+msgid "Replace branch in configuration"
+msgstr "Ȋnlocuiește ramura ȋn configurație"
+
+#: pacman_mirrors/constants/txt.py:56
+msgid "Replace mirror url in mirrorlist"
+msgstr "Ȋnlocuiește adresa url a locației mirror ȋn listă"
+
+#: pacman_mirrors/constants/txt.py:57
+msgid "Branch name"
+msgstr "Numele ramurii"
+
+#: pacman_mirrors/constants/txt.py:58
+msgid "Comma separated list of countries, from which mirrors will be used"
+msgstr "Lista, separată prin virgule, a țărilor din care se vor folosi locații mirror"
+
+#: pacman_mirrors/constants/txt.py:60
+msgid "Load default mirror file"
+msgstr "Ȋncarcă fișierul locațiilor mirror implicite"
+
+#: pacman_mirrors/constants/txt.py:61
+msgid "Generate mirrorlist with a number of up-to-date mirrors. Ignores:"
+msgstr "Generează lista mirror cu un număr de locații actualizate. Ignoră:"
+
+#: pacman_mirrors/constants/txt.py:63
+msgid "Generate mirrorlist with defaults"
+msgstr "Generează lista locațiilor mirror cu valorile implicite"
+
+#: pacman_mirrors/constants/txt.py:64
+msgid "Get current country using geolocation"
+msgstr "Determină țara curentă folosind geolocalizarea"
+
+#: pacman_mirrors/constants/txt.py:65
+msgid "List all available countries"
+msgstr "Afișează toate țările disponibile"
+
+#: pacman_mirrors/constants/txt.py:66
+msgid "Generate custom mirrorlist"
+msgstr "Generează lista personalizată a locațiilor mirror"
+
+#: pacman_mirrors/constants/txt.py:67
+msgid "Generation method"
+msgstr "Metoda de generare"
+
+#: pacman_mirrors/constants/txt.py:68
+msgid "Use to skip generation of mirrorlist"
+msgstr "Folosit pentru a ocoli generarea listei locațiilor mirror"
+
+#: pacman_mirrors/constants/txt.py:69
+msgid "Quiet mode - less verbose output"
+msgstr "Modul tăcut - afișaj mai puțin detaliat"
+
+#: pacman_mirrors/constants/txt.py:70
+msgid "Syncronize pacman databases"
+msgstr "Sincronizează bazele de date pacman"
+
+#: pacman_mirrors/constants/txt.py:71
+msgid "Maximum waiting time for server response"
+msgstr "Timpul maxim de așteptare a răspunsului de la server"
+
+#: pacman_mirrors/constants/txt.py:72
+msgid "Print the pacman-mirrors version"
+msgstr "Afișează versiunea pacman-mirrors"
+
+#: pacman_mirrors/constants/txt.py:74
+msgid "Branch in config is changed"
+msgstr "A fost modificată o ramură din configurație"
+
+#: pacman_mirrors/constants/txt.py:75
+msgid "Protocols in config is changed"
+msgstr "A fost modificat un protocol din configurație"
+
+#: pacman_mirrors/constants/txt.py:76
+msgid "Re-branch requires a branch to work with"
+msgstr "Supra-ramificarea trebuie făcută plecȃnd de la o ramură existentă"
+
+#: pacman_mirrors/constants/txt.py:77
+msgid "Branch in mirror list is changed"
+msgstr "A fost modificată o ramură din lista locațiilor mirror"
+
+#: pacman_mirrors/constants/txt.py:78
+msgid "Available countries are"
+msgstr "Țările disponibile sunt"
+
+#: pacman_mirrors/constants/txt.py:79
+msgid "Could not download from"
+msgstr "Nu se poate descărca de la"
+
+#: pacman_mirrors/constants/txt.py:80
+msgid "Cannot read file"
+msgstr "Fișierul nu este lizibil"
+
+#: pacman_mirrors/constants/txt.py:81
+msgid "Cannot write file"
+msgstr "Fișierul nu poate fi scris"
+
+#: pacman_mirrors/constants/txt.py:82
+msgid "Converting custom mirror file to new format"
+msgstr "Se convertește la noul format un fișier personalizat al locațiilor mirror"
+
+#: pacman_mirrors/constants/txt.py:83
+msgid "Custom mirror file"
+msgstr "Fișier personalizat al locațiilor mirror"
+
+#: pacman_mirrors/constants/txt.py:84
+msgid "Custom mirror file saved"
+msgstr "A fost salvat fișierul personalizat al locațiilor mirror"
+
+#: pacman_mirrors/constants/txt.py:85
+msgid "User generated mirror list"
+msgstr "Lista locațiilor mirror generată de utilizator"
+
+#: pacman_mirrors/constants/txt.py:86
+msgid "Deprecated argument"
+msgstr "Argument scos din uz"
+
+#: pacman_mirrors/constants/txt.py:87
+msgid "doesn't exist."
+msgstr "nu există."
+
+#: pacman_mirrors/constants/txt.py:88
+msgid "Downloading mirrors from"
+msgstr "Se descarcă lista locațiilor mirror de la"
+
+#: pacman_mirrors/constants/txt.py:89
+msgid "Falling back to"
+msgstr "Se revine la"
+
+#: pacman_mirrors/constants/txt.py:90
+msgid "Internet connection appears to be down"
+msgstr "Conexiunea internet nu funcționează"
+
+#: pacman_mirrors/constants/txt.py:91
+msgid "Mirror list is generated using random method"
+msgstr "Lista locațiilor mirror a fost generată folosind o metodă aleatorie"
+
+#: pacman_mirrors/constants/txt.py:92
+msgid "is missing"
+msgstr "lipsește"
+
+#: pacman_mirrors/constants/txt.py:93
+msgid "The mirror file"
+msgstr "Fișierul locațiilor mirror"
+
+#: pacman_mirrors/constants/txt.py:94
+msgid "Mirror list generated and saved to"
+msgstr "Lista locațiilor mirror a fost generată și salvată ȋn"
+
+#: pacman_mirrors/constants/txt.py:95
+msgid "Generated on"
+msgstr "Generată la"
+
+#: pacman_mirrors/constants/txt.py:96
+msgid "custom mirrorlist"
+msgstr "lista personalizată a locațiilor mirror"
+
+#: pacman_mirrors/constants/txt.py:97
+msgid "to reset custom mirrorlist"
+msgstr "pentru a reseta lista personalizată a locațiilor mirror"
+
+#: pacman_mirrors/constants/txt.py:98
+msgid "default mirrorlist"
+msgstr "lista implicită a locațiilor mirror"
+
+#: pacman_mirrors/constants/txt.py:99
+msgid "to modify mirrorlist"
+msgstr "pentru a modifica lista locațiilor mirror"
+
+#: pacman_mirrors/constants/txt.py:100
+msgid "Mirror ranking is not available"
+msgstr "Topul locațiilor mirror nu este disponibil"
+
+#: pacman_mirrors/constants/txt.py:101
+msgid "Must have root privileges"
+msgstr "Sunt necesare drepturi de root"
+
+#: pacman_mirrors/constants/txt.py:102
+msgid "The mirrors has not changed"
+msgstr "Lista locațiilor mirror nu a fost modificată"
+
+#: pacman_mirrors/constants/txt.py:103
+msgid "No mirrors in selection"
+msgstr "Nicio locație mirror nu a fost selectată"
+
+#: pacman_mirrors/constants/txt.py:104
+msgid "Option"
+msgstr "Opțiune"
+
+#: pacman_mirrors/constants/txt.py:105
+msgid "Please use"
+msgstr "Vă rugăm să folosiți"
+
+#: pacman_mirrors/constants/txt.py:106
+msgid "Querying mirrors"
+msgstr "Se interoghează locațiile mirror"
+
+#: pacman_mirrors/constants/txt.py:107
+msgid "Randomizing mirror list"
+msgstr "Se randomizează lista locațiilor mirror"
+
+#: pacman_mirrors/constants/txt.py:108
+msgid "To remove custom config run "
+msgstr "Pentru a elimina configurația personalizată, executați"
+
+#: pacman_mirrors/constants/txt.py:109
+msgid "This may take some time"
+msgstr "Operația va dura"
+
+#: pacman_mirrors/constants/txt.py:110
+msgid "unknown country"
+msgstr "țară necunoscută"
+
+#: pacman_mirrors/constants/txt.py:111
+msgid "Use 0 for all mirrors"
+msgstr "Se folosește 0 pentru toate locațiile mirror"
+
+#: pacman_mirrors/constants/txt.py:112
+msgid "Using all mirrors"
+msgstr "Se folosesc toate locațiile mirror"
+
+#: pacman_mirrors/constants/txt.py:113
+msgid "Using custom mirror file"
+msgstr "Se folosește fișierul personalizat al locațiilor mirror"
+
+#: pacman_mirrors/constants/txt.py:114
+msgid "Using default mirror file"
+msgstr "Se folosește fișierul implicit al locațiilor mirror"
+
+#: pacman_mirrors/constants/txt.py:115
+msgid "Writing mirror list"
+msgstr "Este scrisă lista locațiilor mirror"
+
+#: pacman_mirrors/constants/txt.py:118
+msgid "Manjaro mirrors by response time"
+msgstr "Lista locațiilor mirror pentru Manjaro, ordonată după timpul de răspuns"
+
+#: pacman_mirrors/constants/txt.py:119
+msgid "Manjaro mirrors in random order"
+msgstr "Lista locațiilor mirror pentru Manjaro, ȋn ordine aleatorie"
+
+#: pacman_mirrors/constants/txt.py:120
+msgid "Check mirrors for your personal list"
+msgstr "Verifică locațiile mirror pentru lista personală"
+
+#: pacman_mirrors/constants/txt.py:121
+msgid "Use"
+msgstr "Folosește"
+
+#: pacman_mirrors/constants/txt.py:122
+msgid "Country"
+msgstr "Țara"
+
+#: pacman_mirrors/constants/txt.py:123
+msgid "Resp"
+msgstr "Timp de răspuns"
+
+#: pacman_mirrors/constants/txt.py:124
+msgid "Sync"
+msgstr "Sincronizată"
+
+#: pacman_mirrors/constants/txt.py:126
+msgid "Cancel"
+msgstr "Anulare"
+
+#: pacman_mirrors/constants/txt.py:127
+msgid "OK"
+msgstr "OK"
+
+#: pacman_mirrors/constants/txt.py:128
+msgid "Confirm selections"
+msgstr "Confirmare selecție"
+
+#: pacman_mirrors/constants/txt.py:129
+msgid "I want to use these mirrors"
+msgstr "Vreau să folosesc aceste locații mirror"
