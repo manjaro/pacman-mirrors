@@ -7,15 +7,16 @@
 pacman-mirrors - generate pacman mirrorlist for Manjaro Linux
 
 # SYNOPSIS
-
-pacman-mirrors [-f *NUMBER* | [[-i [-d]] [-c *COUNTRY*, [*COUNTRY*] ... | --geoip]]] [-m *METHOD*] [-a [-p *PREFIX*] [-R] [-G | -S *BRANCH*] [-P *PROTO* [*PROTO*] ...][-U *URL*]] [-b *BRANCH*] [-t *SECONDS*] [-q] [-v] [-n | -y]
+pacman-mirrors [-f*NUMBER*|[[-i[-d]][-c*COUNTRY*[,*COUNTRY*]...|--geoip]]] 
+[-a[-p*PREFIX*][-R][-G|-B/-S*BRANCH*][-P*PROTO*[,*PROTO*]...][-U*URL*]] 
+[-b*BRANCH*] [-q] [-t*SECONDS*] [-v] [-n]
 
 
 # DESCRIPTION
 
 Generate mirrorlist for Manjaro Linux. Default is to rank all mirrors by reponse time. If no arguments are given pacman-mirrors lists available options. Pacman-mirrors requires access to files which are read-only so it must be run with su or sudo. To create a up-to-date mirrorlist using all default use,
 
-    pacman-mirrors --fasttrack 10 && sudo pacman -Syy
+    pacman-mirrors --fasttrack 10
 
 The mirrorlist generation process can be refined through arguments and arguments with options, for example,
 
@@ -26,60 +27,62 @@ After all operations **ALWAYS** syncronize your pacman database with
 
     sudo pacman -Syy
 
-# OPTIONS
+# OPERATION
 
 Some options are mutual exclusive and will throw an arguments error:
 
 * **--branch**, **--get-branch** and **--set-branch**
 * **--country** and **--geoip**
 
-Others can be used together but they have precedence. If the fasttrack arg is used with interactive, country or geoip the fasttrack arg will have precendence and the others are ignored. Some arguments requires other argument to have effect for example,this command will ignore --default argument
+Some arguments requires another argument present to have effect. E.g., this command will ignore --default argument
 
-    WRONG
+   WRONG
+   
     pacman-mirrors -b unstable --default
 
-as it should have been in conjunction with --interactive, like
+The *-d/--default* argument tells *-i/--interactive* to force load all mirrors from the mirrorfile
 
-    CORRECT
+   CORRECT
+   
     pacman-mirrors -b unstable --interactive --default
 
-The same goes for the API specific arguments. For those to have effect the --api argument must be present also.
+   Or
+   
+    pacman-mirrors -bunstable -id
+
+The same goes for the API specific arguments. For those to have effect the *-a/--api* argument must be present.
 
     pacman-mirrors -aS unstable
 
-The arguments can appear in any order except for arguments which takes additional options in which case the options must follow immediately after the argument, for example
+The arguments can appear in any order except for arguments which takes additional options in which case the options must follow immediately after the argument with or without space, for example
 
-    pacman-mirrors -aidS unstable
+    pacman-mirrors -aB unstable
+    pacman-mirrors -aBunstable
+    pacman-mirrors -f 5
+    pacman-mirrors -f5
 
-Pacman-mirrors downloads the lastest available status from [http://repo.manjaro.org](http://repo.manjaro.org). These data is always used during mirrorlist generation to ensure that you connected to a mirror which is up-to-date for your selected branch. Should you decide to temporarily switch branches you will still connect to an up-to-date mirror.
+Pacman-mirrors always attempt to download the lastest available data from [http://repo.manjaro.org](http://repo.manjaro.org). These data is always used during mirrorlist generation to ensure that you connect to a mirror which is up-to-date for your selected branch. Should you decide to temporarily switch branches you will still connect to an up-to-date mirror.
+
+# ARGUMENTS AND OPTIONS
 
 ## IMPORTANT TO REMEMBER
-It cannot be stressed enough that for every mirrorlist generation you commence, you **MUST** run *pacman -Syy*.
+For every mirrorlist generation, you **MUST** run *pacman -Syy*.
 
 ## METHODS
 -f, \--fasttrack *NUMBER*
-:   Generates an up-to-date mirrorlist for the users current selected branch,
-    mirrors are randomly selected from [http://repo.manjaro.org/status.json](http://repo.manjaro.org/status.json),
-    the randomly selected mirrors are ranked by their current access time.
-    The higher number the higher possibility of a fast mirror.
-    If the number 0 is used - it is understood that all mirrors mirrors should be used.
+:   Generates an up-to-date mirrorlist for the users current selected branch, mirrors are randomly selected from the users current mirrorfile, either a custom mirror file or the default status file, the randomly selected mirrors are ranked by their current access time. The higher number the higher possibility of a fast mirror. If the number 0 is used - it is understood that all mirrors mirrors should be used.
 
 -i, \--interactive [--default]
-:   This is a function designed to leave full control for mirrors and protocols.
-    This function **DOES NOT** take into consideration up-to-date mirrors.
-    The addition argument **--default** forces pacman-mirrors to load the default mirror
-    file and ignore any preset custom-mirrors file, thus allowing for reselecting mirrors
-    for a new custom mirror file.
+:   This is a function designed to leave full control for mirrors and protocols to the user. This function **DOES NOT** take into consideration up-to-date mirrors. The addition argument **--default** forces pacman-mirrors to load the default mirror file and ignore any preset custom-mirrors file, thus allowing for reselecting mirrors for a new custom mirror file.
 
 ## BRANCH
 
 -b, \--branch *BRANCH*
-:   Temporarily use another branch, *stable*, *testing* or *unstable*.
-    The branch is reset with next run of pacman-mirrors.
+:   Temporarily use another branch, *stable*, *testing* or *unstable*. The branch is reset with next run of pacman-mirrors.
 
 ## COUNTRY
 -c, \--country *COUNTRY* [*COUNTRY*] ...
-:   Specifiy a country or a list of countries.
+:   Specifiy a country or a list of countries. The list of countries is saved as a custom mirrorfile and the configuration is set to *Custom*
 
 \--geoip
 :   Use geolocation if possible, if geoip is not available all mirrors.
@@ -92,23 +95,20 @@ It cannot be stressed enough that for every mirrorlist generation you commence, 
 -a, \--api [-p *PREFIX*] [-R] [-G|-S/-B *BRANCH*] [-P *PROTO* [*PROTO*] ...] [-U *URL*]
 :   Instructs pacman-mirrors to activate processing of API arguments
 
--p, \--prefix *PREFIX*
-:   Add a path prefix to pacman-mirrors file-handling
-    eg. */mnt/install* or *$mnt*
+-B, -S, \--set-branch *BRANCH*
+:   Permanent change to branch config, using *stable*, *testing* or *unstable*
 
 -G, \--get-branch
 :   Return branch from configuration.
 
+-p, \--prefix *PREFIX*
+:   Add a path prefix to pacman-mirrors file-handling eg. */mnt/install* or *$mnt*
+
 -P, \--proto, \--protocols *PROTO* [*PROTO*] ...
-:   Write protocols to configuration,
-    use *all* or *http*, *https*, *ftp* and *ftps*
+:   Write protocols to configuration, using *all* or *http*, *https*, *ftp* and *ftps*
 
 -R, \--re-branch
 :   Replace branch in mirrorlist
-
--S, B, \--set-branch *BRANCH*
-:   Permanent change to branch config,
-    use *stable*, *testing* or *unstable*
 
 -U, \--url *URL*
 :   Replace mirrorlist with supplied url
@@ -128,9 +128,7 @@ It cannot be stressed enough that for every mirrorlist generation you commence, 
 :   Make pacman-mirrors silent
 
 -t, \--timeout *SECONDS*
-:   Change the number of seconds waiting for a server response,
-    SSL enabled mirrors has this value doubled to compensate
-    for the time spent on exchanging encryption keys
+:   Change the number of seconds waiting for a server response, SSL enabled mirrors has this value doubled to compensate for the time spent on exchanging encryption keys
 
 -v, \--version
 :   Show the version of pacman-mirrors
@@ -144,23 +142,17 @@ It cannot be stressed enough that for every mirrorlist generation you commence, 
     BRANCH: Value from config
 
 ## IMPORTANT TO REMEMBER
-It cannot be stressed enough that for every mirrorlist generation you commence,
-you **MUST** run *pacman -Syy*.
+For every mirrorlist generation, you **MUST** run *pacman -Syy*.
 
 ## Configuration flow of pacman-mirrors
 
-At launch an internal default configuration is setup,
-file configuration is applied and the commandline is parsed and applied.
+At launch an internal default configuration is setup, file configuration is applied and the commandline is parsed and applied.
 
 ## API arguments
 
-These arguments modifies key elements of pacman-mirrors configuration
-according to the packagers needs.
+These arguments modifies key elements of pacman-mirrors configuration according to the packagers needs.
 
-The actions performed by the API are in strict order and
-performed *before any* other actions. This also means that ordinary arguments
-supplied in conjunction with app might be ignored. Eg. **-U** argument terminates
-pacman-mirrors when branch and mirrorlist has been written.
+The actions performed by the API are in strict order and performed *before any* other actions. This also means that ordinary arguments supplied in conjunction with api might be ignored. Eg. **-U** argument terminates pacman-mirrors when branch and mirrorlist has been written.
 
 1. If *-G*
    * print *config.branch*
@@ -178,26 +170,28 @@ pacman-mirrors when branch and mirrorlist has been written.
 6. If *-R*
    * replace branch in mirrorlist with *-S/-B* *BRANCH*
 
-When done pacman-mirrors checks the internet connection and if possible
-download the latest datafiles for creating the mirrorlist.
-At this point it is possible to interrupt further processing.
+When done pacman-mirrors checks the internet connection and if possible download the latest datafiles for creating the mirrorlist. At this point it is possible to interrupt further processing.
 
 If the *-n* argument is present pacman-mirrors will now exit.
 
 # EXAMPLES
 
-Most optional arguments are self explaining others require explanation.
-The API functions is mainly designed to help packagers and iso-builders.
-However it can be of use for everyone because it takes the hazzle out
-of editing your pacman-mirrors configuration.
+Most optional arguments are self explaining others require explanation. The API functions is mainly designed to help packagers and iso-builders. However it can be of use for everyone because it takes the hazzle out of editing your pacman-mirrors configuration.
 
 ## IMPORTANT TO REMEMBER
-It cannot be stressed enough that for every mirrorlist generation you commence,
-you **MUST** run *pacman -Syy*.
+For every mirrorlist generation, you **MUST** run *pacman -Syy*.
 
+## Commands
+ 
 * Which countries has mirrors?
 
-    *sudo pacman-mirrors -l*
+    *pacman-mirrors -l*
+
+* What branch am I on
+
+    *pacman-mirrors -aG*
+
+## Commands requiring sudo
 
 * I want to temporary change branch to unstable, use geolocation,
 
@@ -231,10 +225,6 @@ you **MUST** run *pacman -Syy*.
 
     *sudo pacman-mirrors -c all*
 
-* What branch am I on
-
-    *sudo pacman-mirrors -aG*
-
 * Change system branch and dont change the mirrorlist
 
     *sudo pacman-mirrors -naS unstable*
@@ -260,8 +250,7 @@ you **MUST** run *pacman -Syy*.
 
 # SEE ALSO
 
-The pacman-mirrors source code and all documentation
-may be downloaded from <https://github.com/manjaro/pacman-mirrors/archive/master.zip>
+The pacman-mirrors source code and all documentation may be downloaded from <https://github.com/manjaro/pacman-mirrors/archive/master.zip>
 
 # AUTHORS
 
