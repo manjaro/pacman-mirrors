@@ -111,9 +111,10 @@ class PacmanMirrors:
                              help=txt.HLP_ARG_INTERACTIVE)
         methods_exclusive = methods.add_mutually_exclusive_group()
         methods_exclusive.add_argument("-f", "-g", "--fasttrack",
-                                       # action="store",
+                                       nargs="?",
+                                       const=0,
                                        type=int,
-                                       nargs="*",
+                                       default=0,
                                        metavar=txt.NUMBER,
                                        help="{}".format(txt.HLP_ARG_FASTTRACK))
         methods_exclusive.add_argument("-c", "--country",
@@ -261,9 +262,7 @@ class PacmanMirrors:
                 self.disable_custom_config()
 
         if args.fasttrack:
-            self.fasttrack = args.fasttrack[0]
-            if args.fasttrack is None:
-                self.fasttrack = 0
+            self.fasttrack = args.fasttrack
 
         if args.no_mirrorlist:
             self.no_mirrorlist = True
