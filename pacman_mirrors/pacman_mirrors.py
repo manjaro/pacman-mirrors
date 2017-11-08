@@ -241,11 +241,13 @@ class PacmanMirrors:
         # geoip and country are mutually exclusive
         if args.geoip:
             self.geoip = True
+
         if args.country and not args.geoip:
             self.custom = True
-            if "," in args.country[0]:
+            try:
+                _ = args.country[0]
                 self.config["only_country"] = args.country[0].split(",")
-            else:
+            except IndexError:
                 self.config["only_country"] = args.country
 
         if args.fasttrack:
@@ -638,6 +640,7 @@ class PacmanMirrors:
         """Perform reset of custom configuration"""
         self.config["only_country"] = []
         self.custom = False
+        configfn.modify_config(self.config, custom=False)
 
     def filter_user_branch(self, mirrorlist):
         """Filter mirrorlist on users branch and branch sync state"""
