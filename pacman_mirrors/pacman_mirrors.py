@@ -123,33 +123,33 @@ class PacmanMirrors:
                              choices=["rank", "random"],
                              help=txt.HLP_ARG_METHOD)
         country = parser.add_argument_group(txt.COUNTRY)
-        either_or = country.add_mutually_exclusive_group()
-        either_or.add_argument("-c", "--country",
-                               type=str,
-                               nargs="+",
-                               metavar=txt.COUNTRY,
-                               help=txt.HLP_ARG_COUNTRY)
-        either_or.add_argument("--geoip",
-                               action="store_true",
-                               help=txt.HLP_ARG_GEOIP)
-        country.add_argument("-l", "--country-list", "--list",
+        country_geoip = country.add_mutually_exclusive_group()
+        country_geoip.add_argument("-c", "--country",
+                                   type=str,
+                                   nargs="+",
+                                   metavar=txt.COUNTRY,
+                                   help=txt.HLP_ARG_COUNTRY)
+        country_geoip.add_argument("--geoip",
+                                   action="store_true",
+                                   help=txt.HLP_ARG_GEOIP)
+        country.add_argument("-l", "--list", "--country-list",
                              action="store_true",
                              help=txt.HLP_ARG_LIST)
         # Branch arguments
         branch = parser.add_argument_group(txt.BRANCH)
-        only_one = branch.add_mutually_exclusive_group()
-        only_one.add_argument("-b", "--branch",
-                              type=str,
-                              choices=["stable", "testing", "unstable"],
-                              help=txt.HLP_ARG_BRANCH)
-        only_one.add_argument("-G", "--get-branch",
-                              action="store_true",
-                              help="{}: {}".format(
-                                  txt.API, txt.HLP_ARG_API_GET_BRANCH))
-        only_one.add_argument("-S", "-B", "--set-branch",
-                              choices=["stable", "testing", "unstable"],
-                              help="{}: {}".format(
-                                  txt.API, txt.HLP_ARG_API_SET_BRANCH))
+        branch_one = branch.add_mutually_exclusive_group()
+        branch_one.add_argument("-b", "--branch",
+                                type=str,
+                                choices=["stable", "testing", "unstable"],
+                                help=txt.HLP_ARG_BRANCH)
+        branch_one.add_argument("-G", "--get-branch",
+                                action="store_true",
+                                help="{}: {}".format(
+                                    txt.API, txt.HLP_ARG_API_GET_BRANCH))
+        branch_one.add_argument("-S", "-B", "--set-branch",
+                                choices=["stable", "testing", "unstable"],
+                                help="{}: {}".format(
+                                    txt.API, txt.HLP_ARG_API_SET_BRANCH))
         # Api arguments
         api = parser.add_argument_group(txt.API)
         api.add_argument("-a", "--api",
@@ -197,6 +197,9 @@ class PacmanMirrors:
 
         args = parser.parse_args()
 
+        """
+        No root required
+        """
         if len(sys.argv) == 1 or args.help:
             self.print_help(parser)
             sys.exit(0)
@@ -205,7 +208,7 @@ class PacmanMirrors:
             print("Version {}".format(__version__))
             sys.exit(0)
 
-        if args.country_list:
+        if args.list:
             self.output_country_list()
             sys.exit(0)
 
@@ -213,6 +216,9 @@ class PacmanMirrors:
             self.api_config(get_branch=True)
             sys.exit(0)
 
+        """
+        Root required
+        """
         if os.getuid() != 0:
             print(".: {} {}".format(
                 txt.ERR_CLR, txt.MUST_BE_ROOT))
@@ -230,6 +236,9 @@ class PacmanMirrors:
         if args.quiet:
             self.quiet = True
 
+        """
+        Mirrorlist generation
+        """
         if args.interactive:
             self.interactive = True
             if not os.environ.get("DISPLAY") or not GTK_AVAILABLE:
@@ -242,19 +251,24 @@ class PacmanMirrors:
         if args.geoip:
             self.geoip = True
 
-        if args.country and not args.geoip:
+        if args.country:
             self.custom = True
-            try:
-                _ = args.country[0]
+            if "," in args.country[0]:
                 self.config["only_country"] = args.country[0].split(",")
-            except IndexError:
+            else:
                 self.config["only_country"] = args.country
+
+            if self.config["only_country"] == ["all"]:
+                self.disable_custom_config()
 
         if args.fasttrack:
             self.fasttrack = args.fasttrack[0]
+            if args.fasttrack is None:
+                self.fasttrack = 0
 
         if args.no_mirrorlist:
             self.no_mirrorlist = True
+
         # api handling
         if args.api:
             getbranch = False
@@ -371,11 +385,12 @@ class PacmanMirrors:
         """
         If we have selected_countries - write a custom-mirror file
         """
-        try:
-            _ = self.selected_countries[0]
-            self.output_custom_mirror_file(mirror_selection)
-        except IndexError:
-            pass
+        if len(self.selected_countries) < len(self.mirrors.countrylist):
+            try:
+                _ = self.selected_countries[0]
+                self.output_custom_mirror_file(mirror_selection)
+            except IndexError:
+                pass
 
         try:
             _ = self.config["protocols"][0]
@@ -640,7 +655,7 @@ class PacmanMirrors:
         """Perform reset of custom configuration"""
         self.config["only_country"] = []
         self.custom = False
-        configfn.modify_config(self.config, custom=False)
+        configfn.modify_config(self.config, self.custom)
 
     def filter_user_branch(self, mirrorlist):
         """Filter mirrorlist on users branch and branch sync state"""
@@ -658,9 +673,6 @@ class PacmanMirrors:
         """
         Load mirrors
         """
-        # decision on disable custom config
-        if self.config["only_country"] == ["all"]:
-            self.disable_custom_config()
         # decision on custom or default
         if self.config["only_country"] == ["Custom"]:
             # check if custom config is valid
@@ -841,37 +853,42 @@ class PacmanMirrors:
 
     def run(self):
         """Run"""
-        # build config by parsing pacman-mirrors.conf
+        """
+        Build internal config dictionary
+        Returns the config dictionary and true/false on custom
+        Parse commandline
+        Check network
+        Break if mirrorlist is not to be touched
+        Handle missing network
+        """
         (self.config, self.custom) = configfn.build_config()
-        # ensure /var/lib/pacman-mirrors exist
         filefn.create_dir(self.config["work_dir"])
-        # parse command line
         self.command_line_parse()
-        # net check
         self.network = httpfn.inet_conn_check()
         if self.network:
-            # update data files
             httpfn.update_mirrors(self.config, quiet=self.quiet)
         if self.no_mirrorlist:
-            # exit
             sys.exit(0)
         if not self.network:
             if not self.quiet:
-                # console message
                 pacman_mirrors.functions.util.internet_message()
-            # use random instead of rank
             self.config["method"] = "random"
-            # using fasttrack is not possible
             self.fasttrack = False
+        """
+        Load all mirrors
+        """
         self.load_all_mirrors()
+        """
+        Decide which type of mirrorlist to create
+        Fasttrack
+        Interactive
+        Default
+        """
         if self.fasttrack:
-            # fasttrack argument
             self.build_fasttrack_mirror_list(self.fasttrack)
         elif self.interactive:
-            # interactive argument
             self.build_interactive_mirror_list()
         else:
-            # default
             self.build_common_mirror_list()
 
 
