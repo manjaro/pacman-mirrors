@@ -106,55 +106,48 @@ class PacmanMirrors:
 
         # Method arguments
         methods = parser.add_argument_group(txt.METHODS)
-        methods.add_argument("-f", "-g", "--fasttrack",
-                             # action="store",
-                             type=int,
-                             nargs="*",
-                             metavar=txt.NUMBER,
-                             help="{}".format(txt.HLP_ARG_FASTTRACK))
         methods.add_argument("-i", "--interactive",
                              action="store_true",
                              help=txt.HLP_ARG_INTERACTIVE)
-        methods.add_argument("-d", "--default",
-                             action="store_true",
-                             help="Interactive: " + txt.HLP_ARG_DEFAULT)
-        methods.add_argument("-m", "--method",
-                             type=str,
-                             choices=["rank", "random"],
-                             help=txt.HLP_ARG_METHOD)
+        methods_exclusive = methods.add_mutually_exclusive_group()
+        methods_exclusive.add_argument("-f", "-g", "--fasttrack",
+                                       # action="store",
+                                       type=int,
+                                       nargs="*",
+                                       metavar=txt.NUMBER,
+                                       help="{}".format(txt.HLP_ARG_FASTTRACK))
+        methods_exclusive.add_argument("-c", "--country",
+                                       type=str,
+                                       nargs="+",
+                                       metavar=txt.COUNTRY,
+                                       help=txt.HLP_ARG_COUNTRY)
+        methods_exclusive.add_argument("--geoip",
+                                       action="store_true",
+                                       help=txt.HLP_ARG_GEOIP)
         country = parser.add_argument_group(txt.COUNTRY)
-        country_geoip = country.add_mutually_exclusive_group()
-        country_geoip.add_argument("-c", "--country",
-                                   type=str,
-                                   nargs="+",
-                                   metavar=txt.COUNTRY,
-                                   help=txt.HLP_ARG_COUNTRY)
-        country_geoip.add_argument("--geoip",
-                                   action="store_true",
-                                   help=txt.HLP_ARG_GEOIP)
         country.add_argument("-l", "--list", "--country-list",
                              action="store_true",
                              help=txt.HLP_ARG_LIST)
         # Branch arguments
         branch = parser.add_argument_group(txt.BRANCH)
-        branch_one = branch.add_mutually_exclusive_group()
-        branch_one.add_argument("-b", "--branch",
-                                type=str,
-                                choices=["stable", "testing", "unstable"],
-                                help=txt.HLP_ARG_BRANCH)
-        branch_one.add_argument("-G", "--get-branch",
-                                action="store_true",
-                                help="{}: {}".format(
-                                    txt.API, txt.HLP_ARG_API_GET_BRANCH))
-        branch_one.add_argument("-S", "-B", "--set-branch",
-                                choices=["stable", "testing", "unstable"],
-                                help="{}: {}".format(
-                                    txt.API, txt.HLP_ARG_API_SET_BRANCH))
+        branch_exclusive = branch.add_mutually_exclusive_group()
+        branch_exclusive.add_argument("-b", "--branch",
+                                      type=str,
+                                      choices=["stable", "testing", "unstable"],
+                                      help=txt.HLP_ARG_BRANCH)
+        branch_exclusive.add_argument("-G", "--get-branch",
+                                      action="store_true",
+                                      help="{}: {}".format(
+                                          txt.API, txt.HLP_ARG_API_GET_BRANCH))
+        branch_exclusive.add_argument("-S", "-B", "--set-branch",
+                                      choices=["stable", "testing", "unstable"],
+                                      help="{}: {}".format(
+                                          txt.API, txt.HLP_ARG_API_SET_BRANCH))
         # Api arguments
         api = parser.add_argument_group(txt.API)
         api.add_argument("-a", "--api",
                          action="store_true",
-                         help="[-p {}][-R][-S|-G {}][-P {} [{} ...]]".format(
+                         help="[-p {}][-R][-S/-B|-G {}][-P {} [{} ...]]".format(
                              txt.PREFIX, txt.BRANCH, txt.PROTO, txt.PROTO))
         api.add_argument("-p", "--prefix",
                          type=str,
@@ -178,8 +171,15 @@ class PacmanMirrors:
                              txt.API, txt.HLP_ARG_API_URL))
         # Misc arguments
         misc = parser.add_argument_group(txt.MISC)
+        misc.add_argument("-d", "--default",
+                          action="store_true",
+                          help="Interactive: " + txt.HLP_ARG_DEFAULT)
         misc.add_argument("-h", "--help",
                           action="store_true")
+        misc.add_argument("-m", "--method",
+                          type=str,
+                          choices=["rank", "random"],
+                          help=txt.HLP_ARG_METHOD)
         misc.add_argument("-q", "--quiet",
                           action="store_true",
                           help=txt.HLP_ARG_QUIET)
@@ -190,8 +190,7 @@ class PacmanMirrors:
         misc.add_argument("-v", "--version",
                           action="store_true",
                           help=txt.HLP_ARG_VERSION)
-        sync = misc.add_mutually_exclusive_group()
-        sync.add_argument("-n", "--no-mirrorlist",
+        misc.add_argument("-n", "--no-mirrorlist",
                           action="store_true",
                           help=txt.HLP_ARG_NO_MIRRORLIST)
 
@@ -679,15 +678,14 @@ class PacmanMirrors:
         """
         Load mirrors
         """
-        # decision on custom or default
         if self.config["only_country"] == ["Custom"]:
-            # check if custom config is valid
             if validfn.custom_config_is_valid():
                 self.custom = True
             else:
                 self.disable_custom_config()
         else:
             self.selected_countries = self.config["only_country"]
+
         # decision on custom vs countries from conf or argument
         if self.custom and not self.selected_countries:
             self.load_custom_mirrors()
@@ -695,8 +693,16 @@ class PacmanMirrors:
         else:
             self.load_default_mirrors()
         # validate selection and build country list
+        # util.green("load_all_mirrors ->\n"
+        #            " before ->\n"
+        #            " build_country_list ->\n"
+        #            " selected_countries = {}".format(self.selected_countries))
         self.selected_countries = mirrorfn.build_country_list(
             self.selected_countries, self.mirrors.countrylist, self.geoip)
+        # util.yellow("load_all_mirrors ->\n"
+        #             " after ->\n"
+        #             " build_country_list ->\n"
+        #             " selected_countries = {}".format(self.selected_countries))
 
     def load_custom_mirrors(self):
         """
