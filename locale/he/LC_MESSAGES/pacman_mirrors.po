@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: manjaro-pacman-mirrors\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2017-10-23 20:55+0200\n"
-"PO-Revision-Date: 2017-10-25 07:54+0000\n"
-"Last-Translator: philm <philm@manjaro.org>\n"
+"PO-Revision-Date: 2017-11-07 11:32+0000\n"
+"Last-Translator: Eli Shleifer <eligator@gmail.com>\n"
 "Language-Team: Hebrew (http://www.transifex.com/manjarolinux/manjaro-pacman-mirrors/language/he/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -22,15 +22,15 @@ msgstr ""
 
 #: pacman_mirrors/constants/txt.py:29
 msgid "ERROR"
-msgstr ""
+msgstr "שגיאה"
 
 #: pacman_mirrors/constants/txt.py:30
 msgid "INFO"
-msgstr ""
+msgstr "מידע"
 
 #: pacman_mirrors/constants/txt.py:31
 msgid "WARNING"
-msgstr ""
+msgstr "אזהרה"
 
 #: pacman_mirrors/constants/txt.py:33
 msgid "HTTPException"
@@ -38,19 +38,19 @@ msgstr "חריגת HTTP"
 
 #: pacman_mirrors/constants/txt.py:34
 msgid "TIMEOUT"
-msgstr ""
+msgstr "זמן המתנה מקסימאלי"
 
 #: pacman_mirrors/constants/txt.py:36
 msgid "API"
-msgstr ""
+msgstr "ממשק תִּכְנוּת"
 
 #: pacman_mirrors/constants/txt.py:37
 msgid "BRANCH"
-msgstr ""
+msgstr "ענף"
 
 #: pacman_mirrors/constants/txt.py:38
 msgid "COUNTRY"
-msgstr ""
+msgstr "ארץ"
 
 #: pacman_mirrors/constants/txt.py:39
 msgid "FILE"
@@ -58,15 +58,15 @@ msgstr "קובץ"
 
 #: pacman_mirrors/constants/txt.py:40
 msgid "METHOD"
-msgstr ""
+msgstr "שיטה"
 
 #: pacman_mirrors/constants/txt.py:41
 msgid "METHODS"
-msgstr ""
+msgstr "שיטות"
 
 #: pacman_mirrors/constants/txt.py:42
 msgid "MISC"
-msgstr ""
+msgstr "שׁוֹנוֹת"
 
 #: pacman_mirrors/constants/txt.py:43
 msgid "NUMBER"
@@ -78,11 +78,11 @@ msgstr "נתיב"
 
 #: pacman_mirrors/constants/txt.py:45
 msgid "PREFIX"
-msgstr ""
+msgstr "תחילית"
 
 #: pacman_mirrors/constants/txt.py:46
 msgid "PROTO"
-msgstr ""
+msgstr "פרוטוקול תקשורת"
 
 #: pacman_mirrors/constants/txt.py:47
 msgid "SECONDS"
@@ -94,31 +94,31 @@ msgstr "URL"
 
 #: pacman_mirrors/constants/txt.py:49
 msgid "USAGE"
-msgstr ""
+msgstr "שימוש"
 
 #: pacman_mirrors/constants/txt.py:51
 msgid "Return branch from configuration"
-msgstr ""
+msgstr "החזר את הענף מההגדרות הקיימות"
 
 #: pacman_mirrors/constants/txt.py:52
 msgid "Set prefix to"
-msgstr ""
+msgstr "הגדר תחילית ל"
 
 #: pacman_mirrors/constants/txt.py:53
 msgid "Replace protocols in configuration"
-msgstr ""
+msgstr "החלף פרוטוקול תקשורת בהגדרות"
 
 #: pacman_mirrors/constants/txt.py:54
 msgid "Replace branch in mirrorlist"
-msgstr ""
+msgstr "החלף ענף ברשימת המראות"
 
 #: pacman_mirrors/constants/txt.py:55
 msgid "Replace branch in configuration"
-msgstr ""
+msgstr "החלף ענף בהגדרות"
 
 #: pacman_mirrors/constants/txt.py:56
 msgid "Replace mirror url in mirrorlist"
-msgstr ""
+msgstr "החלף את נתיב המראה ברשימת המראות"
 
 #: pacman_mirrors/constants/txt.py:57
 msgid "Branch name"
@@ -130,23 +130,23 @@ msgstr "רשימת ארצות מופרדת באמצעות פסיקים, אשר �
 
 #: pacman_mirrors/constants/txt.py:60
 msgid "Load default mirror file"
-msgstr ""
+msgstr "טען קובץ מראות על פי ברירת מחדל"
 
 #: pacman_mirrors/constants/txt.py:61
 msgid "Generate mirrorlist with a number of up-to-date mirrors. Ignores:"
-msgstr ""
+msgstr "חולל רשימת מראות עם מספר מראות עדכניות. מתעלם מ:"
 
 #: pacman_mirrors/constants/txt.py:63
 msgid "Generate mirrorlist with defaults"
-msgstr ""
+msgstr "חולל רשימת מראות על פי ברירת מחדל"
 
 #: pacman_mirrors/constants/txt.py:64
 msgid "Get current country using geolocation"
-msgstr ""
+msgstr "שלוף את הארץ הנוכחית באמצעות איכון גיאוגרפי."
 
 #: pacman_mirrors/constants/txt.py:65
 msgid "List all available countries"
-msgstr ""
+msgstr "הצג את כלל הארצות הזמינות"
 
 #: pacman_mirrors/constants/txt.py:66
 msgid "Generate custom mirrorlist"
@@ -158,7 +158,7 @@ msgstr "שיטת יצירה"
 
 #: pacman_mirrors/constants/txt.py:68
 msgid "Use to skip generation of mirrorlist"
-msgstr ""
+msgstr "השתמש בארגומנט זה בכדי לדלג על יצירת רשימת מראות"
 
 #: pacman_mirrors/constants/txt.py:69
 msgid "Quiet mode - less verbose output"
@@ -166,7 +166,7 @@ msgstr "אופן פעולה שקט - פלט מתומצת יותר"
 
 #: pacman_mirrors/constants/txt.py:70
 msgid "Syncronize pacman databases"
-msgstr ""
+msgstr "סנכרן בסיסי נתונים של pacman"
 
 #: pacman_mirrors/constants/txt.py:71
 msgid "Maximum waiting time for server response"
@@ -178,19 +178,19 @@ msgstr "הדפס את גרסת התוכנה pacman-mirrors"
 
 #: pacman_mirrors/constants/txt.py:74
 msgid "Branch in config is changed"
-msgstr ""
+msgstr "הענף השתנה בהגדרות "
 
 #: pacman_mirrors/constants/txt.py:75
 msgid "Protocols in config is changed"
-msgstr ""
+msgstr "פרוטוקול התקשורת השתנה בהגדרות "
 
 #: pacman_mirrors/constants/txt.py:76
 msgid "Re-branch requires a branch to work with"
-msgstr ""
+msgstr "שינוי ענף דורש ענף קיים לעבוד איתו"
 
 #: pacman_mirrors/constants/txt.py:77
 msgid "Branch in mirror list is changed"
-msgstr ""
+msgstr "הענף ברשימת המראות השתנה"
 
 #: pacman_mirrors/constants/txt.py:78
 msgid "Available countries are"
@@ -226,7 +226,7 @@ msgstr "רשימת מראות שנוצרה על ידי המשתמש"
 
 #: pacman_mirrors/constants/txt.py:86
 msgid "Deprecated argument"
-msgstr ""
+msgstr "ארגומנט לא בשימוש"
 
 #: pacman_mirrors/constants/txt.py:87
 msgid "doesn't exist."
@@ -234,7 +234,7 @@ msgstr "לא קיים."
 
 #: pacman_mirrors/constants/txt.py:88
 msgid "Downloading mirrors from"
-msgstr ""
+msgstr "מוריד מראות מ"
 
 #: pacman_mirrors/constants/txt.py:89
 msgid "Falling back to"
@@ -242,11 +242,11 @@ msgstr "נסוג לאחור ל"
 
 #: pacman_mirrors/constants/txt.py:90
 msgid "Internet connection appears to be down"
-msgstr ""
+msgstr "נראה כי חיבור האינטרנט מנותק"
 
 #: pacman_mirrors/constants/txt.py:91
 msgid "Mirror list is generated using random method"
-msgstr ""
+msgstr "רשימת המראות מיוצרת באופן אקראי"
 
 #: pacman_mirrors/constants/txt.py:92
 msgid "is missing"
@@ -258,31 +258,31 @@ msgstr "קובץ המראות"
 
 #: pacman_mirrors/constants/txt.py:94
 msgid "Mirror list generated and saved to"
-msgstr ""
+msgstr "רשימת המראות נוצרה ונשמרה ב"
 
 #: pacman_mirrors/constants/txt.py:95
 msgid "Generated on"
-msgstr ""
+msgstr "נוצרה ב"
 
 #: pacman_mirrors/constants/txt.py:96
 msgid "custom mirrorlist"
-msgstr ""
+msgstr "רשימת מראות מֻתְאֶמֶת"
 
 #: pacman_mirrors/constants/txt.py:97
 msgid "to reset custom mirrorlist"
-msgstr ""
+msgstr "לאפס רשימת מראות מֻתְאֶמֶת"
 
 #: pacman_mirrors/constants/txt.py:98
 msgid "default mirrorlist"
-msgstr ""
+msgstr "רשימת מראות על פי ברירת מחדל"
 
 #: pacman_mirrors/constants/txt.py:99
 msgid "to modify mirrorlist"
-msgstr ""
+msgstr "לשנות רשימת מראות"
 
 #: pacman_mirrors/constants/txt.py:100
 msgid "Mirror ranking is not available"
-msgstr ""
+msgstr "פעולת דירוג המראות אינה זמינה"
 
 #: pacman_mirrors/constants/txt.py:101
 msgid "Must have root privileges"
@@ -290,7 +290,7 @@ msgstr "על התוכנה לקבל הרשאות מנהלן"
 
 #: pacman_mirrors/constants/txt.py:102
 msgid "The mirrors has not changed"
-msgstr ""
+msgstr "רשימת המראות לא שונתה"
 
 #: pacman_mirrors/constants/txt.py:103
 msgid "No mirrors in selection"
@@ -302,7 +302,7 @@ msgstr "בְּרֵרָה"
 
 #: pacman_mirrors/constants/txt.py:105
 msgid "Please use"
-msgstr ""
+msgstr "אנא השתמש ב"
 
 #: pacman_mirrors/constants/txt.py:106
 msgid "Querying mirrors"
@@ -314,7 +314,7 @@ msgstr "מסדר את המראות באופן אקראי"
 
 #: pacman_mirrors/constants/txt.py:108
 msgid "To remove custom config run "
-msgstr ""
+msgstr "בכדי למחוק את התצורה המֻתְאֶמֶת הרץ"
 
 #: pacman_mirrors/constants/txt.py:109
 msgid "This may take some time"
@@ -326,7 +326,7 @@ msgstr "ארץ לא מזוהה"
 
 #: pacman_mirrors/constants/txt.py:111
 msgid "Use 0 for all mirrors"
-msgstr ""
+msgstr "השתמש ב 0 עבור כלל המראות"
 
 #: pacman_mirrors/constants/txt.py:112
 msgid "Using all mirrors"
