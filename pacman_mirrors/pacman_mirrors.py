@@ -269,7 +269,10 @@ class PacmanMirrors:
         if args.no_mirrorlist:
             self.no_mirrorlist = True
 
-        # api handling
+        """
+        API handling
+        Setup variables for passing to the api_config function
+        """
         if args.api:
             getbranch = False
             rebranch = False
@@ -298,7 +301,8 @@ class PacmanMirrors:
 
     def api_config(self, set_pfx=None, set_branch=None, re_branch=False,
                    get_branch=False, set_protocols=False, set_url=None):
-        """Api functions
+        """
+        Api configuration function
         :param set_pfx: prefix to the config paths
         :param set_branch: replace branch in pacman-mirrors.conf
         :param re_branch: replace branch in mirrorlist
@@ -383,7 +387,9 @@ class PacmanMirrors:
         mirror_selection = mirrorfn.filter_mirror_country(self.mirrors.mirrorlist,
                                                           self.selected_countries)
         """
-        If we have selected_countries - write a custom-mirror file
+        We will always have selected countries
+        It is a matter of how many countries
+        Check the length of selected_countries against the full countrylist
         """
         if len(self.selected_countries) < len(self.mirrors.countrylist):
             try:
