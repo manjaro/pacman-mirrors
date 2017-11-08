@@ -106,8 +106,10 @@ class PacmanMirrors:
 
         # Method arguments
         methods = parser.add_argument_group(txt.METHODS)
-        methods.add_argument("-f", "--fasttrack",
+        methods.add_argument("-f", "-g", "--fasttrack",
+                             # action="store",
                              type=int,
+                             nargs="*",
                              metavar=txt.NUMBER,
                              help="{}".format(txt.HLP_ARG_FASTTRACK))
         methods.add_argument("-i", "--interactive",
@@ -247,7 +249,7 @@ class PacmanMirrors:
                 self.config["only_country"] = args.country
 
         if args.fasttrack:
-            self.fasttrack = args.fasttrack
+            self.fasttrack = args.fasttrack[0]
 
         if args.no_mirrorlist:
             self.no_mirrorlist = True
