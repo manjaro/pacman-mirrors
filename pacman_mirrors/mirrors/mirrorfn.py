@@ -114,6 +114,6 @@ def get_custom_mirror_status(config, custom_mirrors):
                 if custom["url"] in status["url"]:
                     custom["last_sync"] = status["last_sync"]
                     custom["branches"] = status["branches"]
-        return custom_list
+        return list(custom_list)
     except (IndexError, KeyError):
         return custom_mirrors
