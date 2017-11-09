@@ -7,9 +7,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: pacman-mirrors 4.3.0.dev0\n"
+"Project-Id-Version: pacman-mirrors 4.5b1\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2017-10-23 20:55+0200\n"
+"POT-Creation-Date: 2017-11-09 14:33+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -131,7 +131,7 @@ msgid "Load default mirror file"
 msgstr ""
 
 #: pacman_mirrors/constants/txt.py:61
-msgid "Generate mirrorlist with a number of up-to-date mirrors. Ignores:"
+msgid "Generate mirrorlist with a number of up-to-date mirrors. Overrides"
 msgstr ""
 
 #: pacman_mirrors/constants/txt.py:63
