@@ -35,17 +35,16 @@ def build_config():
     custom = False
     # default config
     config = {
-        "to_be_removed": conf.TO_BE_REMOVED,  # long after 2017-04-18
         "branch": "stable",
         "branches": conf.BRANCHES,
         "config_file": conf.CONFIG_FILE,
+        "country_pool": [],
         "custom_file": conf.CUSTOM_FILE,
         "method": "rank",
         "work_dir": conf.WORK_DIR,
         "mirror_file": conf.MIRROR_FILE,
         "mirror_list": conf.MIRROR_LIST,
         "no_update": False,
-        "only_country": [],
         "protocols": [],
         "repo_arch": conf.REPO_ARCH,
         "ssl_verify": True,
@@ -70,12 +69,6 @@ def build_config():
                         config["method"] = value
                     elif key == "Branch":
                         config["branch"] = value
-                    elif key == "OnlyCountry":
-                        custom = True
-                        if "," in value:
-                            config["only_country"] = value.split(",")
-                        else:
-                            config["only_country"] = value.split(" ")
                     elif key == "Protocols":
                         if "," in value:
                             config["protocols"] = value.split(",")
@@ -93,45 +86,45 @@ def build_config():
     return config, custom
 
 
-def modify_config(config, custom=False):
-    """Modify configuration
-    :param config: dictionary
-    :param custom:
-    """
-    if not custom:
-        # remove custom file if present
-        if os.path.isfile(config["custom_file"]):
-            os.remove(config["custom_file"])
+# def modify_config(config, custom=False):
+#     """Modify configuration
+#     :param config: dictionary
+#     :param custom:
+#     """
+#     if not custom:
+#         # remove custom file if present
+#         if os.path.isfile(config["custom_file"]):
+#             os.remove(config["custom_file"])
+#
+#     modify_custom_config(config["config_file"], custom=custom)
 
-    modify_custom_config(config["config_file"], custom=custom)
 
-
-def modify_custom_config(filename, custom=False):
-    """Writes the configuration to file
-    :param filename:
-    :param custom:
-    """
-    custom_config = "# OnlyCountry = \n"
-    if custom:
-        custom_config = "OnlyCountry = Custom\n"
-    try:
-        with open(
-            filename) as cnf, tempfile.NamedTemporaryFile(
-            "w+t", dir=os.path.dirname(
-                filename), delete=False) as tmp:
-
-            replaced = False
-            for line in cnf:
-                if "OnlyCountry =" in line:
-                    tmp.write(custom_config)
-                    replaced = True
-                else:
-                    tmp.write("{}".format(line))
-            if not replaced:
-                tmp.write(custom_config)
-        os.replace(tmp.name, filename)
-        os.chmod(filename, 0o644)
-    except OSError as err:
-        print(".: {} {}: {}: {}".format(txt.ERR_CLR, txt.CANNOT_READ_FILE,
-                                        err.filename, err.strerror))
-        sys.exit(2)
+# def modify_custom_config(filename, custom=False):
+#     """Writes the configuration to file
+#     :param filename:
+#     :param custom:
+#     """
+#     custom_config = "# OnlyCountry = \n"
+#     if custom:
+#         custom_config = "OnlyCountry = Custom\n"
+#     try:
+#         with open(
+#             filename) as cnf, tempfile.NamedTemporaryFile(
+#             "w+t", dir=os.path.dirname(
+#                 filename), delete=False) as tmp:
+#
+#             replaced = False
+#             for line in cnf:
+#                 if "OnlyCountry =" in line:
+#                     tmp.write(custom_config)
+#                     replaced = True
+#                 else:
+#                     tmp.write("{}".format(line))
+#             if not replaced:
+#                 tmp.write(custom_config)
+#         os.replace(tmp.name, filename)
+#         os.chmod(filename, 0o644)
+#     except OSError as err:
+#         print(".: {} {}: {}: {}".format(txt.ERR_CLR, txt.CANNOT_READ_FILE,
+#                                         err.filename, err.strerror))
+#         sys.exit(2)
