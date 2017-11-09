@@ -5,8 +5,6 @@ All notable changes to this project will be documented in this file.
 After releasing 4.4 a couple of small trivial issues surfaced.
 * **Fix**: Network check was handled poorly in corner cases.
 * **Fix**: Reset of a custom mirror pool failed in corner cases.
-* **Fix**: Pamac depending on `-g/--generate` and a temporary solution is implemented.
-* **Fix**: `-f/--fasttrack` can temporarily be substituted with `-g`, the number of mirrors is optional and defaults to mirrors in the pool.
 * **Fix**: Country list was not complete
 * **Change**: OnlyCountry removed from configuration to avoid confusion
 * **Added**: Check for custom mirror pool by checking and validating custom-mirrors.json    
