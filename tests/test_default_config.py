@@ -25,7 +25,7 @@ test_conf = {
     "mirror_file": conf.MIRROR_FILE,
     "mirror_list": conf.MIRROR_LIST,
     "no_update": False,
-    "only_country": [],
+    "country_pool": [],
     "protocols": [],
     "repo_arch": conf.REPO_ARCH,
     "status_file": conf.STATUS_FILE,
@@ -133,7 +133,7 @@ class TestDefaultConfig(unittest.TestCase):
             app = PacmanMirrors()
             app.config["config_file"] = conf.CONFIG_FILE
             app.config = configfn.build_config()
-            assert app.config["only_country"] == []
+            assert app.config["country_pool"] == []
 
     def tearDown(self):
         """Tear down"""

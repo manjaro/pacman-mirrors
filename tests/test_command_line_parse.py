@@ -15,7 +15,6 @@ from pacman_mirrors.pacman_mirrors import PacmanMirrors
 from . import mock_configuration as conf
 
 test_conf = {
-    "to_be_removed": conf.TO_BE_REMOVED,
     "branch": "stable",
     "branches": conf.BRANCHES,
     "config_file": conf.CONFIG_FILE,
@@ -25,7 +24,7 @@ test_conf = {
     "mirror_file": conf.MIRROR_FILE,
     "mirror_list": conf.MIRROR_LIST,
     "no_update": False,
-    "only_country": [],
+    "country_pool": [],
     "protocols": [],
     "repo_arch": conf.REPO_ARCH,
     "status_file": conf.STATUS_FILE,
@@ -99,22 +98,7 @@ class TestCommandLineParse(unittest.TestCase):
             app.config["config_file"] = conf.CONFIG_FILE
             app.config = configfn.build_config()
             app.command_line_parse()
-            assert app.config["only_country"] == ["France", "Germany"]
-
-    @patch("os.getuid")
-    @patch.object(configfn, "build_config")
-    def test_arg_custom_country(self, mock_build_config, mock_os_getuid):
-        """TEST: CLI custom is True from ARG '-c Denmark'"""
-        mock_os_getuid.return_value = 0
-        mock_build_config.return_value = test_conf
-        with unittest.mock.patch("sys.argv",
-                                 ["pacman-mirrors",
-                                  "-c Denmark"]):
-            app = PacmanMirrors()
-            app.config["config_file"] = conf.CONFIG_FILE
-            app.config = configfn.build_config()
-            app.command_line_parse()
-            assert app.custom is True
+            assert app.config["country_pool"] == ["France", "Germany"]
 
     @patch("os.getuid")
     @patch.object(configfn, "build_config")

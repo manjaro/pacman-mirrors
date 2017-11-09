@@ -16,7 +16,6 @@ from pacman_mirrors.pacman_mirrors import PacmanMirrors
 from . import mock_configuration as conf
 
 test_conf = {
-    "to_be_removed": conf.TO_BE_REMOVED,
     "branch": "stable",
     "branches": conf.BRANCHES,
     "config_file": conf.CONFIG_FILE,
@@ -26,7 +25,7 @@ test_conf = {
     "mirror_file": conf.MIRROR_FILE,
     "mirror_list": conf.MIRROR_LIST,
     "no_update": False,
-    "only_country": [],
+    "country_pool": [],
     "protocols": [],
     "repo_arch": conf.REPO_ARCH,
     "status_file": conf.STATUS_FILE,
