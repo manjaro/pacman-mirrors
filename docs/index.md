@@ -7,21 +7,21 @@
 pacman-mirrors - generate pacman mirrorlist for Manjaro Linux
 
 # SYNOPSIS
-pacman-mirrors [-f*NUMBER*|[[-i[-d]][-c*COUNTRY*[,*COUNTRY*]...|--geoip]]] 
-[-a[-p*PREFIX*][-R][-G|-B/-S*BRANCH*][-P*PROTO*[,*PROTO*]...][-U*URL*]] 
+pacman-mirrors [-f[*NUMBER*] [[-i[-d]] [-c*COUNTRY*[[,*COUNTRY*]...]|--geoip]]] 
+[-a[-p*PREFIX*][-R][-G|-B/-S*BRANCH*][-P*PROTO*[[,*PROTO*]...]][-U*URL*]] 
 [-b*BRANCH*] [-q] [-t*SECONDS*] [-v] [-n]
 
 
 # DESCRIPTION
 
-Generate mirrorlist for Manjaro Linux. Default is to rank all mirrors by reponse time. 
+Generates mirrorlist with up-to-date mirrors for Manjaro Linux. Default is to rank all mirrors by reponse time. 
 If no arguments are given pacman-mirrors lists available options. 
 Pacman-mirrors requires access to files which are read-only so it must be run with su or sudo. 
-To create a mirrorlist using all default use,
+To create a mirrorlist using all default use
 
     pacman-mirrors -f
 
-The mirrorlist generation process can be refined through arguments and arguments with options, for example,
+The mirrorlist generation process can be refined through arguments and arguments with options, for example
 
     pacman-mirrors --country Denmark --timeout 5
 
@@ -30,18 +30,51 @@ After all operations **ALWAYS** syncronize your pacman database with
 
     sudo pacman -Syy
 
+# FILES OVERVIEW
+
+* **The mirrorlist**: *`/etc/pacman.d/mirrorlist`*.
+   * The file contains a number of servers which `pacman` uses to update your system.
+* **The configuration**: *`/etc/pacman-mirrors.conf`*.
+   * The file holds configuration for pacman-mirrors.
+* **Manjaro mirror pool**: *`/usr/share/pacman-mirrors/mirrors.json`*. 
+   * The worldwide mirrorpool comes with installation. It is compared against the file located at Github in manjaro-web-repo. If the repofile has changed, your local file will be updated with said file.
+* **Mirror pool status**: *`/var/lib/pacman-mirrors/status.json`*.
+   * The mirrorpool status file. It is the data you see displayed at repo.manjaro.org. The file is downloaded on every run of pacman-mirrors and saved in.
+* **Custom mirror pool**: *`/var/lib/pacman-mirrors/custom-mirrors.json`* 
+   * The file is your custom mirror pool and is created by **`-i/--interactive [-d/--default]`** argument or the **`-c/--country`** argument.
+
 # OPERATION
+No matter how you choose to generate your mirrorlist, you will **ONLY** get up-to-date mirrors. 
+This means the - at any given time - number available mirrors will vary depending on when the mirror last syncronized with the master repo server.  
 
-3 modes of operation exist
+You couild face a situation in which pacman-mirrors says - sorry no mirrors found. That is not an error it is a feature.
 
-1. pacman-mirrors -f [number]
-2. pa
+If you are stunned by this message 
 
+    .: WARNING No mirrors in selection
+    .: INFO The mirrors has not changed
+
+Then you have limited your mirror pool too much and none of your selected mirrors are up-to-date.
+
+**Suggested solutions**: 
+* Don't use **`--geoip`**
+* Expand with more countries.
+* Remove protocol limitations if any **`-aPall`**.
+* Reset your list with **`pacman-mirrors -c all`** and then **`pacman-mirrors -f10`**
+
+## MODES
+
+1. The number of mirrors
+   * pacman-mirrors -f [number]
+2. More control (custom mirror pool)
+   * -c COUNTRY[[,COUNTRY]...]
+3. Full control (custom mirror pool)
+   * -i [-d/--default]
 
 Some options are mutual exclusive and will throw an arguments error:
 
 * **--branch**, **--get-branch** and **--set-branch**
-* **--country** and **--geoip**
+* **--country**, **--fasttrack**, **--geoip**
 
 Some arguments requires another argument present to have effect. E.g., this command will ignore --default argument
 
@@ -59,14 +92,13 @@ The *-d/--default* argument tells *-i/--interactive* to force load all mirrors f
    
     pacman-mirrors -bunstable -id
 
-The same goes for the API specific arguments. For those to have effect the *-a/--api* argument must be present.
+API specific arguments. For those to have effect the *-a/--api* argument must be present.
 
     pacman-mirrors -aS unstable
 
 The arguments can appear in any order except for arguments which takes additional options in which case the options must follow immediately after the argument with or without space, for example
-
-    pacman-mirrors -aB unstable
-    pacman-mirrors -aBunstable
+    
+    pacman-mirrors -f
     pacman-mirrors -f 5
     pacman-mirrors -f5
 
@@ -78,26 +110,19 @@ Pacman-mirrors always attempt to download the lastest available data from [http:
 For every mirrorlist generation, you **MUST** run *pacman -Syy*.
 
 ## METHODS
--f, \--fasttrack *NUMBER*
-:   Generates an up-to-date mirrorlist for the users current selected branch, mirrors are randomly selected from the users current mirrorfile, either a custom mirror file or the default status file, the randomly selected mirrors are ranked by their current access time. The higher number the higher possibility of a fast mirror. If the number 0 is used - it is understood that all mirrors mirrors should be used.
+-c, \--country *COUNTRY* [[*COUNTRY*]...]
+:   Creates a custom mirror pool with supplied countries.
+
+-f, \--fasttrack [*NUMBER*]
+:   Generates a random mirrorlist for the users current selected branch, mirrors are randomly selected from the users current mirror pool, either a custom pool or the default pool, the randomly selected mirrors are ranked by their current access time. The higher number the higher possibility of a fast mirror. If a number is given the resulting mirrorlist contains that number of servers.
 
 -i, \--interactive [--default]
-:   This is a function designed to leave full control for mirrors and protocols to the user. This function **DOES NOT** take into consideration up-to-date mirrors. The addition argument **--default** forces pacman-mirrors to load the default mirror file and ignore any preset custom-mirrors file, thus allowing for reselecting mirrors for a new custom mirror file.
+:   This is a function designed to leave full control over countries, mirrors and protocols to the user. This function **DOES NOT** take into consideration up-to-date mirrors. The optional **--default** forces pacman-mirrors to load the default mirror file and ignore any preset custom pool, thus allowing for reselecting mirrors for a new custom pool.
 
 ## BRANCH
 
 -b, \--branch *BRANCH*
 :   Temporarily use another branch, *stable*, *testing* or *unstable*. The branch is reset with next run of pacman-mirrors.
-
-## COUNTRY
--c, \--country *COUNTRY* [*COUNTRY*] ...
-:   Specifiy a country or a list of countries. The list of countries is saved as a custom mirrorfile and the configuration is set to *Custom*
-
-\--geoip
-:   Use geolocation if possible, if geoip is not available all mirrors.
-
--l, \--list, \--country-list
-:   Lists available mirror countries.
 
 ## API
 
@@ -124,8 +149,14 @@ For every mirrorlist generation, you **MUST** run *pacman -Syy*.
 
 ## MISC
 
+\--geoip
+:   Use geolocation if possible, if geoip is not available all mirrors.
+
 -h, \--help
 :   Show the help message
+
+-l, \--list, \--country-list
+:   Lists available mirror countries.
 
 -m, \--method *METHOD*
 :   Default method is *rank* but *random* can be selected.
