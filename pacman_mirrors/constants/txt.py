@@ -25,14 +25,14 @@ _ = i18n.language.gettext
 
 # TRANSLATABLE STRINGS
 
-# message type
+# MESSAGE TYPES
 ERROR = _("ERROR")
 INFO = _("INFO")
 WARN = _("WARNING")
-# error types
+# ERROR TYPES
 HTTP_EXCEPTION = _("HTTPException")
 TIMEOUT = _("TIMEOUT")
-# special words
+# SPECIAL WORDS
 API = _("API")
 BRANCH = _("BRANCH")
 COUNTRY = _("COUNTRY")
@@ -47,7 +47,7 @@ PROTO = _("PROTO")
 SECONDS = _("SECONDS")
 URL = _("URL")
 USAGE = _("USAGE")
-# help messages
+# HELP MESSAGES
 HLP_ARG_API_GET_BRANCH = _("Return branch from configuration")
 HLP_ARG_API_PREFIX = _("Set prefix to")
 HLP_ARG_API_PROTOCOLS = _("Replace protocols in configuration")
@@ -59,7 +59,7 @@ HLP_ARG_COUNTRY = _(
     "Comma separated list of countries, from which mirrors will be used")
 HLP_ARG_DEFAULT = _("Load default mirror file")
 HLP_ARG_FASTTRACK = _(
-    "Generate mirrorlist with a number of up-to-date mirrors. Ignores:")
+    "Generate mirrorlist with a number of up-to-date mirrors. Overrides")
 HLP_ARG_GENERATE = _("Generate mirrorlist with defaults")
 HLP_ARG_GEOIP = _("Get current country using geolocation")
 HLP_ARG_LIST = _("List all available countries")
@@ -70,7 +70,7 @@ HLP_ARG_QUIET = _("Quiet mode - less verbose output")
 HLP_ARG_SYNC = _("Syncronize pacman databases")
 HLP_ARG_TIMEOUT = _("Maximum waiting time for server response")
 HLP_ARG_VERSION = _("Print the pacman-mirrors version")
-# messages
+# GENERAL MESSAGES
 API_CONF_RE_BRANCH = _("Branch in config is changed")
 API_CONF_PROTOCOLS = _("Protocols in config is changed")
 API_ERROR_BRANCH = _("Re-branch requires a branch to work with")
@@ -114,7 +114,7 @@ USING_CUSTOM_FILE = _("Using custom mirror file")
 USING_DEFAULT_FILE = _("Using default mirror file")
 WRITING_MIRROR_LIST = _("Writing mirror list")
 
-# interactive messages
+# INTERACTIVE MESSAGES
 I_TITLE = _("Manjaro mirrors by response time")
 I_TITLE_RANDOM = _("Manjaro mirrors in random order")
 I_LIST_TITLE = _("Check mirrors for your personal list")
@@ -129,21 +129,21 @@ I_CONFIRM_SELECTION = _("Confirm selections")
 I_USE_THESE_MIRRORS = _("I want to use these mirrors")
 # NON TRANSLATABLE STRINGS
 HOUSTON = "Houston?! We have a problem."
-OVERRIDE_OPT = "--country --interactive --method --geoip"
+OVERRIDE_OPT = ": --geoip, --method"
 REPO_SERVER = "repo.manjaro.org"
 MODIFY_CUSTOM = "pacman-mirrors -id"
-MODIFY_DEFAULT = "pacman-mirrors -f"
+MODIFY_DEFAULT = "pacman-mirrors -f [{}]".format(NUMBER)
 RESET_ALL = "pacman-mirrors -c all"
 PREFIX_TIP = ": $mnt | /mnt/install"
-# options
+# OPTIONS
 OPT_RANDOM = " '-m/--method random' "
 OPT_COUNTRY = " 'c/--country' "
-# mirror status constants
+# MIRROR RELATED
 LASTSYNC_OK = "24:00"  # last syncronize in the past 24 hours
 LASTSYNC_NA = "9800:00"  # last syncronization not available
 SERVER_BAD = "9999:99"  # default last syncronization status
 SERVER_RES = "99.99"  # default response status
-# colors
+# MESSAGE WITH COLOR
 ERR_CLR = "\033[1;31m{}\033[1;m".format(ERROR)
 INF_CLR = "\033[1;37m{}\033[1;m".format(INFO)
 WRN_CLR = "\033[1;33m{}\033[1;m".format(WARN)
