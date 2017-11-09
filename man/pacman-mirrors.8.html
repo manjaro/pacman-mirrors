@@ -17,20 +17,59 @@
 <h1 id="name">NAME</h1>
 <p>pacman-mirrors - generate pacman mirrorlist for Manjaro Linux</p>
 <h1 id="synopsis">SYNOPSIS</h1>
-<p>pacman-mirrors [-f<em>NUMBER</em>|[[-i[-d]][-c<em>COUNTRY</em>[,<em>COUNTRY</em>]...|--geoip]]] [-a[-p<em>PREFIX</em>][-R][-G|-B/-S<em>BRANCH</em>][-P<em>PROTO</em>[,<em>PROTO</em>]...][-U<em>URL</em>]] [-b<em>BRANCH</em>] [-q] [-t<em>SECONDS</em>] [-v] [-n]</p>
+<p>pacman-mirrors [-f[<em>NUMBER</em>] [[-i[-d]] [-c<em>COUNTRY</em>[[,<em>COUNTRY</em>]...]|--geoip]]] [-a[-p<em>PREFIX</em>][-R][-G|-B/-S<em>BRANCH</em>][-P<em>PROTO</em>[[,<em>PROTO</em>]...]][-U<em>URL</em>]] [-b<em>BRANCH</em>] [-q] [-t<em>SECONDS</em>] [-v] [-n]</p>
 <h1 id="description">DESCRIPTION</h1>
-<p>Generate mirrorlist for Manjaro Linux. Default is to rank all mirrors by reponse time. If no arguments are given pacman-mirrors lists available options. Pacman-mirrors requires access to files which are read-only so it must be run with su or sudo. To create a up-to-date mirrorlist using all default use,</p>
-<pre><code>pacman-mirrors --fasttrack 10</code></pre>
-<p>The mirrorlist generation process can be refined through arguments and arguments with options, for example,</p>
+<p>Generates mirrorlist with up-to-date mirrors for Manjaro Linux. Default is to rank all mirrors by reponse time. If no arguments are given pacman-mirrors lists available options. Pacman-mirrors requires access to files which are read-only so it must be run with su or sudo. To create a mirrorlist using all default use</p>
+<pre><code>pacman-mirrors -f</code></pre>
+<p>The mirrorlist generation process can be refined through arguments and arguments with options, for example</p>
 <pre><code>pacman-mirrors --country Denmark --timeout 5</code></pre>
 <h2 id="important">IMPORTANT</h2>
 <p>After all operations <strong>ALWAYS</strong> syncronize your pacman database with</p>
 <pre><code>sudo pacman -Syy</code></pre>
+<h1 id="files-overview">FILES OVERVIEW</h1>
+<ul>
+<li><strong>The mirrorlist</strong>: <em><code>/etc/pacman.d/mirrorlist</code></em>.</li>
+<li>The file contains a number of servers which <code>pacman</code> uses to update your system.</li>
+<li><strong>The configuration</strong>: <em><code>/etc/pacman-mirrors.conf</code></em>.</li>
+<li>The file holds configuration for pacman-mirrors.</li>
+<li><strong>Manjaro mirror pool</strong>: <em><code>/usr/share/pacman-mirrors/mirrors.json</code></em>.</li>
+<li>The worldwide mirrorpool comes with installation. It is compared against the file located at Github in manjaro-web-repo. If the repofile has changed, your local file will be updated with said file.</li>
+<li><strong>Mirror pool status</strong>: <em><code>/var/lib/pacman-mirrors/status.json</code></em>.</li>
+<li>The mirrorpool status file. It is the data you see displayed at repo.manjaro.org. The file is downloaded on every run of pacman-mirrors and saved in.</li>
+<li><strong>Custom mirror pool</strong>: <em><code>/var/lib/pacman-mirrors/custom-mirrors.json</code></em></li>
+<li>The file is your custom mirror pool and is created by <strong><code>-i/--interactive [-d/--default]</code></strong> argument or the <strong><code>-c/--country</code></strong> argument.</li>
+</ul>
 <h1 id="operation">OPERATION</h1>
+<p>No matter how you choose to generate your mirrorlist, you will <strong>ONLY</strong> get up-to-date mirrors. This means the - at any given time - number available mirrors will vary depending on when the mirror last syncronized with the master repo server.</p>
+<p>You couild face a situation in which pacman-mirrors says - sorry no mirrors found. That is not an error it is a feature.</p>
+<p>If you are stunned by this message</p>
+<pre><code>.: WARNING No mirrors in selection
+.: INFO The mirrors has not changed</code></pre>
+<p>Then you have limited your mirror pool too much and none of your selected mirrors are up-to-date.</p>
+<p><strong>Suggested solutions</strong>: * Don't use <strong><code>--geoip</code></strong> * Expand with more countries. * Remove protocol limitations if any <strong><code>-aPall</code></strong>. * Reset your list with <strong><code>pacman-mirrors -c all</code></strong> and then <strong><code>pacman-mirrors -f10</code></strong></p>
+<h2 id="modes">MODES</h2>
+<ol style="list-style-type: decimal">
+<li>The number of mirrors</li>
+</ol>
+<ul>
+<li>pacman-mirrors -f [number]</li>
+</ul>
+<ol start="2" style="list-style-type: decimal">
+<li>More control (custom mirror pool)</li>
+</ol>
+<ul>
+<li>-c COUNTRY[[,COUNTRY]...]</li>
+</ul>
+<ol start="3" style="list-style-type: decimal">
+<li>Full control (custom mirror pool)</li>
+</ol>
+<ul>
+<li>-i [-d/--default]</li>
+</ul>
 <p>Some options are mutual exclusive and will throw an arguments error:</p>
 <ul>
 <li><strong>--branch</strong>, <strong>--get-branch</strong> and <strong>--set-branch</strong></li>
-<li><strong>--country</strong> and <strong>--geoip</strong></li>
+<li><strong>--country</strong>, <strong>--fasttrack</strong>, <strong>--geoip</strong></li>
 </ul>
 <p>Some arguments requires another argument present to have effect. E.g., this command will ignore --default argument</p>
 <p>WRONG</p>
@@ -40,11 +79,10 @@
 <pre><code>pacman-mirrors -b unstable --interactive --default</code></pre>
 <p>Or</p>
 <pre><code>pacman-mirrors -bunstable -id</code></pre>
-<p>The same goes for the API specific arguments. For those to have effect the <em>-a/--api</em> argument must be present.</p>
+<p>API specific arguments. For those to have effect the <em>-a/--api</em> argument must be present.</p>
 <pre><code>pacman-mirrors -aS unstable</code></pre>
 <p>The arguments can appear in any order except for arguments which takes additional options in which case the options must follow immediately after the argument with or without space, for example</p>
-<pre><code>pacman-mirrors -aB unstable
-pacman-mirrors -aBunstable
+<pre><code>pacman-mirrors -f
 pacman-mirrors -f 5
 pacman-mirrors -f5</code></pre>
 <p>Pacman-mirrors always attempt to download the lastest available data from <a href="http://repo.manjaro.org" class="uri">http://repo.manjaro.org</a>. These data is always used during mirrorlist generation to ensure that you connect to a mirror which is up-to-date for your selected branch. Should you decide to temporarily switch branches you will still connect to an up-to-date mirror.</p>
@@ -53,29 +91,20 @@ pacman-mirrors -f5</code></pre>
 <p>For every mirrorlist generation, you <strong>MUST</strong> run <em>pacman -Syy</em>.</p>
 <h2 id="methods">METHODS</h2>
 <dl>
-<dt>-f, --fasttrack <em>NUMBER</em></dt>
-<dd>Generates an up-to-date mirrorlist for the users current selected branch, mirrors are randomly selected from the users current mirrorfile, either a custom mirror file or the default status file, the randomly selected mirrors are ranked by their current access time. The higher number the higher possibility of a fast mirror. If the number 0 is used - it is understood that all mirrors mirrors should be used.
+<dt>-c, --country <em>COUNTRY</em> [[<em>COUNTRY</em>]...]</dt>
+<dd>Creates a custom mirror pool with supplied countries.
+</dd>
+<dt>-f, --fasttrack [<em>NUMBER</em>]</dt>
+<dd>Generates a random mirrorlist for the users current selected branch, mirrors are randomly selected from the users current mirror pool, either a custom pool or the default pool, the randomly selected mirrors are ranked by their current access time. The higher number the higher possibility of a fast mirror. If a number is given the resulting mirrorlist contains that number of servers.
 </dd>
 <dt>-i, --interactive [--default]</dt>
-<dd>This is a function designed to leave full control for mirrors and protocols to the user. This function <strong>DOES NOT</strong> take into consideration up-to-date mirrors. The addition argument <strong>--default</strong> forces pacman-mirrors to load the default mirror file and ignore any preset custom-mirrors file, thus allowing for reselecting mirrors for a new custom mirror file.
+<dd>This is a function designed to leave full control over countries, mirrors and protocols to the user. This function <strong>DOES NOT</strong> take into consideration up-to-date mirrors. The optional <strong>--default</strong> forces pacman-mirrors to load the default mirror file and ignore any preset custom pool, thus allowing for reselecting mirrors for a new custom pool.
 </dd>
 </dl>
 <h2 id="branch">BRANCH</h2>
 <dl>
 <dt>-b, --branch <em>BRANCH</em></dt>
 <dd>Temporarily use another branch, <em>stable</em>, <em>testing</em> or <em>unstable</em>. The branch is reset with next run of pacman-mirrors.
-</dd>
-</dl>
-<h2 id="country">COUNTRY</h2>
-<dl>
-<dt>-c, --country <em>COUNTRY</em> [<em>COUNTRY</em>] ...</dt>
-<dd>Specifiy a country or a list of countries. The list of countries is saved as a custom mirrorfile and the configuration is set to <em>Custom</em>
-</dd>
-<dt>--geoip</dt>
-<dd>Use geolocation if possible, if geoip is not available all mirrors.
-</dd>
-<dt>-l, --list, --country-list</dt>
-<dd>Lists available mirror countries.
 </dd>
 </dl>
 <h2 id="api">API</h2>
@@ -104,8 +133,14 @@ pacman-mirrors -f5</code></pre>
 </dl>
 <h2 id="misc">MISC</h2>
 <dl>
+<dt>--geoip</dt>
+<dd>Use geolocation if possible, if geoip is not available all mirrors.
+</dd>
 <dt>-h, --help</dt>
 <dd>Show the help message
+</dd>
+<dt>-l, --list, --country-list</dt>
+<dd>Lists available mirror countries.
 </dd>
 <dt>-m, --method <em>METHOD</em></dt>
 <dd>Default method is <em>rank</em> but <em>random</em> can be selected.
