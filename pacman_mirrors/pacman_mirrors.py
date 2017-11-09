@@ -116,7 +116,7 @@ class PacmanMirrors:
                                        type=int,
                                        default=0,
                                        metavar=txt.NUMBER,
-                                       help="{}".format(txt.HLP_ARG_FASTTRACK))
+                                       help="{} {}".format(txt.HLP_ARG_FASTTRACK, txt.OVERRIDE_OPT))
         methods_exclusive.add_argument("-c", "--country",
                                        type=str,
                                        nargs="+",
@@ -170,11 +170,13 @@ class PacmanMirrors:
                          metavar=txt.URL,
                          help="{}: {}".format(
                              txt.API, txt.HLP_ARG_API_URL))
-        # Misc arguments
+        """
+        Misc arguments for changing various aspects
+        """
         misc = parser.add_argument_group(txt.MISC)
         misc.add_argument("-d", "--default",
                           action="store_true",
-                          help="Interactive: " + txt.HLP_ARG_DEFAULT)
+                          help="INTERACTIVE: " + txt.HLP_ARG_DEFAULT)
         misc.add_argument("-h", "--help",
                           action="store_true")
         misc.add_argument("-m", "--method",
@@ -209,7 +211,7 @@ class PacmanMirrors:
             sys.exit(0)
 
         if args.list:
-            self.output_country_list()
+            self.output_country_pool()
             sys.exit(0)
 
         if args.api and args.get_branch:
@@ -224,48 +226,48 @@ class PacmanMirrors:
                 txt.ERR_CLR, txt.MUST_BE_ROOT))
             sys.exit(1)
 
-        if args.method:
-            self.config["method"] = args.method
-
         if args.branch:
             self.config["branch"] = args.branch
 
-        if args.timeout:
-            self.max_wait_time = args.timeout
+        if args.geoip:
+            self.geoip = True
+
+        if args.method:
+            self.config["method"] = args.method
+
+        if args.no_mirrorlist:
+            self.no_mirrorlist = True
 
         if args.quiet:
             self.quiet = True
 
+        if args.timeout:
+            self.max_wait_time = args.timeout
+
         """
-        Mirrorlist generation
+        Generation methods
         """
-        if args.interactive:
-            self.interactive = True
-            if not os.environ.get("DISPLAY") or not GTK_AVAILABLE:
-                self.no_display = True
-
-        if args.interactive and args.default:
-            self.default = True
-
-        # geoip and country are mutually exclusive
-        if args.geoip:
-            self.geoip = True
-
         if args.country:
-            self.custom = True
+            self.geoip = False
             if "," in args.country[0]:
-                self.config["only_country"] = args.country[0].split(",")
+                self.config["country_pool"] = args.country[0].split(",")
             else:
-                self.config["only_country"] = args.country
+                self.config["country_pool"] = args.country
 
-            if self.config["only_country"] == ["all"]:
-                self.disable_custom_config()
+            if self.config["country_pool"] == ["all"]:
+                self.delete_custom_pool()
 
         if args.fasttrack:
             self.fasttrack = args.fasttrack
+            self.geoip = False
+            self.config["method"] = "rank"
 
-        if args.no_mirrorlist:
-            self.no_mirrorlist = True
+        if args.interactive:
+            self.interactive = True
+            if args.default:
+                self.default = True
+            if not os.environ.get("DISPLAY") or not GTK_AVAILABLE:
+                self.no_display = True
 
         """
         API handling
@@ -314,13 +316,18 @@ class PacmanMirrors:
         if set_pfx is None:
             set_pfx = ""
 
+        """
         # Order of API tasks does matter
         # First API task
+        """
         if get_branch:
             print(self.config["branch"])
+            sys.exit(0)  # exit the normal way
 
+        """
         # apply api configuration to internal configuration object
         # Apply prefix if present
+        """
         if set_pfx:
             set_pfx = apifn.sanitize_prefix(set_pfx)
             self.config["config_file"] = set_pfx + self.config["config_file"]
@@ -329,30 +336,40 @@ class PacmanMirrors:
             self.config["mirror_list"] = set_pfx + self.config["mirror_list"]
             self.config["status_file"] = set_pfx + self.config["status_file"]
             self.config["work_dir"] = set_pfx + self.config["work_dir"]
-            # to be removed long time after 2017-04-18
-            self.config["to_be_removed"] = set_pfx + \
-                self.config["to_be_removed"]
-            # end removal
-        # api tasks
+
+        """
         # Second API task: Set branch
+        """
         if set_branch:
             # Apply branch to internal config
             self.config["branch"] = set_branch
+            """
             # pacman-mirrors.conf could absent so check for it
-            if not filefn.check_file(self.config["config_file"]):
+            """
+            if not filefn.check_existance_of(self.config["config_file"]):
+                """
                 # Copy from host system
+                """
                 filefn.create_dir(set_pfx + "/etc")
                 shutil.copyfile("/etc/pacman-mirrors.conf",
                                 self.config["config_file"])
+                """
                 # Normalize config
+                """
                 apifn.normalize_config(self.config["config_file"])
+            """
             # Write branch to config
+            """
             apifn.write_config_branch(self.config["branch"],
                                       self.config["config_file"],
                                       quiet=self.quiet)
+        """
         # Third API task: Create a mirror list
+        """
         if set_url:
+            """
             # mirror list dir could absent so check for it
+            """
             filefn.create_dir(set_pfx + "/etc/pacman.d")
             mirror = [
                 {
@@ -382,17 +399,17 @@ class PacmanMirrors:
         """
         Generate common mirrorlist
         """
-        mirror_selection = mirrorfn.filter_mirror_country(self.mirrors.mirrorlist,
+        mirror_selection = mirrorfn.filter_mirror_country(self.mirrors.mirror_pool,
                                                           self.selected_countries)
         """
         We will always have selected countries
         It is a matter of how many countries
         Check the length of selected_countries against the full countrylist
         """
-        if len(self.selected_countries) < len(self.mirrors.countrylist):
+        if len(self.selected_countries) < len(self.mirrors.country_pool):
             try:
                 _ = self.selected_countries[0]
-                self.output_custom_mirror_file(mirror_selection)
+                self.output_custom_mirror_pool(mirror_selection)
             except IndexError:
                 pass
 
@@ -424,14 +441,9 @@ class PacmanMirrors:
             _ = mirror_selection[0]
             self.output_mirror_list(mirror_selection)
             if self.custom:
-                configfn.modify_config(self.config,
-                                       custom=self.custom)
                 print(".: {} {} 'sudo {}'".format(txt.INF_CLR,
                                                   txt.REMOVE_CUSTOM_CONFIG,
                                                   txt.RESET_ALL))
-            else:
-                configfn.modify_config(self.config,
-                                       custom=self.custom)
         except IndexError:
             print(".: {} {}".format(txt.WRN_CLR, txt.NO_SELECTION))
             print(".: {} {}".format(txt.INF_CLR, txt.NO_CHANGE))
@@ -446,7 +458,7 @@ class PacmanMirrors:
           either mirrors.json or custom-mirrors.json
         """
         # randomize the load on up-to-date mirrors
-        worklist = self.mirrors.mirrorlist
+        worklist = self.mirrors.mirror_pool
         shuffle(worklist)
         if self.config["protocols"]:
             worklist = mirrorfn.filter_mirror_protocols(
@@ -523,7 +535,7 @@ class PacmanMirrors:
         The final mirrorfile will include all mirrors selected by the user
         The final mirrorlist will exclude (if possible) mirrors not up-to-date
         """
-        worklist = mirrorfn.filter_mirror_country(self.mirrors.mirrorlist,
+        worklist = mirrorfn.filter_mirror_country(self.mirrors.mirror_pool,
                                                   self.selected_countries)
         """
         If config.protols has content, that is a user decision and as such
@@ -592,7 +604,7 @@ class PacmanMirrors:
                 # get url without protocol
                 custom_string = util.strip_protocol(custom["url"])
                 # locate mirror in the full mirrorlist
-                for mirror in self.mirrors.mirrorlist:
+                for mirror in self.mirrors.mirror_pool:
                     mirror_string = util.strip_protocol(mirror["url"])
                     # compare urls
                     if custom_string == mirror_string:
@@ -633,8 +645,8 @@ class PacmanMirrors:
             try:
                 _ = mirror_selection[0]
                 self.custom = True
-                self.config["only_country"] = ["Custom"]
-                self.output_custom_mirror_file(mirror_selection)
+                self.config["country_pool"] = ["Custom"]
+                self.output_custom_mirror_pool(mirror_selection)
                 """
                 Writing the final mirrorlist
                 only write mirrors which are up-to-date for users selected branch
@@ -655,89 +667,86 @@ class PacmanMirrors:
                 print(".: {} {}".format(txt.WRN_CLR, txt.NO_SELECTION))
                 print(".: {} {}".format(txt.INF_CLR, txt.NO_CHANGE))
 
-    def disable_custom_config(self):
-        """Perform reset of custom configuration"""
-        self.config["only_country"] = []
-        self.custom = False
-        configfn.modify_config(self.config, self.custom)
+    def check_custom_mirror_pool(self):
+        """
+        Custom mirror pool or countries from CLI
+        :return: True/False
+        """
+        if validfn.custom_config_is_valid():
+            self.custom = True
+        else:
+            self.selected_countries = self.config["country_pool"]
+        return self.custom
 
-    def filter_user_branch(self, mirrorlist):
-        """Filter mirrorlist on users branch and branch sync state"""
+    def delete_custom_pool(self):
+        """
+        Delete custom mirror pool
+        """
+        self.custom = False
+        self.config["country_pool"] = []
+        filefn.delete_file(self.config["custom_file"])
+
+    def filter_user_branch(self, mirror_pool):
+        """
+        Filter mirrorlist on users branch and branch sync state
+        """
         for idx, branch in enumerate(conf.BRANCHES):
             if branch == self.config["branch"]:
                 filtered = []
-                for mirror in mirrorlist:
+                for mirror in mirror_pool:
                     if mirror["branches"][idx] == 1:
                         filtered.append(mirror)
                 if len(filtered) > 0:
                     return filtered
-        return mirrorlist
+        return mirror_pool
 
     def load_all_mirrors(self):
         """
-        Load mirrors
+        Load all mirrors from active mirror pool
         """
-        if self.config["only_country"] == ["Custom"]:
-            if validfn.custom_config_is_valid():
-                self.custom = True
-            else:
-                self.disable_custom_config()
+        if self.check_custom_mirror_pool():
+            self.load_custom_mirror_pool()
+            self.selected_countries = self.mirrors.country_pool
         else:
-            self.selected_countries = self.config["only_country"]
-
-        # decision on custom vs countries from conf or argument
-        if self.custom and not self.selected_countries:
-            self.load_custom_mirrors()
-            self.selected_countries = self.mirrors.countrylist
-        else:
-            self.load_default_mirrors()
-        # validate selection and build country list
-        # util.green("load_all_mirrors ->\n"
-        #            " before ->\n"
-        #            " build_country_list ->\n"
-        #            " selected_countries = {}".format(self.selected_countries))
+            self.load_default_mirror_pool()
+        """
+        Validate the list of selected countries        
+        """
         self.selected_countries = mirrorfn.build_country_list(
-            self.selected_countries, self.mirrors.countrylist, self.geoip)
-        # util.yellow("load_all_mirrors ->\n"
-        #             " after ->\n"
-        #             " build_country_list ->\n"
-        #             " selected_countries = {}".format(self.selected_countries))
+            self.selected_countries, self.mirrors.country_pool, self.geoip)
 
-    def load_custom_mirrors(self):
+    def load_custom_mirror_pool(self):
         """
-        Load available custom mirrors
+        Load available custom mirrors and update their status from status.json
+        If user request the default mirror pool load the default pool
         """
         if self.default:
-            self.load_default_mirrors()
+            self.load_default_mirror_pool()
         else:
             self.seed_mirrors(self.config["custom_file"])
-            # update custom mirror file with data from status.json
-            self.mirrors.mirrorlist = mirrorfn.get_custom_mirror_status(
-                self.config, self.mirrors.mirrorlist)
+            self.mirrors.mirror_pool = mirrorfn.set_custom_mirror_status(
+                self.config, self.mirrors.mirror_pool)
 
-    def load_default_mirrors(self):
+    def load_default_mirror_pool(self):
         """
         Load all available mirrors
         """
         (file, status) = filefn.return_mirror_filename(self.config)
         self.seed_mirrors(file, status)
 
-    def output_country_list(self):
+    def output_country_pool(self):
         """
         List all available countries
         """
-        self.config["only_country"] = ["all"]
-        self.load_all_mirrors()
-        print("{}".format("\n".join(self.mirrors.countrylist)))
+        self.load_default_mirror_pool()
+        print("{}".format("\n".join(self.mirrors.country_pool)))
 
-    def output_custom_mirror_file(self, selected_mirrors):
+    def output_custom_mirror_pool(self, selected_mirrors):
         """
         Output selected mirrors to custom mirror file
         :param selected_mirrors:
         :return:
         """
-        self.custom = True
-        self.config["only_country"] = ["Custom"]
         print("\n.: {} {}".format(txt.INF_CLR,
                                   txt.CUSTOM_MIRROR_LIST))
         print("--------------------------")
@@ -752,7 +761,6 @@ class PacmanMirrors:
         """
         Outputs selected servers to mirrorlist
         :param selected_servers:
-        :return:
         """
         if self.custom:
             filefn.write_mirror_list(self.config,
@@ -760,27 +768,16 @@ class PacmanMirrors:
                                      custom=self.custom,
                                      quiet=self.quiet,
                                      interactive=True)
-            configfn.modify_config(self.config,
-                                   custom=self.custom)
         else:
             filefn.write_mirror_list(self.config,
                                      selected_servers,
                                      quiet=self.quiet)
 
-    def print_help(self, parser):
-        """
-        Customized print help
-        :param parser:
-        :return:
-        """
-        parser.print_help()
-        print("")
-        self.print_generate_deprecated()
-        self.print_sync_deprecated()
-        print("")
-
     @staticmethod
-    def print_generate_deprecated():
+    def print_deprecated_generate():
+        """
+        Print a deprecation message for -g/--generate
+        """
         print("{}!! {}: '-g/--generate'!\n"
               "{}   {} '-f/--fasttrack {}'"
               ", {}{}".format(color.RED,
@@ -792,7 +789,10 @@ class PacmanMirrors:
                               color.ENDCOLOR))
 
     @staticmethod
-    def print_sync_deprecated():
+    def print_deprecated_sync():
+        """
+        Print a deprecation message for -y/--sync
+        """
         print("{}!! {}: '-y/--sync'!\n"
               "{}   {} 'pacman -Syy'{}".format(color.RED,
                                                txt.DEPRECATED_ARGUMENT,
@@ -800,13 +800,27 @@ class PacmanMirrors:
                                                txt.PLEASE_USE,
                                                color.ENDCOLOR))
 
+    def print_help(self, parser):
+        """
+        Customized print help
+        :param parser:
+        :return:
+        """
+        parser.print_help()
+        print("")
+        self.print_deprecated_generate()
+        self.print_deprecated_sync()
+        print("")
+
     def sort_mirror_countries(self):
-        self.mirrors.mirrorlist = sorted(self.mirrors.mirrorlist,
-                                         key=itemgetter("country"))
-        self.mirrors.countrylist = sorted(self.mirrors.countrylist)
+        self.mirrors.mirror_pool = sorted(self.mirrors.mirror_pool,
+                                          key=itemgetter("country"))
+        self.mirrors.country_pool = sorted(self.mirrors.country_pool)
 
     def seed_mirrors(self, file, status=False):
-        """Seed mirrors"""
+        """
+        Seed mirrors
+        """
         mirrors = filefn.read_mirror_file(file)
         # seed mirror object
         if status:
@@ -817,7 +831,9 @@ class PacmanMirrors:
         self.sort_mirror_countries()
 
     def test_mirrors(self, worklist):
-        """Query server for response time"""
+        """
+        Query server for response time
+        """
         if self.custom:
             print(".: {} {}".format(txt.INF_CLR,
                                     txt.USING_CUSTOM_FILE))
@@ -863,14 +879,14 @@ class PacmanMirrors:
         return worklist
 
     def run(self):
-        """Run"""
         """
-        Build internal config dictionary
-        Returns the config dictionary and true/false on custom
-        Parse commandline
-        Check network
-        Break if mirrorlist is not to be touched
-        Handle missing network
+        Run
+        # Build internal config dictionary
+        # Returns the config dictionary and true/false on custom
+        # Parse commandline
+        # Check network
+        # Check if mirrorlist is not to be touched - normal exit
+        # Handle missing network
         """
         (self.config, self.custom) = configfn.build_config()
         filefn.create_dir(self.config["work_dir"])
@@ -886,14 +902,14 @@ class PacmanMirrors:
             self.config["method"] = "random"
             self.fasttrack = False
         """
-        Load all mirrors
+        # Load all mirrors
         """
         self.load_all_mirrors()
         """
-        Decide which type of mirrorlist to create
-        Fasttrack
-        Interactive
-        Default
+        # Decide which type of mirrorlist to create
+        * Fasttrack
+        * Interactive
+        * Default
         """
         if self.fasttrack:
             self.build_fasttrack_mirror_list(self.fasttrack)
