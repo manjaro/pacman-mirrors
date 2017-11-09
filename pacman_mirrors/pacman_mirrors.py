@@ -82,7 +82,7 @@ class PacmanMirrors:
     def command_line_parse(self):
         """Read the arguments of the command line"""
 
-        args_summary = "[-h] [-f {}] [-i [-d]] [-m {}]\n" \
+        args_summary = "[-h] [-f [{}]] [-i [-d]] [-m {}]\n" \
                        "\t\t[-c {} [{}...]] [--geoip] [-l]\n" \
                        "\t\t[-b {} | -G | -S/-B {}] [-a] [-p {}]\n" \
                        "\t\t[-P {} [{}...]] [-R] [-U {}]\n" \
@@ -110,7 +110,7 @@ class PacmanMirrors:
                              action="store_true",
                              help=txt.HLP_ARG_INTERACTIVE)
         methods_exclusive = methods.add_mutually_exclusive_group()
-        methods_exclusive.add_argument("-f", "-g", "--fasttrack",
+        methods_exclusive.add_argument("-f", "--fasttrack",
                                        nargs="?",
                                        const=0,
                                        type=int,
@@ -125,10 +125,6 @@ class PacmanMirrors:
         methods_exclusive.add_argument("--geoip",
                                        action="store_true",
                                        help=txt.HLP_ARG_GEOIP)
-        country = parser.add_argument_group(txt.COUNTRY)
-        country.add_argument("-l", "--list", "--country-list",
-                             action="store_true",
-                             help=txt.HLP_ARG_LIST)
         # Branch arguments
         branch = parser.add_argument_group(txt.BRANCH)
         branch_exclusive = branch.add_mutually_exclusive_group()
@@ -179,6 +175,9 @@ class PacmanMirrors:
                           help="INTERACTIVE: " + txt.HLP_ARG_DEFAULT)
         misc.add_argument("-h", "--help",
                           action="store_true")
+        misc.add_argument("-l", "--list", "--country-list",
+                          action="store_true",
+                          help=txt.HLP_ARG_LIST)
         misc.add_argument("-m", "--method",
                           type=str,
                           choices=["rank", "random"],
