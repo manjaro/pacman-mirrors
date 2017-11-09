@@ -29,36 +29,49 @@ from pacman_mirrors.constants import txt
 from pacman_mirrors.functions import jsonfn
 
 
-def check_file(file, folder=False):
-    """Check if file exist
-    :param file:
+def check_existance_of(filename, folder=False):
+    """
+    Check existence of named file
+    :param filename:
     :param folder:
     :returns bool if existing
     """
     if folder:
-        return os.path.isdir(file)
-    return os.path.isfile(file)
+        return os.path.isdir(filename)
+    return os.path.isfile(filename)
 
 
-def create_dir(file):
-    """Create directory if not exist
-    :param file:
+def create_dir(foldername):
     """
-    os.makedirs(file, mode=0o755, exist_ok=True)
+    Create named folder if not exist
+    :param foldername:
+    """
+    os.makedirs(foldername, mode=0o755, exist_ok=True)
+
+
+def delete_file(filename):
+    """
+    Delete the named file if exist
+    :param filename:
+    :return:
+    """
+    if os.path.isfile(filename):
+        os.remove(filename)
 
 
 def return_mirror_filename(config):
-    """Load default mirror file
-    :param config:
+    """
+    Find the mirror pool file
+    :param config: config dictionary
     :returns tuple with file and status
     """
     filename = ""
     status = False  # status.json or mirrors.json
     # decision on file availablity
-    if check_file(config["status_file"]):
+    if check_existance_of(config["status_file"]):
         status = True
         filename = config["status_file"]
-    elif check_file(config["mirror_file"]):
+    elif check_existance_of(config["mirror_file"]):
         filename = config["mirror_file"]
     if not filename:
         print("\n{}.:! {}{}\n".format(color.RED,
@@ -129,7 +142,8 @@ def write_mirror_list(config, servers, custom=False,
 
 
 def read_mirror_file(filename):
-    """Read a mirror file
+    """
+    Read content of named file - json data assumed
     :param filename:
     :returns: list of mirrors
     """
@@ -137,7 +151,8 @@ def read_mirror_file(filename):
 
 
 def write_mirrorlist_header(handle, custom=False):
-    """Write mirrorlist header
+    """
+    Write mirrorlist header
     :param handle: handle to a file opened for writing
     :param custom: controls content of the header
     """
@@ -169,7 +184,8 @@ def write_mirrorlist_header(handle, custom=False):
 
 
 def write_mirrorlist_entry(handle, mirror):
-    """Write mirror to mirror list or file
+    """
+    Write mirror to mirror list or file
     :param handle: handle to a file opened for writing
     :param mirror: mirror object
     """
