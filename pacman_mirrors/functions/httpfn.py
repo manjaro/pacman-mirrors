@@ -169,8 +169,8 @@ def inet_conn_check(maxwait=2):
         try:
             data = urlopen(host, timeout=maxwait)
             break
-        except:
-            pass
+        except Exception as e:
+            print(".: {} {} '{}'".format(txt.WRN_CLR, host, e))
     return bool(data)
 
 
