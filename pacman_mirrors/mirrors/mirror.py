@@ -26,8 +26,8 @@ class Mirror:
     """Mirror Class"""
 
     def __init__(self):
-        self.countrylist = []
-        self.mirrorlist = []
+        self.country_pool = []
+        self.mirror_pool = []
 
     def add(self, country, url, protocols,
             branches=None, last_sync="00:00", resp_time="00.00"):
@@ -41,8 +41,8 @@ class Mirror:
         """
         if branches is None:
             branches = [-1, -1, -1]
-        if country not in self.countrylist:
-            self.countrylist.append(country)
+        if country not in self.country_pool:
+            self.country_pool.append(country)
         # translate negative integer in status.json
         if last_sync == -1:
             last_sync = txt.SERVER_BAD
@@ -57,18 +57,19 @@ class Mirror:
             "resp_time": resp_time,
             "url": url
         }
-        self.mirrorlist.append(mirror)
+        self.mirror_pool.append(mirror)
 
-    def seed(self, mirrors, status=False, custom=False):
-        """Seed mirrorlist
-        :param mirrors:
+    def seed(self, servers, status=False, custom=False):
+        """
+        Seed mirrorlist
+        :param servers:
         :param status:
         :param custom:
         """
         if custom:  # clear previous data
-            self.countrylist = []
-            self.mirrorlist = []
-        for server in mirrors:
+            self.country_pool = []
+            self.mirror_pool = []
+        for server in servers:
             if status:
                 self.add(server["country"],
                          server["url"],
