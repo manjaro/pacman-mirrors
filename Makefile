@@ -15,7 +15,7 @@ help:
 	@echo "install - install the package to the active Python's site-packages"
 	@echo "pot-file - extract messages to locale/pacman_mirrors.pot"
 	@echo "push-pot - push pot file to transifex"
-	@echo "pull-pot - pull all translations from transifex"
+	@echo "pull-po - pull all translations from transifex"
 	@echo "mo-files - generate .mo files"
 
 clean: clean-build clean-pyc clean-test

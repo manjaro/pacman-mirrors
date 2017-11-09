@@ -1,6 +1,13 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [4.4.1] 2017-11-09
+After releasing 4.4 a couple of small trivial issues surfaced.
+* **Fix**: Network check was handled poorly in corner cases.
+* **Fix**: Reset of a custom mirror pool failed in corner cases.
+* **Fix**: Pamac depending on `-g/--generate` and a temporary solution is implemented.
+* **Fix**: `-f/--fasttrack` can temporarily be substituted with `-g`, the number of mirrors is optional and defaults to mirrors in the pool.       
+
 ## [4.4] 2017-11-07
 * **Improvement**: `-f/--fasttrack` honor `-c COUNTRY,COUNTRY,COUNTRY` 
 * **Change**: `-c/--country` countries supplied will be written to `custom-mirrors.json`, overwriting exiting file. 

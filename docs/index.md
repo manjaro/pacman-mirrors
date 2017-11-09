@@ -14,9 +14,12 @@ pacman-mirrors [-f*NUMBER*|[[-i[-d]][-c*COUNTRY*[,*COUNTRY*]...|--geoip]]]
 
 # DESCRIPTION
 
-Generate mirrorlist for Manjaro Linux. Default is to rank all mirrors by reponse time. If no arguments are given pacman-mirrors lists available options. Pacman-mirrors requires access to files which are read-only so it must be run with su or sudo. To create a up-to-date mirrorlist using all default use,
+Generate mirrorlist for Manjaro Linux. Default is to rank all mirrors by reponse time. 
+If no arguments are given pacman-mirrors lists available options. 
+Pacman-mirrors requires access to files which are read-only so it must be run with su or sudo. 
+To create a mirrorlist using all default use,
 
-    pacman-mirrors --fasttrack 10
+    pacman-mirrors -f
 
 The mirrorlist generation process can be refined through arguments and arguments with options, for example,
 
@@ -28,6 +31,12 @@ After all operations **ALWAYS** syncronize your pacman database with
     sudo pacman -Syy
 
 # OPERATION
+
+3 modes of operation exist
+
+1. pacman-mirrors -f [number]
+2. pa
+
 
 Some options are mutual exclusive and will throw an arguments error:
 
