@@ -56,8 +56,8 @@ def download_mirrors(config):
         tempfile = config["work_dir"] + "/temp.file"
         jsonfn.json_dump_file(mirrorlist, tempfile)
         filecmp.clear_cache()
-        if filefn.check_file(conf.USR_DIR, folder=True):
-            if not filefn.check_file(config["mirror_file"]):
+        if filefn.check_existance_of(conf.USR_DIR, folder=True):
+            if not filefn.check_existance_of(config["mirror_file"]):
                 jsonfn.json_dump_file(mirrorlist, config["mirror_file"])
             elif not filecmp.cmp(tempfile, config["mirror_file"]):
                 jsonfn.json_dump_file(mirrorlist, config["mirror_file"])
@@ -194,7 +194,7 @@ def update_mirrors(config, quiet=False):
     # one fallback file in /usr/share/pacman-mirrors should be enough.
     # the mirrors.json in /var/lib/pacman-mirrors is confusing.
     # so remove it
-    if filefn.check_file(config["to_be_removed"]):
+    if filefn.check_existance_of(config["to_be_removed"]):
         os.remove(config["to_be_removed"])
     result = None
     connected = inet_conn_check()
@@ -205,7 +205,7 @@ def update_mirrors(config, quiet=False):
                                        txt.REPO_SERVER))
         result = download_mirrors(config)
     else:
-        if not filefn.check_file(config["status_file"]):
+        if not filefn.check_existance_of(config["status_file"]):
             if not quiet:
                 print(".: {} {} {} {}".format(txt.WRN_CLR,
                                               txt.MIRROR_FILE,
@@ -215,7 +215,7 @@ def update_mirrors(config, quiet=False):
                                            txt.FALLING_BACK,
                                            conf.MIRROR_FILE))
             result = (True, False)
-        if not filefn.check_file(config["mirror_file"]):
+        if not filefn.check_existance_of(config["mirror_file"]):
             if not quiet:
                 print(".: {} {}".format(txt.ERR_CLR, txt.HOUSTON))
             result = (False, False)
