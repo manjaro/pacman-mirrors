@@ -24,70 +24,74 @@ from pacman_mirrors.functions import httpfn
 from pacman_mirrors.functions import jsonfn
 
 
-def build_country_list(selectedcountries, countrylist, geoip=False):
-    """Do a check on the users country selection
-    :param selectedcountries:
-    :param countrylist:
+def build_country_list(country_selection, country_pool, geoip=False):
+    """
+    Do a check on the users country selection
+    :param country_selection:
+    :param country_pool:
     :param geoip:
     :return: list of valid countries
     :rtype: list
     """
     # This works so please don't touch
     result = []
-    if selectedcountries:
-        if selectedcountries == ["all"]:
-            result = countrylist
+    if country_selection:
+        if country_selection == ["all"]:
+            result = country_pool
         else:
-            if validfn.country_list_is_valid(selectedcountries,
-                                             countrylist):
-                result = selectedcountries
+            if validfn.country_list_is_valid(country_selection,
+                                             country_pool):
+                result = country_selection
     if not result:
         if geoip:
-            country = get_geoip_country(countrylist)
+            country = get_geoip_country(country_pool)
             if country:  # valid geoip
                 result = country
             else:
-                result = countrylist
+                result = country_pool
         else:
-            result = countrylist
+            result = country_pool
     return result
 
 
-def get_geoip_country(countrylist):
-    """Check if geoip is possible
-    :param countrylist:
+def get_geoip_country(country_pool):
+    """
+    Check if geoip is possible
+    :param country_pool:
     :return: country name if found
     """
     g_country = httpfn.get_geoip_country()
-    if g_country in countrylist:
+    if g_country in country_pool:
         return g_country
     else:
         return None
 
 
-def filter_mirror_country(mirrorlist, countrylist):
-    """Return new list with selection
-    :param mirrorlist:
-    :param countrylist:
+def filter_mirror_country(mirror_pool, country_pool):
+    """
+    Return new mirror pool with selected countries
+    :param mirror_pool:
+    :param country_pool:
     :rtype: list
     """
     result = []
-    for mirror in mirrorlist:
-        if mirror["country"] in countrylist:
+    for mirror in mirror_pool:
+        if mirror["country"] in country_pool:
             result.append(mirror)
     return result
 
 
-def filter_mirror_protocols(mirrorlist, protocols=None):
-    """Return a new mirrorlist with protocols
-    :type mirrorlist: list
+def filter_mirror_protocols(mirror_pool, protocols=None):
+    """
+    Return a new mirrorlist with protocols
+    :type mirror_pool: list
     :type protocols: list
     :rtype: list
     """
     result = []
     if not protocols:
-        return mirrorlist
-    for mirror in mirrorlist:
+        return mirror_pool
+    for mirror in mirror_pool:
         accepted = []
         for idx, protocol in enumerate(protocols):
             if protocol in mirror["protocols"]:
@@ -98,15 +102,15 @@ def filter_mirror_protocols(mirrorlist, protocols=None):
     return result
 
 
-def get_custom_mirror_status(config, custom_mirrors):
+def set_custom_mirror_status(config, custom_pool):
     """
     Apply the current mirror status to the custom mirror file
-    :param config:
-    :param custom_mirrors:
-    :return: custom mirrorfile with current status applied
+    :param config: config dictionary
+    :param custom_pool: the custom mirror pool
+    :return: custom mirror pool with status applied
     """
     status_list = tuple(jsonfn.read_json_file(config["status_file"], dictionary=False))
-    custom_list = tuple(custom_mirrors)
+    custom_list = tuple(custom_pool)
     try:
         _ = status_list[0]
         for custom in custom_list:
@@ -116,4 +120,4 @@ def get_custom_mirror_status(config, custom_mirrors):
                     custom["branches"] = status["branches"]
         return list(custom_list)
     except (IndexError, KeyError):
-        return custom_mirrors
+        return custom_pool
