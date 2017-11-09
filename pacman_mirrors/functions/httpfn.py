@@ -191,11 +191,6 @@ def update_mirrors(config, quiet=False):
     :returns: tuple with result for mirrors.json and status.json
     :rtype: tuple
     """
-    # one fallback file in /usr/share/pacman-mirrors should be enough.
-    # the mirrors.json in /var/lib/pacman-mirrors is confusing.
-    # so remove it
-    if filefn.check_existance_of(config["to_be_removed"]):
-        os.remove(config["to_be_removed"])
     result = None
     connected = inet_conn_check()
     if connected:
