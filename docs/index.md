@@ -14,9 +14,10 @@ pacman-mirrors [-f[*NUMBER*] [[-i[-d]] [-c*COUNTRY*[[,*COUNTRY*]...]|--geoip]]]
 
 # DESCRIPTION
 
-Generates mirrorlist with up-to-date mirrors for Manjaro Linux. Default is to rank all mirrors by reponse time. 
-If no arguments are given pacman-mirrors lists available options. 
-Pacman-mirrors requires access to files which are read-only so it must be run with su or sudo. 
+Generates mirrorlist with up-to-date mirrors for Manjaro Linux.  
+Default is to rank all mirrors by reponse time.  
+If no arguments are given pacman-mirrors lists available options.  
+Pacman-mirrors requires access to files which are read-only so it must be run with *su* or *sudo.*  
 To create a mirrorlist using all default use
 
     pacman-mirrors -f
@@ -25,42 +26,14 @@ The mirrorlist generation process can be refined through arguments and arguments
 
     pacman-mirrors --country Denmark --timeout 5
 
-## IMPORTANT
-After all operations **ALWAYS** syncronize your pacman database with
+# IMPORTANT
+After all operations *ALWAYS* syncronize your pacman database with
 
     sudo pacman -Syy
-
-# FILES OVERVIEW
-
-* **The mirrorlist**: *`/etc/pacman.d/mirrorlist`*.
-   * The file contains a number of servers which `pacman` uses to update your system.
-* **The configuration**: *`/etc/pacman-mirrors.conf`*.
-   * The file holds configuration for pacman-mirrors.
-* **Manjaro mirror pool**: *`/usr/share/pacman-mirrors/mirrors.json`*. 
-   * The worldwide mirrorpool comes with installation. It is compared against the file located at Github in manjaro-web-repo. If the repofile has changed, your local file will be updated with said file.
-* **Mirror pool status**: *`/var/lib/pacman-mirrors/status.json`*.
-   * The mirrorpool status file. It is the data you see displayed at repo.manjaro.org. The file is downloaded on every run of pacman-mirrors and saved in.
-* **Custom mirror pool**: *`/var/lib/pacman-mirrors/custom-mirrors.json`* 
-   * The file is your custom mirror pool and is created by **`-i/--interactive [-d/--default]`** argument or the **`-c/--country`** argument.
 
 # OPERATION
 No matter how you choose to generate your mirrorlist, you will **ONLY** get up-to-date mirrors. 
 This means the - at any given time - number available mirrors will vary depending on when the mirror last syncronized with the master repo server.  
-
-You couild face a situation in which pacman-mirrors says - sorry no mirrors found. That is not an error it is a feature.
-
-If you are stunned by this message 
-
-    .: WARNING No mirrors in selection
-    .: INFO The mirrors has not changed
-
-Then you have limited your mirror pool too much and none of your selected mirrors are up-to-date.
-
-**Suggested solutions**: 
-* Don't use **`--geoip`**
-* Expand with more countries.
-* Remove protocol limitations if any **`-aPall`**.
-* Reset your list with **`pacman-mirrors -c all`** and then **`pacman-mirrors -f10`**
 
 ## MODES
 
@@ -71,12 +44,40 @@ Then you have limited your mirror pool too much and none of your selected mirror
 3. Full control (custom mirror pool)
    * -i [-d/--default]
 
+## FILES OVERVIEW
+
+* **The configuration**: *`/etc/pacman-mirrors.conf`*
+   * The file holds configuration for pacman-mirrors.
+* **The mirrorlist**: *`/etc/pacman.d/mirrorlist`*
+   * The file contains a number of servers which `pacman` uses to update your system.
+* **Manjaro mirror pool**: *`/usr/share/pacman-mirrors/mirrors.json`*
+   * The worldwide mirrorpool comes with installation. It is compared against the file located at Github in manjaro-web-repo. If the repofile has changed, your local file will be updated with said file.
+* **Manjaro mirror pool status**: *`/var/lib/pacman-mirrors/status.json`*
+   * The mirrorpool status file. It is the data you see displayed at repo.manjaro.org. The file is downloaded on every run of pacman-mirrors and saved in.
+* **Custom mirror pool**: *`/var/lib/pacman-mirrors/custom-mirrors.json`* 
+   * The file is your custom mirror pool and is created by **`-i/--interactive [-d/--default]`** argument or the **`-c/--country`** argument.
+
+If you are stunned by this message 
+
+    .: WARNING No mirrors in selection
+    .: INFO The mirrors has not changed
+
+This is not an error, it is a feature.  
+The reason: You have limited your mirror pool too much and none of your selected mirrors are up-to-date.
+
+**Suggested solutions**:
+
+* Remove limitations like **`--geoip`**
+* Expand with more countries.
+* Do a complete reset of your list with *`pacman-mirrors -c all -aP all`** and then **`pacman-mirrors -f`**
+
+## GENERAL INFO ABOUT ARGUMENTS
 Some options are mutual exclusive and will throw an arguments error:
 
 * **--branch**, **--get-branch** and **--set-branch**
 * **--country**, **--fasttrack**, **--geoip**
 
-Some arguments requires another argument present to have effect. E.g., this command will ignore --default argument
+Some arguments requires another argument present to have effect. E.g., this command will ignore *--default* argument
 
    WRONG
    
@@ -104,10 +105,7 @@ The arguments can appear in any order except for arguments which takes additiona
 
 Pacman-mirrors always attempt to download the lastest available data from [http://repo.manjaro.org](http://repo.manjaro.org). These data is always used during mirrorlist generation to ensure that you connect to a mirror which is up-to-date for your selected branch. Should you decide to temporarily switch branches you will still connect to an up-to-date mirror.
 
-# ARGUMENTS AND OPTIONS
-
-## IMPORTANT TO REMEMBER
-For every mirrorlist generation, you **MUST** run *pacman -Syy*.
+# ARGUMENTS, METHODS AND OPTIONS
 
 ## METHODS
 -c, \--country *COUNTRY* [[*COUNTRY*]...]
@@ -181,9 +179,6 @@ For every mirrorlist generation, you **MUST** run *pacman -Syy*.
     3     : Missing mirror file
     BRANCH: Value from config
 
-## IMPORTANT TO REMEMBER
-For every mirrorlist generation, you **MUST** run *pacman -Syy*.
-
 ## Configuration flow of pacman-mirrors
 
 At launch an internal default configuration is setup, file configuration is applied and the commandline is parsed and applied.
@@ -212,14 +207,11 @@ The actions performed by the API are in strict order and performed *before any* 
 
 When done pacman-mirrors checks the internet connection and if possible download the latest datafiles for creating the mirrorlist. At this point it is possible to interrupt further processing.
 
-If the *-n* argument is present pacman-mirrors will now exit.
+If the *-n/--no-mirrorlist* argument is present pacman-mirrors will now exit.
 
 # EXAMPLES
 
 Most optional arguments are self explaining others require explanation. The API functions is mainly designed to help packagers and iso-builders. However it can be of use for everyone because it takes the hazzle out of editing your pacman-mirrors configuration.
-
-## IMPORTANT TO REMEMBER
-For every mirrorlist generation, you **MUST** run *pacman -Syy*.
 
 ## Commands
  
@@ -285,12 +277,16 @@ For every mirrorlist generation, you **MUST** run *pacman -Syy*.
 
     *sudo pacman-mirrors -ap $prefix -S $branch -U $url*
 
+# MORE INFO
+* [https://wiki.manjaro.org/index.php?title=Pacman-mirrors](https://wiki.manjaro.org/index.php?title=Pacman-mirrors)
+* [https://wiki.manjaro.org/index.php?title=Create_your_own_Custom_Mirrorlist](https://wiki.manjaro.org/index.php?title=Create_your_own_Custom_Mirrorlist)
+
 # REPORTING BUGS
-   <https://github.com/manjaro/pacman-mirrors/issues>
+   [https://github.com/manjaro/pacman-mirrors/issues](https://github.com/manjaro/pacman-mirrors/issues)
 
 # SEE ALSO
 
-The pacman-mirrors source code and all documentation may be downloaded from <https://github.com/manjaro/pacman-mirrors/archive/master.zip>
+The pacman-mirrors source code and all documentation may be downloaded from [https://github.com/manjaro/pacman-mirrors/archive/master.zip](https://github.com/manjaro/pacman-mirrors/archive/master.zip)
 
 # AUTHORS
 
