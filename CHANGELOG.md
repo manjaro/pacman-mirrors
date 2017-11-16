@@ -1,16 +1,18 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## [4.5b2] 2017-11-09
-* **Fix**: Custom mirror pool was not reset when supplying new countries on CLI
+## [4.5b2] 2017-11-16
+* **Fix**: Custom mirror pool was not reset when supplying new countries on CLI.
+* **Documentation**: Added file overview to documentation and man page.
+* Discussion on a pamac incompatibility [pamac issue 366](https://github.com/manjaro/pamac/issues/366) and how to solve it properly.
 
 ## [4.5b1] 2017-11-09
 After releasing 4.4 a couple of small trivial issues surfaced.
 * **Fix**: Network check was handled poorly in corner cases.
 * **Fix**: Reset of a custom mirror pool failed in corner cases.
-* **Fix**: Country list was not complete
-* **Change**: OnlyCountry removed from configuration to avoid confusion
-* **Added**: Check for custom mirror pool by checking and validating custom-mirrors.json    
+* **Fix**: Country list was not complete.
+* **Change**: OnlyCountry removed from configuration to avoid confusion.
+* **Added**: Check for custom mirror pool by checking and validating custom-mirrors.json.    
 
 ## [4.4] 2017-11-07
 * **Improvement**: `-f/--fasttrack` honor `-c COUNTRY,COUNTRY,COUNTRY` 
