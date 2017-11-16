@@ -237,9 +237,9 @@ BRANCH: Value from config</code></pre>
 <p><em>sudo pacman-mirrors -b unstable –geoip</em></p></li>
 <li><p>I want to permanently change branch to unstable, use mirrors from Germany and France, use only https and http protocol in that order</p>
 <p><em>sudo pacman-mirrors -ac Germany,France -S unstable -P https http</em></p></li>
-<li><p>Create a mirrorlist with German mirrors</p>
+<li><p>Create a mirrorlist with German mirrors and a custom mirror file</p>
 <p><em>sudo pacman-mirrors -c Germany</em></p></li>
-<li><p>If you want more countries in your mirrorlist add them</p>
+<li><p>If you want more countries in your mirrorlist add them they will be written to your custom mirror pool</p>
 <p><em>sudo pacman-mirrors -c Germany France Denmark</em></p></li>
 <li><p>Create a mirrorlist with 5 mirrors up-to-date on your branch</p>
 <p><em>sudo pacman-mirrors -f 5</em></p></li>
