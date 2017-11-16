@@ -1,7 +1,7 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## [4.5b2] 2017-11-16
+## [4.5.0] 2017-11-16
 * **Fix**: Custom mirror pool was not reset when supplying new countries on CLI.
 * **Documentation**: Added file overview to documentation and man page.
 * Discussion on a pamac incompatibility [pamac issue 366](https://github.com/manjaro/pamac/issues/366) and how to solve it properly.
