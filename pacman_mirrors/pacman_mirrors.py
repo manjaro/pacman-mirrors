@@ -210,7 +210,7 @@ class PacmanMirrors:
             sys.exit(0)
 
         if args.list:
-            self.output_country_pool()
+            self.output_country_pool_console()
             sys.exit(0)
 
         if args.api and args.get_branch:
@@ -398,20 +398,24 @@ class PacmanMirrors:
         """
         Generate common mirrorlist
         """
+        """
+        Create a list based on the content of selected_countries
+        """
         mirror_selection = mirrorfn.filter_mirror_country(self.mirrors.mirror_pool,
                                                           self.selected_countries)
         """
-        We will always have selected countries
-        It is a matter of how many countries
         Check the length of selected_countries against the full countrylist
+        If selected_countries is the lesser then we build a custom pool file
         """
         if len(self.selected_countries) < len(self.mirrors.country_pool):
             try:
                 _ = self.selected_countries[0]
-                self.output_custom_mirror_pool(mirror_selection)
+                self.output_custom_mirror_pool_file(mirror_selection)
             except IndexError:
                 pass
-
+        """
+        Prototol filtering if applicable
+        """
         try:
             _ = self.config["protocols"][0]
             mirror_selection = mirrorfn.filter_mirror_protocols(
@@ -645,7 +649,7 @@ class PacmanMirrors:
                 _ = mirror_selection[0]
                 self.custom = True
                 self.config["country_pool"] = ["Custom"]
-                self.output_custom_mirror_pool(mirror_selection)
+                self.output_custom_mirror_pool_file(mirror_selection)
                 """
                 Writing the final mirrorlist
                 only write mirrors which are up-to-date for users selected branch
@@ -703,10 +707,12 @@ class PacmanMirrors:
         """
         Load all mirrors from active mirror pool
         """
-        if self.check_custom_mirror_pool():
+        if self.check_custom_mirror_pool() and not self.config["country_pool"]:
             self.load_custom_mirror_pool()
             self.selected_countries = self.mirrors.country_pool
         else:
+            if self.config["country_pool"]:
+                self.selected_countries = self.config["country_pool"]
             self.load_default_mirror_pool()
         """
         Validate the list of selected countries        
@@ -733,14 +739,14 @@ class PacmanMirrors:
         (file, status) = filefn.return_mirror_filename(self.config)
         self.seed_mirrors(file, status)
 
-    def output_country_pool(self):
+    def output_country_pool_console(self):
         """
         List all available countries
         """
         self.load_default_mirror_pool()
         print("{}".format("\n".join(self.mirrors.country_pool)))
 
-    def output_custom_mirror_pool(self, selected_mirrors):
+    def output_custom_mirror_pool_file(self, selected_mirrors):
         """
         Output selected mirrors to custom mirror file
         :param selected_mirrors:
