@@ -233,11 +233,11 @@ Most optional arguments are self explaining others require explanation. The API 
 
     *sudo pacman-mirrors -ac Germany,France -S unstable -P https http*
 
-* Create a mirrorlist with German mirrors
+* Create a mirrorlist with German mirrors and a custom mirror file
 
     *sudo pacman-mirrors -c Germany*
 
-* If you want more countries in your mirrorlist add them
+* If you want more countries in your mirrorlist add them they will be written to your custom mirror pool
 
     *sudo pacman-mirrors -c Germany France Denmark*
 
