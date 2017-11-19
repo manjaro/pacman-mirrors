@@ -1,6 +1,9 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [4.6] 2017-11-19
+* **Release bump to 4.6** Error with version display 4.5b1
+
 ## [4.5.0] 2017-11-16
 * **Fix**: Custom mirror pool was not reset when supplying new countries on CLI.
 * **Documentation**: Added file overview to documentation and man page.
