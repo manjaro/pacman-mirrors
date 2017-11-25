@@ -109,7 +109,7 @@ setup(
                 ('share/locale/uk_UA/LC_MESSAGES', ['locale/uk_UA/LC_MESSAGES/pacman-mirrors.mo']),
                 ('share/locale/zh_TW/LC_MESSAGES', ['locale/zh_TW/LC_MESSAGES/pacman-mirrors.mo']),
                 ],
-    scripts=["scripts/pacman-mirrors", "scripts/pacman_mirrors"],
+    scripts=["scripts/pacman-mirrors", "scripts/pm-launcher"],
     install_requires=requirements,
     license="GPL3",
     zip_safe=False,
