@@ -1,60 +1,30 @@
-#!/usr/bin/env python
-#
-# This file is part of pacman-mirrors.
-#
-# pacman-mirrors is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# pacman-mirrors is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with pacman-mirrors.  If not, see <http://www.gnu.org/licenses/>.
-#
-# Author(s): Ramon Buldó <rbuldo@gmail.com>
+#!/bin/bash
 
-import os
-import shutil
+app="pacman-mirrors $*"
 
-from pacman_mirrors import pacman_mirrors
-from pacman_mirrors.config.configuration import O_CUST_FILE
-from pacman_mirrors.functions import customfn
-from pacman_mirrors.translation import i18n
-
-_ = i18n.language.gettext
-
-
-def move_custom_country():
-    """
-    Move custom country file from /etc/pacman.d/mirrors/ to
-    /var/lib/pacman-mirrors/
-    """
-    print(_("Moving 'Custom' mirrors file to ") + "/var/lib/pacman-mirrors/")
-    os.makedirs("/var/lib/pacman-mirrors", mode=0o755, exist_ok=True)
-    try:
-        shutil.move("/etc/pacman.d/mirrors/Custom",
-                    "/var/lib/pacman-mirrors/Custom")
-    except OSError as e:
-        print(_("Warning: Cannot move '{filename}' to '{filename2}': {error}"
-              .format(filename=e.filename,
-                      filename2=e.filename2,
-                      error=e.strerror)))
-
-if os.path.isfile("/etc/pacman.d/mirrors/Custom"):
-    if os.getuid() == 0:
-        move_custom_country()
-
-if os.path.isfile(O_CUST_FILE):
-    if os.getuid() == 0:
-        customfn.convert_to_json()
-try:
-    pm = pacman_mirrors.PacmanMirrors()
-    pm.run()
-
-except KeyboardInterrupt:
-    print("\n" + _("Error: interrupted by the user."))
-    exit(1)
+if [ `id -u` -eq 0 ]; then
+	#user is admin
+	${app}
+else
+	#user is not admin
+	if `echo $- | grep "i" >/dev/null 2>&1`; then
+		#script is running in interactive mode
+		su - -c "${app}"
+	else
+		#script is running in non-interactive mode
+		if [ $XDG_SESSION_TYPE = "wayland" ] ; then
+			xhost +SI:localuser:root
+			pkexec ${app}
+			xhost -SI:localuser:root
+			xhost
+		elif command -v pkexec >/dev/null 2>&1; then
+			pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY ${app}
+		elif command -v sudo >/dev/null 2>&1; then
+			x-terminal-emulator -e "sudo ${app}"
+		elif command -v su >/dev/null 2>&1; then
+			x-terminal-emulator -e "su - -c '${app}'"
+		else
+			x-terminal-emulator -e "echo 'Command must be run as root user: ${app}'"
+		fi
+	fi
+fi
