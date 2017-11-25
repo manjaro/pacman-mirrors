@@ -26,7 +26,7 @@ import gettext
 
 #  The translation files will be under
 #  @LOCALE_DIR@/@LANGUAGE@/LC_MESSAGES/@APP_NAME@.mo
-APP_NAME = "pacman_mirrors"
+APP_NAME = "pacman-mirrors"
 
 APP_DIR = os.path.join(sys.prefix, "share")
 LOCALE_DIR = os.path.join(APP_DIR, "locale")

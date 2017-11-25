@@ -2,7 +2,7 @@
 # Copyright (C) 2017 ORGANIZATION
 # This file is distributed under the same license as the pacman-mirrors
 # project.
-# 
+#
 # Translators:
 # Μιχάλης <mikem132@protonmail.com>, 2017
 # Πέτρος Σαμαράς <psamaras1@gmail.com>, 2016-2017

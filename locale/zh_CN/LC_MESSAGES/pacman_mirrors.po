@@ -2,7 +2,7 @@
 # Copyright (C) 2017 ORGANIZATION
 # This file is distributed under the same license as the pacman-mirrors
 # project.
-# 
+#
 # Translators:
 # dull2wall <jamesjoyce0225@hotmail.com>, 2017
 msgid ""
