@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #
-# This file is part of pacman-mirrors.sh.
+# This file is part of pacman-mirrors.
 #
 # pacman-mirrors is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
