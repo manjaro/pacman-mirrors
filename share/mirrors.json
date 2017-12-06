@@ -112,6 +112,14 @@
         "url": "https://mirrors.zju.edu.cn/manjaro/"
     },
     {
+        "country": "China",
+        "protocols": [
+            "ftp",
+            "https"
+        ],
+        "url": "https://mirrors.shuosc.org/manjaro/"
+    },
+    {
         "country": "Colombia",
         "protocols": [
             "http"
@@ -268,6 +276,15 @@
             "http"
         ],
         "url": "http://babyname.tips/mirrors/manjaro/"
+    },
+    {
+        "country": "Greece",
+        "protocols": [
+            "ftp",
+            "http",
+            "https"
+        ],
+        "url": "https://ftp.cc.uoc.gr/mirrors/linux/manjaro/"
     },
     {
         "country": "Hong_Kong",

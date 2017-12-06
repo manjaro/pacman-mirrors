@@ -23,7 +23,7 @@ import os
 
 from pacman_mirrors.config import configuration as conf
 from pacman_mirrors.constants import txt
-from pacman_mirrors.functions import jsonfn
+from pacman_mirrors.functions import jsonFn
 
 
 def convert_to_json():
@@ -48,7 +48,7 @@ def convert_to_json():
                 "url": mirror_url
             })
         # write new file
-        jsonfn.write_json_file(mirrors, conf.CUSTOM_FILE)
+        jsonFn.write_json_file(mirrors, conf.CUSTOM_FILE)
         os.remove(conf.O_CUST_FILE)
 
 

@@ -24,7 +24,7 @@ from collections import namedtuple
 import npyscreen
 
 from pacman_mirrors.constants import txt
-from pacman_mirrors.functions import consolefn
+from pacman_mirrors.functions import consoleFn
 from pacman_mirrors.translation import i18n
 
 _ = i18n.language.gettext
@@ -58,8 +58,8 @@ class ConsoleUI(npyscreen.NPSAppManaged):
                         "url": txt.I_URL})
         main_server_list.append(header_cols)
         main_server_list.extend(self.server_list)
-        servers = consolefn.list_to_tuple(main_server_list, server)
-        server_rows = consolefn.rows_from_tuple(servers)
+        servers = consoleFn.list_to_tuple(main_server_list, server)
+        server_rows = consoleFn.rows_from_tuple(servers)
         header_row = ("{:<5}".format(txt.I_USE) +
                       (server_rows[0].replace("|", " ").strip()))
         del server_rows[0]

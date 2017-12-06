@@ -35,8 +35,8 @@ from urllib.request import urlopen
 from pacman_mirrors import __version__
 from pacman_mirrors.config import configuration as conf
 from pacman_mirrors.constants import txt
-from pacman_mirrors.functions import filefn
-from pacman_mirrors.functions import jsonfn
+from pacman_mirrors.functions import fileFn
+from pacman_mirrors.functions import jsonFn
 
 
 def download_mirrors(config):
@@ -54,13 +54,13 @@ def download_mirrors(config):
                                     object_pairs_hook=collections.OrderedDict)
         fetchmirrors = True
         tempfile = config["work_dir"] + "/temp.file"
-        jsonfn.json_dump_file(mirrorlist, tempfile)
+        jsonFn.json_dump_file(mirrorlist, tempfile)
         filecmp.clear_cache()
-        if filefn.check_existance_of(conf.USR_DIR, folder=True):
-            if not filefn.check_existance_of(config["mirror_file"]):
-                jsonfn.json_dump_file(mirrorlist, config["mirror_file"])
+        if fileFn.check_existance_of(conf.USR_DIR, folder=True):
+            if not fileFn.check_existance_of(config["mirror_file"]):
+                jsonFn.json_dump_file(mirrorlist, config["mirror_file"])
             elif not filecmp.cmp(tempfile, config["mirror_file"]):
-                jsonfn.json_dump_file(mirrorlist, config["mirror_file"])
+                jsonFn.json_dump_file(mirrorlist, config["mirror_file"])
         os.remove(tempfile)
     except (HTTPException, json.JSONDecodeError, URLError):
         pass
@@ -71,7 +71,7 @@ def download_mirrors(config):
                 response.read().decode("utf8"),
                 object_pairs_hook=collections.OrderedDict)
         fetchstatus = True
-        jsonfn.write_json_file(statuslist, config["status_file"])
+        jsonFn.write_json_file(statuslist, config["status_file"])
     except (HTTPException, json.JSONDecodeError, URLError):
         pass
     # result
@@ -100,7 +100,7 @@ def get_geoip_country():
                 "United States": "United_States",
             }
             if country_name in country_fix.keys():
-                country_name = country_fix[country_name]
+                country_name = [country_fix[country_name]]
     return country_name
 
 
@@ -200,7 +200,7 @@ def update_mirrors(config, quiet=False):
                                        txt.REPO_SERVER))
         result = download_mirrors(config)
     else:
-        if not filefn.check_existance_of(config["status_file"]):
+        if not fileFn.check_existance_of(config["status_file"]):
             if not quiet:
                 print(".: {} {} {} {}".format(txt.WRN_CLR,
                                               txt.MIRROR_FILE,
@@ -210,7 +210,7 @@ def update_mirrors(config, quiet=False):
                                            txt.FALLING_BACK,
                                            conf.MIRROR_FILE))
             result = (True, False)
-        if not filefn.check_existance_of(config["mirror_file"]):
+        if not fileFn.check_existance_of(config["mirror_file"]):
             if not quiet:
                 print(".: {} {}".format(txt.ERR_CLR, txt.HOUSTON))
             result = (False, False)

@@ -9,9 +9,8 @@ Tests for `pacman-mirrors` module.
 import unittest
 from unittest.mock import patch
 
-from pacman_mirrors.config import configfn
-from pacman_mirrors.functions import filefn
-from pacman_mirrors.functions import httpfn
+from pacman_mirrors.functions import fileFn, configFn
+from pacman_mirrors.functions import httpFn
 from pacman_mirrors.pacman_mirrors import PacmanMirrors
 from . import mock_configuration as conf
 
@@ -42,7 +41,7 @@ class TestPacmanMirrors(unittest.TestCase):
         pass
 
     @patch("os.getuid")
-    @patch.object(configfn, "build_config")
+    @patch.object(configFn, "build_config")
     def test_full_run_fasttrack(self,
                                 mock_build_config,
                                 mock_os_getuid):
@@ -53,15 +52,15 @@ class TestPacmanMirrors(unittest.TestCase):
                                  ["pacman-mirrors",
                                   "-f5"]):
             app = PacmanMirrors()
-            app.config = configfn.build_config()
-            filefn.create_dir(test_conf["work_dir"])
+            app.config = configFn.build_config()
+            fileFn.create_dir(test_conf["work_dir"])
             app.command_line_parse()
-            httpfn.update_mirrors(app.config)
+            httpFn.update_mirrors(app.config)
             app.load_all_mirrors()
             app.build_fasttrack_mirror_list(app.fasttrack)
 
     @patch("os.getuid")
-    @patch.object(configfn, "build_config")
+    @patch.object(configFn, "build_config")
     def test_full_run_random(self,
                              mock_build_config,
                              mock_os_getuid):
@@ -73,15 +72,15 @@ class TestPacmanMirrors(unittest.TestCase):
                                   "-c", "all",
                                   "-m", "random"]):
             app = PacmanMirrors()
-            app.config = configfn.build_config()
-            filefn.create_dir(test_conf["work_dir"])
+            app.config = configFn.build_config()
+            fileFn.create_dir(test_conf["work_dir"])
             app.command_line_parse()
-            httpfn.update_mirrors(app.config)
+            httpFn.update_mirrors(app.config)
             app.load_all_mirrors()
             app.build_common_mirror_list()
 
     @patch("os.getuid")
-    @patch.object(configfn, "build_config")
+    @patch.object(configFn, "build_config")
     def test_full_run_rank(self,
                            mock_build_config,
                            mock_os_getuid):
@@ -92,10 +91,10 @@ class TestPacmanMirrors(unittest.TestCase):
                                  ["pacman-mirrors",
                                   "-c", "all"]):
             app = PacmanMirrors()
-            app.config = configfn.build_config()
-            filefn.create_dir(test_conf["work_dir"])
+            app.config = configFn.build_config()
+            fileFn.create_dir(test_conf["work_dir"])
             app.command_line_parse()
-            httpfn.update_mirrors(app.config)
+            httpFn.update_mirrors(app.config)
             app.load_all_mirrors()
             app.build_common_mirror_list()
 

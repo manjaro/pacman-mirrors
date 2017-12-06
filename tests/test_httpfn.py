@@ -10,28 +10,27 @@ Tests for `pacman-mirrors` module.
 import unittest
 from unittest.mock import patch
 
-from pacman_mirrors.config import configfn
-from pacman_mirrors.functions import httpfn
+from pacman_mirrors.functions import httpFn, configFn
 from pacman_mirrors.pacman_mirrors import PacmanMirrors
-from . import mock_configuration as conf
+from . import mock_configuration as mock
 
 test_conf = {
     "branch": "stable",
-    "branches": conf.BRANCHES,
-    "config_file": conf.CONFIG_FILE,
-    "custom_file": conf.CUSTOM_FILE,
+    "branches": mock.BRANCHES,
+    "config_file": mock.CONFIG_FILE,
+    "custom_file": mock.CUSTOM_FILE,
     "method": "rank",
-    "work_dir": conf.WORK_DIR,
-    "mirror_file": conf.MIRROR_FILE,
-    "mirror_list": conf.MIRROR_LIST,
+    "work_dir": mock.WORK_DIR,
+    "mirror_file": mock.MIRROR_FILE,
+    "mirror_list": mock.MIRROR_LIST,
     "no_update": False,
     "country_pool": [],
     "protocols": [],
-    "repo_arch": conf.REPO_ARCH,
-    "status_file": conf.STATUS_FILE,
+    "repo_arch": mock.REPO_ARCH,
+    "status_file": mock.STATUS_FILE,
     "ssl_verify": True,
-    "url_mirrors_json": conf.URL_MIRROR_JSON,
-    "url_status_json": conf.URL_STATUS_JSON
+    "url_mirrors_json": mock.URL_MIRROR_JSON,
+    "url_status_json": mock.URL_STATUS_JSON
 }
 
 
@@ -42,28 +41,28 @@ class TestHttpFn(unittest.TestCase):
         pass
 
     @patch("os.getuid")
-    @patch.object(httpfn, "get_geoip_country")
-    @patch.object(configfn, "build_config")
+    @patch.object(httpFn, "get_geoip_country")
+    @patch.object(configFn, "build_config")
     def test_geoip_available(self,
                              mock_build_config,
                              mock_get_geoip_country,
                              mock_os_getuid):
         """TEST: Geoip country IS avaiable"""
         mock_os_getuid.return_value = 0
-        mock_get_geoip_country.return_value = "France"
         mock_build_config.return_value = test_conf
+        mock_get_geoip_country.return_value = ["Denmark"]
         with unittest.mock.patch("sys.argv",
                                  ["pacman-mirrors",
                                   "--geoip"]):
             app = PacmanMirrors()
-            app.config = configfn.build_config()
+            app.config = configFn.build_config()
             app.command_line_parse()
             app.load_all_mirrors()
-            assert app.selected_countries == ["France"]
+            assert app.selected_countries == ["Denmark"]
 
     @patch("os.getuid")
-    @patch.object(httpfn, "get_geoip_country")
-    @patch.object(configfn, "build_config")
+    @patch.object(httpFn, "get_geoip_country")
+    @patch.object(configFn, "build_config")
     def test_geoip_not_available(self,
                                  mock_build_config,
                                  mock_get_geoip_country,
@@ -76,7 +75,7 @@ class TestHttpFn(unittest.TestCase):
                                  ["pacman-mirrors",
                                   "--geoip"]):
             app = PacmanMirrors()
-            app.config = configfn.build_config()
+            app.config = configFn.build_config()
             app.command_line_parse()
             app.load_all_mirrors()
             assert app.selected_countries == app.mirrors.country_pool

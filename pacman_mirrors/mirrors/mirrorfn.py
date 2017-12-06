@@ -19,9 +19,9 @@
 
 """Pacman-Mirror Mirror Functions"""
 
-from pacman_mirrors.functions import validfn
-from pacman_mirrors.functions import httpfn
-from pacman_mirrors.functions import jsonfn
+from pacman_mirrors.functions import validFn
+from pacman_mirrors.functions import httpFn
+from pacman_mirrors.functions import jsonFn
 
 
 def build_country_list(country_selection, country_pool, geoip=False):
@@ -39,7 +39,7 @@ def build_country_list(country_selection, country_pool, geoip=False):
         if country_selection == ["all"]:
             result = country_pool
         else:
-            if validfn.country_list_is_valid(country_selection,
+            if validFn.country_list_is_valid(country_selection,
                                              country_pool):
                 result = country_selection
     if not result:
@@ -60,7 +60,7 @@ def get_geoip_country(country_pool):
     :param country_pool:
     :return: country name if found
     """
-    g_country = httpfn.get_geoip_country()
+    g_country = httpFn.get_geoip_country()
     if g_country in country_pool:
         return g_country
     else:
@@ -109,7 +109,7 @@ def set_custom_mirror_status(config, custom_pool):
     :param custom_pool: the custom mirror pool
     :return: custom mirror pool with status applied
     """
-    status_list = tuple(jsonfn.read_json_file(config["status_file"], dictionary=False))
+    status_list = tuple(jsonFn.read_json_file(config["status_file"], dictionary=False))
     custom_list = tuple(custom_pool)
     try:
         _ = status_list[0]

@@ -35,14 +35,13 @@ from random import shuffle
 import pacman_mirrors.functions.util
 from pacman_mirrors import __version__
 from pacman_mirrors.api import apifn
-from pacman_mirrors.config import configfn
 from pacman_mirrors.config import configuration as conf
 from pacman_mirrors.constants import colors as color
 from pacman_mirrors.constants import txt
-from pacman_mirrors.functions import filefn
-from pacman_mirrors.functions import httpfn
-from pacman_mirrors.functions import jsonfn
-from pacman_mirrors.functions import validfn
+from pacman_mirrors.functions import fileFn, configFn
+from pacman_mirrors.functions import httpFn
+from pacman_mirrors.functions import jsonFn
+from pacman_mirrors.functions import validFn
 from pacman_mirrors.functions import util
 from pacman_mirrors.mirrors import mirrorfn
 from pacman_mirrors.mirrors.mirror import Mirror
@@ -346,11 +345,11 @@ class PacmanMirrors:
             """
             # pacman-mirrors.conf could absent so check for it
             """
-            if not filefn.check_existance_of(self.config["config_file"]):
+            if not fileFn.check_existance_of(self.config["config_file"]):
                 """
                 # Copy from host system
                 """
-                filefn.create_dir(set_pfx + "/etc")
+                fileFn.create_dir(set_pfx + "/etc")
                 shutil.copyfile("/etc/pacman-mirrors.conf",
                                 self.config["config_file"])
                 """
@@ -370,7 +369,7 @@ class PacmanMirrors:
             """
             # mirror list dir could absent so check for it
             """
-            filefn.create_dir(set_pfx + "/etc/pacman.d")
+            fileFn.create_dir(set_pfx + "/etc/pacman.d")
             mirror = [
                 {
                     "url": apifn.sanitize_url(set_url),
@@ -379,7 +378,7 @@ class PacmanMirrors:
                     "resp_time": "00.00"
                 }
             ]
-            filefn.write_mirror_list(self.config, mirror, quiet=self.quiet)
+            fileFn.write_mirror_list(self.config, mirror, quiet=self.quiet)
             sys.exit(0)
         # Fourth API task: Write protocols to config
         if set_protocols:
@@ -486,7 +485,7 @@ class PacmanMirrors:
                     mirror["country"], mirror["last_sync"], mirror["url"])
                 print("{:.{}}".format(message, cols), end="")
                 sys.stdout.flush()
-            resp_time = httpfn.get_mirror_response(mirror["url"],
+            resp_time = httpFn.get_mirror_response(mirror["url"],
                                                    maxwait=self.max_wait_time,
                                                    quiet=self.quiet)
             mirror["resp_time"] = resp_time
@@ -676,7 +675,7 @@ class PacmanMirrors:
         Custom mirror pool or countries from CLI
         :return: True/False
         """
-        if validfn.custom_config_is_valid():
+        if validFn.custom_config_is_valid():
             self.custom = True
         else:
             self.selected_countries = self.config["country_pool"]
@@ -688,7 +687,7 @@ class PacmanMirrors:
         """
         self.custom = False
         self.config["country_pool"] = []
-        filefn.delete_file(self.config["custom_file"])
+        fileFn.delete_file(self.config["custom_file"])
 
     def filter_user_branch(self, mirror_pool):
         """
@@ -737,7 +736,7 @@ class PacmanMirrors:
         """
         Load all available mirrors
         """
-        (file, status) = filefn.return_mirror_filename(self.config)
+        (file, status) = fileFn.return_mirror_filename(self.config)
         self.seed_mirrors(file, status)
 
     def output_country_pool_console(self):
@@ -757,7 +756,7 @@ class PacmanMirrors:
                                   txt.CUSTOM_MIRROR_LIST))
         print("--------------------------")
         # output mirror file
-        jsonfn.write_json_file(selected_mirrors,
+        jsonFn.write_json_file(selected_mirrors,
                                self.config["custom_file"])
         print(".: {} {}: {}".format(txt.INF_CLR,
                                     txt.CUSTOM_MIRROR_FILE_SAVED,
@@ -769,13 +768,13 @@ class PacmanMirrors:
         :param selected_servers:
         """
         if self.custom:
-            filefn.write_mirror_list(self.config,
+            fileFn.write_mirror_list(self.config,
                                      selected_servers,
                                      custom=self.custom,
                                      quiet=self.quiet,
                                      interactive=True)
         else:
-            filefn.write_mirror_list(self.config,
+            fileFn.write_mirror_list(self.config,
                                      selected_servers,
                                      quiet=self.quiet)
 
@@ -827,7 +826,7 @@ class PacmanMirrors:
         """
         Seed mirrors
         """
-        mirrors = filefn.read_mirror_file(file)
+        mirrors = fileFn.read_mirror_file(file)
         # seed mirror object
         if status:
             self.mirrors.seed(mirrors, status=status)
@@ -870,7 +869,7 @@ class PacmanMirrors:
                 else:
                     self.max_wait_time = http_wait
                 # let's see how responsive you are
-                mirror["resp_time"] = httpfn.get_mirror_response(
+                mirror["resp_time"] = httpFn.get_mirror_response(
                     mirror["url"], maxwait=self.max_wait_time,
                     quiet=self.quiet, ssl_verify=ssl_verify)
 
@@ -903,13 +902,13 @@ class PacmanMirrors:
         # Check if mirrorlist is not to be touched - normal exit
         # Handle missing network
         """
-        (self.config, self.custom) = configfn.build_config()
-        filefn.create_dir(self.config["work_dir"])
+        (self.config, self.custom) = configFn.build_config()
+        fileFn.create_dir(self.config["work_dir"])
         self.command_line_parse()
         self.i686_check()  # transparent change to i686
-        self.network = httpfn.inet_conn_check()
+        self.network = httpFn.inet_conn_check()
         if self.network:
-            httpfn.update_mirrors(self.config, quiet=self.quiet)
+            httpFn.update_mirrors(self.config, quiet=self.quiet)
         if self.no_mirrorlist:
             sys.exit(0)
         if not self.network:

@@ -26,7 +26,7 @@ import sys
 import pacman_mirrors.functions.util
 from pacman_mirrors.constants import colors as color
 from pacman_mirrors.constants import txt
-from pacman_mirrors.functions import jsonfn
+from pacman_mirrors.functions import jsonFn
 
 
 def check_existance_of(filename, folder=False):
@@ -147,7 +147,7 @@ def read_mirror_file(filename):
     :param filename:
     :returns: list of mirrors
     """
-    return jsonfn.read_json_file(filename, dictionary=True)
+    return jsonFn.read_json_file(filename, dictionary=True)
 
 
 def write_mirrorlist_header(handle, custom=False):
