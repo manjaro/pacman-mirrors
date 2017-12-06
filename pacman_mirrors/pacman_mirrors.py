@@ -26,6 +26,7 @@
 import argparse
 import importlib.util
 import os
+import platform
 import shutil
 import sys
 from operator import itemgetter
@@ -883,12 +884,21 @@ class PacmanMirrors:
                                                        color.ENDCOLOR))
         return worklist
 
+    def i686_check(self):
+        if platform.machine() == "i686" and "x32" not in self.config["branch"]:
+            if self.config["branch"] == "stable":
+                self.config["branch"] = "x32-testing"
+            else:
+                self.config["branch"] = "x32-{}".format(self.config["branch"])
+            apifn.write_config_branch(self.config["branch"], self.config["config_file"], quiet=True)
+
     def run(self):
         """
         Run
         # Build internal config dictionary
         # Returns the config dictionary and true/false on custom
         # Parse commandline
+        # i686 check - change branch to x32-$branch
         # Check network
         # Check if mirrorlist is not to be touched - normal exit
         # Handle missing network
@@ -896,6 +906,7 @@ class PacmanMirrors:
         (self.config, self.custom) = configfn.build_config()
         filefn.create_dir(self.config["work_dir"])
         self.command_line_parse()
+        self.i686_check()  # transparent change to i686
         self.network = httpfn.inet_conn_check()
         if self.network:
             httpfn.update_mirrors(self.config, quiet=self.quiet)
