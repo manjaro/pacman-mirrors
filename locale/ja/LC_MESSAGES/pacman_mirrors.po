@@ -4,13 +4,14 @@
 # project.
 # 
 # Translators:
+# David Blaszyk <david@sudomail.ne.jp>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: manjaro-pacman-mirrors\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2017-10-23 20:55+0200\n"
-"PO-Revision-Date: 2015-12-22 01:50+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2017-11-21 20:28+0000\n"
+"Last-Translator: David Blaszyk <david@sudomail.ne.jp>\n"
 "Language-Team: Japanese (http://www.transifex.com/manjarolinux/manjaro-pacman-mirrors/language/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -21,107 +22,107 @@ msgstr ""
 
 #: pacman_mirrors/constants/txt.py:29
 msgid "ERROR"
-msgstr ""
+msgstr "エラー"
 
 #: pacman_mirrors/constants/txt.py:30
 msgid "INFO"
-msgstr ""
+msgstr "情報"
 
 #: pacman_mirrors/constants/txt.py:31
 msgid "WARNING"
-msgstr ""
+msgstr "注意"
 
 #: pacman_mirrors/constants/txt.py:33
 msgid "HTTPException"
-msgstr ""
+msgstr "HTTPの除外"
 
 #: pacman_mirrors/constants/txt.py:34
 msgid "TIMEOUT"
-msgstr ""
+msgstr "タイムアウト"
 
 #: pacman_mirrors/constants/txt.py:36
 msgid "API"
-msgstr ""
+msgstr "API"
 
 #: pacman_mirrors/constants/txt.py:37
 msgid "BRANCH"
-msgstr ""
+msgstr "ブランチ"
 
 #: pacman_mirrors/constants/txt.py:38
 msgid "COUNTRY"
-msgstr ""
+msgstr "国"
 
 #: pacman_mirrors/constants/txt.py:39
 msgid "FILE"
-msgstr ""
+msgstr "ファイル"
 
 #: pacman_mirrors/constants/txt.py:40
 msgid "METHOD"
-msgstr ""
+msgstr "メソード"
 
 #: pacman_mirrors/constants/txt.py:41
 msgid "METHODS"
-msgstr ""
+msgstr "メソード"
 
 #: pacman_mirrors/constants/txt.py:42
 msgid "MISC"
-msgstr ""
+msgstr "ミスク"
 
 #: pacman_mirrors/constants/txt.py:43
 msgid "NUMBER"
-msgstr ""
+msgstr "番号"
 
 #: pacman_mirrors/constants/txt.py:44
 msgid "PATH"
-msgstr ""
+msgstr "パース"
 
 #: pacman_mirrors/constants/txt.py:45
 msgid "PREFIX"
-msgstr ""
+msgstr "プリフィクス"
 
 #: pacman_mirrors/constants/txt.py:46
 msgid "PROTO"
-msgstr ""
+msgstr "プロート"
 
 #: pacman_mirrors/constants/txt.py:47
 msgid "SECONDS"
-msgstr ""
+msgstr "秒"
 
 #: pacman_mirrors/constants/txt.py:48 pacman_mirrors/constants/txt.py:125
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
 #: pacman_mirrors/constants/txt.py:49
 msgid "USAGE"
-msgstr ""
+msgstr "使用"
 
 #: pacman_mirrors/constants/txt.py:51
 msgid "Return branch from configuration"
-msgstr ""
+msgstr "コンフィグからブランチを戻る"
 
 #: pacman_mirrors/constants/txt.py:52
 msgid "Set prefix to"
-msgstr ""
+msgstr "プリフィクスに設定"
 
 #: pacman_mirrors/constants/txt.py:53
 msgid "Replace protocols in configuration"
-msgstr ""
+msgstr "コンフィグ内でプロトコルを替わる"
 
 #: pacman_mirrors/constants/txt.py:54
 msgid "Replace branch in mirrorlist"
-msgstr ""
+msgstr "ミラーリストでブランチを替わる"
 
 #: pacman_mirrors/constants/txt.py:55
 msgid "Replace branch in configuration"
-msgstr ""
+msgstr "コンフィグからブランチを替わる"
 
 #: pacman_mirrors/constants/txt.py:56
 msgid "Replace mirror url in mirrorlist"
-msgstr ""
+msgstr "ミラーリストでミラーURLを替わる"
 
 #: pacman_mirrors/constants/txt.py:57
 msgid "Branch name"
-msgstr ""
+msgstr "ブランチ名"
 
 #: pacman_mirrors/constants/txt.py:58
 msgid "Comma separated list of countries, from which mirrors will be used"
@@ -129,23 +130,23 @@ msgstr ""
 
 #: pacman_mirrors/constants/txt.py:60
 msgid "Load default mirror file"
-msgstr ""
+msgstr "デフォルトミラーファイルをロードする"
 
 #: pacman_mirrors/constants/txt.py:61
 msgid "Generate mirrorlist with a number of up-to-date mirrors. Ignores:"
-msgstr ""
+msgstr "ミラーリストを数更新したミラーと生成する。無視のことは："
 
 #: pacman_mirrors/constants/txt.py:63
 msgid "Generate mirrorlist with defaults"
-msgstr ""
+msgstr "ミラーリストをデフォールトと生成する"
 
 #: pacman_mirrors/constants/txt.py:64
 msgid "Get current country using geolocation"
-msgstr ""
+msgstr "地理位置情報を使用現在の国を探す"
 
 #: pacman_mirrors/constants/txt.py:65
 msgid "List all available countries"
-msgstr ""
+msgstr "すべての可用な国を表示する"
 
 #: pacman_mirrors/constants/txt.py:66
 msgid "Generate custom mirrorlist"
@@ -153,7 +154,7 @@ msgstr ""
 
 #: pacman_mirrors/constants/txt.py:67
 msgid "Generation method"
-msgstr ""
+msgstr "ジェネレーションメソード"
 
 #: pacman_mirrors/constants/txt.py:68
 msgid "Use to skip generation of mirrorlist"
@@ -173,7 +174,7 @@ msgstr ""
 
 #: pacman_mirrors/constants/txt.py:72
 msgid "Print the pacman-mirrors version"
-msgstr ""
+msgstr "pacman-mirrorsのバージョンを表示する"
 
 #: pacman_mirrors/constants/txt.py:74
 msgid "Branch in config is changed"
@@ -193,19 +194,19 @@ msgstr ""
 
 #: pacman_mirrors/constants/txt.py:78
 msgid "Available countries are"
-msgstr ""
+msgstr "可用な国は："
 
 #: pacman_mirrors/constants/txt.py:79
 msgid "Could not download from"
-msgstr ""
+msgstr "・・・からダウンロード失敗"
 
 #: pacman_mirrors/constants/txt.py:80
 msgid "Cannot read file"
-msgstr ""
+msgstr "ファイルを読まれない"
 
 #: pacman_mirrors/constants/txt.py:81
 msgid "Cannot write file"
-msgstr ""
+msgstr "ファイルに書かれない"
 
 #: pacman_mirrors/constants/txt.py:82
 msgid "Converting custom mirror file to new format"
@@ -229,11 +230,11 @@ msgstr ""
 
 #: pacman_mirrors/constants/txt.py:87
 msgid "doesn't exist."
-msgstr ""
+msgstr "がない。"
 
 #: pacman_mirrors/constants/txt.py:88
 msgid "Downloading mirrors from"
-msgstr ""
+msgstr "ミラーをダウンロード場所は："
 
 #: pacman_mirrors/constants/txt.py:89
 msgid "Falling back to"
@@ -249,11 +250,11 @@ msgstr ""
 
 #: pacman_mirrors/constants/txt.py:92
 msgid "is missing"
-msgstr ""
+msgstr "見当たらない"
 
 #: pacman_mirrors/constants/txt.py:93
 msgid "The mirror file"
-msgstr ""
+msgstr "ミラーファイル"
 
 #: pacman_mirrors/constants/txt.py:94
 msgid "Mirror list generated and saved to"
@@ -261,7 +262,7 @@ msgstr ""
 
 #: pacman_mirrors/constants/txt.py:95
 msgid "Generated on"
-msgstr ""
+msgstr "ジェネレーションの時："
 
 #: pacman_mirrors/constants/txt.py:96
 msgid "custom mirrorlist"
@@ -273,11 +274,11 @@ msgstr ""
 
 #: pacman_mirrors/constants/txt.py:98
 msgid "default mirrorlist"
-msgstr ""
+msgstr "デフォルトなミラーリスト"
 
 #: pacman_mirrors/constants/txt.py:99
 msgid "to modify mirrorlist"
-msgstr ""
+msgstr "ミラーリストをh編集する"
 
 #: pacman_mirrors/constants/txt.py:100
 msgid "Mirror ranking is not available"
@@ -297,11 +298,11 @@ msgstr ""
 
 #: pacman_mirrors/constants/txt.py:104
 msgid "Option"
-msgstr ""
+msgstr "オプション"
 
 #: pacman_mirrors/constants/txt.py:105
 msgid "Please use"
-msgstr ""
+msgstr "使用してください"
 
 #: pacman_mirrors/constants/txt.py:106
 msgid "Querying mirrors"
@@ -321,15 +322,15 @@ msgstr ""
 
 #: pacman_mirrors/constants/txt.py:110
 msgid "unknown country"
-msgstr ""
+msgstr "不明な国"
 
 #: pacman_mirrors/constants/txt.py:111
 msgid "Use 0 for all mirrors"
-msgstr ""
+msgstr "すべてのミラーには0を使用してください"
 
 #: pacman_mirrors/constants/txt.py:112
 msgid "Using all mirrors"
-msgstr ""
+msgstr "すべてのミラーを使用"
 
 #: pacman_mirrors/constants/txt.py:113
 msgid "Using custom mirror file"
@@ -341,7 +342,7 @@ msgstr ""
 
 #: pacman_mirrors/constants/txt.py:115
 msgid "Writing mirror list"
-msgstr ""
+msgstr "ミラーリストを書いている"
 
 #: pacman_mirrors/constants/txt.py:118
 msgid "Manjaro mirrors by response time"
@@ -357,11 +358,11 @@ msgstr ""
 
 #: pacman_mirrors/constants/txt.py:121
 msgid "Use"
-msgstr ""
+msgstr "使用"
 
 #: pacman_mirrors/constants/txt.py:122
 msgid "Country"
-msgstr ""
+msgstr "国"
 
 #: pacman_mirrors/constants/txt.py:123
 msgid "Resp"
@@ -373,15 +374,15 @@ msgstr ""
 
 #: pacman_mirrors/constants/txt.py:126
 msgid "Cancel"
-msgstr ""
+msgstr "キャンセル"
 
 #: pacman_mirrors/constants/txt.py:127
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #: pacman_mirrors/constants/txt.py:128
 msgid "Confirm selections"
-msgstr ""
+msgstr "選択を確認してください"
 
 #: pacman_mirrors/constants/txt.py:129
 msgid "I want to use these mirrors"
