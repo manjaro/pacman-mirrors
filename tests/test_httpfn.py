@@ -59,7 +59,7 @@ class TestHttpFn(unittest.TestCase):
             app.config = configfn.build_config()
             app.command_line_parse()
             app.load_all_mirrors()
-            assert app.selected_countries == "France"
+            assert app.selected_countries == ["France"]
 
     @patch("os.getuid")
     @patch.object(httpfn, "get_geoip_country")
