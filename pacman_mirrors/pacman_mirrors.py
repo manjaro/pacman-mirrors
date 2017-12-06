@@ -885,10 +885,7 @@ class PacmanMirrors:
 
     def i686_check(self):
         if platform.machine() == "i686" and "x32" not in self.config["branch"]:
-            if self.config["branch"] == "stable":
-                self.config["branch"] = "x32-testing"
-            else:
-                self.config["branch"] = "x32-{}".format(self.config["branch"])
+            self.config["branch"] = "x32-{}".format(self.config["branch"])
             apifn.write_config_branch(self.config["branch"], self.config["config_file"], quiet=True)
 
     def run(self):
