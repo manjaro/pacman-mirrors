@@ -1,6 +1,9 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [4.6.9] 2017-12-06
+* **Improvement**: support for x32 branches [#114](https://github.com/manjaro/pacman-mirrors/issues/114)
+
 ## [4.6] 2017-11-19
 * **Release bump to 4.6** Error with version display 4.5b1
 
