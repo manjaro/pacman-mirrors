@@ -342,6 +342,7 @@ class PacmanMirrors:
         if set_branch:
             # Apply branch to internal config
             self.config["branch"] = set_branch
+            self.i686_check(write=False)
             """
             # pacman-mirrors.conf could absent so check for it
             """
@@ -380,12 +381,16 @@ class PacmanMirrors:
             ]
             fileFn.write_mirror_list(self.config, mirror, quiet=self.quiet)
             sys.exit(0)
+        """
         # Fourth API task: Write protocols to config
+        """
         if set_protocols:
             apifn.write_protocols(self.config["protocols"],
                                   self.config["config_file"],
                                   quiet=self.quiet)
+        """
         # Fifth API task: Rebranch the mirrorlist
+        """
         if re_branch:
             if not set_branch:
                 print(".: {} {}".format(txt.ERR_CLR, txt.API_ERROR_BRANCH))
@@ -456,7 +461,7 @@ class PacmanMirrors:
         Fast-track the mirrorlist by filtering only up-to-date mirrors
         The function takes into account the branch selected by the user
           either on commandline or in pacman-mirrors.conf.
-        The function returns  a filtered list consisting of a number of mirrors
+        The function returns a filtered list consisting of a number of mirrors
         Only mirrors from the active mirror file is used
           either mirrors.json or custom-mirrors.json
         """
@@ -469,7 +474,7 @@ class PacmanMirrors:
 
         """
         Only pick mirrors which are up-to-date for users selected branch
-          by removin not up-to-date mirrors from the list
+          by removing not up-to-date mirrors from the list
         UP-TO-DATE FILTERING NEXT
         """
         up_to_date_mirrors = self.filter_user_branch(worklist)
@@ -503,7 +508,7 @@ class PacmanMirrors:
             Equality check will stop execution
             when the desired number is reached.
             In the possible event the first mirror's
-            responsetime exceeds the predefined responsetime,
+            response time exceeds the predefined response time,
             the loop would stop execution if the check for zero is not present
             """
             if counter is not 0 and counter == number:
@@ -832,7 +837,7 @@ class PacmanMirrors:
             self.mirrors.seed(mirrors, status=status)
         else:
             self.mirrors.seed(mirrors)
-        # sort mirrors countrywise
+        # sort mirrors country wise
         self.sort_mirror_countries()
 
     def test_mirrors(self, worklist):
@@ -849,7 +854,7 @@ class PacmanMirrors:
                                      txt.QUERY_MIRRORS,
                                      txt.TAKES_TIME))
         cols, lines = pacman_mirrors.functions.util.terminal_size()
-        # set connection timemouts
+        # set connection timeouts
         http_wait = self.max_wait_time
         ssl_wait = self.max_wait_time * 2
         ssl_verify = self.config["ssl_verify"]
@@ -883,10 +888,11 @@ class PacmanMirrors:
                                                        color.ENDCOLOR))
         return worklist
 
-    def i686_check(self):
+    def i686_check(self, write=False):
         if platform.machine() == "i686" and "x32" not in self.config["branch"]:
             self.config["branch"] = "x32-{}".format(self.config["branch"])
-            apifn.write_config_branch(self.config["branch"], self.config["config_file"], quiet=True)
+            if write:
+                apifn.write_config_branch(self.config["branch"], self.config["config_file"], quiet=True)
 
     def run(self):
         """
@@ -902,7 +908,7 @@ class PacmanMirrors:
         (self.config, self.custom) = configFn.build_config()
         fileFn.create_dir(self.config["work_dir"])
         self.command_line_parse()
-        self.i686_check()  # transparent change to i686
+        self.i686_check(write=True)
         self.network = httpFn.inet_conn_check()
         if self.network:
             httpFn.update_mirrors(self.config, quiet=self.quiet)
