@@ -20,7 +20,6 @@ test_conf = {
     "config_file": mock.CONFIG_FILE,
     "custom_file": mock.CUSTOM_FILE,
     "method": "rank",
-    "work_dir": mock.WORK_DIR,
     "mirror_file": mock.MIRROR_FILE,
     "mirror_list": mock.MIRROR_LIST,
     "no_update": False,
@@ -30,7 +29,8 @@ test_conf = {
     "status_file": mock.STATUS_FILE,
     "ssl_verify": True,
     "url_mirrors_json": mock.URL_MIRROR_JSON,
-    "url_status_json": mock.URL_STATUS_JSON
+    "url_status_json": mock.URL_STATUS_JSON,
+    "work_dir": mock.WORK_DIR
 }
 
 
@@ -47,7 +47,7 @@ class TestHttpFn(unittest.TestCase):
                              mock_build_config,
                              mock_get_geoip_country,
                              mock_os_getuid):
-        """TEST: Geoip country IS avaiable"""
+        """TEST: geoip country IS avaiable"""
         mock_os_getuid.return_value = 0
         mock_build_config.return_value = test_conf
         mock_get_geoip_country.return_value = ["Denmark"]
@@ -58,6 +58,7 @@ class TestHttpFn(unittest.TestCase):
             app.config = configFn.build_config()
             app.command_line_parse()
             app.load_all_mirrors()
+            app.selected_countries = httpFn.get_geoip_country()
             assert app.selected_countries == ["Denmark"]
 
     @patch("os.getuid")
@@ -67,7 +68,7 @@ class TestHttpFn(unittest.TestCase):
                                  mock_build_config,
                                  mock_get_geoip_country,
                                  mock_os_getuid):
-        """TEST: Geoip country IS NOT available"""
+        """TEST: geoip country IS NOT available"""
         mock_os_getuid.return_value = 0
         mock_get_geoip_country.return_value = "Antarctica"
         mock_build_config.return_value = test_conf
