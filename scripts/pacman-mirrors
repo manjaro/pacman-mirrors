@@ -22,7 +22,7 @@ import shutil
 
 from pacman_mirrors import pacman_mirrors
 from pacman_mirrors.config.configuration import O_CUST_FILE
-from pacman_mirrors.functions import customfn
+from pacman_mirrors.functions import customFn
 from pacman_mirrors.translation import i18n
 
 _ = i18n.language.gettext
