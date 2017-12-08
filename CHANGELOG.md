@@ -1,6 +1,12 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [4.7.0] 2017-12-08
+* Support for x32 branches - transparent change to x32
+  - Check if architecture is i686 and change branch to x32-$branch
+  - b/--branch and -a/--api -S/--set-branch
+    - no need to prepend when calling branch changing functions 
+
 ## [4.6.9] 2017-12-06
 * **Improvement**: support for x32 branches [#114](https://github.com/manjaro/pacman-mirrors/issues/114)
 
