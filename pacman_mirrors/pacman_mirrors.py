@@ -199,7 +199,9 @@ class PacmanMirrors:
         args = parser.parse_args()
 
         """
+        #############################################################
         No root required
+        #############################################################
         """
         if len(sys.argv) == 1 or args.help:
             self.print_help(parser)
@@ -218,7 +220,9 @@ class PacmanMirrors:
             sys.exit(0)
 
         """
+        #############################################################
         Root required
+        #############################################################
         """
         if os.getuid() != 0:
             print(".: {} {}".format(
@@ -321,7 +325,7 @@ class PacmanMirrors:
         """
         if get_branch:
             print(self.config["branch"])
-            sys.exit(0)  # exit the normal way
+            return
 
         """
         # apply api configuration to internal configuration object
@@ -380,6 +384,7 @@ class PacmanMirrors:
                 }
             ]
             fileFn.write_mirror_list(self.config, mirror, quiet=self.quiet)
+            # exit gracefully
             sys.exit(0)
         """
         # Fourth API task: Write protocols to config
