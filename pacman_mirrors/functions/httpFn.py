@@ -152,6 +152,11 @@ def get_mirror_response(url, maxwait=2, count=1, quiet=False, ssl_verify=True):
         message = "\n.: {} {} '{}'".format(txt.ERR_CLR,
                                            ssl.CertificateError,
                                            url)
+    except Exception as e:
+        message = "\n.: {} {} '{}'".format(txt.ERR_CLR,
+                                           e,
+                                           url)
+
     if message and not quiet:
         print(message)
     if probe_stop:
