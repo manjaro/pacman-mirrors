@@ -1,6 +1,11 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [4.7.1] 2018-01-28
+* Wayland check - disable gtk on wayland compositor [#115](https://github.com/manjaro/pacman-mirrors/issues/115)
+* Added catch for generic network errors not otherwise caught [#119](https://github.com/manjaro/pacman-mirrors/issues/119)
+* Pulled translations
+
 ## [4.7.0] 2017-12-08
 * Support for x32 branches - transparent change to x32
   - Check if architecture is i686 and change branch to x32-$branch
