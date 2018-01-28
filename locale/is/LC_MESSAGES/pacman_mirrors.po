@@ -4,14 +4,14 @@
 # project.
 # 
 # Translators:
-# Kristján Magnússon, 2016-2017
+# Kristján Magnússon, 2016-2018
 msgid ""
 msgstr ""
 "Project-Id-Version: manjaro-pacman-mirrors\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2017-10-23 20:55+0200\n"
-"PO-Revision-Date: 2017-10-25 07:54+0000\n"
-"Last-Translator: philm <philm@manjaro.org>\n"
+"PO-Revision-Date: 2018-01-20 17:34+0000\n"
+"Last-Translator: Kristján Magnússon\n"
 "Language-Team: Icelandic (http://www.transifex.com/manjarolinux/manjaro-pacman-mirrors/language/is/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -22,15 +22,15 @@ msgstr ""
 
 #: pacman_mirrors/constants/txt.py:29
 msgid "ERROR"
-msgstr ""
+msgstr "VILLA"
 
 #: pacman_mirrors/constants/txt.py:30
 msgid "INFO"
-msgstr ""
+msgstr "Upplýsingar"
 
 #: pacman_mirrors/constants/txt.py:31
 msgid "WARNING"
-msgstr ""
+msgstr "AÐVÖRUN"
 
 #: pacman_mirrors/constants/txt.py:33
 msgid "HTTPException"
@@ -42,7 +42,7 @@ msgstr ""
 
 #: pacman_mirrors/constants/txt.py:36
 msgid "API"
-msgstr ""
+msgstr "API"
 
 #: pacman_mirrors/constants/txt.py:37
 msgid "BRANCH"
@@ -50,7 +50,7 @@ msgstr ""
 
 #: pacman_mirrors/constants/txt.py:38
 msgid "COUNTRY"
-msgstr ""
+msgstr "Þjóð"
 
 #: pacman_mirrors/constants/txt.py:39
 msgid "FILE"
@@ -74,7 +74,7 @@ msgstr "NÚMER"
 
 #: pacman_mirrors/constants/txt.py:44
 msgid "PATH"
-msgstr "PATH"
+msgstr ""
 
 #: pacman_mirrors/constants/txt.py:45
 msgid "PREFIX"
@@ -94,7 +94,7 @@ msgstr "VEFSLÓÐ"
 
 #: pacman_mirrors/constants/txt.py:49
 msgid "USAGE"
-msgstr ""
+msgstr "NOTKUN"
 
 #: pacman_mirrors/constants/txt.py:51
 msgid "Return branch from configuration"
@@ -122,11 +122,11 @@ msgstr ""
 
 #: pacman_mirrors/constants/txt.py:57
 msgid "Branch name"
-msgstr "Branch name"
+msgstr ""
 
 #: pacman_mirrors/constants/txt.py:58
 msgid "Comma separated list of countries, from which mirrors will be used"
-msgstr "Comma separated list of countries, from which mirrors will be used"
+msgstr ""
 
 #: pacman_mirrors/constants/txt.py:60
 msgid "Load default mirror file"
@@ -146,15 +146,15 @@ msgstr ""
 
 #: pacman_mirrors/constants/txt.py:65
 msgid "List all available countries"
-msgstr ""
+msgstr "Sýna öll fáanleg lönd"
 
 #: pacman_mirrors/constants/txt.py:66
 msgid "Generate custom mirrorlist"
-msgstr "Generate custom mirrorlist"
+msgstr ""
 
 #: pacman_mirrors/constants/txt.py:67
 msgid "Generation method"
-msgstr "Generation method"
+msgstr ""
 
 #: pacman_mirrors/constants/txt.py:68
 msgid "Use to skip generation of mirrorlist"
@@ -162,7 +162,7 @@ msgstr ""
 
 #: pacman_mirrors/constants/txt.py:69
 msgid "Quiet mode - less verbose output"
-msgstr "Quiet mode - less verbose output"
+msgstr ""
 
 #: pacman_mirrors/constants/txt.py:70
 msgid "Syncronize pacman databases"
@@ -174,7 +174,7 @@ msgstr "Hámarks biðtími fyrir svari þjónsins"
 
 #: pacman_mirrors/constants/txt.py:72
 msgid "Print the pacman-mirrors version"
-msgstr "Print the pacman-mirrors version"
+msgstr ""
 
 #: pacman_mirrors/constants/txt.py:74
 msgid "Branch in config is changed"
@@ -210,19 +210,19 @@ msgstr "Get ekki ritað skrá"
 
 #: pacman_mirrors/constants/txt.py:82
 msgid "Converting custom mirror file to new format"
-msgstr "Converting custom mirror file to new format"
+msgstr ""
 
 #: pacman_mirrors/constants/txt.py:83
 msgid "Custom mirror file"
-msgstr "Custom mirror file"
+msgstr ""
 
 #: pacman_mirrors/constants/txt.py:84
 msgid "Custom mirror file saved"
-msgstr "Custom mirror file saved"
+msgstr ""
 
 #: pacman_mirrors/constants/txt.py:85
 msgid "User generated mirror list"
-msgstr "User generated mirror list"
+msgstr ""
 
 #: pacman_mirrors/constants/txt.py:86
 msgid "Deprecated argument"
@@ -238,7 +238,7 @@ msgstr ""
 
 #: pacman_mirrors/constants/txt.py:89
 msgid "Falling back to"
-msgstr "Falling back to"
+msgstr ""
 
 #: pacman_mirrors/constants/txt.py:90
 msgid "Internet connection appears to be down"
@@ -254,7 +254,7 @@ msgstr "Vantar"
 
 #: pacman_mirrors/constants/txt.py:93
 msgid "The mirror file"
-msgstr "The mirror file"
+msgstr "Spegil skrá"
 
 #: pacman_mirrors/constants/txt.py:94
 msgid "Mirror list generated and saved to"
@@ -266,7 +266,7 @@ msgstr ""
 
 #: pacman_mirrors/constants/txt.py:96
 msgid "custom mirrorlist"
-msgstr ""
+msgstr "sérsniðin spegla listi"
 
 #: pacman_mirrors/constants/txt.py:97
 msgid "to reset custom mirrorlist"
@@ -274,7 +274,7 @@ msgstr ""
 
 #: pacman_mirrors/constants/txt.py:98
 msgid "default mirrorlist"
-msgstr ""
+msgstr "sjálfgefinn spegla listi"
 
 #: pacman_mirrors/constants/txt.py:99
 msgid "to modify mirrorlist"
@@ -294,7 +294,7 @@ msgstr ""
 
 #: pacman_mirrors/constants/txt.py:103
 msgid "No mirrors in selection"
-msgstr "No mirrors in selection"
+msgstr ""
 
 #: pacman_mirrors/constants/txt.py:104
 msgid "Option"
@@ -306,11 +306,11 @@ msgstr "Visamlegast notið"
 
 #: pacman_mirrors/constants/txt.py:106
 msgid "Querying mirrors"
-msgstr "Querying mirrors"
+msgstr ""
 
 #: pacman_mirrors/constants/txt.py:107
 msgid "Randomizing mirror list"
-msgstr "Randomizing mirror list"
+msgstr ""
 
 #: pacman_mirrors/constants/txt.py:108
 msgid "To remove custom config run "
@@ -326,35 +326,35 @@ msgstr "óþekkt land"
 
 #: pacman_mirrors/constants/txt.py:111
 msgid "Use 0 for all mirrors"
-msgstr ""
+msgstr "Nota 0 fyrir alla spegla"
 
 #: pacman_mirrors/constants/txt.py:112
 msgid "Using all mirrors"
-msgstr "Using all mirrors"
+msgstr ""
 
 #: pacman_mirrors/constants/txt.py:113
 msgid "Using custom mirror file"
-msgstr "Using custom mirror file"
+msgstr ""
 
 #: pacman_mirrors/constants/txt.py:114
 msgid "Using default mirror file"
-msgstr "Using default mirror file"
+msgstr ""
 
 #: pacman_mirrors/constants/txt.py:115
 msgid "Writing mirror list"
-msgstr "Writing mirror list"
+msgstr ""
 
 #: pacman_mirrors/constants/txt.py:118
 msgid "Manjaro mirrors by response time"
-msgstr "Manjaro mirrors by response time"
+msgstr ""
 
 #: pacman_mirrors/constants/txt.py:119
 msgid "Manjaro mirrors in random order"
-msgstr "Manjaro mirrors in random order"
+msgstr ""
 
 #: pacman_mirrors/constants/txt.py:120
 msgid "Check mirrors for your personal list"
-msgstr "Check mirrors for your personal list"
+msgstr ""
 
 #: pacman_mirrors/constants/txt.py:121
 msgid "Use"
@@ -386,4 +386,4 @@ msgstr "Staðfesta val"
 
 #: pacman_mirrors/constants/txt.py:129
 msgid "I want to use these mirrors"
-msgstr "Ég vil(l) nota þessa spegla"
+msgstr "Ég vill nota þessa spegla"
