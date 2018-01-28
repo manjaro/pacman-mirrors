@@ -269,7 +269,7 @@ class PacmanMirrors:
             self.interactive = True
             if args.default:
                 self.default = True
-            if not os.environ.get("DISPLAY") or not GTK_AVAILABLE:
+            if os.environ.get("XDG_SESSION_TYPE") == "wayland" or not os.environ.get("DISPLAY") or not GTK_AVAILABLE:
                 self.no_display = True
 
         """
