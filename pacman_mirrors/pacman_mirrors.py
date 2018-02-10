@@ -204,7 +204,7 @@ class PacmanMirrors:
         #############################################################
         """
         if len(sys.argv) == 1 or args.help:
-            self.print_help(parser)
+            parser.print_help()
             sys.exit(0)
 
         if args.version:
@@ -787,45 +787,6 @@ class PacmanMirrors:
             fileFn.write_mirror_list(self.config,
                                      selected_servers,
                                      quiet=self.quiet)
-
-    @staticmethod
-    def print_deprecated_generate():
-        """
-        Print a deprecation message for -g/--generate
-        """
-        print("{}!! {}: '-g/--generate'!\n"
-              "{}   {} '-f/--fasttrack {}'"
-              ", {}{}".format(color.RED,
-                              txt.DEPRECATED_ARGUMENT,
-                              color.BLUE,
-                              txt.PLEASE_USE,
-                              txt.NUMBER,
-                              txt.USE_ZERO_FOR_ALL,
-                              color.ENDCOLOR))
-
-    @staticmethod
-    def print_deprecated_sync():
-        """
-        Print a deprecation message for -y/--sync
-        """
-        print("{}!! {}: '-y/--sync'!\n"
-              "{}   {} 'pacman -Syy'{}".format(color.RED,
-                                               txt.DEPRECATED_ARGUMENT,
-                                               color.BLUE,
-                                               txt.PLEASE_USE,
-                                               color.ENDCOLOR))
-
-    def print_help(self, parser):
-        """
-        Customized print help
-        :param parser:
-        :return:
-        """
-        parser.print_help()
-        print("")
-        self.print_deprecated_generate()
-        self.print_deprecated_sync()
-        print("")
 
     def sort_mirror_countries(self):
         self.mirrors.mirror_pool = sorted(self.mirrors.mirror_pool,
