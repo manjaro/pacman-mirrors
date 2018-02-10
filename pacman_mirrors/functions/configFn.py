@@ -19,9 +19,7 @@
 
 """Pacman-Mirrors Configuration Functions"""
 
-import os
 import sys
-import tempfile
 
 from pacman_mirrors.config import configuration as conf
 from pacman_mirrors.constants import txt
@@ -75,56 +73,43 @@ def build_config():
                         else:
                             config["protocols"] = value.split(" ")
                     elif key == "SSLVerify":
-                        if value == "False":
-                            config["ssl_verify"] = False
+                        config["ssl_verify"] = value
     except (PermissionError, OSError) as err:
         print(".: {} {}: {}: {}".format(txt.ERR_CLR,
                                         txt.CANNOT_READ_FILE,
                                         err.filename,
                                         err.strerror))
         sys.exit(2)
+    if not verify_config(config):
+        sys.exit(2)
     return config, custom
 
 
-# def modify_config(config, custom=False):
-#     """Modify configuration
-#     :param config: dictionary
-#     :param custom:
-#     """
-#     if not custom:
-#         # remove custom file if present
-#         if os.path.isfile(config["custom_file"]):
-#             os.remove(config["custom_file"])
-#
-#     modify_custom_config(config["config_file"], custom=custom)
-
-
-# def modify_custom_config(filename, custom=False):
-#     """Writes the configuration to file
-#     :param filename:
-#     :param custom:
-#     """
-#     custom_config = "# OnlyCountry = \n"
-#     if custom:
-#         custom_config = "OnlyCountry = Custom\n"
-#     try:
-#         with open(
-#             filename) as cnf, tempfile.NamedTemporaryFile(
-#             "w+t", dir=os.path.dirname(
-#                 filename), delete=False) as tmp:
-#
-#             replaced = False
-#             for line in cnf:
-#                 if "OnlyCountry =" in line:
-#                     tmp.write(custom_config)
-#                     replaced = True
-#                 else:
-#                     tmp.write("{}".format(line))
-#             if not replaced:
-#                 tmp.write(custom_config)
-#         os.replace(tmp.name, filename)
-#         os.chmod(filename, 0o644)
-#     except OSError as err:
-#         print(".: {} {}: {}: {}".format(txt.ERR_CLR, txt.CANNOT_READ_FILE,
-#                                         err.filename, err.strerror))
-#         sys.exit(2)
+def verify_config(config):
+    """
+    Verify configuration
+    :param config:
+    """
+    errors = []
+    header = ".: {}: {} `{}`".format(txt.ERR_CLR,
+                                     txt.INVALID_SETTING_IN,
+                                     conf.CONFIG_FILE)
+    if config["method"] not in conf.METHODS:
+        errors.append("     Method = {}. {} {}".format(
+            config["method"], txt.EXP_CLR, conf.METHODS))
+    if config["branch"] not in conf.BRANCHES:
+        errors.append("     Branch = {}. {} {}".format(
+            config["branch"], txt.EXP_CLR, conf.BRANCHES))
+    if config["ssl_verify"] not in conf.SSL:
+        errors.append("     SSLVerfy = {}. {} {}".format(
+            config["ssl_verify"], txt.EXP_CLR, conf.SSL))
+    for p in config["protocols"]:
+        if p not in conf.PROTOCOLS:
+            errors.append("     Protocols = {}. {} {}".format(
+                ", ".join(config["protocols"]), txt.EXP_CLR, conf.PROTOCOLS))
+    if len(errors):
+        print(header)
+        for e in errors:
+            print(e)
+        return False
+    return True
