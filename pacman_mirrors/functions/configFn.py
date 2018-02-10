@@ -96,13 +96,13 @@ def verify_config(config):
                                      conf.CONFIG_FILE)
     if config["method"] not in conf.METHODS:
         errors.append("     Method = {}. {} {}".format(
-            config["method"], txt.EXP_CLR, conf.METHODS))
+            ", ".join(config["method"]), txt.EXP_CLR, conf.METHODS))
     if config["branch"] not in conf.BRANCHES:
         errors.append("     Branch = {}. {} {}".format(
-            config["branch"], txt.EXP_CLR, conf.BRANCHES))
+            ", ".join(config["branch"]), txt.EXP_CLR, conf.BRANCHES))
     if config["ssl_verify"] not in conf.SSL:
         errors.append("     SSLVerfy = {}. {} {}".format(
-            config["ssl_verify"], txt.EXP_CLR, conf.SSL))
+            ", ".join(config["ssl_verify"]), txt.EXP_CLR, conf.SSL))
     for p in config["protocols"]:
         if p not in conf.PROTOCOLS:
             errors.append("     Protocols = {}. {} {}".format(
