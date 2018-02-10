@@ -101,7 +101,7 @@ def verify_config(config):
         errors.append("     Branch = {}. {} {}".format(
             ", ".join(config["branch"]), txt.EXP_CLR, conf.BRANCHES))
     if config["ssl_verify"] not in conf.SSL:
-        errors.append("     SSLVerfy = {}. {} {}".format(
+        errors.append("     SSLVerify = {}. {} {}".format(
             ", ".join(config["ssl_verify"]), txt.EXP_CLR, conf.SSL))
     for p in config["protocols"]:
         if p not in conf.PROTOCOLS:
