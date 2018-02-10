@@ -5,11 +5,11 @@
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <meta name="author" content="" />
-  <title>pacman-mirrors(8) Pacman-Mirrors 4.6 User Manual</title>
+  <title>pacman-mirrors(8) Pacman-Mirrors 4.7.1 User Manual</title>
   <style type="text/css">
       code{white-space: pre-wrap;}
       span.smallcaps{font-variant: small-caps;}
-      div.line-block{white-space: pre-line;}
+      span.underline{text-decoration: underline;}
       div.column{display: inline-block; vertical-align: top; width: 50%;}
   </style>
   <!--[if lt IE 9]>
@@ -18,9 +18,9 @@
 </head>
 <body>
 <header>
-<h1 class="title">pacman-mirrors(8) Pacman-Mirrors 4.6 User Manual</h1>
+<h1 class="title">pacman-mirrors(8) Pacman-Mirrors 4.7.1 User Manual</h1>
 <p class="author"></p>
-<p class="date">November, 2017</p>
+<p class="date">January, 2018</p>
 </header>
 <h1 id="name">NAME</h1>
 <p>pacman-mirrors - generate pacman mirrorlist for Manjaro Linux</p>
@@ -227,28 +227,28 @@ BRANCH: Value from config</code></pre>
 <h2 id="commands">Commands</h2>
 <ul>
 <li><p>Which countries has mirrors?</p>
-<p><em>pacman-mirrors -l</em></p></li>
+<p><em>pacman-mirrors –list</em></p></li>
 <li><p>What branch am I on</p>
-<p><em>pacman-mirrors -aG</em></p></li>
+<p><em>pacman-mirrors –api –get-branch</em></p></li>
 </ul>
 <h2 id="commands-requiring-sudo">Commands requiring sudo</h2>
 <ul>
 <li><p>I want to temporary change branch to unstable, use geolocation,</p>
-<p><em>sudo pacman-mirrors -b unstable –geoip</em></p></li>
+<p><em>sudo pacman-mirrors –branch unstable –geoip</em></p></li>
 <li><p>I want to permanently change branch to unstable, use mirrors from Germany and France, use only https and http protocol in that order</p>
-<p><em>sudo pacman-mirrors -ac Germany,France -S unstable -P https http</em></p></li>
+<p><em>sudo pacman-mirrors –country Germany,France –api –set-branch unstable –procotol https http</em></p></li>
 <li><p>Create a mirrorlist with German mirrors and a custom mirror file</p>
-<p><em>sudo pacman-mirrors -c Germany</em></p></li>
+<p><em>sudo pacman-mirrors –country Germany</em></p></li>
 <li><p>If you want more countries in your mirrorlist add them they will be written to your custom mirror pool</p>
-<p><em>sudo pacman-mirrors -c Germany France Denmark</em></p></li>
+<p><em>sudo pacman-mirrors –country Germany France Denmark</em></p></li>
 <li><p>Create a mirrorlist with 5 mirrors up-to-date on your branch</p>
-<p><em>sudo pacman-mirrors -f 5</em></p></li>
+<p><em>sudo pacman-mirrors –fastrack 5</em></p></li>
 <li><p>I want to choose my mirrors</p>
-<p><em>sudo pacman-mirrors -i</em></p></li>
+<p><em>sudo pacman-mirrors –interactive</em></p></li>
 <li><p>I have a custom mirror list and I want to create a new custom mirror list?</p>
-<p><em>sudo pacman-mirrors -i –default</em></p></li>
+<p><em>sudo pacman-mirrors –interactive –default</em></p></li>
 <li><p>I have a custom mirror list - can I reset it?</p>
-<p><em>sudo pacman-mirrors -c all</em></p></li>
+<p><em>sudo pacman-mirrors –country all</em></p></li>
 <li><p>Change system branch and dont change the mirrorlist</p>
 <p><em>sudo pacman-mirrors -naS unstable</em></p></li>
 <li><p>Change system branch and replace branch in mirrorlist and quit</p>

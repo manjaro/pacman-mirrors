@@ -1,6 +1,6 @@
-% pacman-mirrors(8) Pacman-Mirrors 4.6 User Manual
+% pacman-mirrors(8) Pacman-Mirrors 4.7.1 User Manual
 %
-% November, 2017
+% January, 2018
 
 # NAME
 
@@ -217,45 +217,45 @@ Most optional arguments are self explaining others require explanation. The API 
  
 * Which countries has mirrors?
 
-    *pacman-mirrors -l*
+    *pacman-mirrors --list*
 
 * What branch am I on
 
-    *pacman-mirrors -aG*
+    *pacman-mirrors --api --get-branch*
 
 ## Commands requiring sudo
 
 * I want to temporary change branch to unstable, use geolocation,
 
-    *sudo pacman-mirrors -b unstable --geoip*
+    *sudo pacman-mirrors --branch unstable --geoip*
 
 * I want to permanently change branch to unstable, use mirrors from Germany and France, use only https and http protocol in that order
 
-    *sudo pacman-mirrors -ac Germany,France -S unstable -P https http*
+    *sudo pacman-mirrors --country Germany,France --api --set-branch unstable --procotol https http*
 
 * Create a mirrorlist with German mirrors and a custom mirror file
 
-    *sudo pacman-mirrors -c Germany*
+    *sudo pacman-mirrors --country Germany*
 
 * If you want more countries in your mirrorlist add them they will be written to your custom mirror pool
 
-    *sudo pacman-mirrors -c Germany France Denmark*
+    *sudo pacman-mirrors --country Germany France Denmark*
 
 * Create a mirrorlist with 5 mirrors up-to-date on your branch
 
-    *sudo pacman-mirrors -f 5*
+    *sudo pacman-mirrors --fastrack 5*
 
 * I want to choose my mirrors
 
-    *sudo pacman-mirrors -i*
+    *sudo pacman-mirrors --interactive*
 
 * I have a custom mirror list and I want to create a new custom mirror list?
 
-    *sudo pacman-mirrors -i --default*
+    *sudo pacman-mirrors --interactive --default*
 
 * I have a custom mirror list - can I reset it?
 
-    *sudo pacman-mirrors -c all*
+    *sudo pacman-mirrors --country all*
 
 * Change system branch and dont change the mirrorlist
 
