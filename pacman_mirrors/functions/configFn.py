@@ -65,15 +65,16 @@ def build_config():
                         value = value[1:-1]
                     if key == "Method":
                         config["method"] = value
-                    elif key == "Branch":
+                    if key == "Branch":
                         config["branch"] = value
-                    elif key == "Protocols":
+                    if key == "Protocols":
                         if "," in value:
                             config["protocols"] = value.split(",")
                         else:
                             config["protocols"] = value.split(" ")
-                    elif key == "SSLVerify":
-                        config["ssl_verify"] = value
+                    if key == "SSLVerify":
+                        config["ssl_verify"] = value.lower().capitalize()
+
     except (PermissionError, OSError) as err:
         print(".: {} {}: {}: {}".format(txt.ERR_CLR,
                                         txt.CANNOT_READ_FILE,
@@ -95,18 +96,18 @@ def verify_config(config):
                                      txt.INVALID_SETTING_IN,
                                      conf.CONFIG_FILE)
     if config["method"] not in conf.METHODS:
-        errors.append("     Method = {}. {} {}".format(
-            ", ".join(config["method"]), txt.EXP_CLR, conf.METHODS))
+        errors.append("     'Method = {}'; {} {}".format(
+            config["method"], txt.EXP_CLR, "|".join(conf.METHODS)))
     if config["branch"] not in conf.BRANCHES:
-        errors.append("     Branch = {}. {} {}".format(
-            ", ".join(config["branch"]), txt.EXP_CLR, conf.BRANCHES))
+        errors.append("     'Branch = {}'; {} {}".format(
+            config["branch"], txt.EXP_CLR, "|".join(conf.BRANCHES)))
     if config["ssl_verify"] not in conf.SSL:
-        errors.append("     SSLVerify = {}. {} {}".format(
-            ", ".join(config["ssl_verify"]), txt.EXP_CLR, conf.SSL))
+        errors.append("     'SSLVerify = {}'; {} {}".format(
+            config["ssl_verify"], txt.EXP_CLR, "|".join(conf.SSL)))
     for p in config["protocols"]:
         if p not in conf.PROTOCOLS:
-            errors.append("     Protocols = {}. {} {}".format(
-                ", ".join(config["protocols"]), txt.EXP_CLR, conf.PROTOCOLS))
+            errors.append("     'Protocols = {}'; {} {}".format(
+                config["protocols"], txt.EXP_CLR, ",".join(conf.PROTOCOLS)))
     if len(errors):
         print(header)
         for e in errors:
