@@ -81,8 +81,6 @@ def build_config():
                                         err.filename,
                                         err.strerror))
         sys.exit(2)
-    if not verify_config(config):
-        sys.exit(2)
     return config, custom
 
 
