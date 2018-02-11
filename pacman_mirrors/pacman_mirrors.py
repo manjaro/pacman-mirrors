@@ -875,6 +875,8 @@ class PacmanMirrors:
         fileFn.create_dir(self.config["work_dir"])
         self.command_line_parse()
         self.i686_check(write=True)
+        if not configFn.verify_config(self.config):
+            sys.exit(2)
         self.network = httpFn.inet_conn_check()
         if self.network:
             httpFn.update_mirrors(self.config, quiet=self.quiet)
