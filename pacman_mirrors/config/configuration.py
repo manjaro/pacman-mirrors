@@ -36,7 +36,8 @@ CUSTOM_FILE = "/var/lib/pacman-mirrors/custom-mirrors.json"
 MIRROR_FILE = "/usr/share/pacman-mirrors/mirrors.json"
 STATUS_FILE = "/var/lib/pacman-mirrors/status.json"
 # repo constants
-BRANCHES = ("stable", "testing", "unstable")
+BRANCHES = ("stable", "testing", "unstable",
+            "x32-stable", "x32-testing", "x32-unstable")
 PROTOCOLS = ("https", "http", "ftp", "ftps")
 METHODS = ("rank", "random")
 SSL = ("True", "False")
