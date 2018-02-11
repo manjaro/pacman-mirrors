@@ -1,9 +1,11 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [4.7.3] 2018-02-11
+* Added the missed the x32-branches [Forum post](https://forum.manjaro.org/t/pacman-mirrors-4-7-2-config-file-sanity-check-and-fix-of-my-staring-blind/40171/9)
+
 ## [4.7.2] 2018-02-10
 * Added sanity check to config entries [Forum post](https://forum.manjaro.org/t/solved-struggling-to-change-permanently-from-stable-to-testing/40128)
-
 
 ## [4.7.1] 2018-01-28
 * Wayland check - disable gtk on wayland compositor [#115](https://github.com/manjaro/pacman-mirrors/issues/115)
