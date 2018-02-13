@@ -433,7 +433,7 @@ class PacmanMirrors:
         except IndexError:
             pass
 
-        """        
+        """
         only list mirrors which are up-to-date for users selected branch
         by removing not up-to-date mirrors from the list
         UP-TO-DATE FILTERING NEXT
