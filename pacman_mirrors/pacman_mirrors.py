@@ -707,8 +707,11 @@ class PacmanMirrors:
             if branch == self.config["branch"]:
                 filtered = []
                 for mirror in mirror_pool:
-                    if mirror["branches"][idx] == 1:
-                        filtered.append(mirror)
+                    try:
+                        if mirror["branches"][idx] == 1:
+                            filtered.append(mirror)
+                    except IndexError:
+                        pass
                 if len(filtered) > 0:
                     return filtered
         return mirror_pool

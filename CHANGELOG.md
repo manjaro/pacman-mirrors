@@ -1,6 +1,9 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [4.7.4] 2018-02-13
+* Fix for uncaught IndexError when mirror pool is empty [Forum post](https://forum.manjaro.org/t/pacman-mirrors-4-7-3-1-problems/40319/4)
+
 ## [4.7.3] 2018-02-11
 * Added the missed the x32-branches [Forum post](https://forum.manjaro.org/t/pacman-mirrors-4-7-2-config-file-sanity-check-and-fix-of-my-staring-blind/40171/9)
 
