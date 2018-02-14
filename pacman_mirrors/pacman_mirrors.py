@@ -704,7 +704,11 @@ class PacmanMirrors:
         Filter mirrorlist on users branch and branch sync state
         """
         for idx, branch in enumerate(conf.BRANCHES):
-            if branch == self.config["branch"]:
+            if self.config["x32"]:
+                config_branch = self.config["branch"][4:]
+            else:
+                config_branch = self.config["branch"]
+            if branch == config_branch:
                 filtered = []
                 for mirror in mirror_pool:
                     try:
@@ -858,10 +862,12 @@ class PacmanMirrors:
         return worklist
 
     def i686_check(self, write=False):
-        if platform.machine() == "i686" and "x32" not in self.config["branch"]:
-            self.config["branch"] = "x32-{}".format(self.config["branch"])
-            if write:
-                apifn.write_config_branch(self.config["branch"], self.config["config_file"], quiet=True)
+        if platform.machine() == "i686":
+            self.config["x32"] = True
+            if "x32" not in self.config["branch"]:
+                self.config["branch"] = "x32-{}".format(self.config["branch"])
+                if write:
+                    apifn.write_config_branch(self.config["branch"], self.config["config_file"], quiet=True)
 
     def run(self):
         """

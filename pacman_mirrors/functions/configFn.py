@@ -48,7 +48,8 @@ def build_config():
         "ssl_verify": True,
         "status_file": conf.STATUS_FILE,
         "url_mirrors_json": conf.URL_MIRROR_JSON,
-        "url_status_json": conf.URL_STATUS_JSON
+        "url_status_json": conf.URL_STATUS_JSON,
+        "x32": False
     }
     # try to replace default entries by reading conf file
     try:
@@ -93,15 +94,24 @@ def verify_config(config):
     header = ".: {}: {} `{}`".format(txt.ERR_CLR,
                                      txt.INVALID_SETTING_IN,
                                      conf.CONFIG_FILE)
+    # Check Method
     if config["method"] not in conf.METHODS:
         errors.append("     'Method = {}'; {} {}".format(
             config["method"], txt.EXP_CLR, "|".join(conf.METHODS)))
-    if config["branch"] not in conf.BRANCHES:
-        errors.append("     'Branch = {}'; {} {}".format(
-            config["branch"], txt.EXP_CLR, "|".join(conf.BRANCHES)))
+    # Check Branch
+    if config["x32"]:
+        if config["branch"] not in conf.X32_BRANCHES:
+            errors.append("     'Branch = {}'; {} {}".format(
+                config["branch"], txt.EXP_CLR, "|".join(conf.X32_BRANCHES)))
+    else:
+        if config["branch"] not in conf.BRANCHES:
+            errors.append("     'Branch = {}'; {} {}".format(
+                config["branch"], txt.EXP_CLR, "|".join(conf.BRANCHES)))
+    # Check SSLVerify
     if str(config["ssl_verify"]) not in conf.SSL:
         errors.append("     'SSLVerify = {}'; {} {}".format(
             config["ssl_verify"], txt.EXP_CLR, "|".join(conf.SSL)))
+    # Check Protocols
     for p in config["protocols"]:
         if p not in conf.PROTOCOLS:
             errors.append("     'Protocols = {}'; {} {}".format(
