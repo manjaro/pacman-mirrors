@@ -31,7 +31,8 @@ test_conf = {
     "status_file": conf.STATUS_FILE,
     "ssl_verify": True,
     "url_mirrors_json": conf.URL_MIRROR_JSON,
-    "url_status_json": conf.URL_STATUS_JSON
+    "url_status_json": conf.URL_STATUS_JSON,
+    "x32": False
 }
 
 

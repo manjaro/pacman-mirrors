@@ -11,6 +11,10 @@ MIRROR_FILE = "tests/mock/usr/mirrors.json"
 STATUS_FILE = "tests/mock/var/status.json"
 # repo constants
 BRANCHES = ("stable", "testing", "unstable")
+X32_BRANCHES = ("x32-stable", "x32-testing", "x32-unstable")
+PROTOCOLS = ("https", "http", "ftp", "ftps")
+METHODS = ("rank", "random")
+SSL = ("True", "False")
 REPO_ARCH = "/$repo/$arch"
 # special cases
 O_CUST_FILE = "tests/mock/var/Custom"

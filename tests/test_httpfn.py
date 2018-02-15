@@ -30,7 +30,8 @@ test_conf = {
     "ssl_verify": True,
     "url_mirrors_json": mock.URL_MIRROR_JSON,
     "url_status_json": mock.URL_STATUS_JSON,
-    "work_dir": mock.WORK_DIR
+    "work_dir": mock.WORK_DIR,
+    "x32": False
 }
 
 
