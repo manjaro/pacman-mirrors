@@ -5,13 +5,13 @@
 # 
 # Translators:
 # Μιχάλης <mikem132@protonmail.com>, 2017
-# Πέτρος Σαμαράς <psamaras1@gmail.com>, 2016-2017
+# Πέτρος Σαμαράς <psamaras1@gmail.com>, 2016-2018
 msgid ""
 msgstr ""
 "Project-Id-Version: manjaro-pacman-mirrors\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2017-10-23 20:55+0200\n"
-"PO-Revision-Date: 2017-10-25 10:13+0000\n"
+"PO-Revision-Date: 2018-02-26 14:08+0000\n"
 "Last-Translator: Πέτρος Σαμαράς <psamaras1@gmail.com>\n"
 "Language-Team: Greek (http://www.transifex.com/manjarolinux/manjaro-pacman-mirrors/language/el/)\n"
 "MIME-Version: 1.0\n"
@@ -275,7 +275,7 @@ msgstr "για επαναφορά εξατομικευμένης λίστας"
 
 #: pacman_mirrors/constants/txt.py:98
 msgid "default mirrorlist"
-msgstr "προκαθορισμένη λίστα"
+msgstr "βασική λίστα"
 
 #: pacman_mirrors/constants/txt.py:99
 msgid "to modify mirrorlist"
@@ -343,7 +343,7 @@ msgstr "Χρήση βασικού αρχείου αναμεταδοτών"
 
 #: pacman_mirrors/constants/txt.py:115
 msgid "Writing mirror list"
-msgstr "Εγγραφή λίστας αναμεταδοτών (mirror list)"
+msgstr "Εγγραφή λίστας αναμεταδοτών -mirrorlist"
 
 #: pacman_mirrors/constants/txt.py:118
 msgid "Manjaro mirrors by response time"

@@ -1,8 +1,12 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [4.7.6] 2018-03-08
+* Updated docs
+* Updated translations
+
 ## [4.7.5] 2018-02-14
-* Refactor to handle x32 correct so pool is not emptysu
+* Refactor to handle x32 correct so pool is not empty
 
 ## [4.7.4] 2018-02-13
 * Fix for uncaught IndexError when mirror pool is empty [Forum post](https://forum.manjaro.org/t/pacman-mirrors-4-7-3-1-problems/40319/4)

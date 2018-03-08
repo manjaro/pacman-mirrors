@@ -27,9 +27,9 @@ The mirrorlist generation process can be refined through arguments and arguments
     pacman-mirrors --country Denmark --timeout 5
 
 # IMPORTANT
-After all operations *ALWAYS* syncronize your pacman database with
+After all operations *ALWAYS* syncronize and update your system with
 
-    sudo pacman -Syy
+    sudo pacman -Syyu
 
 # OPERATION
 No matter how you choose to generate your mirrorlist, you will **ONLY** get up-to-date mirrors. 
