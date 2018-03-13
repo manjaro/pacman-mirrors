@@ -101,7 +101,7 @@ To run a subset of tests:
 Developing environment
 
 1. An editor of choice e.g.
-   * Visual Studio Code `yaourt -Syu visual-studio-code`
+   * Visual Studio Code `yaourt -S visual-studio-code`
    * PyCharm Community `pacman -Syu pycharm-community`
 2. Pandoc converter `pacman -Syu pandoc`
 3. Python environment  
