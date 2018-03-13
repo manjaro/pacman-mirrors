@@ -101,12 +101,12 @@ To run a subset of tests:
 Developing environment
 
 1. An editor of choice e.g.
-   * Visual Studio Code `yaourt -S visual-studio-code`
-   * PyCharm Community `pacman -S pycharm-community`
-2. Pandoc converter `pacman -S pandoc`
+   * Visual Studio Code `yaourt -Syu visual-studio-code`
+   * PyCharm Community `pacman -Syu pycharm-community`
+2. Pandoc converter `pacman -Syu pandoc`
 3. Python environment  
     ```
-    sudo pacman -S python-pip
+    sudo pacman -Syu python-pip
     sudo pip install virtualenvwrapper
     mkvirtualenv pacman-mirrors
     python setup.py develop
@@ -116,5 +116,6 @@ Developing environment
     pip install babel
     pip install flake8
     pip install npyscreen
+    pip install transifex-client
     
     ```
