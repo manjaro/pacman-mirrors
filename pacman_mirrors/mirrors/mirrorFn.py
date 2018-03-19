@@ -19,9 +19,11 @@
 
 """Pacman-Mirror Mirror Functions"""
 
+from pacman_mirrors.config import configuration as conf
 from pacman_mirrors.functions import validFn
 from pacman_mirrors.functions import httpFn
 from pacman_mirrors.functions import jsonFn
+from pacman_mirrors.functions import util
 
 
 def build_country_list(country_selection, country_pool, geoip=False):
@@ -102,6 +104,28 @@ def filter_mirror_protocols(mirror_pool, protocols=None):
     return result
 
 
+def filter_user_branch(mirror_pool, config):
+    """
+    Filter mirrorlist on users branch and branch sync state
+    """
+    for idx, branch in enumerate(conf.BRANCHES):
+        if config["x32"]:
+            config_branch = config["branch"][4:]
+        else:
+            config_branch = config["branch"]
+        if branch == config_branch:
+            filtered = []
+            for mirror in mirror_pool:
+                try:
+                    if mirror["branches"][idx] == 1:
+                        filtered.append(mirror)
+                except IndexError:
+                    pass
+            if len(filtered) > 0:
+                return filtered
+    return mirror_pool
+
+
 def set_custom_mirror_status(config, custom_pool):
     """
     Apply the current mirror status to the custom mirror file
@@ -121,3 +145,69 @@ def set_custom_mirror_status(config, custom_pool):
         return list(custom_list)
     except (IndexError, KeyError):
         return custom_pool
+
+
+def translate_interactive_to_pool(interactive_pool, mirror_pool, config):
+    """
+    Translate mirror pool for interactive display
+    :param interactive_pool:
+    :param mirror_pool:
+    :param config:
+    :return:
+    """
+    custom_pool = []
+    mirror_list = []
+    for custom in interactive_pool:
+        """
+        url without protocol
+        """
+        custom_url = util.strip_protocol(custom["url"])
+        """
+        locate mirror in the full mirror pool
+        """
+        for mirror in mirror_pool:
+            mirror_url = util.strip_protocol(mirror["url"])
+            if custom_url == mirror_url:
+                custom_pool.append({
+                    "country": mirror["country"],
+                    "protocols": mirror["protocols"],
+                    "url": mirror["url"]
+                })
+                try:
+                    """
+                    Try to replace protocols with user selection
+                    """
+                    _ = config["protocols"][0]
+                    mirror["protocols"] = config["protocols"]
+                except IndexError:
+                    pass
+                mirror_list.append(mirror)
+    return custom_pool, mirror_list
+
+
+def translate_pool_to_interactive(mirror_pool):
+    """
+    Translate mirror pool for interactive display
+    :param mirror_pool:
+    :return: list of dictionaries
+            {
+                "country": "country_name",
+                "resp_time": "m.sss",
+                "last_sync": "HH:MM",
+                "url": "http://server/repo/"
+            }
+    """
+    interactive_list = []
+    for mirror in mirror_pool:
+        # create an entry for all protocols related to a mirror
+        for protocol in enumerate(mirror["protocols"]):
+            interactive_list.append({
+                "country": mirror["country"],
+                "resp_time": mirror["resp_time"],
+                "last_sync": "{}h {}m".format(mirror["last_sync"][2:].replace(":", ""),
+                                              mirror["last_sync"][:2].replace(":", "")),
+                "url": "{}{}".format(protocol[1], util.strip_protocol(mirror["url"]))
+            })
+    return interactive_list
+
+
