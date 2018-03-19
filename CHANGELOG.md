@@ -1,6 +1,10 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [4.8.1] 2018-03-19
+* Issue [123](https://github.com/manjaro/pacman-mirrors/issues/123) cannot be reproduced.
+Some functions has been refactored in the attempt to solve the issue
+
 ## [4.8.0] 2018-03-19
 * Remove : `--branch` - temporary branch change removed [System Maintenance](https://wiki.manjaro.org/System_Maintenance) [Forum Post](https://forum.manjaro.org/t/wiki-pacman-mirrors-pacman-4-7-6-recommendations-for-maintenance-and-installation/41991/16)
 * Change : `--get-branch` not dependent on api [#124](https://github.com/manjaro/pacman-mirrors/issues/124) and [#125](https://github.com/pacman-mirrors/issues/125)
