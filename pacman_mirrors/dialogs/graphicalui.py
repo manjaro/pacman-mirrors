@@ -48,8 +48,14 @@ class GraphicalUI(Gtk.Window):
 
         custom_mirrors = []
         for server in server_list:
-            custom_mirrors.append(
-                (False, server["country"], server["last_sync"], server["url"]))
+            try:
+                _ = server_list[0]
+                custom_mirrors.append(
+                    (False, server["country"], server["last_sync"], server["url"]))
+            except IndexError as i:
+                print("{} IndexError -> {}".format(txt.ERR_CLR, i))
+            except KeyError as k:
+                print("{} KeyError -> {}".format(txt.ERR_CLR, k))
 
         self.store = Gtk.ListStore(bool, str, str, str)
         for mirror_ref in custom_mirrors:
