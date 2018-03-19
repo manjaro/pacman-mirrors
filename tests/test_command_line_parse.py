@@ -41,35 +41,35 @@ class TestCommandLineParse(unittest.TestCase):
         """Setup tests"""
         pass
 
-    @patch("os.getuid")
-    @patch.object(configFn, "build_config")
-    def test_arg_branch_unstable(self, mock_build_config, mock_os_getuid):
-        """TEST: CLI config[branch] from ARG '-b unstable'"""
-        mock_os_getuid.return_value = 0
-        mock_build_config.return_value = test_conf
-        with unittest.mock.patch("sys.argv",
-                                 ["pacman-mirrors",
-                                  "-b", "unstable"]):
-            app = PacmanMirrors()
-            app.config["config_file"] = conf.CONFIG_FILE
-            app.config = configFn.build_config()
-            app.command_line_parse()
-            assert app.config["branch"] == "unstable"
-
-    @patch("os.getuid")
-    @patch.object(configFn, "build_config")
-    def test_arg_branch_testing(self, mock_build_config, mock_os_getuid):
-        """TEST: CLI config[branch] from ARG '-b testing'"""
-        mock_os_getuid.return_value = 0
-        mock_build_config.return_value = test_conf
-        with unittest.mock.patch("sys.argv",
-                                 ["pacman-mirrors",
-                                  "-b", "testing"]):
-            app = PacmanMirrors()
-            app.config["config_file"] = conf.CONFIG_FILE
-            app.config = configFn.build_config()
-            app.command_line_parse()
-            assert app.config["branch"] == "testing"
+    # @patch("os.getuid")
+    # @patch.object(configFn, "build_config")
+    # def test_arg_branch_unstable(self, mock_build_config, mock_os_getuid):
+    #     """TEST: CLI config[branch] from ARG '-b unstable'"""
+    #     mock_os_getuid.return_value = 0
+    #     mock_build_config.return_value = test_conf
+    #     with unittest.mock.patch("sys.argv",
+    #                              ["pacman-mirrors",
+    #                               "-b", "unstable"]):
+    #         app = PacmanMirrors()
+    #         app.config["config_file"] = conf.CONFIG_FILE
+    #         app.config = configFn.build_config()
+    #         app.command_line_parse()
+    #         assert app.config["branch"] == "unstable"
+    #
+    # @patch("os.getuid")
+    # @patch.object(configFn, "build_config")
+    # def test_arg_branch_testing(self, mock_build_config, mock_os_getuid):
+    #     """TEST: CLI config[branch] from ARG '-b testing'"""
+    #     mock_os_getuid.return_value = 0
+    #     mock_build_config.return_value = test_conf
+    #     with unittest.mock.patch("sys.argv",
+    #                              ["pacman-mirrors",
+    #                               "-b", "testing"]):
+    #         app = PacmanMirrors()
+    #         app.config["config_file"] = conf.CONFIG_FILE
+    #         app.config = configFn.build_config()
+    #         app.command_line_parse()
+    #         assert app.config["branch"] == "testing"
 
     @patch("os.getuid")
     @patch.object(configFn, "build_config")

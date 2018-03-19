@@ -83,20 +83,20 @@ class PacmanMirrors:
         """Read the arguments of the command line"""
 
         args_summary = "[-h] [-f [{}]] [-i [-d]] [-m {}]\n" \
-                       "\t\t[-c {} [{}...]] [--geoip] [-l]\n" \
-                       "\t\t[-b {} | -G | -S/-B {}] [-a] [-p {}]\n" \
-                       "\t\t[-P {} [{}...]] [-R] [-U {}]\n" \
-                       "\t\t[-q] [-t {}] [-v] [-n]".format(txt.NUMBER,
-                                                           txt.METHOD,
-                                                           txt.COUNTRY,
-                                                           txt.COUNTRY,
-                                                           txt.BRANCH,
-                                                           txt.BRANCH,
-                                                           txt.PREFIX,
-                                                           txt.PROTO,
-                                                           txt.PROTO,
-                                                           txt.URL,
-                                                           txt.SECONDS)
+                       "\t\t[-c {} [{}...] | [--geoip]] [-l]\n" \
+                       "\t\t[-q] [-t {}] [-v] [-n]\n" \
+                       "\t\t[--api]\n" \
+                       "\t\t\t[-S/-B {}] [-p {}]\n" \
+                       "\t\t\t[-P {} [{}...]] [-R] [-U {}]\n".format(txt.NUMBER,
+                                                                     txt.METHOD,
+                                                                     txt.COUNTRY,
+                                                                     txt.COUNTRY,
+                                                                     txt.SECONDS,
+                                                                     txt.BRANCH,
+                                                                     txt.PREFIX,
+                                                                     txt.PROTO,
+                                                                     txt.PROTO,
+                                                                     txt.URL)
 
         nusage = "\rVersion {}\n{}:\n pacman-mirrors".format(__version__, txt.USAGE)
         usage = "{} {}".format(nusage, args_summary)
@@ -122,30 +122,19 @@ class PacmanMirrors:
                                        nargs="+",
                                        metavar=txt.COUNTRY,
                                        help=txt.HLP_ARG_COUNTRY)
-        methods_exclusive.add_argument("--geoip",
+        methods_exclusive.add_argument("-g", "--geoip",
                                        action="store_true",
                                        help=txt.HLP_ARG_GEOIP)
-        # Branch arguments
-        branch = parser.add_argument_group(txt.BRANCH)
-        branch_exclusive = branch.add_mutually_exclusive_group()
-        branch_exclusive.add_argument("-b", "--branch",
-                                      type=str,
-                                      choices=["stable", "testing", "unstable"],
-                                      help=txt.HLP_ARG_BRANCH)
-        branch_exclusive.add_argument("-G", "--get-branch",
-                                      action="store_true",
-                                      help="{}: {}".format(
-                                          txt.API, txt.HLP_ARG_API_GET_BRANCH))
-        branch_exclusive.add_argument("-S", "-B", "--set-branch",
-                                      choices=["stable", "testing", "unstable"],
-                                      help="{}: {}".format(
-                                          txt.API, txt.HLP_ARG_API_SET_BRANCH))
         # Api arguments
         api = parser.add_argument_group(txt.API)
         api.add_argument("-a", "--api",
                          action="store_true",
                          help="[-p {}][-R][-S/-B|-G {}][-P {} [{} ...]]".format(
                              txt.PREFIX, txt.BRANCH, txt.PROTO, txt.PROTO))
+        api.add_argument("-S", "-B", "--set-branch",
+                         choices=["stable", "testing", "unstable"],
+                         help="{}: {}".format(
+                             txt.API, txt.HLP_ARG_API_SET_BRANCH))
         api.add_argument("-p", "--prefix",
                          type=str,
                          metavar=txt.PREFIX,
@@ -167,9 +156,12 @@ class PacmanMirrors:
                          help="{}: {}".format(
                              txt.API, txt.HLP_ARG_API_URL))
         """
-        Misc arguments for changing various aspects
+        Misc arguments
         """
         misc = parser.add_argument_group(txt.MISC)
+        misc.add_argument("-G", "--get-branch",
+                          action="store_true",
+                          help="{}".format(txt.HLP_ARG_API_GET_BRANCH))
         misc.add_argument("-d", "--default",
                           action="store_true",
                           help="INTERACTIVE: " + txt.HLP_ARG_DEFAULT)
@@ -182,6 +174,9 @@ class PacmanMirrors:
                           type=str,
                           choices=["rank", "random"],
                           help=txt.HLP_ARG_METHOD)
+        misc.add_argument("-n", "--no-mirrorlist",
+                          action="store_true",
+                          help=txt.HLP_ARG_NO_MIRRORLIST)
         misc.add_argument("-q", "--quiet",
                           action="store_true",
                           help=txt.HLP_ARG_QUIET)
@@ -192,9 +187,6 @@ class PacmanMirrors:
         misc.add_argument("-v", "--version",
                           action="store_true",
                           help=txt.HLP_ARG_VERSION)
-        misc.add_argument("-n", "--no-mirrorlist",
-                          action="store_true",
-                          help=txt.HLP_ARG_NO_MIRRORLIST)
 
         args = parser.parse_args()
 
@@ -215,9 +207,28 @@ class PacmanMirrors:
             self.output_country_pool_console()
             sys.exit(0)
 
-        if args.api and args.get_branch:
-            self.api_config(get_branch=True)
+        if args.get_branch:
+            print(self.config["branch"])
             sys.exit(0)
+
+        """
+        #############################################################
+        Validate arg combinations
+        #############################################################        
+        """
+        """
+        If --set-branch, --protocols, --url, --prefix and not --api reject 
+        """
+        if args.set_branch or args.proto or args.url or args.prefix and not args.api:
+            print(".: {} {}".format(txt.ERR_CLR, txt.API_ARGUMENTS_ERROR))
+            sys.exit(1)
+
+        """
+        If --default and not --interactive reject
+        """
+        if args.default and not args.interactive:
+            print(".: {} {}".format(txt.ERR_CLR, txt.INTERACTIVE_ARGUMENTS_ERROR))
+            sys.exit(1)
 
         """
         #############################################################
@@ -228,9 +239,6 @@ class PacmanMirrors:
             print(".: {} {}".format(
                 txt.ERR_CLR, txt.MUST_BE_ROOT))
             sys.exit(1)
-
-        if args.branch:
-            self.config["branch"] = args.branch
 
         if args.geoip:
             self.geoip = True
@@ -277,13 +285,11 @@ class PacmanMirrors:
         Setup variables for passing to the api_config function
         """
         if args.api:
-            getbranch = False
             rebranch = False
             url = args.url
             setbranch = args.set_branch
             setprotocols = bool(args.proto)
-            if args.get_branch:
-                getbranch = True
+
             if args.re_branch:
                 rebranch = True
             if args.proto:
@@ -298,18 +304,16 @@ class PacmanMirrors:
             self.api_config(set_pfx=args.prefix,
                             set_branch=setbranch,
                             re_branch=rebranch,
-                            get_branch=getbranch,
                             set_protocols=setprotocols,
                             set_url=url)
 
     def api_config(self, set_pfx=None, set_branch=None, re_branch=False,
-                   get_branch=False, set_protocols=False, set_url=None):
+                   set_protocols=False, set_url=None):
         """
         Api configuration function
         :param set_pfx: prefix to the config paths
         :param set_branch: replace branch in pacman-mirrors.conf
         :param re_branch: replace branch in mirrorlist
-        :param get_branch: sys.exit with branch
         :param set_protocols: replace protocols in pacman-mirrors.conf
         :param set_url: replace mirror url in mirrorlist
         """
@@ -318,14 +322,6 @@ class PacmanMirrors:
 
         if set_pfx is None:
             set_pfx = ""
-
-        """
-        # Order of API tasks does matter
-        # First API task
-        """
-        if get_branch:
-            print(self.config["branch"])
-            return
 
         """
         # apply api configuration to internal configuration object
@@ -341,7 +337,7 @@ class PacmanMirrors:
             self.config["work_dir"] = set_pfx + self.config["work_dir"]
 
         """
-        # Second API task: Set branch
+        # First API task: Set branch
         """
         if set_branch:
             # Apply branch to internal config
@@ -368,7 +364,7 @@ class PacmanMirrors:
                                       self.config["config_file"],
                                       quiet=self.quiet)
         """
-        # Third API task: Create a mirror list
+        # Second API task: Create a mirror list
         """
         if set_url:
             """
@@ -387,14 +383,14 @@ class PacmanMirrors:
             # exit gracefully
             sys.exit(0)
         """
-        # Fourth API task: Write protocols to config
+        # Third API task: Write protocols to config
         """
         if set_protocols:
             apifn.write_protocols(self.config["protocols"],
                                   self.config["config_file"],
                                   quiet=self.quiet)
         """
-        # Fifth API task: Rebranch the mirrorlist
+        # Fourth API task: Rebranch the mirrorlist
         """
         if re_branch:
             if not set_branch:

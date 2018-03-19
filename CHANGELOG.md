@@ -1,6 +1,14 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [4.8.0] 2018-03-19
+* Remove : `--branch` - temporary branch change removed [System Maintenance](https://wiki.manjaro.org/System_Maintenance) [Forum Post](https://forum.manjaro.org/t/wiki-pacman-mirrors-pacman-4-7-6-recommendations-for-maintenance-and-installation/41991/16)
+* Change : `--get-branch` not dependent on api [#124](https://github.com/manjaro/pacman-mirrors/issues/124) and [#125](https://github.com/pacman-mirrors/issues/125)
+* Check  : `--api` is present with api args -> args error -> exit(1)
+* Check  : `--interactive` is present with `--default` -> args error -> exit(1)
+* Added  : translation texts for args error
+* Updated: changelog, translations, documentation and tests
+
 ## [4.7.6] 2018-03-08
 * Updated docs
 * Updated translations
@@ -26,7 +34,7 @@ All notable changes to this project will be documented in this file.
 * Support for x32 branches - transparent change to x32
   - Check if architecture is i686 and change branch to x32-$branch
   - b/--branch and -a/--api -S/--set-branch
-    - no need to prepend when calling branch changing functions 
+    - no need to prepend when calling branch changing functions
 
 ## [4.6.9] 2017-12-06
 * **Improvement**: support for x32 branches [#114](https://github.com/manjaro/pacman-mirrors/issues/114)
@@ -45,11 +53,11 @@ After releasing 4.4 a couple of small trivial issues surfaced.
 * **Fix**: Reset of a custom mirror pool failed in corner cases.
 * **Fix**: Country list was not complete.
 * **Change**: OnlyCountry removed from configuration to avoid confusion.
-* **Added**: Check for custom mirror pool by checking and validating custom-mirrors.json.    
+* **Added**: Check for custom mirror pool by checking and validating custom-mirrors.json.
 
 ## [4.4] 2017-11-07
-* **Improvement**: `-f/--fasttrack` honor `-c COUNTRY,COUNTRY,COUNTRY` 
-* **Change**: `-c/--country` countries supplied will be written to `custom-mirrors.json`, overwriting exiting file. 
+* **Improvement**: `-f/--fasttrack` honor `-c COUNTRY,COUNTRY,COUNTRY`
+* **Change**: `-c/--country` countries supplied will be written to `custom-mirrors.json`, overwriting exiting file.
 
 ## [4.3.1] 2017-11-07
 * **Fix**: typo in documentation

@@ -190,6 +190,14 @@ class TestTextMessages(unittest.TestCase):
         """TEST: txt WRITING MIRROR LIST"""
         assert txt.WRITING_MIRROR_LIST is not None
 
+    def test_txt_api_arguments_error(self):
+        """TEST: txt API_ARGUMENTS_ERROR"""
+        assert txt.API_ARGUMENTS_ERROR is not None
+
+    def test_txt_interactive_arguments_error(self):
+        """TEST: txt API_INTERACTIVE_ERROR"""
+        assert txt.INTERACTIVE_ARGUMENTS_ERROR is not None
+
     def tearDown(self):
         """Tear down"""
         pass
