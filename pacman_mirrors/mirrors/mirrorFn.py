@@ -188,14 +188,10 @@ def translate_interactive_to_pool(interactive_pool, mirror_pool, config):
                             pass
                         mirror_list.append(mirror)
                 except (KeyError, IndexError):
-                    print("{} {}\n"
-                          "\tIn (mirrorFn.translate_interactive_to_pool -> inner Loop)".format(txt.WRN_CLR,
-                                                                                               txt.HOUSTON))
+                    print("{} {}! The mirror pool is empty".format(txt.WRN_CLR, txt.HOUSTON))
                     break
         except KeyError:
-            print("{} {}\n"
-                  "\tIn (mirrorFn.translate_interactive_to_pool -> outer Loop)".format(txt.WRN_CLR,
-                                                                                       txt.HOUSTON))
+            print("{} {}! The custom pool is empty".format(txt.WRN_CLR, txt.HOUSTON))
             break
     return custom_pool, mirror_list
 
@@ -227,8 +223,7 @@ def translate_pool_to_interactive(mirror_pool):
                     "url": "{}{}".format(protocol[1], util.strip_protocol(mirror["url"]))
                 })
         except (KeyError, IndexError):
-            print("{} {}\n"
-                  "\tIn (mirrorFn.translate_pool_to_interactive)".format(txt.WRN_CLR, txt.HOUSTON))
+            print("{} {}! The mirror pool is empty".format(txt.WRN_CLR, txt.HOUSTON))
             break
     return interactive_list
 
