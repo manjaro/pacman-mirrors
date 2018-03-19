@@ -199,15 +199,19 @@ def translate_pool_to_interactive(mirror_pool):
     """
     interactive_list = []
     for mirror in mirror_pool:
-        # create an entry for all protocols related to a mirror
-        for protocol in enumerate(mirror["protocols"]):
-            interactive_list.append({
-                "country": mirror["country"],
-                "resp_time": mirror["resp_time"],
-                "last_sync": "{}h {}m".format(mirror["last_sync"][:2].replace(":", ""),
-                                              mirror["last_sync"][2:].replace(":", "")),
-                "url": "{}{}".format(protocol[1], util.strip_protocol(mirror["url"]))
-            })
+        try:
+            _ = mirror_pool[0]
+            # create an entry for all protocols related to a mirror
+            for protocol in enumerate(mirror["protocols"]):
+                interactive_list.append({
+                    "country": mirror["country"],
+                    "resp_time": mirror["resp_time"],
+                    "last_sync": "{}h {}m".format(mirror["last_sync"][:2].replace(":", ""),
+                                                  mirror["last_sync"][2:].replace(":", "")),
+                    "url": "{}{}".format(protocol[1], util.strip_protocol(mirror["url"]))
+                })
+        except IndexError:
+            pass
     return interactive_list
 
 
