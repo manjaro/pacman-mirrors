@@ -217,7 +217,8 @@ def translate_pool_to_interactive(mirror_pool):
         try:
             _ = mirror_pool[0]
             # create an entry for all protocols related to a mirror
-            for protocol in mirror["protocols"]:
+            # for idx, protocol in enumerate(mirror["protocols"]):
+            for idx, protocol in enumerate(mirror["protocols"]):
                 interactive_list.append({
                     "country": mirror["country"],
                     "resp_time": mirror["resp_time"],
