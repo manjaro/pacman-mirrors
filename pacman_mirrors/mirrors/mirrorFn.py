@@ -166,22 +166,26 @@ def translate_interactive_to_pool(interactive_pool, mirror_pool, config):
         locate mirror in the full mirror pool
         """
         for mirror in mirror_pool:
-            mirror_url = util.strip_protocol(mirror["url"])
-            if custom_url == mirror_url:
-                custom_pool.append({
-                    "country": mirror["country"],
-                    "protocols": mirror["protocols"],
-                    "url": mirror["url"]
-                })
-                try:
-                    """
-                    Try to replace protocols with user selection
-                    """
-                    _ = config["protocols"][0]
-                    mirror["protocols"] = config["protocols"]
-                except IndexError:
-                    pass
-                mirror_list.append(mirror)
+            try:
+                _ = mirror_pool[0]
+                mirror_url = util.strip_protocol(mirror["url"])
+                if custom_url == mirror_url:
+                    custom_pool.append({
+                        "country": mirror["country"],
+                        "protocols": mirror["protocols"],
+                        "url": mirror["url"]
+                    })
+                    try:
+                        """
+                        Try to replace protocols with user selection
+                        """
+                        _ = config["protocols"][0]
+                        mirror["protocols"] = config["protocols"]
+                    except IndexError:
+                        pass
+                    mirror_list.append(mirror)
+            except (KeyError, IndexError):
+                pass
     return custom_pool, mirror_list
 
 
