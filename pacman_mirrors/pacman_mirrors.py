@@ -218,9 +218,10 @@ class PacmanMirrors:
         """
         If --set-branch, --protocols, --url, --prefix and not --api reject 
         """
-        if args.set_branch or args.proto or args.url or args.prefix and not args.api:
-            print(".: {} {}".format(txt.ERR_CLR, txt.API_ARGUMENTS_ERROR))
-            sys.exit(1)
+        if args.set_branch or args.proto or args.url or args.prefix:
+            if not args.api:
+                print(".: {} {}".format(txt.ERR_CLR, txt.API_ARGUMENTS_ERROR))
+                sys.exit(1)
 
         """
         If --default and not --interactive reject
