@@ -1,9 +1,12 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [4.8.2] 2018-03-19
+* Fix: Github [#123](https://github.com/manjaro/pacman-mirrors/issues/123).
+
 ## [4.8.1] 2018-03-19
-* Issue [123](https://github.com/manjaro/pacman-mirrors/issues/123) cannot be reproduced.
-Some functions has been refactored in the attempt to solve the issue
+* Trying to squash a bug with help from community. Github [#123](https://github.com/manjaro/pacman-mirrors/issues/123).
+* The issue was hard to pin down, but with the help of a fantastiq community it has been done.
 
 ## [4.8.0] 2018-03-19
 * Remove : `--branch` - temporary branch change removed [System Maintenance](https://wiki.manjaro.org/System_Maintenance) [Forum Post](https://forum.manjaro.org/t/wiki-pacman-mirrors-pacman-4-7-6-recommendations-for-maintenance-and-installation/41991/16)
