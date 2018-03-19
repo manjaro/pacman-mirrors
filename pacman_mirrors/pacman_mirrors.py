@@ -42,7 +42,6 @@ from pacman_mirrors.functions import fileFn, configFn
 from pacman_mirrors.functions import httpFn
 from pacman_mirrors.functions import jsonFn
 from pacman_mirrors.functions import validFn
-from pacman_mirrors.functions import util
 from pacman_mirrors.mirrors import mirrorFn
 from pacman_mirrors.mirrors.mirror import Mirror
 from pacman_mirrors.translation import i18n
