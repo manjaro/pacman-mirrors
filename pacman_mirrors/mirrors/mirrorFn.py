@@ -213,14 +213,13 @@ def translate_pool_to_interactive(mirror_pool):
         try:
             _ = mirror_pool[0]
             ls = str(mirror["last_sync"]).split(":")
-            # create an entry for all protocols related to a mirror
-            # for idx, protocol in enumerate(mirror["protocols"]):
+            mirror_url = util.strip_protocol(mirror["url"])
             for idx, protocol in enumerate(mirror["protocols"]):
                 interactive_list.append({
                     "country": mirror["country"],
                     "resp_time": mirror["resp_time"],
                     "last_sync": "{}h {}m".format(ls[0], ls[1]),
-                    "url": "{}{}".format(protocol[1], util.strip_protocol(mirror["url"]))
+                    "url": "{}{}".format(protocol, mirror_url)
                 })
         except (KeyError, IndexError):
             print("{} {}! The mirror pool is empty".format(txt.WRN_CLR, txt.HOUSTON))
