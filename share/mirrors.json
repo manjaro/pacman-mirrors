@@ -490,6 +490,14 @@
         "url": "http://mirror.is.co.za/mirrors/manjaro.org/"
     },
     {
+        "country": "South_Africa",
+        "protocols": [
+            "http",
+            "ftp"
+        ],
+        "url": "http://manjaro.mirror.ac.za/"
+    },
+    {
         "country": "Sweden",
         "protocols": [
             "ftp",

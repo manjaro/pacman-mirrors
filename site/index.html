@@ -110,20 +110,23 @@
 </div></div>
                 <div class="col-md-9" role="main">
 
-<p>% pacman-mirrors(8) Pacman-Mirrors 4.7.x User Manual
+<p>% pacman-mirrors(8) Pacman-Mirrors 4.8.x User Manual
 %
 % March, 2018</p>
 <h1 id="name">NAME</h1>
 <p>pacman-mirrors - generate pacman mirrorlist for Manjaro Linux</p>
 <h1 id="synopsis">SYNOPSIS</h1>
-<p>pacman-mirrors [-f[<em>NUMBER</em>] [[-i[-d]] [-c<em>COUNTRY</em>[[,<em>COUNTRY</em>]...]|--geoip]]] 
-[-a[-p<em>PREFIX</em>][-R][-G|-B/-S<em>BRANCH</em>][-P<em>PROTO</em>[[,<em>PROTO</em>]...]][-U<em>URL</em>]] 
-[-b<em>BRANCH</em>] [-q] [-t<em>SECONDS</em>] [-v] [-n]</p>
+<p>pacman-mirrors [-h] [-f [NUMBER]] [-i [-d]] [-m METHOD]
+                [-c COUNTRY [COUNTRY...] | [--geoip]] [-l]
+                [-q] [-t SECONDS] [-v] [-n]
+                [--api]
+                        [-S/-B BRANCH] [-p PREFIX]
+                        [-P PROTO [PROTO...]] [-R] [-U URL]</p>
 <h1 id="description">DESCRIPTION</h1>
-<p>Generates mirrorlist with up-to-date mirrors for Manjaro Linux.<br />
-Default is to rank all mirrors by reponse time.<br />
-If no arguments are given pacman-mirrors lists available options.<br />
-Pacman-mirrors requires access to files which are read-only so it must be run with <em>su</em> or <em>sudo.</em><br />
+<p>Generates mirrorlist with up-to-date mirrors for Manjaro Linux.
+Default is to rank all mirrors by reponse time.
+If no arguments are given pacman-mirrors lists available options.
+Pacman-mirrors requires access to files which are read-only so it must be run with <em>su</em> or <em>sudo.</em>
 To create a mirrorlist using all default use</p>
 <pre><code>pacman-mirrors -f
 </code></pre>
@@ -135,8 +138,8 @@ To create a mirrorlist using all default use</p>
 <pre><code>sudo pacman -Syyu
 </code></pre>
 <h1 id="operation">OPERATION</h1>
-<p>No matter how you choose to generate your mirrorlist, you will <strong>ONLY</strong> get up-to-date mirrors. 
-This means the - at any given time - number available mirrors will vary depending on when the mirror last syncronized with the master repo server.  </p>
+<p>No matter how you choose to generate your mirrorlist, you will <strong>ONLY</strong> get up-to-date mirrors.
+This means the - at any given time - number available mirrors will vary depending on when the mirror last syncronized with the master repo server.</p>
 <h2 id="modes">MODES</h2>
 <ol>
 <li>The number of mirrors</li>
@@ -156,14 +159,14 @@ This means the - at any given time - number available mirrors will vary dependin
 <li>The worldwide mirrorpool comes with installation. It is compared against the file located at Github in manjaro-web-repo. If the repofile has changed, your local file will be updated with said file.</li>
 <li><strong>Manjaro mirror pool status</strong>: <em><code>/var/lib/pacman-mirrors/status.json</code></em></li>
 <li>The mirrorpool status file. It is the data you see displayed at repo.manjaro.org. The file is downloaded on every run of pacman-mirrors and saved in.</li>
-<li><strong>Custom mirror pool</strong>: <em><code>/var/lib/pacman-mirrors/custom-mirrors.json</code></em> </li>
+<li><strong>Custom mirror pool</strong>: <em><code>/var/lib/pacman-mirrors/custom-mirrors.json</code></em></li>
 <li>The file is your custom mirror pool and is created by <strong><code>-i/--interactive [-d/--default]</code></strong> argument or the <strong><code>-c/--country</code></strong> argument.</li>
 </ul>
-<p>If you are stunned by this message </p>
+<p>If you are stunned by this message</p>
 <pre><code>.: WARNING No mirrors in selection
 .: INFO The mirrors has not changed
 </code></pre>
-<p>This is not an error, it is a feature.<br />
+<p>This is not an error, it is a feature.
 The reason: You have limited your mirror pool too much and none of your selected mirrors are up-to-date.</p>
 <p><strong>Suggested solutions</strong>:</p>
 <ul>
@@ -174,7 +177,7 @@ The reason: You have limited your mirror pool too much and none of your selected
 <h2 id="general-info-about-arguments">GENERAL INFO ABOUT ARGUMENTS</h2>
 <p>Some options are mutual exclusive and will throw an arguments error:</p>
 <ul>
-<li><strong>--branch</strong>, <strong>--get-branch</strong> and <strong>--set-branch</strong></li>
+<li><strong>--branch</strong> and <strong>--set-branch</strong></li>
 <li><strong>--country</strong>, <strong>--fasttrack</strong>, <strong>--geoip</strong></li>
 </ul>
 <p>Some arguments requires another argument present to have effect. E.g., this command will ignore <em>--default</em> argument</p>
@@ -209,12 +212,10 @@ pacman-mirrors -f5
 <p>-b, --branch <em>BRANCH</em>
 :   Temporarily use another branch, <em>stable</em>, <em>testing</em> or <em>unstable</em>. The branch is reset with next run of pacman-mirrors.</p>
 <h2 id="api">API</h2>
-<p>-a, --api [-p <em>PREFIX</em>] [-R] [-G|-S/-B <em>BRANCH</em>] [-P <em>PROTO</em> [<em>PROTO</em>] ...] [-U <em>URL</em>]
+<p>-a, --api [-p <em>PREFIX</em>] [-R] [-S/-B <em>BRANCH</em>] [-P <em>PROTO</em> [<em>PROTO</em>] ...] [-U <em>URL</em>]
 :   Instructs pacman-mirrors to activate processing of API arguments</p>
 <p>-B, -S, --set-branch <em>BRANCH</em>
 :   Permanent change to branch config, using <em>stable</em>, <em>testing</em> or <em>unstable</em></p>
-<p>-G, --get-branch
-:   Return branch from configuration.</p>
 <p>-p, --prefix <em>PREFIX</em>
 :   Add a path prefix to pacman-mirrors file-handling eg. <em>/mnt/install</em> or <em>$mnt</em></p>
 <p>-P, --proto, --protocols <em>PROTO</em> [<em>PROTO</em>] ...
@@ -224,7 +225,9 @@ pacman-mirrors -f5
 <p>-U, --url <em>URL</em>
 :   Replace mirrorlist with supplied url</p>
 <h2 id="misc">MISC</h2>
-<p>--geoip
+<p>-G, --get-branch
+:   Return branch from configuration.</p>
+<p>-g--geoip
 :   Use geolocation if possible, if geoip is not available all mirrors.</p>
 <p>-h, --help
 :   Show the help message</p>
@@ -436,5 +439,5 @@ Frede Hundewadt &lt;echo ZmhAbWFuamFyby5vcmcK | base64 -d&gt;
 
 <!--
 MkDocs version : 0.17.3
-Build Date UTC : 2018-03-08 13:18:16
+Build Date UTC : 2018-03-19 12:46:52
 -->

@@ -5,7 +5,7 @@
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <meta name="author" content="" />
-  <title>pacman-mirrors(8) Pacman-Mirrors 4.7.x User Manual</title>
+  <title>pacman-mirrors(8) Pacman-Mirrors 4.8.x User Manual</title>
   <style type="text/css">
       code{white-space: pre-wrap;}
       span.smallcaps{font-variant: small-caps;}
@@ -18,20 +18,16 @@
 </head>
 <body>
 <header>
-<h1 class="title">pacman-mirrors(8) Pacman-Mirrors 4.7.x User Manual</h1>
+<h1 class="title">pacman-mirrors(8) Pacman-Mirrors 4.8.x User Manual</h1>
 <p class="author"></p>
 <p class="date">March, 2018</p>
 </header>
 <h1 id="name">NAME</h1>
 <p>pacman-mirrors - generate pacman mirrorlist for Manjaro Linux</p>
 <h1 id="synopsis">SYNOPSIS</h1>
-<p>pacman-mirrors [-f[<em>NUMBER</em>] [[-i[-d]] [-c<em>COUNTRY</em>[[,<em>COUNTRY</em>]…]|–geoip]]] [-a[-p<em>PREFIX</em>][-R][-G|-B/-S<em>BRANCH</em>][-P<em>PROTO</em>[[,<em>PROTO</em>]…]][-U<em>URL</em>]] [-b<em>BRANCH</em>] [-q] [-t<em>SECONDS</em>] [-v] [-n]</p>
+<p>pacman-mirrors [-h] [-f [NUMBER]] [-i [-d]] [-m METHOD] [-c COUNTRY [COUNTRY…] | [–geoip]] [-l] [-q] [-t SECONDS] [-v] [-n] [–api] [-S/-B BRANCH] [-p PREFIX] [-P PROTO [PROTO…]] [-R] [-U URL]</p>
 <h1 id="description">DESCRIPTION</h1>
-<p>Generates mirrorlist with up-to-date mirrors for Manjaro Linux.<br />
-Default is to rank all mirrors by reponse time.<br />
-If no arguments are given pacman-mirrors lists available options.<br />
-Pacman-mirrors requires access to files which are read-only so it must be run with <em>su</em> or <em>sudo.</em><br />
-To create a mirrorlist using all default use</p>
+<p>Generates mirrorlist with up-to-date mirrors for Manjaro Linux. Default is to rank all mirrors by reponse time. If no arguments are given pacman-mirrors lists available options. Pacman-mirrors requires access to files which are read-only so it must be run with <em>su</em> or <em>sudo.</em> To create a mirrorlist using all default use</p>
 <pre><code>pacman-mirrors -f</code></pre>
 <p>The mirrorlist generation process can be refined through arguments and arguments with options, for example</p>
 <pre><code>pacman-mirrors --country Denmark --timeout 5</code></pre>
@@ -81,8 +77,7 @@ To create a mirrorlist using all default use</p>
 <p>If you are stunned by this message</p>
 <pre><code>.: WARNING No mirrors in selection
 .: INFO The mirrors has not changed</code></pre>
-<p>This is not an error, it is a feature.<br />
-The reason: You have limited your mirror pool too much and none of your selected mirrors are up-to-date.</p>
+<p>This is not an error, it is a feature. The reason: You have limited your mirror pool too much and none of your selected mirrors are up-to-date.</p>
 <p><strong>Suggested solutions</strong>:</p>
 <ul>
 <li>Remove limitations like <strong><code>--geoip</code></strong></li>
@@ -92,7 +87,7 @@ The reason: You have limited your mirror pool too much and none of your selected
 <h2 id="general-info-about-arguments">GENERAL INFO ABOUT ARGUMENTS</h2>
 <p>Some options are mutual exclusive and will throw an arguments error:</p>
 <ul>
-<li><strong>–branch</strong>, <strong>–get-branch</strong> and <strong>–set-branch</strong></li>
+<li><strong>–branch</strong> and <strong>–set-branch</strong></li>
 <li><strong>–country</strong>, <strong>–fasttrack</strong>, <strong>–geoip</strong></li>
 </ul>
 <p>Some arguments requires another argument present to have effect. E.g., this command will ignore <em>–default</em> argument</p>
@@ -131,14 +126,11 @@ pacman-mirrors -f5</code></pre>
 </dl>
 <h2 id="api">API</h2>
 <dl>
-<dt>-a, --api [-p <em>PREFIX</em>] [-R] [-G|-S/-B <em>BRANCH</em>] [-P <em>PROTO</em> [<em>PROTO</em>] …] [-U <em>URL</em>]</dt>
+<dt>-a, --api [-p <em>PREFIX</em>] [-R] [-S/-B <em>BRANCH</em>] [-P <em>PROTO</em> [<em>PROTO</em>] …] [-U <em>URL</em>]</dt>
 <dd>Instructs pacman-mirrors to activate processing of API arguments
 </dd>
 <dt>-B, -S, --set-branch <em>BRANCH</em></dt>
 <dd>Permanent change to branch config, using <em>stable</em>, <em>testing</em> or <em>unstable</em>
-</dd>
-<dt>-G, --get-branch</dt>
-<dd>Return branch from configuration.
 </dd>
 <dt>-p, --prefix <em>PREFIX</em></dt>
 <dd>Add a path prefix to pacman-mirrors file-handling eg. <em>/mnt/install</em> or <em>$mnt</em>
@@ -155,7 +147,10 @@ pacman-mirrors -f5</code></pre>
 </dl>
 <h2 id="misc">MISC</h2>
 <dl>
-<dt>--geoip</dt>
+<dt>-G, --get-branch</dt>
+<dd>Return branch from configuration.
+</dd>
+<dt>-g--geoip</dt>
 <dd>Use geolocation if possible, if geoip is not available all mirrors.
 </dd>
 <dt>-h, --help</dt>

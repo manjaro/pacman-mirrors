@@ -31,7 +31,7 @@ class Mirror:
         self.mirror_pool = []
 
     def add(self, country, url, protocols,
-            branches=None, last_sync="00:00", resp_time="00.00"):
+            branches=None, last_sync=None, resp_time=None):
         """Append mirror
         :param country:
         :param url:
@@ -40,6 +40,10 @@ class Mirror:
         :param last_sync: optional from status.json
         :param resp_time: optional from status.json
         """
+        if last_sync is None:
+            last_sync = "00:00"
+        if resp_time is None:
+            resp_time = "00.00"
         if branches is None:
             branches = [-1, -1, -1]
         if country not in self.country_pool:

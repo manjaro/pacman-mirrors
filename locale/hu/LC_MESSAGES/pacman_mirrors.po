@@ -5,13 +5,13 @@
 # 
 # Translators:
 # Zoltán Toldi <ifj.toldi.zoltan@gmail.com>, 2017
-# Zoltán Toldi <ifj.toldi.zoltan@gmail.com>, 2017
+# Zoltán Toldi <ifj.toldi.zoltan@gmail.com>, 2017-2018
 msgid ""
 msgstr ""
 "Project-Id-Version: manjaro-pacman-mirrors\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2017-10-23 20:55+0200\n"
-"PO-Revision-Date: 2017-10-25 19:43+0000\n"
+"PO-Revision-Date: 2018-03-12 08:46+0000\n"
 "Last-Translator: Zoltán Toldi <ifj.toldi.zoltan@gmail.com>\n"
 "Language-Team: Hungarian (http://www.transifex.com/manjarolinux/manjaro-pacman-mirrors/language/hu/)\n"
 "MIME-Version: 1.0\n"
@@ -99,7 +99,7 @@ msgstr "HASZNÁLAT"
 
 #: pacman_mirrors/constants/txt.py:51
 msgid "Return branch from configuration"
-msgstr "Visszatérés az ágra a konfigurációból"
+msgstr "Konfigurált ág megjelenítése"
 
 #: pacman_mirrors/constants/txt.py:52
 msgid "Set prefix to"
@@ -107,11 +107,11 @@ msgstr "Előtag beállítása ehhez:"
 
 #: pacman_mirrors/constants/txt.py:53
 msgid "Replace protocols in configuration"
-msgstr "Protokollok helyreállítása a konfigurációban"
+msgstr "Protokollok lecserélése a konfigurációban"
 
 #: pacman_mirrors/constants/txt.py:54
 msgid "Replace branch in mirrorlist"
-msgstr "Ág helyreállítása a tükörlistában"
+msgstr "Ág lecserélése a tükörlistában"
 
 #: pacman_mirrors/constants/txt.py:55
 msgid "Replace branch in configuration"
@@ -135,11 +135,11 @@ msgstr "Alapértelmezett tükör fájl betöltése"
 
 #: pacman_mirrors/constants/txt.py:61
 msgid "Generate mirrorlist with a number of up-to-date mirrors. Ignores:"
-msgstr ""
+msgstr "Generál egy tükörlistát a naprakész tükörszerverek számával. Mellőzés:"
 
 #: pacman_mirrors/constants/txt.py:63
 msgid "Generate mirrorlist with defaults"
-msgstr ""
+msgstr "Tükörlista generálása az alapértelmezésekkel"
 
 #: pacman_mirrors/constants/txt.py:64
 msgid "Get current country using geolocation"
@@ -159,7 +159,7 @@ msgstr "Generálás módja"
 
 #: pacman_mirrors/constants/txt.py:68
 msgid "Use to skip generation of mirrorlist"
-msgstr ""
+msgstr "Használja a tükörlista generálás kihagyásáért"
 
 #: pacman_mirrors/constants/txt.py:69
 msgid "Quiet mode - less verbose output"
@@ -167,7 +167,7 @@ msgstr "Csendes üzemmód - kevésbé részletes szöveges kimenet"
 
 #: pacman_mirrors/constants/txt.py:70
 msgid "Syncronize pacman databases"
-msgstr ""
+msgstr "Pacman adatbázisok szinkronizálása"
 
 #: pacman_mirrors/constants/txt.py:71
 msgid "Maximum waiting time for server response"
@@ -179,19 +179,19 @@ msgstr "A pacman-mirrors verzió mutatása"
 
 #: pacman_mirrors/constants/txt.py:74
 msgid "Branch in config is changed"
-msgstr ""
+msgstr " Megváltozott az ág a konfigurációban"
 
 #: pacman_mirrors/constants/txt.py:75
 msgid "Protocols in config is changed"
-msgstr ""
+msgstr " Megváltozott a protokoll a konfigurációban"
 
 #: pacman_mirrors/constants/txt.py:76
 msgid "Re-branch requires a branch to work with"
-msgstr ""
+msgstr "Az ág módosítás igényel egy ágat a végrehajtáshoz"
 
 #: pacman_mirrors/constants/txt.py:77
 msgid "Branch in mirror list is changed"
-msgstr ""
+msgstr " Megváltozott az ág a tükörlistában"
 
 #: pacman_mirrors/constants/txt.py:78
 msgid "Available countries are"
@@ -211,7 +211,7 @@ msgstr "A fájl nem írható"
 
 #: pacman_mirrors/constants/txt.py:82
 msgid "Converting custom mirror file to new format"
-msgstr "Az egyéni tükörlista fájl konvertálása új formátumba"
+msgstr "Egyéni tükörlista fájl konvertálása új formátumba"
 
 #: pacman_mirrors/constants/txt.py:83
 msgid "Custom mirror file"
@@ -219,7 +219,7 @@ msgstr "Egyéni tükör fájl"
 
 #: pacman_mirrors/constants/txt.py:84
 msgid "Custom mirror file saved"
-msgstr "Az egyéni tükör fájl elmentve"
+msgstr "Egyéni tükör fájl elmentve"
 
 #: pacman_mirrors/constants/txt.py:85
 msgid "User generated mirror list"
@@ -227,7 +227,7 @@ msgstr "Felhasználó által generált tükörlista"
 
 #: pacman_mirrors/constants/txt.py:86
 msgid "Deprecated argument"
-msgstr ""
+msgstr "Elavult argumentumok"
 
 #: pacman_mirrors/constants/txt.py:87
 msgid "doesn't exist."
@@ -235,7 +235,7 @@ msgstr "nem létezik."
 
 #: pacman_mirrors/constants/txt.py:88
 msgid "Downloading mirrors from"
-msgstr ""
+msgstr "Tükörlisták betöltése innen:"
 
 #: pacman_mirrors/constants/txt.py:89
 msgid "Falling back to"
@@ -243,11 +243,11 @@ msgstr "Visszatérés erre:"
 
 #: pacman_mirrors/constants/txt.py:90
 msgid "Internet connection appears to be down"
-msgstr ""
+msgstr "Úgy tűnik mintha nem lenne kapcsolódva az internethez"
 
 #: pacman_mirrors/constants/txt.py:91
 msgid "Mirror list is generated using random method"
-msgstr ""
+msgstr "A tükörlista le lett generálva véletlenszerű eljárással"
 
 #: pacman_mirrors/constants/txt.py:92
 msgid "is missing"
@@ -259,31 +259,31 @@ msgstr "A tükör fájl"
 
 #: pacman_mirrors/constants/txt.py:94
 msgid "Mirror list generated and saved to"
-msgstr ""
+msgstr "A tükörlista legenerálva és elmentve ide:"
 
 #: pacman_mirrors/constants/txt.py:95
 msgid "Generated on"
-msgstr ""
+msgstr "Generálva itt:"
 
 #: pacman_mirrors/constants/txt.py:96
 msgid "custom mirrorlist"
-msgstr ""
+msgstr "egyéni tükörlista"
 
 #: pacman_mirrors/constants/txt.py:97
 msgid "to reset custom mirrorlist"
-msgstr ""
+msgstr "az egyéni tükörlista visszaállításához"
 
 #: pacman_mirrors/constants/txt.py:98
 msgid "default mirrorlist"
-msgstr ""
+msgstr "alapértelmezett tükörlista"
 
 #: pacman_mirrors/constants/txt.py:99
 msgid "to modify mirrorlist"
-msgstr ""
+msgstr "a tükörlista módosításához"
 
 #: pacman_mirrors/constants/txt.py:100
 msgid "Mirror ranking is not available"
-msgstr ""
+msgstr "A tükör szerver rangsor nem érhető el"
 
 #: pacman_mirrors/constants/txt.py:101
 msgid "Must have root privileges"
@@ -303,7 +303,7 @@ msgstr "Opció"
 
 #: pacman_mirrors/constants/txt.py:105
 msgid "Please use"
-msgstr ""
+msgstr "Kérjük használja"
 
 #: pacman_mirrors/constants/txt.py:106
 msgid "Querying mirrors"
@@ -315,7 +315,7 @@ msgstr "Tükörlisták véletlenszerűsítése"
 
 #: pacman_mirrors/constants/txt.py:108
 msgid "To remove custom config run "
-msgstr ""
+msgstr "Az egyéni konfiguráció eltávolításához futtassa"
 
 #: pacman_mirrors/constants/txt.py:109
 msgid "This may take some time"
@@ -327,7 +327,7 @@ msgstr "ismeretlen ország"
 
 #: pacman_mirrors/constants/txt.py:111
 msgid "Use 0 for all mirrors"
-msgstr ""
+msgstr "A 0 használható az összes tükörhöz"
 
 #: pacman_mirrors/constants/txt.py:112
 msgid "Using all mirrors"
