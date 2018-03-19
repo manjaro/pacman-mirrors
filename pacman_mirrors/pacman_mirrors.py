@@ -226,9 +226,10 @@ class PacmanMirrors:
         """
         If --default and not --interactive reject
         """
-        if args.default and not args.interactive:
-            print(".: {} {}".format(txt.ERR_CLR, txt.INTERACTIVE_ARGUMENTS_ERROR))
-            sys.exit(1)
+        if args.default:
+            if not args.interactive:
+                print(".: {} {}".format(txt.ERR_CLR, txt.INTERACTIVE_ARGUMENTS_ERROR))
+                sys.exit(1)
 
         """
         #############################################################
