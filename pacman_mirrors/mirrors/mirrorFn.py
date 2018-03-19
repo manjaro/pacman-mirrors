@@ -19,6 +19,7 @@
 
 """Pacman-Mirror Mirror Functions"""
 
+from pacman_mirrors.constants import txt
 from pacman_mirrors.config import configuration as conf
 from pacman_mirrors.functions import validFn
 from pacman_mirrors.functions import httpFn
@@ -161,31 +162,41 @@ def translate_interactive_to_pool(interactive_pool, mirror_pool, config):
         """
         url without protocol
         """
-        custom_url = util.strip_protocol(custom["url"])
-        """
-        locate mirror in the full mirror pool
-        """
-        for mirror in mirror_pool:
-            try:
-                _ = mirror_pool[0]
-                mirror_url = util.strip_protocol(mirror["url"])
-                if custom_url == mirror_url:
-                    custom_pool.append({
-                        "country": mirror["country"],
-                        "protocols": mirror["protocols"],
-                        "url": mirror["url"]
-                    })
-                    try:
-                        """
-                        Try to replace protocols with user selection
-                        """
-                        _ = config["protocols"][0]
-                        mirror["protocols"] = config["protocols"]
-                    except IndexError:
-                        pass
-                    mirror_list.append(mirror)
-            except (KeyError, IndexError):
-                pass
+        try:
+
+            custom_url = util.strip_protocol(custom["url"])
+            """
+            locate mirror in the full mirror pool
+            """
+            for mirror in mirror_pool:
+                try:
+                    _ = mirror_pool[0]
+                    mirror_url = util.strip_protocol(mirror["url"])
+                    if custom_url == mirror_url:
+                        custom_pool.append({
+                            "country": mirror["country"],
+                            "protocols": mirror["protocols"],
+                            "url": mirror["url"]
+                        })
+                        try:
+                            """
+                            Try to replace protocols with user selection
+                            """
+                            _ = config["protocols"][0]
+                            mirror["protocols"] = config["protocols"]
+                        except IndexError:
+                            pass
+                        mirror_list.append(mirror)
+                except (KeyError, IndexError):
+                    print("{} {}\n"
+                          "\tIn (mirrorFn.translate_interactive_to_pool -> inner Loop)".format(txt.WRN_CLR,
+                                                                                               txt.HOUSTON))
+                    break
+        except KeyError:
+            print("{} {}\n"
+                  "\tIn (mirrorFn.translate_interactive_to_pool -> outer Loop)".format(txt.WRN_CLR,
+                                                                                       txt.HOUSTON))
+            break
     return custom_pool, mirror_list
 
 
@@ -215,7 +226,9 @@ def translate_pool_to_interactive(mirror_pool):
                     "url": "{}{}".format(protocol[1], util.strip_protocol(mirror["url"]))
                 })
         except IndexError:
-            pass
+            print("{} {}\n"
+                  "\tIn (mirrorFn.translate_pool_to_interactive)".format(txt.WRN_CLR, txt.HOUSTON))
+            break
     return interactive_list
 
 
