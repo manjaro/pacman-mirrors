@@ -1,9 +1,6 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## [4.8.3] 2018-03-19
-* Fix: Github [#123](https://github.com/manjaro/pacman-mirrors/issues/123).
-
 ## [4.8.2] 2018-03-19
 * Fix: Github [#123](https://github.com/manjaro/pacman-mirrors/issues/123).
 
