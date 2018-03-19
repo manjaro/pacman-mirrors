@@ -42,8 +42,7 @@ from pacman_mirrors.functions import fileFn, configFn
 from pacman_mirrors.functions import httpFn
 from pacman_mirrors.functions import jsonFn
 from pacman_mirrors.functions import validFn
-from pacman_mirrors.functions import util
-from pacman_mirrors.mirrors import mirrorfn
+from pacman_mirrors.mirrors import mirrorFn
 from pacman_mirrors.mirrors.mirror import Mirror
 from pacman_mirrors.translation import i18n
 from pacman_mirrors.translation.custom_help_formatter \
@@ -219,16 +218,18 @@ class PacmanMirrors:
         """
         If --set-branch, --protocols, --url, --prefix and not --api reject 
         """
-        if args.set_branch or args.proto or args.url or args.prefix and not args.api:
-            print(".: {} {}".format(txt.ERR_CLR, txt.API_ARGUMENTS_ERROR))
-            sys.exit(1)
+        if args.set_branch or args.proto or args.url or args.prefix:
+            if not args.api:
+                print(".: {} {}".format(txt.ERR_CLR, txt.API_ARGUMENTS_ERROR))
+                sys.exit(1)
 
         """
         If --default and not --interactive reject
         """
-        if args.default and not args.interactive:
-            print(".: {} {}".format(txt.ERR_CLR, txt.INTERACTIVE_ARGUMENTS_ERROR))
-            sys.exit(1)
+        if args.default:
+            if not args.interactive:
+                print(".: {} {}".format(txt.ERR_CLR, txt.INTERACTIVE_ARGUMENTS_ERROR))
+                sys.exit(1)
 
         """
         #############################################################
@@ -407,7 +408,7 @@ class PacmanMirrors:
         """
         Create a list based on the content of selected_countries
         """
-        mirror_selection = mirrorfn.filter_mirror_country(self.mirrors.mirror_pool,
+        mirror_selection = mirrorFn.filter_mirror_country(self.mirrors.mirror_pool,
                                                           self.selected_countries)
         """
         Check the length of selected_countries against the full countrylist
@@ -424,7 +425,7 @@ class PacmanMirrors:
         """
         try:
             _ = self.config["protocols"][0]
-            mirror_selection = mirrorfn.filter_mirror_protocols(
+            mirror_selection = mirrorFn.filter_mirror_protocols(
                 mirror_selection, self.config["protocols"])
         except IndexError:
             pass
@@ -434,7 +435,7 @@ class PacmanMirrors:
         by removing not up-to-date mirrors from the list
         UP-TO-DATE FILTERING NEXT
         """
-        mirror_selection = self.filter_user_branch(mirror_selection)
+        mirror_selection = mirrorFn.filter_user_branch(mirror_selection, self.config)
 
         if self.config["method"] == "rank":
             mirror_selection = self.test_mirrors(mirror_selection)
@@ -470,7 +471,7 @@ class PacmanMirrors:
         worklist = self.mirrors.mirror_pool
         shuffle(worklist)
         if self.config["protocols"]:
-            worklist = mirrorfn.filter_mirror_protocols(
+            worklist = mirrorFn.filter_mirror_protocols(
                 worklist, self.config["protocols"])
 
         """
@@ -478,7 +479,7 @@ class PacmanMirrors:
           by removing not up-to-date mirrors from the list
         UP-TO-DATE FILTERING NEXT
         """
-        up_to_date_mirrors = self.filter_user_branch(worklist)
+        up_to_date_mirrors = mirrorFn.filter_user_branch(worklist, self.config)
         worklist = []
         print(".: {}: {} - {}".format(txt.INF_CLR,
                                       txt.QUERY_MIRRORS,
@@ -544,7 +545,7 @@ class PacmanMirrors:
         The final mirrorfile will include all mirrors selected by the user
         The final mirrorlist will exclude (if possible) mirrors not up-to-date
         """
-        worklist = mirrorfn.filter_mirror_country(self.mirrors.mirror_pool,
+        worklist = mirrorFn.filter_mirror_country(self.mirrors.mirror_pool,
                                                   self.selected_countries)
         """
         If config.protols has content, that is a user decision and as such
@@ -553,7 +554,7 @@ class PacmanMirrors:
         """
         try:
             _ = self.config["protocols"][0]
-            worklist = mirrorfn.filter_mirror_protocols(
+            worklist = mirrorFn.filter_mirror_protocols(
                 worklist, self.config["protocols"])
         except IndexError:
             pass
@@ -565,7 +566,6 @@ class PacmanMirrors:
                 worklist = sorted(worklist, key=itemgetter("resp_time"))
             else:
                 shuffle(worklist)
-        interactive_list = []
         """
         Create a list for display in ui.
         The gui and the console ui expect the supplied list
@@ -582,16 +582,7 @@ class PacmanMirrors:
         a. a mirrorfile in the new json format,
         b. a mirrorlist in pacman format.
         """
-        for mirror in worklist:
-            # create an entry for all protocols related to a mirror
-            for protocol in enumerate(mirror["protocols"]):
-                interactive_list.append({
-                    "country": mirror["country"],
-                    "resp_time": mirror["resp_time"],
-                    "last_sync": mirror["last_sync"],
-                    "url": "{}{}".format(protocol[1],
-                                         util.strip_protocol(mirror["url"]))
-                })
+        interactive_list = mirrorFn.translate_pool_to_interactive(worklist)
         #
         # import the right ui
         if self.no_display:
@@ -605,34 +596,9 @@ class PacmanMirrors:
                              self.default)
         # process user choices
         if interactive.is_done:
-            mirror_list = []  # to be written to mirrorlist
-            mirror_selection = []  # to be written to custom-mirror.json
-            custom_list = interactive.custom_list  # grabbing a copy
-            # loop custom list
-            for custom in custom_list:
-                # get url without protocol
-                custom_string = util.strip_protocol(custom["url"])
-                # locate mirror in the full mirrorlist
-                for mirror in self.mirrors.mirror_pool:
-                    mirror_string = util.strip_protocol(mirror["url"])
-                    # compare urls
-                    if custom_string == mirror_string:
-                        #
-                        # create list for mirror file
-                        mirror_selection.append({
-                            "country": mirror["country"],
-                            "protocols": mirror["protocols"],
-                            "url": mirror["url"]
-                        })
-                        #
-                        # create list for mirror list
-                        try:
-                            # assign user defined protocol if exist
-                            _ = self.config["protocols"][0]
-                            mirror["protocols"] = self.config["protocols"]
-                        except IndexError:
-                            pass
-                        mirror_list.append(mirror)
+            custom_pool, mirror_list = mirrorFn.translate_interactive_to_pool(interactive.custom_list,
+                                                                              self.mirrors.mirror_pool,
+                                                                              self.config)
             """
             Try selected method on the mirrorlist
             """
@@ -652,16 +618,16 @@ class PacmanMirrors:
             Try to write the mirrorfile and mirrorlist
             """
             try:
-                _ = mirror_selection[0]
+                _ = custom_pool[0]
                 self.custom = True
                 self.config["country_pool"] = ["Custom"]
-                self.output_custom_mirror_pool_file(mirror_selection)
+                self.output_custom_mirror_pool_file(custom_pool)
                 """
                 Writing the final mirrorlist
                 only write mirrors which are up-to-date for users selected branch
                 UP-TO-DATE FILTERING NEXT
                 """
-                mirror_list = self.filter_user_branch(mirror_list)
+                mirror_list = mirrorFn.filter_user_branch(mirror_list, self.config)
                 """
                 Try writing mirrorlist
                 If no up-to-date mirrors exist for users branch
@@ -695,27 +661,6 @@ class PacmanMirrors:
         self.config["country_pool"] = []
         fileFn.delete_file(self.config["custom_file"])
 
-    def filter_user_branch(self, mirror_pool):
-        """
-        Filter mirrorlist on users branch and branch sync state
-        """
-        for idx, branch in enumerate(conf.BRANCHES):
-            if self.config["x32"]:
-                config_branch = self.config["branch"][4:]
-            else:
-                config_branch = self.config["branch"]
-            if branch == config_branch:
-                filtered = []
-                for mirror in mirror_pool:
-                    try:
-                        if mirror["branches"][idx] == 1:
-                            filtered.append(mirror)
-                    except IndexError:
-                        pass
-                if len(filtered) > 0:
-                    return filtered
-        return mirror_pool
-
     def load_all_mirrors(self):
         """
         Load all mirrors from active mirror pool
@@ -730,7 +675,7 @@ class PacmanMirrors:
         """
         Validate the list of selected countries        
         """
-        self.selected_countries = mirrorfn.build_country_list(
+        self.selected_countries = mirrorFn.build_country_list(
             self.selected_countries, self.mirrors.country_pool, self.geoip)
 
     def load_custom_mirror_pool(self):
@@ -742,7 +687,7 @@ class PacmanMirrors:
             self.load_default_mirror_pool()
         else:
             self.seed_mirrors(self.config["custom_file"])
-            self.mirrors.mirror_pool = mirrorfn.set_custom_mirror_status(
+            self.mirrors.mirror_pool = mirrorFn.set_custom_mirror_status(
                 self.config, self.mirrors.mirror_pool)
 
     def load_default_mirror_pool(self):

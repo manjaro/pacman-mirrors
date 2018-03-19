@@ -46,24 +46,32 @@ class GraphicalUI(Gtk.Window):
         self.set_border_width(10)
         self.set_position(Gtk.WindowPosition.CENTER)
 
-        mirrors_list = []
+        custom_mirrors = []
         for server in server_list:
-            mirrors_list.append(
-                (False,
-                 server["country"],
-                 "{}h {}m".format(server["last_sync"][:2],
-                                  server["last_sync"][-2:]),
-                 server["url"]))
+            try:
+                _ = server_list[0]
+                custom_mirrors.append(
+                    (False, server["country"], server["last_sync"], server["url"]))
+            except IndexError as i:
+                print("{} IndexError -> {}".format(txt.ERR_CLR, i))
+                pass
+            except KeyError as k:
+                print("{} KeyError -> {}".format(txt.ERR_CLR, k))
+                pass
 
         self.store = Gtk.ListStore(bool, str, str, str)
-        for mirror_ref in mirrors_list:
+        for mirror_ref in custom_mirrors:
             self.store.append(list(mirror_ref))
+
         scrolled_tree = Gtk.ScrolledWindow()
+
         self.tree = Gtk.TreeView(self.store, vexpand=True)
 
         renderer = Gtk.CellRendererToggle()
         renderer.connect("toggled", self.on_toggle)
+
         column = Gtk.TreeViewColumn(txt.I_USE, renderer, active=0)
+
         self.tree.append_column(column)
 
         renderer = Gtk.CellRendererText()
@@ -145,6 +153,8 @@ class GraphicalUI(Gtk.Window):
         if response == Gtk.ResponseType.OK:
             # Quit GUI
             dialog.destroy()
+            for line in self.custom_list:
+                line["last_sync"] = line["last_sync"].replace(" ", ":").replace("h", "").replace("m", "")
             if self.random:
                 shuffle(self.custom_list)
             else:
