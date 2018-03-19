@@ -204,8 +204,8 @@ def translate_pool_to_interactive(mirror_pool):
             interactive_list.append({
                 "country": mirror["country"],
                 "resp_time": mirror["resp_time"],
-                "last_sync": "{}h {}m".format(mirror["last_sync"][2:].replace(":", ""),
-                                              mirror["last_sync"][:2].replace(":", "")),
+                "last_sync": "{}h {}m".format(mirror["last_sync"][:2].replace(":", ""),
+                                              mirror["last_sync"][2:].replace(":", "")),
                 "url": "{}{}".format(protocol[1], util.strip_protocol(mirror["url"]))
             })
     return interactive_list
