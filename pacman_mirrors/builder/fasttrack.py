@@ -32,7 +32,7 @@ from pacman_mirrors.functions import outputFn
 from pacman_mirrors.functions import util
 
 
-def build_fasttrack_mirror_list(self, number):
+def build_mirror_list(self, number):
     """
     Fast-track the mirrorlist by filtering only up-to-date mirrors
     The function takes into account the branch selected by the user

@@ -29,7 +29,7 @@ from pacman_mirrors.functions import outputFn
 from pacman_mirrors.functions import testMirrorFn
 
 
-def build_interactive_mirror_list(self):
+def build_mirror_list(self):
     """
     Prompt the user to select the mirrors with a gui.
     Outputs a "custom" mirror file

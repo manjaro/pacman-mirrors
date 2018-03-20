@@ -28,7 +28,7 @@ from pacman_mirrors.functions import outputFn
 from pacman_mirrors.functions import testMirrorFn
 
 
-def build_common_mirror_list(self):
+def build_mirror_list(self):
     """
     Generate common mirrorlist
     """
