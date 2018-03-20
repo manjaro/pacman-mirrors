@@ -17,7 +17,7 @@
 #
 # Authors: Frede Hundewadt <echo ZmhAbWFuamFyby5vcmcK | base64 -d>
 
-"""Pacman-Mirrors PrintFunctions"""
+"""Pacman-Mirrors Print Functions"""
 
 from pacman_mirrors.constants import colors as color
 

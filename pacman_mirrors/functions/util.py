@@ -17,6 +17,8 @@
 #
 # Authors: Frede Hundewadt <echo ZmhAbWFuamFyby5vcmcK | base64 -d>
 
+"""Pacman-Mirrors Utility Functions"""
+
 
 import platform
 import shutil

@@ -17,7 +17,7 @@
 #
 # Authors: Frede Hundewadt <echo ZmhAbWFuamFyby5vcmcK | base64 -d>
 
-"""Pacman-Mirrors Custom Pool Functions"""
+"""Pacman-Mirrors Custom Pool/Mirror Functions"""
 
 from pacman_mirrors.functions import defaultFn
 from pacman_mirrors.functions import fileFn

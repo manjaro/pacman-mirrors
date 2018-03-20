@@ -17,7 +17,7 @@
 #
 # Authors: Frede Hundewadt <echo ZmhAbWFuamFyby5vcmcK | base64 -d>
 
-"""Pacman-Mirrors Configuration"""
+"""Pacman-Mirrors Configuration Module"""
 
 # http constants
 URL_MIRROR_JSON = \

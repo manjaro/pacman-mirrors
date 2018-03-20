@@ -17,7 +17,7 @@
 #
 # Authors: Frede Hundewadt <echo ZmhAbWFuamFyby5vcmcK | base64 -d>
 
-"""Pacman-Mirrors TUI Module"""
+"""Pacman-Mirrors Console UI Module"""
 
 from collections import namedtuple
 

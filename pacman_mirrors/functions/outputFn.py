@@ -17,7 +17,7 @@
 #
 # Authors: Frede Hundewadt <echo ZmhAbWFuamFyby5vcmcK | base64 -d>
 
-"""Pacman-Mirrors Outpout Functions"""
+"""Pacman-Mirrors Output Functions"""
 
 from pacman_mirrors.constants import txt
 from pacman_mirrors.functions import customFn

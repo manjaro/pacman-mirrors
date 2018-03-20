@@ -18,7 +18,7 @@
 # Authors: Esclapion
 #          Hugo Posnic <huluti@manjaro.org>
 
-"""Pacman-Mirrors GUI Module"""
+"""Pacman-Mirrors GTK GUI Module"""
 
 import gi
 

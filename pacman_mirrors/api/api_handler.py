@@ -17,7 +17,7 @@
 #
 # Authors: Frede Hundewadt <echo ZmhAbWFuamFyby5vcmcK | base64 -d>
 
-"""Pacman-Mirrors Interactive Fasttrack list Builder"""
+"""Pacman-Mirrors API Handler Module"""
 
 import shutil
 import sys

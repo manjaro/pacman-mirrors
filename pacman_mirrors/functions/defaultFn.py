@@ -17,7 +17,7 @@
 #
 # Authors: Frede Hundewadt <echo ZmhAbWFuamFyby5vcmcK | base64 -d>
 
-"""Pacman-Mirrors Default Mirror Functions"""
+"""Pacman-Mirrors Default Pool/Mirror Functions"""
 
 from operator import itemgetter
 from pacman_mirrors.functions import countryFn

@@ -17,7 +17,7 @@
 #
 # Authors: Frede Hundewadt <echo ZmhAbWFuamFyby5vcmcK | base64 -d>
 
-"""Pacman-Mirrors Console Functions"""
+"""Pacman-Mirrors Console UI Functions"""
 
 import json
 

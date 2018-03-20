@@ -17,7 +17,7 @@
 #
 # Authors: Frede Hundewadt <echo ZmhAbWFuamFyby5vcmcK | base64 -d>
 
-"""Pacman-Mirrors Interactive Mirror list Builder"""
+"""Pacman-Mirrors Interactive Mirror List Builder Module"""
 
 from operator import itemgetter
 from random import shuffle
