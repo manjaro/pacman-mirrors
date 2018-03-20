@@ -123,6 +123,9 @@ def parse_command_line(self, gtk_available):
     misc.add_argument("-l", "--list", "--country-list",
                       action="store_true",
                       help=txt.HLP_ARG_LIST)
+    misc.add_argument("-lc", "--config-country",
+                      action="store_true",
+                      help="lists configured mirror countries")
     misc.add_argument("-m", "--method",
                       type=str,
                       choices=["rank", "random"],
@@ -158,6 +161,10 @@ def parse_command_line(self, gtk_available):
 
     if args.list:
         outputFn.console_default_country_pool(self)
+        sys.exit(0)
+
+    if args.config_country:
+        outputFn.console_custom_country_pool(self)
         sys.exit(0)
 
     if args.get_branch:

@@ -25,9 +25,9 @@ from pacman_mirrors.functions import customFn
 from pacman_mirrors.functions import fileFn
 
 
-def load_all_mirrors(self):
+def load_config_mirror_pool(self):
     """
-    Load all mirrors from active mirror pool
+    Load mirrors from active mirror pool
     """
     if customFn.check_custom_mirror_pool(self) and not self.config["country_pool"]:
         customFn.load_custom_mirror_pool(self)

@@ -72,8 +72,7 @@ class PacmanMirrors:
     def run(self):
         """
         Run
-        # Build internal config dictionary
-        # Returns the config dictionary and true/false on custom
+        # Setup config: retunrs the config dictionary and true/false on custom
         # Parse commandline
         # i686 check - change branch to x32-$branch
         # Check network
@@ -82,7 +81,7 @@ class PacmanMirrors:
         # Load all mirrors
         # Build mirror list
         """
-        (self.config, self.custom) = configFn.build_config()
+        (self.config, self.custom) = configFn.setup_config()
         fileFn.create_dir(self.config["work_dir"])
         cli.parse_command_line(self, GTK_AVAILABLE)
         util.i686_check(self, write=True)
@@ -101,7 +100,7 @@ class PacmanMirrors:
         """
         # Load all mirrors
         """
-        defaultFn.load_all_mirrors(self)
+        defaultFn.load_config_mirror_pool(self)
         """
         # Decide which type of mirrorlist to create
         * Fasttrack
@@ -109,11 +108,11 @@ class PacmanMirrors:
         * Default
         """
         if self.fasttrack:
-            fasttrack.build_fasttrack_mirror_list(self, self.fasttrack)
+            fasttrack.build_mirror_list(self, self.fasttrack)
         elif self.interactive:
-            interactive.build_interactive_mirror_list(self)
+            interactive.build_mirror_list(self)
         else:
-            common.build_common_mirror_list(self)
+            common.build_mirror_list(self)
 
 
 if __name__ == "__main__":

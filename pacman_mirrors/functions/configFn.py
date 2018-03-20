@@ -25,7 +25,7 @@ from pacman_mirrors.config import configuration as conf
 from pacman_mirrors.constants import txt
 
 
-def build_config():
+def setup_config():
     """Get config informations
     :returns: config, custom
     :rtype: tuple
