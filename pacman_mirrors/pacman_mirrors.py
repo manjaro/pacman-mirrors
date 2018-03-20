@@ -31,9 +31,9 @@ from pacman_mirrors.builder import common, fasttrack, interactive
 from pacman_mirrors.config import configuration as conf
 from pacman_mirrors.functions import cli
 from pacman_mirrors.functions import configFn
+from pacman_mirrors.functions import defaultFn
 from pacman_mirrors.functions import fileFn
 from pacman_mirrors.functions import httpFn
-from pacman_mirrors.functions import defaultPoolFn
 
 from pacman_mirrors.functions import util
 from pacman_mirrors.mirrors.mirror import Mirror
@@ -101,7 +101,7 @@ class PacmanMirrors:
         """
         # Load all mirrors
         """
-        defaultPoolFn.load_all_mirrors(self)
+        defaultFn.load_all_mirrors(self)
         """
         # Decide which type of mirrorlist to create
         * Fasttrack

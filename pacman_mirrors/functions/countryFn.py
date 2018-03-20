@@ -17,11 +17,8 @@
 #
 # Authors: Frede Hundewadt <echo ZmhAbWFuamFyby5vcmcK | base64 -d>
 
-"""Pacman-Mirrors Default Mirror Functions"""
+"""Pacman-Mirrors Country Functions"""
 
-from operator import itemgetter
-
-from pacman_mirrors.functions import fileFn
 from pacman_mirrors.functions import httpFn
 from pacman_mirrors.functions import validFn
 
@@ -71,21 +68,4 @@ def get_geoip_country(country_pool):
     else:
         return None
 
-
-def seed_mirrors(self, file, status=False):
-    """
-    Seed mirrors
-    """
-    mirrors = fileFn.read_mirror_file(file)
-    if status:
-        self.mirrors.seed(mirrors, status=status)
-    else:
-        self.mirrors.seed(mirrors)
-    sort_mirror_countries(self)
-
-
-def sort_mirror_countries(self):
-    self.mirrors.mirror_pool = sorted(self.mirrors.mirror_pool,
-                                      key=itemgetter("country"))
-    self.mirrors.country_pool = sorted(self.mirrors.country_pool)
 

@@ -122,7 +122,7 @@ def build_interactive_mirror_list(self):
             _ = custom_pool[0]
             self.custom = True
             self.config["country_pool"] = ["Custom"]
-            outputFn.output_custom_mirror_pool_file(self, custom_pool)
+            outputFn.file_custom_mirror_pool(self, custom_pool)
             """
             Writing the final mirrorlist
             only write mirrors which are up-to-date for users selected branch
@@ -136,7 +136,7 @@ def build_interactive_mirror_list(self):
             """
             try:
                 _ = mirror_list[0]
-                outputFn.output_mirror_list(self, mirror_list)
+                outputFn.file_mirror_list(self, mirror_list)
             except IndexError:
                 raise IndexError
         except IndexError:

@@ -96,7 +96,7 @@ def build_fasttrack_mirror_list(self, number):
     """
     try:
         _ = worklist[0]
-        outputFn.output_mirror_list(self, worklist)
+        outputFn.file_mirror_list(self, worklist)
     except IndexError:
         print(".: {} {}".format(txt.WRN_CLR, txt.NO_SELECTION))
         print(".: {} {}".format(txt.INF_CLR, txt.NO_CHANGE))

@@ -25,7 +25,7 @@ import sys
 
 from pacman_mirrors import __version__
 from pacman_mirrors.api import api_handler
-from pacman_mirrors.functions import customPoolFn
+from pacman_mirrors.functions import customFn
 from pacman_mirrors.constants import txt
 from pacman_mirrors.functions import outputFn
 from pacman_mirrors.translation.custom_help_formatter \
@@ -157,7 +157,7 @@ def parse_command_line(self, gtk_available):
         sys.exit(0)
 
     if args.list:
-        outputFn.output_country_pool_console(self)
+        outputFn.console_default_country_pool(self)
         sys.exit(0)
 
     if args.get_branch:
@@ -221,7 +221,7 @@ def parse_command_line(self, gtk_available):
             self.config["country_pool"] = args.country
 
         if self.config["country_pool"] == ["all"]:
-            customPoolFn.delete_custom_pool(self)
+            customFn.delete_custom_pool(self)
 
     if args.fasttrack:
         self.fasttrack = args.fasttrack

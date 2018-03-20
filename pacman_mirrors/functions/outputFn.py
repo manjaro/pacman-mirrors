@@ -20,20 +20,29 @@
 """Pacman-Mirrors Outpout Functions"""
 
 from pacman_mirrors.constants import txt
+from pacman_mirrors.functions import customFn
+from pacman_mirrors.functions import defaultFn
 from pacman_mirrors.functions import fileFn
 from pacman_mirrors.functions import jsonFn
-from pacman_mirrors.functions import defaultPoolFn
 
 
-def output_country_pool_console(self):
+def console_custom_country_pool(self):
     """
-    List all available countries
+    List available countries from custom pool
     """
-    defaultPoolFn.load_default_mirror_pool(self)
+    customFn.load_custom_mirror_pool(self)
     print("{}".format("\n".join(self.mirrors.country_pool)))
 
 
-def output_custom_mirror_pool_file(self, selected_mirrors):
+def console_default_country_pool(self):
+    """
+    List all available countries
+    """
+    defaultFn.load_default_mirror_pool(self)
+    print("{}".format("\n".join(self.mirrors.country_pool)))
+
+
+def file_custom_mirror_pool(self, selected_mirrors):
     """
     Output selected mirrors to custom mirror file
     :param self:
@@ -51,7 +60,7 @@ def output_custom_mirror_pool_file(self, selected_mirrors):
                                 self.config["custom_file"]))
 
 
-def output_mirror_list(self, selected_servers):
+def file_mirror_list(self, selected_servers):
     """
     Outputs selected servers to mirrorlist
     :param self:

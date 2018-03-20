@@ -17,58 +17,64 @@
 #
 # Authors: Frede Hundewadt <echo ZmhAbWFuamFyby5vcmcK | base64 -d>
 
-"""Pacman-Mirrors Custom Functions"""
+"""Pacman-Mirrors Custom Pool Functions"""
 
-import os
-
-from pacman_mirrors.config import configuration as conf
-from pacman_mirrors.constants import txt
+from pacman_mirrors.functions import defaultFn
+from pacman_mirrors.functions import fileFn
 from pacman_mirrors.functions import jsonFn
+from pacman_mirrors.functions import validFn
 
 
-def convert_to_json():
-    """Convert custom mirror file to json"""
-    print(".: {} {}".format(txt.INF_CLR, txt.CONVERT_CUSTOM_MIRROR_FILE))
-    mirrors = []
-    with open(conf.O_CUST_FILE, "r") as mirrorfile:
-        mirror_country = None
-        for line in mirrorfile:
-            country = get_country(line)
-            if country:
-                mirror_country = country
-                continue
-            mirror_url = get_url(line)
-            if not mirror_url:
-                continue
-            mirror_protocol = get_protocol(mirror_url)
-            # add to mirrors
-            mirrors.append({
-                "country": mirror_country,
-                "protocols": [mirror_protocol],
-                "url": mirror_url
-            })
-        # write new file
-        jsonFn.write_json_file(mirrors, conf.CUSTOM_FILE)
-        os.remove(conf.O_CUST_FILE)
+def apply_status_to_custom_mirror_pool(config, custom_pool):
+    """
+    Apply the current mirror status to the custom mirror file
+    :param config: config dictionary
+    :param custom_pool: the custom mirror pool
+    :return: custom mirror pool with status applied
+    """
+    status_list = tuple(jsonFn.read_json_file(config["status_file"], dictionary=False))
+    custom_list = tuple(custom_pool)
+    try:
+        _ = status_list[0]
+        for custom in custom_list:
+            for status in status_list:
+                if custom["url"] in status["url"]:
+                    custom["last_sync"] = status["last_sync"]
+                    custom["branches"] = status["branches"]
+        return list(custom_list)
+    except (IndexError, KeyError):
+        return custom_pool
 
 
-def get_protocol(data):
-    """Extract protocol from url"""
-    pos = data.find(":")
-    return data[:pos]
+def check_custom_mirror_pool(self):
+    """
+    Custom mirror pool or countries from CLI
+    :return: True/False
+    """
+    if validFn.custom_config_is_valid():
+        self.custom = True
+    else:
+        self.selected_countries = self.config["country_pool"]
+    return self.custom
 
 
-def get_country(data):
-    """Extract mirror country from data"""
-    line = data.strip()
-    if line.startswith("[") and line.endswith("]"):
-        return line[1:-1]
-    elif line.startswith("## Country") or line.startswith("## Location"):
-        return line[19:]
+def delete_custom_pool(self):
+    """
+    Delete custom mirror pool
+    """
+    self.custom = False
+    self.config["country_pool"] = []
+    fileFn.delete_file(self.config["custom_file"])
 
 
-def get_url(data):
-    """Extract mirror url from data"""
-    line = data.strip()
-    if line.startswith("Server"):
-        return line[9:].replace("$branch/$repo/$arch", "")
+def load_custom_mirror_pool(self):
+    """
+    Load available custom mirrors and update their status from status.json
+    If user request reset (--default) load the default pool
+    """
+    if self.default:
+        defaultFn.load_default_mirror_pool(self)
+    else:
+        defaultFn.seed_mirrors(self, self.config["custom_file"])
+        self.mirrors.mirror_pool = apply_status_to_custom_mirror_pool(self.config, self.mirrors.mirror_pool)
+

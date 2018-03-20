@@ -44,7 +44,7 @@ def build_common_mirror_list(self):
     if len(self.selected_countries) < len(self.mirrors.country_pool):
         try:
             _ = self.selected_countries[0]
-            outputFn.output_custom_mirror_pool_file(self, mirror_selection)
+            outputFn.file_custom_mirror_pool(self, mirror_selection)
         except IndexError:
             pass
     """
@@ -76,7 +76,7 @@ def build_common_mirror_list(self):
     """
     try:
         _ = mirror_selection[0]
-        outputFn.output_mirror_list(self, mirror_selection)
+        outputFn.file_mirror_list(self, mirror_selection)
         if self.custom:
             print(".: {} {} 'sudo {}'".format(txt.INF_CLR,
                                               txt.REMOVE_CUSTOM_CONFIG,

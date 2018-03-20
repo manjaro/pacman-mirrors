@@ -22,7 +22,29 @@ import platform
 import shutil
 
 from pacman_mirrors.api import apifn
-from pacman_mirrors.constants import colors as color, txt
+from pacman_mirrors.constants import txt
+
+
+def get_country(data):
+    """Extract mirror country from data"""
+    line = data.strip()
+    if line.startswith("[") and line.endswith("]"):
+        return line[1:-1]
+    elif line.startswith("## Country") or line.startswith("## Location"):
+        return line[19:]
+
+
+def get_protocol(data):
+    """Extract protocol from url"""
+    pos = data.find(":")
+    return data[:pos]
+
+
+def get_url(data):
+    """Extract mirror url from data"""
+    line = data.strip()
+    if line.startswith("Server"):
+        return line[9:].replace("$branch/$repo/$arch", "")
 
 
 def i686_check(self, write=False):
@@ -32,6 +54,13 @@ def i686_check(self, write=False):
             self.config["branch"] = "x32-{}".format(self.config["branch"])
             if write:
                 apifn.write_config_branch(self.config["branch"], self.config["config_file"], quiet=True)
+
+
+def internet_message():
+    """Message when internet connection is down"""
+    print(".: {} {}".format(txt.WRN_CLR, txt.INTERNET_DOWN))
+    print(".: {} {}".format(txt.INF_CLR, txt.MIRROR_RANKING_NA))
+    print(".: {} {}".format(txt.INF_CLR, txt.INTERNET_ALTERNATIVE))
 
 
 def strip_protocol(url):
@@ -44,38 +73,6 @@ def strip_protocol(url):
     if colon:
         return url[colon:]
     return url
-
-
-def debug(where, what, value):
-    """Helper for printing debug messages"""
-    print("{} {} >>>> '{} = {}'".format(color.DBG_CLR, where, what, value))
-
-
-def blue(message):
-    """Helper for printing blue messages"""
-    print("{}{}{}".format(color.BLUE, message, color.ENDCOLOR))
-
-
-def green(message):
-    """Helper for printing green messages"""
-    print("{}{}{}".format(color.GREEN, message, color.ENDCOLOR))
-
-
-def red(message):
-    """Helper for printing yellow messages"""
-    print("{}{}{}".format(color.RED, message, color.ENDCOLOR))
-
-
-def yellow(message):
-    """Helper for printing yellow messages"""
-    print("{}{}{}".format(color.YELLOW, message, color.ENDCOLOR))
-
-
-def internet_message():
-    """Message when internet connection is down"""
-    print(".: {} {}".format(txt.WRN_CLR, txt.INTERNET_DOWN))
-    print(".: {} {}".format(txt.INF_CLR, txt.MIRROR_RANKING_NA))
-    print(".: {} {}".format(txt.INF_CLR, txt.INTERNET_ALTERNATIVE))
 
 
 def terminal_size():
