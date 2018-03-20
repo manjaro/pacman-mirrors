@@ -17,41 +17,12 @@
 #
 # Author(s): Ramon Buldó <rbuldo@gmail.com>
 
-import os
-import shutil
-
 from pacman_mirrors import pacman_mirrors
-from pacman_mirrors.config.configuration import O_CUST_FILE
-from pacman_mirrors.functions import customFn
 from pacman_mirrors.translation import i18n
 
 _ = i18n.language.gettext
 
 
-def move_custom_country():
-    """
-    Move custom country file from /etc/pacman.d/mirrors/ to
-    /var/lib/pacman_mirrors/
-    """
-    print(_("Moving 'Custom' mirrors file to ") + "/var/lib/pacman_mirrors/")
-    os.makedirs("/var/lib/pacman_mirrors", mode=0o755, exist_ok=True)
-    try:
-        shutil.move("/etc/pacman.d/mirrors/Custom",
-                    "/var/lib/pacman_mirrors/Custom")
-    except OSError as e:
-        print(_("Warning: Cannot move '{filename}' to '{filename2}': {error}"
-              .format(filename=e.filename,
-                      filename2=e.filename2,
-                      error=e.strerror)))
-
-
-if os.path.isfile("/etc/pacman.d/mirrors/Custom"):
-    if os.getuid() == 0:
-        move_custom_country()
-
-if os.path.isfile(O_CUST_FILE):
-    if os.getuid() == 0:
-        customFn.convert_to_json()
 try:
     pm = pacman_mirrors.PacmanMirrors()
     pm.run()
