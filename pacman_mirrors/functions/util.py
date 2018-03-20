@@ -16,9 +16,22 @@
 # along with pacman-mirrors.  If not, see <http://www.gnu.org/licenses/>.
 #
 # Authors: Frede Hundewadt <echo ZmhAbWFuamFyby5vcmcK | base64 -d>
+
+
+import platform
 import shutil
 
+from pacman_mirrors.api import apifn
 from pacman_mirrors.constants import colors as color, txt
+
+
+def i686_check(self, write=False):
+    if platform.machine() == "i686":
+        self.config["x32"] = True
+        if "x32" not in self.config["branch"]:
+            self.config["branch"] = "x32-{}".format(self.config["branch"])
+            if write:
+                apifn.write_config_branch(self.config["branch"], self.config["config_file"], quiet=True)
 
 
 def strip_protocol(url):
