@@ -123,7 +123,7 @@ def parse_command_line(self, gtk_available):
     misc.add_argument("-l", "--list", "--country-list",
                       action="store_true",
                       help=txt.HLP_ARG_LIST)
-    misc.add_argument("-lc", "--config-country",
+    misc.add_argument("-lc", "--country-config",
                       action="store_true",
                       help="lists configured mirror countries")
     misc.add_argument("-m", "--method",
@@ -163,7 +163,7 @@ def parse_command_line(self, gtk_available):
         outputFn.console_default_country_pool(self)
         sys.exit(0)
 
-    if args.config_country:
+    if args.country_config:
         outputFn.console_custom_country_pool(self)
         sys.exit(0)
 
