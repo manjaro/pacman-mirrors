@@ -1,6 +1,9 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [4.9.0] 2018-03-23
+* Added  : `-lc/--country-config` (Pamac [#366](https://github.com/manjaro/pamac/issues/366))
+
 ## [4.8.2] 2018-03-19
 * Fix: Github [#123](https://github.com/manjaro/pacman-mirrors/issues/123).
 
