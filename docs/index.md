@@ -145,6 +145,9 @@ Pacman-mirrors always attempt to download the lastest available data from [http:
 -l, \--list, \--country-list
 :   Lists available mirror countries.
 
+-lc, \--country-config
+:   Lists custom selected countries.
+
 -m, \--method *METHOD*
 :   Default method is *rank* but *random* can be selected.
 
