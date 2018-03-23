@@ -79,13 +79,7 @@ Some options are mutual exclusive and will throw an arguments error:
 
 Some arguments requires another argument present to have effect. E.g., this command will ignore *--default* argument
 
-   WRONG
-
-    pacman-mirrors --default
-
 The *-d/--default* argument tells *-i/--interactive* to force load all mirrors from the mirrorfile
-
-   CORRECT
 
     pacman-mirrors --interactive --default
 
