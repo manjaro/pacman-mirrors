@@ -1,6 +1,6 @@
-% pacman-mirrors(8) Pacman-Mirrors 4.8.x User Manual
-%
-% March, 2018
+% pacman-mirrors(8) Pacman-Mirrors 4.8.x User Manual  
+%  
+% March, 2018  
 
 # NAME
 
@@ -8,10 +8,9 @@ pacman-mirrors - generate pacman mirrorlist for Manjaro Linux
 
 # SYNOPSIS
  pacman-mirrors [-h] [-f [NUMBER]] [-i [-d]] [-m METHOD]
-                [-c COUNTRY [COUNTRY...] | [--geoip]] [-l]
-                [-q] [-t SECONDS] [-v] [-n]
-                [--api]
-                        [-S/-B BRANCH] [-p PREFIX]
+                [-c COUNTRY [COUNTRY...] | [--geoip]]
+                [-l] [-lc] [-q] [-t SECONDS] [-v] [-n]
+                [--api] [-S/-B BRANCH] [-p PREFIX]
                         [-P PROTO [PROTO...]] [-R] [-U URL]
 
 # DESCRIPTION
@@ -76,24 +75,23 @@ The reason: You have limited your mirror pool too much and none of your selected
 ## GENERAL INFO ABOUT ARGUMENTS
 Some options are mutual exclusive and will throw an arguments error:
 
-* **--branch** and **--set-branch**
 * **--country**, **--fasttrack**, **--geoip**
 
 Some arguments requires another argument present to have effect. E.g., this command will ignore *--default* argument
 
    WRONG
 
-    pacman-mirrors -b unstable --default
+    pacman-mirrors --default
 
 The *-d/--default* argument tells *-i/--interactive* to force load all mirrors from the mirrorfile
 
    CORRECT
 
-    pacman-mirrors -b unstable --interactive --default
+    pacman-mirrors --interactive --default
 
    Or
 
-    pacman-mirrors -bunstable -id
+    pacman-mirrors -id
 
 API specific arguments. For those to have effect the *-a/--api* argument must be present.
 
@@ -118,11 +116,6 @@ Pacman-mirrors always attempt to download the lastest available data from [http:
 
 -i, \--interactive [--default]
 :   This is a function designed to leave full control over countries, mirrors and protocols to the user. This function **DOES NOT** take into consideration up-to-date mirrors. The optional **--default** forces pacman-mirrors to load the default mirror file and ignore any preset custom pool, thus allowing for reselecting mirrors for a new custom pool.
-
-## BRANCH
-
--b, \--branch *BRANCH*
-:   Temporarily use another branch, *stable*, *testing* or *unstable*. The branch is reset with next run of pacman-mirrors.
 
 ## API
 
@@ -191,20 +184,17 @@ These arguments modifies key elements of pacman-mirrors configuration according 
 
 The actions performed by the API are in strict order and performed *before any* other actions. This also means that ordinary arguments supplied in conjunction with api might be ignored. Eg. **-U** argument terminates pacman-mirrors when branch and mirrorlist has been written.
 
-1. If *-G*
-   * print *config.branch*
-   * *sys.exit(0)*
-2. If *p*  *PREFIX*
+1. If *p*  *PREFIX*
    *  add *PREFIX* to internal file configuration
-3. If *-S/-B* *BRANCH*
+2. If *-S/-B* *BRANCH*
    * apply *BRANCH* to internal configuration
    * replace branch in pacman-mirrors.conf with *BRANCH*
-4. If *-U* *URL*
+3. If *-U* *URL*
    * apply internal configuration to a mirrorlist with *URL*
    * *sys.exit(0)*
-5. If *-P* *PROTO* [*PROTO*] ...
+4. If *-P* *PROTO* [*PROTO*] ...
    * replace protocols in pacman-mirrors.conf with *PROTO*
-6. If *-R*
+5. If *-R*
    * replace branch in mirrorlist with *-S/-B* *BRANCH*
 
 When done pacman-mirrors checks the internet connection and if possible download the latest datafiles for creating the mirrorlist. At this point it is possible to interrupt further processing.
@@ -223,13 +213,9 @@ Most optional arguments are self explaining others require explanation. The API 
 
 * What branch am I on
 
-    *pacman-mirrors --api --get-branch*
+    *pacman-mirrors -G*
 
 ## Commands requiring sudo
-
-* I want to temporary change branch to unstable, use geolocation,
-
-    *sudo pacman-mirrors --branch unstable --geoip*
 
 * I want to permanently change branch to unstable, use mirrors from Germany and France, use only https and http protocol in that order
 
@@ -259,6 +245,7 @@ Most optional arguments are self explaining others require explanation. The API 
 
     *sudo pacman-mirrors --country all*
 
+## Advanced use samples - BEWARE OF THE DRAGONS
 * Change system branch and dont change the mirrorlist
 
     *sudo pacman-mirrors -naS unstable*
