@@ -33,8 +33,18 @@ After all operations *ALWAYS* syncronize and update your system with
     sudo pacman -Syyu
 
 # OPERATION
-No matter how you choose to generate your mirrorlist, you will **ONLY** get up-to-date mirrors.
-This means the - at any given time - number available mirrors will vary depending on when the mirror last syncronized with the master repo server.
+Pacman-mirrors tries to povide **ONLY** up-to-date mirrors **if** they are available in your chosen mirror pool
+This means - at any given time - the number of available mirrors will vary depending on when the mirror last syncronized with the master repo server.
+**But** if no up-to-date mirrors is available in your chosen mirror pool, your mirror list will not be changed.
+
+# Network connection
+To be able to download the latest status file from repo.manjaro.org pacman-mirrors verifies network connection by opening up to three different websites. The sites are
+
+1. wikipedia.org
+2. github.com
+2. bitbucket.org
+
+The sites are chosen due to their generic nature and general availability.
 
 ## MODES
 
@@ -68,8 +78,7 @@ The reason: You have limited your mirror pool too much and none of your selected
 
 **Suggested solutions**:
 
-* Remove limitations like **`--geoip`**
-* Expand with more countries.
+* Remove limitations on countries and/or protocols
 * Do a complete reset of your list with *`pacman-mirrors -c all -aP all`** and then **`pacman-mirrors -f`**
 
 ## GENERAL INFO ABOUT ARGUMENTS
@@ -89,7 +98,7 @@ The *-d/--default* argument tells *-i/--interactive* to force load all mirrors f
 
 API specific arguments. For those to have effect the *-a/--api* argument must be present.
 
-    pacman-mirrors -aS unstable
+    pacman-mirrors -aB unstable
 
 The arguments can appear in any order except for arguments which takes additional options in which case the options must follow immediately after the argument with or without space, for example
 
