@@ -36,10 +36,9 @@ def parse_command_line(self, gtk_available):
     """Read the arguments of the command line"""
 
     args_summary = "[-h] [-f [{}]] [-i [-d]] [-m {}]\n" \
-                   "\t\t[-c {} [{}...] | [--geoip]] [-l]\n" \
-                   "\t\t[-q] [-t {}] [-v] [-n]\n" \
-                   "\t\t[--api]\n" \
-                   "\t\t\t[-S/-B {}] [-p {}]\n" \
+                   "\t\t[-c {} [{}...] | [--geoip]]" \
+                   "\t\t[-l] [-lc] [-q] [-t {}] [-v] [-n]\n" \
+                   "\t\t[--api] [-S/-B {}] [-p {}]\n" \
                    "\t\t\t[-P {} [{}...]] [-R] [-U {}]\n".format(txt.NUMBER,
                                                                  txt.METHOD,
                                                                  txt.COUNTRY,
