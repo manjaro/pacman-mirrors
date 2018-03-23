@@ -1,6 +1,9 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [4.9.1] 2018-03-23
+* Fixed  : [#130](https://github.com/manjaro/pacman-mirrors/issues/130) Mirror list generation could result in weird destinations if user selected multiple protocols from same mirror.
+
 ## [4.9.0] 2018-03-23
 * Added  : `-lc/--country-config` (Pamac [#366](https://github.com/manjaro/pamac/issues/366))
 
