@@ -27,6 +27,13 @@ from pacman_mirrors.api import apifn
 from pacman_mirrors.constants import txt
 
 
+def extract_mirror_url(data):
+    """Extract mirror url from data"""
+    line = data.strip()
+    if line.startswith("Server"):
+        return line[9:].replace("$branch/$repo/$arch", "")
+
+
 def get_country(data):
     """Extract mirror country from data"""
     line = data.strip()
@@ -42,11 +49,28 @@ def get_protocol(data):
     return data[:pos]
 
 
-def get_url(data):
-    """Extract mirror url from data"""
-    line = data.strip()
-    if line.startswith("Server"):
-        return line[9:].replace("$branch/$repo/$arch", "")
+def get_protocol_from_url(url):
+    """
+    Splits an url
+    :param url:
+    :returns protocol eg. http
+    """
+    colon = url.find(":")
+    if colon:
+        return url[:colon]
+    return url
+
+
+def get_server_location_from_url(url):
+    """
+    Splits an url
+    :param url:
+    :returns url string without protocol
+    """
+    colon = url.find(":")
+    if colon:
+        return url[colon:]
+    return url
 
 
 def i686_check(self, write=False):
@@ -63,18 +87,6 @@ def internet_message():
     print(".: {} {}".format(txt.WRN_CLR, txt.INTERNET_DOWN))
     print(".: {} {}".format(txt.INF_CLR, txt.MIRROR_RANKING_NA))
     print(".: {} {}".format(txt.INF_CLR, txt.INTERNET_ALTERNATIVE))
-
-
-def strip_protocol(url):
-    """
-    Splits an url
-    :param url:
-    :returns url string without protocol
-    """
-    colon = url.find(":")
-    if colon:
-        return url[colon:]
-    return url
 
 
 def terminal_size():

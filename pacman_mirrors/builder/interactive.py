@@ -85,7 +85,6 @@ def build_mirror_list(self):
     b. a mirrorlist in pacman format.
     """
     interactive_list = convertFn.translate_pool_to_interactive(worklist)
-    #
     # import the right ui
     if self.no_display:
         # in console mode
@@ -132,7 +131,7 @@ def build_mirror_list(self):
             """
             Try writing mirrorlist
             If no up-to-date mirrors exist for users branch
-
+            Raise IndexError
             """
             try:
                 _ = mirror_list[0]
