@@ -35,7 +35,15 @@
 <p>After all operations <em>ALWAYS</em> syncronize and update your system with</p>
 <pre><code>sudo pacman -Syyu</code></pre>
 <h1 id="operation">OPERATION</h1>
-<p>No matter how you choose to generate your mirrorlist, you will <strong>ONLY</strong> get up-to-date mirrors. This means the - at any given time - number available mirrors will vary depending on when the mirror last syncronized with the master repo server.</p>
+<p>Pacman-mirrors tries to povide <strong>ONLY</strong> up-to-date mirrors <strong>if</strong> they are available in your chosen mirror pool This means - at any given time - the number of available mirrors will vary depending on when the mirror last syncronized with the master repo server. <strong>But</strong> if no up-to-date mirrors is available in your chosen mirror pool, your mirror list will not be changed.</p>
+<h1 id="network-connection">Network connection</h1>
+<p>To be able to download the latest status file from repo.manjaro.org pacman-mirrors verifies network connection by opening up to three different websites. The sites are</p>
+<ol type="1">
+<li>wikipedia.org</li>
+<li>github.com</li>
+<li>bitbucket.org</li>
+</ol>
+<p>The sites are chosen due to their generic nature and general availability.</p>
 <h2 id="modes">MODES</h2>
 <ol type="1">
 <li>The number of mirrors
@@ -80,8 +88,7 @@
 <p>This is not an error, it is a feature. The reason: You have limited your mirror pool too much and none of your selected mirrors are up-to-date.</p>
 <p><strong>Suggested solutions</strong>:</p>
 <ul>
-<li>Remove limitations like <strong><code>--geoip</code></strong></li>
-<li>Expand with more countries.</li>
+<li>Remove limitations on countries and/or protocols</li>
 <li>Do a complete reset of your list with *<code>pacman-mirrors -c all -aP all</code><strong> and then </strong><code>pacman-mirrors -f</code>**</li>
 </ul>
 <h2 id="general-info-about-arguments">GENERAL INFO ABOUT ARGUMENTS</h2>
@@ -95,7 +102,7 @@
 <p>Or</p>
 <pre><code>pacman-mirrors -id</code></pre>
 <p>API specific arguments. For those to have effect the <em>-a/–api</em> argument must be present.</p>
-<pre><code>pacman-mirrors -aS unstable</code></pre>
+<pre><code>pacman-mirrors -aB unstable</code></pre>
 <p>The arguments can appear in any order except for arguments which takes additional options in which case the options must follow immediately after the argument with or without space, for example</p>
 <pre><code>pacman-mirrors -f
 pacman-mirrors -f 5
