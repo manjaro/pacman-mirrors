@@ -18,7 +18,7 @@
 # Authors: Frede Hundewadt <echo ZmhAbWFuamFyby5vcmcK | base64 -d>
 
 
-"""Pacman-Mirrors Mirror"""
+"""Pacman-Mirrors Mirror Class Module"""
 
 from pacman_mirrors.constants import txt
 
