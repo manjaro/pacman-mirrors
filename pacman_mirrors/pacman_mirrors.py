@@ -29,7 +29,7 @@ import sys
 import pacman_mirrors.functions.util
 from pacman_mirrors.builder import common, fasttrack, interactive
 from pacman_mirrors.config import configuration as conf
-from pacman_mirrors.functions import cli
+from pacman_mirrors.functions import cliFn
 from pacman_mirrors.functions import configFn
 from pacman_mirrors.functions import defaultFn
 from pacman_mirrors.functions import fileFn
@@ -64,8 +64,9 @@ class PacmanMirrors:
         self.max_wait_time = 2
         self.mirrors = Mirror()
         self.network = True
-        self.no_mirrorlist = False
         self.no_display = False
+        self.no_mirrorlist = False
+        self.no_status = False
         self.quiet = False
         self.selected_countries = []
 
@@ -83,7 +84,7 @@ class PacmanMirrors:
         """
         (self.config, self.custom) = configFn.setup_config()
         fileFn.create_dir(self.config["work_dir"])
-        cli.parse_command_line(self, GTK_AVAILABLE)
+        cliFn.parse_command_line(self, GTK_AVAILABLE)
         util.i686_check(self, write=True)
         if not configFn.verify_config(self.config):
             sys.exit(2)
