@@ -135,6 +135,9 @@ def parse_command_line(self, gtk_available):
     misc.add_argument("-q", "--quiet",
                       action="store_true",
                       help=txt.HLP_ARG_QUIET)
+    misc.add_argument("-s", "--no-status",
+                      action="store_true",
+                      help=txt.HLP_ARG_STATUS)
     misc.add_argument("-t", "--timeout",
                       type=int,
                       metavar=txt.SECONDS,
@@ -210,6 +213,9 @@ def parse_command_line(self, gtk_available):
     if args.no_mirrorlist:
         self.no_mirrorlist = True
 
+    if args.no_status:
+        self.no_status = True
+
     if args.quiet:
         self.quiet = True
 
@@ -262,6 +268,6 @@ def parse_command_line(self, gtk_available):
                 else:
                     self.config["protocols"] = args.proto
 
-        api_handler.api_config(self, set_pfx=args.prefix,
+        api_handler.set_config(self, set_pfx=args.prefix,
                                set_branch=setbranch, re_branch=rebranch,
                                set_protocols=setprotocols, set_url=url)
