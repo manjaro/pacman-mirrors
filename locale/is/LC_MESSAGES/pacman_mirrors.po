@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: manjaro-pacman-mirrors\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
 "POT-Creation-Date: 2017-10-23 20:55+0200\n"
-"PO-Revision-Date: 2018-01-20 17:34+0000\n"
+"PO-Revision-Date: 2018-03-24 13:50+0000\n"
 "Last-Translator: Kristján Magnússon\n"
 "Language-Team: Icelandic (http://www.transifex.com/manjarolinux/manjaro-pacman-mirrors/language/is/)\n"
 "MIME-Version: 1.0\n"
@@ -38,7 +38,7 @@ msgstr "HTTPException"
 
 #: pacman_mirrors/constants/txt.py:34
 msgid "TIMEOUT"
-msgstr ""
+msgstr "Hlé"
 
 #: pacman_mirrors/constants/txt.py:36
 msgid "API"
@@ -58,11 +58,11 @@ msgstr "SKRÁ"
 
 #: pacman_mirrors/constants/txt.py:40
 msgid "METHOD"
-msgstr ""
+msgstr "Aðferð"
 
 #: pacman_mirrors/constants/txt.py:41
 msgid "METHODS"
-msgstr ""
+msgstr "Aðferðir"
 
 #: pacman_mirrors/constants/txt.py:42
 msgid "MISC"
@@ -122,7 +122,7 @@ msgstr ""
 
 #: pacman_mirrors/constants/txt.py:57
 msgid "Branch name"
-msgstr ""
+msgstr "Nafn útibús"
 
 #: pacman_mirrors/constants/txt.py:58
 msgid "Comma separated list of countries, from which mirrors will be used"
@@ -262,7 +262,7 @@ msgstr ""
 
 #: pacman_mirrors/constants/txt.py:95
 msgid "Generated on"
-msgstr ""
+msgstr "Búið til á "
 
 #: pacman_mirrors/constants/txt.py:96
 msgid "custom mirrorlist"
@@ -378,7 +378,7 @@ msgstr "Hætta við"
 
 #: pacman_mirrors/constants/txt.py:127
 msgid "OK"
-msgstr "Alt í lagi"
+msgstr "Allt í lagi"
 
 #: pacman_mirrors/constants/txt.py:128
 msgid "Confirm selections"
