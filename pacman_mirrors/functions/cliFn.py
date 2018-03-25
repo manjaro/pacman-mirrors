@@ -194,6 +194,9 @@ def parse_command_line(self, gtk_available):
             print(".: {} {}".format(txt.ERR_CLR, txt.INTERACTIVE_ARGUMENTS_ERROR))
             sys.exit(1)
 
+    if args.fasttrack and args.no_status:
+        print(".: {} {}".format(txt.ERR_CLR, txt.FASTTRACK_ARGUMENTS_ERROR))
+
     """
     #############################################################
     Root required

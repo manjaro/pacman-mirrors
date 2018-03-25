@@ -162,3 +162,5 @@ WRN_CLR = "\033[1;33m{}\033[1;m".format(WARN)
 EXP_CLR = "\033[1;33m{}\033[1;m".format(EXPECTED)
 API_ARGUMENTS_ERROR = "{} {}.".format(ARGUMENT_API, MISSING_ARGUMENT)
 INTERACTIVE_ARGUMENTS_ERROR = "{} {}.".format(ARGUMENT_INTERACTIVE, MISSING_ARGUMENT)
+FASTTRACK_ARGUMENTS_ERROR = _("pacman-mirrors: error: argument -s/--no-status: "
+                              "not allowed with argument -f/--fasttrack")
