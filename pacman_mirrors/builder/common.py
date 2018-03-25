@@ -58,11 +58,11 @@ def build_mirror_list(self):
         pass
 
     """
-    only list mirrors which are up-to-date for users selected branch
-    by removing not up-to-date mirrors from the list
-    UP-TO-DATE FILTERING NEXT
+    Unless the user has provided the --no-status argument we only 
+    write mirrors which are up-to-date for users selected branch
     """
-    mirror_selection = filterFn.filter_user_branch(mirror_selection, self.config)
+    if self.no_status is False:
+        mirror_selection = filterFn.filter_user_branch(mirror_selection, self.config)
 
     if self.config["method"] == "rank":
         mirror_selection = testMirrorFn.test_mirrors(self, mirror_selection)
