@@ -132,7 +132,10 @@ def build_mirror_list(self):
             Unless the user has provided the --no-status argument we only 
             write mirrors which are up-to-date for users selected branch
             """
-            if self.no_status is False:
+            if self.no_status:
+                print("{} {}\n{} {}".format(txt.WRN_CLR, txt.OVERRIDE_STATUS_CHOICE,
+                                            txt.WRN_CLR, txt.OVERRIDE_STATUS_MIRROR))
+            else:
                 mirror_list = filterFn.filter_user_branch(mirror_list, self.config)
             """
             Writing mirrorlist
