@@ -19,8 +19,6 @@
 
 """Pacman-Mirrors Converter Functions"""
 
-from collections import OrderedDict
-
 from pacman_mirrors.constants import txt
 from pacman_mirrors.functions import util
 
@@ -35,8 +33,8 @@ def translate_interactive_to_pool(interactive_pool, mirror_pool, config):
     """
     custom_pool = []
     mirror_list = []
-    urls = set()
-    protocols = set()
+    custom_urls = set()
+    custom_protocols = set()
     for custom in interactive_pool:
         try:
             """
@@ -52,8 +50,8 @@ def translate_interactive_to_pool(interactive_pool, mirror_pool, config):
                     _ = mirror_pool[0]
                     mirror_url = util.get_server_location_from_url(mirror["url"])
                     if custom_url == mirror_url:
-                        if custom_url not in urls:
-                            urls.add(custom_url)
+                        if custom_url not in custom_urls:
+                            custom_urls.add(custom_url)
                             custom_pool.append({
                                 "country": mirror["country"],
                                 "protocols": mirror["protocols"],
@@ -69,8 +67,8 @@ def translate_interactive_to_pool(interactive_pool, mirror_pool, config):
                         except IndexError:
                             pass
 
-                        if custom_protocol not in protocols:
-                            protocols.add(custom_protocol)
+                        if custom_protocol not in custom_protocols:
+                            custom_protocols.add(custom_protocol)
                             mirror_list.append({
                                 "country": mirror["country"],
                                 "branches": mirror["branches"],
@@ -81,11 +79,11 @@ def translate_interactive_to_pool(interactive_pool, mirror_pool, config):
                             })
 
                 except (KeyError, IndexError):
-                    print("{} {}! The default pool is empty!".format(txt.WRN_CLR, txt.HOUSTON))
+                    print("{} {}! {}!".format(txt.WRN_CLR, txt.HOUSTON, txt.DEFAULT_POOL_EMPTY))
                     break
-                protocols = set()
+                custom_protocols = set()
         except KeyError:
-            print("{} {}! The custom pool is empty!".format(txt.WRN_CLR, txt.HOUSTON))
+            print("{} {}! {}!".format(txt.WRN_CLR, txt.HOUSTON, txt.CUSTOM_POOL_EMPTY))
             break
 
     return custom_pool, mirror_list
@@ -107,17 +105,17 @@ def translate_pool_to_interactive(mirror_pool):
     for mirror in mirror_pool:
         try:
             _ = mirror_pool[0]
-            ls = str(mirror["last_sync"]).split(":")
+            last_sync = str(mirror["last_sync"]).split(":")
             mirror_url = util.get_server_location_from_url(mirror["url"])
             for idx, protocol in enumerate(mirror["protocols"]):
                 interactive_list.append({
                     "country": mirror["country"],
                     "resp_time": mirror["resp_time"],
-                    "last_sync": "{}h {}m".format(ls[0], ls[1]),
+                    "last_sync": "{}h {}m".format(last_sync[0], last_sync[1]),
                     "url": "{}{}".format(protocol, mirror_url)
                 })
         except (KeyError, IndexError):
-            print("{} {}! The mirror pool is empty".format(txt.WRN_CLR, txt.HOUSTON))
+            print("{} {}! {}!".format(txt.WRN_CLR, txt.HOUSTON, txt.MIRROR_POOL_EMPTY))
             break
     return interactive_list
 
