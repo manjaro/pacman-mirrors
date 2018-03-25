@@ -78,11 +78,13 @@ def build_mirror_list(self):
         "last_sync": "HH:MM",
         "url": "http://server/repo/"
     }
-    Therefor we have to create a list in the old format,
+    Therefore we have to create a list in the old format,
     thus avoiding rewrite of the ui and related functions.
     We subseqently need to translate the result into:
     a. a mirrorfile in the new json format,
     b. a mirrorlist in pacman format.
+    As of version 4.8.x the last sync field contents is a string
+    with the hours and minutes more human readable eg. 03h 33m
     """
     interactive_list = convertFn.translate_pool_to_interactive(worklist)
     # import the right ui
@@ -121,17 +123,22 @@ def build_mirror_list(self):
             _ = custom_pool[0]
             self.custom = True
             self.config["country_pool"] = ["Custom"]
+            """
+            Writing the custom mirror pool file
+            """
             outputFn.file_custom_mirror_pool(self, custom_pool)
             """
-            Writing the final mirrorlist
-            only write mirrors which are up-to-date for users selected branch
-            UP-TO-DATE FILTERING NEXT
+            Filtering the mirror list
+            Unless the user has provided the --no-status argument we only 
+            write mirrors which are up-to-date for users selected branch
             """
-            mirror_list = filterFn.filter_user_branch(mirror_list, self.config)
+            if self.no_status is False:
+                mirror_list = filterFn.filter_user_branch(mirror_list, self.config)
             """
-            Try writing mirrorlist
-            If no up-to-date mirrors exist for users branch
-            Raise IndexError
+            Writing mirrorlist
+            If the mirror list is empty because 
+            no up-to-date mirrors exist for users branch
+            raise IndexError to the outer try-catch
             """
             try:
                 _ = mirror_list[0]
