@@ -28,15 +28,15 @@ from pacman_mirrors.functions import fileFn
 from pacman_mirrors.functions import util
 
 
-def api_config(self, set_pfx=None, set_branch=None, re_branch=False, set_protocols=False, set_url=None):
+def set_config(self, set_pfx=None, set_branch=None, re_branch=False, set_protocols=False, set_url=None):
     """
     Api configuration function
     :param self:
     :param set_pfx: prefix to the config paths
     :param set_branch: replace branch in pacman-mirrors.conf
-    :param re_branch: replace branch in mirrorlist
+    :param re_branch: replace branch in mirror list
     :param set_protocols: replace protocols in pacman-mirrors.conf
-    :param set_url: replace mirror url in mirrorlist
+    :param set_url: replace mirror url in mirror list
     """
     if set_url is None:
         set_url = ""
@@ -111,7 +111,7 @@ def api_config(self, set_pfx=None, set_branch=None, re_branch=False, set_protoco
                               self.config["config_file"],
                               quiet=self.quiet)
     """
-    # Fourth API task: Rebranch the mirrorlist
+    # Fourth API task: Rebranch the mirrorl ist
     """
     if re_branch:
         if not set_branch:
