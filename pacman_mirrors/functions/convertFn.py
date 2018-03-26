@@ -79,11 +79,11 @@ def translate_interactive_to_pool(interactive_pool, mirror_pool, config):
                             })
 
                 except (KeyError, IndexError):
-                    print("{} {}! {}!".format(txt.WRN_CLR, txt.HOUSTON, txt.DEFAULT_POOL_EMPTY))
+                    print(".: {} {}! {}!".format(txt.WRN_CLR, txt.HOUSTON, txt.DEFAULT_POOL_EMPTY))
                     break
                 custom_protocols = set()
         except KeyError:
-            print("{} {}! {}!".format(txt.WRN_CLR, txt.HOUSTON, txt.CUSTOM_POOL_EMPTY))
+            print(".: {} {}! {}!".format(txt.WRN_CLR, txt.HOUSTON, txt.CUSTOM_POOL_EMPTY))
             break
 
     return custom_pool, mirror_list
@@ -97,7 +97,7 @@ def translate_pool_to_interactive(mirror_pool):
             {
                 "country": "country_name",
                 "resp_time": "m.sss",
-                "last_sync": "HH:MM",
+                "last_sync": "HHh MMm",
                 "url": "http://server/repo/"
             }
     """
@@ -115,7 +115,7 @@ def translate_pool_to_interactive(mirror_pool):
                     "url": "{}{}".format(protocol, mirror_url)
                 })
         except (KeyError, IndexError):
-            print("{} {}! {}!".format(txt.WRN_CLR, txt.HOUSTON, txt.MIRROR_POOL_EMPTY))
+            print(".: {} {}! {}!".format(txt.WRN_CLR, txt.HOUSTON, txt.MIRROR_POOL_EMPTY))
             break
     return interactive_list
 
