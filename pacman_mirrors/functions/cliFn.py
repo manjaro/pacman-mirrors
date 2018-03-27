@@ -39,16 +39,16 @@ def parse_command_line(self, gtk_available):
                    "\t\t[-c {} [{}...] | [--geoip]]\n" \
                    "\t\t[-l] [-lc] [-q] [-t {}] [-v] [-n]\n" \
                    "\t\t[--api] [-S/-B {}] [-p {}]\n" \
-                   "\t\t\t[-P {} [{}...]] [-R] [-U {}]\n".format(txt.NUMBER,
-                                                                 txt.METHOD,
-                                                                 txt.COUNTRY,
-                                                                 txt.COUNTRY,
-                                                                 txt.SECONDS,
-                                                                 txt.BRANCH,
-                                                                 txt.PREFIX,
-                                                                 txt.PROTO,
-                                                                 txt.PROTO,
-                                                                 txt.URL)
+                   "\t\t\t[-P {} [{}...]] [-R] [-U {}]".format(txt.NUMBER,
+                                                               txt.METHOD,
+                                                               txt.COUNTRY,
+                                                               txt.COUNTRY,
+                                                               txt.SECONDS,
+                                                               txt.BRANCH,
+                                                               txt.PREFIX,
+                                                               txt.PROTO,
+                                                               txt.PROTO,
+                                                               txt.URL)
 
     nusage = "\rVersion {}\n{}:\n pacman-mirrors".format(__version__, txt.USAGE)
     usage = "{} {}".format(nusage, args_summary)
@@ -64,9 +64,9 @@ def parse_command_line(self, gtk_available):
     methods_exclusive = methods.add_mutually_exclusive_group()
     methods_exclusive.add_argument("-f", "--fasttrack",
                                    nargs="?",
-                                   const=0,
+                                   const=-1,
                                    type=int,
-                                   default=0,
+                                   # default=0,
                                    metavar=txt.NUMBER,
                                    help="{} {}".format(txt.HLP_ARG_FASTTRACK, txt.OVERRIDE_OPT))
     methods_exclusive.add_argument("-c", "--country",
@@ -135,6 +135,9 @@ def parse_command_line(self, gtk_available):
     misc.add_argument("-q", "--quiet",
                       action="store_true",
                       help=txt.HLP_ARG_QUIET)
+    misc.add_argument("-s", "--no-status",
+                      action="store_true",
+                      help=txt.HLP_ARG_STATUS)
     misc.add_argument("-t", "--timeout",
                       type=int,
                       metavar=txt.SECONDS,
@@ -180,7 +183,8 @@ def parse_command_line(self, gtk_available):
     """
     if args.set_branch or args.proto or args.url or args.prefix:
         if not args.api:
-            print(".: {} {}".format(txt.ERR_CLR, txt.API_ARGUMENTS_ERROR))
+            print("Version {}\nUSAGE:\n {} {}".format(__version__, "pacman-mirrors", args_summary))
+            print("{}".format(txt.API_ARGUMENTS_ERROR))
             sys.exit(1)
 
     """
@@ -188,7 +192,8 @@ def parse_command_line(self, gtk_available):
     """
     if args.default:
         if not args.interactive:
-            print(".: {} {}".format(txt.ERR_CLR, txt.INTERACTIVE_ARGUMENTS_ERROR))
+            print("Version {}\nUSAGE:\n {} {}".format(__version__, "pacman-mirrors", args_summary))
+            print("{}".format(txt.INTERACTIVE_ARGUMENTS_ERROR))
             sys.exit(1)
 
     """
@@ -210,6 +215,9 @@ def parse_command_line(self, gtk_available):
     if args.no_mirrorlist:
         self.no_mirrorlist = True
 
+    if args.no_status:
+        self.no_status = True
+
     if args.quiet:
         self.quiet = True
 
@@ -229,7 +237,12 @@ def parse_command_line(self, gtk_available):
         if self.config["country_pool"] == ["all"]:
             customFn.delete_custom_pool(self)
 
-    if args.fasttrack:
+    if args.fasttrack is not None:
+        if args.no_status:
+            print("Version {}\nUSAGE:\n {} {}".format(__version__, "pacman-mirrors", args_summary))
+            print("{}".format(txt.FASTTRACK_ARGUMENTS_ERROR))
+            sys.exit(1)
+
         self.fasttrack = args.fasttrack
         self.geoip = False
         self.config["method"] = "rank"
@@ -262,6 +275,6 @@ def parse_command_line(self, gtk_available):
                 else:
                     self.config["protocols"] = args.proto
 
-        api_handler.api_config(self, set_pfx=args.prefix,
+        api_handler.set_config(self, set_pfx=args.prefix,
                                set_branch=setbranch, re_branch=rebranch,
                                set_protocols=setprotocols, set_url=url)
