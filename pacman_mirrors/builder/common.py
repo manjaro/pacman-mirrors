@@ -33,15 +33,15 @@ def build_mirror_list(self):
     Generate common mirrorlist
     """
     """
-    Create a list based on the content of selected_countries
-    """
-    mirror_selection = filterFn.filter_mirror_country(self.mirrors.mirror_pool,
-                                                      self.selected_countries)
-    """
     Remove known bad mirrors from the list
     mirrors where status.json has -1 for last_sync
     """
-    mirror_selection = filterFn.filter_bad_mirrors(mirror_selection)
+    mirror_selection = filterFn.filter_bad_mirrors(self.mirrors.mirror_pool)
+    """
+    Create a list based on the content of selected_countries
+    """
+    mirror_selection = filterFn.filter_mirror_country(mirror_selection,
+                                                      self.selected_countries)
     """
     Check the length of selected_countries against the full countrylist
     If selected_countries is the lesser then we build a custom pool file
