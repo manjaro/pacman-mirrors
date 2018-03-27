@@ -31,9 +31,8 @@ def filter_bad_mirrors(mirror_pool):
     """
     result = []
     for mirror in mirror_pool:
-        if mirror["last_sync"] == txt.SERVER_BAD:
-            break
-        result.append(mirror)
+        if mirror["last_sync"] != txt.SERVER_BAD:
+            result.append(mirror)
     return result
 
 
