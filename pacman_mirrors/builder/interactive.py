@@ -36,7 +36,11 @@ def build_mirror_list(self):
     Modify the configuration file to use the "custom" file.
     Outputs a pacman mirrorlist,
     """
-
+    """
+    Remove known bad mirrors from the list
+    mirrors where status.json has -1 for last_sync or branches is -1,-1,-1
+    """
+    worklist = filterFn.filter_bad_mirrors(self.mirrors.mirror_pool)
     """
     It would seem reasonable to implement a filter
     based on the users branch and the mirrors update status
@@ -47,13 +51,7 @@ def build_mirror_list(self):
     The final mirrorfile will include all mirrors selected by the user
     The final mirrorlist will exclude (if possible) mirrors not up-to-date
     """
-    worklist = filterFn.filter_mirror_country(self.mirrors.mirror_pool,
-                                              self.selected_countries)
-    """
-    Remove known bad mirrors from the list
-    mirrors where status.json has -1 for last_sync
-    """
-    worklist = filterFn.filter_bad_mirrors(worklist)
+    worklist = filterFn.filter_mirror_country(worklist, self.selected_countries)
     """
     If config.protols has content, that is a user decision and as such
     it has nothing to do with the reasoning regarding mirrors
@@ -102,6 +100,9 @@ def build_mirror_list(self):
                          self.default)
     # process user choices
     if interactive.is_done:
+        """
+        translate interactive list back to our json format
+        """
         custom_pool, mirror_list = convertFn.translate_interactive_to_pool(interactive.custom_list,
                                                                            self.mirrors.mirror_pool,
                                                                            self.config)
