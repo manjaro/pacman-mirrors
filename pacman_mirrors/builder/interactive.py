@@ -133,8 +133,9 @@ def build_mirror_list(self):
             write mirrors which are up-to-date for users selected branch
             """
             if self.no_status:
-                print("{} {}\n{} {}".format(txt.WRN_CLR, txt.OVERRIDE_STATUS_CHOICE,
-                                            txt.WRN_CLR, txt.OVERRIDE_STATUS_MIRROR))
+                pass
+                # print("{} {}\n{} {}".format(txt.WRN_CLR, txt.OVERRIDE_STATUS_CHOICE,
+                #                             txt.WRN_CLR, txt.OVERRIDE_STATUS_MIRROR))
             else:
                 mirror_list = filterFn.filter_user_branch(mirror_list, self.config)
             """
@@ -145,6 +146,9 @@ def build_mirror_list(self):
             try:
                 _ = mirror_list[0]
                 outputFn.file_mirror_list(self, mirror_list)
+                if self.no_status:
+                    print("{} {}\n{} {}".format(txt.WRN_CLR, txt.OVERRIDE_STATUS_CHOICE,
+                                                txt.WRN_CLR, txt.OVERRIDE_STATUS_MIRROR))
             except IndexError:
                 raise IndexError
         except IndexError:

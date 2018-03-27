@@ -67,8 +67,9 @@ def build_mirror_list(self):
     write mirrors which are up-to-date for users selected branch
     """
     if self.no_status:
-        print("{} {}\n{} {}".format(txt.WRN_CLR, txt.OVERRIDE_STATUS_CHOICE,
-                                    txt.WRN_CLR, txt.OVERRIDE_STATUS_MIRROR))
+        pass
+        # print("{} {}\n{} {}".format(txt.WRN_CLR, txt.OVERRIDE_STATUS_CHOICE,
+        #                             txt.WRN_CLR, txt.OVERRIDE_STATUS_MIRROR))
     else:
         mirror_selection = filterFn.filter_user_branch(mirror_selection,
                                                        self.config)
@@ -91,6 +92,9 @@ def build_mirror_list(self):
             print(".: {} {} 'sudo {}'".format(txt.INF_CLR,
                                               txt.REMOVE_CUSTOM_CONFIG,
                                               txt.RESET_ALL))
+        if self.no_status:
+            print("{} {}\n{} {}".format(txt.WRN_CLR, txt.OVERRIDE_STATUS_CHOICE,
+                                        txt.WRN_CLR, txt.OVERRIDE_STATUS_MIRROR))
     except IndexError:
         print(".: {} {}".format(txt.WRN_CLR, txt.NO_SELECTION))
         print(".: {} {}".format(txt.INF_CLR, txt.NO_CHANGE))
