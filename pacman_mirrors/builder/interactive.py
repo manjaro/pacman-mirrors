@@ -50,6 +50,11 @@ def build_mirror_list(self):
     worklist = filterFn.filter_mirror_country(self.mirrors.mirror_pool,
                                               self.selected_countries)
     """
+    Remove known bad mirrors from the list
+    mirrors where status.json has -1 for last_sync
+    """
+    worklist = filterFn.filter_bad_mirrors(worklist)
+    """
     If config.protols has content, that is a user decision and as such
     it has nothing to do with the reasoning regarding mirrors
     which might or might not be up-to-date
@@ -75,7 +80,7 @@ def build_mirror_list(self):
     {
         "country": "country_name",
         "resp_time": "m.sss",
-        "last_sync": "HH:MM",
+        "last_sync": "HHh MMm",
         "url": "http://server/repo/"
     }
     Therefor we have to create a list in the old format,
@@ -123,11 +128,14 @@ def build_mirror_list(self):
             self.config["country_pool"] = ["Custom"]
             outputFn.file_custom_mirror_pool(self, custom_pool)
             """
-            Writing the final mirrorlist
-            only write mirrors which are up-to-date for users selected branch
-            UP-TO-DATE FILTERING NEXT
+            Unless the user has provided the --no-status argument we only 
+            write mirrors which are up-to-date for users selected branch
             """
-            mirror_list = filterFn.filter_user_branch(mirror_list, self.config)
+            if self.no_status:
+                print("{} {}\n{} {}".format(txt.WRN_CLR, txt.OVERRIDE_STATUS_CHOICE,
+                                            txt.WRN_CLR, txt.OVERRIDE_STATUS_MIRROR))
+            else:
+                mirror_list = filterFn.filter_user_branch(mirror_list, self.config)
             """
             Try writing mirrorlist
             If no up-to-date mirrors exist for users branch
