@@ -19,7 +19,24 @@
 
 """Pacman-Mirrors Filter Functions"""
 
+from pacman_mirrors.constants import txt
 from pacman_mirrors.config import configuration as conf
+
+
+def filter_bad_mirrors(mirror_pool):
+    """
+    Remove known bad mirrors
+    branch is == -1
+    :return: list with badd mirrors removed
+    """
+    result = []
+    for mirror in mirror_pool:
+        if mirror["last_sync"] == txt.SERVER_BAD:
+            break
+        if mirror["branches"] == [-1, -1, -1]:
+            break
+        result.append(mirror)
+    return result
 
 
 def filter_mirror_country(mirror_pool, country_pool):
