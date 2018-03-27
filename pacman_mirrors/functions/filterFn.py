@@ -33,8 +33,6 @@ def filter_bad_mirrors(mirror_pool):
     for mirror in mirror_pool:
         if mirror["last_sync"] == txt.SERVER_BAD:
             break
-        if mirror["branches"] == [-1, -1, -1]:
-            break
         result.append(mirror)
     return result
 
