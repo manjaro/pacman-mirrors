@@ -28,7 +28,7 @@ from pacman_mirrors.functions import fileFn
 from pacman_mirrors.functions import util
 
 
-def api_config(self, set_pfx=None, set_branch=None, re_branch=False, set_protocols=False, set_url=None):
+def set_config(self, set_pfx=None, set_branch=None, re_branch=False, set_protocols=False, set_url=None):
     """
     Api configuration function
     :param self:
