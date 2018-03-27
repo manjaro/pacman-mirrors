@@ -64,8 +64,9 @@ class PacmanMirrors:
         self.max_wait_time = 2
         self.mirrors = Mirror()
         self.network = True
-        self.no_mirrorlist = False
         self.no_display = False
+        self.no_mirrorlist = False
+        self.no_status = False
         self.quiet = False
         self.selected_countries = []
 
