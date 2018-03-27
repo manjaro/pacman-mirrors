@@ -38,6 +38,11 @@ def build_mirror_list(self):
     mirror_selection = filterFn.filter_mirror_country(self.mirrors.mirror_pool,
                                                       self.selected_countries)
     """
+    Remove known bad mirrors from the list
+    mirrors where status.json has -1 for last_sync
+    """
+    mirror_selection = filterFn.filter_bad_mirrors(mirror_selection)
+    """
     Check the length of selected_countries against the full countrylist
     If selected_countries is the lesser then we build a custom pool file
     """
@@ -52,20 +57,25 @@ def build_mirror_list(self):
     """
     try:
         _ = self.config["protocols"][0]
-        mirror_selection = filterFn.filter_mirror_protocols(
-            mirror_selection, self.config["protocols"])
+        mirror_selection = filterFn.filter_mirror_protocols(mirror_selection,
+                                                            self.config["protocols"])
     except IndexError:
         pass
 
     """
-    only list mirrors which are up-to-date for users selected branch
-    by removing not up-to-date mirrors from the list
-    UP-TO-DATE FILTERING NEXT
+    Unless the user has provided the --no-status argument we only 
+    write mirrors which are up-to-date for users selected branch
     """
-    mirror_selection = filterFn.filter_user_branch(mirror_selection, self.config)
+    if self.no_status:
+        print("{} {}\n{} {}".format(txt.WRN_CLR, txt.OVERRIDE_STATUS_CHOICE,
+                                    txt.WRN_CLR, txt.OVERRIDE_STATUS_MIRROR))
+    else:
+        mirror_selection = filterFn.filter_user_branch(mirror_selection,
+                                                       self.config)
 
     if self.config["method"] == "rank":
-        mirror_selection = testMirrorFn.test_mirrors(self, mirror_selection)
+        mirror_selection = testMirrorFn.test_mirrors(self,
+                                                     mirror_selection)
         mirror_selection = sorted(mirror_selection,
                                   key=itemgetter("resp_time"))
     else:
