@@ -107,13 +107,13 @@ def translate_pool_to_interactive(mirror_pool):
     for mirror in mirror_pool:
         try:
             _ = mirror_pool[0]
-            ls = str(mirror["last_sync"]).split(":")
+            last_sync = str(mirror["last_sync"]).split(":")
             mirror_url = util.get_server_location_from_url(mirror["url"])
             for idx, protocol in enumerate(mirror["protocols"]):
                 interactive_list.append({
                     "country": mirror["country"],
                     "resp_time": mirror["resp_time"],
-                    "last_sync": "{}h {}m".format(ls[0], ls[1]),
+                    "last_sync": "{}h {}m".format(last_sync[0], last_sync[1]),
                     "url": "{}{}".format(protocol, mirror_url)
                 })
         except (KeyError, IndexError):
