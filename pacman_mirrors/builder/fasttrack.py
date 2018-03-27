@@ -41,19 +41,26 @@ def build_mirror_list(self, number):
     Only mirrors from the active mirror file is used
       either mirrors.json or custom-mirrors.json
     """
-    # randomize the load on up-to-date mirrors
-    worklist = self.mirrors.mirror_pool
-    shuffle(worklist)
+    """
+    remove known bad mirrors (status.json last_sync = -1)
+    """
+    worklist = filterFn.filter_bad_mirrors(self.mirrors.mirror_pool)
+    """
+    filter protocols if user has a selection
+    """
     if self.config["protocols"]:
         worklist = filterFn.filter_mirror_protocols(
             worklist, self.config["protocols"])
 
     """
-    Only pick mirrors which are up-to-date for users selected branch
-      by removing not up-to-date mirrors from the list
-    UP-TO-DATE FILTERING NEXT
+    Only pick mirrors which are up-to-date for the system branch
+    by removing not up-to-date mirrors from the list
     """
     up_to_date_mirrors = filterFn.filter_user_branch(worklist, self.config)
+    """
+    Shuffle the list
+    """
+    shuffle(up_to_date_mirrors)
     worklist = []
     print(".: {}: {} - {}".format(txt.INF_CLR,
                                   txt.QUERY_MIRRORS,
@@ -100,4 +107,3 @@ def build_mirror_list(self, number):
     except IndexError:
         print(".: {} {}".format(txt.WRN_CLR, txt.NO_SELECTION))
         print(".: {} {}".format(txt.INF_CLR, txt.NO_CHANGE))
-
