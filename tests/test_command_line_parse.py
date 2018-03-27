@@ -10,7 +10,7 @@ Tests for `pacman-mirrors` module.
 import unittest
 from unittest.mock import patch
 
-from pacman_mirrors.functions import cli
+from pacman_mirrors.functions import cliFn
 from pacman_mirrors.functions import configFn
 from pacman_mirrors.pacman_mirrors import PacmanMirrors
 from . import mock_configuration as conf
@@ -84,7 +84,7 @@ class TestCommandLineParse(unittest.TestCase):
             app = PacmanMirrors()
             app.config["config_file"] = conf.CONFIG_FILE
             app.config = configFn.setup_config()
-            cli.parse_command_line(app, True)
+            cliFn.parse_command_line(app, True)
             assert app.config["method"] == "random"
 
     @patch("os.getuid")
@@ -99,7 +99,7 @@ class TestCommandLineParse(unittest.TestCase):
             app = PacmanMirrors()
             app.config["config_file"] = conf.CONFIG_FILE
             app.config = configFn.setup_config()
-            cli.parse_command_line(app, True)
+            cliFn.parse_command_line(app, True)
             assert app.config["country_pool"] == ["France", "Germany"]
 
     @patch("os.getuid")
@@ -114,7 +114,7 @@ class TestCommandLineParse(unittest.TestCase):
             app = PacmanMirrors()
             app.config["config_file"] = conf.CONFIG_FILE
             app.config = configFn.setup_config()
-            cli.parse_command_line(app, True)
+            cliFn.parse_command_line(app, True)
             assert app.geoip is True
 
     @patch("os.getuid")
@@ -129,7 +129,7 @@ class TestCommandLineParse(unittest.TestCase):
             app = PacmanMirrors()
             app.config["config_file"] = conf.CONFIG_FILE
             app.config = configFn.setup_config()
-            cli.parse_command_line(app, True)
+            cliFn.parse_command_line(app, True)
             assert app.fasttrack == 5
 
     @patch("os.getuid")
@@ -144,7 +144,7 @@ class TestCommandLineParse(unittest.TestCase):
             app = PacmanMirrors()
             app.config["config_file"] = conf.CONFIG_FILE
             app.config = configFn.setup_config()
-            cli.parse_command_line(app, True)
+            cliFn.parse_command_line(app, True)
             assert app.interactive is True
 
     @patch("os.getuid")
@@ -159,7 +159,7 @@ class TestCommandLineParse(unittest.TestCase):
             app = PacmanMirrors()
             app.config["config_file"] = conf.CONFIG_FILE
             app.config = configFn.setup_config()
-            cli.parse_command_line(app, True)
+            cliFn.parse_command_line(app, True)
             assert app.max_wait_time == 5
 
     @patch("os.getuid")
@@ -174,7 +174,7 @@ class TestCommandLineParse(unittest.TestCase):
             app = PacmanMirrors()
             app.config["config_file"] = conf.CONFIG_FILE
             app.config = configFn.setup_config()
-            cli.parse_command_line(app, True)
+            cliFn.parse_command_line(app, True)
             assert app.quiet is True
 
     def tearDown(self):

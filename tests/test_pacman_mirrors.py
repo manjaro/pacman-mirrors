@@ -10,7 +10,7 @@ import unittest
 from unittest.mock import patch
 
 from pacman_mirrors.builder import common, fasttrack
-from pacman_mirrors.functions import fileFn, configFn, cli, defaultFn
+from pacman_mirrors.functions import fileFn, configFn, cliFn, defaultFn
 from pacman_mirrors.functions import httpFn
 from pacman_mirrors.pacman_mirrors import PacmanMirrors
 from . import mock_configuration as conf
@@ -56,7 +56,7 @@ class TestPacmanMirrors(unittest.TestCase):
             app = PacmanMirrors()
             app.config = configFn.setup_config()
             fileFn.create_dir(test_conf["work_dir"])
-            cli.parse_command_line(app, True)
+            cliFn.parse_command_line(app, True)
             httpFn.update_mirrors(app.config)
             defaultFn.load_default_mirror_pool(app)
             fasttrack.build_mirror_list(app, app.fasttrack)
@@ -76,7 +76,7 @@ class TestPacmanMirrors(unittest.TestCase):
             app = PacmanMirrors()
             app.config = configFn.setup_config()
             fileFn.create_dir(test_conf["work_dir"])
-            cli.parse_command_line(app, True)
+            cliFn.parse_command_line(app, True)
             httpFn.update_mirrors(app.config)
             defaultFn.load_default_mirror_pool(app)
             common.build_mirror_list(app)
@@ -95,7 +95,7 @@ class TestPacmanMirrors(unittest.TestCase):
             app = PacmanMirrors()
             app.config = configFn.setup_config()
             fileFn.create_dir(test_conf["work_dir"])
-            cli.parse_command_line(app, True)
+            cliFn.parse_command_line(app, True)
             httpFn.update_mirrors(app.config)
             defaultFn.load_default_mirror_pool(app)
             common.build_mirror_list(app)
