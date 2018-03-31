@@ -27,6 +27,7 @@ def filter_bad_mirrors(mirror_pool):
     """
     Remove known bad mirrors
     branch is == -1
+    :param mirror_pool: the global mirror pool
     :return: list with bad mirrors removed
     """
     result = []
