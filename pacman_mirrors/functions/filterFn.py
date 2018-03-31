@@ -27,7 +27,7 @@ def filter_bad_mirrors(mirror_pool):
     """
     Remove known bad mirrors
     branch is == -1
-    :return: list with badd mirrors removed
+    :return: list with bad mirrors removed
     """
     result = []
     for mirror in mirror_pool:
@@ -67,6 +67,20 @@ def filter_mirror_protocols(mirror_pool, protocols=None):
                 accepted.append(protocol)
         if accepted:
             mirror["protocols"] = accepted
+            result.append(mirror)
+    return result
+
+
+def filter_poor_mirrors(mirror_pool, interval=9999):
+    """
+    Remove poorly updated mirrors
+    last_sync is more than 1000 hours
+    :return: list with poor mirrors removed
+    """
+    result = []
+    for mirror in mirror_pool:
+        last_sync = str(mirror["last_sync"]).split(":")
+        if int(last_sync[0]) < interval:
             result.append(mirror)
     return result
 
