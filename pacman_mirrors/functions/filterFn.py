@@ -73,9 +73,10 @@ def filter_mirror_protocols(mirror_pool, protocols=None):
 
 def filter_poor_mirrors(mirror_pool, interval=9999):
     """
-    Remove poorly updated mirrors
-    last_sync is more than 1000 hours
-    :return: list with poor mirrors removed
+    Remove poorly updated mirrors last_sync is more than interval hours
+    :param mirror_pool: object
+    :param interval: hours since last sync
+    :return: list with mirrors removed which has not synced since interval
     """
     result = []
     for mirror in mirror_pool:
