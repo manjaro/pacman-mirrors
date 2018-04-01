@@ -40,12 +40,8 @@ Pacman-mirrors tries to provide **ONLY** up-to-date mirrors **if** they
 are available in your chosen mirror pool. This means - at any given time - 
 the number of available mirrors will vary depending on when the mirror 
 last syncronized with the master repo server. If no up-to-date mirrors 
-<<<<<<< HEAD
-is available in your chosen mirror pool, your mirror list will not be changed.
-=======
 is available in your chosen mirror pool, your mirror list will not be changed. 
 This behavior can be overridden if so desired by using the *-s/--no-status* switch.
->>>>>>> no-status-branch
 
 # Network connection
 To be able to download the latest status file from repo.manjaro.org 
@@ -118,11 +114,7 @@ for example
 Pacman-mirrors always attempt to download the lastest available data 
 from [http://repo.manjaro.org](http://repo.manjaro.org). 
 These data is always used during mirrorlist generation to ensure that you connect to a mirror 
-<<<<<<< HEAD
 which is up-to-date for your selected branch.
-=======
-which is up-to-date for your systems branch.
->>>>>>> no-status-branch
 
 # ARGUMENTS, METHODS AND OPTIONS
 
