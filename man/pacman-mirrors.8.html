@@ -36,7 +36,7 @@
 <p>After all operations <em>ALWAYS</em> syncronize and update your system with</p>
 <pre><code>sudo pacman -Syyu</code></pre>
 <h1 id="operation">OPERATION</h1>
-<p>Pacman-mirrors tries to provide <strong>ONLY</strong> up-to-date mirrors <strong>if</strong> they are available in your chosen mirror pool. This means - at any given time - the number of available mirrors will vary depending on when the mirror last syncronized with the master repo server. If no up-to-date mirrors &lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD is available in your chosen mirror pool, your mirror list will not be changed. ======= is available in your chosen mirror pool, your mirror list will not be changed. This behavior can be overridden if so desired by using the <em>-s/–no-status</em> switch. &gt;&gt;&gt;&gt;&gt;&gt;&gt; no-status-branch</p>
+<p>Pacman-mirrors tries to provide <strong>ONLY</strong> up-to-date mirrors <strong>if</strong> they are available in your chosen mirror pool. This means - at any given time - the number of available mirrors will vary depending on when the mirror last syncronized with the master repo server. If no up-to-date mirrors is available in your chosen mirror pool, your mirror list will not be changed. This behavior can be overridden if so desired by using the <em>-s/–no-status</em> switch.</p>
 <h1 id="network-connection">Network connection</h1>
 <p>To be able to download the latest status file from repo.manjaro.org pacman-mirrors verifies network connection by opening up to three different websites. These sites are</p>
 <ol type="1">
@@ -108,7 +108,7 @@
 <pre><code>pacman-mirrors -f
 pacman-mirrors -f 5
 pacman-mirrors -f5</code></pre>
-<p>Pacman-mirrors always attempt to download the lastest available data from <a href="http://repo.manjaro.org" class="uri">http://repo.manjaro.org</a>. These data is always used during mirrorlist generation to ensure that you connect to a mirror &lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD which is up-to-date for your selected branch. ======= which is up-to-date for your systems branch. &gt;&gt;&gt;&gt;&gt;&gt;&gt; no-status-branch</p>
+<p>Pacman-mirrors always attempt to download the lastest available data from <a href="http://repo.manjaro.org" class="uri">http://repo.manjaro.org</a>. These data is always used during mirrorlist generation to ensure that you connect to a mirror which is up-to-date for your systems branch.</p>
 <h1 id="arguments-methods-and-options">ARGUMENTS, METHODS AND OPTIONS</h1>
 <h2 id="methods">METHODS</h2>
 <dl>
