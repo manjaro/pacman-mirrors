@@ -85,7 +85,7 @@ def setup_config():
     return config, custom
 
 
-def verify_config(config):
+def sanitize_config(config):
     """
     Verify configuration
     :param config:

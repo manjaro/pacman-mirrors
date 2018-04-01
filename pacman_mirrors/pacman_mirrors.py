@@ -76,6 +76,7 @@ class PacmanMirrors:
         # Setup config: retunrs the config dictionary and true/false on custom
         # Parse commandline
         # i686 check - change branch to x32-$branch
+        # sanitize config
         # Check network
         # Check if mirrorlist is not to be touched - normal exit
         # Handle missing network
@@ -86,7 +87,7 @@ class PacmanMirrors:
         fileFn.create_dir(self.config["work_dir"])
         cliFn.parse_command_line(self, GTK_AVAILABLE)
         util.i686_check(self, write=True)
-        if not configFn.verify_config(self.config):
+        if not configFn.sanitize_config(self.config):
             sys.exit(2)
         self.network = httpFn.inet_conn_check()
         if self.network:
