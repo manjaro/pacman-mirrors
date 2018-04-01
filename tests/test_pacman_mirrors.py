@@ -57,7 +57,7 @@ class TestPacmanMirrors(unittest.TestCase):
             app.config = configFn.setup_config()
             fileFn.create_dir(test_conf["work_dir"])
             cliFn.parse_command_line(app, True)
-            httpFn.update_mirrors(app.config)
+            httpFn.update_mirror_pool(app.config)
             defaultFn.load_default_mirror_pool(app)
             fasttrack.build_mirror_list(app, app.fasttrack)
 
@@ -77,7 +77,7 @@ class TestPacmanMirrors(unittest.TestCase):
             app.config = configFn.setup_config()
             fileFn.create_dir(test_conf["work_dir"])
             cliFn.parse_command_line(app, True)
-            httpFn.update_mirrors(app.config)
+            httpFn.update_mirror_pool(app.config)
             defaultFn.load_default_mirror_pool(app)
             common.build_mirror_list(app)
 
@@ -96,7 +96,7 @@ class TestPacmanMirrors(unittest.TestCase):
             app.config = configFn.setup_config()
             fileFn.create_dir(test_conf["work_dir"])
             cliFn.parse_command_line(app, True)
-            httpFn.update_mirrors(app.config)
+            httpFn.update_mirror_pool(app.config)
             defaultFn.load_default_mirror_pool(app)
             common.build_mirror_list(app)
 

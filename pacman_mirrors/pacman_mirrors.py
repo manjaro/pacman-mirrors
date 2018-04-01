@@ -78,6 +78,7 @@ class PacmanMirrors:
         # i686 check - change branch to x32-$branch
         # sanitize config
         # Check network
+        # Update mirror pool
         # Check if mirrorlist is not to be touched - normal exit
         # Handle missing network
         # Load all mirrors
@@ -91,7 +92,7 @@ class PacmanMirrors:
             sys.exit(2)
         self.network = httpFn.inet_conn_check()
         if self.network:
-            httpFn.update_mirrors(self.config, quiet=self.quiet)
+            httpFn.update_mirror_pool(self.config, quiet=self.quiet)
         if self.no_mirrorlist:
             sys.exit(0)
         if not self.network:

@@ -189,7 +189,7 @@ def ping_host(host, count=1):
     return system_call("ping -c{} {} > /dev/null".format(count, host)) == 0
 
 
-def update_mirrors(config, quiet=False):
+def update_mirror_pool(config, quiet=False):
     """Download updates from repo.manjaro.org
     :param config:
     :param quiet:
