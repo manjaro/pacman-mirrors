@@ -81,7 +81,7 @@ class PacmanMirrors:
         # Update mirror pool
         # Check if mirrorlist is not to be touched - normal exit
         # Handle missing network
-        # Load all mirrors
+        # Load default mirror pool
         # Build mirror list
         """
         (self.config, self.custom) = configFn.setup_config()
@@ -101,7 +101,7 @@ class PacmanMirrors:
             self.config["method"] = "random"
             self.fasttrack = False
         """
-        # Load all mirrors
+        # Load configured mirror pool
         """
         defaultFn.load_config_mirror_pool(self)
         """
