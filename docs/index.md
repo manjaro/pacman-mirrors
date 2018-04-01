@@ -1,6 +1,6 @@
-% pacman-mirrors(8) Pacman-Mirrors 4.10.x User Manual  
-%  
-% March, 2018  
+% pacman-mirrors(8) Pacman-Mirrors 4.10.x User Manual
+%
+% March, 2018
 
 # NAME
 
@@ -18,14 +18,14 @@ pacman-mirrors - generate pacman mirrorlist for Manjaro Linux
 Generates mirrorlist with up-to-date mirrors for Manjaro Linux.
 Default is to rank all mirrors by reponse time.
 If no arguments are given pacman-mirrors lists available options.
-Pacman-mirrors requires access to files which are read-only 
+Pacman-mirrors requires access to files which are read-only
 so it must be run with *su* or *sudo*.
 
 To create a mirrorlist using all default use
 
     pacman-mirrors -f
 
-The mirrorlist generation process can be refined through arguments 
+The mirrorlist generation process can be refined through arguments
 and arguments with options, for example
 
     pacman-mirrors --country Denmark --timeout 5
@@ -36,20 +36,16 @@ After all operations *ALWAYS* syncronize and update your system with
     sudo pacman -Syyu
 
 # OPERATION
-Pacman-mirrors tries to provide **ONLY** up-to-date mirrors **if** they 
-are available in your chosen mirror pool. This means - at any given time - 
-the number of available mirrors will vary depending on when the mirror 
-last syncronized with the master repo server. If no up-to-date mirrors 
-<<<<<<< HEAD
+Pacman-mirrors tries to provide **ONLY** up-to-date mirrors **if** they
+are available in your chosen mirror pool. This means - at any given time -
+the number of available mirrors will vary depending on when the mirror
+last syncronized with the master repo server. If no up-to-date mirrors
 is available in your chosen mirror pool, your mirror list will not be changed.
-=======
-is available in your chosen mirror pool, your mirror list will not be changed. 
 This behavior can be overridden if so desired by using the *-s/--no-status* switch.
->>>>>>> no-status-branch
 
 # Network connection
-To be able to download the latest status file from repo.manjaro.org 
-pacman-mirrors verifies network connection by opening up to 
+To be able to download the latest status file from repo.manjaro.org
+pacman-mirrors verifies network connection by opening up to
 three different websites. These sites are
 
 1. wikipedia.org
@@ -74,12 +70,12 @@ The sites are chosen due to their generic nature and general availability.
 * **The mirrorlist**: *`/etc/pacman.d/mirrorlist`*
    * The file contains a number of servers which `pacman` uses to update your system.
 * **Manjaro mirror pool**: *`/usr/share/pacman-mirrors/mirrors.json`*
-   * The worldwide mirrorpool comes with installation. 
-   * At runtime the file is downloaded from Github and compared with the systems file. 
+   * The worldwide mirrorpool comes with installation.
+   * At runtime the file is downloaded from Github and compared with the systems file.
    * If the files differs, your local file will be replaced.
 * **Manjaro mirror pool status**: *`/var/lib/pacman-mirrors/status.json`*
-   * The mirrorpool status file. 
-   * It is the data you see displayed at repo.manjaro.org. 
+   * The mirrorpool status file.
+   * It is the data you see displayed at repo.manjaro.org.
    * The file is downloaded and saved on every run of pacman-mirrors.
 * **Custom mirror pool**: *`/var/lib/pacman-mirrors/custom-mirrors.json`*
    * The file is your custom mirror pool
@@ -104,25 +100,21 @@ Some options are mutual exclusive and will throw an arguments error:
 * **--country**, **--fasttrack**, **--geoip**
 * **--fasttrack** and **--nostatus**
 
-Some arguments requires another argument present to have effect. 
+Some arguments requires another argument present to have effect.
 If such conditions rise pacman-mirrors will throw an arguments error.
 
-The arguments can appear in any order except for arguments which takes additional options 
-in which case the options must follow immediately after the argument with or without space, 
+The arguments can appear in any order except for arguments which takes additional options
+in which case the options must follow immediately after the argument with or without space,
 for example
 
     pacman-mirrors -f
     pacman-mirrors -f 5
     pacman-mirrors -f5
 
-Pacman-mirrors always attempt to download the lastest available data 
-from [http://repo.manjaro.org](http://repo.manjaro.org). 
-These data is always used during mirrorlist generation to ensure that you connect to a mirror 
-<<<<<<< HEAD
-which is up-to-date for your selected branch.
-=======
+Pacman-mirrors always attempt to download the lastest available data
+from [http://repo.manjaro.org](http://repo.manjaro.org).
+These data is always used during mirrorlist generation to ensure that you connect to a mirror
 which is up-to-date for your systems branch.
->>>>>>> no-status-branch
 
 # ARGUMENTS, METHODS AND OPTIONS
 
@@ -183,7 +175,7 @@ which is up-to-date for your systems branch.
 :   Make pacman-mirrors silent.
 
 -s, \--no-status
-:   Ignore up-to-date status for system branch. 
+:   Ignore up-to-date status for system branch.
 
 -t, \--timeout *SECONDS*
 :   Change the number of seconds waiting for a server response, SSL enabled mirrors has this value doubled to compensate for the time spent on exchanging encryption keys.
@@ -201,15 +193,15 @@ which is up-to-date for your systems branch.
 
 ## Configuration flow of pacman-mirrors
 
-At launch an internal default configuration is setup, 
+At launch an internal default configuration is setup,
 file configuration is applied then the commandline is parsed and applied.
 
 ## API arguments
 
 The arguments modifies key elements of pacman-mirrors configuration according to the users needs.
 
-The actions performed by the API are in strict order and performed *before any* other actions. 
-This also means that ordinary arguments supplied in conjunction with api might be ignored. 
+The actions performed by the API are in strict order and performed *before any* other actions.
+This also means that ordinary arguments supplied in conjunction with api might be ignored.
 Eg. **-U** argument terminates pacman-mirrors when branch and mirrorlist has been written.
 
 1. If *p*  *PREFIX*
@@ -225,17 +217,17 @@ Eg. **-U** argument terminates pacman-mirrors when branch and mirrorlist has bee
 5. If *-R*
    * replace branch in mirrorlist with *-S/-B* *BRANCH*
 
-When done pacman-mirrors checks the internet connection and 
-if possible download the latest datafiles for creating the mirrorlist. 
+When done pacman-mirrors checks the internet connection and
+if possible download the latest datafiles for creating the mirrorlist.
 At this point it is possible to interrupt further processing.
 
 If the *-n/--no-mirrorlist* argument is present pacman-mirrors will now exit.
 
 # EXAMPLES
 
-Most optional arguments are self explaining others require explanation. 
-The API functions is mainly designed to help packagers and iso-builders. 
-However it can be of use for everyone because it takes the hazzle out of 
+Most optional arguments are self explaining others require explanation.
+The API functions is mainly designed to help packagers and iso-builders.
+However it can be of use for everyone because it takes the hazzle out of
 editing your pacman-mirrors configuration.
 
 ## Commands
