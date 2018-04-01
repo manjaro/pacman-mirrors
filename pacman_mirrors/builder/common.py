@@ -67,19 +67,10 @@ def build_mirror_list(self):
     write mirrors which are up-to-date for users selected branch
     """
     if self.no_status:
-<<<<<<< HEAD
-        print("{} {}\n{} {}".format(txt.WRN_CLR, txt.OVERRIDE_STATUS_CHOICE,
-                                    txt.WRN_CLR, txt.OVERRIDE_STATUS_MIRROR))
-    else:
-        mirror_selection = filterFn.filter_user_branch(mirror_selection, self.config)
-=======
         pass
-        # print("{} {}\n{} {}".format(txt.WRN_CLR, txt.OVERRIDE_STATUS_CHOICE,
-        #                             txt.WRN_CLR, txt.OVERRIDE_STATUS_MIRROR))
     else:
         mirror_selection = filterFn.filter_user_branch(mirror_selection,
                                                        self.config)
->>>>>>> no-status-branch
 
     if self.config["method"] == "rank":
         mirror_selection = testMirrorFn.test_mirrors(self,
