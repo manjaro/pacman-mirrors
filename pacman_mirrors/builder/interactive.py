@@ -36,7 +36,11 @@ def build_mirror_list(self):
     Modify the configuration file to use the "custom" file.
     Outputs a pacman mirrorlist,
     """
-
+    """
+    Remove known bad mirrors from the list
+    mirrors where status.json has -1 for last_sync or branches is -1,-1,-1
+    """
+    worklist = filterFn.filter_bad_mirrors(self.mirrors.mirror_pool)
     """
     It would seem reasonable to implement a filter
     based on the users branch and the mirrors update status
@@ -47,8 +51,7 @@ def build_mirror_list(self):
     The final mirrorfile will include all mirrors selected by the user
     The final mirrorlist will exclude (if possible) mirrors not up-to-date
     """
-    worklist = filterFn.filter_mirror_country(self.mirrors.mirror_pool,
-                                              self.selected_countries)
+    worklist = filterFn.filter_mirror_country(worklist, self.selected_countries)
     """
     If config.protols has content, that is a user decision and as such
     it has nothing to do with the reasoning regarding mirrors
@@ -75,7 +78,7 @@ def build_mirror_list(self):
     {
         "country": "country_name",
         "resp_time": "m.sss",
-        "last_sync": "HH:MM",
+        "last_sync": "HHh MMm",
         "url": "http://server/repo/"
     }
     Therefore we have to create a list in the old format,
@@ -99,6 +102,9 @@ def build_mirror_list(self):
                          self.default)
     # process user choices
     if interactive.is_done:
+        """
+        translate interactive list back to our json format
+        """
         custom_pool, mirror_list = convertFn.translate_interactive_to_pool(interactive.custom_list,
                                                                            self.mirrors.mirror_pool,
                                                                            self.config)
@@ -128,13 +134,22 @@ def build_mirror_list(self):
             """
             outputFn.file_custom_mirror_pool(self, custom_pool)
             """
+<<<<<<< HEAD
             Filtering the mirror list
+=======
+>>>>>>> no-status-branch
             Unless the user has provided the --no-status argument we only 
             write mirrors which are up-to-date for users selected branch
             """
             if self.no_status:
+<<<<<<< HEAD
                 print("{} {}\n{} {}".format(txt.WRN_CLR, txt.OVERRIDE_STATUS_CHOICE,
                                             txt.WRN_CLR, txt.OVERRIDE_STATUS_MIRROR))
+=======
+                pass
+                # print("{} {}\n{} {}".format(txt.WRN_CLR, txt.OVERRIDE_STATUS_CHOICE,
+                #                             txt.WRN_CLR, txt.OVERRIDE_STATUS_MIRROR))
+>>>>>>> no-status-branch
             else:
                 mirror_list = filterFn.filter_user_branch(mirror_list, self.config)
             """
@@ -146,6 +161,9 @@ def build_mirror_list(self):
             try:
                 _ = mirror_list[0]
                 outputFn.file_mirror_list(self, mirror_list)
+                if self.no_status:
+                    print("{} {}\n{} {}".format(txt.WRN_CLR, txt.OVERRIDE_STATUS_CHOICE,
+                                                txt.WRN_CLR, txt.OVERRIDE_STATUS_MIRROR))
             except IndexError:
                 raise IndexError
         except IndexError:

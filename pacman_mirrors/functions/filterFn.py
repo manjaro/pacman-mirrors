@@ -19,7 +19,22 @@
 
 """Pacman-Mirrors Filter Functions"""
 
+from pacman_mirrors.constants import txt
 from pacman_mirrors.config import configuration as conf
+
+
+def filter_bad_mirrors(mirror_pool):
+    """
+    Remove known bad mirrors
+    branch is == -1
+    :param mirror_pool: the global mirror pool
+    :return: list with bad mirrors removed
+    """
+    result = []
+    for mirror in mirror_pool:
+        if mirror["last_sync"] != txt.SERVER_BAD:
+            result.append(mirror)
+    return result
 
 
 def filter_mirror_country(mirror_pool, country_pool):
@@ -53,6 +68,21 @@ def filter_mirror_protocols(mirror_pool, protocols=None):
                 accepted.append(protocol)
         if accepted:
             mirror["protocols"] = accepted
+            result.append(mirror)
+    return result
+
+
+def filter_poor_mirrors(mirror_pool, interval=9999):
+    """
+    Remove poorly updated mirrors last_sync is more than interval hours
+    :param mirror_pool: object
+    :param interval: hours since last sync
+    :return: list with mirrors removed which has not synced since interval
+    """
+    result = []
+    for mirror in mirror_pool:
+        last_sync = str(mirror["last_sync"]).split(":")
+        if int(last_sync[0]) < interval:
             result.append(mirror)
     return result
 

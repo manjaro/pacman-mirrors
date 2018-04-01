@@ -33,9 +33,14 @@ def build_mirror_list(self):
     Generate common mirrorlist
     """
     """
+    Remove known bad mirrors from the list
+    mirrors where status.json has -1 for last_sync
+    """
+    mirror_selection = filterFn.filter_bad_mirrors(self.mirrors.mirror_pool)
+    """
     Create a list based on the content of selected_countries
     """
-    mirror_selection = filterFn.filter_mirror_country(self.mirrors.mirror_pool,
+    mirror_selection = filterFn.filter_mirror_country(mirror_selection,
                                                       self.selected_countries)
     """
     Check the length of selected_countries against the full countrylist
@@ -52,8 +57,8 @@ def build_mirror_list(self):
     """
     try:
         _ = self.config["protocols"][0]
-        mirror_selection = filterFn.filter_mirror_protocols(
-            mirror_selection, self.config["protocols"])
+        mirror_selection = filterFn.filter_mirror_protocols(mirror_selection,
+                                                            self.config["protocols"])
     except IndexError:
         pass
 
@@ -62,13 +67,23 @@ def build_mirror_list(self):
     write mirrors which are up-to-date for users selected branch
     """
     if self.no_status:
+<<<<<<< HEAD
         print("{} {}\n{} {}".format(txt.WRN_CLR, txt.OVERRIDE_STATUS_CHOICE,
                                     txt.WRN_CLR, txt.OVERRIDE_STATUS_MIRROR))
     else:
         mirror_selection = filterFn.filter_user_branch(mirror_selection, self.config)
+=======
+        pass
+        # print("{} {}\n{} {}".format(txt.WRN_CLR, txt.OVERRIDE_STATUS_CHOICE,
+        #                             txt.WRN_CLR, txt.OVERRIDE_STATUS_MIRROR))
+    else:
+        mirror_selection = filterFn.filter_user_branch(mirror_selection,
+                                                       self.config)
+>>>>>>> no-status-branch
 
     if self.config["method"] == "rank":
-        mirror_selection = testMirrorFn.test_mirrors(self, mirror_selection)
+        mirror_selection = testMirrorFn.test_mirrors(self,
+                                                     mirror_selection)
         mirror_selection = sorted(mirror_selection,
                                   key=itemgetter("resp_time"))
     else:
@@ -84,6 +99,9 @@ def build_mirror_list(self):
             print(".: {} {} 'sudo {}'".format(txt.INF_CLR,
                                               txt.REMOVE_CUSTOM_CONFIG,
                                               txt.RESET_ALL))
+        if self.no_status:
+            print("{} {}\n{} {}".format(txt.WRN_CLR, txt.OVERRIDE_STATUS_CHOICE,
+                                        txt.WRN_CLR, txt.OVERRIDE_STATUS_MIRROR))
     except IndexError:
         print(".: {} {}".format(txt.WRN_CLR, txt.NO_SELECTION))
         print(".: {} {}".format(txt.INF_CLR, txt.NO_CHANGE))
