@@ -134,22 +134,11 @@ def build_mirror_list(self):
             """
             outputFn.file_custom_mirror_pool(self, custom_pool)
             """
-<<<<<<< HEAD
-            Filtering the mirror list
-=======
->>>>>>> no-status-branch
             Unless the user has provided the --no-status argument we only 
             write mirrors which are up-to-date for users selected branch
             """
             if self.no_status:
-<<<<<<< HEAD
-                print("{} {}\n{} {}".format(txt.WRN_CLR, txt.OVERRIDE_STATUS_CHOICE,
-                                            txt.WRN_CLR, txt.OVERRIDE_STATUS_MIRROR))
-=======
                 pass
-                # print("{} {}\n{} {}".format(txt.WRN_CLR, txt.OVERRIDE_STATUS_CHOICE,
-                #                             txt.WRN_CLR, txt.OVERRIDE_STATUS_MIRROR))
->>>>>>> no-status-branch
             else:
                 mirror_list = filterFn.filter_user_branch(mirror_list, self.config)
             """
