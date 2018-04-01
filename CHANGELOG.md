@@ -1,7 +1,7 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## [4.10.0] 2018-03-25
+## [4.10.1] 2018-04-01
 * Added       : Implemented issue [#128](https://github.com/manjaro/pacman-mirrors/issues/128)
 * Description : `-s/--no-status` Allow mirror list with not up-to-date mirrors
 
