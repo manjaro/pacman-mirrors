@@ -1,13 +1,9 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-<<<<<<< HEAD
 ## [4.10.0] 2018-03-25
-* Added  : Implemented issue [#128](https://github.com/manjaro/pacman-mirrors/issues/128)
-=======
-## [4.10.0] 2018-03-27
-* Added  : [#128](https://github.com/manjaro/pacman-mirrors/issues/128) `-s/--no-status` Allow mirror list with not up-to-date mirrors
->>>>>>> no-status-branch
+* Added       : Implemented issue [#128](https://github.com/manjaro/pacman-mirrors/issues/128)
+* Description : `-s/--no-status` Allow mirror list with not up-to-date mirrors
 
 ## [4.9.1] 2018-03-23
 * Fixed  : [#130](https://github.com/manjaro/pacman-mirrors/issues/130) Mirror list generation could result in weird destinations if user selected multiple protocols from same mirror.
