@@ -118,10 +118,11 @@ def get_mirror_response(url, maxwait=2, count=1, quiet=False, ssl_verify=True):
     probe_stop = None
     message = ""
     # context = None
-    context = ssl.SSLContext(ssl.PROTOCOL_SSLv23)
+    context = ssl.create_default_context()
     headers = {"User-Agent": "pacman-mirrors {}".format(__version__)}
     if not ssl_verify:
         # context = ssl.SSLContext(ssl.PROTOCOL_SSLv23)
+        context.check_hostname = False
         context.verify_mode = ssl.CERT_NONE
     req = urllib.request.Request(
         url + "state", headers=headers
